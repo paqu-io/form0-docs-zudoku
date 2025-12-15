@@ -1,3 +1,11 @@
+import React from "react"
+import { LanguageSlot } from "./src/components/language-slot.jsx"
+import { createI18nPlugin } from "./src/plugins/i18n-plugin.jsx"
+import { createLocalizedNavigationPlugin } from "./src/plugins/localized-navigation-plugin.js"
+
+const i18nPlugin = createI18nPlugin({ preloadNamespaces: ["common", "docs"] })
+const localizedNavigationPlugin = createLocalizedNavigationPlugin()
+
 /** @type {import('zudoku').ZudokuConfig} */
 const config = {
   site: {
@@ -11,6 +19,7 @@ const config = {
     {
       type: "category",
       label: "Documentation",
+      link: { type: "doc", file: "introduction", path: "/introduction" },
       items: [
         {
           type: "category",
@@ -27,6 +36,12 @@ const config = {
               },
               label: "API Reference",
               to: "/api",
+            },
+            {
+              type: "doc",
+              file: "test",
+              path: "/test",
+              label: "This is a test",
             },
           ],
         },
@@ -53,6 +68,9 @@ const config = {
     },
   ],
   redirects: [{ from: "/", to: "/introduction" }],
+  slots: {
+    "head-navigation-end": () => <LanguageSlot />,
+  },
   apis: [
     {
       type: "file",
@@ -66,6 +84,7 @@ const config = {
       showLastModified: false,
     },
   },
+  plugins: [i18nPlugin, localizedNavigationPlugin],
   theme: {
     noDefaultTheme: true,
     light: {

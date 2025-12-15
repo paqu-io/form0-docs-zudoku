@@ -1,0 +1,18 @@
+{
+  "site": {
+    "title": "form0 docs",
+    "tagline": "Moduli basati su schema per ogni piattaforma."
+  },
+  "nav": {
+    "documentation": "Documentazione",
+    "api": "Riferimento API",
+    "gettingStarted": "Per iniziare",
+    "usefulLinks": "Link utili",
+    "zudokuDocs": "Documentazione Zudoku",
+    "new": "Nuovo",
+    "test": "Questa è una prova"
+  },
+  "language": {
+    "label": "Lingua"
+  }
+}

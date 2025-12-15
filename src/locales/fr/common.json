@@ -1,0 +1,18 @@
+{
+  "site": {
+    "title": "form0 docs",
+    "tagline": "Des formulaires pilotés par schéma pour chaque plateforme."
+  },
+  "nav": {
+    "documentation": "Documentation",
+    "api": "Référence API",
+    "gettingStarted": "Prise en main",
+    "usefulLinks": "Liens utiles",
+    "zudokuDocs": "Docs Zudoku",
+    "new": "Nouveau",
+    "test": "C'est un test"
+  },
+  "language": {
+    "label": "Langue"
+  }
+}

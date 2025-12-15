@@ -7,7 +7,8 @@
     "dev": "zudoku dev",
     "build": "zudoku build",
     "preview": "zudoku preview",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "node scripts/apply-zudoku-locale-patch.js"
   },
   "dependencies": {
     "react": ">=19.0.0",

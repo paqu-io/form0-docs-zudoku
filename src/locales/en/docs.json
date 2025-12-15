@@ -1,0 +1,14 @@
+{
+  "introduction": {
+    "title": "Welcome to form0 docs",
+    "editHint": "Edit this page by opening {path}.",
+    "learnMore": "See zudoku.config.jsx for full configuration."
+  },
+  "example": {
+    "title": "Example page",
+    "tip": "Edit this page by opening {path}."
+  },
+  "test": {
+    "title": "This is a test"
+  }
+}

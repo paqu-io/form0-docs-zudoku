@@ -1,0 +1,18 @@
+{
+  "site": {
+    "title": "form0 docs",
+    "tagline": "Schema-driven forms for every platform."
+  },
+  "nav": {
+    "documentation": "Documentation",
+    "api": "API Reference",
+    "gettingStarted": "Getting Started",
+    "usefulLinks": "Useful Links",
+    "zudokuDocs": "Zudoku Docs",
+    "new": "New",
+    "test": "This is a test"
+  },
+  "language": {
+    "label": "Language"
+  }
+}
