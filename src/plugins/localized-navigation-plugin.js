@@ -55,9 +55,13 @@ const get = (obj, path, fallback) => {
 const withLocalePrefix = (path, prefix) => {
   if (!prefix || prefix === "/") return path
   if (!path) return path
-  if (path === API_PATH) return path
+  // Skip external URLs and API path
+  if (path.startsWith("http://") || path.startsWith("https://")) return path
+  if (path === API_PATH || path === "api") return path
   if (path.startsWith(prefix)) return path
-  return `${prefix}${path}`
+  // Ensure path starts with / before concatenating (Zudoku may strip leading slashes)
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`
+  return `${prefix}${normalizedPath}`
 }
 
 const stripPrefix = (path, prefix) => {
