@@ -9,11 +9,17 @@ const localizedNavigationPlugin = createLocalizedNavigationPlugin()
 /** @type {import('zudoku').ZudokuConfig} */
 const config = {
   site: {
+    title: "form0 | docs",
     logo: {
       src: { light: "/logo-light.svg", dark: "/logo-dark.svg" },
-      alt: "Zudoku",
-      width: "130px",
+      alt: "form0 docs",
+      width: "267px",
     },
+  },
+  metadata: {
+    favicon: "/favicon.svg",
+    title: "form0 | docs - %s",
+    defaultTitle: "form0 | docs",
   },
   navigation: [
     {
@@ -40,7 +46,6 @@ const config = {
             {
               type: "doc",
               file: "test",
-              path: "/test",
               label: "This is a test",
             },
           ],
@@ -85,6 +90,18 @@ const config = {
     },
   },
   plugins: [i18nPlugin, localizedNavigationPlugin],
+  // Pagefind search only works after build (index is generated at build time).
+  // Dev mode will show errors in console but search will work in production.
+  search: {
+    type: "pagefind",
+    maxSubResults: 3,
+    ranking: {
+      termFrequency: 0.8,
+      pageLength: 0.6,
+      termSimilarity: 1.2,
+      termSaturation: 1.2,
+    },
+  },
   theme: {
     noDefaultTheme: true,
     light: {
@@ -277,6 +294,26 @@ const config = {
       #cc-main .pm__table-th,
       #cc-main .pm__service-title {
         font-size: 0.9375rem;
+      }
+
+      /* Remove focus ring flash on search dialog close button */
+      [data-slot="dialog-close"],
+      [role="dialog"] button,
+      [data-radix-dialog-content] button,
+      [cmdk-dialog] button {
+        --tw-ring-color: transparent !important;
+        --tw-ring-shadow: none !important;
+      }
+      [data-slot="dialog-close"]:focus,
+      [data-slot="dialog-close"]:focus-visible,
+      [role="dialog"] button:focus,
+      [role="dialog"] button:focus-visible,
+      [data-radix-dialog-content] button:focus,
+      [data-radix-dialog-content] button:focus-visible,
+      [cmdk-dialog] button:focus,
+      [cmdk-dialog] button:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
       }
     `,
   },
