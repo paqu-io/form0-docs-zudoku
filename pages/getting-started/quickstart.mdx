@@ -1,0 +1,69 @@
+---
+title: Quickstart
+description: Build and preview your first form0 schema in minutes.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+import { Stepper } from "zudoku/ui/Stepper";
+
+<Badge variant="default">CLI</Badge> <Badge variant="muted">Local</Badge>
+
+Create a form0 project, start the dev server, and open a live preview. This flow uses only the CLI and the default schema template that comes with it.
+
+## Get ready in 5 steps
+Build and preview your first form0 schema in minutes.
+
+<Stepper>
+
+1. Install the CLI:
+
+   ```bash
+   npm install -g @paqu-io/form0-cli@latest
+   ```
+
+   Or run without a global install:
+
+   ```bash
+   npx @paqu-io/form0-cli@latest
+   ```
+   :::info
+
+   npx command runs the CLI without a global install.
+
+   :::
+
+1. Start the interactive shell:
+
+   ```bash
+   form0
+   ```
+
+1. Initialize a standard project:
+
+   - Run `init`
+   - Choose **Standard project**
+   - Let the CLI auto-load your schema
+
+   :::info
+
+   If there is only one schema file in the project root, it is loaded automatically.
+
+   :::
+
+1. Start the dev server:
+
+   ```ansi
+   form0> serve
+   ```
+
+1. Open the live preview at `http://localhost:3030` in your browser.
+
+</Stepper>
+
+## What you get
+Standard projects are file-first and CLI-driven.
+
+- form.schema.json` with a starter form
+- `form0.config.js` for CLI settings
+- `test.js` for local engine checks
+- `supporting-images/` for field assets

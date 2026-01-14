@@ -1,0 +1,90 @@
+---
+title: Modifiez votre premier schéma
+description: Ajoutez un NumericField et un CalculatedField en mode édition de schéma.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+import { Callout } from "zudoku/ui/Callout";
+import { Stepper } from "zudoku/ui/Stepper";
+
+<Badge variant="default">CLI</Badge> <Badge variant="muted">Local</Badge>
+
+## Flux d'édition en direct
+Cette page suppose que vous avez déjà exécuté `serve` et que l'aperçu en direct est ouvert à l'adresse `http://localhost:3030`.
+
+<Stepper>
+
+1. Entrez dans le mode d'édition du schéma :
+
+   ```ansi
+   form0(server)> schema edit
+   ```
+   <Callout type="caution" title="Éditeur requis">
+      Le mode d'édition du schéma ouvre votre éditeur de code. Assurez-vous que la variable `EDITOR` ou `VISUAL` est configurée :
+
+      - **Linux/macOS** : Ajoutez `export EDITOR=code` à `~/.bashrc`, `~/.zshrc` ou `~/.profile`, puis redémarrez votre terminal ou exécutez `source ~/.bashrc`.
+      - **Windows (PowerShell)** : Exécutez `$env:EDITOR = "code"` pour la session en cours, ou ajoutez-le à votre profil PowerShell (`$PROFILE`).
+      - **Windows (CMD)** : Utilisez `set EDITOR=code` pour la session, ou configurez-le de façon permanente via *Propriétés système → Variables d'environnement*.
+   </Callout>
+
+1. Prévisualisez le schéma du formulaire :
+
+   ```ansi
+   form0(server,schema)> preview
+   ```
+
+1. Ajoutez un *NumericField* après un champ de votre choix, en utilisant le numéro de ligne affiché au début de chaque ligne (par exemple, `2` dans `2 | TextField ...`) dans l'aperçu du schéma :
+
+   ```ansi
+   form0(server,schema)> add NumericField after <id>
+   ```
+
+   La CLI ouvrira un modèle JSON dans votre éditeur. Gardez les valeurs par défaut et modifiez quelques champs, par exemple :
+
+   ```json
+   {
+     "data_name": "quantity",
+     "label": "Quantity",
+     "min": 1,
+     "max": 100,
+     "format": "integer"
+   }
+   ```
+
+1. Ajoutez un *CalculatedField* après le champ `quantity` que vous venez de créer :
+
+   ```ansi
+   form0(server,schema)> add CalculatedField after <new-id>
+   ```
+
+   Modifiez le style d'affichage et l'expression de calcul :
+
+   ```json
+   {
+     "data_name": "total",
+     "label": "Total",
+     "display": { "style": "numeric" },
+     "calculate": "$quantity * 2"
+   }
+   ```
+
+1. Enregistrez et fermez votre éditeur.
+
+   Le schéma est sauvegardé et validé automatiquement. Les éventuels avertissements s'afficheront dans la CLI.
+
+1. Vérifiez l'aperçu en direct.
+
+   Vos nouveaux champs devraient apparaître immédiatement dans le navigateur.
+
+1. Quittez le mode d'édition du schéma :
+
+   ```ansi
+   form0(server,schema)> q
+   ```
+   Et arrêtez le serveur de développement :
+
+   ```ansi
+   form0(server)> serve stop
+   ```
+
+</Stepper>

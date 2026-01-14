@@ -1,0 +1,69 @@
+---
+title: Inicio rápido
+description: Crea y visualiza tu primer esquema form0 en minutos.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+import { Stepper } from "zudoku/ui/Stepper";
+
+<Badge variant="default">CLI</Badge> <Badge variant="muted">Local</Badge>
+
+Crea un proyecto form0, inicia el servidor de desarrollo y abre una vista previa en vivo. Este flujo utiliza únicamente la CLI y la plantilla de esquema que viene incluida.
+
+## Listo en 5 pasos
+Crea y visualiza tu primer esquema form0 en minutos.
+
+<Stepper>
+
+1. Instala la CLI:
+
+   ```bash
+   npm install -g @paqu-io/form0-cli@latest
+   ```
+
+   También puedes ejecutarla sin instalarla globalmente:
+
+   ```bash
+   npx @paqu-io/form0-cli@latest
+   ```
+   :::info
+
+   El comando npx ejecuta la CLI sin necesidad de una instalación global.
+
+   :::
+
+1. Inicia la shell interactiva:
+
+   ```bash
+   form0
+   ```
+
+1. Inicializa un proyecto estándar:
+
+   - Ejecuta `init`
+   - Selecciona **Standard project**
+   - Deja que la CLI cargue tu esquema automáticamente
+
+   :::info
+
+   Si solo hay un archivo de esquema en la raíz del proyecto, se carga automáticamente.
+
+   :::
+
+1. Inicia el servidor de desarrollo:
+
+   ```ansi
+   form0> serve
+   ```
+
+1. Abre la vista previa en vivo en `http://localhost:3030` desde tu navegador.
+
+</Stepper>
+
+## Qué obtienes
+Los proyectos estándar están orientados a archivos y se gestionan desde la CLI.
+
+- `form.schema.json` con un formulario de ejemplo
+- `form0.config.js` para la configuración de la CLI
+- `test.js` para pruebas locales del motor
+- `supporting-images/` para recursos gráficos de los campos

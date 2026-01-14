@@ -10,5 +10,13 @@
   },
   "test": {
     "title": "Esta es una prueba"
+  },
+  "getting-started": {
+    "quickstart": {
+      "title": "Quickstart"
+    },
+    "schema-edit": {
+      "title": "Edit your first schema"
+    }
   }
 }

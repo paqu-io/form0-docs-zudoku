@@ -25,28 +25,25 @@ const config = {
     {
       type: "category",
       label: "Documentation",
-      link: { type: "doc", file: "introduction", path: "/introduction" },
+      link: {
+        type: "doc",
+        file: "getting-started/quickstart",
+      },
       items: [
         {
           type: "category",
           label: "Getting Started",
           icon: "sparkles",
           items: [
-            "/introduction",
             {
-              type: "link",
-              icon: "folder-cog",
-              badge: {
-                label: "New",
-                color: "purple",
-              },
-              label: "API Reference",
-              to: "/api",
+              type: "doc",
+              file: "getting-started/quickstart",
+              label: "Quickstart",
             },
             {
               type: "doc",
-              file: "test",
-              label: "This is a test",
+              file: "getting-started/schema-edit",
+              label: "Edit your first schema",
             },
           ],
         },
@@ -66,23 +63,11 @@ const config = {
         },
       ],
     },
-    {
-      type: "link",
-      to: "/api",
-      label: "API Reference",
-    },
   ],
-  redirects: [{ from: "/", to: "/introduction" }],
+  redirects: [{ from: "/", to: "/getting-started/quickstart" }],
   slots: {
     "head-navigation-end": () => <LanguageSlot />,
   },
-  apis: [
-    {
-      type: "file",
-      input: "./apis/openapi.yaml",
-      path: "/api",
-    },
-  ],
   docs: {
     defaultOptions: {
       // Avoid hydration mismatch from locale-dependent toLocaleString in the last-modified tooltip.
