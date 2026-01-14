@@ -1,0 +1,28 @@
+---
+title: OFF
+description: Removes event handlers.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+
+# OFF
+
+<Badge variant="secondary">Events</Badge>
+
+Removes event handlers.
+
+## Example
+
+```js
+OFF('change', 'city')
+```
+
+## Parameters
+
+- eventType: string
+- fieldKeyOrCallback: string|function (optional)
+- callback: function (optional)
+
+## Returns
+
+Operation descriptor (used by clients).

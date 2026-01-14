@@ -1,0 +1,42 @@
+---
+title: Core concepts
+description: The schema-first mental model behind form0-core.
+---
+
+# Core concepts
+
+## Schema-first
+
+A form0 schema is a JSON document with a top-level `form` object. The schema defines the
+structure, rules, and behavior of a form without any UI code.
+
+## Fields and values
+
+- Each field has a stable `key` (internal identifier) and a `data_name` (value name).
+- Engine values are stored by `data_name`.
+- Conditions reference fields by `field_id` (prefer `key`, `data_name` is accepted as a fallback).
+
+## Engine state
+
+The engine evaluates the schema and produces a state object with:
+
+- `values`: current field values
+- `errors`: validation errors
+- `visible`: visibility flags per field
+- `required`: requirement flags per field
+- `read_only`: read-only flags per field
+
+## Data flow
+
+1. Load schema
+2. Provide initial values (optional)
+3. Evaluate calculated fields and conditions
+4. Validate field values
+5. Read state or build a structured record
+
+## Events and expressions
+
+- Calculations use expressions like `$age + 1` inside `CalculatedField.calculate`.
+- Events live in `form.events.code` and can react to changes at runtime.
+
+Next: the form object and top-level schema attributes.

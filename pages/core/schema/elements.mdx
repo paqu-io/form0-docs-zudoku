@@ -1,0 +1,64 @@
+---
+title: Elements and nesting
+description: How fields and sections are organized in a schema.
+---
+
+# Elements and nesting
+
+`form.elements` is an ordered array of fields and containers. Containers (Sections) can nest other
+fields via their own `elements` array.
+
+## Keys and data names
+
+- `key`: stable internal identifier (unique across the form)
+- `data_name`: value identifier (unique, lowercase a-z, 0-9, underscore only)
+
+`data_name` is used as the value key in engine state. Keys are preferred when referencing fields
+in conditions and in `title_field.elements`.
+
+## Containers
+
+The following field types can contain nested elements:
+
+- `Section`
+- `RepeatableSection`
+- `BuildingPlanSection`
+
+## Example
+
+```json
+{
+  "type": "Section",
+  "key": "personal_section",
+  "data_name": "personal_section",
+  "label": "Personal info",
+  "display": "inline",
+  "description": null,
+  "description_mode": null,
+  "visible": true,
+  "visible_conditions": null,
+  "elements": [
+    {
+      "type": "TextField",
+      "key": "first_name",
+      "data_name": "first_name",
+      "label": "First name",
+      "display": "default",
+      "description": null,
+      "description_mode": null,
+      "required": true,
+      "required_conditions": null,
+      "visible": true,
+      "visible_conditions": null,
+      "read_only": false,
+      "read_only_conditions": null,
+      "default_value": null,
+      "pattern": null,
+      "pattern_description": null,
+      "supporting_image": false,
+      "supporting_image_path": null,
+      "supporting_image_display": null
+    }
+  ]
+}
+```

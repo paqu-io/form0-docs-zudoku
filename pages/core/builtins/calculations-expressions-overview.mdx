@@ -1,0 +1,60 @@
+---
+title: Calculations & expressions
+description: Builtins available in calculated fields and expressions.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+
+# Calculations & expressions
+
+Calculated fields evaluate JavaScript expressions stored in `calculate`. Field values are
+available as `$field_name` variables.
+
+## Quick example
+
+```js
+ROUND($price * $qty, 2)
+```
+
+## Builtins by category
+
+### <Badge variant="secondary">Logical</Badge>
+
+- [`IF`](/core/builtins/calculations-expressions/if)
+- [`AND`](/core/builtins/calculations-expressions/and)
+- [`OR`](/core/builtins/calculations-expressions/or)
+- [`COUNT`](/core/builtins/calculations-expressions/count)
+- [`COUNTA`](/core/builtins/calculations-expressions/counta)
+- [`COUNTBLANK`](/core/builtins/calculations-expressions/countblank)
+- [`ARRAY`](/core/builtins/calculations-expressions/array)
+
+### <Badge variant="secondary">Math</Badge>
+
+- [`ABS`](/core/builtins/calculations-expressions/abs)
+- [`CEILING`](/core/builtins/calculations-expressions/ceiling)
+- [`COS`](/core/builtins/calculations-expressions/cos)
+- [`SIN`](/core/builtins/calculations-expressions/sin)
+- [`ROUND`](/core/builtins/calculations-expressions/round)
+
+### <Badge variant="secondary">String</Badge>
+
+- [`UPPER`](/core/builtins/calculations-expressions/upper)
+
+### <Badge variant="secondary">Choice</Badge>
+
+- [`CHOICEVALUE`](/core/builtins/calculations-expressions/choicevalue)
+- [`CHOICELABEL`](/core/builtins/calculations-expressions/choicelabel)
+- [`CHOICEVALUES`](/core/builtins/calculations-expressions/choicevalues)
+- [`CHOICELABELS`](/core/builtins/calculations-expressions/choicelabels)
+- [`HASOTHER`](/core/builtins/calculations-expressions/hasother)
+- [`OTHER`](/core/builtins/calculations-expressions/other)
+
+### <Badge variant="secondary">Schema</Badge>
+
+- [`FORM`](/core/builtins/calculations-expressions/form)
+- [`DATANAMES`](/core/builtins/calculations-expressions/datanames)
+
+### <Badge variant="secondary">Control</Badge>
+
+- [`SETRESULT`](/core/builtins/calculations-expressions/setresult)
+- [`EVAL`](/core/builtins/calculations-expressions/eval)

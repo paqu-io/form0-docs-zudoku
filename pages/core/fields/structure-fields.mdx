@@ -1,0 +1,86 @@
+---
+title: Structure fields
+description: Sections, repeatable sections, and building plans.
+---
+
+import { Callout } from "zudoku/ui/Callout";
+
+# Structure fields
+
+## Section
+
+```json
+{
+  "type": "Section",
+  "key": "details",
+  "data_name": "details",
+  "label": "Details",
+  "display": "inline",
+  "description": null,
+  "description_mode": null,
+  "visible": true,
+  "visible_conditions": null,
+  "elements": []
+}
+```
+
+Additional attributes:
+
+- `display`: `inline` or `drilldown`.
+- `elements`: Nested fields.
+
+## RepeatableSection
+
+```json
+{
+  "type": "RepeatableSection",
+  "key": "items",
+  "data_name": "items",
+  "label": "Items",
+  "display": "drilldown",
+  "description": null,
+  "description_mode": null,
+  "visible": true,
+  "visible_conditions": null,
+  "location_enabled": false,
+  "location_required": false,
+  "elements": []
+}
+```
+
+Additional attributes:
+
+- `location_enabled`: Enables location data for items.
+- `location_required`: Requires location data for items.
+
+Repeatable sections create an array of child records in the output.
+
+## BuildingPlanSection
+
+```json
+{
+  "type": "BuildingPlanSection",
+  "key": "building_plan",
+  "data_name": "building_plan",
+  "label": "Building plan",
+  "description": null,
+  "description_mode": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "building_plan": { "nodes": [], "edges": [] },
+  "node_overrides": null,
+  "elements": []
+}
+```
+
+Additional attributes:
+
+- `building_plan`: Structure describing the plan topology.
+- `node_overrides`: Overrides for generated nodes.
+
+<Callout type="info" title="Building plan expansion">
+  BuildingPlanSection expands into nested RepeatableSections at runtime. We will expand this
+  documentation with full examples soon.
+</Callout>

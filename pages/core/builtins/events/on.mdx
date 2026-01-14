@@ -1,0 +1,28 @@
+---
+title: ON
+description: Registers an event handler.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+
+# ON
+
+<Badge variant="secondary">Events</Badge>
+
+Registers an event handler.
+
+## Example
+
+```js
+ON('change', 'city', function (event) { ALERT('City changed'); })
+```
+
+## Parameters
+
+- eventType: string
+- fieldKeyOrCallback: string|function
+- callback: function (optional)
+
+## Returns
+
+Operation descriptor (used by clients).

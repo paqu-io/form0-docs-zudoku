@@ -1,0 +1,38 @@
+---
+title: Output and records
+description: Engine state and structured record output.
+---
+
+# Output and records
+
+form0-core exposes two primary outputs:
+
+- Engine state (`values`, `errors`, `visible`, `required`, `read_only`)
+- Structured records for persistence (`createStructuredRecord`)
+
+## Engine state
+
+After `engine.eval()`, call `engine.getState()` to access the latest state.
+
+## Structured record output
+
+`createStructuredRecord` transforms engine state into a submission-friendly format:
+
+- `form_values` uses field keys by default
+- Repeatable sections become arrays of child records
+- Sections are omitted (containers only)
+
+### Field key mode
+
+You can switch to `data_name` keys by using `fieldKeyMode`:
+
+```js
+const record = createStructuredRecord(state, fields, {
+  fieldKeyMode: 'data-name',
+});
+```
+
+## Repeatable sections
+
+Repeatable sections create nested records. Use `originalElements` to preserve the correct nesting
+structure when building records.

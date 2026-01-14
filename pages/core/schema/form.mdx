@@ -1,0 +1,67 @@
+---
+title: Form object
+description: Top-level schema attributes and form metadata.
+---
+
+import { Callout } from "zudoku/ui/Callout";
+
+# Form object
+
+Every schema starts with a `form` object. It defines metadata, special fields, and events.
+
+## Core attributes
+
+| Attribute | Type | Notes |
+| --- | --- | --- |
+| `name` | string | Human-friendly form name. |
+| `description` | string | Optional form description. |
+| `id` | string | Unique form identifier (UUID recommended). |
+| `status` | string | Form status, usually `active` or `inactive`. |
+| `version` | number | Form version, incremented on save. |
+| `ai` | object | AI metadata for form-level guidance. |
+| `status_field` | object | Special status field definition (see Meta fields). |
+| `title_field` | object | Special title field definition (see Meta fields). |
+| `events` | object | Event code block (`events.code`). |
+| `location_enabled` | boolean | Enables location data (if supported by the client). |
+| `location_required` | boolean | Requires location data (if enabled). |
+| `bounding_box` | array | `[min_lat, min_lng, max_lat, max_lng]` if available. |
+| `image` | string | URL for the form icon (original). |
+| `image_thumbnail` | string | URL for thumbnail icon. |
+| `image_small` | string | URL for small icon. |
+| `image_large` | string | URL for large icon. |
+
+## Special fields
+
+`status_field` and `title_field` are defined at the top level, not in `elements`. They are
+validated like standard field types but have fixed behaviors.
+
+## Events
+
+`events.code` contains JavaScript expressions that register event handlers using builtins such as
+`ON`, `OFF`, `ALERT`, and `SETVALUE`.
+
+<Callout type="info" title="Reform metadata">
+  form0-core accepts additional reform-only metadata (record counts, org IDs, etc.). If you do not
+  use reform, you can omit those fields. For details, see the reform docs at
+  [docs.reformapp.io](https://docs.reformapp.io).
+</Callout>
+
+## Example
+
+```json
+{
+  "form": {
+    "name": "Inspection",
+    "description": "Weekly inspection form",
+    "id": "form_001",
+    "status": "active",
+    "version": 1,
+    "location_enabled": true,
+    "location_required": false,
+    "status_field": { "type": "StatusField", "label": "Status", "choices": [] },
+    "title_field": { "type": "TitleField", "label": "Title", "elements": [] },
+    "events": { "code": "ON('load-record', function (e) { ALERT('Ready'); })" },
+    "elements": []
+  }
+}
+```

@@ -1,0 +1,28 @@
+---
+title: IF
+description: Choose between two values based on a condition.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+
+# IF
+
+<Badge variant="secondary">Logical</Badge>
+
+Choose between two values based on a condition.
+
+## Example
+
+```js
+IF($age >= 18, "adult", "minor")
+```
+
+## Parameters
+
+- condition: boolean expression
+- trueValue: returned when condition is truthy
+- falseValue: returned otherwise
+
+## Returns
+
+Either `trueValue` or `falseValue`.

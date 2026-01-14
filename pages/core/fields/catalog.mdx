@@ -1,0 +1,31 @@
+---
+title: Field catalog
+description: All field types and their categories.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+
+# Field catalog
+
+The table below lists every field type supported by form0-core.
+
+| Field type | Category | Description |
+| --- | --- | --- |
+| `TextField` | <Badge variant="secondary">Input</Badge> | Single-line text input. |
+| `NumericField` | <Badge variant="secondary">Input</Badge> | Numeric input with min/max and format. |
+| `SingleChoiceField` | <Badge variant="secondary">Input</Badge> | Single choice selection. |
+| `MultiChoiceField` | <Badge variant="secondary">Input</Badge> | Multi choice selection. |
+| `BooleanField` | <Badge variant="secondary">Input</Badge> | Boolean choice (yes/no or tri-state). |
+| `DateField` | <Badge variant="secondary">Input</Badge> | Date input. |
+| `TimeField` | <Badge variant="secondary">Input</Badge> | Time input. |
+| `CalculatedField` | <Badge variant="muted">Computed</Badge> | Value computed from expressions. |
+| `LabelField` | <Badge variant="muted">Computed</Badge> | Non-editable label or note. |
+| `Section` | <Badge variant="outline">Structure</Badge> | Container for nested fields. |
+| `RepeatableSection` | <Badge variant="outline">Structure</Badge> | Repeating container for records. |
+| `BuildingPlanSection` | <Badge variant="outline">Structure</Badge> | Building-plan driven repeatables. |
+| `SignatureField` | <Badge variant="secondary">Media</Badge> | Signature capture. |
+| `PhotoField` | <Badge variant="secondary">Media</Badge> | Photo capture/upload. |
+| `VideoField` | <Badge variant="secondary">Media</Badge> | Video capture/upload. |
+| `FormLinkField` | <Badge variant="outline">Meta</Badge> | Link to records from another form. |
+| `StatusField` | <Badge variant="outline">Meta</Badge> | Form status selector (top-level). |
+| `TitleField` | <Badge variant="outline">Meta</Badge> | Composite title (top-level). |

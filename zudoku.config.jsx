@@ -49,6 +49,273 @@ const config = {
         },
         {
           type: "category",
+          label: "Core",
+          icon: "cpu",
+          items: [
+            {
+              type: "doc",
+              file: "core/overview",
+              label: "Core overview",
+            },
+            {
+              type: "doc",
+              file: "core/concepts",
+              label: "Core concepts",
+            },
+            {
+              type: "category",
+              label: "Schema",
+              items: [
+                {
+                  type: "doc",
+                  file: "core/schema/form",
+                  label: "Form object",
+                },
+                {
+                  type: "doc",
+                  file: "core/schema/elements",
+                  label: "Elements and nesting",
+                },
+                {
+                  type: "doc",
+                  file: "core/schema/conditions-operators",
+                  label: "Conditions and operators",
+                },
+                {
+                  type: "doc",
+                  file: "core/schema/validation",
+                  label: "Schema validation",
+                },
+              ],
+            },
+            {
+              type: "category",
+              label: "Fields",
+              items: [
+                {
+                  type: "doc",
+                  file: "core/fields/catalog",
+                  label: "Field catalog",
+                },
+                {
+                  type: "doc",
+                  file: "core/fields/common-attributes",
+                  label: "Common attributes",
+                },
+                {
+                  type: "doc",
+                  file: "core/fields/input-fields",
+                  label: "Input fields",
+                },
+                {
+                  type: "doc",
+                  file: "core/fields/computed-fields",
+                  label: "Computed fields",
+                },
+                {
+                  type: "doc",
+                  file: "core/fields/media-fields",
+                  label: "Media fields",
+                },
+                {
+                  type: "doc",
+                  file: "core/fields/structure-fields",
+                  label: "Structure fields",
+                },
+                {
+                  type: "doc",
+                  file: "core/fields/meta-fields",
+                  label: "Meta fields",
+                },
+              ],
+            },
+            {
+              type: "category",
+              label: "Builtins",
+              items: [
+                {
+                  type: "doc",
+                  file: "core/builtins/index",
+                  label: "Builtins overview",
+                },
+                {
+                  type: "category",
+                  label: "Calculations & expressions",
+                  items: [
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions-overview",
+                      label: "Overview",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/if",
+                      label: "IF",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/and",
+                      label: "AND",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/or",
+                      label: "OR",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/count",
+                      label: "COUNT",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/counta",
+                      label: "COUNTA",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/countblank",
+                      label: "COUNTBLANK",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/array",
+                      label: "ARRAY",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/abs",
+                      label: "ABS",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/ceiling",
+                      label: "CEILING",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/cos",
+                      label: "COS",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/sin",
+                      label: "SIN",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/round",
+                      label: "ROUND",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/upper",
+                      label: "UPPER",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/choicevalue",
+                      label: "CHOICEVALUE",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/choicelabel",
+                      label: "CHOICELABEL",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/choicevalues",
+                      label: "CHOICEVALUES",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/choicelabels",
+                      label: "CHOICELABELS",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/hasother",
+                      label: "HASOTHER",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/other",
+                      label: "OTHER",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/form",
+                      label: "FORM",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/datanames",
+                      label: "DATANAMES",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/setresult",
+                      label: "SETRESULT",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/calculations-expressions/eval",
+                      label: "EVAL",
+                    },
+                  ],
+                },
+                {
+                  type: "category",
+                  label: "Events",
+                  items: [
+                    {
+                      type: "doc",
+                      file: "core/builtins/events-overview",
+                      label: "Overview",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/events/on",
+                      label: "ON",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/events/off",
+                      label: "OFF",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/events/alert",
+                      label: "ALERT",
+                    },
+                    {
+                      type: "doc",
+                      file: "core/builtins/events/setvalue",
+                      label: "SETVALUE",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: "doc",
+              file: "core/ai-metadata",
+              label: "AI metadata",
+            },
+            {
+              type: "doc",
+              file: "core/security",
+              label: "Security and sandboxing",
+            },
+            {
+              type: "doc",
+              file: "core/output-records",
+              label: "Output and records",
+            },
+          ],
+        },
+        {
+          type: "category",
           label: "Useful Links",
           collapsible: false,
           icon: "link",
