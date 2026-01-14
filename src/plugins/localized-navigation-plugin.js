@@ -72,8 +72,8 @@ const stripPrefix = (path, prefix) => {
 const pathToMessageKey = (path) =>
   path
     .replace(/^\/+/, "")
-    .replace(/\/+/g, ".")
     .replace(/\.[^/.]+$/, "")
+    .replace(/\/+/g, ".")
 
 const getDocTitle = (slugKey, locale, fallbackLabel) => {
   for (const namespace of getNamespaceOrder()) {
