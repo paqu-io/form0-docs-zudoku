@@ -251,6 +251,10 @@ const config = {
                       type: "doc",
                       file: "core/builtins/calculations-expressions/datanames",
                       label: "DATANAMES",
+                      badge: {
+                        label: "New",
+                        color: "purple",
+                      }
                     },
                     {
                       type: "doc",
@@ -301,6 +305,10 @@ const config = {
               type: "doc",
               file: "core/ai-metadata",
               label: "AI metadata",
+              badge: {
+                label: "Beta",
+                color: "yellow",
+              }
             },
             {
               type: "doc",

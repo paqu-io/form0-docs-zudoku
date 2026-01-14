@@ -75,15 +75,36 @@ const pathToMessageKey = (path) =>
     .replace(/\.[^/.]+$/, "")
     .replace(/\/+/g, ".")
 
+// Convert label to camelCase key for locale lookup
+// "Calculations & expressions" -> "calculationsExpressions"
+// "Getting Started" -> "gettingStarted"
+const labelToNavKey = (label) =>
+  label
+    .replace(/[^a-zA-Z0-9\s]/g, "")
+    .trim()
+    .split(/\s+/)
+    .map((word, i) =>
+      i === 0 ? word.toLowerCase() : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    )
+    .join("")
+
 const getDocTitle = (slugKey, locale, fallbackLabel) => {
+  // First, try to look up from common.json using the label key (consistent with category labels)
+  if (fallbackLabel) {
+    const common = getCommon(locale)
+    const labelKey = labelToNavKey(fallbackLabel)
+    const commonTitle = get(common, `nav.${labelKey}`)
+    if (commonTitle) return commonTitle
+  }
+
+  // Fall back to path-based lookup in docs.json
   for (const namespace of getNamespaceOrder()) {
     const bundle = getBundle(namespace, locale)
     const title = get(bundle, `${slugKey}.title`)
     if (title) return title
   }
-  // Optional: allow nav.* overrides in common as a last resort
-  const common = getCommon(locale)
-  return get(common, `nav.${slugKey}`, fallbackLabel)
+
+  return fallbackLabel
 }
 
 const buildNav = (localePrefix, locale) => {
@@ -146,16 +167,11 @@ export function createLocalizedNavigationPlugin() {
     items.map((item) => {
       const next = { ...item }
 
-      if (next.label) {
+      // Translate category labels dynamically from common.json nav.*
+      if (next.type === "category" && next.label) {
         const common = getCommon(locale)
-        if (next.label === "Documentation")
-          next.label = get(common, "nav.documentation", "Documentation")
-        if (next.label === "API Reference")
-          next.label = get(common, "nav.api", "API Reference")
-        if (next.label === "Getting Started")
-          next.label = get(common, "nav.gettingStarted", "Getting Started")
-        if (next.label === "Useful Links")
-          next.label = get(common, "nav.usefulLinks", "Useful Links")
+        const key = labelToNavKey(next.label)
+        next.label = get(common, `nav.${key}`, next.label)
       }
 
       if (next.type === "doc" && next.path) {
