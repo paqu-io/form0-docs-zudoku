@@ -10,33 +10,45 @@ import { Callout } from "zudoku/ui/Callout";
 
 Every schema starts with a `form` object. It defines metadata, special fields, and events.
 
-## Core attributes
-
-| Attribute | Type | Required | Notes |
-| --- | :---: | :---: | --- |
-| `name` | string | ✓ | Human-friendly form name. |
-| `description` | string | | Optional form description. |
-| `id` | string | ✓ | Unique form identifier (UUID recommended). |
-| `status` | string | | Form status, usually `active` or `inactive`. |
-| `version` | number | ✓ | Form version, incremented on form save. |
-| `ai` | object | | AI metadata for form-level guidance. |
-| `status_field` | object | ✓ | Special status field definition (see Meta fields). |
-| `title_field` | object | ✓ | Special title field definition (see Meta fields). |
-| `events` | object | ✓ | Event code block (`events.code`). |
-| `location_enabled` | boolean | | Enables location data (if supported by the client). |
-| `location_required` | boolean | | Requires location data (if enabled). |
-| `bounding_box` | array | | `[min_lat, min_lng, max_lat, max_lng]` if available. |
-| `image` | string | | URL for the form icon (original). |
-| `image_thumbnail` | string | | URL for thumbnail icon. |
-| `image_small` | string | | URL for small icon. |
-| `image_large` | string | | URL for large icon. |
+## Attributes
 
 <Callout type="info" title="Application-level attributes">
-  Some schema attributes are application-level metadata, so they are not processed directly by the engine.
-
-  These attributes are still accepted by the engine. They can be used when integrating with [reform](https://reformapp.io), 
-  the SaaS product built by [paqu.io](https://paqu.io) (the team behind form0), or when building similar functionality in your own application.
+  Attributes marked with ✓ in the **App** column are application-level metadata not processed directly by the engine.
+  They can be used when integrating with [reform](https://reformapp.io) or when building similar functionality in your own application.
 </Callout>
+
+| Attribute | Type | Required | App | Notes |
+| --- | :---: | :---: | :---: | --- |
+| `name` | string | ✓ | | Human-friendly form name. |
+| `description` | string | | | Optional form description. |
+| `id` | string | ✓ | | Unique form identifier (UUID recommended). |
+| `record_count` | number | | ✓ | Number of records in the form. |
+| `record_last_change_at` | string | | ✓ | Last record change date/time (ISO 8601). |
+| `form_created_at` | string | | ✓ | Form creation date/time (ISO 8601). |
+| `form_updated_at` | string | | ✓ | Form last update date/time (ISO 8601). |
+| `form_created_by` | string | | ✓ | User who created the form. |
+| `form_updated_by` | string | | ✓ | User who last updated the form. |
+| `status` | string | | ✓ | Form status, usually `active` or `inactive`. |
+| `version` | number | ✓ | ✓ | Form version, incremented on form save. |
+| `main_org_id` | string | | ✓ | Main organization ID (or `personal`). |
+| `main_org_metadata` | object | | ✓ | Main organization metadata fields. |
+| `sub_org_id` | string | | ✓ | Sub-organization ID. |
+| `sub_org_metadata` | object | | ✓ | Sub-organization metadata fields. |
+| `project_id` | string | | ✓ | Project ID. |
+| `project_metadata` | object | | ✓ | Project metadata fields. |
+| `ai` | object | | | AI metadata for form-level guidance. |
+| `status_field` | object | ✓ | | Special status field definition (see Meta fields). |
+| `title_field` | object | ✓ | | Special title field definition (see Meta fields). |
+| `bounding_box` | array | | ✓ | `[min_lat, min_lng, max_lat, max_lng]` containing all records. |
+| `location_enabled` | boolean | | ✓ | Enables location capture (if supported by client). |
+| `location_required` | boolean | | ✓ | Requires location data when enabled. |
+| `image` | string | | ✓ | URL for the form icon (original). |
+| `image_thumbnail` | string | | ✓ | URL for thumbnail icon (160x160 px). |
+| `image_small` | string | | ✓ | URL for small icon (320x320 px). |
+| `image_large` | string | | ✓ | URL for large icon (640x640 px). |
+| `events` | object | | | Event code block (`events.code`). |
+| `form_links` | object | | | Links to/from other forms (used with FormLinkField). |
+| `elements` | array | ✓ | | Form fields and containers (see [Elements](/core/schema/elements)). |
 
 ## Special fields
 
