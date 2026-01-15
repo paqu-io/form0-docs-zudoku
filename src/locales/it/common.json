@@ -21,6 +21,7 @@
     "coreOverview": "Panoramica del nucleo",
     "coreConcepts": "Concetti del nucleo",
     "formObject": "Oggetto modulo",
+    "formAttributes": "Attributi del modulo",
     "elementsAndNesting": "Elementi e nidificazione",
     "conditionsAndOperators": "Condizioni e operatori",
     "schemaValidation": "Validazione dello schema",

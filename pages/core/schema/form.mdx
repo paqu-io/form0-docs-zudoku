@@ -13,15 +13,15 @@ Every schema starts with a `form` object. It defines metadata, special fields, a
 ## Attributes
 
 <Callout type="info" title="Application-level attributes">
-  Attributes marked with ✓ in the **App** column are application-level metadata not processed directly by the engine.
-  They can be used when integrating with [reform](https://reformapp.io) or when building similar functionality in your own application.
+  Attributes marked with ✓ in the **App-level** column are application-level metadata not processed directly by the engine.
+  They can be used when integrating with [reform](https://reformapp.io) SaaS product or when building similar functionality in your own application.
 </Callout>
 
-| Attribute | Type | Required | App | Notes |
+| Attribute | Type | Required | App&#8209;level | Notes |
 | --- | :---: | :---: | :---: | --- |
 | `name` | string | ✓ | | Human-friendly form name. |
-| `description` | string | | | Optional form description. |
-| `id` | string | ✓ | | Unique form identifier (UUID recommended). |
+| `description` | string | | | Form description. |
+| `id` | string | ✓ | | Unique form identifier. |
 | `record_count` | number | | ✓ | Number of records in the form. |
 | `record_last_change_at` | string | | ✓ | Last record change date/time (ISO 8601). |
 | `form_created_at` | string | | ✓ | Form creation date/time (ISO 8601). |
@@ -30,35 +30,37 @@ Every schema starts with a `form` object. It defines metadata, special fields, a
 | `form_updated_by` | string | | ✓ | User who last updated the form. |
 | `status` | string | | ✓ | Form status, usually `active` or `inactive`. |
 | `version` | number | ✓ | ✓ | Form version, incremented on form save. |
-| `main_org_id` | string | | ✓ | Main organization ID (or `personal`). |
+| `main_org_id` | string | | ✓ | Main organization ID. |
 | `main_org_metadata` | object | | ✓ | Main organization metadata fields. |
 | `sub_org_id` | string | | ✓ | Sub-organization ID. |
 | `sub_org_metadata` | object | | ✓ | Sub-organization metadata fields. |
 | `project_id` | string | | ✓ | Project ID. |
 | `project_metadata` | object | | ✓ | Project metadata fields. |
-| `ai` | object | | | AI metadata for form-level guidance. |
-| `status_field` | object | ✓ | | Special status field definition (see Meta fields). |
-| `title_field` | object | ✓ | | Special title field definition (see Meta fields). |
+| `ai` | object | | | AI metadata for form-level guidance (see [AI metadata](/core/ai-metadata)). |
+| `status_field` | object | ✓ | | Special status field definition (see [Meta fields](/core/fields/meta-fields#statusfield)). |
+| `title_field` | object | ✓ | | Special title field definition (see [Meta fields](/core/fields/meta-fields#titlefield)). |
 | `bounding_box` | array | | ✓ | `[min_lat, min_lng, max_lat, max_lng]` containing all records. |
-| `location_enabled` | boolean | | ✓ | Enables location capture (if supported by client). |
+| `location_enabled` | boolean | | ✓ | Enables location capture. |
 | `location_required` | boolean | | ✓ | Requires location data when enabled. |
 | `image` | string | | ✓ | URL for the form icon (original). |
 | `image_thumbnail` | string | | ✓ | URL for thumbnail icon (160x160 px). |
 | `image_small` | string | | ✓ | URL for small icon (320x320 px). |
 | `image_large` | string | | ✓ | URL for large icon (640x640 px). |
 | `events` | object | | | Event code block (`events.code`). |
-| `form_links` | object | | | Links to/from other forms (used with FormLinkField). |
+| `form_links` | object | | | Links to/from other forms (used with `FormLinkField`, see [Meta fields](/core/fields/meta-fields#formlinkfield)). |
 | `elements` | array | ✓ | | Form fields and containers (see [Elements](/core/schema/elements)). |
+
+For detailed information on each attribute including defaults and choices, see [Form attributes](/core/schema/form-attributes).
 
 ## Special fields
 
 `status_field` and `title_field` are defined at the top level, not in `elements`. They are
-validated like standard field types but have fixed behaviors.
+validated like standard field types but have fixed behaviors. See [Meta fields](/core/fields/meta-fields) for details.
 
 ## Events
 
-`events.code` contains JavaScript expressions that register event handlers using builtins such as
-`ON`, `OFF`, `ALERT`, and `SETVALUE`.
+`events.code` contains builtin and JavaScript expressions that register event handlers using builtins such as
+`ON`, `OFF`, `ALERT`, `SETVALUE`, etc. See [Events](/core/builtins/events-overview) for details.
 
 ## Example
 

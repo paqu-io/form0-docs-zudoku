@@ -21,6 +21,7 @@
     "coreOverview": "Overview",
     "coreConcepts": "Concepts",
     "formObject": "Form object",
+    "formAttributes": "Form attributes",
     "elementsAndNesting": "Elements and nesting",
     "conditionsAndOperators": "Conditions and operators",
     "schemaValidation": "Schema validation",

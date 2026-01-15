@@ -21,6 +21,7 @@
     "coreOverview": "Visión general del núcleo",
     "coreConcepts": "Conceptos del núcleo",
     "formObject": "Objeto formulario",
+    "formAttributes": "Atributos del formulario",
     "elementsAndNesting": "Elementos y anidamiento",
     "conditionsAndOperators": "Condiciones y operadores",
     "schemaValidation": "Validación del esquema",

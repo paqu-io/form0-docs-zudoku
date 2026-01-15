@@ -30,6 +30,9 @@
       "form": {
         "title": "Form object"
       },
+      "form-attributes": {
+        "title": "Form attributes"
+      },
       "elements": {
         "title": "Elements and nesting"
       },

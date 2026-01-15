@@ -21,6 +21,7 @@
     "coreOverview": "Aperçu du noyau",
     "coreConcepts": "Concepts du noyau",
     "formObject": "Objet formulaire",
+    "formAttributes": "Attributs du formulaire",
     "elementsAndNesting": "Éléments et imbrication",
     "conditionsAndOperators": "Conditions et opérateurs",
     "schemaValidation": "Validation du schéma",

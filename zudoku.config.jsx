@@ -73,6 +73,11 @@ const config = {
                 },
                 {
                   type: "doc",
+                  file: "core/schema/form-attributes",
+                  label: "Form attributes",
+                },
+                {
+                  type: "doc",
                   file: "core/schema/elements",
                   label: "Elements and nesting",
                 },
@@ -346,11 +351,11 @@ const config = {
   docs: {
     files: "pages/**/*.{md,mdx}",
     defaultOptions: {
-      // Avoid hydration mismatch from locale-dependent toLocaleString in the last-modified tooltip.
-      showLastModified: false,
+      // To avoid hydration mismatch from locale-dependent toLocaleString in the last-modified tooltip, need to set showLastModified to false and remove the suggestEdit slot.
+      showLastModified: true,
       suggestEdit: {
         url: "https://github.com/paqu-io/form0-docs-zudoku/edit/main/pages",
-        text: "Edit this page on GitHub"
+        text: "Edit this page"
       }
     },
     copyPage: true,
@@ -394,7 +399,7 @@ const config = {
       destructive: "#c82d2d",
       destructiveForeground: "#ffffff",
       border: "#dcd8d3",
-      input: "#ffffff",
+      input: "#dcd8d3",
       ring: "#e24414",
       radius: "0.5rem",
     },
@@ -416,7 +421,7 @@ const config = {
       destructive: "#e04040",
       destructiveForeground: "#ffffff",
       border: "#3a3938",
-      input: "#201f1e",
+      input: "#3a3938",
       ring: "#e24414",
       radius: "0.5rem",
     },
