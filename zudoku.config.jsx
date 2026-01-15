@@ -55,12 +55,12 @@ const config = {
             {
               type: "doc",
               file: "core/overview",
-              label: "Core overview",
+              label: "Overview",
             },
             {
               type: "doc",
               file: "core/concepts",
-              label: "Core concepts",
+              label: "Concepts",
             },
             {
               type: "category",
@@ -119,8 +119,8 @@ const config = {
                 },
                 {
                   type: "doc",
-                  file: "core/fields/structure-fields",
-                  label: "Structure fields",
+                  file: "core/fields/containers",
+                  label: "Containers",
                 },
                 {
                   type: "doc",
@@ -344,9 +344,21 @@ const config = {
     "head-navigation-end": () => <LanguageSlot />,
   },
   docs: {
+    files: "pages/**/*.{md,mdx}",
     defaultOptions: {
       // Avoid hydration mismatch from locale-dependent toLocaleString in the last-modified tooltip.
       showLastModified: false,
+      suggestEdit: {
+        url: "https://github.com/paqu-io/form0-docs-zudoku/edit/main/pages",
+        text: "Edit this page on GitHub"
+      }
+    },
+    copyPage: true,
+    publishMarkdown: true,
+    llms: {
+      llmsTxt: true, // Generate llms.txt
+      llmsTxtFull: true, // Generate llms-full.txt
+      includeProtected: false, // Exclude protected routes
     },
   },
   plugins: [i18nPlugin, localizedNavigationPlugin],

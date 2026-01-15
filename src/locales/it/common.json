@@ -29,7 +29,7 @@
     "inputFields": "Campi di input",
     "computedFields": "Campi calcolati",
     "mediaFields": "Campi multimediali",
-    "structureFields": "Campi di struttura",
+    "containers": "Campi di struttura",
     "metaFields": "Campi meta",
     "builtinsOverview": "Panoramica delle funzioni",
     "overview": "Panoramica",

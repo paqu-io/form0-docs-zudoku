@@ -21,10 +21,10 @@
   },
   "core": {
     "overview": {
-      "title": "Core overview"
+      "title": "Overview"
     },
     "concepts": {
-      "title": "Core concepts"
+      "title": "Concepts"
     },
     "schema": {
       "form": {
@@ -56,8 +56,8 @@
       "media-fields": {
         "title": "Media fields"
       },
-      "structure-fields": {
-        "title": "Structure fields"
+      "containers": {
+        "title": "Containers"
       },
       "meta-fields": {
         "title": "Meta fields"

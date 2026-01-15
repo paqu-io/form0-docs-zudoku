@@ -1,9 +1,11 @@
 ---
-title: Core concepts
+title: Concepts
 description: The schema-first mental model behind form0-core.
 ---
 
-# Core concepts
+import { Badge } from "zudoku/ui/Badge";
+
+<Badge variant="default">Engine</Badge> <Badge variant="muted">Local</Badge>
 
 ## Schema-first
 
@@ -12,9 +14,9 @@ structure, rules, and behavior of a form without any UI code.
 
 ## Fields and values
 
-- Each field has a stable `key` (internal identifier) and a `data_name` (value name).
+- Each field has a `data_name` (human-readable identifier) and a `key` (internal identifier, typically derived from `data_name`).
 - Engine values are stored by `data_name`.
-- Conditions reference fields by `field_id` (prefer `key`, `data_name` is accepted as a fallback).
+- Conditions reference fields by `field_id`. You can use either `key` or `data_name`; using `data_name` is often more practical when writing schemas manually since it's more memorable.
 
 ## Engine state
 
@@ -28,15 +30,17 @@ The engine evaluates the schema and produces a state object with:
 
 ## Data flow
 
-1. Load schema
+1. Load the schema and create the engine
 2. Provide initial values (optional)
-3. Evaluate calculated fields and conditions
-4. Validate field values
-5. Read state or build a structured record
+3. Fire any initialization events
+4. Evaluate: calculations, conditions, and validation
+5. On each value change:
+   - Update the value
+   - Re-evaluate (live validation)
+   - Fire change events if defined
+6. Read state or build a structured record for submission
 
 ## Events and expressions
 
-- Calculations use expressions like `$age + 1` inside `CalculatedField.calculate`.
-- Events live in `form.events.code` and can react to changes at runtime.
-
-Next: the form object and top-level schema attributes.
+- Calculated fields use expressions, inside `calculate` property, like `$age + 1` to derive values from other fields.
+- Events live in `form.events.code` and can react to form changes at runtime (e.g., when a record is loaded or a field changes).

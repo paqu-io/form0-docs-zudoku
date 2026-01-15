@@ -3,26 +3,28 @@ title: Elements and nesting
 description: How fields and sections are organized in a schema.
 ---
 
-# Elements and nesting
+import { Badge } from "zudoku/ui/Badge";
 
-`form.elements` is an ordered array of fields and containers. Containers (Sections) can nest other
+<Badge variant="default">Engine</Badge> <Badge variant="muted">Local</Badge> <Badge variant="muted">Schema</Badge>
+
+`form.elements` is an ordered array of fields and containers. Containers can nest other
 fields via their own `elements` array.
 
 ## Keys and data names
 
-- `key`: stable internal identifier (unique across the form)
-- `data_name`: value identifier (unique, lowercase a-z, 0-9, underscore only)
+- `data_name`: human-readable identifier used as the value key in engine state (unique, lowercase a-z, 0-9, underscore only, maximum 42 characters)
+- `key`: internal identifier, typically derived from `data_name` (unique, hexadecimal, 8 characters)
 
-`data_name` is used as the value key in engine state. Keys are preferred when referencing fields
-in conditions and in `title_field.elements`.
+When referencing fields in conditions or `title_field.elements`, you can use either `key` or `data_name`. Using `data_name` is often more practical when writing schemas manually since it's more memorable.
 
 ## Containers
 
 The following field types can contain nested elements:
 
-- `Section`
-- `RepeatableSection`
-- `BuildingPlanSection`
+- `Section` – groups fields visually
+- `RepeatableSection` – allows multiple instances of its children
+
+`BuildingPlanSection` also supports nested elements but has specialized behavior for dynamic form generation. See [BuildingPlanSection](/core/fields/containers#buildingplansection) for details.
 
 ## Example
 

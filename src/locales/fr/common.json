@@ -29,7 +29,7 @@
     "inputFields": "Champs de saisie",
     "computedFields": "Champs calculés",
     "mediaFields": "Champs média",
-    "structureFields": "Champs de structure",
+    "containers": "Champs de structure",
     "metaFields": "Champs méta",
     "builtinsOverview": "Aperçu des fonctions",
     "overview": "Aperçu",
