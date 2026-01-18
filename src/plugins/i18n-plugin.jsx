@@ -42,8 +42,7 @@ export function createI18nPlugin(options = {}) {
   const Wrapper = ({ children }) => {
     const inRouter = useInRouterContext()
     const location = inRouter ? useLocation() : null
-    const initialLocale =
-      (location && getLocaleFromUrl(location.pathname)) || DEFAULT_LOCALE
+    const initialLocale = location ? getLocaleFromUrl(location.pathname) : null
 
     return (
       <I18nProvider preload={preloadNamespaces} initialLocale={initialLocale}>

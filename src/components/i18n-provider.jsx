@@ -68,7 +68,11 @@ export function I18nProvider({ children, initialLocale, preload = DEFAULT_NAMESP
       const targetLocale = urlLocale || locale
 
       setLoading((prev) => prev)
-      await setI18nLocale(targetLocale, { namespaces: preloadRef.current })
+      await setI18nLocale(targetLocale, {
+        namespaces: preloadRef.current,
+        // Sync URL prefix on first load when locale is not in the URL.
+        syncPath: !urlLocale,
+      })
       if (!cancelled) {
         setLocaleState(getLocale())
         setLoading(false)
