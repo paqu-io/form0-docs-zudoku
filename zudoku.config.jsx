@@ -1,9 +1,11 @@
 import React from "react"
 import { LanguageSlot } from "./src/components/language-slot.jsx"
 import { createI18nPlugin } from "./src/plugins/i18n-plugin.jsx"
+import { createDefaultDarkThemePlugin } from "./src/plugins/default-dark-theme-plugin.jsx"
 import { createLocalizedNavigationPlugin } from "./src/plugins/localized-navigation-plugin.js"
 
 const i18nPlugin = createI18nPlugin({ preloadNamespaces: ["common", "docs"] })
+const defaultDarkThemePlugin = createDefaultDarkThemePlugin()
 const localizedNavigationPlugin = createLocalizedNavigationPlugin()
 
 /** @type {import('zudoku').ZudokuConfig} */
@@ -366,7 +368,7 @@ const config = {
       includeProtected: false, // Exclude protected routes
     },
   },
-  plugins: [i18nPlugin, localizedNavigationPlugin],
+  plugins: [i18nPlugin, localizedNavigationPlugin, defaultDarkThemePlugin],
   // Pagefind search only works after build (index is generated at build time).
   // Dev mode will show errors in console but search will work in production.
   search: {
