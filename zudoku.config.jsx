@@ -361,9 +361,9 @@ const config = {
       // To avoid hydration mismatch from locale-dependent toLocaleString in the last-modified tooltip, need to set showLastModified to false and remove the suggestEdit slot.
       showLastModified: true,
       suggestEdit: {
-        url: "https://github.com/paqu-io/form0-docs-zudoku/edit/main/pages",
-        text: "Edit this page"
-      }
+        url: "https://github.com/paqu-io/form0-docs-zudoku/blob/main/{filePath}",
+        text: "Edit this page",
+      },
     },
     copyPage: true,
     publishMarkdown: true,
