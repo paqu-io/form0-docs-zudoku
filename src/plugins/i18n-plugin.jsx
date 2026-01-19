@@ -9,6 +9,7 @@ import {
   getLocaleFromUrl,
   setLocale,
 } from "../utils/i18n.js"
+import { CookieConsentManager } from "../components/cookie-consent-manager.jsx"
 
 function LocaleSync({ namespaces }) {
   // During SSR prerender there's no router; skip syncing.
@@ -47,6 +48,7 @@ export function createI18nPlugin(options = {}) {
     return (
       <I18nProvider preload={preloadNamespaces} initialLocale={initialLocale}>
         {inRouter && <LocaleSync namespaces={preloadNamespaces} />}
+        <CookieConsentManager />
         {children}
       </I18nProvider>
     )

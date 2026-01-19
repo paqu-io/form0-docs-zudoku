@@ -1,0 +1,39 @@
+{
+  "consentModal": {
+    "title": "We value your privacy",
+    "description": "We use essential cookies to make this site work and optional analytics/marketing cookies to improve your experience. You can change your choice anytime.",
+    "acceptAllBtn": "Accept all",
+    "acceptNecessaryBtn": "Reject non-essential",
+    "showPreferencesBtn": "Manage preferences",
+    "closeIconLabel": "Close dialog"
+  },
+  "preferencesModal": {
+    "title": "Cookie preferences",
+    "acceptAllBtn": "Accept all",
+    "acceptNecessaryBtn": "Reject non-essential",
+    "savePreferencesBtn": "Save choices",
+    "closeIconLabel": "Close dialog",
+    "serviceTooltip": "Service controlled by",
+    "sections": [
+      {
+        "title": "Use of cookies",
+        "description": "Select which categories to allow. Essential cookies are always on because the site will not function without them."
+      },
+      {
+        "title": "Strictly necessary",
+        "description": "Required for core features like language and theme.",
+        "linkedCategory": "necessary"
+      },
+      {
+        "title": "Analytics",
+        "description": "Helps us understand traffic and usage.",
+        "linkedCategory": "analytics"
+      },
+      {
+        "title": "Marketing",
+        "description": "Used to show relevant campaigns and measure performance.",
+        "linkedCategory": "marketing"
+      }
+    ]
+  }
+}
