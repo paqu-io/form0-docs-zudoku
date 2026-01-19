@@ -3,7 +3,7 @@ import { LanguageSelector } from "./dropdown-radio-group-language.jsx"
 import { getLocale, onLocaleChange, setLocale as setGlobalLocale } from "../utils/i18n.js"
 
 // Header slot uses the global i18n store directly to avoid nested providers and sync issues.
-export function LanguageSlot() {
+export function LanguageSlot({ showLabel = false } = {}) {
   const [locale, setLocaleState] = useState(getLocale())
 
   useEffect(() => {
@@ -18,5 +18,7 @@ export function LanguageSlot() {
     [],
   )
 
-  return <LanguageSelector locale={locale} onChange={handleChange} />
+  return (
+    <LanguageSelector locale={locale} onChange={handleChange} showLabel={showLabel} />
+  )
 }

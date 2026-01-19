@@ -353,6 +353,11 @@ const config = {
   redirects: [{ from: "/", to: "/getting-started/quickstart" }],
   slots: {
     "head-navigation-end": () => <LanguageSlot />,
+    "top-navigation-side": () => (
+      <div className="lg:hidden">
+        <LanguageSlot showLabel />
+      </div>
+    ),
     "footer-before": () => <FooterBrandBlock />,
   },
   docs: {
@@ -603,6 +608,30 @@ const config = {
       [cmdk-dialog] button:focus-visible {
         outline: none !important;
         box-shadow: none !important;
+      }
+
+      /* Theme switch active state (match form0-landing) */
+      button[aria-label="Switch to dark mode"],
+      button[aria-label="Switch to light mode"] {
+        border-color: var(--border);
+        background-color: color-mix(in srgb, var(--background) 85%, transparent);
+      }
+      button[aria-label="Switch to dark mode"] > div:first-child,
+      button[aria-label="Switch to light mode"] > div:last-child {
+        border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+        background-color: color-mix(in srgb, var(--primary) 12%, transparent);
+        color: var(--primary);
+      }
+      button[aria-label="Switch to dark mode"] > div:last-child,
+      button[aria-label="Switch to light mode"] > div:first-child {
+        color: color-mix(in srgb, var(--foreground) 70%, transparent);
+      }
+      button[aria-label="Switch to dark mode"] > div:first-child svg path,
+      button[aria-label="Switch to dark mode"] > div:first-child svg circle,
+      button[aria-label="Switch to light mode"] > div:last-child svg path,
+      button[aria-label="Switch to light mode"] > div:last-child svg circle {
+        fill: currentColor;
+        stroke: currentColor;
       }
     `,
   },
