@@ -1,4 +1,5 @@
 import React from "react"
+import { FooterBrandBlock } from "./src/components/footer-brand-block.jsx"
 import { LanguageSlot } from "./src/components/language-slot.jsx"
 import { createI18nPlugin } from "./src/plugins/i18n-plugin.jsx"
 import { createDefaultDarkThemePlugin } from "./src/plugins/default-dark-theme-plugin.jsx"
@@ -16,6 +17,9 @@ const config = {
       src: { light: "/logo-light.svg", dark: "/logo-dark.svg" },
       alt: "form0 docs",
       width: "267px",
+    },
+    footer: {
+      position: "center",
     },
   },
   metadata: {
@@ -349,6 +353,7 @@ const config = {
   redirects: [{ from: "/", to: "/getting-started/quickstart" }],
   slots: {
     "head-navigation-end": () => <LanguageSlot />,
+    "footer-before": () => <FooterBrandBlock />,
   },
   docs: {
     files: "pages/**/*.{md,mdx}",
@@ -573,6 +578,11 @@ const config = {
       #cc-main .pm__table-th,
       #cc-main .pm__service-title {
         font-size: 0.9375rem;
+      }
+
+      /* Reduce top padding for the minimal footer */
+      footer > .max-w-screen-2xl {
+        padding-top: 1rem;
       }
 
       /* Remove focus ring flash on search dialog close button */
