@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "form0 docs",
+    "tagline": "Formularios basados en esquemas para cada plataforma."
+  },
+  "nav": {
+    "documentation": "Documentación",
+    "api": "Referencia de API",
+    "gettingStarted": "Primeros pasos",
+    "usefulLinks": "Enlaces útiles",
+    "zudokuDocs": "Docs de Zudoku",
+    "new": "Nuevo",
+    "core": "Núcleo",
+    "schema": "Esquema",
+    "fields": "Campos",
+    "builtins": "Funciones integradas",
+    "calculationsExpressions": "Cálculos y expresiones",
+    "events": "Eventos",
+    "quickstart": "Inicio rápido",
+    "editYourFirstSchema": "Edita tu primer esquema",
+    "coreOverview": "Visión general del núcleo",
+    "coreConcepts": "Conceptos del núcleo",
+    "formObject": "Objeto formulario",
+    "formAttributes": "Atributos del formulario",
+    "elementsAndNesting": "Elementos y anidamiento",
+    "conditionsAndOperators": "Condiciones y operadores",
+    "schemaValidation": "Validación del esquema",
+    "fieldCatalog": "Catálogo de campos",
+    "commonAttributes": "Atributos comunes",
+    "inputFields": "Campos de entrada",
+    "computedFields": "Campos calculados",
+    "mediaFields": "Campos multimedia",
+    "containers": "Campos de estructura",
+    "metaFields": "Campos meta",
+    "builtinsOverview": "Visión general de funciones",
+    "overview": "Visión general",
+    "aiMetadata": "Metadatos de IA",
+    "securityAndSandboxing": "Seguridad y aislamiento",
+    "outputAndRecords": "Salida y registros"
+  },
+  "language": {
+    "label": "Idioma"
+  }
+}

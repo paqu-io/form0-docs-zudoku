@@ -1,0 +1,69 @@
+---
+title: Computed fields
+description: CalculatedField and LabelField.
+---
+
+import { Callout } from "zudoku/ui/Callout";
+
+# Computed fields
+
+## CalculatedField
+
+```json
+{
+  "type": "CalculatedField",
+  "key": "total",
+  "data_name": "total",
+  "label": "Total",
+  "display": { "style": "numeric" },
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": true,
+  "calculate": "$quantity * 2",
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null
+}
+```
+
+Additional attributes:
+
+- `calculate`: Expression string evaluated by the engine.
+- `display.style`: `text`, `numeric`, `date`, or `currency`.
+
+Notes:
+
+- `required` is always `false`.
+- `read_only` is always `true`.
+
+## LabelField
+
+```json
+{
+  "type": "LabelField",
+  "key": "label_note",
+  "data_name": "label_note",
+  "label": "Note",
+  "display": "default",
+  "description": "Static label text",
+  "description_mode": "subtext",
+  "required": false,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": true,
+  "default_value": null,
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null
+}
+```
+
+LabelField is a non-editable field that is useful for inline text and UI grouping.
+
+<Callout type="info" title="Expressions">
+  Use builtins (for example, `IF`, `ROUND`, `CHOICEVALUE`) inside `calculate`.
+  See the Builtins pages for the full list.
+</Callout>

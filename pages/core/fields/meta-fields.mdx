@@ -1,0 +1,103 @@
+---
+title: Meta fields
+description: FormLinkField, StatusField, and TitleField.
+---
+
+import { Callout } from "zudoku/ui/Callout";
+
+# Meta fields
+
+## FormLinkField
+
+```json
+{
+  "type": "FormLinkField",
+  "key": "related_record",
+  "data_name": "related_record",
+  "label": "Related record",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "allow_creating_records": true,
+  "allow_existing_records": true,
+  "allow_updating_records": false,
+  "allow_multiple_records": false,
+  "form_id": "target-form-id",
+  "record_conditions": null,
+  "record_defaults": null
+}
+```
+
+Additional attributes:
+
+- `allow_creating_records`, `allow_existing_records`, `allow_updating_records`
+- `allow_multiple_records`
+- `form_id`: Target form identifier
+- `record_conditions`: Filters for linked records
+- `record_defaults`: Default field mappings when creating new records
+
+`record_defaults` entries use mappings like:
+
+```json
+{
+  "source_field_id": "source_field_key",
+  "destination_field_id": "target_field_key"
+}
+```
+
+## StatusField
+
+```json
+{
+  "type": "StatusField",
+  "key": "@status",
+  "data_name": "status",
+  "label": "Status",
+  "display": "default",
+  "enabled": true,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": "pending",
+  "choices": [
+    { "label": "Open", "value": "open" },
+    { "label": "Closed", "value": "closed" }
+  ]
+}
+```
+
+StatusField is defined under `form.status_field` (not inside `elements`).
+
+## TitleField
+
+```json
+{
+  "type": "TitleField",
+  "key": "@title",
+  "data_name": "title",
+  "label": "Title",
+  "display": "default",
+  "enabled": true,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": true,
+  "read_only_conditions": null,
+  "elements": ["first_name", "last_name"]
+}
+```
+
+TitleField is defined under `form.title_field`. The `elements` array lists field keys (preferred)
+or `data_name` values to build the record title.
+
+<Callout type="info" title="Reform details">
+  FormLink, Status, and Title fields have deeper behavior in reform. Additional details will be
+  linked in a later revision at [docs.reformapp.io](https://docs.reformapp.io).
+</Callout>

@@ -1,0 +1,88 @@
+---
+title: Media fields
+description: Signature, photo, and video capture.
+---
+
+# Media fields
+
+## SignatureField
+
+```json
+{
+  "type": "SignatureField",
+  "key": "signature",
+  "data_name": "signature",
+  "label": "Signature",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": true,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "agreement_text": "I confirm the information is accurate."
+}
+```
+
+Additional attributes:
+
+- `agreement_text`: Optional consent text displayed near the signature.
+
+## PhotoField
+
+```json
+{
+  "type": "PhotoField",
+  "key": "photos",
+  "data_name": "photos",
+  "label": "Photos",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "min_length": 0,
+  "max_length": 5
+}
+```
+
+Additional attributes:
+
+- `min_length`: Minimum number of photos required.
+- `max_length`: Maximum number of photos allowed.
+
+## VideoField
+
+```json
+{
+  "type": "VideoField",
+  "key": "videos",
+  "data_name": "videos",
+  "label": "Videos",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "min_length": 0,
+  "max_length": 2
+}
+```
+
+Additional attributes:
+
+- `min_length`: Minimum number of videos required.
+- `max_length`: Maximum number of videos allowed.

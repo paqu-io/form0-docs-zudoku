@@ -1,0 +1,30 @@
+---
+title: CHOICEVALUE
+description: Returns the selected value from a single-choice field.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+
+# CHOICEVALUE
+
+<Badge variant="secondary">Choice</Badge>
+
+Returns the selected value from a single-choice field.
+
+## Example
+
+```js
+CHOICEVALUE($city)
+```
+
+## Parameters
+
+- choiceField: SingleChoiceField or BooleanField value
+
+## Returns
+
+Selected choice value or null.
+
+## Notes
+
+- Preserves numeric values when possible.

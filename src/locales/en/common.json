@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "form0 docs",
+    "tagline": "Schema-driven forms for every platform."
+  },
+  "nav": {
+    "documentation": "Documentation",
+    "api": "API Reference",
+    "gettingStarted": "Getting Started",
+    "usefulLinks": "Useful Links",
+    "zudokuDocs": "Zudoku Docs",
+    "new": "New",
+    "core": "Core",
+    "schema": "Schema",
+    "fields": "Fields",
+    "builtins": "Builtins",
+    "calculationsExpressions": "Calculations & expressions",
+    "events": "Events",
+    "quickstart": "Quickstart",
+    "editYourFirstSchema": "Edit your first schema",
+    "coreOverview": "Overview",
+    "coreConcepts": "Concepts",
+    "formObject": "Form object",
+    "formAttributes": "Form attributes",
+    "elementsAndNesting": "Elements and nesting",
+    "conditionsAndOperators": "Conditions and operators",
+    "schemaValidation": "Schema validation",
+    "fieldCatalog": "Field catalog",
+    "commonAttributes": "Common attributes",
+    "inputFields": "Input fields",
+    "computedFields": "Computed fields",
+    "mediaFields": "Media fields",
+    "containers": "Containers",
+    "metaFields": "Meta fields",
+    "builtinsOverview": "Builtins overview",
+    "overview": "Overview",
+    "aiMetadata": "AI metadata",
+    "securityAndSandboxing": "Security and sandboxing",
+    "outputAndRecords": "Output and records"
+  },
+  "language": {
+    "label": "Language"
+  }
+}

@@ -1,0 +1,75 @@
+---
+title: Guida rapida
+description: Crea e visualizza il tuo primo schema form0 in pochi minuti.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+import { Stepper } from "zudoku/ui/Stepper";
+
+<Badge variant="default">CLI</Badge> <Badge variant="muted">Local</Badge>
+
+Crea un progetto form0, avvia il server di sviluppo e apri un'anteprima live. Questo flusso utilizza solo la CLI e il template di schema incluso di default.
+
+## Prerequisiti
+- **Node.js** `18.0.0+` - [Scaricalo qui](https://nodejs.org/)
+- Un terminale o prompt dei comandi
+- Il tuo editor di codice preferito
+
+## Pronto in 5 passaggi
+Crea e visualizza il tuo primo schema form0 in pochi minuti.
+
+<Stepper>
+
+1. Installa la CLI:
+
+   ```bash
+   npm install -g form0-cli
+   ```
+
+   Oppure eseguila senza installarla globalmente:
+
+   ```bash
+   npx form0-cli
+   ```
+   :::info
+
+   Il comando npx esegue la CLI senza bisogno di un'installazione globale.
+
+   :::
+
+1. Avvia la shell interattiva:
+
+   ```bash
+   form0
+   ```
+
+1. Inizializza un progetto standard:
+
+   - Esegui `init`
+   - Scegli **Standard project**
+   - Lascia che la CLI carichi automaticamente il tuo schema
+
+   :::info
+
+   Se nella root del progetto c'è un solo file di schema, viene caricato automaticamente.
+
+   :::
+
+1. Avvia il server di sviluppo:
+
+   ```ansi
+   form0> serve
+   ```
+
+1. 🎉 **Fatto!** Ora la tua anteprima live di form0 è in esecuzione su `http://localhost:3030` nel tuo browser.
+
+</Stepper>
+
+## Cosa ottieni
+I progetti standard sono basati su file e gestiti dalla CLI.
+
+- `form.schema.json` con un form di esempio
+- `form0.config.js` per le impostazioni della CLI
+- `test.js` per verifiche locali del motore
+- `supporting-images/` per le risorse grafiche dei campi
+

@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "form0 docs",
+    "tagline": "Des formulaires pilotés par schéma pour chaque plateforme."
+  },
+  "nav": {
+    "documentation": "Documentation",
+    "api": "Référence API",
+    "gettingStarted": "Prise en main",
+    "usefulLinks": "Liens utiles",
+    "zudokuDocs": "Docs Zudoku",
+    "new": "Nouveau",
+    "core": "Noyau",
+    "schema": "Schéma",
+    "fields": "Champs",
+    "builtins": "Fonctions intégrées",
+    "calculationsExpressions": "Calculs et expressions",
+    "events": "Événements",
+    "quickstart": "Démarrage rapide",
+    "editYourFirstSchema": "Modifier votre premier schéma",
+    "coreOverview": "Aperçu du noyau",
+    "coreConcepts": "Concepts du noyau",
+    "formObject": "Objet formulaire",
+    "formAttributes": "Attributs du formulaire",
+    "elementsAndNesting": "Éléments et imbrication",
+    "conditionsAndOperators": "Conditions et opérateurs",
+    "schemaValidation": "Validation du schéma",
+    "fieldCatalog": "Catalogue des champs",
+    "commonAttributes": "Attributs communs",
+    "inputFields": "Champs de saisie",
+    "computedFields": "Champs calculés",
+    "mediaFields": "Champs média",
+    "containers": "Champs de structure",
+    "metaFields": "Champs méta",
+    "builtinsOverview": "Aperçu des fonctions",
+    "overview": "Aperçu",
+    "aiMetadata": "Métadonnées IA",
+    "securityAndSandboxing": "Sécurité et isolation",
+    "outputAndRecords": "Sortie et enregistrements"
+  },
+  "language": {
+    "label": "Langue"
+  }
+}

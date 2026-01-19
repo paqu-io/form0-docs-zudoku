@@ -1,0 +1,171 @@
+{
+  "introduction": {
+    "title": "Welcome to form0 docs",
+    "editHint": "Edit this page by opening {path}.",
+    "learnMore": "See zudoku.config.jsx for full configuration."
+  },
+  "example": {
+    "title": "Example page",
+    "tip": "Edit this page by opening {path}."
+  },
+  "test": {
+    "title": "This is a test"
+  },
+  "getting-started": {
+    "quickstart": {
+      "title": "Quickstart"
+    },
+    "schema-edit": {
+      "title": "Edit your first schema"
+    }
+  },
+  "core": {
+    "overview": {
+      "title": "Overview"
+    },
+    "concepts": {
+      "title": "Concepts"
+    },
+    "schema": {
+      "form": {
+        "title": "Form object"
+      },
+      "form-attributes": {
+        "title": "Form attributes"
+      },
+      "elements": {
+        "title": "Elements and nesting"
+      },
+      "conditions-operators": {
+        "title": "Conditions and operators"
+      },
+      "validation": {
+        "title": "Schema validation"
+      }
+    },
+    "fields": {
+      "catalog": {
+        "title": "Field catalog"
+      },
+      "common-attributes": {
+        "title": "Common attributes"
+      },
+      "input-fields": {
+        "title": "Input fields"
+      },
+      "computed-fields": {
+        "title": "Computed fields"
+      },
+      "media-fields": {
+        "title": "Media fields"
+      },
+      "containers": {
+        "title": "Containers"
+      },
+      "meta-fields": {
+        "title": "Meta fields"
+      }
+    },
+    "builtins": {
+      "index": {
+        "title": "Builtins overview"
+      },
+      "calculations-expressions": {
+        "title": "Calculations & expressions",
+        "if": {
+          "title": "IF"
+        },
+        "and": {
+          "title": "AND"
+        },
+        "or": {
+          "title": "OR"
+        },
+        "count": {
+          "title": "COUNT"
+        },
+        "counta": {
+          "title": "COUNTA"
+        },
+        "countblank": {
+          "title": "COUNTBLANK"
+        },
+        "array": {
+          "title": "ARRAY"
+        },
+        "abs": {
+          "title": "ABS"
+        },
+        "ceiling": {
+          "title": "CEILING"
+        },
+        "cos": {
+          "title": "COS"
+        },
+        "sin": {
+          "title": "SIN"
+        },
+        "round": {
+          "title": "ROUND"
+        },
+        "upper": {
+          "title": "UPPER"
+        },
+        "choicevalue": {
+          "title": "CHOICEVALUE"
+        },
+        "choicelabel": {
+          "title": "CHOICELABEL"
+        },
+        "choicevalues": {
+          "title": "CHOICEVALUES"
+        },
+        "choicelabels": {
+          "title": "CHOICELABELS"
+        },
+        "hasother": {
+          "title": "HASOTHER"
+        },
+        "other": {
+          "title": "OTHER"
+        },
+        "form": {
+          "title": "FORM"
+        },
+        "datanames": {
+          "title": "DATANAMES"
+        },
+        "setresult": {
+          "title": "SETRESULT"
+        },
+        "eval": {
+          "title": "EVAL"
+        }
+      },
+      "events": {
+        "title": "Events",
+        "on": {
+          "title": "ON"
+        },
+        "off": {
+          "title": "OFF"
+        },
+        "alert": {
+          "title": "ALERT"
+        },
+        "setvalue": {
+          "title": "SETVALUE"
+        }
+      }
+    },
+    "ai-metadata": {
+      "title": "AI metadata"
+    },
+    "security": {
+      "title": "Security and sandboxing"
+    },
+    "output-records": {
+      "title": "Output and records"
+    }
+  }
+}

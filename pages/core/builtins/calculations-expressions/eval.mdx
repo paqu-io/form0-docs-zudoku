@@ -1,0 +1,30 @@
+---
+title: EVAL
+description: Evaluates a dynamic expression in a restricted context.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+
+# EVAL
+
+<Badge variant="secondary">Control</Badge>
+
+Evaluates a dynamic expression in a restricted context.
+
+## Example
+
+```js
+EVAL("$" + fieldName)
+```
+
+## Parameters
+
+- expression: string
+
+## Returns
+
+Result of the expression or null.
+
+## Notes
+
+- EVAL applies extra security rules; keep expressions simple.

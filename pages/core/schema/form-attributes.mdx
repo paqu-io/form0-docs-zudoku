@@ -1,0 +1,436 @@
+---
+title: Form attributes
+description: Complete reference for all form object attributes.
+---
+
+import { Badge } from "zudoku/ui/Badge";
+import { Callout } from "zudoku/ui/Callout";
+
+<Badge variant="default">Engine</Badge> <Badge variant="muted">Local</Badge> <Badge variant="muted">Schema</Badge>
+
+This page documents all attributes available on the `form` object, including application-level metadata.
+
+<Callout type="note" title="Application-level attributes">
+  Attributes marked as **App-level** are metadata not processed directly by the engine.
+  They can be used when integrating with [reform](https://reformapp.io) SaaS product or when building similar functionality in your own application.
+</Callout>
+
+---
+
+## name
+
+Human-friendly form name displayed in the UI.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | ✓ |
+| Default | - |
+| Choices | - |
+| App-level | - |
+
+---
+
+## description
+
+Form description.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | - |
+| Choices | - |
+| App-level | - |
+
+---
+
+## id
+
+Unique form identifier. UUID format recommended.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | ✓ |
+| Default | - |
+| Choices | - |
+| App-level | - |
+
+---
+
+## record_count
+
+Number of records in the form.
+
+| Property | Value |
+| --- | --- |
+| Type | `number` |
+| Required | - |
+| Default | `0` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## record_last_change_at
+
+Date/time of the last record change in ISO 8601 format.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## form_created_at
+
+Form creation date/time in ISO 8601 format.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## form_updated_at
+
+Form last update date/time in ISO 8601 format.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## form_created_by
+
+User who created the form.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## form_updated_by
+
+User who last updated the form.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## status
+
+Form status indicator.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | - |
+| Choices | `active`, `inactive` |
+| App-level | ✓ |
+
+---
+
+## version
+
+Form version number, incremented on each form save.
+
+| Property | Value |
+| --- | --- |
+| Type | `number` |
+| Required | ✓ |
+| Default | `1` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## main_org_id
+
+Main organization identifier.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | - |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## main_org_metadata
+
+Metadata fields associated with the main organization.
+
+| Property | Value |
+| --- | --- |
+| Type | `object` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## sub_org_id
+
+Sub-organization identifier.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## sub_org_metadata
+
+Metadata fields associated with the sub-organization.
+
+| Property | Value |
+| --- | --- |
+| Type | `object` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## project_id
+
+Project identifier.
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## project_metadata
+
+Metadata fields associated with the project.
+
+| Property | Value |
+| --- | --- |
+| Type | `object` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## ai
+
+AI metadata for form-level guidance. See [AI metadata](/core/ai-metadata) for details.
+
+| Property | Value |
+| --- | --- |
+| Type | `object` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | - |
+
+---
+
+## status_field
+
+Special status field definition. See [Meta fields](/core/fields/meta-fields#statusfield) for details.
+
+| Property | Value |
+| --- | --- |
+| Type | `object` |
+| Required | ✓ |
+| Default | - |
+| Choices | - |
+| App-level | - |
+
+---
+
+## title_field
+
+Special title field definition. See [Meta fields](/core/fields/meta-fields#titlefield) for details.
+
+| Property | Value |
+| --- | --- |
+| Type | `object` |
+| Required | ✓ |
+| Default | - |
+| Choices | - |
+| App-level | - |
+
+---
+
+## bounding_box
+
+Bounding box containing all form records. Format: `[min_lat, min_lng, max_lat, max_lng]`.
+
+| Property | Value |
+| --- | --- |
+| Type | `array` |
+| Required | - |
+| Default | `[0, 0, 0, 0]` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## location_enabled
+
+Enables location capture for records.
+
+| Property | Value |
+| --- | --- |
+| Type | `boolean` |
+| Required | - |
+| Default | - |
+| Choices | `true`, `false` |
+| App-level | ✓ |
+
+---
+
+## location_required
+
+Requires location data when `location_enabled` is `true`.
+
+| Property | Value |
+| --- | --- |
+| Type | `boolean` |
+| Required | - |
+| Default | - |
+| Choices | `true`, `false` |
+| App-level | ✓ |
+
+---
+
+## image
+
+URL for the form icon (original size).
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## image_thumbnail
+
+URL for the thumbnail-sized form icon (160x160 px).
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## image_small
+
+URL for the small-sized form icon (320x320 px).
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## image_large
+
+URL for the large-sized form icon (640x640 px).
+
+| Property | Value |
+| --- | --- |
+| Type | `string` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | ✓ |
+
+---
+
+## events
+
+Event code block containing builtin and JavaScript expressions for event handlers. Code is placed in `events.code`.
+
+| Property | Value |
+| --- | --- |
+| Type | `object` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | - |
+
+---
+
+## form_links
+
+Links to/from other forms (used with `FormLinkField`). See [Meta fields](/core/fields/meta-fields#formlinkfield) for details.
+
+| Property | Value |
+| --- | --- |
+| Type | `object` |
+| Required | - |
+| Default | `null` |
+| Choices | - |
+| App-level | - |
+
+---
+
+## elements
+
+Form fields and containers. See [Elements and nesting](/core/schema/elements).
+
+| Property | Value |
+| --- | --- |
+| Type | `array` |
+| Required | ✓ |
+| Default | `[]` |
+| Choices | - |
+| App-level | - |

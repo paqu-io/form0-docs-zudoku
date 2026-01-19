@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "form0 docs",
+    "tagline": "Moduli basati su schema per ogni piattaforma."
+  },
+  "nav": {
+    "documentation": "Documentazione",
+    "api": "Riferimento API",
+    "gettingStarted": "Per iniziare",
+    "usefulLinks": "Link utili",
+    "zudokuDocs": "Documentazione Zudoku",
+    "new": "Nuovo",
+    "core": "Nucleo",
+    "schema": "Schema",
+    "fields": "Campi",
+    "builtins": "Funzioni integrate",
+    "calculationsExpressions": "Calcoli ed espressioni",
+    "events": "Eventi",
+    "quickstart": "Avvio rapido",
+    "editYourFirstSchema": "Modifica il tuo primo schema",
+    "coreOverview": "Panoramica del nucleo",
+    "coreConcepts": "Concetti del nucleo",
+    "formObject": "Oggetto modulo",
+    "formAttributes": "Attributi del modulo",
+    "elementsAndNesting": "Elementi e nidificazione",
+    "conditionsAndOperators": "Condizioni e operatori",
+    "schemaValidation": "Validazione dello schema",
+    "fieldCatalog": "Catalogo campi",
+    "commonAttributes": "Attributi comuni",
+    "inputFields": "Campi di input",
+    "computedFields": "Campi calcolati",
+    "mediaFields": "Campi multimediali",
+    "containers": "Campi di struttura",
+    "metaFields": "Campi meta",
+    "builtinsOverview": "Panoramica delle funzioni",
+    "overview": "Panoramica",
+    "aiMetadata": "Metadati IA",
+    "securityAndSandboxing": "Sicurezza e isolamento",
+    "outputAndRecords": "Output e record"
+  },
+  "language": {
+    "label": "Lingua"
+  }
+}

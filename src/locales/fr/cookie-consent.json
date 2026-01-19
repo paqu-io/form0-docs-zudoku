@@ -1,0 +1,39 @@
+{
+  "consentModal": {
+    "title": "Nous respectons votre vie privée",
+    "description": "Nous utilisons des cookies essentiels pour faire fonctionner le site et, si vous y consentez, des cookies d'analyse/marketing pour améliorer votre expérience. Vous pouvez modifier votre choix à tout moment.",
+    "acceptAllBtn": "Tout accepter",
+    "acceptNecessaryBtn": "Refuser les optionnels",
+    "showPreferencesBtn": "Gérer les préférences",
+    "closeIconLabel": "Fermer la fenêtre"
+  },
+  "preferencesModal": {
+    "title": "Préférences de cookies",
+    "acceptAllBtn": "Tout accepter",
+    "acceptNecessaryBtn": "Refuser les optionnels",
+    "savePreferencesBtn": "Enregistrer",
+    "closeIconLabel": "Fermer la fenêtre",
+    "serviceTooltip": "Service géré par",
+    "sections": [
+      {
+        "title": "Utilisation des cookies",
+        "description": "Choisissez les catégories à autoriser. Les cookies essentiels sont toujours activés car le site ne fonctionne pas sans eux."
+      },
+      {
+        "title": "Strictement nécessaires",
+        "description": "Requis pour les fonctions de base comme la langue et le thème.",
+        "linkedCategory": "necessary"
+      },
+      {
+        "title": "Analyse",
+        "description": "Aide à comprendre le trafic et l'usage.",
+        "linkedCategory": "analytics"
+      },
+      {
+        "title": "Marketing",
+        "description": "Utilisés pour montrer des campagnes pertinentes et mesurer leur performance.",
+        "linkedCategory": "marketing"
+      }
+    ]
+  }
+}

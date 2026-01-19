@@ -1,0 +1,32 @@
+---
+title: Security and sandboxing
+description: Expression security modes in form0-core.
+---
+
+# Security and sandboxing
+
+Expressions are evaluated by form0-core in a configurable security mode.
+
+## Modes
+
+- `TRUSTED`: Full JavaScript access (default).
+- `SAFE`: Restricted globals and blocked patterns.
+- `CUSTOM`: User-defined rules.
+
+## Safe mode defaults
+
+Safe mode blocks patterns like `eval`, `Function`, `window`, `document`, `process`, `require`, and
+other unsafe globals. It also limits execution time and call stack depth.
+
+## Using a security config
+
+```js
+import { createFormEngine, SAFE_SECURITY_CONFIG } from 'form0-core';
+
+const engine = createFormEngine({
+  schema,
+  security: SAFE_SECURITY_CONFIG,
+});
+```
+
+Security config is used for calculated fields and event code.

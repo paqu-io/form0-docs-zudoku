@@ -7,12 +7,14 @@
     "dev": "zudoku dev",
     "build": "zudoku build",
     "preview": "zudoku preview",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "node scripts/apply-zudoku-locale-patch.js"
   },
   "dependencies": {
     "react": ">=19.0.0",
     "react-dom": ">=19.0.0",
-    "zudoku": "0.66.2"
+    "vanilla-cookieconsent": "^3.1.0",
+    "zudoku": "^0.66.6"
   },
   "devDependencies": {
     "eslint": "^8"

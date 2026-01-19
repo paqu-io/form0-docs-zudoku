@@ -1,0 +1,52 @@
+---
+title: Common attributes
+description: Attributes shared by most field types.
+---
+
+import { Callout } from "zudoku/ui/Callout";
+
+# Common attributes
+
+Most field types share a set of core attributes. Field-specific pages cover everything not listed
+here.
+
+## Identity
+
+- `type`: Field type name (for example, `TextField`).
+- `key`: Stable unique identifier. Prefer keys for conditions and references.
+- `data_name`: Value identifier used in engine state.
+- `label`: Label shown to users.
+
+## Description and display
+
+- `description`: Optional helper text.
+- `description_mode`: `default` or `subtext`.
+- `display`: Visual style, varies per field type.
+
+## Visibility, required, and read-only
+
+- `visible`: Base visibility (boolean).
+- `visible_conditions`: Condition object; overrides `visible` when present.
+- `required`: Base requirement (boolean).
+- `required_conditions`: Condition object; overrides `required` when present.
+- `read_only`: Base read-only flag (boolean).
+- `read_only_conditions`: Condition object; overrides `read_only` when present.
+
+## Default value
+
+- `default_value`: Initial value for the field (type-specific rules apply).
+
+## Supporting images
+
+- `supporting_image`: Enables a supporting image.
+- `supporting_image_path`: Relative or absolute image path.
+- `supporting_image_display`: `default` or `dialog`.
+
+## AI metadata
+
+- `ai`: Optional AI metadata for field-level guidance.
+
+<Callout type="info" title="Field-specific rules">
+  Some fields lock values (for example, `CalculatedField.read_only` is always true).
+  Always check the field type page for specific constraints.
+</Callout>

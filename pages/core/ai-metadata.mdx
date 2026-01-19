@@ -1,0 +1,63 @@
+---
+title: AI metadata
+description: Optional AI guidance for forms and fields.
+---
+
+# AI metadata
+
+form0-core supports optional AI metadata to guide external agents. Metadata is ignored by the
+engine unless your tooling reads it.
+
+## Form-level AI
+
+`form.ai` supports the following keys:
+
+- `context`: Array of domain tags.
+- `instructions`: Array of instructions for AI tooling.
+- `namingPolicy`: Object describing naming preferences.
+- `tasks`: Array of tasks to enable (for example, `suggestFieldNames`).
+- `requiresConsent`: Boolean flag for user consent.
+- `allowCloud`: Boolean flag for cloud processing.
+
+Example:
+
+```json
+{
+  "ai": {
+    "context": ["safety_inspections"],
+    "instructions": ["Use snake_case"],
+    "namingPolicy": { "language": "en", "case": "snake", "asciiOnly": true },
+    "tasks": ["suggestFieldNames"],
+    "requiresConsent": true
+  }
+}
+```
+
+## Field-level AI
+
+`field.ai` supports:
+
+- `context`, `instructions`, `tasks` (same as form)
+- `examples`: Example values
+- `synonyms`: Alternative labels
+- `inferrable`: Boolean flag for inference
+- `fillStrategy`: `infer_from_previous`, `require_explicit`, or `suggest_options`
+- `priority`: Number indicating importance
+- `dependencies`: Array of field identifiers
+- `choicePolicy`: Object describing choice value strategy
+- `providerHints`: Provider-specific hints
+- `requiresConsent`, `allowCloud`
+
+Example:
+
+```json
+{
+  "ai": {
+    "examples": ["John", "Jane"],
+    "synonyms": ["First name"],
+    "inferrable": true,
+    "fillStrategy": "suggest_options",
+    "priority": 0.7
+  }
+}
+```
