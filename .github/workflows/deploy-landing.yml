@@ -19,6 +19,7 @@ on:
       - "package.json"
       - "package-lock.json"
       - ".github/workflows/deploy-landing.yml"
+      - "README.md"
 
 jobs:
   build-and-deploy:
