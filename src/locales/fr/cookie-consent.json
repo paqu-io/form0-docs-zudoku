@@ -1,7 +1,7 @@
 {
   "consentModal": {
     "title": "Nous respectons votre vie privée",
-    "description": "Nous utilisons des cookies essentiels pour faire fonctionner le site et, si vous y consentez, des cookies d'analyse/marketing pour améliorer votre expérience. Vous pouvez modifier votre choix à tout moment.",
+    "description": "Nous utilisons des cookies essentiels pour faire fonctionner le site et, si vous y consentez, des cookies d'analyse pour améliorer votre expérience. Vous pouvez modifier votre choix à tout moment.",
     "acceptAllBtn": "Tout accepter",
     "acceptNecessaryBtn": "Refuser les optionnels",
     "showPreferencesBtn": "Gérer les préférences",

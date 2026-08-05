@@ -14,7 +14,11 @@ import it from "../locales/it/cookie-consent.json"
 
 import "vanilla-cookieconsent/dist/cookieconsent.css"
 
-const { run, setLanguage } = cookieConsent.default ?? cookieConsent
+const { eraseCookies, run, setLanguage } = cookieConsent.default ?? cookieConsent
+
+const CONSENT_COOKIE_NAME = "cc_form0_marketing_consent"
+const LEGACY_CONSENT_COOKIE_NAME = "cc_cookie"
+const CONSENT_COOKIE_DOMAIN = "form0.dev"
 
 const guiOptions = {
   consentModal: {
@@ -43,7 +47,7 @@ const categories = {
         { name: /^_ga/, path: "/" },
         { name: "_gid", path: "/" },
         { name: /^_gcl_/, path: "/" },
-        { name: /^umami/, path: "/", domain: ".form0.dev" },
+        { name: /^umami/, path: "/", domain: CONSENT_COOKIE_DOMAIN },
       ],
     },
   },
@@ -108,7 +112,8 @@ function buildConfig(locale) {
   return {
     revision: 1,
     cookie: {
-      domain: ".form0.dev",
+      name: CONSENT_COOKIE_NAME,
+      domain: CONSENT_COOKIE_DOMAIN,
       expiresAfterDays: 182,
     },
     guiOptions,
@@ -135,6 +140,8 @@ export function CookieConsentManager() {
     const cleanup = syncDarkModeClass()
 
     ensureUmamiScriptTag()
+    eraseCookies(LEGACY_CONSENT_COOKIE_NAME, "/")
+    eraseCookies(LEGACY_CONSENT_COOKIE_NAME, "/", CONSENT_COOKIE_DOMAIN)
     run(buildConfig(locale))
     initializedRef.current = true
 
