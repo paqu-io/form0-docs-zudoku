@@ -2,30 +2,30 @@
 // Re-apply locale-aware navigation behavior to zudoku after installs.
 // Keeps the existing useCurrentNavigation hook working when routes use `/xx/` prefixes.
 
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { existsSync, readFileSync, writeFileSync } from "node:fs"
+import { join } from "node:path"
 
 const target = join(
   process.cwd(),
-  'node_modules',
-  'zudoku',
-  'dist',
-  'lib',
-  'components',
-  'context',
-  'ZudokuContext.js',
+  "node_modules",
+  "zudoku",
+  "dist",
+  "lib",
+  "components",
+  "context",
+  "ZudokuContext.js",
 )
 
 if (!existsSync(target)) {
-  console.warn('[zudoku-patch] Target file not found, skipping:', target)
+  console.warn("[zudoku-patch] Target file not found, skipping:", target)
   process.exit(0)
 }
 
-const source = readFileSync(target, 'utf8')
+const source = readFileSync(target, "utf8")
 
 // Idempotency check — if our locale logic is already present, do nothing.
-if (source.includes('stripLocale') && source.includes('hasLocalePrefix')) {
-  console.log('[zudoku-patch] Locale navigation patch already applied')
+if (source.includes("stripLocale") && source.includes("hasLocalePrefix")) {
+  console.log("[zudoku-patch] Locale navigation patch already applied")
   process.exit(0)
 }
 
@@ -75,9 +75,9 @@ let next = source.replace(navBlockOriginal, navBlockPatched)
 next = next.replace(returnBlockOriginal, returnBlockPatched)
 
 if (next === source) {
-  console.error('[zudoku-patch] Failed to apply patch — patterns not found')
+  console.error("[zudoku-patch] Failed to apply patch — patterns not found")
   process.exit(1)
 }
 
-writeFileSync(target, next, 'utf8')
-console.log('[zudoku-patch] Locale navigation patch applied')
+writeFileSync(target, next, "utf8")
+console.log("[zudoku-patch] Locale navigation patch applied")

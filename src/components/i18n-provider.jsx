@@ -143,7 +143,10 @@ export function I18nProvider({ children, initialLocale, preload = DEFAULT_NAMESP
       link.setAttribute("rel", "alternate")
       link.setAttribute("data-hreflang", "true")
       link.setAttribute("hreflang", loc)
-      link.setAttribute("href", loc === "x-default" ? hrefForLocale(DEFAULT_LOCALE) : hrefForLocale(loc))
+      link.setAttribute(
+        "href",
+        loc === "x-default" ? hrefForLocale(DEFAULT_LOCALE) : hrefForLocale(loc),
+      )
       document.head.appendChild(link)
     })
   }, [locale])

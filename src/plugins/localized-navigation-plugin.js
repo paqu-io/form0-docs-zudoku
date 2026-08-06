@@ -1,7 +1,5 @@
-import { Book, FolderCog, Link as LinkIcon, Sparkles } from "zudoku/icons"
 import { DEFAULT_LOCALE, getLocale, getLocaleFromUrl, onLocaleChange } from "../utils/i18n.js"
 
-const INTRO_PATH = "/introduction"
 const API_PATH = "/api"
 
 // Load every locale namespace eagerly so navigation labels can be resolved
@@ -26,8 +24,6 @@ const getBundle = (namespace, locale) => {
 }
 
 const getCommon = (locale) => getBundle("common", locale)
-const getDocs = (locale) => getBundle("docs", locale)
-
 // Priority namespaces to check for document titles; fall back to any other
 // namespaces that exist (except "common", which is reserved for UI strings).
 const PRIORITY_NAMESPACES = ["docs", "api"]
@@ -84,7 +80,7 @@ const labelToNavKey = (label) =>
     .trim()
     .split(/\s+/)
     .map((word, i) =>
-      i === 0 ? word.toLowerCase() : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      i === 0 ? word.toLowerCase() : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
     )
     .join("")
 
@@ -107,61 +103,9 @@ const getDocTitle = (slugKey, locale, fallbackLabel) => {
   return fallbackLabel
 }
 
-const buildNav = (localePrefix, locale) => {
-  const prefix = localePrefix === "/" ? "" : localePrefix
-  const common = getCommon(locale)
-  const docs = getDocs(locale)
-  const introductionLabel = get(docs, "introduction.title", "Introduction")
-
-  return [
-    {
-      type: "category",
-      label: get(common, "nav.gettingStarted", "Getting Started"),
-      icon: Sparkles,
-      items: [
-        {
-          type: "doc",
-          label: introductionLabel,
-          path: withLocalePrefix(INTRO_PATH, prefix),
-        },
-        {
-          type: "link",
-          icon: FolderCog,
-          badge: {
-            label: get(common, "nav.new", "New"),
-            color: "purple",
-          },
-          label: get(common, "nav.api", "API Reference"),
-          to: API_PATH,
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: get(common, "nav.usefulLinks", "Useful Links"),
-      collapsible: false,
-      icon: LinkIcon,
-      items: [
-        {
-          type: "link",
-          icon: Book,
-          label: get(common, "nav.zudokuDocs", "Zudoku Docs"),
-          to: "https://zudoku.dev/docs/",
-        },
-      ],
-    },
-    {
-      type: "link",
-      to: API_PATH,
-      label: get(common, "nav.api", "API Reference"),
-    },
-  ]
-}
-
 export function createLocalizedNavigationPlugin() {
   let baseNavigation = null
   let ctx = null
-  let unsubscribeLocale = null
 
   const translateNavigation = (items, locale, prefix = "") =>
     items.map((item) => {
@@ -218,7 +162,7 @@ export function createLocalizedNavigationPlugin() {
         const urlLocale = getLocaleFromUrl(window.location.pathname)
         const initial = urlLocale || getLocale() || DEFAULT_LOCALE
         applyNavigationLocale(initial)
-        unsubscribeLocale = onLocaleChange((next) => applyNavigationLocale(next))
+        onLocaleChange((next) => applyNavigationLocale(next))
       }
     },
     events: {

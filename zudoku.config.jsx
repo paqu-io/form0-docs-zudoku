@@ -265,7 +265,7 @@ const config = {
                       badge: {
                         label: "New",
                         color: "purple",
-                      }
+                      },
                     },
                     {
                       type: "doc",
@@ -319,7 +319,7 @@ const config = {
               badge: {
                 label: "Beta",
                 color: "yellow",
-              }
+              },
             },
             {
               type: "doc",
@@ -635,6 +635,6 @@ const config = {
       }
     `,
   },
-};
+}
 
-export default config;
+export default config

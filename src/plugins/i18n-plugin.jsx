@@ -11,13 +11,7 @@ import {
 } from "../utils/i18n.js"
 import { CookieConsentManager } from "../components/cookie-consent-manager.jsx"
 
-function LocaleSync({ namespaces }) {
-  // During SSR prerender there's no router; skip syncing.
-  if (import.meta.env.SSR) return null
-
-  const inRouter = useInRouterContext()
-  if (!inRouter) return null
-
+function RouterLocaleSync({ namespaces }) {
   const location = useLocation()
 
   useEffect(() => {
@@ -40,14 +34,28 @@ function LocaleSync({ namespaces }) {
 export function createI18nPlugin(options = {}) {
   const preloadNamespaces = options.preloadNamespaces || DEFAULT_NAMESPACES
 
-  const Wrapper = ({ children }) => {
-    const inRouter = useInRouterContext()
-    const location = inRouter ? useLocation() : null
-    const initialLocale = location ? getLocaleFromUrl(location.pathname) : null
+  const RoutedWrapper = ({ children }) => {
+    const location = useLocation()
+    const initialLocale = getLocaleFromUrl(location.pathname)
 
     return (
       <I18nProvider preload={preloadNamespaces} initialLocale={initialLocale}>
-        {inRouter && <LocaleSync namespaces={preloadNamespaces} />}
+        <RouterLocaleSync namespaces={preloadNamespaces} />
+        <CookieConsentManager />
+        {children}
+      </I18nProvider>
+    )
+  }
+
+  const Wrapper = ({ children }) => {
+    const inRouter = useInRouterContext()
+
+    if (inRouter) {
+      return <RoutedWrapper>{children}</RoutedWrapper>
+    }
+
+    return (
+      <I18nProvider preload={preloadNamespaces}>
         <CookieConsentManager />
         {children}
       </I18nProvider>

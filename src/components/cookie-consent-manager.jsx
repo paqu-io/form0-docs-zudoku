@@ -2,11 +2,7 @@ import { useEffect, useRef } from "react"
 import * as cookieConsent from "vanilla-cookieconsent"
 
 import { useI18n } from "./i18n-provider.jsx"
-import {
-  UMAMI_DOMAINS,
-  UMAMI_SCRIPT_SRC,
-  UMAMI_WEBSITE_ID,
-} from "../utils/umami-config.js"
+import { UMAMI_DOMAINS, UMAMI_SCRIPT_SRC, UMAMI_WEBSITE_ID } from "../utils/umami-config.js"
 import en from "../locales/en/cookie-consent.json"
 import es from "../locales/es/cookie-consent.json"
 import fr from "../locales/fr/cookie-consent.json"
@@ -62,8 +58,7 @@ function pruneTranslations(rawTranslations) {
       const copy = JSON.parse(JSON.stringify(value))
       if (copy?.preferencesModal?.sections) {
         copy.preferencesModal.sections = copy.preferencesModal.sections.filter(
-          (section) =>
-            !section.linkedCategory || activeCategories.includes(section.linkedCategory),
+          (section) => !section.linkedCategory || activeCategories.includes(section.linkedCategory),
         )
       }
       return [locale, copy]
