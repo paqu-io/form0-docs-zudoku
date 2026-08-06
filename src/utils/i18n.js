@@ -1,5 +1,4 @@
-const DEFAULT_LOCALE = "en"
-const SUPPORTED_LOCALES = ["en", "es", "fr", "it"]
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../i18n/constants.js"
 const DEFAULT_NAMESPACES = ["common", "docs"]
 const EAGER_NAMESPACES = ["common", "docs"]
 const LOCALE_STORAGE_KEY = "form0-docs:locale"

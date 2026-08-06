@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import * as cookieConsent from "vanilla-cookieconsent"
+import { eraseCookies, run, setLanguage } from "vanilla-cookieconsent/dist/cookieconsent.esm.js"
 
 import { useI18n } from "./i18n-provider.jsx"
 import { UMAMI_DOMAINS, UMAMI_SCRIPT_SRC, UMAMI_WEBSITE_ID } from "../utils/umami-config.js"
@@ -9,8 +9,6 @@ import fr from "../locales/fr/cookie-consent.json"
 import it from "../locales/it/cookie-consent.json"
 
 import "vanilla-cookieconsent/dist/cookieconsent.css"
-
-const { eraseCookies, run, setLanguage } = cookieConsent.default ?? cookieConsent
 
 const CONSENT_COOKIE_NAME = "cc_form0_marketing_consent"
 const LEGACY_CONSENT_COOKIE_NAME = "cc_cookie"

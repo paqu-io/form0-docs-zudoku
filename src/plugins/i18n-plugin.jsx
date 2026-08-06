@@ -1,6 +1,5 @@
-import React from "react"
 import { useEffect } from "react"
-import { useInRouterContext, useLocation } from "react-router"
+import { useInRouterContext, useLocation } from "zudoku/router"
 import { I18nProvider } from "../components/i18n-provider.jsx"
 import {
   DEFAULT_LOCALE,
