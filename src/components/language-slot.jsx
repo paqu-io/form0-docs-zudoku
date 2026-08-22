@@ -1,19 +1,20 @@
-import { useEffect, useState, useCallback } from "react"
+import { useCallback } from "react"
 import { LanguageSelector } from "./dropdown-radio-group-language.jsx"
-import { getLocale, onLocaleChange, setLocale as setGlobalLocale } from "../utils/i18n.js"
+import { useSyncLocalePath, useUrlLocale } from "../hooks/use-locale-path.js"
+import { setLocale as setGlobalLocale } from "../utils/i18n.js"
 
-// Header slot uses the global i18n store directly to avoid nested providers and sync issues.
 export function LanguageSlot({ showLabel = false } = {}) {
-  const [locale, setLocaleState] = useState(getLocale())
+  const locale = useUrlLocale()
+  const syncPath = useSyncLocalePath()
 
-  useEffect(() => {
-    return onLocaleChange((next) => setLocaleState(next))
-  }, [])
-
-  const handleChange = useCallback(async (nextLocale) => {
-    await setGlobalLocale(nextLocale, { syncPath: true })
-    setLocaleState(nextLocale)
-  }, [])
+  const handleChange = useCallback(
+    async (nextLocale) => {
+      if (!nextLocale || nextLocale === locale) return
+      await setGlobalLocale(nextLocale)
+      syncPath(nextLocale)
+    },
+    [locale, syncPath],
+  )
 
   return <LanguageSelector locale={locale} onChange={handleChange} showLabel={showLabel} />
 }

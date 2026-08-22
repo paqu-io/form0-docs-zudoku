@@ -4,6 +4,13 @@ import { fileURLToPath } from "node:url"
 
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../src/i18n/constants.js"
 
+const LANGUAGE_LABELS = {
+  en: "English",
+  es: "Español",
+  fr: "Français",
+  it: "Italiano",
+}
+
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const outputRoot = path.join(repositoryRoot, "dist")
 const representativeDocument = "getting-started/quickstart"
@@ -44,8 +51,27 @@ async function collectFiles(directory, predicate) {
   return files.flat()
 }
 
-for (const artifact of ["llms.txt", "llms-full.txt", "pagefind/pagefind.js"]) {
+for (const artifact of [
+  "llms.txt",
+  "llms-full.txt",
+  "pagefind/pagefind.js",
+  "pagefind/pagefind-entry.json",
+]) {
   await requireFile(artifact)
+}
+
+try {
+  const pagefindEntry = JSON.parse(
+    await readFile(path.join(outputRoot, "pagefind/pagefind-entry.json"), "utf8"),
+  )
+  const pagefindJs = await readFile(path.join(outputRoot, "pagefind/pagefind.js"), "utf8")
+  if (pagefindEntry.version && !pagefindJs.includes(pagefindEntry.version)) {
+    failures.push(
+      `pagefind.js does not contain index version ${pagefindEntry.version}; the search client and index are out of sync`,
+    )
+  }
+} catch {
+  failures.push("Unable to read pagefind version metadata")
 }
 
 let llmsTxt
@@ -123,6 +149,24 @@ for (const locale of SUPPORTED_LOCALES) {
     if (html.includes(unprefixedQuickstart)) {
       failures.push(`${htmlPath} contains an unprefixed localized navigation link`)
     }
+  }
+
+  const selectedLanguageLabels = [
+    ...html.matchAll(/aria-label="Select language"[^>]*>([\s\S]*?)<\/button>/g),
+  ].map((match) => {
+    const text = match[1]
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+    return Object.values(LANGUAGE_LABELS).find((label) => text.includes(label)) ?? text
+  })
+  const expectedLanguageLabel = LANGUAGE_LABELS[locale]
+  if (selectedLanguageLabels.length === 0) {
+    failures.push(`${htmlPath} does not contain a language selector`)
+  } else if (selectedLanguageLabels.some((label) => label !== expectedLanguageLabel)) {
+    failures.push(
+      `${htmlPath} language selector rendered ${selectedLanguageLabels.join(", ")} instead of ${expectedLanguageLabel}`,
+    )
   }
 }
 

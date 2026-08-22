@@ -64,12 +64,10 @@ function isPathExcluded(pathname) {
   return PATHNAME_LOCALE_EXCLUSIONS.some((prefix) => pathname.startsWith(prefix))
 }
 
-function syncPathLocale(locale) {
-  if (typeof window === "undefined") return
-  const { pathname, search, hash } = window.location
+export function getLocalizedPathname(pathname, locale) {
+  if (typeof pathname !== "string" || isPathExcluded(pathname)) return pathname
 
-  if (isPathExcluded(pathname)) return
-
+  const target = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE
   const segments = pathname.split("/").filter(Boolean)
   const pathLocale = getLocaleFromPath(pathname)
 
@@ -78,14 +76,17 @@ function syncPathLocale(locale) {
   }
 
   const trailing = segments.length ? `/${segments.join("/")}` : ""
-  const nextPath = locale === DEFAULT_LOCALE ? `${trailing || "/"}` : `/${locale}${trailing || ""}`
+  const nextPath = target === DEFAULT_LOCALE ? `${trailing || "/"}` : `/${target}${trailing || ""}`
+  return nextPath === "" ? "/" : nextPath
+}
 
-  const normalizedPath = nextPath === "" ? "/" : nextPath
-  const nextUrl = `${normalizedPath}${search}${hash}`
+function syncPathLocale(locale) {
+  if (typeof window === "undefined") return
+  const { pathname, search, hash } = window.location
+  const nextUrl = `${getLocalizedPathname(pathname, locale)}${search}${hash}`
 
   if (nextUrl !== `${pathname}${search}${hash}`) {
     window.history.replaceState({}, "", nextUrl)
-    window.dispatchEvent(new PopStateEvent("popstate"))
   }
 }
 

@@ -31,50 +31,56 @@ const I18nContext = createContext({
   preloadNamespaces: DEFAULT_NAMESPACES,
 })
 
-export function I18nProvider({ children, initialLocale, preload = DEFAULT_NAMESPACES }) {
-  const detectedLocale = useMemo(() => initialLocale || detectLocale(), [initialLocale])
+export function I18nProvider({
+  children,
+  initialLocale,
+  preload = DEFAULT_NAMESPACES,
+  onPathSync,
+}) {
+  const pageLocale = initialLocale || DEFAULT_LOCALE
   const preloadRef = useRef(preload)
+  const onPathSyncRef = useRef(onPathSync)
   const seeded = useMemo(
-    // Use silent mode to avoid triggering notifyLocale during render phase
-    // (which would cause "Cannot update component while rendering" errors)
-    () => primeLocale(detectedLocale, preloadRef.current, { silent: true }),
-    [detectedLocale],
+    () => primeLocale(pageLocale, preloadRef.current, { silent: true }),
+    [pageLocale],
   )
-  const [locale, setLocaleState] = useState(detectedLocale)
+  const [locale, setLocaleState] = useState(pageLocale)
   const [loading, setLoading] = useState(!seeded)
 
   useEffect(() => {
     preloadRef.current = preload
   }, [preload])
 
+  useEffect(() => {
+    onPathSyncRef.current = onPathSync
+  }, [onPathSync])
+
   useLayoutEffect(() => {
     if (seeded) return
-    // useLayoutEffect runs after render, so it's safe to notify here
-    const wasSeeded = primeLocale(detectedLocale, preloadRef.current)
+    const wasSeeded = primeLocale(pageLocale, preloadRef.current)
     if (wasSeeded) {
       setLoading(false)
     }
-  }, [detectedLocale, seeded])
+  }, [pageLocale, seeded])
 
   useEffect(() => {
     let cancelled = false
 
     const boot = async () => {
-      // Use the URL locale if available, as it's the source of truth after navigation.
-      // This prevents races where the locale state is stale after a remount.
       const urlLocale =
         typeof window !== "undefined" ? getLocaleFromUrl(window.location.pathname) : null
-      const targetLocale = urlLocale || locale
+      const preferred = urlLocale || detectLocale({ pathname: window.location.pathname })
 
-      setLoading((prev) => prev)
-      await setI18nLocale(targetLocale, {
+      await setI18nLocale(preferred, {
         namespaces: preloadRef.current,
-        // Sync URL prefix on first load when locale is not in the URL.
-        syncPath: !urlLocale,
       })
-      if (!cancelled) {
-        setLocaleState(getLocale())
-        setLoading(false)
+      if (cancelled) return
+
+      setLocaleState(getLocale())
+      setLoading(false)
+
+      if (!urlLocale && preferred !== pageLocale) {
+        onPathSyncRef.current?.(preferred)
       }
     }
 
@@ -88,16 +94,15 @@ export function I18nProvider({ children, initialLocale, preload = DEFAULT_NAMESP
       cancelled = true
       unsubscribe()
     }
-  }, [locale])
+  }, [pageLocale])
 
   const handleLocaleChange = async (nextLocale) => {
     if (!nextLocale || nextLocale === locale) return nextLocale
     setLoading(true)
     const resolved = await setI18nLocale(nextLocale, {
       namespaces: preloadRef.current,
-      // User intent: sync the URL prefix so navigation stays in step.
-      syncPath: true,
     })
+    onPathSyncRef.current?.(resolved)
     setLocaleState(resolved)
     setLoading(false)
     return resolved

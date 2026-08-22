@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useInRouterContext, useLocation } from "zudoku/router"
 import { I18nProvider } from "../components/i18n-provider.jsx"
+import { useSyncLocalePath, useUrlLocale } from "../hooks/use-locale-path.js"
 import {
   DEFAULT_LOCALE,
   DEFAULT_NAMESPACES,
@@ -10,21 +11,18 @@ import {
 } from "../utils/i18n.js"
 import { CookieConsentManager } from "../components/cookie-consent-manager.jsx"
 
+function syncLocaleFromPath(pathname, namespaces) {
+  const urlLocale = getLocaleFromUrl(pathname) || DEFAULT_LOCALE
+  if (urlLocale !== getLocale()) {
+    void setLocale(urlLocale, { namespaces })
+  }
+}
+
 function RouterLocaleSync({ namespaces }) {
   const location = useLocation()
 
   useEffect(() => {
-    const urlLocale = getLocaleFromUrl(location.pathname)
-    const active = getLocale()
-
-    if (urlLocale && urlLocale !== active) {
-      void setLocale(urlLocale, { namespaces })
-      return
-    }
-
-    if (!urlLocale && active !== DEFAULT_LOCALE) {
-      void setLocale(active, { namespaces })
-    }
+    syncLocaleFromPath(location.pathname, namespaces)
   }, [location.pathname, namespaces])
 
   return null
@@ -34,11 +32,15 @@ export function createI18nPlugin(options = {}) {
   const preloadNamespaces = options.preloadNamespaces || DEFAULT_NAMESPACES
 
   const RoutedWrapper = ({ children }) => {
-    const location = useLocation()
-    const initialLocale = getLocaleFromUrl(location.pathname)
+    const initialLocale = useUrlLocale()
+    const syncPathToLocale = useSyncLocalePath()
 
     return (
-      <I18nProvider preload={preloadNamespaces} initialLocale={initialLocale}>
+      <I18nProvider
+        preload={preloadNamespaces}
+        initialLocale={initialLocale}
+        onPathSync={syncPathToLocale}
+      >
         <RouterLocaleSync namespaces={preloadNamespaces} />
         <CookieConsentManager />
         {children}
@@ -67,20 +69,8 @@ export function createI18nPlugin(options = {}) {
     }),
     events: {
       location: ({ to }) => {
-        // Only handle location events on the client to avoid SSR/hydration issues.
         if (typeof window === "undefined") return
-
-        const urlLocale = getLocaleFromUrl(to.pathname)
-        const active = getLocale()
-
-        if (urlLocale && urlLocale !== active) {
-          void setLocale(urlLocale, { namespaces: preloadNamespaces })
-          return
-        }
-
-        if (!urlLocale && active !== DEFAULT_LOCALE) {
-          void setLocale(active, { namespaces: preloadNamespaces })
-        }
+        syncLocaleFromPath(to.pathname, preloadNamespaces)
       },
     },
   }
