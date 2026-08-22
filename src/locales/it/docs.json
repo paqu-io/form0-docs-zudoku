@@ -167,5 +167,10 @@
     "output-records": {
       "title": "Output and records"
     }
+  },
+  "guides": {
+    "coming-soon": {
+      "title": "Prossimamente"
+    }
   }
 }

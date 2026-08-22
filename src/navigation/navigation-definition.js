@@ -48,7 +48,7 @@ function deepFreeze(value) {
   return Object.freeze(value)
 }
 
-export const navigationDefinition = deepFreeze([
+const documentationItems = [
   category(
     "Getting Started",
     [
@@ -106,4 +106,11 @@ export const navigationDefinition = deepFreeze([
     ],
     { collapsible: false, icon: "nav-link" },
   ),
+]
+
+const guidesItems = [doc("guides/coming-soon", "Coming soon")]
+
+export const navigationDefinition = deepFreeze([
+  category("Documentation", documentationItems),
+  category("Guides", guidesItems),
 ])

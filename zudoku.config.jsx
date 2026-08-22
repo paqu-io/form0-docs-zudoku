@@ -1,5 +1,8 @@
-import { FooterBrandBlock } from "./src/components/footer-brand-block.jsx"
+import { DocsWordmark } from "./src/components/docs-wordmark.jsx"
+import { SiteFooter } from "./src/components/site-footer.jsx"
 import { LanguageSlot } from "./src/components/language-slot.jsx"
+import { MobileDrawerMenu } from "./src/components/mobile-drawer-menu.jsx"
+import { DesktopSectionTabs, TopNavHeightFix } from "./src/components/site-section-nav.jsx"
 import { createI18nPlugin } from "./src/plugins/i18n-plugin.jsx"
 import { createDefaultDarkThemePlugin } from "./src/plugins/default-dark-theme-plugin.jsx"
 import { createDocsSeoPlugin } from "./src/plugins/docs-seo-plugin.jsx"
@@ -16,9 +19,9 @@ const config = {
   site: {
     title: "form0 | docs",
     logo: {
-      src: { light: "/logo-light.svg", dark: "/logo-dark.svg" },
+      src: { light: "/logo-mark.svg", dark: "/logo-mark.svg" },
       alt: "form0 docs",
-      width: "267px",
+      width: "2rem",
     },
     footer: {
       position: "center",
@@ -37,13 +40,12 @@ const config = {
   navigation: [],
   redirects: [{ from: "/", to: "/getting-started/quickstart" }],
   slots: {
+    "head-navigation-start": () => <DocsWordmark />,
     "head-navigation-end": () => <LanguageSlot />,
-    "head-navigation-start": () => (
-      <div className="lg:hidden">
-        <LanguageSlot showLabel />
-      </div>
-    ),
-    "footer-before": () => <FooterBrandBlock />,
+    "top-navigation-before": () => <DesktopSectionTabs />,
+    "top-navigation-after": () => <TopNavHeightFix />,
+    "layout-after-head": () => <MobileDrawerMenu />,
+    "footer-before": () => <SiteFooter />,
   },
   docs: {
     files: "pages/**/*.{md,mdx}",
@@ -320,9 +322,41 @@ const config = {
         font-size: 0.9375rem;
       }
 
-      /* Reduce top padding for the minimal footer */
+      /* Logo mark matches form0-landing (h-8 w-8, gap-3.5 to the wordmark) */
+      header a.shrink-0 img {
+        width: 2rem !important;
+        height: 2rem !important;
+      }
+      header .flex.items-center.gap-4.min-w-0.justify-self-start {
+        gap: 0.875rem;
+      }
+
+      /* Let the mobile search button use the remaining header width */
+      @media (max-width: 1023px) {
+        header .max-w-screen-2xl.mx-auto.flex > div:nth-child(2) {
+          flex: 1 1 0%;
+          min-width: 0;
+        }
+        header .max-w-screen-2xl.mx-auto.flex > div:nth-child(2) > div {
+          width: 100%;
+        }
+        header button.relative.w-full.h-8 {
+          width: 100%;
+          max-width: none;
+          padding-inline-end: 0.75rem;
+        }
+      }
+
+      /* paqu.io-style footer lives in the before slot; hide Zudoku's empty chrome */
       footer > .max-w-screen-2xl {
-        padding-top: 1rem;
+        padding: 0;
+      }
+      footer > .max-w-screen-2xl > .flex.flex-row {
+        display: block;
+        width: 100%;
+      }
+      footer > .max-w-screen-2xl > .flex.items-center.justify-between {
+        display: none;
       }
 
       /* Remove focus ring flash on search dialog close button */
@@ -367,6 +401,15 @@ const config = {
       button[aria-label="Switch to light mode"] > div:last-child svg circle {
         fill: currentColor;
         stroke: currentColor;
+      }
+
+      /* Landing-style preferences live in our drawer slot; hide the native theme row */
+      [data-docs-header-drawer] .overflow-y-auto > ul:not(:has(li)) {
+        display: none;
+      }
+      [data-docs-header-drawer] .border-t > div.flex.items-center.justify-between,
+      [data-vaul-drawer][class*="w-[340px"] .border-t > div.flex.items-center.justify-between {
+        display: none;
       }
     `,
   },

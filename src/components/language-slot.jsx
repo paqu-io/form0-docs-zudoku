@@ -3,7 +3,7 @@ import { LanguageSelector } from "./dropdown-radio-group-language.jsx"
 import { useSyncLocalePath, useUrlLocale } from "../hooks/use-locale-path.js"
 import { setLocale as setGlobalLocale } from "../utils/i18n.js"
 
-export function LanguageSlot({ showLabel = false } = {}) {
+export function LanguageSlot({ showLabel = false, trackingLocation = "header" } = {}) {
   const locale = useUrlLocale()
   const syncPath = useSyncLocalePath()
 
@@ -16,5 +16,12 @@ export function LanguageSlot({ showLabel = false } = {}) {
     [locale, syncPath],
   )
 
-  return <LanguageSelector locale={locale} onChange={handleChange} showLabel={showLabel} />
+  return (
+    <LanguageSelector
+      locale={locale}
+      onChange={handleChange}
+      showLabel={showLabel}
+      trackingLocation={trackingLocation}
+    />
+  )
 }

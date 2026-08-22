@@ -96,6 +96,7 @@
   "es/example": "Página de ejemplo",
   "es/getting-started/quickstart": "Inicio rápido",
   "es/getting-started/schema-edit": "Edita tu primer esquema",
+  "es/guides/coming-soon": "Próximamente",
   "es/introduction": "Bienvenido a Zudoku",
   "es/test": "Esta es una prueba",
   "fr/core/ai-metadata": "ai-metadata (Coming soon)",
@@ -148,10 +149,12 @@
   "fr/example": "Page d'exemple",
   "fr/getting-started/quickstart": "Démarrage rapide",
   "fr/getting-started/schema-edit": "Modifiez votre premier schéma",
+  "fr/guides/coming-soon": "Bientôt disponible",
   "fr/introduction": "Bienvenue sur Zudoku",
   "fr/test": "dasdsadsa",
   "getting-started/quickstart": "Quickstart",
   "getting-started/schema-edit": "Edit your first schema",
+  "guides/coming-soon": "Coming soon",
   "it/core/ai-metadata": "ai-metadata (Coming soon)",
   "it/core/builtins/calculations-expressions/abs": "ABS (Coming soon)",
   "it/core/builtins/calculations-expressions/and": "AND (Coming soon)",
@@ -202,6 +205,7 @@
   "it/example": "Pagina di esempio",
   "it/getting-started/quickstart": "Guida rapida",
   "it/getting-started/schema-edit": "Modifica il tuo primo schema",
+  "it/guides/coming-soon": "Prossimamente",
   "it/introduction": "Benvenuti su Zudoku",
   "it/test": "Questa è una prova"
 }

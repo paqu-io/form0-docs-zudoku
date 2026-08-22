@@ -15,7 +15,13 @@ const LANGUAGES = [
   { value: "it", label: "Italiano" },
 ]
 
-export function LanguageSelector({ size = "sm", locale: localeProp, onChange, showLabel = false }) {
+export function LanguageSelector({
+  size = "sm",
+  locale: localeProp,
+  onChange,
+  showLabel = false,
+  trackingLocation = "header",
+}) {
   const ctx = useI18n()
   const locale = localeProp ?? ctx.locale
   const setLocale = onChange ?? ctx.setLocale
@@ -24,7 +30,7 @@ export function LanguageSelector({ size = "sm", locale: localeProp, onChange, sh
     if (!language || language === locale) return
     setLocale(language)
     if (typeof window !== "undefined" && window.umami) {
-      window.umami.track("language-change", { locale: language, location: "header" })
+      window.umami.track("language-change", { locale: language, location: trackingLocation })
     }
   }
 

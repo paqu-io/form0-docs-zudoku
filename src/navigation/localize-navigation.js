@@ -3,7 +3,8 @@ import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../i18n/constants.js"
 const EXTERNAL_URL_PATTERN = /^[a-z][a-z\d+.-]*:|^\/\//i
 const LOCALE_PREFIX_PATTERN = new RegExp(`^/?(?:${SUPPORTED_LOCALES.join("|")})(?=/|$)`, "i")
 
-const stripLocalePrefix = (path) => path.replace(LOCALE_PREFIX_PATTERN, "").replace(/^\/+/, "")
+export const stripLocalePrefix = (path) =>
+  path.replace(LOCALE_PREFIX_PATTERN, "").replace(/^\/+/, "")
 
 export function localizePath(path, locale) {
   if (!path || EXTERNAL_URL_PATTERN.test(path)) return path

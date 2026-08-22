@@ -5,6 +5,8 @@
   },
   "nav": {
     "documentation": "Documentazione",
+    "guides": "Guide",
+    "comingSoon": "Prossimamente",
     "api": "Riferimento API",
     "gettingStarted": "Per iniziare",
     "usefulLinks": "Link utili",
@@ -40,6 +42,18 @@
   },
   "language": {
     "label": "Lingua"
+  },
+  "theme": {
+    "label": "Tema"
+  },
+  "drawer": {
+    "close": "Chiudi"
+  },
+  "footer": {
+    "copyright": "Copyright © {year} - Tutti i diritti riservati",
+    "madeBy": "Fatto da 🦙 da",
+    "privacy": "Informativa privacy",
+    "manageCookies": "Gestisci i cookie"
   },
   "seo": {
     "titleTemplate": "form0 da paqu.io | docs · {page}",
