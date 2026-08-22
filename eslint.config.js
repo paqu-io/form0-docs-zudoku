@@ -8,7 +8,7 @@ import { defineConfig, globalIgnores } from "eslint/config"
 export default defineConfig([
   globalIgnores(["dist", "public/pagefind"]),
   {
-    files: ["**/*.{js,jsx}"],
+    files: ["**/*.{js,jsx,mjs}"],
     extends: [
       js.configs.recommended,
       reactHooks.configs.flat.recommended,
@@ -34,7 +34,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["eslint.config.js", "scripts/**/*.js", "zudoku.config.jsx"],
+    files: ["eslint.config.js", "scripts/**/*.{js,mjs}", "tests/**/*.js", "zudoku.config.jsx"],
     languageOptions: {
       globals: globals.node,
     },

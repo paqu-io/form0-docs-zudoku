@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { LanguageSelector } from "./dropdown-radio-group-language.jsx"
 import { getLocale, onLocaleChange, setLocale as setGlobalLocale } from "../utils/i18n.js"
 
