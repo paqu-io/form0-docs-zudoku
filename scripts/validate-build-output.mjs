@@ -48,6 +48,27 @@ for (const artifact of ["llms.txt", "llms-full.txt", "pagefind/pagefind.js"]) {
   await requireFile(artifact)
 }
 
+let llmsTxt
+try {
+  llmsTxt = await readFile(path.join(outputRoot, "llms.txt"), "utf8")
+} catch {
+  llmsTxt = ""
+}
+
+if (llmsTxt) {
+  if (!/\[[^\]]+\]\(https:\/\//.test(llmsTxt)) {
+    failures.push("llms.txt does not contain markdown hyperlinks")
+  }
+  if (!llmsTxt.includes("https://docs.form0.dev/getting-started/quickstart.md")) {
+    failures.push("llms.txt is missing the Quickstart absolute .md URL")
+  }
+  for (const banned of ["Questa è una prova", "dasdsadsa"]) {
+    if (llmsTxt.includes(banned)) {
+      failures.push(`llms.txt contains boilerplate page copy: ${banned}`)
+    }
+  }
+}
+
 for (const locale of SUPPORTED_LOCALES) {
   const prefix = locale === DEFAULT_LOCALE ? "" : `${locale}/`
   const htmlPath = `${prefix}${representativeDocument}.html`

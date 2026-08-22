@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "zudoku dev",
-    "build": "zudoku build",
+    "build": "zudoku build && node scripts/write-agent-files.mjs",
     "format": "prettier --write src scripts tests .github/workflows package.json zudoku.config.jsx",
     "format:check": "prettier --check src scripts tests .github/workflows package.json zudoku.config.jsx",
     "i18n:validate": "node scripts/validate-i18n.mjs",
