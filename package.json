@@ -3,20 +3,41 @@
   "version": "0.1.0",
   "type": "module",
   "private": true,
+  "engines": {
+    "node": ">=24 <25",
+    "npm": ">=10"
+  },
   "scripts": {
     "dev": "zudoku dev",
-    "build": "zudoku build",
+    "build": "zudoku build && node scripts/write-agent-files.mjs",
+    "format": "prettier --write src scripts tests .github/workflows package.json zudoku.config.jsx",
+    "format:check": "prettier --check src scripts tests .github/workflows package.json zudoku.config.jsx",
+    "i18n:validate": "node scripts/validate-i18n.mjs",
+    "navigation:validate": "node scripts/validate-navigation-source.mjs",
+    "test": "node --test tests/*.test.js",
+    "build:validate": "node scripts/validate-build-output.mjs",
+    "lint": "npm run lint:advisory",
+    "lint:advisory": "eslint .",
+    "lint:gate": "eslint . --quiet",
+    "lint:check": "npm run lint:gate",
+    "security:audit:prod": "npm audit --omit=dev --audit-level=high",
+    "security:audit:all": "npm audit --audit-level=high",
     "preview": "zudoku preview",
-    "lint": "eslint",
-    "postinstall": "node scripts/apply-zudoku-locale-patch.js"
+    "check": "npm run format:check && npm run i18n:validate && npm run navigation:validate && npm test && npm run lint:gate && npm run build && npm run build:validate"
   },
   "dependencies": {
-    "react": ">=19.0.0",
-    "react-dom": ">=19.0.0",
-    "vanilla-cookieconsent": "^3.1.0",
-    "zudoku": "^0.66.6"
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "vanilla-cookieconsent": "^3.1.0"
   },
   "devDependencies": {
-    "eslint": "^8"
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "globals": "^16.5.0",
+    "prettier": "^3.9.6",
+    "zudoku": "0.83.0"
   }
 }

@@ -1,4 +1,3 @@
-import React from "react"
 import { FooterBrandBlock } from "./src/components/footer-brand-block.jsx"
 import { LanguageSlot } from "./src/components/language-slot.jsx"
 import { createI18nPlugin } from "./src/plugins/i18n-plugin.jsx"
@@ -21,339 +20,21 @@ const config = {
     footer: {
       position: "center",
     },
+    sidebar: {
+      collapsible: true,
+      toggleVisibility: "always",
+    },
   },
   metadata: {
     favicon: "/favicon.svg",
     title: "form0 | docs - %s",
     defaultTitle: "form0 | docs",
   },
-  navigation: [
-    {
-      type: "category",
-      label: "Documentation",
-      link: {
-        type: "doc",
-        file: "getting-started/quickstart",
-      },
-      items: [
-        {
-          type: "category",
-          label: "Getting Started",
-          icon: "sparkles",
-          items: [
-            {
-              type: "doc",
-              file: "getting-started/quickstart",
-              label: "Quickstart",
-            },
-            {
-              type: "doc",
-              file: "getting-started/schema-edit",
-              label: "Edit your first schema",
-            },
-          ],
-        },
-        {
-          type: "category",
-          label: "Core",
-          icon: "cpu",
-          items: [
-            {
-              type: "doc",
-              file: "core/overview",
-              label: "Overview",
-            },
-            {
-              type: "doc",
-              file: "core/concepts",
-              label: "Concepts",
-            },
-            {
-              type: "category",
-              label: "Schema",
-              items: [
-                {
-                  type: "doc",
-                  file: "core/schema/form",
-                  label: "Form object",
-                },
-                {
-                  type: "doc",
-                  file: "core/schema/form-attributes",
-                  label: "Form attributes",
-                },
-                {
-                  type: "doc",
-                  file: "core/schema/elements",
-                  label: "Elements and nesting",
-                },
-                {
-                  type: "doc",
-                  file: "core/schema/conditions-operators",
-                  label: "Conditions and operators",
-                },
-                {
-                  type: "doc",
-                  file: "core/schema/validation",
-                  label: "Schema validation",
-                },
-              ],
-            },
-            {
-              type: "category",
-              label: "Fields",
-              items: [
-                {
-                  type: "doc",
-                  file: "core/fields/catalog",
-                  label: "Field catalog",
-                },
-                {
-                  type: "doc",
-                  file: "core/fields/common-attributes",
-                  label: "Common attributes",
-                },
-                {
-                  type: "doc",
-                  file: "core/fields/input-fields",
-                  label: "Input fields",
-                },
-                {
-                  type: "doc",
-                  file: "core/fields/computed-fields",
-                  label: "Computed fields",
-                },
-                {
-                  type: "doc",
-                  file: "core/fields/media-fields",
-                  label: "Media fields",
-                },
-                {
-                  type: "doc",
-                  file: "core/fields/containers",
-                  label: "Containers",
-                },
-                {
-                  type: "doc",
-                  file: "core/fields/meta-fields",
-                  label: "Meta fields",
-                },
-              ],
-            },
-            {
-              type: "category",
-              label: "Builtins",
-              items: [
-                {
-                  type: "doc",
-                  file: "core/builtins/index",
-                  label: "Builtins overview",
-                },
-                {
-                  type: "category",
-                  label: "Calculations & expressions",
-                  items: [
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions-overview",
-                      label: "Overview",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/if",
-                      label: "IF",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/and",
-                      label: "AND",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/or",
-                      label: "OR",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/count",
-                      label: "COUNT",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/counta",
-                      label: "COUNTA",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/countblank",
-                      label: "COUNTBLANK",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/array",
-                      label: "ARRAY",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/abs",
-                      label: "ABS",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/ceiling",
-                      label: "CEILING",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/cos",
-                      label: "COS",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/sin",
-                      label: "SIN",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/round",
-                      label: "ROUND",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/upper",
-                      label: "UPPER",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/choicevalue",
-                      label: "CHOICEVALUE",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/choicelabel",
-                      label: "CHOICELABEL",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/choicevalues",
-                      label: "CHOICEVALUES",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/choicelabels",
-                      label: "CHOICELABELS",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/hasother",
-                      label: "HASOTHER",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/other",
-                      label: "OTHER",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/form",
-                      label: "FORM",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/datanames",
-                      label: "DATANAMES",
-                      badge: {
-                        label: "New",
-                        color: "purple",
-                      }
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/setresult",
-                      label: "SETRESULT",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/calculations-expressions/eval",
-                      label: "EVAL",
-                    },
-                  ],
-                },
-                {
-                  type: "category",
-                  label: "Events",
-                  items: [
-                    {
-                      type: "doc",
-                      file: "core/builtins/events-overview",
-                      label: "Overview",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/events/on",
-                      label: "ON",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/events/off",
-                      label: "OFF",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/events/alert",
-                      label: "ALERT",
-                    },
-                    {
-                      type: "doc",
-                      file: "core/builtins/events/setvalue",
-                      label: "SETVALUE",
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              type: "doc",
-              file: "core/ai-metadata",
-              label: "AI metadata",
-              badge: {
-                label: "Beta",
-                color: "yellow",
-              }
-            },
-            {
-              type: "doc",
-              file: "core/security",
-              label: "Security and sandboxing",
-            },
-            {
-              type: "doc",
-              file: "core/output-records",
-              label: "Output and records",
-            },
-          ],
-        },
-        {
-          type: "category",
-          label: "Useful Links",
-          collapsible: false,
-          icon: "link",
-          items: [
-            {
-              type: "link",
-              icon: "book",
-              label: "Zudoku Docs",
-              to: "https://zudoku.dev/docs/",
-            },
-          ],
-        },
-      ],
-    },
-  ],
+  navigation: [],
   redirects: [{ from: "/", to: "/getting-started/quickstart" }],
   slots: {
     "head-navigation-end": () => <LanguageSlot />,
-    "top-navigation-side": () => (
+    "head-navigation-start": () => (
       <div className="lg:hidden">
         <LanguageSlot showLabel />
       </div>
@@ -363,14 +44,13 @@ const config = {
   docs: {
     files: "pages/**/*.{md,mdx}",
     defaultOptions: {
-      // To avoid hydration mismatch from locale-dependent toLocaleString in the last-modified tooltip, need to set showLastModified to false and remove the suggestEdit slot.
+      copyPage: true,
       showLastModified: true,
       suggestEdit: {
         url: "https://github.com/paqu-io/form0-docs-zudoku/blob/main/{filePath}",
         text: "Edit this page",
       },
     },
-    copyPage: true,
     publishMarkdown: true,
     llms: {
       llmsTxt: true, // Generate llms.txt
@@ -459,6 +139,45 @@ const config = {
         --sidebar-border: #dcd8d3;
         --sidebar-ring: #e24414;
 
+        --callout-note: oklch(0.55 0.02 280);
+        --callout-tip: oklch(0.62 0.17 145);
+        --callout-info: oklch(0.58 0.16 250);
+        --callout-caution: oklch(0.7 0.16 75);
+        --callout-danger: oklch(0.6 0.22 25);
+        --callout-sparkles: oklch(0.6 0.2 300);
+        --callout-rocket: oklch(0.55 0.2 270);
+        --callout-settings: oklch(0.5 0.015 285);
+        --callout-zap: oklch(0.68 0.17 95);
+        --callout-lock: oklch(0.52 0.06 230);
+        --callout-megaphone: oklch(0.62 0.15 220);
+
+        nav-sparkles,
+        nav-cpu,
+        nav-link,
+        nav-book {
+          display: inline-block;
+          background-color: currentColor;
+          mask-position: center;
+          mask-repeat: no-repeat;
+          mask-size: contain;
+        }
+
+        nav-sparkles {
+          mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xMS4wMTcgMi44MTRhMSAxIDAgMCAxIDEuOTY2IDBsMS4wNTEgNS41NThhMiAyIDAgMCAwIDEuNTk0IDEuNTk0bDUuNTU4IDEuMDUxYTEgMSAwIDAgMSAwIDEuOTY2bC01LjU1OCAxLjA1MWEyIDIgMCAwIDAtMS41OTQgMS41OTRsLTEuMDUxIDUuNTU4YTEgMSAwIDAgMS0xLjk2NiAwbC0xLjA1MS01LjU1OGEyIDIgMCAwIDAtMS41OTQtMS41OTRsLTUuNTU4LTEuMDUxYTEgMSAwIDAgMSAwLTEuOTY2bDUuNTU4LTEuMDUxYTIgMiAwIDAgMCAxLjU5NC0xLjU5NHoiLz48cGF0aCBkPSJNMjAgMnY0Ii8+PHBhdGggZD0iTTIyIDRoLTQiLz48Y2lyY2xlIGN4PSI0IiBjeT0iMjAiIHI9IjIiLz48L3N2Zz4=");
+        }
+
+        nav-cpu {
+          mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xMiAyMHYyIi8+PHBhdGggZD0iTTEyIDJ2MiIvPjxwYXRoIGQ9Ik0xNyAyMHYyIi8+PHBhdGggZD0iTTE3IDJ2MiIvPjxwYXRoIGQ9Ik0yIDEyaDIiLz48cGF0aCBkPSJNMiAxN2gyIi8+PHBhdGggZD0iTTIgN2gyIi8+PHBhdGggZD0iTTIwIDEyaDIiLz48cGF0aCBkPSJNMjAgMTdoMiIvPjxwYXRoIGQ9Ik0yMCA3aDIiLz48cGF0aCBkPSJNNyAyMHYyIi8+PHBhdGggZD0iTTcgMnYyIi8+PHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiByeD0iMiIvPjxyZWN0IHg9IjgiIHk9IjgiIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHJ4PSIxIi8+PC9zdmc+");
+        }
+
+        nav-link {
+          mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xMCAxM2E1IDUgMCAwIDAgNy41NC41NGwzLTNhNSA1IDAgMCAwLTcuMDctNy4wN2wtMS43MiAxLjcxIi8+PHBhdGggZD0iTTE0IDExYTUgNSAwIDAgMC03LjU0LS41NGwtMyAzYTUgNSAwIDAgMCA3LjA3IDcuMDdsMS43MS0xLjcxIi8+PC9zdmc+");
+        }
+
+        nav-book {
+          mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik00IDE5LjV2LTE1QTIuNSAyLjUgMCAwIDEgNi41IDJIMTlhMSAxIDAgMCAxIDEgMXYxOGExIDEgMCAwIDEtMSAxSDYuNWExIDEgMCAwIDEgMC01SDIwIi8+PC9zdmc+");
+        }
+
         --font-serif: Pangolin, cursive;
         --font-sans: Figtree, ui-sans-serif, system-ui, sans-serif;
         --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
@@ -518,6 +237,18 @@ const config = {
         --sidebar-accent-foreground: #f0e9e4;
         --sidebar-border: #3a3533;
         --sidebar-ring: #e24414;
+
+        --callout-note: oklch(0.72 0.02 280);
+        --callout-tip: oklch(0.75 0.17 145);
+        --callout-info: oklch(0.72 0.16 250);
+        --callout-caution: oklch(0.8 0.16 75);
+        --callout-danger: oklch(0.7 0.2 25);
+        --callout-sparkles: oklch(0.72 0.18 300);
+        --callout-rocket: oklch(0.7 0.18 270);
+        --callout-settings: oklch(0.72 0.015 285);
+        --callout-zap: oklch(0.85 0.16 90);
+        --callout-lock: oklch(0.7 0.06 230);
+        --callout-megaphone: oklch(0.75 0.14 220);
 
         --font-serif: Pangolin, cursive;
         --font-sans: Figtree, ui-sans-serif, system-ui, sans-serif;
@@ -635,6 +366,6 @@ const config = {
       }
     `,
   },
-};
+}
 
-export default config;
+export default config

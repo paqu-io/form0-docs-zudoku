@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { LanguageSelector } from "./dropdown-radio-group-language.jsx"
 import { getLocale, onLocaleChange, setLocale as setGlobalLocale } from "../utils/i18n.js"
 
@@ -10,15 +10,10 @@ export function LanguageSlot({ showLabel = false } = {}) {
     return onLocaleChange((next) => setLocaleState(next))
   }, [])
 
-  const handleChange = useCallback(
-    async (nextLocale) => {
-      await setGlobalLocale(nextLocale, { syncPath: true })
-      setLocaleState(nextLocale)
-    },
-    [],
-  )
+  const handleChange = useCallback(async (nextLocale) => {
+    await setGlobalLocale(nextLocale, { syncPath: true })
+    setLocaleState(nextLocale)
+  }, [])
 
-  return (
-    <LanguageSelector locale={locale} onChange={handleChange} showLabel={showLabel} />
-  )
+  return <LanguageSelector locale={locale} onChange={handleChange} showLabel={showLabel} />
 }

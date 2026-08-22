@@ -1,7 +1,7 @@
 {
   "consentModal": {
     "title": "We value your privacy",
-    "description": "We use essential cookies to make this site work and optional analytics/marketing cookies to improve your experience. You can change your choice anytime.",
+    "description": "We use essential cookies to make this site work and optional analytics cookies to improve your experience. You can change your choice anytime.",
     "acceptAllBtn": "Accept all",
     "acceptNecessaryBtn": "Reject non-essential",
     "showPreferencesBtn": "Manage preferences",

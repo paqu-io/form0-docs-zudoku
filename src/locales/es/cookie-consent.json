@@ -1,7 +1,7 @@
 {
   "consentModal": {
     "title": "Respetamos tu privacidad",
-    "description": "Usamos cookies esenciales para que el sitio funcione y analíticas/marketing opcionales para mejorar tu experiencia. Puedes cambiar tu elección en cualquier momento.",
+    "description": "Usamos cookies esenciales para que el sitio funcione y cookies analíticas opcionales para mejorar tu experiencia. Puedes cambiar tu elección en cualquier momento.",
     "acceptAllBtn": "Aceptar todas",
     "acceptNecessaryBtn": "Rechazar opcionales",
     "showPreferencesBtn": "Gestionar preferencias",

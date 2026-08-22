@@ -1,4 +1,3 @@
-import React from "react"
 import { ChevronDown, Globe } from "lucide-react"
 import { Button } from "zudoku/components"
 import {
@@ -16,12 +15,7 @@ const LANGUAGES = [
   { value: "it", label: "Italiano" },
 ]
 
-export function LanguageSelector({
-  size = "sm",
-  locale: localeProp,
-  onChange,
-  showLabel = false,
-}) {
+export function LanguageSelector({ size = "sm", locale: localeProp, onChange, showLabel = false }) {
   const ctx = useI18n()
   const locale = localeProp ?? ctx.locale
   const setLocale = onChange ?? ctx.setLocale

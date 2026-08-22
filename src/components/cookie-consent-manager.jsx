@@ -1,12 +1,8 @@
 import { useEffect, useRef } from "react"
-import * as cookieConsent from "vanilla-cookieconsent"
+import { eraseCookies, run, setLanguage } from "vanilla-cookieconsent/dist/cookieconsent.esm.js"
 
 import { useI18n } from "./i18n-provider.jsx"
-import {
-  UMAMI_DOMAINS,
-  UMAMI_SCRIPT_SRC,
-  UMAMI_WEBSITE_ID,
-} from "../utils/umami-config.js"
+import { UMAMI_DOMAINS, UMAMI_SCRIPT_SRC, UMAMI_WEBSITE_ID } from "../utils/umami-config.js"
 import en from "../locales/en/cookie-consent.json"
 import es from "../locales/es/cookie-consent.json"
 import fr from "../locales/fr/cookie-consent.json"
@@ -14,7 +10,9 @@ import it from "../locales/it/cookie-consent.json"
 
 import "vanilla-cookieconsent/dist/cookieconsent.css"
 
-const { run, setLanguage } = cookieConsent.default ?? cookieConsent
+const CONSENT_COOKIE_NAME = "cc_form0_marketing_consent"
+const LEGACY_CONSENT_COOKIE_NAME = "cc_cookie"
+const CONSENT_COOKIE_DOMAIN = "form0.dev"
 
 const guiOptions = {
   consentModal: {
@@ -43,7 +41,7 @@ const categories = {
         { name: /^_ga/, path: "/" },
         { name: "_gid", path: "/" },
         { name: /^_gcl_/, path: "/" },
-        { name: /^umami/, path: "/", domain: ".form0.dev" },
+        { name: /^umami/, path: "/", domain: CONSENT_COOKIE_DOMAIN },
       ],
     },
   },
@@ -58,8 +56,7 @@ function pruneTranslations(rawTranslations) {
       const copy = JSON.parse(JSON.stringify(value))
       if (copy?.preferencesModal?.sections) {
         copy.preferencesModal.sections = copy.preferencesModal.sections.filter(
-          (section) =>
-            !section.linkedCategory || activeCategories.includes(section.linkedCategory),
+          (section) => !section.linkedCategory || activeCategories.includes(section.linkedCategory),
         )
       }
       return [locale, copy]
@@ -108,7 +105,8 @@ function buildConfig(locale) {
   return {
     revision: 1,
     cookie: {
-      domain: ".form0.dev",
+      name: CONSENT_COOKIE_NAME,
+      domain: CONSENT_COOKIE_DOMAIN,
       expiresAfterDays: 182,
     },
     guiOptions,
@@ -135,6 +133,8 @@ export function CookieConsentManager() {
     const cleanup = syncDarkModeClass()
 
     ensureUmamiScriptTag()
+    eraseCookies(LEGACY_CONSENT_COOKIE_NAME, "/")
+    eraseCookies(LEGACY_CONSENT_COOKIE_NAME, "/", CONSENT_COOKIE_DOMAIN)
     run(buildConfig(locale))
     initializedRef.current = true
 

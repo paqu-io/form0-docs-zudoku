@@ -22,14 +22,14 @@ Every schema starts with a `form` object. It defines metadata, special fields, a
 | `name` | string | ✓ | | Human-friendly form name. |
 | `description` | string | | | Form description. |
 | `id` | string | ✓ | | Unique form identifier. |
-| `record_count` | number | | ✓ | Number of records in the form. |
-| `record_last_change_at` | string | | ✓ | Last record change date/time (ISO 8601). |
+| `record_count` | number | | ✓ | Platform-owned operational counter. Number of records in the form. |
+| `record_last_change_at` | string | | ✓ | Platform-owned operational counter. Last record change date/time (ISO 8601). |
 | `form_created_at` | string | | ✓ | Form creation date/time (ISO 8601). |
 | `form_updated_at` | string | | ✓ | Form last update date/time (ISO 8601). |
 | `form_created_by` | string | | ✓ | User who created the form. |
 | `form_updated_by` | string | | ✓ | User who last updated the form. |
 | `status` | string | | ✓ | Form status, usually `active` or `inactive`. |
-| `version` | number | ✓ | ✓ | Form version, incremented on form save. |
+| `version` | string | | ✓ | Optional platform-owned schema version. form0-core does not increment it. |
 | `main_org_id` | string | | ✓ | Main organization ID. |
 | `main_org_metadata` | object | | ✓ | Main organization metadata fields. |
 | `sub_org_id` | string | | ✓ | Sub-organization ID. |
@@ -71,7 +71,7 @@ validated like standard field types but have fixed behaviors. See [Meta fields](
     "description": "Weekly inspection form",
     "id": "form_001",
     "status": "active",
-    "version": 1,
+    "version": "1",
     "location_enabled": true,
     "location_required": false,
     "status_field": { "type": "StatusField", "label": "Status", "choices": [] },

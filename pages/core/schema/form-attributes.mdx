@@ -61,13 +61,13 @@ Unique form identifier. UUID format recommended.
 
 ## record_count
 
-Number of records in the form.
+Platform-owned operational counter. Number of records in the form.
 
 | Property | Value |
 | --- | --- |
 | Type | `number` |
 | Required | - |
-| Default | `0` |
+| Default | Host-defined |
 | Choices | - |
 | App-level | ✓ |
 
@@ -75,13 +75,13 @@ Number of records in the form.
 
 ## record_last_change_at
 
-Date/time of the last record change in ISO 8601 format.
+Platform-owned operational counter. Date/time of the last record change in ISO 8601 format.
 
 | Property | Value |
 | --- | --- |
 | Type | `string` |
 | Required | - |
-| Default | `null` |
+| Default | Host-defined |
 | Choices | - |
 | App-level | ✓ |
 
@@ -159,13 +159,13 @@ Form status indicator.
 
 ## version
 
-Form version number, incremented on each form save.
+Optional platform-owned schema version. form0-core does not increment it.
 
 | Property | Value |
 | --- | --- |
-| Type | `number` |
-| Required | ✓ |
-| Default | `1` |
+| Type | `string` |
+| Required | - |
+| Default | - |
 | Choices | - |
 | App-level | ✓ |
 

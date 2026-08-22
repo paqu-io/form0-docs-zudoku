@@ -1,5 +1,3 @@
-import React from "react"
-
 export function createCookieConsentPlugin(options = {}) {
   const umami = options.umami || {}
   const websiteId = umami.websiteId

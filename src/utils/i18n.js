@@ -1,5 +1,4 @@
-const DEFAULT_LOCALE = "en"
-const SUPPORTED_LOCALES = ["en", "es", "fr", "it"]
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../i18n/constants.js"
 const DEFAULT_NAMESPACES = ["common", "docs"]
 const EAGER_NAMESPACES = ["common", "docs"]
 const LOCALE_STORAGE_KEY = "form0-docs:locale"
@@ -42,7 +41,7 @@ function getStoredLocale() {
   if (typeof window === "undefined") return null
   try {
     return window.localStorage.getItem(LOCALE_STORAGE_KEY)
-  } catch (error) {
+  } catch {
     return null
   }
 }
@@ -51,7 +50,7 @@ function persistLocale(locale) {
   if (typeof window === "undefined") return
   try {
     window.localStorage.setItem(LOCALE_STORAGE_KEY, locale)
-  } catch (error) {
+  } catch {
     // ignore storage errors
   }
 }
@@ -79,8 +78,7 @@ function syncPathLocale(locale) {
   }
 
   const trailing = segments.length ? `/${segments.join("/")}` : ""
-  const nextPath =
-    locale === DEFAULT_LOCALE ? `${trailing || "/"}` : `/${locale}${trailing || ""}`
+  const nextPath = locale === DEFAULT_LOCALE ? `${trailing || "/"}` : `/${locale}${trailing || ""}`
 
   const normalizedPath = nextPath === "" ? "/" : nextPath
   const nextUrl = `${normalizedPath}${search}${hash}`
@@ -234,7 +232,9 @@ export function detectLocale(options = {}) {
 
   if (serverLocale && isSupportedLocale(serverLocale)) return serverLocale
 
-  const pathLocale = getLocaleFromPath(pathname ?? (typeof window !== "undefined" ? window.location.pathname : ""))
+  const pathLocale = getLocaleFromPath(
+    pathname ?? (typeof window !== "undefined" ? window.location.pathname : ""),
+  )
   if (pathLocale) return pathLocale
 
   const savedLocale = storedLocale ?? getStoredLocale()
