@@ -2,11 +2,14 @@ import { FooterBrandBlock } from "./src/components/footer-brand-block.jsx"
 import { LanguageSlot } from "./src/components/language-slot.jsx"
 import { createI18nPlugin } from "./src/plugins/i18n-plugin.jsx"
 import { createDefaultDarkThemePlugin } from "./src/plugins/default-dark-theme-plugin.jsx"
+import { createDocsSeoPlugin } from "./src/plugins/docs-seo-plugin.jsx"
 import { createLocalizedNavigationPlugin } from "./src/plugins/localized-navigation-plugin.js"
+import { TAB_DEFAULT_TITLE, TAB_TITLE_TEMPLATE } from "./src/seo/site-titles.js"
 
 const i18nPlugin = createI18nPlugin({ preloadNamespaces: ["common", "docs"] })
 const defaultDarkThemePlugin = createDefaultDarkThemePlugin()
 const localizedNavigationPlugin = createLocalizedNavigationPlugin()
+const docsSeoPlugin = createDocsSeoPlugin()
 
 /** @type {import('zudoku').ZudokuConfig} */
 const config = {
@@ -27,8 +30,9 @@ const config = {
   },
   metadata: {
     favicon: "/favicon.svg",
-    title: "form0 | docs - %s",
-    defaultTitle: "form0 | docs",
+    // Browser tab. og:title / twitter:title use the longer "by paqu.io" form.
+    title: TAB_TITLE_TEMPLATE,
+    defaultTitle: TAB_DEFAULT_TITLE,
   },
   navigation: [],
   redirects: [{ from: "/", to: "/getting-started/quickstart" }],
@@ -58,7 +62,7 @@ const config = {
       includeProtected: false, // Exclude protected routes
     },
   },
-  plugins: [i18nPlugin, localizedNavigationPlugin, defaultDarkThemePlugin],
+  plugins: [i18nPlugin, localizedNavigationPlugin, defaultDarkThemePlugin, docsSeoPlugin],
   // Pagefind search only works after build (index is generated at build time).
   // Dev mode will show errors in console but search will work in production.
   search: {

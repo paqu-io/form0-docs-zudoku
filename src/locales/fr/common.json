@@ -40,5 +40,9 @@
   },
   "language": {
     "label": "Langue"
+  },
+  "seo": {
+    "titleTemplate": "form0 par paqu.io | docs · {page}",
+    "defaultTitle": "form0 par paqu.io | docs"
   }
 }

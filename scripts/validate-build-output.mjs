@@ -151,6 +151,27 @@ for (const locale of SUPPORTED_LOCALES) {
     }
   }
 
+  const mdxPath = path.join(repositoryRoot, "pages", prefix, `${representativeDocument}.mdx`)
+  let pageTitle
+  try {
+    const mdx = await readFile(mdxPath, "utf8")
+    pageTitle = mdx.match(/^title:\s*(.+)$/m)?.[1]?.trim()
+  } catch {
+    pageTitle = undefined
+  }
+  if (pageTitle) {
+    const expectedTabTitle = `form0 | docs · ${pageTitle}`
+    const expectedOgTitle = commonMessages[locale].seo.titleTemplate.replace("{page}", pageTitle)
+    if (!html.includes(`<title>${expectedTabTitle}</title>`)) {
+      failures.push(`${htmlPath} does not contain tab title ${JSON.stringify(expectedTabTitle)}`)
+    }
+    if (!html.includes(`content="${expectedOgTitle}"`)) {
+      failures.push(
+        `${htmlPath} does not contain Open Graph title ${JSON.stringify(expectedOgTitle)}`,
+      )
+    }
+  }
+
   const selectedLanguageLabels = [
     ...html.matchAll(/aria-label="Select language"[^>]*>([\s\S]*?)<\/button>/g),
   ].map((match) => {
@@ -212,6 +233,6 @@ if (failures.length) {
   process.exitCode = 1
 } else {
   console.log(
-    "Validated localized navigation, icons, callouts, Markdown, Pagefind, edit links and LLM outputs.",
+    "Validated localized navigation, icons, callouts, Markdown, Pagefind, titles, edit links and LLM outputs.",
   )
 }
