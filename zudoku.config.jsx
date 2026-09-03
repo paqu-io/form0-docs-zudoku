@@ -7,6 +7,7 @@ import { createI18nPlugin } from "./src/plugins/i18n-plugin.jsx"
 import { createDefaultDarkThemePlugin } from "./src/plugins/default-dark-theme-plugin.jsx"
 import { createDocsSeoPlugin } from "./src/plugins/docs-seo-plugin.jsx"
 import { createLocalizedNavigationPlugin } from "./src/plugins/localized-navigation-plugin.js"
+import { DOCS_ORIGIN, sitemapExcludedPaths } from "./src/seo/page-metadata.js"
 import { TAB_DEFAULT_TITLE, TAB_TITLE_TEMPLATE } from "./src/seo/site-titles.js"
 
 const i18nPlugin = createI18nPlugin({ preloadNamespaces: ["common", "docs"] })
@@ -22,6 +23,7 @@ const config = {
       src: { light: "/logo-mark.svg", dark: "/logo-mark.svg" },
       alt: "form0 docs",
       width: "2rem",
+      href: "/getting-started/quickstart",
     },
     footer: {
       position: "center",
@@ -30,6 +32,16 @@ const config = {
       collapsible: true,
       toggleVisibility: "always",
     },
+  },
+  canonicalUrlOrigin: DOCS_ORIGIN,
+  sitemap: {
+    siteUrl: DOCS_ORIGIN,
+    changefreq: "weekly",
+    priority: 0.7,
+    // Zudoku 0.83 uses the build time for every URL rather than each file's
+    // actual modification time, so omitting lastmod is more truthful.
+    autoLastmod: false,
+    exclude: sitemapExcludedPaths(),
   },
   metadata: {
     favicon: "/favicon.svg",
@@ -59,9 +71,11 @@ const config = {
     },
     publishMarkdown: true,
     llms: {
-      llmsTxt: true, // Generate llms.txt
-      llmsTxtFull: true, // Generate llms-full.txt
-      includeProtected: false, // Exclude protected routes
+      // Generated after the build so untranslated and temporary pages can
+      // remain reachable without entering the AI discovery corpus.
+      llmsTxt: false,
+      llmsTxtFull: false,
+      includeProtected: false,
     },
   },
   plugins: [i18nPlugin, localizedNavigationPlugin, defaultDarkThemePlugin, docsSeoPlugin],

@@ -10,11 +10,9 @@ import {
 import {
   DEFAULT_LOCALE,
   DEFAULT_NAMESPACES,
-  PATHNAME_LOCALE_EXCLUSIONS,
   detectLocale,
   getLocale,
   getLocaleFromUrl,
-  getSupportedLocales,
   onLocaleChange,
   primeLocale,
   setLocale as setI18nLocale,
@@ -119,41 +117,6 @@ export function I18nProvider({
     }),
     [locale, loading],
   )
-
-  useEffect(() => {
-    if (typeof document === "undefined" || typeof window === "undefined") return
-
-    const { pathname, origin, search, hash } = window.location
-    if (PATHNAME_LOCALE_EXCLUSIONS.some((prefix) => pathname.startsWith(prefix))) return
-
-    const pathLocale = getLocaleFromUrl(pathname)
-    const segments = pathname.split("/").filter(Boolean)
-    if (pathLocale) segments.shift()
-    const trailing = segments.length ? `/${segments.join("/")}` : "/"
-
-    const hrefForLocale = (loc) => {
-      const path = loc === DEFAULT_LOCALE ? trailing : `/${loc}${trailing === "/" ? "" : trailing}`
-      return `${origin}${path}${search}${hash}`
-    }
-
-    document
-      .querySelectorAll('link[rel="alternate"][data-hreflang]')
-      .forEach((node) => node.remove())
-
-    const locales = [...getSupportedLocales(), "x-default"]
-
-    locales.forEach((loc) => {
-      const link = document.createElement("link")
-      link.setAttribute("rel", "alternate")
-      link.setAttribute("data-hreflang", "true")
-      link.setAttribute("hreflang", loc)
-      link.setAttribute(
-        "href",
-        loc === "x-default" ? hrefForLocale(DEFAULT_LOCALE) : hrefForLocale(loc),
-      )
-      document.head.appendChild(link)
-    })
-  }, [locale])
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>
 }

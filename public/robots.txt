@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://docs.form0.dev/sitemap.xml

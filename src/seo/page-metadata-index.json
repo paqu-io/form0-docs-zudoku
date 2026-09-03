@@ -1,0 +1,2937 @@
+{
+  "/core/ai-metadata": {
+    "pathname": "/core/ai-metadata",
+    "translationKey": "/core/ai-metadata",
+    "locale": "en",
+    "title": "AI metadata",
+    "description": "Optional AI guidance for forms and fields.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/ai-metadata"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/abs": {
+    "pathname": "/core/builtins/calculations-expressions/abs",
+    "translationKey": "/core/builtins/calculations-expressions/abs",
+    "locale": "en",
+    "title": "ABS",
+    "description": "Returns the absolute value of a number.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/abs"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/and": {
+    "pathname": "/core/builtins/calculations-expressions/and",
+    "translationKey": "/core/builtins/calculations-expressions/and",
+    "locale": "en",
+    "title": "AND",
+    "description": "Returns true when all arguments are truthy.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/and"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/array": {
+    "pathname": "/core/builtins/calculations-expressions/array",
+    "translationKey": "/core/builtins/calculations-expressions/array",
+    "locale": "en",
+    "title": "ARRAY",
+    "description": "Builds an array from arguments or parses a string.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/array"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/ceiling": {
+    "pathname": "/core/builtins/calculations-expressions/ceiling",
+    "translationKey": "/core/builtins/calculations-expressions/ceiling",
+    "locale": "en",
+    "title": "CEILING",
+    "description": "Rounds a value up to the nearest multiple of a factor.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/ceiling"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/choicelabel": {
+    "pathname": "/core/builtins/calculations-expressions/choicelabel",
+    "translationKey": "/core/builtins/calculations-expressions/choicelabel",
+    "locale": "en",
+    "title": "CHOICELABEL",
+    "description": "Returns the selected label from a single-choice field.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicelabel"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/choicelabels": {
+    "pathname": "/core/builtins/calculations-expressions/choicelabels",
+    "translationKey": "/core/builtins/calculations-expressions/choicelabels",
+    "locale": "en",
+    "title": "CHOICELABELS",
+    "description": "Returns an array of selected labels from a multi-choice field.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicelabels"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/choicevalue": {
+    "pathname": "/core/builtins/calculations-expressions/choicevalue",
+    "translationKey": "/core/builtins/calculations-expressions/choicevalue",
+    "locale": "en",
+    "title": "CHOICEVALUE",
+    "description": "Returns the selected value from a single-choice field.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicevalue"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/choicevalues": {
+    "pathname": "/core/builtins/calculations-expressions/choicevalues",
+    "translationKey": "/core/builtins/calculations-expressions/choicevalues",
+    "locale": "en",
+    "title": "CHOICEVALUES",
+    "description": "Returns an array of selected values from a multi-choice field.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicevalues"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/cos": {
+    "pathname": "/core/builtins/calculations-expressions/cos",
+    "translationKey": "/core/builtins/calculations-expressions/cos",
+    "locale": "en",
+    "title": "COS",
+    "description": "Returns the cosine of a value (in radians).",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/cos"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/count": {
+    "pathname": "/core/builtins/calculations-expressions/count",
+    "translationKey": "/core/builtins/calculations-expressions/count",
+    "locale": "en",
+    "title": "COUNT",
+    "description": "Counts numeric values in an array.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/count"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/counta": {
+    "pathname": "/core/builtins/calculations-expressions/counta",
+    "translationKey": "/core/builtins/calculations-expressions/counta",
+    "locale": "en",
+    "title": "COUNTA",
+    "description": "Counts all items in an array.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/counta"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/countblank": {
+    "pathname": "/core/builtins/calculations-expressions/countblank",
+    "translationKey": "/core/builtins/calculations-expressions/countblank",
+    "locale": "en",
+    "title": "COUNTBLANK",
+    "description": "Counts blank values in an array (null, undefined, empty string).",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/countblank"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/datanames": {
+    "pathname": "/core/builtins/calculations-expressions/datanames",
+    "translationKey": "/core/builtins/calculations-expressions/datanames",
+    "locale": "en",
+    "title": "DATANAMES",
+    "description": "Returns field data names, optionally filtered by type.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/datanames"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/eval": {
+    "pathname": "/core/builtins/calculations-expressions/eval",
+    "translationKey": "/core/builtins/calculations-expressions/eval",
+    "locale": "en",
+    "title": "EVAL",
+    "description": "Evaluates a dynamic expression in a restricted context.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/eval"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/form": {
+    "pathname": "/core/builtins/calculations-expressions/form",
+    "translationKey": "/core/builtins/calculations-expressions/form",
+    "locale": "en",
+    "title": "FORM",
+    "description": "Accesses the form schema (planned, not yet implemented).",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/form"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/hasother": {
+    "pathname": "/core/builtins/calculations-expressions/hasother",
+    "translationKey": "/core/builtins/calculations-expressions/hasother",
+    "locale": "en",
+    "title": "HASOTHER",
+    "description": "Returns true if an “other” value was entered.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/hasother"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/if": {
+    "pathname": "/core/builtins/calculations-expressions/if",
+    "translationKey": "/core/builtins/calculations-expressions/if",
+    "locale": "en",
+    "title": "IF",
+    "description": "Choose between two values based on a condition.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/if"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/or": {
+    "pathname": "/core/builtins/calculations-expressions/or",
+    "translationKey": "/core/builtins/calculations-expressions/or",
+    "locale": "en",
+    "title": "OR",
+    "description": "Returns true when any argument is truthy.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/or"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/other": {
+    "pathname": "/core/builtins/calculations-expressions/other",
+    "translationKey": "/core/builtins/calculations-expressions/other",
+    "locale": "en",
+    "title": "OTHER",
+    "description": "Returns the “other” label when present.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/other"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/round": {
+    "pathname": "/core/builtins/calculations-expressions/round",
+    "translationKey": "/core/builtins/calculations-expressions/round",
+    "locale": "en",
+    "title": "ROUND",
+    "description": "Rounds a number to a given number of decimal places.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/round"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/setresult": {
+    "pathname": "/core/builtins/calculations-expressions/setresult",
+    "translationKey": "/core/builtins/calculations-expressions/setresult",
+    "locale": "en",
+    "title": "SETRESULT",
+    "description": "Sets the result value for multi-line expressions.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/setresult"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/sin": {
+    "pathname": "/core/builtins/calculations-expressions/sin",
+    "translationKey": "/core/builtins/calculations-expressions/sin",
+    "locale": "en",
+    "title": "SIN",
+    "description": "Returns the sine of a value (in radians).",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/sin"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/upper": {
+    "pathname": "/core/builtins/calculations-expressions/upper",
+    "translationKey": "/core/builtins/calculations-expressions/upper",
+    "locale": "en",
+    "title": "UPPER",
+    "description": "Converts a value to an uppercase string.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/upper"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions-overview": {
+    "pathname": "/core/builtins/calculations-expressions-overview",
+    "translationKey": "/core/builtins/calculations-expressions-overview",
+    "locale": "en",
+    "title": "Calculations & expressions",
+    "description": "Builtins available in calculated fields and expressions.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions-overview"
+      }
+    ]
+  },
+  "/core/builtins/events/alert": {
+    "pathname": "/core/builtins/events/alert",
+    "translationKey": "/core/builtins/events/alert",
+    "locale": "en",
+    "title": "ALERT",
+    "description": "Shows an alert with a title and optional message.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/alert"
+      }
+    ]
+  },
+  "/core/builtins/events/off": {
+    "pathname": "/core/builtins/events/off",
+    "translationKey": "/core/builtins/events/off",
+    "locale": "en",
+    "title": "OFF",
+    "description": "Removes event handlers.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/off"
+      }
+    ]
+  },
+  "/core/builtins/events/on": {
+    "pathname": "/core/builtins/events/on",
+    "translationKey": "/core/builtins/events/on",
+    "locale": "en",
+    "title": "ON",
+    "description": "Registers an event handler.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/on"
+      }
+    ]
+  },
+  "/core/builtins/events/setvalue": {
+    "pathname": "/core/builtins/events/setvalue",
+    "translationKey": "/core/builtins/events/setvalue",
+    "locale": "en",
+    "title": "SETVALUE",
+    "description": "Sets a field value during an event.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/setvalue"
+      }
+    ]
+  },
+  "/core/builtins/events-overview": {
+    "pathname": "/core/builtins/events-overview",
+    "translationKey": "/core/builtins/events-overview",
+    "locale": "en",
+    "title": "Events",
+    "description": "Builtins available in form events.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events-overview"
+      }
+    ]
+  },
+  "/core/builtins/index": {
+    "pathname": "/core/builtins/index",
+    "translationKey": "/core/builtins/index",
+    "locale": "en",
+    "title": "Builtins overview",
+    "description": "Built-in functions available in calculations and events.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/index"
+      }
+    ]
+  },
+  "/core/concepts": {
+    "pathname": "/core/concepts",
+    "translationKey": "/core/concepts",
+    "locale": "en",
+    "title": "Concepts",
+    "description": "The schema-first mental model behind form0-core.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/concepts"
+      }
+    ]
+  },
+  "/core/fields/catalog": {
+    "pathname": "/core/fields/catalog",
+    "translationKey": "/core/fields/catalog",
+    "locale": "en",
+    "title": "Field catalog",
+    "description": "All field types and their categories.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/catalog"
+      }
+    ]
+  },
+  "/core/fields/common-attributes": {
+    "pathname": "/core/fields/common-attributes",
+    "translationKey": "/core/fields/common-attributes",
+    "locale": "en",
+    "title": "Common attributes",
+    "description": "Attributes shared by most field types.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/common-attributes"
+      }
+    ]
+  },
+  "/core/fields/computed-fields": {
+    "pathname": "/core/fields/computed-fields",
+    "translationKey": "/core/fields/computed-fields",
+    "locale": "en",
+    "title": "Computed fields",
+    "description": "CalculatedField and LabelField.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/computed-fields"
+      }
+    ]
+  },
+  "/core/fields/containers": {
+    "pathname": "/core/fields/containers",
+    "translationKey": "/core/fields/containers",
+    "locale": "en",
+    "title": "Containers",
+    "description": "Sections, repeatable sections, and building plans.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/containers"
+      }
+    ]
+  },
+  "/core/fields/input-fields": {
+    "pathname": "/core/fields/input-fields",
+    "translationKey": "/core/fields/input-fields",
+    "locale": "en",
+    "title": "Input fields",
+    "description": "Text, numeric, choice, and date/time field types.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/input-fields"
+      }
+    ]
+  },
+  "/core/fields/media-fields": {
+    "pathname": "/core/fields/media-fields",
+    "translationKey": "/core/fields/media-fields",
+    "locale": "en",
+    "title": "Media fields",
+    "description": "Signature, photo, and video capture.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/media-fields"
+      }
+    ]
+  },
+  "/core/fields/meta-fields": {
+    "pathname": "/core/fields/meta-fields",
+    "translationKey": "/core/fields/meta-fields",
+    "locale": "en",
+    "title": "Meta fields",
+    "description": "FormLinkField, StatusField, and TitleField.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/meta-fields"
+      }
+    ]
+  },
+  "/core/output-records": {
+    "pathname": "/core/output-records",
+    "translationKey": "/core/output-records",
+    "locale": "en",
+    "title": "Output and records",
+    "description": "Engine state and structured record output.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/output-records"
+      }
+    ]
+  },
+  "/core/overview": {
+    "pathname": "/core/overview",
+    "translationKey": "/core/overview",
+    "locale": "en",
+    "title": "Overview",
+    "description": "What form0-core is responsible for and how it fits in the form0 ecosystem.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/overview"
+      }
+    ]
+  },
+  "/core/schema/conditions-operators": {
+    "pathname": "/core/schema/conditions-operators",
+    "translationKey": "/core/schema/conditions-operators",
+    "locale": "en",
+    "title": "Conditions and operators",
+    "description": "Conditional visibility, requirements, and read-only rules.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/conditions-operators"
+      }
+    ]
+  },
+  "/core/schema/elements": {
+    "pathname": "/core/schema/elements",
+    "translationKey": "/core/schema/elements",
+    "locale": "en",
+    "title": "Elements and nesting",
+    "description": "How fields and sections are organized in a schema.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/elements"
+      }
+    ]
+  },
+  "/core/schema/form-attributes": {
+    "pathname": "/core/schema/form-attributes",
+    "translationKey": "/core/schema/form-attributes",
+    "locale": "en",
+    "title": "Form attributes",
+    "description": "Complete reference for all form object attributes.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/form-attributes"
+      }
+    ]
+  },
+  "/core/schema/form": {
+    "pathname": "/core/schema/form",
+    "translationKey": "/core/schema/form",
+    "locale": "en",
+    "title": "Form object",
+    "description": "Top-level schema attributes and form metadata.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/form"
+      }
+    ]
+  },
+  "/core/schema/validation": {
+    "pathname": "/core/schema/validation",
+    "translationKey": "/core/schema/validation",
+    "locale": "en",
+    "title": "Schema validation",
+    "description": "How form0-core validates schemas and conditions.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/validation"
+      }
+    ]
+  },
+  "/core/security": {
+    "pathname": "/core/security",
+    "translationKey": "/core/security",
+    "locale": "en",
+    "title": "Security and sandboxing",
+    "description": "Expression security modes in form0-core.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/security"
+      }
+    ]
+  },
+  "/es/core/ai-metadata": {
+    "pathname": "/es/core/ai-metadata",
+    "translationKey": "/core/ai-metadata",
+    "locale": "es",
+    "title": "ai-metadata (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/ai-metadata"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/abs": {
+    "pathname": "/es/core/builtins/calculations-expressions/abs",
+    "translationKey": "/core/builtins/calculations-expressions/abs",
+    "locale": "es",
+    "title": "ABS (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/abs"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/and": {
+    "pathname": "/es/core/builtins/calculations-expressions/and",
+    "translationKey": "/core/builtins/calculations-expressions/and",
+    "locale": "es",
+    "title": "AND (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/and"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/array": {
+    "pathname": "/es/core/builtins/calculations-expressions/array",
+    "translationKey": "/core/builtins/calculations-expressions/array",
+    "locale": "es",
+    "title": "ARRAY (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/array"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/ceiling": {
+    "pathname": "/es/core/builtins/calculations-expressions/ceiling",
+    "translationKey": "/core/builtins/calculations-expressions/ceiling",
+    "locale": "es",
+    "title": "CEILING (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/ceiling"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/choicelabel": {
+    "pathname": "/es/core/builtins/calculations-expressions/choicelabel",
+    "translationKey": "/core/builtins/calculations-expressions/choicelabel",
+    "locale": "es",
+    "title": "CHOICELABEL (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicelabel"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/choicelabels": {
+    "pathname": "/es/core/builtins/calculations-expressions/choicelabels",
+    "translationKey": "/core/builtins/calculations-expressions/choicelabels",
+    "locale": "es",
+    "title": "CHOICELABELS (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicelabels"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/choicevalue": {
+    "pathname": "/es/core/builtins/calculations-expressions/choicevalue",
+    "translationKey": "/core/builtins/calculations-expressions/choicevalue",
+    "locale": "es",
+    "title": "CHOICEVALUE (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicevalue"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/choicevalues": {
+    "pathname": "/es/core/builtins/calculations-expressions/choicevalues",
+    "translationKey": "/core/builtins/calculations-expressions/choicevalues",
+    "locale": "es",
+    "title": "CHOICEVALUES (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicevalues"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/cos": {
+    "pathname": "/es/core/builtins/calculations-expressions/cos",
+    "translationKey": "/core/builtins/calculations-expressions/cos",
+    "locale": "es",
+    "title": "COS (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/cos"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/count": {
+    "pathname": "/es/core/builtins/calculations-expressions/count",
+    "translationKey": "/core/builtins/calculations-expressions/count",
+    "locale": "es",
+    "title": "COUNT (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/count"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/counta": {
+    "pathname": "/es/core/builtins/calculations-expressions/counta",
+    "translationKey": "/core/builtins/calculations-expressions/counta",
+    "locale": "es",
+    "title": "COUNTA (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/counta"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/countblank": {
+    "pathname": "/es/core/builtins/calculations-expressions/countblank",
+    "translationKey": "/core/builtins/calculations-expressions/countblank",
+    "locale": "es",
+    "title": "COUNTBLANK (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/countblank"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/datanames": {
+    "pathname": "/es/core/builtins/calculations-expressions/datanames",
+    "translationKey": "/core/builtins/calculations-expressions/datanames",
+    "locale": "es",
+    "title": "DATANAMES (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/datanames"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/eval": {
+    "pathname": "/es/core/builtins/calculations-expressions/eval",
+    "translationKey": "/core/builtins/calculations-expressions/eval",
+    "locale": "es",
+    "title": "EVAL (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/eval"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/form": {
+    "pathname": "/es/core/builtins/calculations-expressions/form",
+    "translationKey": "/core/builtins/calculations-expressions/form",
+    "locale": "es",
+    "title": "FORM (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/form"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/hasother": {
+    "pathname": "/es/core/builtins/calculations-expressions/hasother",
+    "translationKey": "/core/builtins/calculations-expressions/hasother",
+    "locale": "es",
+    "title": "HASOTHER (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/hasother"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/if": {
+    "pathname": "/es/core/builtins/calculations-expressions/if",
+    "translationKey": "/core/builtins/calculations-expressions/if",
+    "locale": "es",
+    "title": "IF (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/if"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/or": {
+    "pathname": "/es/core/builtins/calculations-expressions/or",
+    "translationKey": "/core/builtins/calculations-expressions/or",
+    "locale": "es",
+    "title": "OR (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/or"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/other": {
+    "pathname": "/es/core/builtins/calculations-expressions/other",
+    "translationKey": "/core/builtins/calculations-expressions/other",
+    "locale": "es",
+    "title": "OTHER (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/other"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/round": {
+    "pathname": "/es/core/builtins/calculations-expressions/round",
+    "translationKey": "/core/builtins/calculations-expressions/round",
+    "locale": "es",
+    "title": "ROUND (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/round"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/setresult": {
+    "pathname": "/es/core/builtins/calculations-expressions/setresult",
+    "translationKey": "/core/builtins/calculations-expressions/setresult",
+    "locale": "es",
+    "title": "SETRESULT (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/setresult"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/sin": {
+    "pathname": "/es/core/builtins/calculations-expressions/sin",
+    "translationKey": "/core/builtins/calculations-expressions/sin",
+    "locale": "es",
+    "title": "SIN (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/sin"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/upper": {
+    "pathname": "/es/core/builtins/calculations-expressions/upper",
+    "translationKey": "/core/builtins/calculations-expressions/upper",
+    "locale": "es",
+    "title": "UPPER (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/upper"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions-overview": {
+    "pathname": "/es/core/builtins/calculations-expressions-overview",
+    "translationKey": "/core/builtins/calculations-expressions-overview",
+    "locale": "es",
+    "title": "Calculations & expressions (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions-overview"
+      }
+    ]
+  },
+  "/es/core/builtins/events/alert": {
+    "pathname": "/es/core/builtins/events/alert",
+    "translationKey": "/core/builtins/events/alert",
+    "locale": "es",
+    "title": "ALERT (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/alert"
+      }
+    ]
+  },
+  "/es/core/builtins/events/off": {
+    "pathname": "/es/core/builtins/events/off",
+    "translationKey": "/core/builtins/events/off",
+    "locale": "es",
+    "title": "OFF (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/off"
+      }
+    ]
+  },
+  "/es/core/builtins/events/on": {
+    "pathname": "/es/core/builtins/events/on",
+    "translationKey": "/core/builtins/events/on",
+    "locale": "es",
+    "title": "ON (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/on"
+      }
+    ]
+  },
+  "/es/core/builtins/events/setvalue": {
+    "pathname": "/es/core/builtins/events/setvalue",
+    "translationKey": "/core/builtins/events/setvalue",
+    "locale": "es",
+    "title": "SETVALUE (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/setvalue"
+      }
+    ]
+  },
+  "/es/core/builtins/events-overview": {
+    "pathname": "/es/core/builtins/events-overview",
+    "translationKey": "/core/builtins/events-overview",
+    "locale": "es",
+    "title": "Events (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events-overview"
+      }
+    ]
+  },
+  "/es/core/builtins/index": {
+    "pathname": "/es/core/builtins/index",
+    "translationKey": "/core/builtins/index",
+    "locale": "es",
+    "title": "Builtins overview (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/index"
+      }
+    ]
+  },
+  "/es/core/concepts": {
+    "pathname": "/es/core/concepts",
+    "translationKey": "/core/concepts",
+    "locale": "es",
+    "title": "concepts (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/concepts"
+      }
+    ]
+  },
+  "/es/core/fields/catalog": {
+    "pathname": "/es/core/fields/catalog",
+    "translationKey": "/core/fields/catalog",
+    "locale": "es",
+    "title": "catalog (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/catalog"
+      }
+    ]
+  },
+  "/es/core/fields/common-attributes": {
+    "pathname": "/es/core/fields/common-attributes",
+    "translationKey": "/core/fields/common-attributes",
+    "locale": "es",
+    "title": "common-attributes (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/common-attributes"
+      }
+    ]
+  },
+  "/es/core/fields/computed-fields": {
+    "pathname": "/es/core/fields/computed-fields",
+    "translationKey": "/core/fields/computed-fields",
+    "locale": "es",
+    "title": "computed-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/computed-fields"
+      }
+    ]
+  },
+  "/es/core/fields/containers": {
+    "pathname": "/es/core/fields/containers",
+    "translationKey": "/core/fields/containers",
+    "locale": "es",
+    "title": "containers (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/containers"
+      }
+    ]
+  },
+  "/es/core/fields/input-fields": {
+    "pathname": "/es/core/fields/input-fields",
+    "translationKey": "/core/fields/input-fields",
+    "locale": "es",
+    "title": "input-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/input-fields"
+      }
+    ]
+  },
+  "/es/core/fields/media-fields": {
+    "pathname": "/es/core/fields/media-fields",
+    "translationKey": "/core/fields/media-fields",
+    "locale": "es",
+    "title": "media-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/media-fields"
+      }
+    ]
+  },
+  "/es/core/fields/meta-fields": {
+    "pathname": "/es/core/fields/meta-fields",
+    "translationKey": "/core/fields/meta-fields",
+    "locale": "es",
+    "title": "meta-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/meta-fields"
+      }
+    ]
+  },
+  "/es/core/output-records": {
+    "pathname": "/es/core/output-records",
+    "translationKey": "/core/output-records",
+    "locale": "es",
+    "title": "output-records (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/output-records"
+      }
+    ]
+  },
+  "/es/core/overview": {
+    "pathname": "/es/core/overview",
+    "translationKey": "/core/overview",
+    "locale": "es",
+    "title": "overview (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/overview"
+      }
+    ]
+  },
+  "/es/core/schema/conditions-operators": {
+    "pathname": "/es/core/schema/conditions-operators",
+    "translationKey": "/core/schema/conditions-operators",
+    "locale": "es",
+    "title": "conditions-operators (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/conditions-operators"
+      }
+    ]
+  },
+  "/es/core/schema/elements": {
+    "pathname": "/es/core/schema/elements",
+    "translationKey": "/core/schema/elements",
+    "locale": "es",
+    "title": "elements (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/elements"
+      }
+    ]
+  },
+  "/es/core/schema/form-attributes": {
+    "pathname": "/es/core/schema/form-attributes",
+    "translationKey": "/core/schema/form-attributes",
+    "locale": "es",
+    "title": "Form attributes (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/form-attributes"
+      }
+    ]
+  },
+  "/es/core/schema/form": {
+    "pathname": "/es/core/schema/form",
+    "translationKey": "/core/schema/form",
+    "locale": "es",
+    "title": "form (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/form"
+      }
+    ]
+  },
+  "/es/core/schema/validation": {
+    "pathname": "/es/core/schema/validation",
+    "translationKey": "/core/schema/validation",
+    "locale": "es",
+    "title": "validation (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/validation"
+      }
+    ]
+  },
+  "/es/core/security": {
+    "pathname": "/es/core/security",
+    "translationKey": "/core/security",
+    "locale": "es",
+    "title": "security (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/security"
+      }
+    ]
+  },
+  "/es/getting-started/quickstart": {
+    "pathname": "/es/getting-started/quickstart",
+    "translationKey": "/getting-started/quickstart",
+    "locale": "es",
+    "title": "Inicio rápido",
+    "description": "Crea y visualiza tu primer esquema form0 en minutos.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/quickstart"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/quickstart"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/quickstart"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/quickstart"
+      }
+    ]
+  },
+  "/es/getting-started/schema-edit": {
+    "pathname": "/es/getting-started/schema-edit",
+    "translationKey": "/getting-started/schema-edit",
+    "locale": "es",
+    "title": "Edita tu primer esquema",
+    "description": "Añade un NumericField y un CalculatedField usando el modo de edición de esquemas.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/schema-edit"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/schema-edit"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/schema-edit"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/schema-edit"
+      }
+    ]
+  },
+  "/es/guides/coming-soon": {
+    "pathname": "/es/guides/coming-soon",
+    "translationKey": "/guides/coming-soon",
+    "locale": "es",
+    "title": "Próximamente",
+    "description": "Las guías prácticas de form0 llegarán aquí en breve.",
+    "indexable": false,
+    "status": "temporary",
+    "alternates": []
+  },
+  "/fr/core/ai-metadata": {
+    "pathname": "/fr/core/ai-metadata",
+    "translationKey": "/core/ai-metadata",
+    "locale": "fr",
+    "title": "ai-metadata (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/ai-metadata"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/abs": {
+    "pathname": "/fr/core/builtins/calculations-expressions/abs",
+    "translationKey": "/core/builtins/calculations-expressions/abs",
+    "locale": "fr",
+    "title": "ABS (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/abs"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/and": {
+    "pathname": "/fr/core/builtins/calculations-expressions/and",
+    "translationKey": "/core/builtins/calculations-expressions/and",
+    "locale": "fr",
+    "title": "AND (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/and"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/array": {
+    "pathname": "/fr/core/builtins/calculations-expressions/array",
+    "translationKey": "/core/builtins/calculations-expressions/array",
+    "locale": "fr",
+    "title": "ARRAY (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/array"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/ceiling": {
+    "pathname": "/fr/core/builtins/calculations-expressions/ceiling",
+    "translationKey": "/core/builtins/calculations-expressions/ceiling",
+    "locale": "fr",
+    "title": "CEILING (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/ceiling"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/choicelabel": {
+    "pathname": "/fr/core/builtins/calculations-expressions/choicelabel",
+    "translationKey": "/core/builtins/calculations-expressions/choicelabel",
+    "locale": "fr",
+    "title": "CHOICELABEL (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicelabel"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/choicelabels": {
+    "pathname": "/fr/core/builtins/calculations-expressions/choicelabels",
+    "translationKey": "/core/builtins/calculations-expressions/choicelabels",
+    "locale": "fr",
+    "title": "CHOICELABELS (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicelabels"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/choicevalue": {
+    "pathname": "/fr/core/builtins/calculations-expressions/choicevalue",
+    "translationKey": "/core/builtins/calculations-expressions/choicevalue",
+    "locale": "fr",
+    "title": "CHOICEVALUE (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicevalue"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/choicevalues": {
+    "pathname": "/fr/core/builtins/calculations-expressions/choicevalues",
+    "translationKey": "/core/builtins/calculations-expressions/choicevalues",
+    "locale": "fr",
+    "title": "CHOICEVALUES (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicevalues"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/cos": {
+    "pathname": "/fr/core/builtins/calculations-expressions/cos",
+    "translationKey": "/core/builtins/calculations-expressions/cos",
+    "locale": "fr",
+    "title": "COS (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/cos"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/count": {
+    "pathname": "/fr/core/builtins/calculations-expressions/count",
+    "translationKey": "/core/builtins/calculations-expressions/count",
+    "locale": "fr",
+    "title": "COUNT (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/count"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/counta": {
+    "pathname": "/fr/core/builtins/calculations-expressions/counta",
+    "translationKey": "/core/builtins/calculations-expressions/counta",
+    "locale": "fr",
+    "title": "COUNTA (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/counta"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/countblank": {
+    "pathname": "/fr/core/builtins/calculations-expressions/countblank",
+    "translationKey": "/core/builtins/calculations-expressions/countblank",
+    "locale": "fr",
+    "title": "COUNTBLANK (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/countblank"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/datanames": {
+    "pathname": "/fr/core/builtins/calculations-expressions/datanames",
+    "translationKey": "/core/builtins/calculations-expressions/datanames",
+    "locale": "fr",
+    "title": "DATANAMES (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/datanames"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/eval": {
+    "pathname": "/fr/core/builtins/calculations-expressions/eval",
+    "translationKey": "/core/builtins/calculations-expressions/eval",
+    "locale": "fr",
+    "title": "EVAL (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/eval"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/form": {
+    "pathname": "/fr/core/builtins/calculations-expressions/form",
+    "translationKey": "/core/builtins/calculations-expressions/form",
+    "locale": "fr",
+    "title": "FORM (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/form"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/hasother": {
+    "pathname": "/fr/core/builtins/calculations-expressions/hasother",
+    "translationKey": "/core/builtins/calculations-expressions/hasother",
+    "locale": "fr",
+    "title": "HASOTHER (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/hasother"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/if": {
+    "pathname": "/fr/core/builtins/calculations-expressions/if",
+    "translationKey": "/core/builtins/calculations-expressions/if",
+    "locale": "fr",
+    "title": "IF (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/if"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/or": {
+    "pathname": "/fr/core/builtins/calculations-expressions/or",
+    "translationKey": "/core/builtins/calculations-expressions/or",
+    "locale": "fr",
+    "title": "OR (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/or"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/other": {
+    "pathname": "/fr/core/builtins/calculations-expressions/other",
+    "translationKey": "/core/builtins/calculations-expressions/other",
+    "locale": "fr",
+    "title": "OTHER (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/other"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/round": {
+    "pathname": "/fr/core/builtins/calculations-expressions/round",
+    "translationKey": "/core/builtins/calculations-expressions/round",
+    "locale": "fr",
+    "title": "ROUND (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/round"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/setresult": {
+    "pathname": "/fr/core/builtins/calculations-expressions/setresult",
+    "translationKey": "/core/builtins/calculations-expressions/setresult",
+    "locale": "fr",
+    "title": "SETRESULT (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/setresult"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/sin": {
+    "pathname": "/fr/core/builtins/calculations-expressions/sin",
+    "translationKey": "/core/builtins/calculations-expressions/sin",
+    "locale": "fr",
+    "title": "SIN (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/sin"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/upper": {
+    "pathname": "/fr/core/builtins/calculations-expressions/upper",
+    "translationKey": "/core/builtins/calculations-expressions/upper",
+    "locale": "fr",
+    "title": "UPPER (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/upper"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions-overview": {
+    "pathname": "/fr/core/builtins/calculations-expressions-overview",
+    "translationKey": "/core/builtins/calculations-expressions-overview",
+    "locale": "fr",
+    "title": "Calculations & expressions (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions-overview"
+      }
+    ]
+  },
+  "/fr/core/builtins/events/alert": {
+    "pathname": "/fr/core/builtins/events/alert",
+    "translationKey": "/core/builtins/events/alert",
+    "locale": "fr",
+    "title": "ALERT (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/alert"
+      }
+    ]
+  },
+  "/fr/core/builtins/events/off": {
+    "pathname": "/fr/core/builtins/events/off",
+    "translationKey": "/core/builtins/events/off",
+    "locale": "fr",
+    "title": "OFF (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/off"
+      }
+    ]
+  },
+  "/fr/core/builtins/events/on": {
+    "pathname": "/fr/core/builtins/events/on",
+    "translationKey": "/core/builtins/events/on",
+    "locale": "fr",
+    "title": "ON (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/on"
+      }
+    ]
+  },
+  "/fr/core/builtins/events/setvalue": {
+    "pathname": "/fr/core/builtins/events/setvalue",
+    "translationKey": "/core/builtins/events/setvalue",
+    "locale": "fr",
+    "title": "SETVALUE (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/setvalue"
+      }
+    ]
+  },
+  "/fr/core/builtins/events-overview": {
+    "pathname": "/fr/core/builtins/events-overview",
+    "translationKey": "/core/builtins/events-overview",
+    "locale": "fr",
+    "title": "Events (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events-overview"
+      }
+    ]
+  },
+  "/fr/core/builtins/index": {
+    "pathname": "/fr/core/builtins/index",
+    "translationKey": "/core/builtins/index",
+    "locale": "fr",
+    "title": "Builtins overview (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/index"
+      }
+    ]
+  },
+  "/fr/core/concepts": {
+    "pathname": "/fr/core/concepts",
+    "translationKey": "/core/concepts",
+    "locale": "fr",
+    "title": "concepts (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/concepts"
+      }
+    ]
+  },
+  "/fr/core/fields/catalog": {
+    "pathname": "/fr/core/fields/catalog",
+    "translationKey": "/core/fields/catalog",
+    "locale": "fr",
+    "title": "catalog (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/catalog"
+      }
+    ]
+  },
+  "/fr/core/fields/common-attributes": {
+    "pathname": "/fr/core/fields/common-attributes",
+    "translationKey": "/core/fields/common-attributes",
+    "locale": "fr",
+    "title": "common-attributes (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/common-attributes"
+      }
+    ]
+  },
+  "/fr/core/fields/computed-fields": {
+    "pathname": "/fr/core/fields/computed-fields",
+    "translationKey": "/core/fields/computed-fields",
+    "locale": "fr",
+    "title": "computed-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/computed-fields"
+      }
+    ]
+  },
+  "/fr/core/fields/containers": {
+    "pathname": "/fr/core/fields/containers",
+    "translationKey": "/core/fields/containers",
+    "locale": "fr",
+    "title": "containers (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/containers"
+      }
+    ]
+  },
+  "/fr/core/fields/input-fields": {
+    "pathname": "/fr/core/fields/input-fields",
+    "translationKey": "/core/fields/input-fields",
+    "locale": "fr",
+    "title": "input-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/input-fields"
+      }
+    ]
+  },
+  "/fr/core/fields/media-fields": {
+    "pathname": "/fr/core/fields/media-fields",
+    "translationKey": "/core/fields/media-fields",
+    "locale": "fr",
+    "title": "media-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/media-fields"
+      }
+    ]
+  },
+  "/fr/core/fields/meta-fields": {
+    "pathname": "/fr/core/fields/meta-fields",
+    "translationKey": "/core/fields/meta-fields",
+    "locale": "fr",
+    "title": "meta-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/meta-fields"
+      }
+    ]
+  },
+  "/fr/core/output-records": {
+    "pathname": "/fr/core/output-records",
+    "translationKey": "/core/output-records",
+    "locale": "fr",
+    "title": "output-records (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/output-records"
+      }
+    ]
+  },
+  "/fr/core/overview": {
+    "pathname": "/fr/core/overview",
+    "translationKey": "/core/overview",
+    "locale": "fr",
+    "title": "overview (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/overview"
+      }
+    ]
+  },
+  "/fr/core/schema/conditions-operators": {
+    "pathname": "/fr/core/schema/conditions-operators",
+    "translationKey": "/core/schema/conditions-operators",
+    "locale": "fr",
+    "title": "conditions-operators (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/conditions-operators"
+      }
+    ]
+  },
+  "/fr/core/schema/elements": {
+    "pathname": "/fr/core/schema/elements",
+    "translationKey": "/core/schema/elements",
+    "locale": "fr",
+    "title": "elements (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/elements"
+      }
+    ]
+  },
+  "/fr/core/schema/form-attributes": {
+    "pathname": "/fr/core/schema/form-attributes",
+    "translationKey": "/core/schema/form-attributes",
+    "locale": "fr",
+    "title": "Form attributes (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/form-attributes"
+      }
+    ]
+  },
+  "/fr/core/schema/form": {
+    "pathname": "/fr/core/schema/form",
+    "translationKey": "/core/schema/form",
+    "locale": "fr",
+    "title": "form (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/form"
+      }
+    ]
+  },
+  "/fr/core/schema/validation": {
+    "pathname": "/fr/core/schema/validation",
+    "translationKey": "/core/schema/validation",
+    "locale": "fr",
+    "title": "validation (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/validation"
+      }
+    ]
+  },
+  "/fr/core/security": {
+    "pathname": "/fr/core/security",
+    "translationKey": "/core/security",
+    "locale": "fr",
+    "title": "security (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/security"
+      }
+    ]
+  },
+  "/fr/getting-started/quickstart": {
+    "pathname": "/fr/getting-started/quickstart",
+    "translationKey": "/getting-started/quickstart",
+    "locale": "fr",
+    "title": "Démarrage rapide",
+    "description": "Créez et prévisualisez votre premier schéma form0 en quelques minutes.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/quickstart"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/quickstart"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/quickstart"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/quickstart"
+      }
+    ]
+  },
+  "/fr/getting-started/schema-edit": {
+    "pathname": "/fr/getting-started/schema-edit",
+    "translationKey": "/getting-started/schema-edit",
+    "locale": "fr",
+    "title": "Modifiez votre premier schéma",
+    "description": "Ajoutez un NumericField et un CalculatedField en mode édition de schéma.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/schema-edit"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/schema-edit"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/schema-edit"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/schema-edit"
+      }
+    ]
+  },
+  "/fr/guides/coming-soon": {
+    "pathname": "/fr/guides/coming-soon",
+    "translationKey": "/guides/coming-soon",
+    "locale": "fr",
+    "title": "Bientôt disponible",
+    "description": "Les guides pratiques form0 arriveront ici prochainement.",
+    "indexable": false,
+    "status": "temporary",
+    "alternates": []
+  },
+  "/getting-started/quickstart": {
+    "pathname": "/getting-started/quickstart",
+    "translationKey": "/getting-started/quickstart",
+    "locale": "en",
+    "title": "Quickstart",
+    "description": "Build and preview your first form0 schema in minutes.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/quickstart"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/quickstart"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/quickstart"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/quickstart"
+      }
+    ]
+  },
+  "/getting-started/schema-edit": {
+    "pathname": "/getting-started/schema-edit",
+    "translationKey": "/getting-started/schema-edit",
+    "locale": "en",
+    "title": "Edit your first schema",
+    "description": "Add a NumericField and a CalculatedField using schema edit mode.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/schema-edit"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/schema-edit"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/schema-edit"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/schema-edit"
+      }
+    ]
+  },
+  "/guides/coming-soon": {
+    "pathname": "/guides/coming-soon",
+    "translationKey": "/guides/coming-soon",
+    "locale": "en",
+    "title": "Coming soon",
+    "description": "Practical form0 guides will land here shortly.",
+    "indexable": false,
+    "status": "temporary",
+    "alternates": []
+  },
+  "/it/core/ai-metadata": {
+    "pathname": "/it/core/ai-metadata",
+    "translationKey": "/core/ai-metadata",
+    "locale": "it",
+    "title": "ai-metadata (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/ai-metadata"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/abs": {
+    "pathname": "/it/core/builtins/calculations-expressions/abs",
+    "translationKey": "/core/builtins/calculations-expressions/abs",
+    "locale": "it",
+    "title": "ABS (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/abs"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/and": {
+    "pathname": "/it/core/builtins/calculations-expressions/and",
+    "translationKey": "/core/builtins/calculations-expressions/and",
+    "locale": "it",
+    "title": "AND (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/and"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/array": {
+    "pathname": "/it/core/builtins/calculations-expressions/array",
+    "translationKey": "/core/builtins/calculations-expressions/array",
+    "locale": "it",
+    "title": "ARRAY (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/array"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/ceiling": {
+    "pathname": "/it/core/builtins/calculations-expressions/ceiling",
+    "translationKey": "/core/builtins/calculations-expressions/ceiling",
+    "locale": "it",
+    "title": "CEILING (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/ceiling"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/choicelabel": {
+    "pathname": "/it/core/builtins/calculations-expressions/choicelabel",
+    "translationKey": "/core/builtins/calculations-expressions/choicelabel",
+    "locale": "it",
+    "title": "CHOICELABEL (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicelabel"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/choicelabels": {
+    "pathname": "/it/core/builtins/calculations-expressions/choicelabels",
+    "translationKey": "/core/builtins/calculations-expressions/choicelabels",
+    "locale": "it",
+    "title": "CHOICELABELS (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicelabels"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/choicevalue": {
+    "pathname": "/it/core/builtins/calculations-expressions/choicevalue",
+    "translationKey": "/core/builtins/calculations-expressions/choicevalue",
+    "locale": "it",
+    "title": "CHOICEVALUE (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicevalue"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/choicevalues": {
+    "pathname": "/it/core/builtins/calculations-expressions/choicevalues",
+    "translationKey": "/core/builtins/calculations-expressions/choicevalues",
+    "locale": "it",
+    "title": "CHOICEVALUES (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/choicevalues"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/cos": {
+    "pathname": "/it/core/builtins/calculations-expressions/cos",
+    "translationKey": "/core/builtins/calculations-expressions/cos",
+    "locale": "it",
+    "title": "COS (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/cos"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/count": {
+    "pathname": "/it/core/builtins/calculations-expressions/count",
+    "translationKey": "/core/builtins/calculations-expressions/count",
+    "locale": "it",
+    "title": "COUNT (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/count"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/counta": {
+    "pathname": "/it/core/builtins/calculations-expressions/counta",
+    "translationKey": "/core/builtins/calculations-expressions/counta",
+    "locale": "it",
+    "title": "COUNTA (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/counta"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/countblank": {
+    "pathname": "/it/core/builtins/calculations-expressions/countblank",
+    "translationKey": "/core/builtins/calculations-expressions/countblank",
+    "locale": "it",
+    "title": "COUNTBLANK (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/countblank"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/datanames": {
+    "pathname": "/it/core/builtins/calculations-expressions/datanames",
+    "translationKey": "/core/builtins/calculations-expressions/datanames",
+    "locale": "it",
+    "title": "DATANAMES (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/datanames"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/eval": {
+    "pathname": "/it/core/builtins/calculations-expressions/eval",
+    "translationKey": "/core/builtins/calculations-expressions/eval",
+    "locale": "it",
+    "title": "EVAL (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/eval"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/form": {
+    "pathname": "/it/core/builtins/calculations-expressions/form",
+    "translationKey": "/core/builtins/calculations-expressions/form",
+    "locale": "it",
+    "title": "FORM (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/form"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/hasother": {
+    "pathname": "/it/core/builtins/calculations-expressions/hasother",
+    "translationKey": "/core/builtins/calculations-expressions/hasother",
+    "locale": "it",
+    "title": "HASOTHER (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/hasother"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/if": {
+    "pathname": "/it/core/builtins/calculations-expressions/if",
+    "translationKey": "/core/builtins/calculations-expressions/if",
+    "locale": "it",
+    "title": "IF (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/if"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/or": {
+    "pathname": "/it/core/builtins/calculations-expressions/or",
+    "translationKey": "/core/builtins/calculations-expressions/or",
+    "locale": "it",
+    "title": "OR (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/or"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/other": {
+    "pathname": "/it/core/builtins/calculations-expressions/other",
+    "translationKey": "/core/builtins/calculations-expressions/other",
+    "locale": "it",
+    "title": "OTHER (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/other"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/round": {
+    "pathname": "/it/core/builtins/calculations-expressions/round",
+    "translationKey": "/core/builtins/calculations-expressions/round",
+    "locale": "it",
+    "title": "ROUND (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/round"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/setresult": {
+    "pathname": "/it/core/builtins/calculations-expressions/setresult",
+    "translationKey": "/core/builtins/calculations-expressions/setresult",
+    "locale": "it",
+    "title": "SETRESULT (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/setresult"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/sin": {
+    "pathname": "/it/core/builtins/calculations-expressions/sin",
+    "translationKey": "/core/builtins/calculations-expressions/sin",
+    "locale": "it",
+    "title": "SIN (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/sin"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/upper": {
+    "pathname": "/it/core/builtins/calculations-expressions/upper",
+    "translationKey": "/core/builtins/calculations-expressions/upper",
+    "locale": "it",
+    "title": "UPPER (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/upper"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions-overview": {
+    "pathname": "/it/core/builtins/calculations-expressions-overview",
+    "translationKey": "/core/builtins/calculations-expressions-overview",
+    "locale": "it",
+    "title": "Calculations & expressions (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions-overview"
+      }
+    ]
+  },
+  "/it/core/builtins/events/alert": {
+    "pathname": "/it/core/builtins/events/alert",
+    "translationKey": "/core/builtins/events/alert",
+    "locale": "it",
+    "title": "ALERT (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/alert"
+      }
+    ]
+  },
+  "/it/core/builtins/events/off": {
+    "pathname": "/it/core/builtins/events/off",
+    "translationKey": "/core/builtins/events/off",
+    "locale": "it",
+    "title": "OFF (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/off"
+      }
+    ]
+  },
+  "/it/core/builtins/events/on": {
+    "pathname": "/it/core/builtins/events/on",
+    "translationKey": "/core/builtins/events/on",
+    "locale": "it",
+    "title": "ON (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/on"
+      }
+    ]
+  },
+  "/it/core/builtins/events/setvalue": {
+    "pathname": "/it/core/builtins/events/setvalue",
+    "translationKey": "/core/builtins/events/setvalue",
+    "locale": "it",
+    "title": "SETVALUE (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/setvalue"
+      }
+    ]
+  },
+  "/it/core/builtins/events-overview": {
+    "pathname": "/it/core/builtins/events-overview",
+    "translationKey": "/core/builtins/events-overview",
+    "locale": "it",
+    "title": "Events (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events-overview"
+      }
+    ]
+  },
+  "/it/core/builtins/index": {
+    "pathname": "/it/core/builtins/index",
+    "translationKey": "/core/builtins/index",
+    "locale": "it",
+    "title": "Builtins overview (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/index"
+      }
+    ]
+  },
+  "/it/core/concepts": {
+    "pathname": "/it/core/concepts",
+    "translationKey": "/core/concepts",
+    "locale": "it",
+    "title": "concepts (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/concepts"
+      }
+    ]
+  },
+  "/it/core/fields/catalog": {
+    "pathname": "/it/core/fields/catalog",
+    "translationKey": "/core/fields/catalog",
+    "locale": "it",
+    "title": "catalog (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/catalog"
+      }
+    ]
+  },
+  "/it/core/fields/common-attributes": {
+    "pathname": "/it/core/fields/common-attributes",
+    "translationKey": "/core/fields/common-attributes",
+    "locale": "it",
+    "title": "common-attributes (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/common-attributes"
+      }
+    ]
+  },
+  "/it/core/fields/computed-fields": {
+    "pathname": "/it/core/fields/computed-fields",
+    "translationKey": "/core/fields/computed-fields",
+    "locale": "it",
+    "title": "computed-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/computed-fields"
+      }
+    ]
+  },
+  "/it/core/fields/containers": {
+    "pathname": "/it/core/fields/containers",
+    "translationKey": "/core/fields/containers",
+    "locale": "it",
+    "title": "containers (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/containers"
+      }
+    ]
+  },
+  "/it/core/fields/input-fields": {
+    "pathname": "/it/core/fields/input-fields",
+    "translationKey": "/core/fields/input-fields",
+    "locale": "it",
+    "title": "input-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/input-fields"
+      }
+    ]
+  },
+  "/it/core/fields/media-fields": {
+    "pathname": "/it/core/fields/media-fields",
+    "translationKey": "/core/fields/media-fields",
+    "locale": "it",
+    "title": "media-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/media-fields"
+      }
+    ]
+  },
+  "/it/core/fields/meta-fields": {
+    "pathname": "/it/core/fields/meta-fields",
+    "translationKey": "/core/fields/meta-fields",
+    "locale": "it",
+    "title": "meta-fields (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/fields/meta-fields"
+      }
+    ]
+  },
+  "/it/core/output-records": {
+    "pathname": "/it/core/output-records",
+    "translationKey": "/core/output-records",
+    "locale": "it",
+    "title": "output-records (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/output-records"
+      }
+    ]
+  },
+  "/it/core/overview": {
+    "pathname": "/it/core/overview",
+    "translationKey": "/core/overview",
+    "locale": "it",
+    "title": "overview (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/overview"
+      }
+    ]
+  },
+  "/it/core/schema/conditions-operators": {
+    "pathname": "/it/core/schema/conditions-operators",
+    "translationKey": "/core/schema/conditions-operators",
+    "locale": "it",
+    "title": "conditions-operators (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/conditions-operators"
+      }
+    ]
+  },
+  "/it/core/schema/elements": {
+    "pathname": "/it/core/schema/elements",
+    "translationKey": "/core/schema/elements",
+    "locale": "it",
+    "title": "elements (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/elements"
+      }
+    ]
+  },
+  "/it/core/schema/form-attributes": {
+    "pathname": "/it/core/schema/form-attributes",
+    "translationKey": "/core/schema/form-attributes",
+    "locale": "it",
+    "title": "Form attributes (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/form-attributes"
+      }
+    ]
+  },
+  "/it/core/schema/form": {
+    "pathname": "/it/core/schema/form",
+    "translationKey": "/core/schema/form",
+    "locale": "it",
+    "title": "form (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/form"
+      }
+    ]
+  },
+  "/it/core/schema/validation": {
+    "pathname": "/it/core/schema/validation",
+    "translationKey": "/core/schema/validation",
+    "locale": "it",
+    "title": "validation (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/schema/validation"
+      }
+    ]
+  },
+  "/it/core/security": {
+    "pathname": "/it/core/security",
+    "translationKey": "/core/security",
+    "locale": "it",
+    "title": "security (Coming soon)",
+    "indexable": false,
+    "status": "untranslated",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/security"
+      }
+    ]
+  },
+  "/it/getting-started/quickstart": {
+    "pathname": "/it/getting-started/quickstart",
+    "translationKey": "/getting-started/quickstart",
+    "locale": "it",
+    "title": "Guida rapida",
+    "description": "Crea e visualizza il tuo primo schema form0 in pochi minuti.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/quickstart"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/quickstart"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/quickstart"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/quickstart"
+      }
+    ]
+  },
+  "/it/getting-started/schema-edit": {
+    "pathname": "/it/getting-started/schema-edit",
+    "translationKey": "/getting-started/schema-edit",
+    "locale": "it",
+    "title": "Modifica il tuo primo schema",
+    "description": "Aggiungi un NumericField e un CalculatedField usando la modalità di modifica dello schema.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/schema-edit"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/schema-edit"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/schema-edit"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/schema-edit"
+      }
+    ]
+  },
+  "/it/guides/coming-soon": {
+    "pathname": "/it/guides/coming-soon",
+    "translationKey": "/guides/coming-soon",
+    "locale": "it",
+    "title": "Prossimamente",
+    "description": "Le guide pratiche di form0 arriveranno qui a breve.",
+    "indexable": false,
+    "status": "temporary",
+    "alternates": []
+  }
+}

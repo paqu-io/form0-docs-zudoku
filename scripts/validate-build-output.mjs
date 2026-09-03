@@ -3,6 +3,7 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../src/i18n/constants.js"
+import { allPageMetadata, canonicalUrl } from "../src/seo/page-metadata.js"
 
 const LANGUAGE_LABELS = {
   en: "English",
@@ -54,6 +55,8 @@ async function collectFiles(directory, predicate) {
 for (const artifact of [
   "llms.txt",
   "llms-full.txt",
+  "robots.txt",
+  "sitemap.xml",
   "pagefind/pagefind.js",
   "pagefind/pagefind-entry.json",
 ]) {
@@ -93,6 +96,41 @@ if (llmsTxt) {
       failures.push(`llms.txt contains boilerplate page copy: ${banned}`)
     }
   }
+}
+
+let llmsFull = ""
+try {
+  llmsFull = await readFile(path.join(outputRoot, "llms-full.txt"), "utf8")
+} catch {
+  // Missing output is already reported above.
+}
+for (const banned of [
+  "This page is not translated yet.",
+  "Practical form0 guides will land here shortly.",
+  "Questa è una prova",
+  "dasdsadsa",
+]) {
+  if (llmsFull.includes(banned)) failures.push(`llms-full.txt contains excluded copy: ${banned}`)
+}
+
+try {
+  const robots = await readFile(path.join(outputRoot, "robots.txt"), "utf8")
+  if (!robots.includes("Sitemap: https://docs.form0.dev/sitemap.xml")) {
+    failures.push("robots.txt does not advertise the canonical sitemap")
+  }
+
+  const sitemap = await readFile(path.join(outputRoot, "sitemap.xml"), "utf8")
+  const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1])
+  const expected = allPageMetadata()
+    .filter((page) => page.indexable)
+    .map((page) => canonicalUrl(page.pathname))
+  if (locations.length !== expected.length || expected.some((url) => !locations.includes(url))) {
+    failures.push(
+      `sitemap.xml contains ${locations.length} URLs instead of the ${expected.length} indexable documentation pages`,
+    )
+  }
+} catch {
+  failures.push("Unable to validate robots.txt and sitemap.xml")
 }
 
 for (const locale of SUPPORTED_LOCALES) {
@@ -146,8 +184,11 @@ for (const locale of SUPPORTED_LOCALES) {
 
   if (locale !== DEFAULT_LOCALE) {
     const unprefixedQuickstart = `href="/${representativeDocument}"`
-    if (html.includes(unprefixedQuickstart)) {
-      failures.push(`${htmlPath} contains an unprefixed localized navigation link`)
+    const occurrences = html.split(unprefixedQuickstart).length - 1
+    if (occurrences !== 1 || !html.includes(`${unprefixedQuickstart} data-discover="true"`)) {
+      failures.push(
+        `${htmlPath} must contain only the direct, non-redirecting English brand destination outside its localized navigation`,
+      )
     }
   }
 
@@ -172,6 +213,33 @@ for (const locale of SUPPORTED_LOCALES) {
     }
   }
 
+  if (!html.includes(`<html lang="${locale}">`)) {
+    failures.push(`${htmlPath} does not declare its prerendered language as ${locale}`)
+  }
+  if (
+    !html.includes(`rel="canonical" href="${canonicalUrl(`/${prefix}${representativeDocument}`)}"`)
+  ) {
+    failures.push(`${htmlPath} does not contain its canonical URL`)
+  }
+  for (const marker of [
+    'name="robots" content="index, follow"',
+    'property="og:description"',
+    'property="og:url"',
+    'property="og:image"',
+    'name="twitter:card" content="summary_large_image"',
+    'name="twitter:description"',
+    'name="twitter:image"',
+    'rel="describedby" href="https://docs.form0.dev/llms.txt"',
+    'type="application/ld+json"',
+  ]) {
+    if (!html.includes(marker)) failures.push(`${htmlPath} is missing SEO marker ${marker}`)
+  }
+  for (const alternateLocale of SUPPORTED_LOCALES) {
+    if (!html.includes(`hreflang="${alternateLocale}"`)) {
+      failures.push(`${htmlPath} is missing its ${alternateLocale} substantive hreflang alternate`)
+    }
+  }
+
   const selectedLanguageLabels = [
     ...html.matchAll(/aria-label="Select language"[^>]*>([\s\S]*?)<\/button>/g),
   ].map((match) => {
@@ -188,6 +256,31 @@ for (const locale of SUPPORTED_LOCALES) {
     failures.push(
       `${htmlPath} language selector rendered ${selectedLanguageLabels.join(", ")} instead of ${expectedLanguageLabel}`,
     )
+  }
+}
+
+for (const page of allPageMetadata()) {
+  const htmlPath = `${page.pathname.replace(/^\//, "")}.html`
+  let html
+  try {
+    html = await readFile(path.join(outputRoot, htmlPath), "utf8")
+  } catch {
+    failures.push(`Missing dist/${htmlPath}`)
+    continue
+  }
+
+  const h1Count = (html.match(/<h1(?:\s|>)/g) || []).length
+  if (h1Count !== 1) failures.push(`${htmlPath} contains ${h1Count} H1 elements instead of one`)
+
+  if (!page.indexable) {
+    if (!html.includes('name="robots" content="noindex, follow"')) {
+      failures.push(`${htmlPath} is not marked noindex, follow`)
+    }
+    if (/hreflang=/.test(html))
+      failures.push(`${htmlPath} exposes hreflang for placeholder content`)
+    if (/type="application\/ld\+json"/.test(html)) {
+      failures.push(`${htmlPath} exposes article structured data for placeholder content`)
+    }
   }
 }
 
@@ -233,6 +326,6 @@ if (failures.length) {
   process.exitCode = 1
 } else {
   console.log(
-    "Validated localized navigation, icons, callouts, Markdown, Pagefind, titles, edit links and LLM outputs.",
+    "Validated localized navigation, metadata, heading hierarchy, sitemap, Markdown, Pagefind, edit links and filtered LLM outputs.",
   )
 }
