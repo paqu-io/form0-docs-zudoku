@@ -52,7 +52,7 @@ export function SiteFooter() {
                 href={PAQU_IO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="text-primary underline underline-offset-4"
               >
                 paqu.io
               </a>
