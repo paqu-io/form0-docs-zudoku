@@ -111,10 +111,18 @@ function buildConfig(locale) {
     },
     guiOptions,
     categories,
-    disablePageInteraction: true,
+    // Deliberately not a blocking overlay. Nothing analytics-related loads
+    // before consent either way, so blocking the page does not protect
+    // anything: it only makes the choice feel forced, which works against
+    // consent being freely given, and pushes people to dismiss the banner
+    // however they can rather than answer it.
+    disablePageInteraction: false,
+    // No `autoDetect`. The library gives it precedence over `default`, so it
+    // overrode the page locale with the browser's: /it rendered an English
+    // banner to anyone whose browser was English. `default` already carries
+    // the resolved locale, and setLanguage below follows it on every change.
     language: {
       default: locale,
-      autoDetect: "browser",
       translations,
     },
     manageScriptTags: true,

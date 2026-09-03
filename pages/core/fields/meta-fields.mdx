@@ -94,8 +94,15 @@ StatusField is defined under `form.status_field` (not inside `elements`).
 }
 ```
 
-TitleField is defined under `form.title_field`. The `elements` array lists field keys (preferred)
-or `data_name` values to build the record title.
+TitleField uses ordered field keys (preferred) or `data_name` values. Non-empty display values are
+joined with `", "`; choice fields use their current schema labels, and the result is `null` when no
+part resolves.
+
+At the root, TitleField is defined under `form.title_field` and may reference root fields inside
+ordinary sections, but never repeatable descendants. The same complete shape can be assigned to
+`RepeatableSection.title_field`, where references are scoped to that child-record dataset. See
+[RepeatableSection](/core/fields/containers#repeatablesection) for persistence and UI fallback
+behavior.
 
 <Callout type="info" title="Reform details">
   FormLink, Status, and Title fields have deeper behavior in reform. Additional details will be

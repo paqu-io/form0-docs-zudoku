@@ -44,7 +44,33 @@ Additional attributes:
   "visible_conditions": null,
   "location_enabled": false,
   "location_required": false,
-  "elements": []
+  "title_field": {
+    "type": "TitleField",
+    "key": "@title",
+    "data_name": "title",
+    "label": "Title",
+    "display": "default",
+    "enabled": true,
+    "visible": true,
+    "visible_conditions": null,
+    "read_only": true,
+    "read_only_conditions": null,
+    "elements": ["item_name", "item_date"]
+  },
+  "elements": [
+    {
+      "type": "TextField",
+      "key": "item_name",
+      "data_name": "item_name",
+      "label": "Item name"
+    },
+    {
+      "type": "DateField",
+      "key": "item_date",
+      "data_name": "item_date",
+      "label": "Item date"
+    }
+  ]
 }
 ```
 
@@ -52,8 +78,18 @@ Additional attributes:
 
 - `location_enabled`: Enables location data for items.
 - `location_required`: Requires location data for items.
+- `title_field`: Optional `TitleField` used to derive each child record's title. Use `null` when no
+  entry title is configured.
 
-Repeatable sections create an array of child records in the output.
+Repeatable sections create an array of child records in the output. A configured entry title is
+stored as `@title` on each child record. If all title parts are blank, `@title` is `null`; renderers
+may show a positional label such as `Items 1`, but that fallback is not persisted.
+
+Title references are scoped to the repeatable's own child-record dataset. They may point to fields
+inside ordinary nested `Section` containers, but not to fields outside the repeatable or inside a
+nested `RepeatableSection`. Eligible types are `TextField`, `NumericField`, `DateField`, `TimeField`,
+`SingleChoiceField`, `MultiChoiceField`, `BooleanField`, and `CalculatedField`. Ordered field keys are
+preferred, while `data_name` references are accepted for authored schemas.
 
 ## BuildingPlanSection
 
