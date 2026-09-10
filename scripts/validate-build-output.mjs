@@ -53,6 +53,7 @@ async function collectFiles(directory, predicate) {
 }
 
 for (const artifact of [
+  "404.md",
   "llms.txt",
   "llms-full.txt",
   "robots.txt",
@@ -91,11 +92,29 @@ if (llmsTxt) {
   if (!llmsTxt.includes("https://docs.form0.dev/getting-started/quickstart.md")) {
     failures.push("llms.txt is missing the Quickstart absolute .md URL")
   }
+  if (!llmsTxt.includes("## When to use form0 documentation")) {
+    failures.push("llms.txt is missing explicit when-to-use guidance")
+  }
   for (const banned of ["Questa è una prova", "dasdsadsa"]) {
     if (llmsTxt.includes(banned)) {
       failures.push(`llms.txt contains boilerplate page copy: ${banned}`)
     }
   }
+}
+
+try {
+  const notFoundMarkdown = await readFile(path.join(outputRoot, "404.md"), "utf8")
+  for (const target of [
+    "https://docs.form0.dev/getting-started/quickstart.md",
+    "https://docs.form0.dev/llms.txt",
+    "https://docs.form0.dev/sitemap.xml",
+  ]) {
+    if (!notFoundMarkdown.includes(target)) {
+      failures.push(`404.md is missing its recovery link to ${target}`)
+    }
+  }
+} catch {
+  // Missing output is already reported above.
 }
 
 let llmsFull = ""
@@ -236,6 +255,31 @@ for (const locale of SUPPORTED_LOCALES) {
     'type="application/ld+json"',
   ]) {
     if (!html.includes(marker)) failures.push(`${htmlPath} is missing SEO marker ${marker}`)
+  }
+
+  if (html.includes('dangerouslysetinnerhtml="[object Object]"')) {
+    failures.push(`${htmlPath} contains a serialized dangerouslySetInnerHTML attribute`)
+  }
+
+  const jsonLdBlocks = [
+    ...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g),
+  ]
+  if (jsonLdBlocks.length !== 1) {
+    failures.push(`${htmlPath} contains ${jsonLdBlocks.length} JSON-LD blocks instead of one`)
+  }
+  for (const [, jsonLd] of jsonLdBlocks) {
+    try {
+      const parsed = JSON.parse(jsonLd.trim())
+      if (parsed["@type"] !== "TechArticle") {
+        failures.push(`${htmlPath} JSON-LD does not describe a TechArticle`)
+      }
+    } catch {
+      failures.push(`${htmlPath} contains invalid JSON-LD`)
+    }
+  }
+
+  if (!html.includes("localStorage.setItem(key, 'dark')")) {
+    failures.push(`${htmlPath} is missing the executable default-theme script`)
   }
   for (const alternateLocale of SUPPORTED_LOCALES) {
     if (!html.includes(`hreflang="${alternateLocale}"`)) {

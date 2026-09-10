@@ -68,6 +68,13 @@ form0 is a library you install and run yourself. It has no accounts, no hosted f
 and no REST or webhook interface for agents to call. Persistence is opt-in through connectors.
 form0-core is the engine if you already have an application.
 
+## When to use form0 documentation
+
+- Use these docs when integrating the form0 engine, CLI, React or React Native bindings, or persistence connectors.
+- Start with Quickstart when evaluating form0 or building a new schema-driven form integration.
+- Use the Core reference when implementing fields, conditions, calculations, validation, events, security, or record output.
+- Do not look for a hosted HTTP API here. Use reform when the job needs a hosted form-management service.
+
 ${sections.join("\n\n")}
 
 ## Optional
@@ -78,6 +85,18 @@ ${link(
   "Concatenated published page contents generated at build time.",
 )}
 ${link("Website", `${PROJECT_ORIGIN}/llms.txt`, "Project index, packages, and site markdown.")}
+`
+}
+
+export function notFoundMarkdown() {
+  return `# Documentation page not found
+
+The requested form0 documentation path does not exist.
+
+- [Start with Quickstart](${DOCS_ORIGIN}/getting-started/quickstart.md)
+- [Browse the agent-readable documentation index](${DOCS_ORIGIN}/llms.txt)
+- [Browse the XML sitemap](${DOCS_ORIGIN}/sitemap.xml)
+- [Visit the form0 website](${PROJECT_ORIGIN}/llms.txt)
 `
 }
 
@@ -139,6 +158,7 @@ if (invokedDirectly) {
   await Promise.all([
     writeFile(join(outputRoot, "llms.txt"), llmsTxt(), "utf8"),
     llmsFullTxt().then((content) => writeFile(join(outputRoot, "llms-full.txt"), content, "utf8")),
+    writeFile(join(outputRoot, "404.md"), notFoundMarkdown(), "utf8"),
     writePrerenderedLanguages(),
   ])
   console.log("Wrote filtered LLM discovery files and localized prerendered document languages")

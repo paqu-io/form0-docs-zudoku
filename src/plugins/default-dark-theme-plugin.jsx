@@ -1,8 +1,6 @@
 export const createDefaultDarkThemePlugin = () => ({
   getHead: () => (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `(() => {
+    <script>{`(() => {
   try {
     var key = 'theme';
     if (!localStorage.getItem(key)) {
@@ -11,8 +9,6 @@ export const createDefaultDarkThemePlugin = () => ({
       document.documentElement.style.colorScheme = 'dark';
     }
   } catch (e) {}
-})();`,
-      }}
-    />
+})();`}</script>
   ),
 })

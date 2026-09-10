@@ -93,12 +93,9 @@ export function createDocsSeoPlugin() {
             />
           )}
           {page?.indexable && page.title && page.description && (
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify(articleJsonLd(page, url)).replace(/</g, "\\u003c"),
-              }}
-            />
+            <script type="application/ld+json">
+              {JSON.stringify(articleJsonLd(page, url)).replace(/</g, "\\u003c")}
+            </script>
           )}
         </>
       )
