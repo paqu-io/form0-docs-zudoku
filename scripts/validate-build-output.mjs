@@ -118,6 +118,9 @@ try {
   if (!robots.includes("Sitemap: https://docs.form0.dev/sitemap.xml")) {
     failures.push("robots.txt does not advertise the canonical sitemap")
   }
+  if (!robots.includes("Content-Signal: ai-train=no, search=yes, ai-input=yes")) {
+    failures.push("robots.txt does not declare the expected Content Signals policy")
+  }
 
   const sitemap = await readFile(path.join(outputRoot, "sitemap.xml"), "utf8")
   const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1])
