@@ -1,4 +1,490 @@
 {
+  "/cli/command-reference": {
+    "pathname": "/cli/command-reference",
+    "translationKey": "/cli/command-reference",
+    "locale": "en",
+    "title": "Command reference",
+    "description": "User-facing index of form0-cli commands and command groups.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/command-reference"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/command-reference"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/command-reference"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/command-reference"
+      }
+    ]
+  },
+  "/cli/connector-management": {
+    "pathname": "/cli/connector-management",
+    "translationKey": "/cli/connector-management",
+    "locale": "en",
+    "title": "Connector management",
+    "description": "Install, configure, test, inspect, and remove form0 connector packages.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/connector-management"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/connector-management"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/connector-management"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/connector-management"
+      }
+    ]
+  },
+  "/cli/initialize-project": {
+    "pathname": "/cli/initialize-project",
+    "translationKey": "/cli/initialize-project",
+    "locale": "en",
+    "title": "Initialize a project",
+    "description": "Create a standard, web, or mobile form0 project with the CLI.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/initialize-project"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/initialize-project"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/initialize-project"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/initialize-project"
+      }
+    ]
+  },
+  "/cli/install-update": {
+    "pathname": "/cli/install-update",
+    "translationKey": "/cli/install-update",
+    "locale": "en",
+    "title": "Install and update",
+    "description": "Install form0-cli globally or run it temporarily with npx.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/install-update"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/install-update"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/install-update"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/install-update"
+      }
+    ]
+  },
+  "/cli/interactive-shell": {
+    "pathname": "/cli/interactive-shell",
+    "translationKey": "/cli/interactive-shell",
+    "locale": "en",
+    "title": "Interactive shell",
+    "description": "Work with a loaded form schema in a persistent form0-cli session.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/interactive-shell"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/interactive-shell"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/interactive-shell"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/interactive-shell"
+      }
+    ]
+  },
+  "/cli/local-development/app-development-servers": {
+    "pathname": "/cli/local-development/app-development-servers",
+    "translationKey": "/cli/local-development/app-development-servers",
+    "locale": "en",
+    "title": "App development servers",
+    "description": "Start a configured web or Expo application alongside the form0 preview server.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/local-development/app-development-servers"
+      }
+    ]
+  },
+  "/cli/local-development/live-preview": {
+    "pathname": "/cli/local-development/live-preview",
+    "translationKey": "/cli/local-development/live-preview",
+    "locale": "en",
+    "title": "Live preview server",
+    "description": "Serve a form schema locally with browser preview and automatic updates.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/local-development/live-preview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/local-development/live-preview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/local-development/live-preview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/local-development/live-preview"
+      }
+    ]
+  },
+  "/cli/overview": {
+    "pathname": "/cli/overview",
+    "translationKey": "/cli/overview",
+    "locale": "en",
+    "title": "CLI overview",
+    "description": "What form0-cli does and how to choose between its interactive and standalone workflows.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/overview"
+      }
+    ]
+  },
+  "/cli/project-configuration": {
+    "pathname": "/cli/project-configuration",
+    "translationKey": "/cli/project-configuration",
+    "locale": "en",
+    "title": "Project configuration",
+    "description": "Understand the project-local and user-local configuration used by form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/project-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/project-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/project-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/project-configuration"
+      }
+    ]
+  },
+  "/cli/reform/sign-in-organization": {
+    "pathname": "/cli/reform/sign-in-organization",
+    "translationKey": "/cli/reform/sign-in-organization",
+    "locale": "en",
+    "title": "Sign in and select an organization",
+    "description": "Authenticate form0-cli with Reform and choose the organization used by sync commands.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/reform/sign-in-organization"
+      }
+    ]
+  },
+  "/cli/reform/sync-forms": {
+    "pathname": "/cli/reform/sync-forms",
+    "translationKey": "/cli/reform/sync-forms",
+    "locale": "en",
+    "title": "Sync forms",
+    "description": "Pull accessible Reform forms into the current form0 project.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/reform/sync-forms"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/reform/sync-forms"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/reform/sync-forms"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/reform/sync-forms"
+      }
+    ]
+  },
+  "/cli/schemas/import-export-csv": {
+    "pathname": "/cli/schemas/import-export-csv",
+    "translationKey": "/cli/schemas/import-export-csv",
+    "locale": "en",
+    "title": "Import and export CSV",
+    "description": "Move form schema definitions between JSON and the CLI's CSV representation.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/import-export-csv"
+      }
+    ]
+  },
+  "/cli/schemas/load-edit": {
+    "pathname": "/cli/schemas/load-edit",
+    "translationKey": "/cli/schemas/load-edit",
+    "locale": "en",
+    "title": "Load and edit schemas",
+    "description": "Load a schema into the interactive shell and edit it with your configured editor.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/load-edit"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/load-edit"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/load-edit"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/load-edit"
+      }
+    ]
+  },
+  "/cli/schemas/run-values": {
+    "pathname": "/cli/schemas/run-values",
+    "translationKey": "/cli/schemas/run-values",
+    "locale": "en",
+    "title": "Run with values",
+    "description": "Evaluate a schema with initial values from JSON, YAML, or an inline JSON value.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/run-values"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/run-values"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/run-values"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/run-values"
+      }
+    ]
+  },
+  "/cli/schemas/validate-preview": {
+    "pathname": "/cli/schemas/validate-preview",
+    "translationKey": "/cli/schemas/validate-preview",
+    "locale": "en",
+    "title": "Validate and preview",
+    "description": "Check schema validity and inspect its field structure from the command line.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/validate-preview"
+      }
+    ]
+  },
+  "/cli/schemas/watch-test": {
+    "pathname": "/cli/schemas/watch-test",
+    "translationKey": "/cli/schemas/watch-test",
+    "locale": "en",
+    "title": "Watch and test",
+    "description": "Revalidate schemas as they change and run a project's form0 test script.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/watch-test"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/watch-test"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/watch-test"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/watch-test"
+      }
+    ]
+  },
+  "/cli/security": {
+    "pathname": "/cli/security",
+    "translationKey": "/cli/security",
+    "locale": "en",
+    "title": "Security",
+    "description": "Trust boundaries and safe local-development practices for form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/security"
+      }
+    ]
+  },
+  "/cli/troubleshooting": {
+    "pathname": "/cli/troubleshooting",
+    "translationKey": "/cli/troubleshooting",
+    "locale": "en",
+    "title": "Troubleshooting",
+    "description": "Resolve common form0-cli installation, project, preview, and connector problems.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/troubleshooting"
+      }
+    ]
+  },
   "/core/ai-metadata": {
     "pathname": "/core/ai-metadata",
     "translationKey": "/core/ai-metadata",
@@ -701,6 +1187,492 @@
       {
         "locale": "en",
         "pathname": "/core/security"
+      }
+    ]
+  },
+  "/es/cli/command-reference": {
+    "pathname": "/es/cli/command-reference",
+    "translationKey": "/cli/command-reference",
+    "locale": "es",
+    "title": "Referencia de comandos",
+    "description": "Índice de los comandos y grupos de comandos de form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/command-reference"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/command-reference"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/command-reference"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/command-reference"
+      }
+    ]
+  },
+  "/es/cli/connector-management": {
+    "pathname": "/es/cli/connector-management",
+    "translationKey": "/cli/connector-management",
+    "locale": "es",
+    "title": "Gestión de conectores",
+    "description": "Instala, configura, prueba, inspecciona y elimina conectores de form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/connector-management"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/connector-management"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/connector-management"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/connector-management"
+      }
+    ]
+  },
+  "/es/cli/initialize-project": {
+    "pathname": "/es/cli/initialize-project",
+    "translationKey": "/cli/initialize-project",
+    "locale": "es",
+    "title": "Inicializar un proyecto",
+    "description": "Crea un proyecto estándar, web o móvil de form0 con la CLI.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/initialize-project"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/initialize-project"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/initialize-project"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/initialize-project"
+      }
+    ]
+  },
+  "/es/cli/install-update": {
+    "pathname": "/es/cli/install-update",
+    "translationKey": "/cli/install-update",
+    "locale": "es",
+    "title": "Instalar y actualizar",
+    "description": "Instala form0-cli globalmente o ejecútalo temporalmente con npx.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/install-update"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/install-update"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/install-update"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/install-update"
+      }
+    ]
+  },
+  "/es/cli/interactive-shell": {
+    "pathname": "/es/cli/interactive-shell",
+    "translationKey": "/cli/interactive-shell",
+    "locale": "es",
+    "title": "Shell interactivo",
+    "description": "Trabaja con un esquema cargado en una sesión persistente de form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/interactive-shell"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/interactive-shell"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/interactive-shell"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/interactive-shell"
+      }
+    ]
+  },
+  "/es/cli/local-development/app-development-servers": {
+    "pathname": "/es/cli/local-development/app-development-servers",
+    "translationKey": "/cli/local-development/app-development-servers",
+    "locale": "es",
+    "title": "Servidores de desarrollo de aplicaciones",
+    "description": "Inicia una aplicación web o Expo configurada junto con la previsualización de form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/local-development/app-development-servers"
+      }
+    ]
+  },
+  "/es/cli/local-development/live-preview": {
+    "pathname": "/es/cli/local-development/live-preview",
+    "translationKey": "/cli/local-development/live-preview",
+    "locale": "es",
+    "title": "Servidor de previsualización",
+    "description": "Sirve un esquema localmente con previsualización en el navegador.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/local-development/live-preview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/local-development/live-preview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/local-development/live-preview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/local-development/live-preview"
+      }
+    ]
+  },
+  "/es/cli/overview": {
+    "pathname": "/es/cli/overview",
+    "translationKey": "/cli/overview",
+    "locale": "es",
+    "title": "Visión general de la CLI",
+    "description": "Qué hace form0-cli y cuándo usar el shell interactivo o los comandos independientes.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/overview"
+      }
+    ]
+  },
+  "/es/cli/project-configuration": {
+    "pathname": "/es/cli/project-configuration",
+    "translationKey": "/cli/project-configuration",
+    "locale": "es",
+    "title": "Configuración del proyecto",
+    "description": "Configuración local del proyecto y preferencias de usuario utilizadas por form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/project-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/project-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/project-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/project-configuration"
+      }
+    ]
+  },
+  "/es/cli/reform/sign-in-organization": {
+    "pathname": "/es/cli/reform/sign-in-organization",
+    "translationKey": "/cli/reform/sign-in-organization",
+    "locale": "es",
+    "title": "Iniciar sesión y seleccionar una organización",
+    "description": "Autentica form0-cli con Reform y selecciona la organización activa.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/reform/sign-in-organization"
+      }
+    ]
+  },
+  "/es/cli/reform/sync-forms": {
+    "pathname": "/es/cli/reform/sync-forms",
+    "translationKey": "/cli/reform/sync-forms",
+    "locale": "es",
+    "title": "Sincronizar formularios",
+    "description": "Descarga formularios accesibles de Reform al proyecto actual.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/reform/sync-forms"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/reform/sync-forms"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/reform/sync-forms"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/reform/sync-forms"
+      }
+    ]
+  },
+  "/es/cli/schemas/import-export-csv": {
+    "pathname": "/es/cli/schemas/import-export-csv",
+    "translationKey": "/cli/schemas/import-export-csv",
+    "locale": "es",
+    "title": "Importar y exportar CSV",
+    "description": "Convierte definiciones de esquema entre JSON y la representación CSV de la CLI.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/import-export-csv"
+      }
+    ]
+  },
+  "/es/cli/schemas/load-edit": {
+    "pathname": "/es/cli/schemas/load-edit",
+    "translationKey": "/cli/schemas/load-edit",
+    "locale": "es",
+    "title": "Cargar y editar esquemas",
+    "description": "Carga un esquema y edítalo con el editor configurado.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/load-edit"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/load-edit"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/load-edit"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/load-edit"
+      }
+    ]
+  },
+  "/es/cli/schemas/run-values": {
+    "pathname": "/es/cli/schemas/run-values",
+    "translationKey": "/cli/schemas/run-values",
+    "locale": "es",
+    "title": "Ejecutar con valores",
+    "description": "Evalúa un esquema con valores iniciales en JSON o YAML.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/run-values"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/run-values"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/run-values"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/run-values"
+      }
+    ]
+  },
+  "/es/cli/schemas/validate-preview": {
+    "pathname": "/es/cli/schemas/validate-preview",
+    "translationKey": "/cli/schemas/validate-preview",
+    "locale": "es",
+    "title": "Validar y previsualizar",
+    "description": "Comprueba un esquema e inspecciona su estructura desde la línea de comandos.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/validate-preview"
+      }
+    ]
+  },
+  "/es/cli/schemas/watch-test": {
+    "pathname": "/es/cli/schemas/watch-test",
+    "translationKey": "/cli/schemas/watch-test",
+    "locale": "es",
+    "title": "Observar y probar",
+    "description": "Revalida esquemas al cambiar y ejecuta las pruebas del proyecto.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/watch-test"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/watch-test"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/watch-test"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/watch-test"
+      }
+    ]
+  },
+  "/es/cli/security": {
+    "pathname": "/es/cli/security",
+    "translationKey": "/cli/security",
+    "locale": "es",
+    "title": "Seguridad",
+    "description": "Límites de confianza y prácticas seguras de desarrollo local para form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/security"
+      }
+    ]
+  },
+  "/es/cli/troubleshooting": {
+    "pathname": "/es/cli/troubleshooting",
+    "translationKey": "/cli/troubleshooting",
+    "locale": "es",
+    "title": "Solución de problemas",
+    "description": "Resuelve problemas habituales de instalación, proyecto, previsualización y conectores.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/troubleshooting"
       }
     ]
   },
@@ -1425,6 +2397,492 @@
     "indexable": false,
     "status": "temporary",
     "alternates": []
+  },
+  "/fr/cli/command-reference": {
+    "pathname": "/fr/cli/command-reference",
+    "translationKey": "/cli/command-reference",
+    "locale": "fr",
+    "title": "Référence des commandes",
+    "description": "Index des commandes et groupes de commandes de form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/command-reference"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/command-reference"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/command-reference"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/command-reference"
+      }
+    ]
+  },
+  "/fr/cli/connector-management": {
+    "pathname": "/fr/cli/connector-management",
+    "translationKey": "/cli/connector-management",
+    "locale": "fr",
+    "title": "Gestion des connecteurs",
+    "description": "Installez, configurez, testez, inspectez et supprimez les connecteurs form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/connector-management"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/connector-management"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/connector-management"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/connector-management"
+      }
+    ]
+  },
+  "/fr/cli/initialize-project": {
+    "pathname": "/fr/cli/initialize-project",
+    "translationKey": "/cli/initialize-project",
+    "locale": "fr",
+    "title": "Initialiser un projet",
+    "description": "Créez un projet form0 standard, web ou mobile avec la CLI.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/initialize-project"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/initialize-project"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/initialize-project"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/initialize-project"
+      }
+    ]
+  },
+  "/fr/cli/install-update": {
+    "pathname": "/fr/cli/install-update",
+    "translationKey": "/cli/install-update",
+    "locale": "fr",
+    "title": "Installer et mettre à jour",
+    "description": "Installez form0-cli globalement ou exécutez-le temporairement avec npx.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/install-update"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/install-update"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/install-update"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/install-update"
+      }
+    ]
+  },
+  "/fr/cli/interactive-shell": {
+    "pathname": "/fr/cli/interactive-shell",
+    "translationKey": "/cli/interactive-shell",
+    "locale": "fr",
+    "title": "Shell interactif",
+    "description": "Travaillez avec un schéma chargé dans une session persistante de form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/interactive-shell"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/interactive-shell"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/interactive-shell"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/interactive-shell"
+      }
+    ]
+  },
+  "/fr/cli/local-development/app-development-servers": {
+    "pathname": "/fr/cli/local-development/app-development-servers",
+    "translationKey": "/cli/local-development/app-development-servers",
+    "locale": "fr",
+    "title": "Serveurs de développement d’applications",
+    "description": "Lancez une application web ou Expo configurée avec l’aperçu form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/local-development/app-development-servers"
+      }
+    ]
+  },
+  "/fr/cli/local-development/live-preview": {
+    "pathname": "/fr/cli/local-development/live-preview",
+    "translationKey": "/cli/local-development/live-preview",
+    "locale": "fr",
+    "title": "Serveur de prévisualisation",
+    "description": "Servez un schéma localement avec un aperçu dans le navigateur.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/local-development/live-preview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/local-development/live-preview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/local-development/live-preview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/local-development/live-preview"
+      }
+    ]
+  },
+  "/fr/cli/overview": {
+    "pathname": "/fr/cli/overview",
+    "translationKey": "/cli/overview",
+    "locale": "fr",
+    "title": "Aperçu de la CLI",
+    "description": "Rôle de form0-cli et choix entre le shell interactif et les commandes autonomes.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/overview"
+      }
+    ]
+  },
+  "/fr/cli/project-configuration": {
+    "pathname": "/fr/cli/project-configuration",
+    "translationKey": "/cli/project-configuration",
+    "locale": "fr",
+    "title": "Configuration du projet",
+    "description": "Configuration locale du projet et préférences utilisateur utilisées par form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/project-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/project-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/project-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/project-configuration"
+      }
+    ]
+  },
+  "/fr/cli/reform/sign-in-organization": {
+    "pathname": "/fr/cli/reform/sign-in-organization",
+    "translationKey": "/cli/reform/sign-in-organization",
+    "locale": "fr",
+    "title": "Se connecter et choisir une organisation",
+    "description": "Authentifiez form0-cli auprès de Reform et sélectionnez l’organisation active.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/reform/sign-in-organization"
+      }
+    ]
+  },
+  "/fr/cli/reform/sync-forms": {
+    "pathname": "/fr/cli/reform/sync-forms",
+    "translationKey": "/cli/reform/sync-forms",
+    "locale": "fr",
+    "title": "Synchroniser des formulaires",
+    "description": "Récupérez les formulaires Reform accessibles dans le projet actuel.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/reform/sync-forms"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/reform/sync-forms"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/reform/sync-forms"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/reform/sync-forms"
+      }
+    ]
+  },
+  "/fr/cli/schemas/import-export-csv": {
+    "pathname": "/fr/cli/schemas/import-export-csv",
+    "translationKey": "/cli/schemas/import-export-csv",
+    "locale": "fr",
+    "title": "Importer et exporter en CSV",
+    "description": "Convertissez les définitions de schéma entre JSON et la représentation CSV de la CLI.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/import-export-csv"
+      }
+    ]
+  },
+  "/fr/cli/schemas/load-edit": {
+    "pathname": "/fr/cli/schemas/load-edit",
+    "translationKey": "/cli/schemas/load-edit",
+    "locale": "fr",
+    "title": "Charger et modifier des schémas",
+    "description": "Chargez un schéma et modifiez-le avec l’éditeur configuré.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/load-edit"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/load-edit"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/load-edit"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/load-edit"
+      }
+    ]
+  },
+  "/fr/cli/schemas/run-values": {
+    "pathname": "/fr/cli/schemas/run-values",
+    "translationKey": "/cli/schemas/run-values",
+    "locale": "fr",
+    "title": "Exécuter avec des valeurs",
+    "description": "Évaluez un schéma avec des valeurs initiales JSON ou YAML.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/run-values"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/run-values"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/run-values"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/run-values"
+      }
+    ]
+  },
+  "/fr/cli/schemas/validate-preview": {
+    "pathname": "/fr/cli/schemas/validate-preview",
+    "translationKey": "/cli/schemas/validate-preview",
+    "locale": "fr",
+    "title": "Valider et prévisualiser",
+    "description": "Vérifiez un schéma et inspectez sa structure depuis la ligne de commande.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/validate-preview"
+      }
+    ]
+  },
+  "/fr/cli/schemas/watch-test": {
+    "pathname": "/fr/cli/schemas/watch-test",
+    "translationKey": "/cli/schemas/watch-test",
+    "locale": "fr",
+    "title": "Surveiller et tester",
+    "description": "Revalidez les schémas lors des modifications et exécutez les tests du projet.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/watch-test"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/watch-test"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/watch-test"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/watch-test"
+      }
+    ]
+  },
+  "/fr/cli/security": {
+    "pathname": "/fr/cli/security",
+    "translationKey": "/cli/security",
+    "locale": "fr",
+    "title": "Sécurité",
+    "description": "Limites de confiance et pratiques sûres de développement local pour form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/security"
+      }
+    ]
+  },
+  "/fr/cli/troubleshooting": {
+    "pathname": "/fr/cli/troubleshooting",
+    "translationKey": "/cli/troubleshooting",
+    "locale": "fr",
+    "title": "Dépannage",
+    "description": "Résolvez les problèmes courants d’installation, de projet, d’aperçu et de connecteur.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/troubleshooting"
+      }
+    ]
   },
   "/fr/core/ai-metadata": {
     "pathname": "/fr/core/ai-metadata",
@@ -2211,6 +3669,492 @@
     "indexable": false,
     "status": "temporary",
     "alternates": []
+  },
+  "/it/cli/command-reference": {
+    "pathname": "/it/cli/command-reference",
+    "translationKey": "/cli/command-reference",
+    "locale": "it",
+    "title": "Riferimento dei comandi",
+    "description": "Indice dei comandi e dei gruppi di comandi di form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/command-reference"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/command-reference"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/command-reference"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/command-reference"
+      }
+    ]
+  },
+  "/it/cli/connector-management": {
+    "pathname": "/it/cli/connector-management",
+    "translationKey": "/cli/connector-management",
+    "locale": "it",
+    "title": "Gestione dei connettori",
+    "description": "Installa, configura, testa, ispeziona e rimuovi i connettori form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/connector-management"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/connector-management"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/connector-management"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/connector-management"
+      }
+    ]
+  },
+  "/it/cli/initialize-project": {
+    "pathname": "/it/cli/initialize-project",
+    "translationKey": "/cli/initialize-project",
+    "locale": "it",
+    "title": "Inizializzare un progetto",
+    "description": "Crea un progetto form0 standard, web o mobile con la CLI.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/initialize-project"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/initialize-project"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/initialize-project"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/initialize-project"
+      }
+    ]
+  },
+  "/it/cli/install-update": {
+    "pathname": "/it/cli/install-update",
+    "translationKey": "/cli/install-update",
+    "locale": "it",
+    "title": "Installare e aggiornare",
+    "description": "Installa form0-cli globalmente o eseguilo temporaneamente con npx.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/install-update"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/install-update"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/install-update"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/install-update"
+      }
+    ]
+  },
+  "/it/cli/interactive-shell": {
+    "pathname": "/it/cli/interactive-shell",
+    "translationKey": "/cli/interactive-shell",
+    "locale": "it",
+    "title": "Shell interattiva",
+    "description": "Lavora con uno schema caricato in una sessione persistente di form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/interactive-shell"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/interactive-shell"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/interactive-shell"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/interactive-shell"
+      }
+    ]
+  },
+  "/it/cli/local-development/app-development-servers": {
+    "pathname": "/it/cli/local-development/app-development-servers",
+    "translationKey": "/cli/local-development/app-development-servers",
+    "locale": "it",
+    "title": "Server di sviluppo delle applicazioni",
+    "description": "Avvia un’applicazione web o Expo configurata insieme all’anteprima form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/local-development/app-development-servers"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/local-development/app-development-servers"
+      }
+    ]
+  },
+  "/it/cli/local-development/live-preview": {
+    "pathname": "/it/cli/local-development/live-preview",
+    "translationKey": "/cli/local-development/live-preview",
+    "locale": "it",
+    "title": "Server di anteprima",
+    "description": "Servi uno schema localmente con anteprima nel browser.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/local-development/live-preview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/local-development/live-preview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/local-development/live-preview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/local-development/live-preview"
+      }
+    ]
+  },
+  "/it/cli/overview": {
+    "pathname": "/it/cli/overview",
+    "translationKey": "/cli/overview",
+    "locale": "it",
+    "title": "Panoramica della CLI",
+    "description": "Cosa fa form0-cli e quando usare la shell interattiva o i comandi autonomi.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/overview"
+      }
+    ]
+  },
+  "/it/cli/project-configuration": {
+    "pathname": "/it/cli/project-configuration",
+    "translationKey": "/cli/project-configuration",
+    "locale": "it",
+    "title": "Configurazione del progetto",
+    "description": "Configurazione locale del progetto e preferenze utente usate da form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/project-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/project-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/project-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/project-configuration"
+      }
+    ]
+  },
+  "/it/cli/reform/sign-in-organization": {
+    "pathname": "/it/cli/reform/sign-in-organization",
+    "translationKey": "/cli/reform/sign-in-organization",
+    "locale": "it",
+    "title": "Accedere e selezionare un’organizzazione",
+    "description": "Autentica form0-cli con Reform e seleziona l’organizzazione attiva.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/reform/sign-in-organization"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/reform/sign-in-organization"
+      }
+    ]
+  },
+  "/it/cli/reform/sync-forms": {
+    "pathname": "/it/cli/reform/sync-forms",
+    "translationKey": "/cli/reform/sync-forms",
+    "locale": "it",
+    "title": "Sincronizzare i moduli",
+    "description": "Scarica nel progetto corrente i moduli Reform accessibili.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/reform/sync-forms"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/reform/sync-forms"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/reform/sync-forms"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/reform/sync-forms"
+      }
+    ]
+  },
+  "/it/cli/schemas/import-export-csv": {
+    "pathname": "/it/cli/schemas/import-export-csv",
+    "translationKey": "/cli/schemas/import-export-csv",
+    "locale": "it",
+    "title": "Importare ed esportare CSV",
+    "description": "Converti le definizioni di schema tra JSON e la rappresentazione CSV della CLI.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/import-export-csv"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/import-export-csv"
+      }
+    ]
+  },
+  "/it/cli/schemas/load-edit": {
+    "pathname": "/it/cli/schemas/load-edit",
+    "translationKey": "/cli/schemas/load-edit",
+    "locale": "it",
+    "title": "Caricare e modificare gli schemi",
+    "description": "Carica uno schema e modificalo con l’editor configurato.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/load-edit"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/load-edit"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/load-edit"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/load-edit"
+      }
+    ]
+  },
+  "/it/cli/schemas/run-values": {
+    "pathname": "/it/cli/schemas/run-values",
+    "translationKey": "/cli/schemas/run-values",
+    "locale": "it",
+    "title": "Eseguire con valori",
+    "description": "Valuta uno schema con valori iniziali JSON o YAML.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/run-values"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/run-values"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/run-values"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/run-values"
+      }
+    ]
+  },
+  "/it/cli/schemas/validate-preview": {
+    "pathname": "/it/cli/schemas/validate-preview",
+    "translationKey": "/cli/schemas/validate-preview",
+    "locale": "it",
+    "title": "Validare e visualizzare l’anteprima",
+    "description": "Controlla uno schema e ispeziona la sua struttura dalla riga di comando.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/validate-preview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/validate-preview"
+      }
+    ]
+  },
+  "/it/cli/schemas/watch-test": {
+    "pathname": "/it/cli/schemas/watch-test",
+    "translationKey": "/cli/schemas/watch-test",
+    "locale": "it",
+    "title": "Monitorare e testare",
+    "description": "Rivalida gli schemi quando cambiano ed esegui i test del progetto.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/schemas/watch-test"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/schemas/watch-test"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/schemas/watch-test"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/schemas/watch-test"
+      }
+    ]
+  },
+  "/it/cli/security": {
+    "pathname": "/it/cli/security",
+    "translationKey": "/cli/security",
+    "locale": "it",
+    "title": "Sicurezza",
+    "description": "Confini di fiducia e pratiche sicure di sviluppo locale per form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/security"
+      }
+    ]
+  },
+  "/it/cli/troubleshooting": {
+    "pathname": "/it/cli/troubleshooting",
+    "translationKey": "/cli/troubleshooting",
+    "locale": "it",
+    "title": "Risoluzione dei problemi",
+    "description": "Risolvi i problemi comuni di installazione, progetto, anteprima e connettori.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/troubleshooting"
+      }
+    ]
   },
   "/it/core/ai-metadata": {
     "pathname": "/it/core/ai-metadata",

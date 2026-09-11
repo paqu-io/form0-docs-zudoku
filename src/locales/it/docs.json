@@ -19,6 +19,32 @@
       "title": "Edit your first schema"
     }
   },
+  "cli": {
+    "overview": { "title": "Panoramica" },
+    "install-update": { "title": "Installare e aggiornare" },
+    "initialize-project": { "title": "Inizializzare un progetto" },
+    "interactive-shell": { "title": "Shell interattiva" },
+    "schemas": {
+      "load-edit": { "title": "Caricare e modificare gli schemi" },
+      "validate-preview": { "title": "Validare e visualizzare l’anteprima" },
+      "run-values": { "title": "Eseguire con valori" },
+      "watch-test": { "title": "Monitorare e testare" },
+      "import-export-csv": { "title": "Importare ed esportare CSV" }
+    },
+    "local-development": {
+      "live-preview": { "title": "Server di anteprima" },
+      "app-development-servers": { "title": "Server di sviluppo delle applicazioni" }
+    },
+    "project-configuration": { "title": "Configurazione del progetto" },
+    "connector-management": { "title": "Gestione dei connettori" },
+    "reform": {
+      "sign-in-organization": { "title": "Accedere e selezionare un’organizzazione" },
+      "sync-forms": { "title": "Sincronizzare i moduli" }
+    },
+    "command-reference": { "title": "Riferimento dei comandi" },
+    "troubleshooting": { "title": "Risoluzione dei problemi" },
+    "security": { "title": "Sicurezza" }
+  },
   "core": {
     "overview": {
       "title": "Overview"

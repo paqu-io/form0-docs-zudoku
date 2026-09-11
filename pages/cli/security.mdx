@@ -1,0 +1,12 @@
+---
+title: Security
+description: Trust boundaries and safe local-development practices for form0-cli.
+---
+
+`form0-cli` is a local development tool. Schema expressions and event scripts execute JavaScript,
+and configured connectors execute as Node.js modules. Use schemas, projects, and connector packages
+from trusted sources.
+
+Keep credentials in ignored local environment files. The preview server binds to `localhost` by
+default; only expose it on trusted networks. Report suspected vulnerabilities privately through
+the [form0-cli security policy](https://github.com/paqu-io/form0-cli/security/policy).

@@ -1,0 +1,11 @@
+---
+title: Project configuration
+description: Understand the project-local and user-local configuration used by form0-cli.
+---
+
+Project settings live in `form0.config.js`. Depending on the project type, this can describe schema
+locations, application development servers, themes, storage, and connectors.
+
+Machine-specific values and connector credentials belong in `.env.local`. User preferences such
+as CLI theme and locale are managed separately by the CLI. Do not commit secrets or local database
+files containing real submissions.

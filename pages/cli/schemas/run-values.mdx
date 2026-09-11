@@ -1,0 +1,10 @@
+---
+title: Run with values
+description: Evaluate a schema with initial values from JSON, YAML, or an inline JSON value.
+---
+
+Use `form0 run <schema> --values <input>` to evaluate a form. The input can be an inline JSON value
+or a path to a JSON, YAML, or YML file.
+
+The command prints the evaluated engine state, including values, validation errors, visibility,
+requirements, and read-only state. Unknown input fields are ignored with warnings.

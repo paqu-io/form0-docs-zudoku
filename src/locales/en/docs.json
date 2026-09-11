@@ -19,6 +19,32 @@
       "title": "Edit your first schema"
     }
   },
+  "cli": {
+    "overview": { "title": "Overview" },
+    "install-update": { "title": "Install and update" },
+    "initialize-project": { "title": "Initialize a project" },
+    "interactive-shell": { "title": "Interactive shell" },
+    "schemas": {
+      "load-edit": { "title": "Load and edit schemas" },
+      "validate-preview": { "title": "Validate and preview" },
+      "run-values": { "title": "Run with values" },
+      "watch-test": { "title": "Watch and test" },
+      "import-export-csv": { "title": "Import and export CSV" }
+    },
+    "local-development": {
+      "live-preview": { "title": "Live preview server" },
+      "app-development-servers": { "title": "App development servers" }
+    },
+    "project-configuration": { "title": "Project configuration" },
+    "connector-management": { "title": "Connector management" },
+    "reform": {
+      "sign-in-organization": { "title": "Sign in and select an organization" },
+      "sync-forms": { "title": "Sync forms" }
+    },
+    "command-reference": { "title": "Command reference" },
+    "troubleshooting": { "title": "Troubleshooting" },
+    "security": { "title": "Security" }
+  },
   "core": {
     "overview": {
       "title": "Overview"
