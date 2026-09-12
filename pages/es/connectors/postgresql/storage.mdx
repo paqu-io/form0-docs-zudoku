@@ -1,0 +1,24 @@
+---
+title: Modelo de almacenamiento y operaciones de PostgreSQL
+description: Comprende las tablas, cargas JSONB, índices y límites operativos del conector PostgreSQL.
+---
+
+La inicialización crea dos tablas si todavía no existen:
+
+- `form0_submissions` guarda los registros principales.
+- `form0_submissions_children` guarda los registros de secciones repetibles anidadas.
+
+Los nombres son configurables. Cada tabla proyecta metadatos comunes en columnas tipadas y guarda
+el registro completo en `form_values` como JSONB. La tabla secundaria conserva los identificadores
+del registro principal y del padre inmediato para reconstruir las relaciones anidadas.
+
+El conector crea índices para estado, formulario, marcas de tiempo, borrador, versión, changeset y
+creador, además de un índice GIN para `form_values` y triggers para las marcas de actualización.
+
+`onFormSubmit()` inserta primero el registro principal y después los anidados de forma recursiva.
+Es un límite de escritura, no una API pública de consultas ni un servicio de sincronización. Las
+aplicaciones deben consultar las tablas con su propia capa de acceso y decidir cómo tratar los
+identificadores duplicados.
+
+El propietario de la base de datos sigue siendo responsable de migraciones, copias de seguridad,
+pruebas de restauración, retención, monitorización, capacidad, acceso y requisitos normativos.

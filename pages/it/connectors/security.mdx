@@ -1,0 +1,21 @@
+---
+title: Sicurezza e responsabilità dei dati
+description: Proteggi credenziali, submission salvate e processo host.
+---
+
+I connettori vengono eseguiti nel processo Node.js host e ricevono le submission complete. Installa
+solo pacchetti affidabili e verifica gli aggiornamenti prima del deploy.
+
+Conserva le credenziali in file di ambiente ignorati o in un secret manager. Per PostgreSQL, usa
+TLS nelle connessioni remote e un ruolo dedicato con privilegi minimi. Per SQLite, limita l’accesso
+al file e ai backup e tienili fuori dalle directory pubbliche.
+
+I connettori non forniscono autenticazione utente, autorizzazione applicativa, gestione delle chiavi,
+policy di backup o conservazione o controlli normativi. L’applicazione e il proprietario dello
+storage devono definirli e applicarli.
+
+Le espressioni dello schema seguono il [modello di fiducia di Core](/it/core/security). Un connettore
+non isola gli schemi e non rende sicuro contenuto eseguibile non affidabile.
+
+Segnala le vulnerabilità privatamente secondo la policy di sicurezza del repository interessato.
+Non pubblicare sospette vulnerabilità in una issue pubblica.

@@ -485,6 +485,249 @@
       }
     ]
   },
+  "/connectors/choose": {
+    "pathname": "/connectors/choose",
+    "translationKey": "/connectors/choose",
+    "locale": "en",
+    "title": "Choosing a connector",
+    "description": "Compare the official PostgreSQL and SQLite connectors.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/choose"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/choose"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/choose"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/choose"
+      }
+    ]
+  },
+  "/connectors/direct-integration": {
+    "pathname": "/connectors/direct-integration",
+    "translationKey": "/connectors/direct-integration",
+    "locale": "en",
+    "title": "Direct integration",
+    "description": "Own a form0 connector lifecycle directly in a Node.js application.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/direct-integration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/direct-integration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/direct-integration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/direct-integration"
+      }
+    ]
+  },
+  "/connectors/overview": {
+    "pathname": "/connectors/overview",
+    "translationKey": "/connectors/overview",
+    "locale": "en",
+    "title": "Connectors overview",
+    "description": "Persist form0 structured records through trusted connector packages.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/overview"
+      }
+    ]
+  },
+  "/connectors/postgresql/setup": {
+    "pathname": "/connectors/postgresql/setup",
+    "translationKey": "/connectors/postgresql/setup",
+    "locale": "en",
+    "title": "PostgreSQL setup and configuration",
+    "description": "Install and configure the official PostgreSQL connector.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/postgresql/setup"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/postgresql/setup"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/postgresql/setup"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/postgresql/setup"
+      }
+    ]
+  },
+  "/connectors/postgresql/storage": {
+    "pathname": "/connectors/postgresql/storage",
+    "translationKey": "/connectors/postgresql/storage",
+    "locale": "en",
+    "title": "PostgreSQL storage model and operations",
+    "description": "Understand the tables, JSONB payloads, indexes, and operational boundary of the PostgreSQL connector.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/postgresql/storage"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/postgresql/storage"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/postgresql/storage"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/postgresql/storage"
+      }
+    ]
+  },
+  "/connectors/security": {
+    "pathname": "/connectors/security",
+    "translationKey": "/connectors/security",
+    "locale": "en",
+    "title": "Security and data responsibility",
+    "description": "Protect connector credentials, stored submissions, and the host process.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/security"
+      }
+    ]
+  },
+  "/connectors/sqlite/setup": {
+    "pathname": "/connectors/sqlite/setup",
+    "translationKey": "/connectors/sqlite/setup",
+    "locale": "en",
+    "title": "SQLite setup and configuration",
+    "description": "Install and configure the official SQLite connector for Node.js.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/sqlite/setup"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/sqlite/setup"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/sqlite/setup"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/sqlite/setup"
+      }
+    ]
+  },
+  "/connectors/sqlite/storage": {
+    "pathname": "/connectors/sqlite/storage",
+    "translationKey": "/connectors/sqlite/storage",
+    "locale": "en",
+    "title": "SQLite storage model and operations",
+    "description": "Understand the local tables, JSON payloads, locking, and operational boundary of the SQLite connector.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/sqlite/storage"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/sqlite/storage"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/sqlite/storage"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/sqlite/storage"
+      }
+    ]
+  },
+  "/connectors/troubleshooting": {
+    "pathname": "/connectors/troubleshooting",
+    "translationKey": "/connectors/troubleshooting",
+    "locale": "en",
+    "title": "Connector troubleshooting",
+    "description": "Diagnose installation, configuration, connection, and storage failures.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/troubleshooting"
+      }
+    ]
+  },
   "/core/ai-metadata": {
     "pathname": "/core/ai-metadata",
     "translationKey": "/core/ai-metadata",
@@ -1673,6 +1916,249 @@
       {
         "locale": "it",
         "pathname": "/it/cli/troubleshooting"
+      }
+    ]
+  },
+  "/es/connectors/choose": {
+    "pathname": "/es/connectors/choose",
+    "translationKey": "/connectors/choose",
+    "locale": "es",
+    "title": "Elegir un conector",
+    "description": "Compara los conectores oficiales para PostgreSQL y SQLite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/choose"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/choose"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/choose"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/choose"
+      }
+    ]
+  },
+  "/es/connectors/direct-integration": {
+    "pathname": "/es/connectors/direct-integration",
+    "translationKey": "/connectors/direct-integration",
+    "locale": "es",
+    "title": "Integración directa",
+    "description": "Controla directamente el ciclo de vida de un conector form0 en Node.js.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/direct-integration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/direct-integration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/direct-integration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/direct-integration"
+      }
+    ]
+  },
+  "/es/connectors/overview": {
+    "pathname": "/es/connectors/overview",
+    "translationKey": "/connectors/overview",
+    "locale": "es",
+    "title": "Visión general de conectores",
+    "description": "Guarda registros estructurados de form0 mediante paquetes de conectores de confianza.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/overview"
+      }
+    ]
+  },
+  "/es/connectors/postgresql/setup": {
+    "pathname": "/es/connectors/postgresql/setup",
+    "translationKey": "/connectors/postgresql/setup",
+    "locale": "es",
+    "title": "Configuración de PostgreSQL",
+    "description": "Instala y configura el conector oficial para PostgreSQL.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/postgresql/setup"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/postgresql/setup"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/postgresql/setup"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/postgresql/setup"
+      }
+    ]
+  },
+  "/es/connectors/postgresql/storage": {
+    "pathname": "/es/connectors/postgresql/storage",
+    "translationKey": "/connectors/postgresql/storage",
+    "locale": "es",
+    "title": "Modelo de almacenamiento y operaciones de PostgreSQL",
+    "description": "Comprende las tablas, cargas JSONB, índices y límites operativos del conector PostgreSQL.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/postgresql/storage"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/postgresql/storage"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/postgresql/storage"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/postgresql/storage"
+      }
+    ]
+  },
+  "/es/connectors/security": {
+    "pathname": "/es/connectors/security",
+    "translationKey": "/connectors/security",
+    "locale": "es",
+    "title": "Seguridad y responsabilidad sobre los datos",
+    "description": "Protege credenciales, envíos almacenados y el proceso anfitrión.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/security"
+      }
+    ]
+  },
+  "/es/connectors/sqlite/setup": {
+    "pathname": "/es/connectors/sqlite/setup",
+    "translationKey": "/connectors/sqlite/setup",
+    "locale": "es",
+    "title": "Configuración de SQLite",
+    "description": "Instala y configura el conector oficial SQLite para Node.js.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/sqlite/setup"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/sqlite/setup"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/sqlite/setup"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/sqlite/setup"
+      }
+    ]
+  },
+  "/es/connectors/sqlite/storage": {
+    "pathname": "/es/connectors/sqlite/storage",
+    "translationKey": "/connectors/sqlite/storage",
+    "locale": "es",
+    "title": "Modelo de almacenamiento y operaciones de SQLite",
+    "description": "Comprende las tablas locales, JSON, bloqueos y límites operativos del conector SQLite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/sqlite/storage"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/sqlite/storage"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/sqlite/storage"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/sqlite/storage"
+      }
+    ]
+  },
+  "/es/connectors/troubleshooting": {
+    "pathname": "/es/connectors/troubleshooting",
+    "translationKey": "/connectors/troubleshooting",
+    "locale": "es",
+    "title": "Solución de problemas de conectores",
+    "description": "Diagnostica fallos de instalación, configuración, conexión y almacenamiento.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/troubleshooting"
       }
     ]
   },
@@ -2881,6 +3367,249 @@
       {
         "locale": "it",
         "pathname": "/it/cli/troubleshooting"
+      }
+    ]
+  },
+  "/fr/connectors/choose": {
+    "pathname": "/fr/connectors/choose",
+    "translationKey": "/connectors/choose",
+    "locale": "fr",
+    "title": "Choisir un connecteur",
+    "description": "Comparez les connecteurs officiels PostgreSQL et SQLite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/choose"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/choose"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/choose"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/choose"
+      }
+    ]
+  },
+  "/fr/connectors/direct-integration": {
+    "pathname": "/fr/connectors/direct-integration",
+    "translationKey": "/connectors/direct-integration",
+    "locale": "fr",
+    "title": "Intégration directe",
+    "description": "Gérez directement le cycle de vie d’un connecteur form0 dans Node.js.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/direct-integration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/direct-integration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/direct-integration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/direct-integration"
+      }
+    ]
+  },
+  "/fr/connectors/overview": {
+    "pathname": "/fr/connectors/overview",
+    "translationKey": "/connectors/overview",
+    "locale": "fr",
+    "title": "Vue d’ensemble des connecteurs",
+    "description": "Conservez les enregistrements structurés form0 avec des connecteurs de confiance.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/overview"
+      }
+    ]
+  },
+  "/fr/connectors/postgresql/setup": {
+    "pathname": "/fr/connectors/postgresql/setup",
+    "translationKey": "/connectors/postgresql/setup",
+    "locale": "fr",
+    "title": "Installation et configuration de PostgreSQL",
+    "description": "Installez et configurez le connecteur PostgreSQL officiel.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/postgresql/setup"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/postgresql/setup"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/postgresql/setup"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/postgresql/setup"
+      }
+    ]
+  },
+  "/fr/connectors/postgresql/storage": {
+    "pathname": "/fr/connectors/postgresql/storage",
+    "translationKey": "/connectors/postgresql/storage",
+    "locale": "fr",
+    "title": "Modèle de stockage et exploitation de PostgreSQL",
+    "description": "Comprenez les tables, données JSONB, index et limites opérationnelles du connecteur PostgreSQL.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/postgresql/storage"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/postgresql/storage"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/postgresql/storage"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/postgresql/storage"
+      }
+    ]
+  },
+  "/fr/connectors/security": {
+    "pathname": "/fr/connectors/security",
+    "translationKey": "/connectors/security",
+    "locale": "fr",
+    "title": "Sécurité et responsabilité des données",
+    "description": "Protégez les identifiants, soumissions stockées et le processus hôte.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/security"
+      }
+    ]
+  },
+  "/fr/connectors/sqlite/setup": {
+    "pathname": "/fr/connectors/sqlite/setup",
+    "translationKey": "/connectors/sqlite/setup",
+    "locale": "fr",
+    "title": "Installation et configuration de SQLite",
+    "description": "Installez et configurez le connecteur SQLite officiel pour Node.js.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/sqlite/setup"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/sqlite/setup"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/sqlite/setup"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/sqlite/setup"
+      }
+    ]
+  },
+  "/fr/connectors/sqlite/storage": {
+    "pathname": "/fr/connectors/sqlite/storage",
+    "translationKey": "/connectors/sqlite/storage",
+    "locale": "fr",
+    "title": "Modèle de stockage et exploitation de SQLite",
+    "description": "Comprenez les tables locales, données JSON, verrous et limites opérationnelles du connecteur SQLite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/sqlite/storage"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/sqlite/storage"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/sqlite/storage"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/sqlite/storage"
+      }
+    ]
+  },
+  "/fr/connectors/troubleshooting": {
+    "pathname": "/fr/connectors/troubleshooting",
+    "translationKey": "/connectors/troubleshooting",
+    "locale": "fr",
+    "title": "Résolution des problèmes de connecteurs",
+    "description": "Diagnostiquez les problèmes d’installation, configuration, connexion et stockage.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/troubleshooting"
       }
     ]
   },
@@ -4153,6 +4882,249 @@
       {
         "locale": "it",
         "pathname": "/it/cli/troubleshooting"
+      }
+    ]
+  },
+  "/it/connectors/choose": {
+    "pathname": "/it/connectors/choose",
+    "translationKey": "/connectors/choose",
+    "locale": "it",
+    "title": "Scegliere un connettore",
+    "description": "Confronta i connettori ufficiali PostgreSQL e SQLite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/choose"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/choose"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/choose"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/choose"
+      }
+    ]
+  },
+  "/it/connectors/direct-integration": {
+    "pathname": "/it/connectors/direct-integration",
+    "translationKey": "/connectors/direct-integration",
+    "locale": "it",
+    "title": "Integrazione diretta",
+    "description": "Gestisci direttamente il ciclo di vita di un connettore form0 in Node.js.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/direct-integration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/direct-integration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/direct-integration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/direct-integration"
+      }
+    ]
+  },
+  "/it/connectors/overview": {
+    "pathname": "/it/connectors/overview",
+    "translationKey": "/connectors/overview",
+    "locale": "it",
+    "title": "Panoramica dei connettori",
+    "description": "Salva i record strutturati form0 tramite pacchetti connettore affidabili.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/overview"
+      }
+    ]
+  },
+  "/it/connectors/postgresql/setup": {
+    "pathname": "/it/connectors/postgresql/setup",
+    "translationKey": "/connectors/postgresql/setup",
+    "locale": "it",
+    "title": "Installazione e configurazione di PostgreSQL",
+    "description": "Installa e configura il connettore PostgreSQL ufficiale.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/postgresql/setup"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/postgresql/setup"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/postgresql/setup"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/postgresql/setup"
+      }
+    ]
+  },
+  "/it/connectors/postgresql/storage": {
+    "pathname": "/it/connectors/postgresql/storage",
+    "translationKey": "/connectors/postgresql/storage",
+    "locale": "it",
+    "title": "Modello di archiviazione e operatività di PostgreSQL",
+    "description": "Comprendi tabelle, payload JSONB, indici e confine operativo del connettore PostgreSQL.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/postgresql/storage"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/postgresql/storage"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/postgresql/storage"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/postgresql/storage"
+      }
+    ]
+  },
+  "/it/connectors/security": {
+    "pathname": "/it/connectors/security",
+    "translationKey": "/connectors/security",
+    "locale": "it",
+    "title": "Sicurezza e responsabilità dei dati",
+    "description": "Proteggi credenziali, submission salvate e processo host.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/security"
+      }
+    ]
+  },
+  "/it/connectors/sqlite/setup": {
+    "pathname": "/it/connectors/sqlite/setup",
+    "translationKey": "/connectors/sqlite/setup",
+    "locale": "it",
+    "title": "Installazione e configurazione di SQLite",
+    "description": "Installa e configura il connettore SQLite ufficiale per Node.js.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/sqlite/setup"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/sqlite/setup"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/sqlite/setup"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/sqlite/setup"
+      }
+    ]
+  },
+  "/it/connectors/sqlite/storage": {
+    "pathname": "/it/connectors/sqlite/storage",
+    "translationKey": "/connectors/sqlite/storage",
+    "locale": "it",
+    "title": "Modello di archiviazione e operatività di SQLite",
+    "description": "Comprendi tabelle locali, payload JSON, locking e confine operativo del connettore SQLite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/sqlite/storage"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/sqlite/storage"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/sqlite/storage"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/sqlite/storage"
+      }
+    ]
+  },
+  "/it/connectors/troubleshooting": {
+    "pathname": "/it/connectors/troubleshooting",
+    "translationKey": "/connectors/troubleshooting",
+    "locale": "it",
+    "title": "Risoluzione dei problemi dei connettori",
+    "description": "Diagnostica errori di installazione, configurazione, connessione e storage.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/connectors/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/connectors/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/connectors/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/connectors/troubleshooting"
       }
     ]
   },

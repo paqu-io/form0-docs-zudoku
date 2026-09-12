@@ -1,0 +1,35 @@
+---
+title: Direct integration
+description: Own a form0 connector lifecycle directly in a Node.js application.
+---
+
+The CLI is the normal integration path, but both official connectors expose the same lifecycle:
+
+- `initialize(config, envVars)` opens storage and creates missing tables.
+- `onFormSubmit(record)` stores a canonical structured record.
+- `healthCheck()` reports whether the initialized storage is reachable.
+- `getMetadata()` describes the installed connector and active configuration without exposing secrets.
+- `destroy()` releases the database connection or local file handle.
+
+```javascript
+import { Form0PostgreSQLConnector } from 'form0-connector-pg';
+
+const connector = new Form0PostgreSQLConnector();
+
+await connector.initialize();
+const health = await connector.healthCheck();
+
+if (!health.healthy) {
+  throw new Error(health.message);
+}
+
+const result = await connector.onFormSubmit(structuredRecord);
+await connector.destroy();
+```
+
+Explicit configuration values override environment-derived values. Keep credentials outside
+source control and always release the connector during application shutdown.
+
+The accepted record shape is documented under [Core output and records](/core/output-records).
+Connectors add server-side timestamps before storage and return a result describing the main and
+nested records that were written.

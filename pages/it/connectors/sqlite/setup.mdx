@@ -1,0 +1,30 @@
+---
+title: Installazione e configurazione di SQLite
+description: Installa e configura il connettore SQLite ufficiale per Node.js.
+---
+
+Installa e configura il connettore tramite la CLI interattiva:
+
+```text
+form0> connector install form0-connector-sqlite
+form0> connector configure form0-connector-sqlite
+form0> connector test form0-connector-sqlite
+```
+
+Per l’uso diretto, esegui `npm install form0-connector-sqlite`.
+
+| Variabile d’ambiente | Scopo | Valore predefinito |
+| --- | --- | --- |
+| `FORM0_CONNECTOR_SQLITE_PATH` | Percorso relativo o assoluto | `./form0.db` |
+| `FORM0_CONNECTOR_SQLITE_TABLE_NAME` | Tabella principale | `form0_submissions` |
+| `FORM0_CONNECTOR_SQLITE_CHILD_TABLE_NAME` | Tabella dei record annidati | `form0_submissions_children` |
+| `FORM0_CONNECTOR_SQLITE_DEBUG` | Logging dettagliato | `false` |
+
+I percorsi relativi vengono risolti dalla directory di lavoro del processo. Il connettore crea la
+directory e il file quando necessario, quindi il processo deve disporre dell’accesso in scrittura.
+
+Il pacchetto richiede Node.js 22 o successivo e una piattaforma supportata dalla dipendenza nativa
+`better-sqlite3`. Non è destinato a React Native o Expo; usa storage mobile nativo come
+`expo-sqlite` in questi ambienti.
+
+Non collocare il database in una directory web pubblica e non aggiungerlo al controllo versione.

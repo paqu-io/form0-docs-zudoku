@@ -1,0 +1,25 @@
+---
+title: Résolution des problèmes de connecteurs
+description: Diagnostiquez les problèmes d’installation, configuration, connexion et stockage.
+---
+
+Commencez par les vérifications de la CLI :
+
+```text
+form0> connector test <package-name>
+form0> connector status
+```
+
+Vérifiez que les commandes sont lancées depuis le projet contenant `form0.config.js`, que le paquet
+est installé et que les valeurs requises sont présentes dans `.env.local` ou l’environnement hôte.
+
+Pour PostgreSQL, vérifiez le réseau, les identifiants, TLS, l’existence du schéma et les droits sur
+les tables, index et triggers. Corrigez l’épuisement du pool et les erreurs de certificat au niveau
+de la base ou du déploiement, sans désactiver les contrôles de sécurité sans examen.
+
+Pour SQLite, vérifiez que la dépendance native prend en charge la plateforme et que le processus
+peut créer et écrire le répertoire. Fermez les outils externes si le fichier est verrouillé et évitez
+un nombre d’écrivains simultanés supérieur au modèle prévu par SQLite.
+
+Utilisez `healthCheck()` en intégration directe. Activez temporairement les journaux de débogage si
+nécessaire, sans enregistrer les identifiants ni les soumissions sensibles complètes.

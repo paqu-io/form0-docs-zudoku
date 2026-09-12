@@ -1,0 +1,20 @@
+---
+title: Visión general de conectores
+description: Guarda registros estructurados de form0 mediante paquetes de conectores de confianza.
+---
+
+Los conectores reciben registros estructurados de un proyecto form0 y los escriben en un
+almacenamiento controlado por la aplicación anfitriona. Los conectores oficiales admiten
+actualmente PostgreSQL y SQLite.
+
+El flujo recomendado es gestionarlos con `form0-cli`: instalar un conector, configurarlo en el
+proyecto, probar la conexión y consultar su estado. Una aplicación también puede crear el conector
+directamente cuando necesite controlar su ciclo de vida.
+
+Los conectores se ejecutan dentro del proceso local de Node.js. No son servicios de almacenamiento
+alojados ni proporcionan autenticación, autorización, copias de seguridad, retención o
+administración de bases de datos. Esas responsabilidades corresponden a la aplicación y al
+propietario de la base de datos.
+
+Empieza por [Elegir un conector](/es/connectors/choose) o consulta la
+[guía de gestión de conectores de la CLI](/es/cli/connector-management).

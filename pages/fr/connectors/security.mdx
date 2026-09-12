@@ -1,0 +1,21 @@
+---
+title: Sécurité et responsabilité des données
+description: Protégez les identifiants, soumissions stockées et le processus hôte.
+---
+
+Les connecteurs s’exécutent dans le processus Node.js hôte et reçoivent les soumissions complètes.
+N’installez que des connecteurs de confiance et examinez les mises à jour avant le déploiement.
+
+Conservez les identifiants dans des fichiers d’environnement ignorés ou un gestionnaire de secrets.
+Pour PostgreSQL, utilisez TLS à distance et un rôle dédié avec le minimum de privilèges. Pour SQLite,
+limitez l’accès au fichier et à ses sauvegardes et gardez-les hors des répertoires publics.
+
+Les connecteurs ne fournissent ni authentification utilisateur, ni autorisation applicative, ni
+gestion des clés, ni politique de sauvegarde ou de rétention, ni contrôle réglementaire.
+L’application et le propriétaire du stockage doivent les définir et les appliquer.
+
+Les expressions de schéma suivent le [modèle de confiance de Core](/fr/core/security). Un connecteur
+n’isole pas les schémas et ne sécurise pas du contenu exécutable non fiable.
+
+Signalez les vulnérabilités en privé selon la politique de sécurité du dépôt concerné. Ne publiez
+pas une vulnérabilité présumée dans une issue publique.

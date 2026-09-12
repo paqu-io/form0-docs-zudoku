@@ -1,0 +1,22 @@
+---
+title: Security and data responsibility
+description: Protect connector credentials, stored submissions, and the host process.
+---
+
+Connector packages execute inside the host Node.js process and receive complete form submissions.
+Install only trusted connector packages and review upgrades before deployment.
+
+Keep database credentials in ignored local environment files or a secret manager. For PostgreSQL,
+use TLS for remote connections and grant a dedicated role only the schema and table privileges it
+needs. For SQLite, restrict access to the database file and its backups, and keep it outside
+publicly served directories.
+
+Connectors do not provide user authentication, application authorization, encryption-key
+management, backup policies, retention schedules, or regulatory controls. The application and
+storage owner must define and enforce those controls for the data being collected.
+
+Schema expressions execute according to the [Core trust model](/core/security). A storage connector
+does not sandbox schemas or make untrusted executable schema content safe.
+
+Report connector vulnerabilities privately through the security policy in the affected connector's
+GitHub repository. Do not disclose suspected vulnerabilities in a public issue.

@@ -1,0 +1,25 @@
+---
+title: Risoluzione dei problemi dei connettori
+description: Diagnostica errori di installazione, configurazione, connessione e storage.
+---
+
+Inizia dai controlli della CLI:
+
+```text
+form0> connector test <package-name>
+form0> connector status
+```
+
+Verifica che i comandi vengano eseguiti dal progetto contenente `form0.config.js`, che il pacchetto
+sia installato e che i valori richiesti siano presenti in `.env.local` o nell’ambiente host.
+
+Per PostgreSQL, verifica rete, credenziali, TLS, esistenza dello schema e permessi per tabelle,
+indici e trigger. Risolvi l’esaurimento del pool e gli errori dei certificati nel database o nel
+deploy, senza disabilitare controlli di sicurezza senza revisione.
+
+Per SQLite, verifica che la dipendenza nativa supporti la piattaforma e che il processo possa creare
+e scrivere la directory. Chiudi i viewer esterni se il file è bloccato ed evita più writer
+concorrenti di quanti previsti dal modello di SQLite.
+
+Usa `healthCheck()` nelle integrazioni dirette. Abilita temporaneamente il debug quando serve più
+contesto, ma non registrare credenziali o submission sensibili complete.

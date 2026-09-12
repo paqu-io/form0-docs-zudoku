@@ -1,0 +1,41 @@
+---
+title: PostgreSQL setup and configuration
+description: Install and configure the official PostgreSQL connector.
+---
+
+Install and configure the connector through the interactive CLI:
+
+```text
+form0> connector install form0-connector-pg
+form0> connector configure form0-connector-pg
+form0> connector test form0-connector-pg
+```
+
+For direct use, install it with `npm install form0-connector-pg`.
+
+Required settings are the database name, username, and password. The host defaults to `localhost`
+and the port defaults to `5432`.
+
+| Environment variable | Purpose | Default |
+| --- | --- | --- |
+| `FORM0_CONNECTOR_PG_HOST` | PostgreSQL host | `localhost` |
+| `FORM0_CONNECTOR_PG_PORT` | PostgreSQL port | `5432` |
+| `FORM0_CONNECTOR_PG_DATABASE` | Database name | Required |
+| `FORM0_CONNECTOR_PG_USERNAME` | Database role | Required |
+| `FORM0_CONNECTOR_PG_PASSWORD` | Database password | Required |
+| `FORM0_CONNECTOR_PG_SSL` | Enable TLS | `false` |
+| `FORM0_CONNECTOR_PG_SSL_REJECT_UNAUTHORIZED` | Verify the server certificate | `true` |
+| `FORM0_CONNECTOR_PG_MAX_CONNECTIONS` | Maximum pool size | `10` |
+| `FORM0_CONNECTOR_PG_IDLE_TIMEOUT` | Idle timeout in milliseconds | `30000` |
+| `FORM0_CONNECTOR_PG_CONNECTION_TIMEOUT` | Connection timeout in milliseconds | `5000` |
+| `FORM0_CONNECTOR_PG_SCHEMA` | Existing schema containing connector tables | `public` |
+| `FORM0_CONNECTOR_PG_TABLE_NAME` | Main table | `form0_submissions` |
+| `FORM0_CONNECTOR_PG_CHILD_TABLE_NAME` | Nested-record table | `form0_submissions_children` |
+| `FORM0_CONNECTOR_PG_DEBUG` | Verbose connector logging | `false` |
+
+Schema and table names must be valid unquoted PostgreSQL identifiers. The schema must already
+exist, and the configured role needs permission to connect, create the missing tables, create
+indexes and triggers, and read and write those tables.
+
+Use TLS for remote connections and a dedicated least-privilege role. Keep configuration in an
+ignored `.env.local` file or the host application's secret manager.

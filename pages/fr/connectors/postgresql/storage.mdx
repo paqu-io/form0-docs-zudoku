@@ -1,0 +1,23 @@
+---
+title: Modèle de stockage et exploitation de PostgreSQL
+description: Comprenez les tables, données JSONB, index et limites opérationnelles du connecteur PostgreSQL.
+---
+
+L’initialisation crée deux tables si elles n’existent pas :
+
+- `form0_submissions` stocke les enregistrements principaux.
+- `form0_submissions_children` stocke les sections répétables imbriquées.
+
+Leurs noms sont configurables. Chaque table projette les métadonnées courantes dans des colonnes
+typées et stocke l’enregistrement complet dans `form_values` au format JSONB. La table enfant garde
+les identifiants de l’enregistrement principal et du parent immédiat pour reconstruire les relations.
+
+Le connecteur crée des index pour l’état, le formulaire, les horodatages, le brouillon, la version,
+le changeset et le créateur, ainsi qu’un index GIN pour `form_values` et des triggers d’horodatage.
+
+`onFormSubmit()` insère l’enregistrement principal puis les enregistrements imbriqués récursivement.
+C’est une frontière d’écriture, pas une API publique de requête ou un service de synchronisation.
+Les applications doivent utiliser leur propre couche d’accès et définir le traitement des doublons.
+
+Le propriétaire de la base reste responsable des migrations, sauvegardes, tests de restauration,
+de la rétention, supervision, capacité, gestion des accès et exigences réglementaires.

@@ -1,0 +1,41 @@
+---
+title: Configuración de PostgreSQL
+description: Instala y configura el conector oficial para PostgreSQL.
+---
+
+Instala y configura el conector mediante la CLI interactiva:
+
+```text
+form0> connector install form0-connector-pg
+form0> connector configure form0-connector-pg
+form0> connector test form0-connector-pg
+```
+
+Para usarlo directamente, ejecuta `npm install form0-connector-pg`.
+
+Son obligatorios el nombre de la base de datos, el usuario y la contraseña. El host predeterminado
+es `localhost` y el puerto, `5432`.
+
+| Variable de entorno | Finalidad | Valor predeterminado |
+| --- | --- | --- |
+| `FORM0_CONNECTOR_PG_HOST` | Host de PostgreSQL | `localhost` |
+| `FORM0_CONNECTOR_PG_PORT` | Puerto de PostgreSQL | `5432` |
+| `FORM0_CONNECTOR_PG_DATABASE` | Nombre de la base de datos | Obligatorio |
+| `FORM0_CONNECTOR_PG_USERNAME` | Rol de la base de datos | Obligatorio |
+| `FORM0_CONNECTOR_PG_PASSWORD` | Contraseña | Obligatorio |
+| `FORM0_CONNECTOR_PG_SSL` | Activar TLS | `false` |
+| `FORM0_CONNECTOR_PG_SSL_REJECT_UNAUTHORIZED` | Verificar el certificado del servidor | `true` |
+| `FORM0_CONNECTOR_PG_MAX_CONNECTIONS` | Tamaño máximo del pool | `10` |
+| `FORM0_CONNECTOR_PG_IDLE_TIMEOUT` | Tiempo de inactividad en milisegundos | `30000` |
+| `FORM0_CONNECTOR_PG_CONNECTION_TIMEOUT` | Tiempo de conexión en milisegundos | `5000` |
+| `FORM0_CONNECTOR_PG_SCHEMA` | Esquema existente para las tablas | `public` |
+| `FORM0_CONNECTOR_PG_TABLE_NAME` | Tabla principal | `form0_submissions` |
+| `FORM0_CONNECTOR_PG_CHILD_TABLE_NAME` | Tabla de registros anidados | `form0_submissions_children` |
+| `FORM0_CONNECTOR_PG_DEBUG` | Registro detallado | `false` |
+
+Los nombres del esquema y de las tablas deben ser identificadores PostgreSQL válidos sin comillas.
+El esquema debe existir y el rol necesita permisos para conectarse, crear tablas, índices y
+triggers, y leer y escribir esas tablas.
+
+Usa TLS en conexiones remotas y un rol dedicado con privilegios mínimos. Guarda la configuración
+en un `.env.local` ignorado o en el gestor de secretos de la aplicación.

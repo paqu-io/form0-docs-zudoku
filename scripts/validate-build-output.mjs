@@ -181,13 +181,17 @@ for (const locale of SUPPORTED_LOCALES) {
     failures.push(`${htmlPath} does not contain its locale-specific edit-page target`)
   }
 
-  for (const icon of ["sparkles", "cpu", "link", "book"]) {
+  for (const icon of ["sparkles", "terminal", "cpu", "plug", "link", "book"]) {
     if (!html.includes(`<nav-${icon}`) || !html.includes(`"icon":"nav-${icon}"`)) {
       failures.push(`${htmlPath} does not contain the ${icon} navigation icon`)
     }
   }
 
-  if (/<(?:sparkles|cpu|book)(?:\s|>)|<link class="size-4|"icon":\{"displayName"/.test(html)) {
+  if (
+    /<(?:sparkles|terminal|cpu|plug|book)(?:\s|>)|<link class="size-4|"icon":\{"displayName"/.test(
+      html,
+    )
+  ) {
     failures.push(`${htmlPath} contains an unresolved navigation icon element`)
   }
 
@@ -344,7 +348,7 @@ const cssFiles = await collectFiles(path.join(outputRoot, "assets"), (file) =>
   file.endsWith(".css"),
 )
 const compiledCss = (await Promise.all(cssFiles.map((file) => readFile(file, "utf8")))).join("\n")
-for (const icon of ["sparkles", "cpu", "link", "book"]) {
+for (const icon of ["sparkles", "terminal", "cpu", "plug", "link", "book"]) {
   if (!compiledCss.includes(`nav-${icon}`)) {
     failures.push(`Compiled CSS is missing the nav-${icon} icon mask`)
   }

@@ -49,10 +49,37 @@ test("repeated and mixed localization calls cannot accumulate prefixes", () => {
 
 test("external links remain untouched", () => {
   const navigation = localizeNavigation(navigationDefinition, "fr")
-  const [externalLink] = collect(navigation, "link")
+  const links = collect(navigation, "link")
+  const externalLink = links.find(({ to }) => to === "https://zudoku.dev/docs/")
 
+  assert.ok(externalLink)
   assert.equal(externalLink.to, "https://zudoku.dev/docs/")
   assert.equal(localizePath("mailto:hello@form0.dev", "fr"), "mailto:hello@form0.dev")
+})
+
+test("internal navigation links receive the locale prefix", () => {
+  const navigation = localizeNavigation(navigationDefinition, "fr")
+  const internalLink = collect(navigation, "link").find(
+    ({ label }) => label === "Connector management",
+  )
+
+  assert.ok(internalLink)
+  assert.equal(internalLink.to, "/fr/cli/connector-management")
+})
+
+test("documentation categories retain their order and hydration-safe icons", () => {
+  const [documentation] = navigationDefinition
+
+  assert.deepEqual(
+    documentation.items.map(({ label, icon }) => [label, icon]),
+    [
+      ["Getting Started", "nav-sparkles"],
+      ["CLI", "nav-terminal"],
+      ["Core", "nav-cpu"],
+      ["Connectors", "nav-plug"],
+      ["Useful Links", "nav-link"],
+    ],
+  )
 })
 
 test("translation resolution has deterministic locale and English fallbacks", () => {

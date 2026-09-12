@@ -1,0 +1,23 @@
+---
+title: Modello di archiviazione e operatività di PostgreSQL
+description: Comprendi tabelle, payload JSONB, indici e confine operativo del connettore PostgreSQL.
+---
+
+L’inizializzazione crea due tabelle quando non esistono:
+
+- `form0_submissions` contiene i record principali.
+- `form0_submissions_children` contiene i record delle sezioni ripetibili annidate.
+
+I nomi sono configurabili. Ogni tabella proietta i metadati comuni in colonne tipizzate e salva il
+record completo in `form_values` come JSONB. La tabella figlia conserva gli identificatori del
+record principale e del genitore immediato per ricostruire le relazioni annidate.
+
+Il connettore crea indici per stato, form, timestamp, bozza, versione, changeset e autore, oltre a
+un indice GIN per `form_values` e trigger che aggiornano i timestamp del database.
+
+`onFormSubmit()` inserisce prima il record principale e poi quelli annidati ricorsivamente. È un
+confine di scrittura, non un’API pubblica di query né un servizio di sincronizzazione. Le
+applicazioni devono usare un proprio livello di accesso e decidere come gestire gli ID duplicati.
+
+Il proprietario del database resta responsabile di migrazioni, backup, test di ripristino,
+conservazione, monitoraggio, capacità, controllo degli accessi e requisiti normativi.

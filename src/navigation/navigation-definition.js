@@ -57,32 +57,36 @@ const documentationItems = [
     ],
     { icon: "nav-sparkles" },
   ),
-  category("CLI", [
-    doc("cli/overview", "Overview"),
-    doc("cli/install-update", "Install and update"),
-    doc("cli/initialize-project", "Initialize a project"),
-    doc("cli/interactive-shell", "Interactive shell"),
-    category("Working with schemas", [
-      doc("cli/schemas/load-edit", "Load and edit schemas"),
-      doc("cli/schemas/validate-preview", "Validate and preview"),
-      doc("cli/schemas/run-values", "Run with values"),
-      doc("cli/schemas/watch-test", "Watch and test"),
-      doc("cli/schemas/import-export-csv", "Import and export CSV"),
-    ]),
-    category("Local development", [
-      doc("cli/local-development/live-preview", "Live preview server"),
-      doc("cli/local-development/app-development-servers", "App development servers"),
-    ]),
-    doc("cli/project-configuration", "Project configuration"),
-    doc("cli/connector-management", "Connector management"),
-    category("Reform integration", [
-      doc("cli/reform/sign-in-organization", "Sign in and select an organization"),
-      doc("cli/reform/sync-forms", "Sync forms"),
-    ]),
-    doc("cli/command-reference", "Command reference"),
-    doc("cli/troubleshooting", "Troubleshooting"),
-    doc("cli/security", "Security"),
-  ]),
+  category(
+    "CLI",
+    [
+      doc("cli/overview", "Overview"),
+      doc("cli/install-update", "Install and update"),
+      doc("cli/initialize-project", "Initialize a project"),
+      doc("cli/interactive-shell", "Interactive shell"),
+      category("Working with schemas", [
+        doc("cli/schemas/load-edit", "Load and edit schemas"),
+        doc("cli/schemas/validate-preview", "Validate and preview"),
+        doc("cli/schemas/run-values", "Run with values"),
+        doc("cli/schemas/watch-test", "Watch and test"),
+        doc("cli/schemas/import-export-csv", "Import and export CSV"),
+      ]),
+      category("Local development", [
+        doc("cli/local-development/live-preview", "Live preview server"),
+        doc("cli/local-development/app-development-servers", "App development servers"),
+      ]),
+      doc("cli/project-configuration", "Project configuration"),
+      doc("cli/connector-management", "Connector management"),
+      category("Reform integration", [
+        doc("cli/reform/sign-in-organization", "Sign in and select an organization"),
+        doc("cli/reform/sync-forms", "Sync forms"),
+      ]),
+      doc("cli/command-reference", "Command reference"),
+      doc("cli/troubleshooting", "Troubleshooting"),
+      doc("cli/security", "Security"),
+    ],
+    { icon: "nav-terminal" },
+  ),
   category(
     "Core",
     [
@@ -119,6 +123,30 @@ const documentationItems = [
       doc("core/output-records", "Output and records"),
     ],
     { icon: "nav-cpu" },
+  ),
+  category(
+    "Connectors",
+    [
+      doc("connectors/overview", "Overview"),
+      doc("connectors/choose", "Choosing a connector"),
+      {
+        type: "link",
+        label: "Connector management",
+        to: "/cli/connector-management",
+      },
+      doc("connectors/direct-integration", "Direct integration"),
+      category("PostgreSQL", [
+        doc("connectors/postgresql/setup", "Setup and configuration"),
+        doc("connectors/postgresql/storage", "Storage model and operations"),
+      ]),
+      category("SQLite", [
+        doc("connectors/sqlite/setup", "Setup and configuration"),
+        doc("connectors/sqlite/storage", "Storage model and operations"),
+      ]),
+      doc("connectors/security", "Security and data responsibility"),
+      doc("connectors/troubleshooting", "Troubleshooting"),
+    ],
+    { icon: "nav-plug" },
   ),
   category(
     "Useful Links",

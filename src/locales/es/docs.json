@@ -45,6 +45,21 @@
     "troubleshooting": { "title": "Solución de problemas" },
     "security": { "title": "Seguridad" }
   },
+  "connectors": {
+    "overview": { "title": "Visión general de conectores" },
+    "choose": { "title": "Elegir un conector" },
+    "direct-integration": { "title": "Integración directa" },
+    "postgresql": {
+      "setup": { "title": "Configuración de PostgreSQL" },
+      "storage": { "title": "Modelo de almacenamiento y operaciones de PostgreSQL" }
+    },
+    "sqlite": {
+      "setup": { "title": "Configuración de SQLite" },
+      "storage": { "title": "Modelo de almacenamiento y operaciones de SQLite" }
+    },
+    "security": { "title": "Seguridad y responsabilidad sobre los datos" },
+    "troubleshooting": { "title": "Solución de problemas de conectores" }
+  },
   "core": {
     "overview": {
       "title": "Overview"

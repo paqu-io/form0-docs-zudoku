@@ -1,0 +1,21 @@
+---
+title: Seguridad y responsabilidad sobre los datos
+description: Protege credenciales, envíos almacenados y el proceso anfitrión.
+---
+
+Los conectores se ejecutan dentro del proceso Node.js anfitrión y reciben los envíos completos.
+Instala solo paquetes de confianza y revisa las actualizaciones antes del despliegue.
+
+Guarda las credenciales en archivos de entorno ignorados o en un gestor de secretos. Para
+PostgreSQL, usa TLS en conexiones remotas y un rol dedicado con privilegios mínimos. Para SQLite,
+restringe el archivo y sus copias y mantenlos fuera de directorios públicos.
+
+Los conectores no proporcionan autenticación de usuarios, autorización de aplicación, gestión de
+claves, políticas de copia o retención ni controles normativos. La aplicación y el propietario del
+almacenamiento deben definirlos y aplicarlos.
+
+Las expresiones de esquema se ejecutan conforme al [modelo de confianza de Core](/es/core/security).
+Un conector no aísla los esquemas ni hace seguro contenido ejecutable que no sea de confianza.
+
+Informa de vulnerabilidades en privado mediante la política de seguridad del repositorio afectado.
+No publiques vulnerabilidades sospechadas en una incidencia pública.

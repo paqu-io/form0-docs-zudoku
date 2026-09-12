@@ -1,0 +1,20 @@
+---
+title: Vue d’ensemble des connecteurs
+description: Conservez les enregistrements structurés form0 avec des connecteurs de confiance.
+---
+
+Les connecteurs reçoivent les enregistrements structurés d’un projet form0 et les écrivent dans un
+stockage contrôlé par l’application hôte. Les connecteurs officiels prennent actuellement en charge
+PostgreSQL et SQLite.
+
+Le parcours recommandé consiste à les gérer avec `form0-cli` : installer un connecteur, le
+configurer dans le projet, tester la connexion et consulter son état. Une application peut aussi
+instancier directement un connecteur lorsqu’elle doit gérer son cycle de vie.
+
+Les connecteurs s’exécutent dans le processus Node.js local. Ce ne sont pas des services de stockage
+hébergés et ils ne fournissent ni authentification, ni autorisation, ni sauvegardes, ni rétention,
+ni administration de base de données. Ces responsabilités restent celles de l’application et du
+propriétaire de la base de données.
+
+Commencez par [Choisir un connecteur](/fr/connectors/choose) ou consultez le
+[guide de gestion des connecteurs de la CLI](/fr/cli/connector-management).

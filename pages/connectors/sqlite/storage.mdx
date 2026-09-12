@@ -1,0 +1,23 @@
+---
+title: SQLite storage model and operations
+description: Understand the local tables, JSON payloads, locking, and operational boundary of the SQLite connector.
+---
+
+Initialization enables foreign-key enforcement and creates configurable main and child tables.
+Common metadata is projected into SQLite columns, while the complete structured record is encoded
+as JSON text in `form_values`.
+
+Nested repeatable-section records retain the main record identifier and immediate parent
+identifier. Indexes cover common status, form, timestamp, draft, version, changeset, and relationship
+columns.
+
+`onFormSubmit()` writes the main record and then recursively writes nested records. When SQLite
+reports a retryable file-lock or I/O error, the connector reconnects and retries the submission
+once. Persistent failures are returned to the caller.
+
+The connector is a write boundary and does not provide a public query or synchronization API.
+Applications that read the database should use a separate data-access layer and coordinate access
+with the writer.
+
+The host application owns file permissions, concurrency planning, backups, restoration tests,
+retention, secure exports, and deletion of sensitive records.

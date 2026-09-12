@@ -1,0 +1,24 @@
+---
+title: PostgreSQL storage model and operations
+description: Understand the tables, JSONB payloads, indexes, and operational boundary of the PostgreSQL connector.
+---
+
+Initialization creates two tables when they do not already exist:
+
+- `form0_submissions` stores main records.
+- `form0_submissions_children` stores records from nested repeatable sections.
+
+The names are configurable. Each table projects common record metadata into typed columns and
+stores the complete record payload in `form_values` as JSONB. The child table retains both the main
+record identifier and the immediate parent identifier so nested relationships can be reconstructed.
+
+The connector creates indexes for common status, form, timestamp, draft, version, changeset, and
+creator fields. It also creates a GIN index for `form_values` and triggers that maintain database
+update timestamps.
+
+`onFormSubmit()` inserts the main record before recursively inserting nested records. It is a write
+boundary, not a public query API or synchronization service. Applications should query the tables
+through their own data-access layer and decide how duplicate record identifiers are handled.
+
+Database owners remain responsible for schema migrations, backups, restoration tests, retention,
+monitoring, capacity, access control, and regulatory requirements.

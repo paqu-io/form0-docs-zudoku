@@ -1,0 +1,26 @@
+---
+title: Connector troubleshooting
+description: Diagnose installation, configuration, connection, and storage failures.
+---
+
+Start with the CLI's connector checks:
+
+```text
+form0> connector test <package-name>
+form0> connector status
+```
+
+Confirm that commands run from the project containing `form0.config.js`, the connector package is
+installed, and required values are present in `.env.local` or the host environment.
+
+For PostgreSQL failures, verify network reachability, credentials, TLS settings, schema existence,
+and the role's table, index, and trigger permissions. Connection-pool exhaustion and certificate
+verification failures should be resolved at the database or deployment boundary rather than by
+disabling security checks without review.
+
+For SQLite failures, confirm that the native dependency supports the runtime platform and that the
+process can create and write the configured directory. Close external database viewers when the
+file is locked, and avoid concurrent writers that exceed SQLite's intended operating model.
+
+Use `healthCheck()` in direct integrations. Enable connector debug logging temporarily when more
+context is needed, but do not log credentials or complete sensitive submissions.

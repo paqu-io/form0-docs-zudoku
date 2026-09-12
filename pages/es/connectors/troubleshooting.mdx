@@ -1,0 +1,25 @@
+---
+title: Solución de problemas de conectores
+description: Diagnostica fallos de instalación, configuración, conexión y almacenamiento.
+---
+
+Empieza por las comprobaciones de la CLI:
+
+```text
+form0> connector test <package-name>
+form0> connector status
+```
+
+Confirma que ejecutas los comandos desde el proyecto que contiene `form0.config.js`, que el paquete
+está instalado y que los valores necesarios existen en `.env.local` o en el entorno anfitrión.
+
+Para PostgreSQL, comprueba la red, credenciales, TLS, existencia del esquema y permisos para tablas,
+índices y triggers. Resuelve el agotamiento del pool y los fallos de certificados en la base de datos
+o el despliegue, sin desactivar verificaciones de seguridad sin revisión.
+
+Para SQLite, confirma que la dependencia nativa admite la plataforma y que el proceso puede crear y
+escribir el directorio. Cierra visores externos si el archivo está bloqueado y evita demasiados
+escritores concurrentes.
+
+Usa `healthCheck()` en integraciones directas. Activa temporalmente el registro de depuración si
+necesitas contexto, pero no registres credenciales ni envíos sensibles completos.

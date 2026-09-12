@@ -1,0 +1,24 @@
+---
+title: Choosing a connector
+description: Compare the official PostgreSQL and SQLite connectors.
+---
+
+Both official connectors accept the same form0 structured-record shape and preserve nested
+repeatable-section relationships. Choose based on where the application runs and how its data must
+be operated.
+
+| Consideration | PostgreSQL | SQLite |
+| --- | --- | --- |
+| Storage | Network database | Local database file |
+| Best fit | Server applications and shared deployments | Local tools and simple Node.js deployments |
+| Concurrency | Connection pool and database-managed concurrency | SQLite file-locking constraints |
+| Operations | Database roles, TLS, backups, and server administration | File permissions, copies, backups, and retention |
+| Payload | JSONB plus projected columns | JSON text plus projected columns |
+| Platform | Node.js with access to PostgreSQL | Node.js with a supported native build |
+
+Use PostgreSQL when multiple processes or deployments share submissions, or when database-level
+querying and operational controls matter. Use SQLite when the data should remain in a local file
+and the application can operate within SQLite's concurrency model.
+
+The Node.js SQLite connector is not compatible with React Native or Expo. Mobile applications
+should use platform-native storage such as `expo-sqlite` and their own synchronization boundary.

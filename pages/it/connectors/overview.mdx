@@ -1,0 +1,18 @@
+---
+title: Panoramica dei connettori
+description: Salva i record strutturati form0 tramite pacchetti connettore affidabili.
+---
+
+I connettori ricevono i record strutturati di un progetto form0 e li scrivono in uno storage
+controllato dall’applicazione host. I connettori ufficiali supportano attualmente PostgreSQL e SQLite.
+
+Il flusso consigliato consiste nel gestirli con `form0-cli`: installare un connettore, configurarlo
+nel progetto, verificare la connessione e controllarne lo stato. Un’applicazione può anche istanziare
+direttamente un connettore quando deve gestirne il ciclo di vita.
+
+I connettori vengono eseguiti nel processo Node.js locale. Non sono servizi di storage ospitati e
+non forniscono autenticazione, autorizzazione, backup, conservazione o amministrazione del database.
+Queste responsabilità restano all’applicazione e al proprietario del database.
+
+Inizia da [Scegliere un connettore](/it/connectors/choose) oppure consulta la
+[guida alla gestione dei connettori della CLI](/it/cli/connector-management).

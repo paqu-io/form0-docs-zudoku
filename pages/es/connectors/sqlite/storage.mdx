@@ -1,0 +1,22 @@
+---
+title: Modelo de almacenamiento y operaciones de SQLite
+description: Comprende las tablas locales, JSON, bloqueos y límites operativos del conector SQLite.
+---
+
+La inicialización activa las claves foráneas y crea las tablas principal y secundaria configuradas.
+Los metadatos comunes se proyectan en columnas SQLite y el registro completo se codifica como texto
+JSON en `form_values`.
+
+Los registros de secciones repetibles conservan los identificadores del registro principal y del
+padre inmediato. Los índices cubren estado, formulario, marcas de tiempo, borrador, versión,
+changeset y relaciones.
+
+`onFormSubmit()` escribe el registro principal y después los anidados recursivamente. Si SQLite
+devuelve un error reintentable de bloqueo o E/S, el conector se reconecta y reintenta una vez. Los
+fallos persistentes se devuelven al llamador.
+
+El conector es un límite de escritura y no proporciona una API pública de consultas o
+sincronización. Las aplicaciones deben usar una capa de acceso separada y coordinarla con el escritor.
+
+La aplicación es responsable de permisos, concurrencia, copias de seguridad, restauraciones,
+retención, exportaciones seguras y eliminación de datos sensibles.

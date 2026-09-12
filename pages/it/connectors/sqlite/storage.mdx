@@ -1,0 +1,21 @@
+---
+title: Modello di archiviazione e operatività di SQLite
+description: Comprendi tabelle locali, payload JSON, locking e confine operativo del connettore SQLite.
+---
+
+L’inizializzazione abilita le chiavi esterne e crea le tabelle principale e figlia configurate. I
+metadati comuni vengono proiettati in colonne SQLite e il record completo viene codificato come
+testo JSON in `form_values`.
+
+I record delle sezioni ripetibili conservano gli identificatori del record principale e del
+genitore immediato. Gli indici coprono stato, form, timestamp, bozza, versione, changeset e relazioni.
+
+`onFormSubmit()` scrive il record principale e poi quelli annidati ricorsivamente. Se SQLite segnala
+un errore di locking o I/O ritentabile, il connettore si riconnette e riprova una volta. Gli errori
+persistenti vengono restituiti al chiamante.
+
+Il connettore è un confine di scrittura e non fornisce un’API pubblica di query o sincronizzazione.
+Le applicazioni devono usare un livello di accesso separato e coordinarlo con il writer.
+
+L’applicazione host gestisce permessi, concorrenza, backup, test di ripristino, conservazione,
+esportazioni sicure ed eliminazione dei dati sensibili.
