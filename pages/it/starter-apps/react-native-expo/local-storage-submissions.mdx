@@ -1,0 +1,20 @@
+---
+title: Archiviazione locale e invii
+description: Comprendi lo store SQLite e il confine con invio remoto e sincronizzazione.
+---
+
+Lo starter salva gli invii strutturati con `expo-sqlite`. Configura o disattiva il comportamento nel
+blocco `storage` di `form0.config.js`. Il database vive nel sandbox dell’applicazione. Ogni invio
+inserisce metadati e record strutturato completo in JSON. I controlli di debug possono elencare o
+cancellare i record quando `debug` è attivo.
+
+## Persistenza non significa sincronizzazione
+
+Lo store fornisce solo persistenza locale. Non carica record, riprova richieste, risolve conflitti,
+cifra esportazioni o definisce la conservazione. L’app deve progettare questi comportamenti e trattare
+backup ed esportazioni come dati sensibili.
+
+I pacchetti Node.js `form0-connector-pg` e `form0-connector-sqlite` non funzionano in React Native.
+Invia i dati remoti tramite un’API applicativa autenticata; non integrare credenziali del database.
+Consulta [Valori, snapshot e invio](/it/bindings/react-native/values-snapshots-submission) e
+[Integrazione mobile](/it/bindings/react-native/mobile-integration).

@@ -1,0 +1,22 @@
+---
+title: Renderers, thèmes, polices et images dans le starter mobile
+description: Personnalisez la présentation native et gérez polices et images embarquées.
+---
+
+La racine charge `form0Fonts` avec `expo-font` avant le rendu et enveloppe l’interface dans
+`ThemeProvider`. Configurez le mode de couleur et les surcharges dans `form0.config.js`.
+
+Associez les types de champ à des identifiants dans `form0.config.js`, puis ces identifiants aux
+composants dans `src/field-renderers/resolver.js`. Cette séparation garde la configuration
+sérialisable. Consultez les [renderers personnalisés](/fr/bindings/react-native/custom-renderers).
+
+React Native doit découvrir statiquement les images embarquées. Ajoutez-les dans
+`assets/supporting-images`, puis exécutez :
+
+```bash
+npm run generate-images
+```
+
+Validez l’image et `src/supporting-images/index.js`. Les scripts de démarrage régénèrent ce fichier
+et la CI vérifie son actualité. Les images HTTP(S) distantes n’ont pas besoin d’entrée. Consultez
+[Thèmes, polices et images](/fr/bindings/react-native/themes-assets).

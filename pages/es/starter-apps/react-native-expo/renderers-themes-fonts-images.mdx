@@ -1,0 +1,22 @@
+---
+title: Renderizadores, temas, fuentes e imágenes en el starter móvil
+description: Personaliza la presentación nativa y gestiona fuentes e imágenes auxiliares empaquetadas.
+---
+
+La raíz carga `form0Fonts` con `expo-font` antes de renderizar y envuelve la interfaz en
+`ThemeProvider`. Configura el modo de color y las personalizaciones en `form0.config.js`.
+
+Asocia tipos de campo con identificadores en `form0.config.js` y esos identificadores con
+componentes en `src/field-renderers/resolver.js`. Esta separación mantiene la configuración
+serializable. Consulta [Renderizadores personalizados](/es/bindings/react-native/custom-renderers).
+
+React Native necesita descubrir estáticamente las imágenes empaquetadas. Añádelas a
+`assets/supporting-images` y regenera el registro:
+
+```bash
+npm run generate-images
+```
+
+Confirma tanto el recurso como `src/supporting-images/index.js`. Los scripts de inicio regeneran el
+archivo y CI comprueba que esté actualizado. Las imágenes HTTP y HTTPS remotas no requieren una
+entrada. Consulta [Temas, fuentes e imágenes](/es/bindings/react-native/themes-assets).

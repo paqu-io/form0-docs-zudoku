@@ -1,0 +1,37 @@
+---
+title: Local storage and submissions
+description: Understand the starter SQLite record store and the boundary for remote submission and sync.
+---
+
+## Included SQLite store
+
+The starter saves structured submitted records with `expo-sqlite`. Configure or disable it through
+the `storage` block in `form0.config.js`:
+
+```js
+storage: {
+  enabled: true,
+  databaseName: "form0.db",
+  tableName: "form0_submissions",
+  debug: false,
+}
+```
+
+The database lives in the platform-specific application sandbox. Each submission is inserted with
+record metadata and the complete structured record as JSON. The included debug controls can list
+or clear records when `debug` is enabled.
+
+## Persistence is not synchronization
+
+This store provides on-device persistence only. It does not upload records, retry requests, resolve
+conflicts, encrypt exports, or define retention and deletion policy. Applications must design those
+behaviors for their data and threat model. Treat database backups and exported files as sensitive
+user data.
+
+The Node.js `form0-connector-pg` and `form0-connector-sqlite` packages do not run in React Native.
+Send remote submissions through an authenticated application API; do not embed database credentials
+in a mobile application.
+
+For the renderer submission and snapshot contract, see
+[Values, snapshots, and submission](/bindings/react-native/values-snapshots-submission). For general
+mobile boundaries, see [Mobile integration](/bindings/react-native/mobile-integration).

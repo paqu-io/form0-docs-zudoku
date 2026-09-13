@@ -1,0 +1,20 @@
+---
+title: Compila e distribuisci lo starter React Native ed Expo
+description: Prepara configurazione e asset per build native di sviluppo e produzione.
+---
+
+Il repository non impone account store, firma, progetto EAS, politica di aggiornamento o workflow
+di release. Queste decisioni appartengono all’applicazione.
+
+Prima di una build distribuibile:
+
+1. Sostituisci nome, slug, versione, icone e splash in `app.json`.
+2. Definisci identificatori Android/iOS e permessi di piattaforma.
+3. Rimuovi log e tunnel riservati allo sviluppo.
+4. Verifica sicurezza di schemi, record, media, conservazione e API remota.
+5. Prova su dispositivi fisici supportati.
+6. Configura firma, build, invii e aggiornamenti con il workflow Expo scelto.
+
+Consulta [development builds](https://docs.expo.dev/develop/development-builds/introduction/) ed
+[EAS Build](https://docs.expo.dev/build/introduction/). L’export CI è uno smoke test, non una build
+firmata né un sostituto dei test su dispositivo.

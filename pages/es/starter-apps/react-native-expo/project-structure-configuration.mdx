@@ -1,0 +1,33 @@
+---
+title: Estructura y configuración del proyecto React Native y Expo
+description: Comprende los archivos del starter móvil y configura su comportamiento form0 y Expo.
+---
+
+El starter es una aplicación Expo normal. La identidad y los ajustes nativos viven en `app.json`;
+las convenciones de form0 viven en `form0.config.js`.
+
+```text
+.
+├── app.json
+├── form0.config.js
+├── assets/
+├── scripts/
+└── src/
+    ├── components/
+    ├── field-renderers/
+    ├── forms/
+    ├── lib/
+    ├── pages/
+    └── supporting-images/
+```
+
+Usa `app.json` para nombre, slug, versión, orientación, iconos, pantalla inicial y opciones de
+plataforma. Revisa estos valores de ejemplo antes de distribuir la aplicación.
+
+`form0.config.js` controla diseño, tema, modo de interacción, teclado, renderizadores, formato de
+salida, almacenamiento SQLite y el servidor Expo usado por `form0 serve --app`.
+
+Guarda URLs de desarrollo específicas de la máquina en `.env.local`. No incluyas secretos en la
+configuración pública de Expo ni en valores empaquetados en el cliente. Consulta la
+[configuración de proyectos CLI](/es/cli/project-configuration) y continúa con
+[Formularios, pantallas y navegación](./forms-screens-navigation).

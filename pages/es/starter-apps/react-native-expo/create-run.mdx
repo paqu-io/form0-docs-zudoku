@@ -1,0 +1,38 @@
+---
+title: Crear y ejecutar el starter de React Native y Expo
+description: Crea el starter móvil mantenido con form0-cli y ábrelo en un dispositivo o emulador.
+---
+
+El starter de React Native y Expo es la vía más rápida para una aplicación móvil form0. Incluye
+esquemas de ejemplo, renderizadores nativos, fuentes, imágenes auxiliares y persistencia SQLite local.
+
+## Crear la aplicación
+
+Instala [form0-cli](/es/cli/install-update) e inicializa el proyecto:
+
+```bash
+npm install --global form0-cli
+form0 init my-mobile-form
+```
+
+Elige **Aplicación móvil** y **React Native + Expo**. Entra en el directorio generado, instala las
+dependencias si es necesario y arranca Expo:
+
+```bash
+cd my-mobile-form
+npm install
+npm start
+```
+
+El botón **Use this template** de GitHub es una alternativa para copiar el repositorio. La CLI sigue
+siendo la ruta recomendada.
+
+## Elegir un destino de desarrollo
+
+Usa Expo Go si todas las dependencias nativas son compatibles. Usa un development build cuando
+añadas bibliotecas nativas o necesites un entorno más próximo a producción. También puedes abrir un
+emulador Android, el simulador de iOS o el destino web con `npm run android`, `npm run ios` y
+`npm run web`.
+
+El starter requiere Node.js 22 o posterior. Continúa con
+[Estructura y configuración](./project-structure-configuration).

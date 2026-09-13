@@ -110,6 +110,35 @@ const documentationItems = [
         ],
         { icon: "nav-react" },
       ),
+      category(
+        "React Native + Expo",
+        [
+          doc("starter-apps/react-native-expo/create-run", "Create and run"),
+          doc(
+            "starter-apps/react-native-expo/project-structure-configuration",
+            "Project structure and configuration",
+          ),
+          doc(
+            "starter-apps/react-native-expo/forms-screens-navigation",
+            "Forms, screens, and navigation",
+          ),
+          doc(
+            "starter-apps/react-native-expo/renderers-themes-fonts-images",
+            "Renderers, themes, fonts, and images",
+          ),
+          doc(
+            "starter-apps/react-native-expo/device-development-networking",
+            "Device development and networking",
+          ),
+          doc(
+            "starter-apps/react-native-expo/local-storage-submissions",
+            "Local storage and submissions",
+          ),
+          doc("starter-apps/react-native-expo/build-distribution", "Build and distribution"),
+          doc("starter-apps/react-native-expo/troubleshooting", "Troubleshooting"),
+        ],
+        { icon: "nav-react-native" },
+      ),
     ],
     { icon: "nav-layout-template" },
   ),

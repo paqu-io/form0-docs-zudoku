@@ -57,6 +57,18 @@
       "submissions-connectors": { "title": "Invii e connettori" },
       "build-deployment": { "title": "Build e distribuzione dell’app React e Vite" },
       "troubleshooting": { "title": "Risoluzione dei problemi React e Vite" }
+    },
+    "react-native-expo": {
+      "create-run": { "title": "Crea e avvia lo starter React Native ed Expo" },
+      "project-structure-configuration": {
+        "title": "Struttura e configurazione del progetto React Native ed Expo"
+      },
+      "forms-screens-navigation": { "title": "Moduli, schermate e navigazione" },
+      "renderers-themes-fonts-images": { "title": "Renderer, temi, font e immagini" },
+      "device-development-networking": { "title": "Sviluppo su dispositivo e rete" },
+      "local-storage-submissions": { "title": "Archiviazione locale e invii" },
+      "build-distribution": { "title": "Compila e distribuisci lo starter React Native ed Expo" },
+      "troubleshooting": { "title": "Risoluzione dei problemi dello starter React Native ed Expo" }
     }
   },
   "connectors": {

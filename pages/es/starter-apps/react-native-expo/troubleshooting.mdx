@@ -1,0 +1,33 @@
+---
+title: Solución de problemas del starter React Native y Expo
+description: Diagnostica dependencias, red, imágenes, fuentes y SQLite.
+---
+
+## Dependencias incompatibles
+
+Usa las comprobaciones conscientes del SDK de Expo:
+
+```bash
+npx expo install --check
+npx expo-doctor@latest
+```
+
+Revisa los cambios antes de `npx expo install --fix` y trata un cambio de SDK como una migración.
+
+## El dispositivo no abre el proyecto
+
+Comprueba LAN, firewall, VPN, aislamiento Wi-Fi, puerto y si el cliente necesita Expo Go o un
+development build. Una URL pública no debe mostrar una página intermedia.
+
+## Falta una imagen o fuente
+
+Ejecuta `npm run generate-images`, confirma el registro y reinicia Metro si su grafo está obsoleto.
+Espera a `useFonts(form0Fonts)` antes de renderizar.
+
+## SQLite no escribe
+
+Valida `databaseName` y `tableName`, revisa los logs y activa temporalmente `debug`. Los nombres de
+tabla admiten letras, dígitos y guiones bajos. Borrar los datos de la app elimina la base del sandbox.
+
+Para problemas del componente, consulta
+[Solución de problemas de React Native](/es/bindings/react-native/troubleshooting).

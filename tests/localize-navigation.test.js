@@ -94,7 +94,10 @@ test("binding and connector technologies retain their navigation icons", () => {
     starterApps.items
       .filter(({ type }) => type === "category")
       .map(({ label, icon }) => [label, icon]),
-    [["React + Vite", "nav-react"]],
+    [
+      ["React + Vite", "nav-react"],
+      ["React Native + Expo", "nav-react-native"],
+    ],
   )
 
   assert.deepEqual(

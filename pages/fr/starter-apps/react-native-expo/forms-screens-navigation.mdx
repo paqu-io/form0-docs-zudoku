@@ -1,0 +1,23 @@
+---
+title: Formulaires, écrans et navigation dans le starter mobile
+description: Enregistrez les schémas et adaptez le flux d’écrans au système de navigation de l’application.
+---
+
+Les schémas vivent dans `src/forms`. Enregistrez chaque formulaire dans `src/forms/registry.js` avec
+un identifiant stable, des métadonnées et `loadSchema`. Validez-les avec
+[form0-cli](/fr/cli/schemas/validate-preview).
+
+`useFormSchema` expose le chargement, le schéma et l’erreur. Le flux inclus reste volontairement
+simple :
+
+```text
+App → Home → FormPage → Form0Form
+```
+
+`Home` liste les formulaires, `FormPage` charge le schéma et gère soumission et débogage, tandis que
+`Form0Form` transmet la configuration au `FormRenderer` natif.
+
+Ce flux est un point de départ, pas un routeur. Remplacez `activeFormId` par la navigation de votre
+application pour les liens profonds, onglets ou piles authentifiées. Le renderer gère défilement,
+clavier et écrans internes ; ne l’enveloppez pas dans un autre défilement vertical. Consultez
+[Modes et navigation](/fr/bindings/react-native/modes-navigation).

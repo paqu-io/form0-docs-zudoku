@@ -1,0 +1,25 @@
+---
+title: Développement sur appareil et réseau
+description: Connectez les appareils Expo au starter par LAN ou URL publique de développement.
+---
+
+La configuration par défaut lance Expo sur le réseau local. L’appareil doit atteindre la machine de
+développement et le port 8081. Pare-feu, Wi-Fi isolé, VPN et conteneurs peuvent bloquer l’accès.
+
+Exécutez `form0 serve --app` pour utiliser le bloc `devServer`. Consultez la
+[référence du serveur d’application](/fr/cli/local-development/app-development-servers).
+
+Sans accès LAN, définissez dans `.env.local` :
+
+```text
+FORM0_APP_PUBLIC_URL=https://your-development-domain.example
+```
+
+Démarrez le tunnel séparément, puis utilisez `form0 serve --app`, ou `--public-url` ponctuellement.
+L’URL doit servir directement manifeste, bundle, ressources et WebSocket Expo. Une page
+intermédiaire casse le client. Un tunnel n’est pas un déploiement de production et le bundle ne doit
+contenir aucun identifiant privilégié.
+
+Utilisez Expo Go pour les modules compatibles et un
+[development build](https://docs.expo.dev/develop/development-builds/introduction/) pour le code
+natif personnalisé.

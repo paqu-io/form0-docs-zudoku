@@ -1,0 +1,23 @@
+---
+title: Formularios, pantallas y navegación en el starter móvil
+description: Registra esquemas y adapta el flujo de pantallas al sistema de navegación de tu aplicación.
+---
+
+Los esquemas viven en `src/forms`. Registra cada formulario en `src/forms/registry.js` con un ID
+estable, metadatos visibles y una función `loadSchema`. Valídalos con
+[form0-cli](/es/cli/schemas/validate-preview) antes de publicarlos.
+
+`useFormSchema` resuelve el registro seleccionado y expone carga, esquema y error. El flujo incluido
+es deliberadamente pequeño:
+
+```text
+App → Home → FormPage → Form0Form
+```
+
+`Home` enumera formularios, `FormPage` carga el esquema y controla envíos y depuración, y
+`Form0Form` traduce la configuración al `FormRenderer` nativo.
+
+Este flujo es un punto de partida, no un framework de rutas. Sustituye `activeFormId` por la
+biblioteca de navegación de la aplicación cuando necesites enlaces profundos, pestañas o pilas
+autenticadas. El renderizador controla scroll, teclado y pantallas internas; no lo envuelvas en otro
+scroll vertical. Consulta [Modos y navegación](/es/bindings/react-native/modes-navigation).

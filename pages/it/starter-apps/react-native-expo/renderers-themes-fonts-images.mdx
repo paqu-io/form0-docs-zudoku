@@ -1,0 +1,22 @@
+---
+title: Renderer, temi, font e immagini nello starter mobile
+description: Personalizza la presentazione nativa e gestisci font e immagini di supporto integrate.
+---
+
+La radice carica `form0Fonts` con `expo-font` prima del rendering e avvolge l’interfaccia in
+`ThemeProvider`. Configura modalità colore e personalizzazioni in `form0.config.js`.
+
+Associa i tipi di campo a identificatori in `form0.config.js`, poi gli identificatori ai componenti
+in `src/field-renderers/resolver.js`. La separazione mantiene serializzabile la configurazione.
+Consulta i [renderer personalizzati](/it/bindings/react-native/custom-renderers).
+
+React Native deve scoprire staticamente le immagini integrate. Aggiungile in
+`assets/supporting-images`, quindi esegui:
+
+```bash
+npm run generate-images
+```
+
+Registra sia l’asset sia `src/supporting-images/index.js`. Gli script di avvio rigenerano il file e
+la CI ne verifica l’aggiornamento. Le immagini HTTP(S) remote non richiedono una voce. Consulta
+[Temi, font e immagini](/it/bindings/react-native/themes-assets).

@@ -1,0 +1,20 @@
+---
+title: Almacenamiento local y envíos
+description: Comprende el almacén SQLite del starter y el límite para envíos remotos y sincronización.
+---
+
+El starter guarda registros estructurados enviados mediante `expo-sqlite`. Configúralo o
+desactívalo en el bloque `storage` de `form0.config.js`. La base de datos vive en el sandbox de la
+aplicación. Cada envío inserta metadatos y el registro estructurado completo como JSON. Los controles
+de depuración pueden enumerar o borrar registros cuando `debug` está activado.
+
+## Persistencia no significa sincronización
+
+El almacén solo aporta persistencia local. No sube registros, reintenta solicitudes, resuelve
+conflictos, cifra exportaciones ni define retención. La aplicación debe diseñar esos comportamientos
+y tratar copias y exportaciones como datos sensibles.
+
+Los paquetes Node.js `form0-connector-pg` y `form0-connector-sqlite` no funcionan en React Native.
+Envía datos remotos mediante una API de aplicación autenticada; nunca empaquetes credenciales de la
+base de datos. Consulta [Valores, snapshots y envío](/es/bindings/react-native/values-snapshots-submission)
+y [Integración móvil](/es/bindings/react-native/mobile-integration).

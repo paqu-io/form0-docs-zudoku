@@ -1,0 +1,32 @@
+---
+title: Forms, screens, and navigation in the mobile starter
+description: Register schemas and adapt the starter screen flow to an application navigation system.
+---
+
+## Register forms
+
+Schemas live under `src/forms`. Add each form to `src/forms/registry.js` with a stable ID, display
+metadata, and a `loadSchema` function. Static imports are useful for the first screen; dynamic
+imports can defer loading other forms.
+
+`useFormSchema` resolves the selected registry entry and exposes its loading, schema, and error
+state. Validate schemas with [form0-cli](/cli/schemas/validate-preview) before shipping them.
+
+## Understand the screen flow
+
+The starter deliberately uses a small state-based flow:
+
+```text
+App → Home → FormPage → Form0Form
+```
+
+`Home` lists registered forms. `FormPage` loads the schema and owns submission and storage-debug
+actions. `Form0Form` maps application configuration into the React Native `FormRenderer`.
+
+This is an understandable starting point, not a routing framework. Replace the `activeFormId` state
+with the router or navigation library used by your application when you need deep links, tabs,
+authenticated stacks, or restored navigation state.
+
+The renderer owns scrolling, keyboard avoidance, and drill-down screens inside its allocated screen
+area. Avoid wrapping it in another vertical scroll view. See
+[Modes and navigation](/bindings/react-native/modes-navigation) for the renderer contract.

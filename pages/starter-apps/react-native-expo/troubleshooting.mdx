@@ -1,0 +1,42 @@
+---
+title: React Native and Expo starter troubleshooting
+description: Diagnose dependency, device networking, image-registry, font, and SQLite problems.
+---
+
+## Expo reports incompatible dependencies
+
+Use Expo's compatibility-aware commands instead of installing arbitrary native package versions:
+
+```bash
+npx expo install --check
+npx expo-doctor@latest
+```
+
+Use `npx expo install --fix` only after reviewing the proposed changes. Treat an Expo SDK upgrade as
+a migration and follow the SDK upgrade guide.
+
+## A device cannot open the project
+
+Confirm the device can reach the development computer over LAN. Check firewalls, VPNs, Wi-Fi client
+isolation, the configured port, and whether the client expects Expo Go or a development build. If
+you use a public URL, verify that it does not return an interstitial before the Expo endpoints.
+
+## A supporting image is missing
+
+Confirm its path matches the schema, place bundled assets under `assets/supporting-images`, and run
+`npm run generate-images`. Commit the regenerated registry and restart Metro when the module graph
+is stale.
+
+## Fonts or native modules do not load
+
+Wait for `useFonts(form0Fonts)` before rendering. Install Expo packages with `npx expo install` and
+use a development build for native modules unavailable in Expo Go.
+
+## SQLite writes fail
+
+Validate `databaseName` and `tableName`, inspect device logs, and temporarily enable storage debug
+output. Table names accept only letters, digits, and underscores; invalid values fall back to the
+default. Remember that clearing app data removes the sandbox database.
+
+For component-specific failures, continue with
+[React Native troubleshooting](/bindings/react-native/troubleshooting).

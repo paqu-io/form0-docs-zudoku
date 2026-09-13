@@ -4045,6 +4045,222 @@
       }
     ]
   },
+  "/es/starter-apps/react-native-expo/build-distribution": {
+    "pathname": "/es/starter-apps/react-native-expo/build-distribution",
+    "translationKey": "/starter-apps/react-native-expo/build-distribution",
+    "locale": "es",
+    "title": "Compilar y distribuir el starter de React Native y Expo",
+    "description": "Prepara configuración y recursos para builds nativas de desarrollo y producción.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/build-distribution"
+      }
+    ]
+  },
+  "/es/starter-apps/react-native-expo/create-run": {
+    "pathname": "/es/starter-apps/react-native-expo/create-run",
+    "translationKey": "/starter-apps/react-native-expo/create-run",
+    "locale": "es",
+    "title": "Crear y ejecutar el starter de React Native y Expo",
+    "description": "Crea el starter móvil mantenido con form0-cli y ábrelo en un dispositivo o emulador.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/create-run"
+      }
+    ]
+  },
+  "/es/starter-apps/react-native-expo/device-development-networking": {
+    "pathname": "/es/starter-apps/react-native-expo/device-development-networking",
+    "translationKey": "/starter-apps/react-native-expo/device-development-networking",
+    "locale": "es",
+    "title": "Desarrollo en dispositivos y red",
+    "description": "Conecta dispositivos Expo al starter mediante LAN o una URL pública de desarrollo.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/device-development-networking"
+      }
+    ]
+  },
+  "/es/starter-apps/react-native-expo/forms-screens-navigation": {
+    "pathname": "/es/starter-apps/react-native-expo/forms-screens-navigation",
+    "translationKey": "/starter-apps/react-native-expo/forms-screens-navigation",
+    "locale": "es",
+    "title": "Formularios, pantallas y navegación en el starter móvil",
+    "description": "Registra esquemas y adapta el flujo de pantallas al sistema de navegación de tu aplicación.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/forms-screens-navigation"
+      }
+    ]
+  },
+  "/es/starter-apps/react-native-expo/local-storage-submissions": {
+    "pathname": "/es/starter-apps/react-native-expo/local-storage-submissions",
+    "translationKey": "/starter-apps/react-native-expo/local-storage-submissions",
+    "locale": "es",
+    "title": "Almacenamiento local y envíos",
+    "description": "Comprende el almacén SQLite del starter y el límite para envíos remotos y sincronización.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/local-storage-submissions"
+      }
+    ]
+  },
+  "/es/starter-apps/react-native-expo/project-structure-configuration": {
+    "pathname": "/es/starter-apps/react-native-expo/project-structure-configuration",
+    "translationKey": "/starter-apps/react-native-expo/project-structure-configuration",
+    "locale": "es",
+    "title": "Estructura y configuración del proyecto React Native y Expo",
+    "description": "Comprende los archivos del starter móvil y configura su comportamiento form0 y Expo.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/project-structure-configuration"
+      }
+    ]
+  },
+  "/es/starter-apps/react-native-expo/renderers-themes-fonts-images": {
+    "pathname": "/es/starter-apps/react-native-expo/renderers-themes-fonts-images",
+    "translationKey": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
+    "locale": "es",
+    "title": "Renderizadores, temas, fuentes e imágenes en el starter móvil",
+    "description": "Personaliza la presentación nativa y gestiona fuentes e imágenes auxiliares empaquetadas.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      }
+    ]
+  },
+  "/es/starter-apps/react-native-expo/troubleshooting": {
+    "pathname": "/es/starter-apps/react-native-expo/troubleshooting",
+    "translationKey": "/starter-apps/react-native-expo/troubleshooting",
+    "locale": "es",
+    "title": "Solución de problemas del starter React Native y Expo",
+    "description": "Diagnostica dependencias, red, imágenes, fuentes y SQLite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/troubleshooting"
+      }
+    ]
+  },
   "/es/starter-apps/react-vite/build-deployment": {
     "pathname": "/es/starter-apps/react-vite/build-deployment",
     "translationKey": "/starter-apps/react-vite/build-deployment",
@@ -6276,6 +6492,222 @@
       {
         "locale": "it",
         "pathname": "/it/starter-apps/overview"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-native-expo/build-distribution": {
+    "pathname": "/fr/starter-apps/react-native-expo/build-distribution",
+    "translationKey": "/starter-apps/react-native-expo/build-distribution",
+    "locale": "fr",
+    "title": "Compiler et distribuer le starter React Native et Expo",
+    "description": "Préparez configuration et ressources pour les builds natifs de développement et production.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/build-distribution"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-native-expo/create-run": {
+    "pathname": "/fr/starter-apps/react-native-expo/create-run",
+    "translationKey": "/starter-apps/react-native-expo/create-run",
+    "locale": "fr",
+    "title": "Créer et exécuter le starter React Native et Expo",
+    "description": "Créez le starter mobile maintenu avec form0-cli et ouvrez-le sur un appareil ou un émulateur.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/create-run"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-native-expo/device-development-networking": {
+    "pathname": "/fr/starter-apps/react-native-expo/device-development-networking",
+    "translationKey": "/starter-apps/react-native-expo/device-development-networking",
+    "locale": "fr",
+    "title": "Développement sur appareil et réseau",
+    "description": "Connectez les appareils Expo au starter par LAN ou URL publique de développement.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/device-development-networking"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-native-expo/forms-screens-navigation": {
+    "pathname": "/fr/starter-apps/react-native-expo/forms-screens-navigation",
+    "translationKey": "/starter-apps/react-native-expo/forms-screens-navigation",
+    "locale": "fr",
+    "title": "Formulaires, écrans et navigation dans le starter mobile",
+    "description": "Enregistrez les schémas et adaptez le flux d’écrans au système de navigation de l’application.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/forms-screens-navigation"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-native-expo/local-storage-submissions": {
+    "pathname": "/fr/starter-apps/react-native-expo/local-storage-submissions",
+    "translationKey": "/starter-apps/react-native-expo/local-storage-submissions",
+    "locale": "fr",
+    "title": "Stockage local et soumissions",
+    "description": "Comprenez le stockage SQLite du starter et la limite avec soumission distante et synchronisation.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/local-storage-submissions"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-native-expo/project-structure-configuration": {
+    "pathname": "/fr/starter-apps/react-native-expo/project-structure-configuration",
+    "translationKey": "/starter-apps/react-native-expo/project-structure-configuration",
+    "locale": "fr",
+    "title": "Structure et configuration du projet React Native et Expo",
+    "description": "Comprenez les fichiers du starter et configurez son comportement form0 et Expo.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/project-structure-configuration"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-native-expo/renderers-themes-fonts-images": {
+    "pathname": "/fr/starter-apps/react-native-expo/renderers-themes-fonts-images",
+    "translationKey": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
+    "locale": "fr",
+    "title": "Renderers, thèmes, polices et images dans le starter mobile",
+    "description": "Personnalisez la présentation native et gérez polices et images embarquées.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-native-expo/troubleshooting": {
+    "pathname": "/fr/starter-apps/react-native-expo/troubleshooting",
+    "translationKey": "/starter-apps/react-native-expo/troubleshooting",
+    "locale": "fr",
+    "title": "Résolution des problèmes du starter React Native et Expo",
+    "description": "Diagnostiquez dépendances, réseau, images, polices et SQLite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/troubleshooting"
       }
     ]
   },
@@ -8577,6 +9009,222 @@
       }
     ]
   },
+  "/it/starter-apps/react-native-expo/build-distribution": {
+    "pathname": "/it/starter-apps/react-native-expo/build-distribution",
+    "translationKey": "/starter-apps/react-native-expo/build-distribution",
+    "locale": "it",
+    "title": "Compila e distribuisci lo starter React Native ed Expo",
+    "description": "Prepara configurazione e asset per build native di sviluppo e produzione.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/build-distribution"
+      }
+    ]
+  },
+  "/it/starter-apps/react-native-expo/create-run": {
+    "pathname": "/it/starter-apps/react-native-expo/create-run",
+    "translationKey": "/starter-apps/react-native-expo/create-run",
+    "locale": "it",
+    "title": "Crea e avvia lo starter React Native ed Expo",
+    "description": "Crea lo starter mobile mantenuto con form0-cli e aprilo su un dispositivo o emulatore.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/create-run"
+      }
+    ]
+  },
+  "/it/starter-apps/react-native-expo/device-development-networking": {
+    "pathname": "/it/starter-apps/react-native-expo/device-development-networking",
+    "translationKey": "/starter-apps/react-native-expo/device-development-networking",
+    "locale": "it",
+    "title": "Sviluppo su dispositivo e rete",
+    "description": "Collega dispositivi Expo allo starter tramite LAN o URL pubblico di sviluppo.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/device-development-networking"
+      }
+    ]
+  },
+  "/it/starter-apps/react-native-expo/forms-screens-navigation": {
+    "pathname": "/it/starter-apps/react-native-expo/forms-screens-navigation",
+    "translationKey": "/starter-apps/react-native-expo/forms-screens-navigation",
+    "locale": "it",
+    "title": "Moduli, schermate e navigazione nello starter mobile",
+    "description": "Registra gli schemi e adatta il flusso al sistema di navigazione dell’applicazione.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/forms-screens-navigation"
+      }
+    ]
+  },
+  "/it/starter-apps/react-native-expo/local-storage-submissions": {
+    "pathname": "/it/starter-apps/react-native-expo/local-storage-submissions",
+    "translationKey": "/starter-apps/react-native-expo/local-storage-submissions",
+    "locale": "it",
+    "title": "Archiviazione locale e invii",
+    "description": "Comprendi lo store SQLite e il confine con invio remoto e sincronizzazione.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/local-storage-submissions"
+      }
+    ]
+  },
+  "/it/starter-apps/react-native-expo/project-structure-configuration": {
+    "pathname": "/it/starter-apps/react-native-expo/project-structure-configuration",
+    "translationKey": "/starter-apps/react-native-expo/project-structure-configuration",
+    "locale": "it",
+    "title": "Struttura e configurazione del progetto React Native ed Expo",
+    "description": "Comprendi i file dello starter e configura il comportamento form0 ed Expo.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/project-structure-configuration"
+      }
+    ]
+  },
+  "/it/starter-apps/react-native-expo/renderers-themes-fonts-images": {
+    "pathname": "/it/starter-apps/react-native-expo/renderers-themes-fonts-images",
+    "translationKey": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
+    "locale": "it",
+    "title": "Renderer, temi, font e immagini nello starter mobile",
+    "description": "Personalizza la presentazione nativa e gestisci font e immagini di supporto integrate.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      }
+    ]
+  },
+  "/it/starter-apps/react-native-expo/troubleshooting": {
+    "pathname": "/it/starter-apps/react-native-expo/troubleshooting",
+    "translationKey": "/starter-apps/react-native-expo/troubleshooting",
+    "locale": "it",
+    "title": "Risoluzione dei problemi dello starter React Native ed Expo",
+    "description": "Diagnostica dipendenze, rete, immagini, font e SQLite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/troubleshooting"
+      }
+    ]
+  },
   "/it/starter-apps/react-vite/build-deployment": {
     "pathname": "/it/starter-apps/react-vite/build-deployment",
     "translationKey": "/starter-apps/react-vite/build-deployment",
@@ -8790,6 +9438,222 @@
       {
         "locale": "it",
         "pathname": "/it/starter-apps/overview"
+      }
+    ]
+  },
+  "/starter-apps/react-native-expo/build-distribution": {
+    "pathname": "/starter-apps/react-native-expo/build-distribution",
+    "translationKey": "/starter-apps/react-native-expo/build-distribution",
+    "locale": "en",
+    "title": "Build and distribute the React Native and Expo starter",
+    "description": "Prepare the starter configuration and assets for native development and production builds.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/build-distribution"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/build-distribution"
+      }
+    ]
+  },
+  "/starter-apps/react-native-expo/create-run": {
+    "pathname": "/starter-apps/react-native-expo/create-run",
+    "translationKey": "/starter-apps/react-native-expo/create-run",
+    "locale": "en",
+    "title": "Create and run the React Native and Expo starter",
+    "description": "Create the maintained mobile starter with form0-cli and open it on a device or emulator.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/create-run"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/create-run"
+      }
+    ]
+  },
+  "/starter-apps/react-native-expo/device-development-networking": {
+    "pathname": "/starter-apps/react-native-expo/device-development-networking",
+    "translationKey": "/starter-apps/react-native-expo/device-development-networking",
+    "locale": "en",
+    "title": "Device development and networking",
+    "description": "Connect Expo devices to the mobile starter over LAN or a public development URL.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/device-development-networking"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/device-development-networking"
+      }
+    ]
+  },
+  "/starter-apps/react-native-expo/forms-screens-navigation": {
+    "pathname": "/starter-apps/react-native-expo/forms-screens-navigation",
+    "translationKey": "/starter-apps/react-native-expo/forms-screens-navigation",
+    "locale": "en",
+    "title": "Forms, screens, and navigation in the mobile starter",
+    "description": "Register schemas and adapt the starter screen flow to an application navigation system.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/forms-screens-navigation"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/forms-screens-navigation"
+      }
+    ]
+  },
+  "/starter-apps/react-native-expo/local-storage-submissions": {
+    "pathname": "/starter-apps/react-native-expo/local-storage-submissions",
+    "translationKey": "/starter-apps/react-native-expo/local-storage-submissions",
+    "locale": "en",
+    "title": "Local storage and submissions",
+    "description": "Understand the starter SQLite record store and the boundary for remote submission and sync.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/local-storage-submissions"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/local-storage-submissions"
+      }
+    ]
+  },
+  "/starter-apps/react-native-expo/project-structure-configuration": {
+    "pathname": "/starter-apps/react-native-expo/project-structure-configuration",
+    "translationKey": "/starter-apps/react-native-expo/project-structure-configuration",
+    "locale": "en",
+    "title": "React Native and Expo project structure and configuration",
+    "description": "Understand the mobile starter files and configure its form0 and Expo behavior.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/project-structure-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/project-structure-configuration"
+      }
+    ]
+  },
+  "/starter-apps/react-native-expo/renderers-themes-fonts-images": {
+    "pathname": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
+    "translationKey": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
+    "locale": "en",
+    "title": "Renderers, themes, fonts, and images in the mobile starter",
+    "description": "Customize native form presentation and manage fonts and bundled supporting images.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/renderers-themes-fonts-images"
+      }
+    ]
+  },
+  "/starter-apps/react-native-expo/troubleshooting": {
+    "pathname": "/starter-apps/react-native-expo/troubleshooting",
+    "translationKey": "/starter-apps/react-native-expo/troubleshooting",
+    "locale": "en",
+    "title": "React Native and Expo starter troubleshooting",
+    "description": "Diagnose dependency, device networking, image-registry, font, and SQLite problems.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-native-expo/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-native-expo/troubleshooting"
       }
     ]
   },

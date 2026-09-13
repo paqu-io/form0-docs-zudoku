@@ -1,0 +1,20 @@
+---
+title: Stockage local et soumissions
+description: Comprenez le stockage SQLite du starter et la limite avec soumission distante et synchronisation.
+---
+
+Le starter enregistre les soumissions structurées avec `expo-sqlite`. Configurez ou désactivez ce
+comportement dans `storage` dans `form0.config.js`. La base vit dans le bac à sable de l’application.
+Chaque soumission ajoute les métadonnées et le document structuré complet en JSON. Les commandes de
+débogage peuvent lister ou effacer les lignes lorsque `debug` est actif.
+
+## Persistance ne signifie pas synchronisation
+
+Ce stockage reste local. Il ne transfère pas les données, ne réessaie pas, ne résout pas les conflits,
+ne chiffre pas les exports et ne définit pas leur conservation. Concevez ces comportements et
+traitez sauvegardes et exports comme des données sensibles.
+
+Les paquets Node.js `form0-connector-pg` et `form0-connector-sqlite` ne fonctionnent pas dans React
+Native. Passez par une API applicative authentifiée et n’embarquez jamais d’identifiants de base de
+données. Consultez [Valeurs, snapshots et soumission](/fr/bindings/react-native/values-snapshots-submission)
+et [Intégration mobile](/fr/bindings/react-native/mobile-integration).

@@ -1,0 +1,21 @@
+---
+title: Moduli, schermate e navigazione nello starter mobile
+description: Registra gli schemi e adatta il flusso al sistema di navigazione dell’applicazione.
+---
+
+Gli schemi si trovano in `src/forms`. Registra ogni modulo in `src/forms/registry.js` con ID stabile,
+metadati e `loadSchema`. Validali con [form0-cli](/it/cli/schemas/validate-preview).
+
+`useFormSchema` espone caricamento, schema ed errore. Il flusso incluso è volutamente semplice:
+
+```text
+App → Home → FormPage → Form0Form
+```
+
+`Home` elenca i moduli, `FormPage` carica lo schema e gestisce invio e debug, mentre `Form0Form`
+trasmette la configurazione al `FormRenderer` nativo.
+
+Questo flusso è un punto di partenza, non un router. Sostituisci `activeFormId` con la navigazione
+dell’app quando servono deep link, tab o stack autenticati. Il renderer gestisce scorrimento,
+tastiera e schermate interne; non avvolgerlo in un altro scroll verticale. Consulta
+[Modalità e navigazione](/it/bindings/react-native/modes-navigation).

@@ -1,0 +1,25 @@
+---
+title: Desarrollo en dispositivos y red
+description: Conecta dispositivos Expo al starter mediante LAN o una URL pública de desarrollo.
+---
+
+La configuración predeterminada inicia Expo en la red local. El dispositivo debe alcanzar el equipo
+de desarrollo y el puerto 8081. Firewalls, Wi-Fi aislado, VPN y contenedores pueden impedirlo.
+
+Ejecuta `form0 serve --app` para usar la integración definida en `devServer`. Consulta la
+[referencia del servidor de aplicaciones](/es/cli/local-development/app-development-servers).
+
+Si la LAN no está disponible, define la URL configurada en `.env.local`:
+
+```text
+FORM0_APP_PUBLIC_URL=https://your-development-domain.example
+```
+
+Inicia el túnel por separado y ejecuta `form0 serve --app`, o usa `--public-url` para una ejecución.
+La URL debe servir directamente el manifiesto, bundle, recursos y WebSocket de Expo. Las páginas
+intermedias rompen el cliente. No uses un túnel como despliegue de producción ni incluyas
+credenciales privilegiadas en el bundle.
+
+Usa Expo Go para módulos compatibles y un
+[development build](https://docs.expo.dev/develop/development-builds/introduction/) para código
+nativo personalizado.

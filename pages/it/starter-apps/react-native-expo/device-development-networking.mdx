@@ -1,0 +1,25 @@
+---
+title: Sviluppo su dispositivo e rete
+description: Collega dispositivi Expo allo starter tramite LAN o URL pubblico di sviluppo.
+---
+
+La configurazione predefinita avvia Expo sulla rete locale. Il dispositivo deve raggiungere il
+computer di sviluppo e la porta 8081. Firewall, Wi-Fi isolato, VPN e container possono bloccarlo.
+
+Esegui `form0 serve --app` per usare il blocco `devServer`. Consulta il
+[riferimento del server applicativo](/it/cli/local-development/app-development-servers).
+
+Se la LAN non è disponibile, definisci in `.env.local`:
+
+```text
+FORM0_APP_PUBLIC_URL=https://your-development-domain.example
+```
+
+Avvia separatamente il tunnel e usa `form0 serve --app`, oppure `--public-url` per una singola
+esecuzione. L’URL deve servire direttamente manifesto, bundle, asset e WebSocket Expo. Le pagine
+intermedie interrompono il client. Un tunnel non è un deployment di produzione e il bundle non deve
+contenere credenziali privilegiate.
+
+Usa Expo Go per moduli compatibili e un
+[development build](https://docs.expo.dev/develop/development-builds/introduction/) per codice nativo
+personalizzato.
