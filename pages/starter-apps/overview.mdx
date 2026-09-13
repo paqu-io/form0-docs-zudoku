@@ -1,0 +1,32 @@
+---
+title: Starter apps overview
+description: Choose a maintained form0 starter and create an application through form0-cli.
+---
+
+Starter apps are maintained application foundations that combine form0 packages with routing,
+configuration, styling, and local-development conventions. They are useful when you want a working
+application to customize rather than adding a binding to an existing project.
+
+| Starter             | Best for                                                                          | Source                                                                   |
+| ------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| React + Vite        | Browser applications, custom web forms, and static hosting                        | [GitHub](https://github.com/paqu-io/form0-web-tmpl-react-vite)           |
+| React Native + Expo | iOS and Android applications, device capabilities, and offline-oriented workflows | [GitHub](https://github.com/paqu-io/form0-mobile-tmpl-react-native-expo) |
+
+## Recommended creation path
+
+Use [form0-cli](/cli/overview) to create a starter. The CLI guides project and package-manager
+selection and produces a normal application repository that you own.
+
+```bash
+npm install --global form0-cli
+form0 init my-form-app
+```
+
+GitHub's **Use this template** button is also available when you explicitly want to create a
+repository from the source starter. The CLI remains the canonical onboarding path.
+
+Starter guides explain the application around form0. For package APIs, use the
+[React and React Native binding documentation](/bindings/overview). For schema behavior, use the
+[Core documentation](/core/overview).
+
+Continue with [Create and run the React and Vite starter](/starter-apps/react-vite/create-run).

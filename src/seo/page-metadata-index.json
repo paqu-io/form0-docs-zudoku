@@ -4018,6 +4018,222 @@
     "status": "temporary",
     "alternates": []
   },
+  "/es/starter-apps/overview": {
+    "pathname": "/es/starter-apps/overview",
+    "translationKey": "/starter-apps/overview",
+    "locale": "es",
+    "title": "Visión general de aplicaciones iniciales",
+    "description": "Elige una aplicación inicial mantenida de form0 y créala con form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/overview"
+      }
+    ]
+  },
+  "/es/starter-apps/react-vite/build-deployment": {
+    "pathname": "/es/starter-apps/react-vite/build-deployment",
+    "translationKey": "/starter-apps/react-vite/build-deployment",
+    "locale": "es",
+    "title": "Compilar y desplegar la aplicación React y Vite",
+    "description": "Crea, previsualiza y aloja una compilación de producción de la aplicación web.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/build-deployment"
+      }
+    ]
+  },
+  "/es/starter-apps/react-vite/create-run": {
+    "pathname": "/es/starter-apps/react-vite/create-run",
+    "translationKey": "/starter-apps/react-vite/create-run",
+    "locale": "es",
+    "title": "Crear y ejecutar la aplicación React y Vite",
+    "description": "Crea la aplicación web mantenida con form0-cli e inicia su servidor de desarrollo Vite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/create-run"
+      }
+    ]
+  },
+  "/es/starter-apps/react-vite/forms-routes-presentations": {
+    "pathname": "/es/starter-apps/react-vite/forms-routes-presentations",
+    "translationKey": "/starter-apps/react-vite/forms-routes-presentations",
+    "locale": "es",
+    "title": "Formularios, rutas y presentaciones",
+    "description": "Registra esquemas y ofrece experiencias estándar, simplificadas, modales y spotlight.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/forms-routes-presentations"
+      }
+    ]
+  },
+  "/es/starter-apps/react-vite/project-structure-configuration": {
+    "pathname": "/es/starter-apps/react-vite/project-structure-configuration",
+    "translationKey": "/starter-apps/react-vite/project-structure-configuration",
+    "locale": "es",
+    "title": "Estructura y configuración del proyecto React y Vite",
+    "description": "Comprende la estructura de la aplicación y configura el motor, las presentaciones, los esquemas y el servidor de desarrollo.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/project-structure-configuration"
+      }
+    ]
+  },
+  "/es/starter-apps/react-vite/renderers-themes-styling": {
+    "pathname": "/es/starter-apps/react-vite/renderers-themes-styling",
+    "translationKey": "/starter-apps/react-vite/renderers-themes-styling",
+    "locale": "es",
+    "title": "Renderizadores, temas y estilos",
+    "description": "Personaliza la aplicación React y Vite con renderizadores, temas y CSS propio.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/renderers-themes-styling"
+      }
+    ]
+  },
+  "/es/starter-apps/react-vite/submissions-connectors": {
+    "pathname": "/es/starter-apps/react-vite/submissions-connectors",
+    "translationKey": "/starter-apps/react-vite/submissions-connectors",
+    "locale": "es",
+    "title": "Envíos y conectores",
+    "description": "Comprende los registros estructurados, el envío local y las responsabilidades de producción.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/submissions-connectors"
+      }
+    ]
+  },
+  "/es/starter-apps/react-vite/troubleshooting": {
+    "pathname": "/es/starter-apps/react-vite/troubleshooting",
+    "translationKey": "/starter-apps/react-vite/troubleshooting",
+    "locale": "es",
+    "title": "Solución de problemas de React y Vite",
+    "description": "Resuelve problemas habituales de rutas, esquemas, renderizadores, workers y conectores.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/troubleshooting"
+      }
+    ]
+  },
   "/fr/bindings/overview": {
     "pathname": "/fr/bindings/overview",
     "translationKey": "/bindings/overview",
@@ -6035,6 +6251,222 @@
     "indexable": false,
     "status": "temporary",
     "alternates": []
+  },
+  "/fr/starter-apps/overview": {
+    "pathname": "/fr/starter-apps/overview",
+    "translationKey": "/starter-apps/overview",
+    "locale": "fr",
+    "title": "Aperçu des applications de démarrage",
+    "description": "Choisissez une application form0 maintenue et créez-la avec form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/overview"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-vite/build-deployment": {
+    "pathname": "/fr/starter-apps/react-vite/build-deployment",
+    "translationKey": "/starter-apps/react-vite/build-deployment",
+    "locale": "fr",
+    "title": "Builder et déployer l’application React et Vite",
+    "description": "Créez, prévisualisez et hébergez un build de production de l’application web.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/build-deployment"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-vite/create-run": {
+    "pathname": "/fr/starter-apps/react-vite/create-run",
+    "translationKey": "/starter-apps/react-vite/create-run",
+    "locale": "fr",
+    "title": "Créer et exécuter l’application React et Vite",
+    "description": "Créez l’application web maintenue avec form0-cli et démarrez son serveur Vite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/create-run"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-vite/forms-routes-presentations": {
+    "pathname": "/fr/starter-apps/react-vite/forms-routes-presentations",
+    "translationKey": "/starter-apps/react-vite/forms-routes-presentations",
+    "locale": "fr",
+    "title": "Formulaires, routes et présentations",
+    "description": "Enregistrez des schémas et proposez des expériences standard, simplifiées, modales et spotlight.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/forms-routes-presentations"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-vite/project-structure-configuration": {
+    "pathname": "/fr/starter-apps/react-vite/project-structure-configuration",
+    "translationKey": "/starter-apps/react-vite/project-structure-configuration",
+    "locale": "fr",
+    "title": "Structure et configuration du projet React et Vite",
+    "description": "Comprenez la structure et configurez le moteur, les présentations, les schémas et le serveur de développement.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/project-structure-configuration"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-vite/renderers-themes-styling": {
+    "pathname": "/fr/starter-apps/react-vite/renderers-themes-styling",
+    "translationKey": "/starter-apps/react-vite/renderers-themes-styling",
+    "locale": "fr",
+    "title": "Rendus, thèmes et styles",
+    "description": "Personnalisez l’application React et Vite avec des rendus, des thèmes et du CSS applicatif.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/renderers-themes-styling"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-vite/submissions-connectors": {
+    "pathname": "/fr/starter-apps/react-vite/submissions-connectors",
+    "translationKey": "/starter-apps/react-vite/submissions-connectors",
+    "locale": "fr",
+    "title": "Soumissions et connecteurs",
+    "description": "Comprenez les enregistrements structurés, la soumission locale et les responsabilités de production.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/submissions-connectors"
+      }
+    ]
+  },
+  "/fr/starter-apps/react-vite/troubleshooting": {
+    "pathname": "/fr/starter-apps/react-vite/troubleshooting",
+    "translationKey": "/starter-apps/react-vite/troubleshooting",
+    "locale": "fr",
+    "title": "Résolution des problèmes React et Vite",
+    "description": "Résolvez les problèmes courants de routes, schémas, rendus, workers et connecteurs.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/troubleshooting"
+      }
+    ]
   },
   "/getting-started/quickstart": {
     "pathname": "/getting-started/quickstart",
@@ -8117,5 +8549,437 @@
     "indexable": false,
     "status": "temporary",
     "alternates": []
+  },
+  "/it/starter-apps/overview": {
+    "pathname": "/it/starter-apps/overview",
+    "translationKey": "/starter-apps/overview",
+    "locale": "it",
+    "title": "Panoramica delle app starter",
+    "description": "Scegli un’app form0 mantenuta e creala con form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/overview"
+      }
+    ]
+  },
+  "/it/starter-apps/react-vite/build-deployment": {
+    "pathname": "/it/starter-apps/react-vite/build-deployment",
+    "translationKey": "/starter-apps/react-vite/build-deployment",
+    "locale": "it",
+    "title": "Build e distribuzione dell’app React e Vite",
+    "description": "Crea, visualizza in anteprima e ospita una build di produzione dell’app web.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/build-deployment"
+      }
+    ]
+  },
+  "/it/starter-apps/react-vite/create-run": {
+    "pathname": "/it/starter-apps/react-vite/create-run",
+    "translationKey": "/starter-apps/react-vite/create-run",
+    "locale": "it",
+    "title": "Crea e avvia l’app React e Vite",
+    "description": "Crea l’app web mantenuta con form0-cli e avvia il server di sviluppo Vite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/create-run"
+      }
+    ]
+  },
+  "/it/starter-apps/react-vite/forms-routes-presentations": {
+    "pathname": "/it/starter-apps/react-vite/forms-routes-presentations",
+    "translationKey": "/starter-apps/react-vite/forms-routes-presentations",
+    "locale": "it",
+    "title": "Moduli, route e presentazioni",
+    "description": "Registra gli schemi e offri esperienze standard, semplificate, modali e spotlight.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/forms-routes-presentations"
+      }
+    ]
+  },
+  "/it/starter-apps/react-vite/project-structure-configuration": {
+    "pathname": "/it/starter-apps/react-vite/project-structure-configuration",
+    "translationKey": "/starter-apps/react-vite/project-structure-configuration",
+    "locale": "it",
+    "title": "Struttura e configurazione del progetto React e Vite",
+    "description": "Comprendi la struttura e configura motore, presentazioni, schemi e server di sviluppo.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/project-structure-configuration"
+      }
+    ]
+  },
+  "/it/starter-apps/react-vite/renderers-themes-styling": {
+    "pathname": "/it/starter-apps/react-vite/renderers-themes-styling",
+    "translationKey": "/starter-apps/react-vite/renderers-themes-styling",
+    "locale": "it",
+    "title": "Renderer, temi e stili",
+    "description": "Personalizza l’app React e Vite con renderer, temi e CSS dell’applicazione.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/renderers-themes-styling"
+      }
+    ]
+  },
+  "/it/starter-apps/react-vite/submissions-connectors": {
+    "pathname": "/it/starter-apps/react-vite/submissions-connectors",
+    "translationKey": "/starter-apps/react-vite/submissions-connectors",
+    "locale": "it",
+    "title": "Invii e connettori",
+    "description": "Comprendi record strutturati, invio locale e responsabilità di produzione.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/submissions-connectors"
+      }
+    ]
+  },
+  "/it/starter-apps/react-vite/troubleshooting": {
+    "pathname": "/it/starter-apps/react-vite/troubleshooting",
+    "translationKey": "/starter-apps/react-vite/troubleshooting",
+    "locale": "it",
+    "title": "Risoluzione dei problemi React e Vite",
+    "description": "Risolvi problemi comuni relativi a route, schemi, renderer, worker e connettori.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/troubleshooting"
+      }
+    ]
+  },
+  "/starter-apps/overview": {
+    "pathname": "/starter-apps/overview",
+    "translationKey": "/starter-apps/overview",
+    "locale": "en",
+    "title": "Starter apps overview",
+    "description": "Choose a maintained form0 starter and create an application through form0-cli.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/overview"
+      }
+    ]
+  },
+  "/starter-apps/react-vite/build-deployment": {
+    "pathname": "/starter-apps/react-vite/build-deployment",
+    "translationKey": "/starter-apps/react-vite/build-deployment",
+    "locale": "en",
+    "title": "Build and deploy the React and Vite starter",
+    "description": "Create, preview, and host a production build of the maintained web starter.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/build-deployment"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/build-deployment"
+      }
+    ]
+  },
+  "/starter-apps/react-vite/create-run": {
+    "pathname": "/starter-apps/react-vite/create-run",
+    "translationKey": "/starter-apps/react-vite/create-run",
+    "locale": "en",
+    "title": "Create and run the React and Vite starter",
+    "description": "Create the maintained web starter with form0-cli and start its Vite development server.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/create-run"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/create-run"
+      }
+    ]
+  },
+  "/starter-apps/react-vite/forms-routes-presentations": {
+    "pathname": "/starter-apps/react-vite/forms-routes-presentations",
+    "translationKey": "/starter-apps/react-vite/forms-routes-presentations",
+    "locale": "en",
+    "title": "Forms, routes, and presentations",
+    "description": "Register form schemas and expose standard, simplified, modal, and spotlight experiences.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/forms-routes-presentations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/forms-routes-presentations"
+      }
+    ]
+  },
+  "/starter-apps/react-vite/project-structure-configuration": {
+    "pathname": "/starter-apps/react-vite/project-structure-configuration",
+    "translationKey": "/starter-apps/react-vite/project-structure-configuration",
+    "locale": "en",
+    "title": "React and Vite project structure and configuration",
+    "description": "Understand the web starter layout and configure its engine, presentation, schemas, and development server.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/project-structure-configuration"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/project-structure-configuration"
+      }
+    ]
+  },
+  "/starter-apps/react-vite/renderers-themes-styling": {
+    "pathname": "/starter-apps/react-vite/renderers-themes-styling",
+    "translationKey": "/starter-apps/react-vite/renderers-themes-styling",
+    "locale": "en",
+    "title": "Renderers, themes, and styling",
+    "description": "Customize the React and Vite starter through renderer registration, themes, and application CSS.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/renderers-themes-styling"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/renderers-themes-styling"
+      }
+    ]
+  },
+  "/starter-apps/react-vite/submissions-connectors": {
+    "pathname": "/starter-apps/react-vite/submissions-connectors",
+    "translationKey": "/starter-apps/react-vite/submissions-connectors",
+    "locale": "en",
+    "title": "Submissions and connectors",
+    "description": "Understand structured records, the starter's local submission helper, and production data responsibilities.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/submissions-connectors"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/submissions-connectors"
+      }
+    ]
+  },
+  "/starter-apps/react-vite/troubleshooting": {
+    "pathname": "/starter-apps/react-vite/troubleshooting",
+    "translationKey": "/starter-apps/react-vite/troubleshooting",
+    "locale": "en",
+    "title": "React and Vite starter troubleshooting",
+    "description": "Resolve common installation, routing, schema, renderer, worker, and connector problems.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/starter-apps/react-vite/troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/starter-apps/react-vite/troubleshooting"
+      }
+    ]
   }
 }

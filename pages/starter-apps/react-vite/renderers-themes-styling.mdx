@@ -1,0 +1,45 @@
+---
+title: Renderers, themes, and styling
+description: Customize the React and Vite starter through renderer registration, themes, and application CSS.
+---
+
+The starter keeps package rendering contracts separate from application presentation. Import
+`form0-react/index.css` once, then layer application-specific choices on top.
+
+## Field renderers
+
+Application renderer overrides live in `src/field-renderers`. To add one:
+
+1. Create the React component.
+2. Add it to `src/field-renderers/resolver.js` under a stable identifier.
+3. Map the form0 field type to that identifier in `form0.config.js`.
+
+```js
+fieldRenderers: {
+  DateField: "date-field-shadcn",
+}
+```
+
+The included date renderer demonstrates composing form0 field props with shadcn/ui primitives.
+Review the [custom renderer contract](/bindings/react/custom-renderers) before creating additional
+overrides.
+
+## Themes
+
+Set `theme.mode` to `light`, `dark`, or `system`. To replace the package theme, create a Vanilla
+Extract theme under `src/themes` and set `theme.customTheme` to its import path.
+
+The custom theme must implement the complete `form0-react` theme contract. Use
+`src/themes/custom-example.css.js` as the starting point and see
+[Themes and styling](/bindings/react/themes-styling) for the contract.
+
+## Application CSS
+
+Use these layers for different responsibilities:
+
+- `src/index.css` for Tailwind, shadcn tokens, and global application styles;
+- `src/App.css` for application layout;
+- `src/styles/form0-overrides.css` for application-owned form classes; and
+- Vanilla Extract themes for package renderer tokens.
+
+Prefer renderer registration and theme contracts over editing code inside installed form0 packages.

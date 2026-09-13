@@ -1,0 +1,27 @@
+---
+title: Moduli, route e presentazioni
+description: Registra gli schemi e offri esperienze standard, semplificate, modali e spotlight.
+---
+
+Gli schemi si trovano in `src/forms`. Il registro `src/forms/registry.js` associa a ogni modulo una
+route, metadati, un import dinamico e valori iniziali opzionali.
+
+```js
+const forms = [
+  {
+    id: "contatti",
+    title: "Contatti",
+    description: "Invia un messaggio al team.",
+    loadSchema: () => import("./contatti/schema.json"),
+  },
+]
+```
+
+L’applicazione offre `/`, `/:formId` e `/:formId/:variant`. Le varianti di pagina sono `standard` e
+`simplified`; `modal` e `spotlight` compaiono come sovrapposizioni dalla home.
+
+Le impostazioni di layout sono in `form0.config.js`. Il wrapper passa a `FormRenderer` tema,
+posizionamento, interazione e dimensioni risolti.
+
+Consulta [Modifica il tuo primo schema](/it/getting-started/schema-edit) e
+[Modalità, posizionamento e navigazione](/it/bindings/react/modes-placement-navigation).

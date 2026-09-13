@@ -1,0 +1,23 @@
+---
+title: Compilar y desplegar la aplicación React y Vite
+description: Crea, previsualiza y aloja una compilación de producción de la aplicación web.
+---
+
+```bash
+npm run build
+npm run preview
+```
+
+Vite escribe los archivos estáticos en `dist`. Despliega ese directorio en un alojamiento estático
+o detrás de tu servidor.
+
+La aplicación usa rutas del navegador. Configura el alojamiento para devolver `index.html` como
+fallback en rutas como `/contacto/standard`; de lo contrario, una navegación directa devolverá 404.
+
+El proxy de conectores solo existe en desarrollo. En producción, usa un endpoint del servidor
+controlado por tu aplicación.
+
+Antes de desplegar, ejecuta lint y build, revisa el aviso de tamaño de bundle, mantén los `.env`
+locales fuera de Git, comprueba que los assets no contienen secretos y prueba la navegación directa.
+Los valores de entorno expuestos al navegador se incorporan estáticamente al build y deben
+considerarse públicos.

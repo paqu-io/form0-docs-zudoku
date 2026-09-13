@@ -45,6 +45,20 @@
     "troubleshooting": { "title": "Troubleshooting" },
     "security": { "title": "Security" }
   },
+  "starter-apps": {
+    "overview": { "title": "Starter apps overview" },
+    "react-vite": {
+      "create-run": { "title": "Create and run the React and Vite starter" },
+      "project-structure-configuration": {
+        "title": "React and Vite project structure and configuration"
+      },
+      "forms-routes-presentations": { "title": "Forms, routes, and presentations" },
+      "renderers-themes-styling": { "title": "Renderers, themes, and styling" },
+      "submissions-connectors": { "title": "Submissions and connectors" },
+      "build-deployment": { "title": "Build and deploy the React and Vite starter" },
+      "troubleshooting": { "title": "React and Vite starter troubleshooting" }
+    }
+  },
   "connectors": {
     "overview": { "title": "Connectors overview" },
     "choose": { "title": "Choosing a connector" },

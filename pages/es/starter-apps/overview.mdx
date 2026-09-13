@@ -1,0 +1,31 @@
+---
+title: Visión general de aplicaciones iniciales
+description: Elige una aplicación inicial mantenida de form0 y créala con form0-cli.
+---
+
+Las aplicaciones iniciales combinan los paquetes de form0 con rutas, configuración, estilos y
+convenciones de desarrollo local. Úsalas cuando prefieras personalizar una aplicación funcional en
+lugar de integrar un binding en un proyecto existente.
+
+| Aplicación          | Recomendada para                                                             | Código fuente                                                            |
+| ------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| React + Vite        | Aplicaciones web, formularios personalizados y alojamiento estático          | [GitHub](https://github.com/paqu-io/form0-web-tmpl-react-vite)           |
+| React Native + Expo | Aplicaciones iOS y Android, funciones del dispositivo y trabajo sin conexión | [GitHub](https://github.com/paqu-io/form0-mobile-tmpl-react-native-expo) |
+
+## Ruta de creación recomendada
+
+Usa [form0-cli](/es/cli/overview) para crear el proyecto. La CLI guía la selección del tipo de
+aplicación y del gestor de paquetes y genera un repositorio normal que te pertenece.
+
+```bash
+npm install --global form0-cli
+form0 init mi-aplicacion-form0
+```
+
+También puedes usar **Use this template** en GitHub cuando quieras crear el repositorio directamente
+desde la plantilla. La CLI sigue siendo la ruta de incorporación canónica.
+
+Estas guías explican la aplicación alrededor de form0. Consulta [Bindings](/es/bindings/overview)
+para las API de los paquetes y [Core](/es/core/overview) para el comportamiento del esquema.
+
+Continúa con [Crear y ejecutar React y Vite](/es/starter-apps/react-vite/create-run).

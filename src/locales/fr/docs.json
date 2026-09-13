@@ -45,6 +45,20 @@
     "troubleshooting": { "title": "Dépannage" },
     "security": { "title": "Sécurité" }
   },
+  "starter-apps": {
+    "overview": { "title": "Aperçu des applications de démarrage" },
+    "react-vite": {
+      "create-run": { "title": "Créer et exécuter l’application React et Vite" },
+      "project-structure-configuration": {
+        "title": "Structure et configuration du projet React et Vite"
+      },
+      "forms-routes-presentations": { "title": "Formulaires, routes et présentations" },
+      "renderers-themes-styling": { "title": "Rendus, thèmes et styles" },
+      "submissions-connectors": { "title": "Soumissions et connecteurs" },
+      "build-deployment": { "title": "Builder et déployer l’application React et Vite" },
+      "troubleshooting": { "title": "Résolution des problèmes React et Vite" }
+    }
+  },
   "connectors": {
     "overview": { "title": "Vue d’ensemble des connecteurs" },
     "choose": { "title": "Choisir un connecteur" },

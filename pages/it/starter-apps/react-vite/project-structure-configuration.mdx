@@ -1,0 +1,39 @@
+---
+title: Struttura e configurazione del progetto React e Vite
+description: Comprendi la struttura e configura motore, presentazioni, schemi e server di sviluppo.
+---
+
+Lo starter è una normale applicazione Vite. Le impostazioni form0 sono in `form0.config.js`, mentre
+il codice dell’applicazione rimane in `src`.
+
+```text
+.
+├── form0.config.js
+├── src/
+│   ├── components/        # wrapper e primitive dell’interfaccia
+│   ├── field-renderers/   # renderer dell’applicazione
+│   ├── forms/             # schemi, registro e loader
+│   ├── pages/             # pagine e route
+│   ├── styles/            # stili form0 aggiuntivi
+│   └── themes/            # temi Vanilla Extract opzionali
+└── vite.config.js         # plugin, alias e proxy locale
+```
+
+## Aree di configurazione
+
+`form0.config.js` controlla layout, modalità e store del motore, tema, interazione, directory degli
+schemi, server di sviluppo, renderer dei campi e formato di output. Le prop possono sostituire le
+impostazioni pertinenti per un singolo modulo.
+
+> [!CAUTION]
+> Mantieni `engine.store` su `snapshot`. La configurazione inclusa documenta un limite noto dei
+> messaggi di validazione con la modalità `selector`.
+
+## Proxy di sviluppo
+
+Vite inoltra `/api` a `http://localhost:3030` per impostazione predefinita. Definisci
+`FORM0_DEV_API_URL` nell’ambiente del processo o in un file `.env` locale di Vite per cambiare
+indirizzo. Il valore viene usato dalla configurazione Vite e non è esposto al browser.
+
+Non inserire credenziali nelle variabili client. Le credenziali del database appartengono
+all’ambiente CLI o server descritto in [Connettori](/it/connectors/overview).

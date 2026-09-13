@@ -1,0 +1,46 @@
+---
+title: React and Vite starter troubleshooting
+description: Resolve common installation, routing, schema, renderer, worker, and connector problems.
+---
+
+## A form route says the form was not found
+
+Confirm that the URL identifier exactly matches an entry in `src/forms/registry.js`. Also confirm
+that its dynamic import points to an existing schema file.
+
+## A schema fails to load
+
+Open the browser console for the import error, then run schema validation through form0-cli. JSON
+syntax errors and incorrect relative import paths are the most common causes.
+
+```bash
+form0
+```
+
+Load the schema and run `validate`. See [Validate and preview](/cli/schemas/validate-preview).
+
+## A custom renderer is not used
+
+Check all three names: the schema field type, its mapping in `form0.config.js`, and the resolver
+identifier in `src/field-renderers/resolver.js`. The resolver logs a warning for unknown identifiers.
+
+## Submissions cannot reach the CLI server
+
+Run `form0 serve --app` from the project directory. If the CLI server uses a different address, set
+`FORM0_DEV_API_URL` before starting Vite or in the relevant local `.env` file. Confirm that
+`devServer.apiBaseUrl` still matches the Vite proxy path.
+
+## Worker evaluation fails
+
+Temporarily set `engine.mode` to `main-thread` to isolate worker loading from schema behavior. Then
+check the browser console, asset paths, and deployment content type. See
+[Workers and performance](/bindings/react/workers-performance).
+
+## Direct links return 404 after deployment
+
+Configure the static host to fall back to `index.html` for unknown application paths. This is a host
+configuration issue, not a React route-definition issue.
+
+For package-level rendering failures, continue with
+[React troubleshooting](/bindings/react/troubleshooting). For database failures, use
+[Connector troubleshooting](/connectors/troubleshooting).

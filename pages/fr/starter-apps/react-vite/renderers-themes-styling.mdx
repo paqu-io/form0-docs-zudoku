@@ -1,0 +1,33 @@
+---
+title: Rendus, thèmes et styles
+description: Personnalisez l’application React et Vite avec des rendus, des thèmes et du CSS applicatif.
+---
+
+Le starter sépare les contrats du paquet de la présentation applicative. Importez
+`form0-react/index.css` une fois, puis ajoutez les choix propres à l’application.
+
+## Rendus de champs
+
+Pour ajouter un rendu dans `src/field-renderers` :
+
+1. Créez le composant React.
+2. Enregistrez-le sous un identifiant stable dans `resolver.js`.
+3. Associez le type de champ à cet identifiant dans `form0.config.js`.
+
+```js
+fieldRenderers: {
+  DateField: "date-field-shadcn",
+}
+```
+
+Consultez le [contrat des rendus personnalisés](/fr/bindings/react/custom-renderers).
+
+## Thèmes et CSS
+
+`theme.mode` accepte `light`, `dark` et `system`. Pour remplacer le thème du paquet, créez un thème
+Vanilla Extract sous `src/themes` et renseignez `theme.customTheme`. Il doit implémenter tout le
+contrat `form0-react`; partez de `custom-example.css.js`.
+
+Utilisez `src/index.css` pour Tailwind et shadcn, `App.css` pour la mise en page,
+`form0-overrides.css` pour vos classes et les thèmes Vanilla Extract pour les tokens du paquet.
+Consultez [Thèmes et styles](/fr/bindings/react/themes-styling).

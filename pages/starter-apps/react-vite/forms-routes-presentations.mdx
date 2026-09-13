@@ -1,0 +1,50 @@
+---
+title: Forms, routes, and presentations
+description: Register form schemas and expose standard, simplified, modal, and spotlight experiences.
+---
+
+Schema files live under `src/forms`. The registry in `src/forms/registry.js` gives each form an
+application route, display metadata, a dynamic schema import, and optional initial values.
+
+```js
+const forms = [
+  {
+    id: "contact",
+    title: "Contact us",
+    description: "Send a message to the team.",
+    loadSchema: () => import("./contact/schema.json"),
+  },
+]
+```
+
+Create the matching schema file, then add the registry entry. Dynamic imports keep schema files in
+separate build chunks.
+
+## Routes
+
+The starter provides:
+
+- `/` for the form list and overlay examples;
+- `/:formId` for the default standard presentation; and
+- `/:formId/:variant` for `standard` or `simplified` page presentations.
+
+`FormPage` validates the form identifier and presentation before loading the schema. `Home` owns the
+modal and spotlight examples.
+
+## Presentations
+
+The four included presentation keys are:
+
+| Key          | Placement         |
+| ------------ | ----------------- |
+| `standard`   | Full form page    |
+| `simplified` | Step-by-step page |
+| `modal`      | Dialog overlay    |
+| `spotlight`  | Drawer overlay    |
+
+Layout defaults for each presentation live in `form0.config.js`. The application wrapper passes the
+resolved theme, placement, interaction mode, and sizing to `FormRenderer`.
+
+Use [Edit your first schema](/getting-started/schema-edit) for schema authoring and
+[Modes, placement, and navigation](/bindings/react/modes-placement-navigation) for the underlying
+React binding behavior.

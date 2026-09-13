@@ -1,0 +1,27 @@
+---
+title: Formulaires, routes et présentations
+description: Enregistrez des schémas et proposez des expériences standard, simplifiées, modales et spotlight.
+---
+
+Les schémas résident dans `src/forms`. Le registre `src/forms/registry.js` associe à chaque
+formulaire une route, des métadonnées, un import dynamique et des valeurs initiales facultatives.
+
+```js
+const forms = [
+  {
+    id: "contact",
+    title: "Contact",
+    description: "Envoyez un message à l’équipe.",
+    loadSchema: () => import("./contact/schema.json"),
+  },
+]
+```
+
+L’application fournit `/`, `/:formId` et `/:formId/:variant`. Les variantes de page sont `standard`
+et `simplified`; `modal` et `spotlight` apparaissent en superposition depuis l’accueil.
+
+Les valeurs de mise en page résident dans `form0.config.js`. Le wrapper transmet à `FormRenderer`
+le thème, le placement, l’interaction et les dimensions résolus.
+
+Consultez [Modifier votre premier schéma](/fr/getting-started/schema-edit) et
+[Modes, emplacement et navigation](/fr/bindings/react/modes-placement-navigation).

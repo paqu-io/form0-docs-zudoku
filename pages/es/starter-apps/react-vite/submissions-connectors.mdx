@@ -1,0 +1,28 @@
+---
+title: Envíos y conectores
+description: Comprende los registros estructurados, el envío local y las responsabilidades de producción.
+---
+
+`Form0Form` proporciona un manejador de envío predeterminado cuando no recibe `onSubmit`. Crea o
+acepta un registro estructurado de form0 y lo registra durante el desarrollo.
+
+Si `devServer.submitToConnector` es `true`, también llama a:
+
+1. `POST /api/create-record` cuando todavía no existe un registro estructurado completo.
+2. `POST /api/submit-record` para enviarlo a los conectores gestionados por form0-cli.
+
+Inicia ambos servidores con `form0 serve --app`. Gestiona los conectores con la
+[guía de la CLI](/es/cli/connector-management) y compáralos en
+[Elegir un conector](/es/connectors/choose).
+
+Pasa `onSubmit` a `Form0Form` para sustituir el manejador. Usa
+`useDefaultSubmitHandler={false}` para no proporcionar ninguna ruta predeterminada. El contrato se
+describe en [Valores, snapshots y envío](/es/bindings/react/values-snapshots-submission).
+
+> [!WARNING]
+> Los endpoints de la CLI y el proxy de Vite son herramientas de desarrollo local, no una API de
+> producción. Una aplicación desplegada necesita autenticación, autorización, validación, límites
+> y controles de almacenamiento en un servidor de confianza. Nunca envíes credenciales al navegador.
+
+Usa únicamente esquemas de autores de confianza. Consulta el
+[límite de confianza de form0-core](/es/core/security).

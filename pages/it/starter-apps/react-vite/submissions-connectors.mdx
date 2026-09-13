@@ -1,0 +1,28 @@
+---
+title: Invii e connettori
+description: Comprendi record strutturati, invio locale e responsabilità di produzione.
+---
+
+`Form0Form` fornisce un gestore di invio predefinito quando non riceve `onSubmit`. Crea o accetta un
+record form0 strutturato e lo registra durante lo sviluppo.
+
+Se `devServer.submitToConnector` è `true`, chiama anche:
+
+1. `POST /api/create-record` se non esiste ancora un record strutturato completo.
+2. `POST /api/submit-record` per inviarlo ai connettori gestiti da form0-cli.
+
+Avvia entrambi i server con `form0 serve --app`. Gestisci i connettori con la
+[CLI](/it/cli/connector-management) e confrontali in
+[Scegliere un connettore](/it/connectors/choose).
+
+Passa `onSubmit` a `Form0Form` per sostituire il gestore. Usa
+`useDefaultSubmitHandler={false}` per non fornire un percorso predefinito. Il contratto è descritto
+in [Valori, snapshot e invio](/it/bindings/react/values-snapshots-submission).
+
+> [!WARNING]
+> Gli endpoint CLI e il proxy Vite sono strumenti di sviluppo locale, non un’API di produzione.
+> Un’app distribuita richiede autenticazione, autorizzazione, validazione, limiti e controlli di
+> archiviazione su un server attendibile. Non inviare mai credenziali al browser.
+
+Usa solo schemi di autori attendibili. Consulta il
+[confine di fiducia di form0-core](/it/core/security).

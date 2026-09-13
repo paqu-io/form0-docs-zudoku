@@ -1,0 +1,22 @@
+---
+title: Build e distribuzione dell’app React e Vite
+description: Crea, visualizza in anteprima e ospita una build di produzione dell’app web.
+---
+
+```bash
+npm run build
+npm run preview
+```
+
+Vite scrive i file statici in `dist`. Distribuisci la directory su un host statico o dietro il tuo
+server.
+
+L’app usa il routing del browser. Configura l’host affinché restituisca `index.html` come fallback
+per route come `/contatti/standard`; altrimenti la navigazione diretta restituirà 404.
+
+Il proxy dei connettori esiste solo in sviluppo. In produzione usa un endpoint server controllato
+dall’applicazione.
+
+Prima della distribuzione esegui lint e build, valuta l’avviso sulla dimensione del bundle, mantieni
+i `.env` fuori da Git, controlla gli asset e prova la navigazione diretta. Le variabili esposte al
+browser sono incorporate staticamente nella build e devono essere considerate pubbliche.

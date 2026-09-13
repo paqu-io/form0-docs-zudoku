@@ -1,0 +1,34 @@
+---
+title: Résolution des problèmes React et Vite
+description: Résolvez les problèmes courants de routes, schémas, rendus, workers et connecteurs.
+---
+
+## Formulaire introuvable
+
+Vérifiez que l’identifiant de l’URL correspond à `src/forms/registry.js` et que l’import dynamique
+vise un schéma existant.
+
+## Échec du chargement du schéma
+
+Examinez l’erreur d’import dans la console et validez le JSON avec form0-cli. Consultez
+[Valider et prévisualiser](/fr/cli/schemas/validate-preview).
+
+## Rendu personnalisé ignoré
+
+Comparez le type de champ, le mapping de `form0.config.js` et l’identifiant de `resolver.js`.
+
+## La soumission n’atteint pas la CLI
+
+Exécutez `form0 serve --app`. Pour une autre adresse, définissez `FORM0_DEV_API_URL` et vérifiez que
+`devServer.apiBaseUrl` correspond à la route du proxy.
+
+## Échec du worker
+
+Passez temporairement `engine.mode` à `main-thread`, puis contrôlez les routes d’assets et les types
+de contenu. Consultez [Workers et performances](/fr/bindings/react/workers-performance).
+
+## Les routes directes renvoient 404
+
+Configurez `index.html` comme fallback. Pour le reste, consultez
+[React](/fr/bindings/react/troubleshooting) ou
+[Connecteurs](/fr/connectors/troubleshooting).

@@ -1,0 +1,49 @@
+---
+title: React and Vite project structure and configuration
+description: Understand the web starter layout and configure its engine, presentation, schemas, and development server.
+---
+
+The starter is a normal Vite application. Its form0-specific defaults live in `form0.config.js`,
+while application code remains under `src`.
+
+```text
+.
+├── form0.config.js
+├── src/
+│   ├── components/        # application form wrappers and UI primitives
+│   ├── field-renderers/   # application-owned renderer overrides
+│   ├── forms/             # schema files, registry, and loader
+│   ├── pages/             # home and form routes
+│   ├── styles/            # application-level form overrides
+│   └── themes/            # optional Vanilla Extract themes
+└── vite.config.js         # React plugins, aliases, and local API proxy
+```
+
+## Configuration areas
+
+Edit `form0.config.js` to control:
+
+- `layout`: default width, label placement, and per-presentation layout;
+- `engine`: main-thread or worker evaluation and the React store strategy;
+- `theme`: light, dark, system, or an application theme class;
+- `interaction`: initial edit/read-only behavior and overlay submission behavior;
+- `schemas.directory`: the schema directory used by tooling;
+- `devServer`: the app command, connector submission switch, and API base URL;
+- `fieldRenderers`: field types replaced by application renderers; and
+- `output.useKeys`: whether structured records prefer schema keys or data names.
+
+Component props can override the relevant defaults for a specific form. Keep reusable application
+defaults in the config and keep form behavior in the schema.
+
+> [!CAUTION]
+> Keep the engine store set to `snapshot` in this starter. The included configuration documents a
+> known validation-message limitation with `selector` mode.
+
+## Development proxy
+
+The Vite server proxies `/api` to `http://localhost:3030` by default. Set
+`FORM0_DEV_API_URL` in the process environment or a local Vite `.env` file to use another CLI server
+address. The value is consumed by Vite configuration and is not exposed to browser code.
+
+Do not place credentials in client-side variables. Database credentials belong to the CLI or
+server-side connector environment described in the [connector documentation](/connectors/overview).

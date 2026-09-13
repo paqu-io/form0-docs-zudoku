@@ -1,0 +1,37 @@
+---
+title: Build and deploy the React and Vite starter
+description: Create, preview, and host a production build of the maintained web starter.
+---
+
+Create and preview a production build locally:
+
+```bash
+npm run build
+npm run preview
+```
+
+Vite writes static output to `dist`. Deploy that directory with a static host or place it behind
+your application server.
+
+## Hosting requirements
+
+The starter uses browser routing. Configure the host to serve `index.html` as the fallback for
+application routes such as `/contact/standard`; otherwise direct navigation to those URLs can
+return the host's 404 page.
+
+The default connector proxy exists only in the development server. Production submission must use
+an application-owned server endpoint. Configure that endpoint explicitly rather than assuming the
+development `/api` proxy will be present after deployment.
+
+## Before deployment
+
+- Run `npm run lint` and `npm run build`.
+- Review the generated bundle-size warning and introduce code splitting when application growth
+  makes the initial download inappropriate.
+- Keep local `.env` files out of version control.
+- Confirm that no secrets are embedded in the generated assets.
+- Test direct navigation to every public application route.
+- Review the [security policy](https://github.com/paqu-io/form0-web-tmpl-react-vite/blob/main/SECURITY.md).
+
+Vite environment values intended for browser code are statically embedded at build time. Treat
+them as public configuration, even when they originate in a local environment file.

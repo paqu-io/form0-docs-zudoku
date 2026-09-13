@@ -75,6 +75,7 @@ test("documentation categories retain their order and hydration-safe icons", () 
     [
       ["Getting Started", "nav-sparkles"],
       ["CLI", "nav-terminal"],
+      ["Starter apps", "nav-layout-template"],
       ["Core", "nav-cpu"],
       ["Bindings", "nav-blocks"],
       ["Connectors", "nav-plug"],
@@ -85,8 +86,16 @@ test("documentation categories retain their order and hydration-safe icons", () 
 
 test("binding and connector technologies retain their navigation icons", () => {
   const [documentation] = navigationDefinition
+  const starterApps = documentation.items.find(({ label }) => label === "Starter apps")
   const bindings = documentation.items.find(({ label }) => label === "Bindings")
   const connectors = documentation.items.find(({ label }) => label === "Connectors")
+
+  assert.deepEqual(
+    starterApps.items
+      .filter(({ type }) => type === "category")
+      .map(({ label, icon }) => [label, icon]),
+    [["React + Vite", "nav-react"]],
+  )
 
   assert.deepEqual(
     bindings.items

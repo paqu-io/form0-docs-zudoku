@@ -1,0 +1,35 @@
+---
+title: Solución de problemas de React y Vite
+description: Resuelve problemas habituales de rutas, esquemas, renderizadores, workers y conectores.
+---
+
+## No se encuentra un formulario
+
+Comprueba que el identificador de la URL coincide con `src/forms/registry.js` y que la importación
+dinámica apunta a un esquema existente.
+
+## El esquema no se carga
+
+Revisa el error de importación en la consola y valida el JSON con form0-cli. Consulta
+[Validar y previsualizar](/es/cli/schemas/validate-preview).
+
+## No se usa un renderizador personalizado
+
+Compara el tipo de campo, el mapping de `form0.config.js` y el identificador de `resolver.js`.
+
+## El envío no alcanza la CLI
+
+Ejecuta `form0 serve --app`. Si la dirección es distinta, define `FORM0_DEV_API_URL` y confirma que
+`devServer.apiBaseUrl` coincide con la ruta del proxy.
+
+## Falla la evaluación en worker
+
+Cambia temporalmente `engine.mode` a `main-thread` para separar la carga del worker del esquema.
+Después revisa rutas de assets y tipos de contenido. Consulta
+[Workers y rendimiento](/es/bindings/react/workers-performance).
+
+## Las rutas directas devuelven 404
+
+Configura el alojamiento para usar `index.html` como fallback. Para otros problemas, consulta
+[React](/es/bindings/react/troubleshooting) o
+[Conectores](/es/connectors/troubleshooting).

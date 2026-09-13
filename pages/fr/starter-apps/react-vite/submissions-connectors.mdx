@@ -1,0 +1,28 @@
+---
+title: Soumissions et connecteurs
+description: Comprenez les enregistrements structurés, la soumission locale et les responsabilités de production.
+---
+
+`Form0Form` fournit un gestionnaire de soumission par défaut sans prop `onSubmit`. Il crée ou accepte
+un enregistrement form0 structuré et le journalise pendant le développement.
+
+Si `devServer.submitToConnector` vaut `true`, il appelle aussi :
+
+1. `POST /api/create-record` si aucun enregistrement complet n’existe encore.
+2. `POST /api/submit-record` pour l’envoyer aux connecteurs gérés par form0-cli.
+
+Démarrez les deux serveurs avec `form0 serve --app`. Gérez les connecteurs avec la
+[CLI](/fr/cli/connector-management) et comparez-les dans
+[Choisir un connecteur](/fr/connectors/choose).
+
+Passez `onSubmit` à `Form0Form` pour remplacer le gestionnaire. Utilisez
+`useDefaultSubmitHandler={false}` pour ne fournir aucun chemin par défaut. Le contrat est détaillé
+dans [Valeurs, snapshots et soumission](/fr/bindings/react/values-snapshots-submission).
+
+> [!WARNING]
+> Les endpoints CLI et le proxy Vite sont des outils locaux, pas une API de production. Une
+> application déployée exige authentification, autorisation, validation, limitation de débit et
+> contrôles de stockage sur un serveur de confiance. N’envoyez jamais d’identifiants au navigateur.
+
+N’utilisez que des schémas d’auteurs de confiance. Consultez la
+[frontière de confiance de form0-core](/fr/core/security).

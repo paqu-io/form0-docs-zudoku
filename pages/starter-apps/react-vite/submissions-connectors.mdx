@@ -1,0 +1,38 @@
+---
+title: Submissions and connectors
+description: Understand structured records, the starter's local submission helper, and production data responsibilities.
+---
+
+`Form0Form` supplies a default submission handler when the caller does not provide `onSubmit`. The
+handler creates or accepts a structured form0 record and logs it for development.
+
+When `devServer.submitToConnector` is `true`, it also calls two local endpoints:
+
+1. `POST /api/create-record` when the renderer has not already produced a complete structured record.
+2. `POST /api/submit-record` to send that record to connectors managed by form0-cli.
+
+The Vite proxy forwards `/api` to the CLI development server. Start both processes with:
+
+```bash
+form0 serve --app
+```
+
+Use [CLI connector management](/cli/connector-management) to install, configure, test, and inspect a
+connector. Use [Choosing a connector](/connectors/choose) to compare PostgreSQL and SQLite.
+
+## Supply application submission behavior
+
+Pass `onSubmit` to `Form0Form` to replace the default handler. Set
+`useDefaultSubmitHandler={false}` if the form should render without either submission path.
+
+For the complete callback record and metadata contract, see
+[Values, snapshots, and submission](/bindings/react/values-snapshots-submission).
+
+> [!WARNING]
+> The CLI endpoints and Vite proxy are local-development helpers, not a production submission API.
+> A deployed application needs a trusted server boundary with authentication, authorization,
+> validation, rate limiting, and appropriate storage controls. Never ship database credentials to
+> browser code.
+
+Only use schemas from trusted authors. Schema expressions execute within the documented
+[form0-core trust boundary](/core/security).

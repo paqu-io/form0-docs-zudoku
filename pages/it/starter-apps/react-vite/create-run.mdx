@@ -1,0 +1,41 @@
+---
+title: Crea e avvia l’app React e Vite
+description: Crea l’app web mantenuta con form0-cli e avvia il server di sviluppo Vite.
+---
+
+## Requisiti
+
+- Node.js 22 o successivo
+- Un package manager supportato; la sorgente include un lockfile npm
+- Un browser moderno
+
+## Crea l’applicazione
+
+```bash
+npm install --global form0-cli
+form0 init mia-app-form0
+```
+
+Scegli **App web** e **React + Vite**. Entra nella directory generata, installa le dipendenze se
+necessario e avvia l’applicazione:
+
+```bash
+cd mia-app-form0
+npm install
+npm run dev
+```
+
+Apri l’URL mostrato da Vite, normalmente `http://localhost:5173`. La home elenca i moduli di esempio
+e le relative presentazioni come pagina o sovrapposizione.
+
+## Avvia con form0-cli
+
+`form0 serve --app` avvia il server dell’applicazione insieme a quello di sviluppo della CLI. Usa
+questa modalità affinché il gestore di invio predefinito raggiunga i connettori locali.
+
+```bash
+form0 serve --app
+```
+
+Consulta [Server delle applicazioni](/it/cli/local-development/app-development-servers) e
+[Invii e connettori](/it/starter-apps/react-vite/submissions-connectors).

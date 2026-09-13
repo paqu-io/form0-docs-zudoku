@@ -1,0 +1,34 @@
+---
+title: Risoluzione dei problemi React e Vite
+description: Risolvi problemi comuni relativi a route, schemi, renderer, worker e connettori.
+---
+
+## Modulo non trovato
+
+Verifica che l’identificatore nell’URL corrisponda a `src/forms/registry.js` e che l’import dinamico
+punti a uno schema esistente.
+
+## Lo schema non viene caricato
+
+Controlla l’errore di import nella console e valida il JSON con form0-cli. Consulta
+[Validare e visualizzare l’anteprima](/it/cli/schemas/validate-preview).
+
+## Il renderer personalizzato non viene usato
+
+Confronta il tipo di campo, la mappatura in `form0.config.js` e l’identificatore in `resolver.js`.
+
+## L’invio non raggiunge la CLI
+
+Esegui `form0 serve --app`. Per un indirizzo diverso, definisci `FORM0_DEV_API_URL` e verifica che
+`devServer.apiBaseUrl` corrisponda alla route del proxy.
+
+## Il worker non funziona
+
+Imposta temporaneamente `engine.mode` su `main-thread`, poi controlla route degli asset e content
+type. Consulta [Worker e prestazioni](/it/bindings/react/workers-performance).
+
+## Le route dirette restituiscono 404
+
+Configura `index.html` come fallback. Per altri problemi consulta
+[React](/it/bindings/react/troubleshooting) o
+[Connettori](/it/connectors/troubleshooting).

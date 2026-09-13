@@ -1,0 +1,28 @@
+---
+title: Formularios, rutas y presentaciones
+description: Registra esquemas y ofrece experiencias estándar, simplificadas, modales y spotlight.
+---
+
+Los esquemas viven en `src/forms`. El registro `src/forms/registry.js` asigna a cada formulario una
+ruta, metadatos visibles, una importación dinámica y valores iniciales opcionales.
+
+```js
+const forms = [
+  {
+    id: "contacto",
+    title: "Contacto",
+    description: "Envía un mensaje al equipo.",
+    loadSchema: () => import("./contacto/schema.json"),
+  },
+]
+```
+
+La aplicación ofrece `/`, `/:formId` y `/:formId/:variant`. Las variantes de página son `standard`
+y `simplified`; `modal` y `spotlight` se muestran como superposiciones desde la página inicial.
+
+Los valores de layout de cada presentación están en `form0.config.js`. El wrapper pasa el tema, la
+ubicación, la interacción y las dimensiones resueltas a `FormRenderer`.
+
+Consulta [Edita tu primer esquema](/es/getting-started/schema-edit) para crear esquemas y
+[Modos, ubicación y navegación](/es/bindings/react/modes-placement-navigation) para el contrato del
+binding de React.

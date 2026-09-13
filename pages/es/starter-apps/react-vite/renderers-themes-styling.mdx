@@ -1,0 +1,33 @@
+---
+title: Renderizadores, temas y estilos
+description: Personaliza la aplicación React y Vite con renderizadores, temas y CSS propio.
+---
+
+La plantilla separa los contratos del paquete de la presentación de la aplicación. Importa
+`form0-react/index.css` una vez y añade después los estilos propios.
+
+## Renderizadores de campos
+
+Para añadir un renderizador en `src/field-renderers`:
+
+1. Crea el componente React.
+2. Regístralo con un identificador estable en `resolver.js`.
+3. Asocia el tipo de campo al identificador en `form0.config.js`.
+
+```js
+fieldRenderers: {
+  DateField: "date-field-shadcn",
+}
+```
+
+Consulta el [contrato de renderizadores personalizados](/es/bindings/react/custom-renderers).
+
+## Temas y CSS
+
+`theme.mode` admite `light`, `dark` y `system`. Para sustituir el tema del paquete, crea un tema de
+Vanilla Extract bajo `src/themes` y configura `theme.customTheme`. Debe implementar todo el contrato
+de `form0-react`; usa `custom-example.css.js` como base.
+
+Usa `src/index.css` para Tailwind y tokens de shadcn, `App.css` para el layout de la aplicación,
+`form0-overrides.css` para clases propias y los temas de Vanilla Extract para los tokens del paquete.
+Consulta [Temas y estilos](/es/bindings/react/themes-styling).

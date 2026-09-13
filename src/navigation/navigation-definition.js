@@ -88,6 +88,32 @@ const documentationItems = [
     { icon: "nav-terminal" },
   ),
   category(
+    "Starter apps",
+    [
+      doc("starter-apps/overview", "Overview"),
+      category(
+        "React + Vite",
+        [
+          doc("starter-apps/react-vite/create-run", "Create and run"),
+          doc(
+            "starter-apps/react-vite/project-structure-configuration",
+            "Project structure and configuration",
+          ),
+          doc(
+            "starter-apps/react-vite/forms-routes-presentations",
+            "Forms, routes, and presentations",
+          ),
+          doc("starter-apps/react-vite/renderers-themes-styling", "Renderers, themes, and styling"),
+          doc("starter-apps/react-vite/submissions-connectors", "Submissions and connectors"),
+          doc("starter-apps/react-vite/build-deployment", "Build and deployment"),
+          doc("starter-apps/react-vite/troubleshooting", "Troubleshooting"),
+        ],
+        { icon: "nav-react" },
+      ),
+    ],
+    { icon: "nav-layout-template" },
+  ),
+  category(
     "Core",
     [
       doc("core/overview", "Overview"),

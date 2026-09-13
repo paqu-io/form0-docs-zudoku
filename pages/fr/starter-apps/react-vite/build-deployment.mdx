@@ -1,0 +1,22 @@
+---
+title: Builder et déployer l’application React et Vite
+description: Créez, prévisualisez et hébergez un build de production de l’application web.
+---
+
+```bash
+npm run build
+npm run preview
+```
+
+Vite écrit les fichiers statiques dans `dist`. Déployez ce répertoire chez un hébergeur statique ou
+derrière votre serveur.
+
+L’application utilise le routage navigateur. Configurez l’hébergeur pour renvoyer `index.html` sur
+les routes comme `/contact/standard`, sinon une navigation directe renverra une 404.
+
+Le proxy des connecteurs n’existe qu’en développement. En production, utilisez un endpoint serveur
+contrôlé par votre application.
+
+Avant le déploiement, exécutez lint et build, examinez l’avertissement de taille du bundle, gardez
+les `.env` hors de Git, vérifiez les assets et testez la navigation directe. Toute variable exposée
+au navigateur est intégrée statiquement au build et doit être considérée comme publique.
