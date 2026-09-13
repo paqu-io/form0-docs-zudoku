@@ -1,0 +1,49 @@
+---
+title: FormRenderer
+description: Configure the primary form0 React component.
+---
+
+`FormRenderer` validates and prepares a schema, creates the form engine, renders fields and
+sections, and produces structured records on submission.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialValues={{ name: "Ada" }}
+  mode="edit"
+  theme="standard"
+  colorMode="system"
+  labelPosition="top"
+  onSubmit={saveRecord}
+/>
+```
+
+## Essential properties
+
+| Property | Purpose |
+| --- | --- |
+| `schema` | A form0 schema containing `form.elements`. |
+| `initialValues` | Initial non-repeatable field values. |
+| `initialSnapshot` | Restore raw values, repeatable state, and timestamps together. |
+| `overrideValues` | Apply authoritative values over initial values. |
+| `onSubmit` | Receive the structured record and submission metadata. |
+| `onSnapshotChange` | Observe seed and user-change snapshots. |
+| `mode` | Start in `edit` or `readonly` mode. |
+
+## Consumer-owned UI and state
+
+- `headerAccessory` renders a React node, or a function receiving `{ mode }`, between the summary
+  and form body.
+- `recordMetadataFields` displays read-only record metadata. A descriptor with `displayValue` never
+  enters engine values, snapshots, or submitted values.
+- `externalDirty` includes application-owned changes in overlay discard confirmation.
+- `submitBlockedReason` disables and guards submission while an external requirement is unresolved.
+- `onSchemaReady` receives the prepared schema after stable keys have been ensured.
+
+## Form element properties
+
+Additional standard form properties such as `id`, `aria-*`, and event handlers are forwarded to
+the rendered `<form>`. Do not use this path for engine configuration.
+
+Continue with [Values, snapshots, and submission](/bindings/react/values-snapshots-submission) or
+[Modes, placement, and navigation](/bindings/react/modes-placement-navigation).

@@ -1,0 +1,59 @@
+---
+title: Values, snapshots, and submission
+description: Seed, observe, restore, and submit form0 React state.
+---
+
+## Initial values and overrides
+
+Use `initialValues` for the record being edited. `overrideValues` take precedence and are useful
+for authoritative host values such as a status supplied by an application.
+
+For complete restoration, prefer `initialSnapshot`:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialSnapshot={{
+    raw_values: saved.raw_values,
+    repeatable: saved.repeatable,
+    timestamps: saved.timestamps,
+  }}
+  onSnapshotChange={(snapshot, change) => {
+    if (change.dirty) queueDraft(snapshot)
+  }}
+  onSubmit={saveRecord}
+/>
+```
+
+An initial snapshot supersedes `initialValues` for raw field values. It also restores nested
+repeatable entries and client/server timestamps as one coherent state.
+
+## Observe drafts
+
+`onSnapshotChange(snapshot, change)` is called first with `{ kind: "seed", dirty: false }`. Later
+user changes use `{ kind: "change", dirty: boolean }`.
+
+The snapshot contains:
+
+```js
+{
+  raw_values: {},
+  repeatable: {},
+  timestamps: {
+    created_at_client: null,
+    updated_at_client: null,
+    created_at_server: null,
+    updated_at_server: null,
+  },
+}
+```
+
+## Submit records
+
+`onSubmit(record, meta)` receives the structured record described in
+[Output and records](/core/output-records). `meta` contains `rawValues`, `repeatable`, `timestamps`,
+and `validationSummary`.
+
+If `onSubmit` returns a promise, an overlay configured with `autoCloseOverlayOnSubmit` closes only
+after the promise resolves. A rejection leaves it open. Use `submitBlockedReason` for application
+requirements outside the schema and `externalDirty` for application state outside the renderer.

@@ -1,0 +1,27 @@
+---
+title: Modalità, posizionamento e navigazione
+description: Configura modifica, overlay, etichette, sezioni e flussi semplificati.
+---
+
+## Modalità di interazione
+
+Usa `mode="edit"` o `mode="readonly"`. Un modulo in sola lettura può offrire la modifica con
+`allowReadOnlyEditToggle`; `readOnlyEditToggleDisabledReason` ne spiega l’indisponibilità.
+`showPrimaryActionsInViewMode` controlla la visibilità delle azioni principali disabilitate.
+
+## Posizionamento
+
+`formPlacement` accetta `form-page`, `form-modal` e `form-spotlight`. Per un overlay, fornisci
+`onRequestClose`. `autoCloseOverlayOnSubmit` chiude l’overlay dopo un invio sincrono riuscito o dopo
+la risoluzione della promise restituita. La conferma di abbandono include `externalDirty`.
+
+## Layout e navigazione
+
+- `labelPosition` accetta `top` o `side`.
+- `labelWidthPercent` controlla la colonna delle etichette nel layout laterale.
+- `formWidth` accetta una larghezza CSS.
+- `forceShowNavigationPanel` mantiene visibile la navigazione per sezioni.
+- `simplifiedMode` presenta un campo alla volta; `onSimplifiedNavigation` osserva l’avanzamento.
+
+`FormRenderer` gestisce sezioni, voci ripetibili, validazione, focus e tastiera. Mantieni la logica
+condizionale nello schema invece di duplicarla nello stato React.

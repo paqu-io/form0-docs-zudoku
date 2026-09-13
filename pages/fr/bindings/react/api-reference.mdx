@@ -1,0 +1,35 @@
+---
+title: Référence de l’API React
+description: Composants, hooks, registres et utilitaires publics de form0-react.
+---
+
+Toutes les exportations JavaScript prises en charge proviennent de `form0-react`, sauf indication
+d’un autre chemin.
+
+## Affichage et thèmes
+
+- `FormRenderer`
+- `ThemeProvider`, `ThemeContext`, `useThemeClass`
+
+## Registre de champs
+
+- `FieldRegistryProvider`, `FieldRegistryContext`, `useFieldRegistry`
+- `createFieldRegistry`, `defaultFieldRegistry`
+- `registerFieldComponent`, `unregisterFieldComponent`, `resetFieldComponents`
+- `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
+- `KNOWN_FIELD_TYPES`
+
+## Utilitaires de schéma
+
+- `cloneDeep(value)` et `cloneSchema(schema)` créent des copies indépendantes.
+- `ensureSchemaKeys(elements)` ajoute les clés stables et indique une modification.
+- `prepareSchema(schema)` clone un schéma et assure les clés sur la copie.
+
+## Intégration spécialisée
+
+- `useBuildingPlanController(options)` coordonne l’interface des plans avec les données répétables ;
+  ce n’est pas un hook général d’état de formulaire.
+
+`useFormEngine`, le client worker, `FieldRenderer` et les rendus individuels sont internes et absents
+de la carte d’exports. Les jetons de thème proviennent de `form0-react/theme.css.js` et la feuille
+compilée de `form0-react/index.css`.

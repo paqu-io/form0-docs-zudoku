@@ -1,0 +1,50 @@
+---
+title: Values, snapshots, and submission
+description: Seed, persist, restore, save, and submit form0 React Native state.
+---
+
+## Initial state and restoration
+
+Use `initialValues` for an ordinary record seed. `overrideValues` take precedence and suit
+authoritative host values. For complete restoration, prefer `initialSnapshot`:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialSnapshot={savedDraft}
+  onSnapshotChange={(snapshot, change) => {
+    if (change.dirty) queueLocalDraft(snapshot)
+  }}
+  onSubmit={uploadRecord}
+/>
+```
+
+The snapshot keeps raw values, nested repeatable entries, and timestamps together:
+
+```js
+{
+  raw_values: {},
+  repeatable: {},
+  timestamps: {
+    created_at_client: null,
+    updated_at_client: null,
+    created_at_server: null,
+    updated_at_server: null,
+  },
+}
+```
+
+`onSnapshotChange(snapshot, meta)` first reports `{ kind: "seed", dirty: false }`; later user
+changes use `{ kind: "change", dirty }`.
+
+## Save drafts or submit records
+
+Set `primaryActionMode="save"` and provide `onSave(snapshot, meta)` for a validation-tolerant draft
+action. `meta` contains the current validation summary and dirty state.
+
+The default submit action validates first. `onSubmit(record, meta)` receives the structured record
+described in [Output and records](/core/output-records), plus raw values, repeatable state,
+timestamps, and the validation summary.
+
+The binding does not persist or synchronize either payload. Store snapshots locally, upload
+records, retry failures, and resolve conflicts in the host application.

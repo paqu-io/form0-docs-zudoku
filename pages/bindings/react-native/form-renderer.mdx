@@ -1,0 +1,46 @@
+---
+title: FormRenderer
+description: Configure the primary form0 React Native component.
+---
+
+`FormRenderer` validates and prepares a schema, creates the form engine, renders native fields and
+sections, and produces structured records or restorable snapshots.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialValues={{ name: "Ada" }}
+  mode="edit"
+  colorMode="light"
+  labelPosition="top"
+  onSubmit={saveRecord}
+/>
+```
+
+## Essential properties
+
+| Property | Purpose |
+| --- | --- |
+| `schema` | A form0 schema containing `form.elements`. |
+| `initialValues` | Initial non-repeatable field values. |
+| `initialSnapshot` | Restore raw values, repeatable state, and timestamps together. |
+| `overrideValues` | Apply authoritative values over initial values. |
+| `onSubmit` | Receive a validation-gated structured record and metadata. |
+| `onSave` | Receive a snapshot without requiring the form to be valid. |
+| `onSnapshotChange` | Observe seed and user-change snapshots. |
+| `mode` | Start in `edit` or `readonly` mode. |
+
+## Host integration
+
+- `onRequestClose` enables the root cancel action and receives `{ reason: "cancel" }` after any
+  required discard confirmation.
+- `headerAccessory` renders application content immediately below the built-in header.
+- `showHeader` hides the built-in header when the host owns surrounding navigation and actions.
+- `primaryActionMode`, `primaryActionLabel`, and `showPrimaryActionsInViewMode` customize the
+  built-in primary action.
+- `onSchemaReady` receives the prepared schema after stable keys have been ensured.
+- `engineOptions` supplies Core helpers, security configuration, warnings, operation handling, and
+  update observation.
+
+Continue with [Values, snapshots, and submission](/bindings/react-native/values-snapshots-submission)
+or [Modes and navigation](/bindings/react-native/modes-navigation).

@@ -1,0 +1,19 @@
+---
+title: Modes et navigation
+description: Configurez édition, en-têtes, sections, répétables et navigation de validation.
+---
+
+Utilisez `mode="edit"` ou `mode="readonly"`. Un formulaire en lecture seule peut afficher l’action
+de modification intégrée ; `showPrimaryActionsInViewMode` en contrôle la visibilité.
+
+L’en-tête propose l’envoi ou la sauvegarde selon `primaryActionMode`. Définissez
+`showHeader={false}` si l’application fournit son propre en-tête. `onRequestClose` active
+l’annulation et protège les formulaires modifiés par une confirmation.
+
+`FormRenderer` gère les sections intégrées et détaillées, les listes et éditeurs répétables, une
+feuille de navigation des sections et erreurs, le déplacement vers le premier champ invalide et le
+défilement adapté au clavier.
+
+`forceShowNavigationPanel` force l’accès à la navigation. `keyboardScrollOffset` ajuste la cible
+verticale sous un en-tête superposé. `labelPosition` accepte `top` ou `side`, et
+`labelWidthPercent` dimensionne la colonne latérale.

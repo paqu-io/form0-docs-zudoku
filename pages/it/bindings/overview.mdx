@@ -1,0 +1,29 @@
+---
+title: Panoramica dei binding UI
+description: Renderizza schemi form0 nei framework lasciando a form0-core la logica del modulo.
+---
+
+import { Callout } from "zudoku/ui/Callout"
+
+I binding collegano il motore indipendente dal framework `form0-core` all’interfaccia di
+un’applicazione. Il motore resta responsabile di calcoli, condizioni, validazione, eventi e record
+strutturati; il binding trasforma tale stato in componenti e interazioni della piattaforma.
+
+Per una nuova applicazione, parti dalla [CLI form0](/it/cli/overview) e scegli uno starter. Usa
+direttamente un binding quando integri form0 in un’applicazione esistente.
+
+## Binding ufficiali
+
+| Pacchetto | Piattaforma | Documentazione | Codice sorgente |
+| --- | --- | --- | --- |
+| [`form0-react`](https://www.npmjs.com/package/form0-react) | Applicazioni web React | [Installazione e rendering](/it/bindings/react/install-render) | [GitHub](https://github.com/paqu-io/form0-react) |
+| [`form0-react-native`](https://www.npmjs.com/package/form0-react-native) | Applicazioni React Native ed Expo | [Installazione e rendering](/it/bindings/react-native/install-render) | [GitHub](https://github.com/paqu-io/form0-react-native) |
+
+I binding non cambiano la semantica dello schema. Consulta la
+[documentazione Core](/it/core/overview) per schemi, campi, espressioni, validazione, sicurezza e
+record di output.
+
+<Callout type="caution" title="Solo schemi attendibili">
+  Le espressioni e gli script degli eventi eseguono JavaScript. Renderizza solo schemi di autori
+  attendibili. Consulta [Sicurezza e isolamento](/it/core/security).
+</Callout>

@@ -1,0 +1,43 @@
+---
+title: Installer et afficher avec React Native
+description: Installez form0-react-native et affichez un schéma dans une application React Native ou Expo.
+---
+
+Pour une nouvelle application mobile, suivez le [démarrage rapide CLI](/fr/getting-started/quickstart).
+Le projet Expo maintenu inclut le binding, les polices, des schémas d’exemple, les images de support
+et une persistance SQLite locale.
+
+Pour ajouter form0 à une application existante :
+
+```bash
+npm install form0-react-native form0-core lucide-react-native
+```
+
+Installez des dépendances natives compatibles. Avec Expo :
+
+```bash
+npx expo install react-native-svg react-native-safe-area-context expo-font
+```
+
+Le paquet requiert Node.js 22 ou plus récent pour l’installation et l’outillage, React 18 ou 19 et
+React Native 0.72 ou plus récent. `react-native-safe-area-context` est facultatif, mais permet à
+l’en-tête intégré de respecter la zone sûre. S’il est installé, entourez la racine de l’application
+avec `SafeAreaProvider`.
+
+## Afficher un schéma
+
+```jsx
+import { FormRenderer } from "form0-react-native"
+import schema from "./contact.form0.json"
+
+export function ContactForm() {
+  return <FormRenderer schema={schema} onSubmit={(record) => console.log(record)} />
+}
+```
+
+`schema` doit contenir un objet formulaire `form0-core` valide. Commencez par
+[Modifier votre premier schéma](/fr/getting-started/schema-edit) ou consultez
+[l’objet formulaire](/fr/core/schema/form).
+
+Chargez les polices incluses avant d’afficher le formulaire. Consultez
+[Thèmes, polices et images](/fr/bindings/react-native/themes-assets).

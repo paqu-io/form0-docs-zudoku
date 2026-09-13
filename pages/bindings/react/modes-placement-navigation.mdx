@@ -1,0 +1,37 @@
+---
+title: Modes, placement, and navigation
+description: Configure editing, overlays, labels, sections, and simplified React form flows.
+---
+
+## Interaction mode
+
+Set `mode="edit"` or `mode="readonly"`. Read-only forms can expose an edit toggle with
+`allowReadOnlyEditToggle`; use `readOnlyEditToggleDisabledReason` when the host application must
+explain why editing is unavailable.
+
+`showPrimaryActionsInViewMode` controls whether disabled primary actions remain visible in view
+mode.
+
+## Placement
+
+`formPlacement` accepts:
+
+- `form-page` for normal page content;
+- `form-modal` for modal presentation;
+- `form-spotlight` for a drawer or spotlight presentation.
+
+For overlays, provide `onRequestClose`. `autoCloseOverlayOnSubmit` closes the overlay after a
+successful synchronous submission or after the returned submission promise resolves. Discard
+confirmation includes renderer changes and `externalDirty`.
+
+## Layout and navigation
+
+- `labelPosition` accepts `top` or `side`.
+- `labelWidthPercent` controls the label column in side layout.
+- `formWidth` accepts a CSS width value.
+- `forceShowNavigationPanel` keeps section navigation visible when it would normally collapse.
+- `simplifiedMode` presents one field at a time; `onSimplifiedNavigation` observes movement.
+
+Sections, repeatable entries, validation navigation, focus handling, and keyboard actions are
+managed by `FormRenderer`. Keep conditional behavior in the schema rather than duplicating it in
+React state.

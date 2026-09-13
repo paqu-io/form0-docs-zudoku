@@ -1,0 +1,43 @@
+---
+title: FormRenderer
+description: Configura el componente principal de form0 para React Native.
+---
+
+`FormRenderer` valida y prepara el esquema, crea el motor, renderiza campos y secciones nativos y
+produce registros estructurados o snapshots restaurables.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialValues={{ name: "Ada" }}
+  mode="edit"
+  colorMode="light"
+  labelPosition="top"
+  onSubmit={saveRecord}
+/>
+```
+
+## Propiedades esenciales
+
+| Propiedad | Finalidad |
+| --- | --- |
+| `schema` | Esquema form0 con `form.elements`. |
+| `initialValues` | Valores iniciales no repetibles. |
+| `initialSnapshot` | Restaura valores, repetibles y marcas temporales conjuntamente. |
+| `overrideValues` | Aplica valores autoritativos sobre los iniciales. |
+| `onSubmit` | Recibe un registro validado y sus metadatos. |
+| `onSave` | Recibe un snapshot sin exigir que el formulario sea válido. |
+| `onSnapshotChange` | Observa el estado inicial y los cambios del usuario. |
+| `mode` | Inicia en modo `edit` o `readonly`. |
+
+## Integración con la aplicación
+
+- `onRequestClose` habilita cancelar y confirma el descarte cuando hay cambios.
+- `headerAccessory` muestra contenido bajo la cabecera; `showHeader` oculta la cabecera integrada.
+- `primaryActionMode`, `primaryActionLabel` y `showPrimaryActionsInViewMode` configuran la acción
+  principal.
+- `onSchemaReady` recibe el esquema preparado.
+- `engineOptions` proporciona helpers, seguridad, avisos, operaciones y observación del motor.
+
+Continúa con [Valores, snapshots y envío](/es/bindings/react-native/values-snapshots-submission) o
+[Modos y navegación](/es/bindings/react-native/modes-navigation).

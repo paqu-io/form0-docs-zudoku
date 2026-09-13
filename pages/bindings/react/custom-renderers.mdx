@@ -1,0 +1,54 @@
+---
+title: Custom field renderers
+description: Replace form0-react field presentation globally or within a React subtree.
+---
+
+Custom renderers change presentation without moving calculations, visibility, requirements, or
+validation out of `form0-core`.
+
+## Scoped overrides
+
+Prefer `FieldRegistryProvider` when an application, route, test, or Storybook story needs an
+isolated renderer set:
+
+```jsx
+import { FieldRegistryProvider, FormRenderer } from "form0-react"
+import { DateField } from "./date-field.jsx"
+
+export function AppForm({ schema }) {
+  return (
+    <FieldRegistryProvider renderers={{ DateField }}>
+      <FormRenderer schema={schema} />
+    </FieldRegistryProvider>
+  )
+}
+```
+
+A renderer receives the field contract used by the defaults:
+
+```jsx
+function DateField({ field, value, onChange, readOnly, inputProps, className }) {
+  return (
+    <input
+      {...inputProps}
+      className={className}
+      type="date"
+      value={value ?? ""}
+      disabled={readOnly}
+      onChange={(event) => onChange(event.target.value)}
+    />
+  )
+}
+```
+
+Preserve the supplied accessibility properties in `inputProps`.
+
+## Registry instances and global overrides
+
+Use `createFieldRegistry({ includeDefaults, renderers })` for an explicit registry instance. The
+module-level `registerFieldComponent`, `unregisterFieldComponent`, and `resetFieldComponents`
+helpers mutate the shared default registry and are best reserved for application bootstrap or
+tests.
+
+Only field types declared by `form0-core` can be registered. A new schema field type must first be
+defined in Core; a React renderer alone cannot extend the schema contract.

@@ -76,8 +76,34 @@ test("documentation categories retain their order and hydration-safe icons", () 
       ["Getting Started", "nav-sparkles"],
       ["CLI", "nav-terminal"],
       ["Core", "nav-cpu"],
+      ["Bindings", "nav-blocks"],
       ["Connectors", "nav-plug"],
       ["Useful Links", "nav-link"],
+    ],
+  )
+})
+
+test("binding and connector technologies retain their navigation icons", () => {
+  const [documentation] = navigationDefinition
+  const bindings = documentation.items.find(({ label }) => label === "Bindings")
+  const connectors = documentation.items.find(({ label }) => label === "Connectors")
+
+  assert.deepEqual(
+    bindings.items
+      .filter(({ type }) => type === "category")
+      .map(({ label, icon }) => [label, icon]),
+    [
+      ["React", "nav-react"],
+      ["React Native", "nav-react-native"],
+    ],
+  )
+  assert.deepEqual(
+    connectors.items
+      .filter(({ label }) => ["PostgreSQL", "SQLite"].includes(label))
+      .map(({ label, icon }) => [label, icon]),
+    [
+      ["PostgreSQL", "nav-postgresql"],
+      ["SQLite", "nav-sqlite"],
     ],
   )
 })

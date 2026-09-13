@@ -1,0 +1,25 @@
+---
+title: Built-in field renderers
+description: Field types rendered by form0-react-native without application overrides.
+---
+
+`form0-react-native` provides native defaults for most public field types defined by `form0-core`.
+Schema behavior and accepted attributes remain defined by the [Field catalog](/core/fields/catalog).
+
+| Group | Rendered types |
+| --- | --- |
+| Text and numbers | `TextField`, `NumericField`, `CalculatedField` |
+| Choices | `SingleChoiceField`, `MultiChoiceField`, `BooleanField` |
+| Date and time | `DateField`, `TimeField` |
+| Display and record metadata | `LabelField`, `TitleField`, `StatusField` |
+| Signature | `SignatureField` |
+
+`Section` and `RepeatableSection` are structural nodes handled by `FormRenderer` through inline or
+drilldown navigation rather than the field registry.
+
+`PhotoField`, `VideoField`, and `FormLinkField` currently use placeholder-backed defaults. Provide
+application renderers before relying on those fields in production. Media capture, permissions,
+local storage, upload, and retention remain application responsibilities.
+
+Use `KNOWN_FIELD_TYPES` to inspect the registrable set and `getMissingFieldComponentTypes()` during
+development to detect missing defaults or overrides.

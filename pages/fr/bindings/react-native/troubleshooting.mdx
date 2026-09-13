@@ -1,0 +1,36 @@
+---
+title: Résolution des problèmes React Native
+description: Résolvez les problèmes d’installation, rendu, polices, ressources et persistance.
+---
+
+## Metro ne résout pas une dépendance peer
+
+Installez des versions compatibles de `lucide-react-native` et `react-native-svg`. Avec Expo,
+utilisez `npx expo install react-native-svg react-native-safe-area-context expo-font`, puis
+redémarrez Metro.
+
+## Le texte utilise une police de remplacement
+
+Chargez `form0Fonts` avec `expo-font` avant le formulaire et alignez le thème personnalisé sur les
+noms enregistrés.
+
+## Une image locale manque
+
+Fournissez à `imageResolver` une table statique, régénérez-la si le starter la gère et redémarrez
+Metro après l’ajout de ressources.
+
+## Un champ est non pris en charge ou provisoire
+
+Consultez [Rendus intégrés](/fr/bindings/react-native/built-in-renderers). `PhotoField`, `VideoField`
+et `FormLinkField` exigent des remplacements applicatifs en production.
+
+## L’envoi ne s’exécute pas
+
+`onSubmit` est soumis à validation. Vérifiez le mode édition, fournissez le callback et examinez
+les erreurs dans la navigation. Pour un brouillon, utilisez `onSave` et
+`primaryActionMode="save"`.
+
+## Les brouillons disparaissent au redémarrage
+
+Le binding émet les instantanés sans les stocker. Persistez-les et restaurez l’objet complet avec
+`initialSnapshot`, répétables et horodatages compris.

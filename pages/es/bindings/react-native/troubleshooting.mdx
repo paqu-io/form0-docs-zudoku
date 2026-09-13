@@ -1,0 +1,35 @@
+---
+title: Solución de problemas de React Native
+description: Resuelve problemas de instalación, renderizado, fuentes, recursos y persistencia.
+---
+
+## Metro no resuelve una dependencia peer
+
+Instala versiones compatibles de `lucide-react-native` y `react-native-svg`. En Expo, usa
+`npx expo install react-native-svg react-native-safe-area-context expo-font` y reinicia Metro.
+
+## El texto usa una fuente alternativa
+
+Carga `form0Fonts` con `expo-font` antes del formulario y alinea cualquier tema personalizado con
+los nombres registrados.
+
+## Falta una imagen local
+
+Proporciona `imageResolver` con un mapa estático, regenera el mapa si lo gestiona el starter y
+reinicia Metro tras añadir recursos.
+
+## Un campo aparece como no compatible o provisional
+
+Consulta [Renderizadores integrados](/es/bindings/react-native/built-in-renderers). `PhotoField`,
+`VideoField` y `FormLinkField` necesitan overrides de la aplicación para producción.
+
+## El envío no se ejecuta
+
+`onSubmit` exige una validación correcta. Verifica que el modo sea edición, proporciona el callback
+y revisa los errores en la navegación. Para borradores, usa `onSave` y
+`primaryActionMode="save"`.
+
+## Los borradores desaparecen al reiniciar
+
+El binding emite snapshots, pero no los almacena. Persístelos y restaura el objeto completo con
+`initialSnapshot`, incluidos repetibles y marcas temporales.

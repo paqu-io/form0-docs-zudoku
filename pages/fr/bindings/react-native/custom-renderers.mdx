@@ -1,0 +1,26 @@
+---
+title: Rendus de champs personnalisés
+description: Remplacez la présentation native globalement ou dans un sous-arbre de composants.
+---
+
+Les rendus personnalisés changent la présentation sans retirer à `form0-core` les calculs, la
+visibilité, les obligations ou la validation.
+
+```jsx
+import { FormRenderer } from "form0-react-native"
+import { PhotoField } from "./photo-field.jsx"
+
+<FormRenderer schema={schema} renderers={{ PhotoField }} />
+```
+
+Le composant reçoit `field`, `value`, `onChange`, `readOnly`, `required`, `error` et `inputProps`.
+Préservez les propriétés applicables de `inputProps` et appelez `onChange` avec la forme attendue
+par le schéma.
+
+Utilisez `FieldRegistryProvider` pour un sous-arbre ou
+`createFieldRegistry({ includeDefaults, renderers })` pour un registre explicite. Les helpers
+`registerFieldComponent`, `unregisterFieldComponent` et `resetFieldComponents` modifient le
+registre global ; réservez-les au démarrage ou aux tests.
+
+Seuls les types déclarés par `form0-core` peuvent être enregistrés ; un rendu seul n’étend pas le
+contrat du schéma.

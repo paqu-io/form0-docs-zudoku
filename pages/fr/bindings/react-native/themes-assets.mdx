@@ -1,0 +1,40 @@
+---
+title: Thèmes, polices et images
+description: Configurez couleurs, typographie et images de support de form0 en React Native.
+---
+
+`colorMode` accepte `light` ou `dark`. Un `customTheme` partiel est fusionné avec le thème intégré.
+L’application peut résoudre la préférence du système avec `useColorScheme` et transmettre le mode.
+
+```jsx
+<FormRenderer schema={schema} colorMode="dark" customTheme={{ color: { primary: "#7c3aed" } }} />
+```
+
+`lightTheme`, `darkTheme`, `mergeThemes`, `getThemeByName`, `ThemeProvider` et `useTheme` sont aussi
+exportés.
+
+## Polices incluses
+
+Avec Expo, chargez `form0Fonts` avant le formulaire :
+
+```jsx
+import { useFonts } from "expo-font"
+import { form0Fonts, FormRenderer } from "form0-react-native"
+
+const [fontsLoaded] = useFonts(form0Fonts)
+if (!fontsLoaded) return null
+return <FormRenderer schema={schema} />
+```
+
+## Images de support
+
+Les URL HTTP et HTTPS deviennent `{ uri }`. Pour une image locale, React Native exige une référence
+statique ; fournissez un `imageResolver` qui associe les chemins du schéma aux sources importées ou
+chargées avec `require`.
+
+```jsx
+const images = { "safety/helmet.png": require("./assets/safety/helmet.png") }
+<FormRenderer schema={schema} imageResolver={(path) => images[path] ?? null} />
+```
+
+Le starter Expo maintenu génère cette table lorsque les ressources changent.

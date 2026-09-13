@@ -60,6 +60,33 @@
     "security": { "title": "Seguridad y responsabilidad sobre los datos" },
     "troubleshooting": { "title": "Solución de problemas de conectores" }
   },
+  "bindings": {
+    "overview": { "title": "Visión general de bindings" },
+    "react": {
+      "install-render": { "title": "Instalar y renderizar" },
+      "form-renderer": { "title": "FormRenderer" },
+      "values-snapshots-submission": { "title": "Valores, instantáneas y envío" },
+      "built-in-renderers": { "title": "Renderizadores incluidos" },
+      "custom-renderers": { "title": "Renderizadores personalizados" },
+      "modes-placement-navigation": { "title": "Modos, ubicación y navegación" },
+      "themes-styling": { "title": "Temas y estilos" },
+      "workers-performance": { "title": "Workers y rendimiento" },
+      "api-reference": { "title": "Referencia de la API de React" },
+      "troubleshooting": { "title": "Solución de problemas de React" }
+    },
+    "react-native": {
+      "install-render": { "title": "Instalar y renderizar" },
+      "form-renderer": { "title": "FormRenderer" },
+      "values-snapshots-submission": { "title": "Valores, snapshots y envío" },
+      "built-in-renderers": { "title": "Renderizadores integrados" },
+      "custom-renderers": { "title": "Renderizadores personalizados" },
+      "modes-navigation": { "title": "Modos y navegación" },
+      "themes-assets": { "title": "Temas, fuentes e imágenes" },
+      "mobile-integration": { "title": "Integración móvil" },
+      "api-reference": { "title": "Referencia de la API de React Native" },
+      "troubleshooting": { "title": "Solución de problemas de React Native" }
+    }
+  },
   "core": {
     "overview": {
       "title": "Overview"

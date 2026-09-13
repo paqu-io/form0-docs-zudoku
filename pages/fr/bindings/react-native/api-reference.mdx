@@ -1,0 +1,30 @@
+---
+title: Référence de l’API React Native
+description: Exportations publiques de form0-react-native.
+---
+
+Toutes les exportations prises en charge proviennent de `form0-react-native`.
+
+## Rendu et thèmes
+
+- `FormRenderer`, `FormHeader`
+- `ThemeProvider`, `ThemeContext`, `useTheme`
+- `lightTheme`, `darkTheme`, `mergeThemes`, `getThemeByName`
+
+## Registre de champs
+
+- `FieldRegistryProvider`, `FieldRegistryContext`, `useFieldRegistry`
+- `createFieldRegistry`, `defaultFieldRegistry`
+- `registerFieldComponent`, `unregisterFieldComponent`, `resetFieldComponents`
+- `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
+- `KNOWN_FIELD_TYPES`
+
+## Images et typographie
+
+- `ImageResolverProvider`, `ImageResolverContext`, `useImageResolver`
+- `Text`, `TextInput`
+- `form0Fonts` et les constantes `FORM0_FONT_FAMILY*`
+
+Le paquet inclut des déclarations TypeScript pour les propriétés, instantanés, métadonnées, options
+du moteur, registres et rendus. Les hooks internes du moteur et les composants par défaut
+individuels ne sont pas des exportations publiques.

@@ -1,0 +1,23 @@
+---
+title: Intégration mobile
+description: Intégrez le binding natif et définissez les limites du hors-ligne et des médias.
+---
+
+Donnez à `FormRenderer` une zone d’écran délimitée : il gère son propre défilement, le clavier, le
+focus et les écrans détaillés. Évitez de l’entourer d’un autre défilement vertical. Utilisez
+`keyboardScrollOffset` pour les en-têtes superposés.
+
+Installez `react-native-safe-area-context` et utilisez `SafeAreaProvider` à la racine pour que
+l’en-tête intégré respecte la zone sûre. Si l’application l’applique déjà, masquez l’en-tête avec
+`showHeader={false}`.
+
+Le moteur local permet un fonctionnement hors ligne, mais le binding n’inclut ni persistance ni
+synchronisation. Stockez les brouillons depuis `onSnapshotChange` ou `onSave`, restaurez-les avec
+`initialSnapshot` et mettez en file les enregistrements `onSubmit`. L’application définit les
+réessais, conflits, chiffrement, rétention et suppression.
+
+Les connecteurs Node.js `form0-connector-pg` et `form0-connector-sqlite` ne fonctionnent pas dans
+React Native. Utilisez un stockage natif tel que `expo-sqlite` et une API authentifiée à distance.
+
+Photos et vidéos exigent des rendus personnalisés gérant autorisations, capture, identifiants
+durables, transfert et nettoyage.

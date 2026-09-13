@@ -1,0 +1,22 @@
+---
+title: Integrazione mobile
+description: Integra il binding nativo e definisci i confini di offline e media.
+---
+
+Assegna a `FormRenderer` un’area dello schermo delimitata: gestisce scorrimento, tastiera, focus e
+schermate drilldown. Evita di inserirlo in un altro scroll verticale. Usa `keyboardScrollOffset`
+per header sovrapposti.
+
+Installa `react-native-safe-area-context` e usa `SafeAreaProvider` alla radice perché l’header
+integrato rispetti l’area sicura. Se l’app la applica già, nascondi l’header con
+`showHeader={false}`.
+
+Il motore locale consente flussi offline, ma il binding non include persistenza o sincronizzazione.
+Salva bozze da `onSnapshotChange` o `onSave`, ripristinale con `initialSnapshot` e accoda i record di
+`onSubmit`. L’app definisce ritentativi, conflitti, cifratura, conservazione ed eliminazione.
+
+I connector Node.js `form0-connector-pg` e `form0-connector-sqlite` non funzionano in React Native.
+Usa storage nativo come `expo-sqlite` e un’API autenticata per i dati remoti.
+
+Foto e video richiedono renderer personalizzati che gestiscano permessi, acquisizione,
+identificatori durevoli, upload e pulizia.

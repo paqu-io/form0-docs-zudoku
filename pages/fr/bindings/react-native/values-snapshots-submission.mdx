@@ -1,0 +1,30 @@
+---
+title: Valeurs, instantanés et envoi
+description: Initialisez, persistez, restaurez, sauvegardez et envoyez l’état form0 en React Native.
+---
+
+Utilisez `initialValues` pour une initialisation ordinaire et `overrideValues` pour des valeurs
+faisant autorité. Pour une restauration complète, préférez `initialSnapshot` :
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialSnapshot={savedDraft}
+  onSnapshotChange={(snapshot, change) => {
+    if (change.dirty) queueLocalDraft(snapshot)
+  }}
+  onSubmit={uploadRecord}
+/>
+```
+
+L’instantané conserve ensemble `raw_values`, `repeatable` et les horodatages `timestamps`.
+`onSnapshotChange(snapshot, meta)` indique d’abord `{ kind: "seed", dirty: false }`, puis les
+modifications utilisent `{ kind: "change", dirty }`.
+
+Configurez `primaryActionMode="save"` et `onSave(snapshot, meta)` pour enregistrer un brouillon même
+si la validation échoue. L’envoi par défaut valide d’abord. `onSubmit(record, meta)` reçoit
+[l’enregistrement structuré](/fr/core/output-records), les valeurs brutes, répétables, horodatages
+et le résumé de validation.
+
+Le binding ne persiste ni ne synchronise ces données. L’application stocke les instantanés,
+transmet les enregistrements, réessaie les échecs et résout les conflits.

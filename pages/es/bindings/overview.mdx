@@ -1,0 +1,29 @@
+---
+title: Visión general de los bindings de interfaz
+description: Renderiza esquemas form0 en frameworks de aplicación mientras form0-core controla el comportamiento.
+---
+
+import { Callout } from "zudoku/ui/Callout"
+
+Los bindings conectan el motor independiente del framework `form0-core` con la interfaz de una
+aplicación. El motor sigue controlando cálculos, condiciones, validación, eventos y registros
+estructurados; el binding convierte ese estado en componentes e interacciones de la plataforma.
+
+Para aplicaciones nuevas, empieza con la [CLI de form0](/es/cli/overview) y elige un proyecto
+inicial. Usa un binding directamente al integrar form0 en una aplicación existente.
+
+## Bindings oficiales
+
+| Paquete | Plataforma | Documentación | Código fuente |
+| --- | --- | --- | --- |
+| [`form0-react`](https://www.npmjs.com/package/form0-react) | Aplicaciones web React | [Instalar y renderizar](/es/bindings/react/install-render) | [GitHub](https://github.com/paqu-io/form0-react) |
+| [`form0-react-native`](https://www.npmjs.com/package/form0-react-native) | Aplicaciones React Native y Expo | [Instalar y renderizar](/es/bindings/react-native/install-render) | [GitHub](https://github.com/paqu-io/form0-react-native) |
+
+Los bindings no cambian la semántica del esquema. Consulta la
+[documentación de Core](/es/core/overview) para esquemas, campos, expresiones, validación, seguridad
+y registros de salida.
+
+<Callout type="caution" title="Solo esquemas de confianza">
+  Las expresiones y los scripts de eventos ejecutan JavaScript. Renderiza únicamente esquemas de
+  autores de confianza. Consulta [Seguridad y aislamiento](/es/core/security).
+</Callout>

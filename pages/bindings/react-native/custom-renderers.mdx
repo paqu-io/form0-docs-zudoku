@@ -1,0 +1,39 @@
+---
+title: Custom field renderers
+description: Replace form0 React Native field presentation globally or within a component subtree.
+---
+
+Custom renderers change native presentation without moving calculations, visibility,
+requirements, or validation out of `form0-core`.
+
+## Per-form overrides
+
+Pass a renderer map directly to `FormRenderer` for an isolated form:
+
+```jsx
+import { FormRenderer } from "form0-react-native"
+import { PhotoField } from "./photo-field.jsx"
+
+<FormRenderer schema={schema} renderers={{ PhotoField }} />
+```
+
+A renderer receives the field and its evaluated interaction state:
+
+```jsx
+function PhotoField({ field, value, onChange, readOnly, required, error, inputProps }) {
+  // Render application-owned capture, preview, and removal controls.
+}
+```
+
+Preserve applicable properties from `inputProps`, and call `onChange` with the value shape expected
+by the schema and submission boundary.
+
+## Providers, registries, and global overrides
+
+Use `FieldRegistryProvider` for a subtree override or
+`createFieldRegistry({ includeDefaults, renderers })` for an explicit registry instance. The
+module-level `registerFieldComponent`, `unregisterFieldComponent`, and `resetFieldComponents`
+helpers mutate the shared default registry and are best reserved for bootstrap code or tests.
+
+Only field types declared by `form0-core` can be registered. A new schema field type must first be
+defined in Core; a native renderer alone cannot extend the schema contract.

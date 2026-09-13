@@ -1,0 +1,31 @@
+---
+title: Mobile integration
+description: Place the native binding inside a mobile screen and define offline and media boundaries.
+---
+
+## Screen, keyboard, and safe area
+
+Give `FormRenderer` a bounded screen area; it owns the scroll view, keyboard avoidance, field focus,
+and drilldown screens inside that area. Avoid wrapping it in another vertical scroll view. Use
+`keyboardScrollOffset` when an application-owned overlay or header changes the visible target.
+
+Install `react-native-safe-area-context` and wrap the application root in `SafeAreaProvider` to let
+the built-in header include the top safe-area inset. If the application already applies safe-area
+padding, set `showHeader={false}` and provide the surrounding navigation itself.
+
+## Offline boundary
+
+The binding is offline-capable because schema evaluation is local, but it is not a persistence or
+synchronization layer. Use `onSnapshotChange` or `onSave` to write drafts to platform-native
+storage, restore them through `initialSnapshot`, and queue validated `onSubmit` records for upload.
+The application must define retry, conflict, encryption, retention, and deletion behavior.
+
+The Node.js `form0-connector-pg` and `form0-connector-sqlite` packages do not run in React Native.
+Use a platform-native database such as `expo-sqlite` for on-device data and an authenticated
+application API for remote storage.
+
+## Media boundary
+
+Photo and video capture require custom renderers. Those renderers own runtime permissions, capture,
+local identifiers, previews, background upload, and cleanup. Keep durable identifiers in form
+values; do not assume a temporary file URI will remain valid across application restarts.

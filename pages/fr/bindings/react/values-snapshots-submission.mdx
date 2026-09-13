@@ -1,0 +1,47 @@
+---
+title: Valeurs, instantanés et soumission
+description: Initialisez, observez, restaurez et soumettez l’état React de form0.
+---
+
+## Valeurs initiales et remplacements
+
+Utilisez `initialValues` pour l’enregistrement édité. `overrideValues` est prioritaire et convient
+aux valeurs imposées par l’application hôte, comme un statut.
+
+Pour une restauration complète, préférez `initialSnapshot` :
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialSnapshot={{
+    raw_values: saved.raw_values,
+    repeatable: saved.repeatable,
+    timestamps: saved.timestamps,
+  }}
+  onSnapshotChange={(snapshot, change) => {
+    if (change.dirty) queueDraft(snapshot)
+  }}
+  onSubmit={saveRecord}
+/>
+```
+
+L’instantané initial remplace `initialValues` pour les champs et restaure aussi les entrées
+répétables imbriquées et les horodatages dans un état cohérent.
+
+## Observer les brouillons
+
+`onSnapshotChange(snapshot, change)` est d’abord appelé avec `{ kind: "seed", dirty: false }`. Les
+modifications suivantes utilisent `{ kind: "change", dirty: boolean }`.
+
+L’instantané contient `raw_values`, `repeatable` et `timestamps`, avec les dates de création et de
+mise à jour du client et du serveur.
+
+## Soumettre des enregistrements
+
+`onSubmit(record, meta)` reçoit l’enregistrement décrit dans
+[Sortie et enregistrements](/fr/core/output-records). `meta` contient `rawValues`, `repeatable`,
+`timestamps` et `validationSummary`.
+
+Si `onSubmit` renvoie une promesse, un overlay configuré avec `autoCloseOverlayOnSubmit` ne se ferme
+qu’après sa résolution. Utilisez `submitBlockedReason` pour les exigences externes au schéma et
+`externalDirty` pour l’état externe au renderer.

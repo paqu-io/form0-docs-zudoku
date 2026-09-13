@@ -1,0 +1,25 @@
+---
+title: Renderer dei campi inclusi
+description: Tipi di campo renderizzati da form0-react senza override dell’applicazione.
+---
+
+`form0-react` include una UI accessibile per i tipi pubblici definiti da `form0-core`. Il
+comportamento e gli attributi accettati restano definiti dal
+[catalogo campi](/it/core/fields/catalog).
+
+| Gruppo | Tipi renderizzati |
+| --- | --- |
+| Testo e numeri | `TextField`, `NumericField`, `CalculatedField` |
+| Scelte | `SingleChoiceField`, `MultiChoiceField`, `BooleanField` |
+| Data e ora | `DateField`, `TimeField` |
+| Visualizzazione e metadati | `LabelField`, `TitleField`, `StatusField`, `FormLinkField` |
+| Media | `PhotoField`, `VideoField`, `SignatureField` |
+
+`Section`, `RepeatableSection` e `BuildingPlanSection` sono nodi strutturali gestiti da
+`FormRenderer`, non dal registro dei campi.
+
+Usa `KNOWN_FIELD_TYPES` per conoscere i tipi registrabili. In sviluppo,
+`getMissingFieldComponentTypes()` aiuta a rilevare renderer mancanti.
+
+I renderer media gestiscono interazione e anteprima nel browser; persistenza e caricamento restano
+responsabilità dell’applicazione.

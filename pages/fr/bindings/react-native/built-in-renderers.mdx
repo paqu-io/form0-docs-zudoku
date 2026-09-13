@@ -1,0 +1,23 @@
+---
+title: Rendus de champs intégrés
+description: Types de champs affichés par form0-react-native sans remplacement applicatif.
+---
+
+`form0-react-native` fournit des composants natifs pour la plupart des types publics définis par
+`form0-core`. Le [catalogue des champs](/fr/core/fields/catalog) reste le contrat de référence.
+
+| Groupe | Types affichés |
+| --- | --- |
+| Texte et nombres | `TextField`, `NumericField`, `CalculatedField` |
+| Choix | `SingleChoiceField`, `MultiChoiceField`, `BooleanField` |
+| Date et heure | `DateField`, `TimeField` |
+| Affichage et métadonnées | `LabelField`, `TitleField`, `StatusField` |
+| Signature | `SignatureField` |
+
+`Section` et `RepeatableSection` sont des nœuds structurels gérés par `FormRenderer`.
+
+`PhotoField`, `VideoField` et `FormLinkField` utilisent actuellement des composants provisoires.
+Fournissez des rendus applicatifs avant leur utilisation en production. Capture, autorisations,
+stockage, transfert et rétention des médias restent à la charge de l’application.
+
+Utilisez `KNOWN_FIELD_TYPES` et `getMissingFieldComponentTypes()` pour contrôler la couverture.

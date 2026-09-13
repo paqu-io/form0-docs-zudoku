@@ -1,0 +1,46 @@
+---
+title: Valori, snapshot e invio
+description: Inizializza, osserva, ripristina e invia lo stato React di form0.
+---
+
+## Valori iniziali e override
+
+Usa `initialValues` per il record in modifica. `overrideValues` ha la precedenza ed è utile per
+valori autorevoli dell’applicazione host, come uno stato.
+
+Per un ripristino completo, preferisci `initialSnapshot`:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialSnapshot={{
+    raw_values: saved.raw_values,
+    repeatable: saved.repeatable,
+    timestamps: saved.timestamps,
+  }}
+  onSnapshotChange={(snapshot, change) => {
+    if (change.dirty) queueDraft(snapshot)
+  }}
+  onSubmit={saveRecord}
+/>
+```
+
+Lo snapshot iniziale sostituisce `initialValues` per i campi e ripristina anche voci ripetibili
+annidate e timestamp come singolo stato coerente.
+
+## Osservare le bozze
+
+`onSnapshotChange(snapshot, change)` viene chiamato prima con `{ kind: "seed", dirty: false }`. Le
+modifiche successive usano `{ kind: "change", dirty: boolean }`.
+
+Lo snapshot contiene `raw_values`, `repeatable` e `timestamps`, con date di creazione e aggiornamento
+del client e del server.
+
+## Inviare record
+
+`onSubmit(record, meta)` riceve il record descritto in [Output e record](/it/core/output-records).
+`meta` contiene `rawValues`, `repeatable`, `timestamps` e `validationSummary`.
+
+Se `onSubmit` restituisce una promise, un overlay con `autoCloseOverlayOnSubmit` si chiude solo dopo
+la risoluzione. Usa `submitBlockedReason` per requisiti esterni allo schema ed `externalDirty` per
+stato dell’applicazione esterno al renderer.

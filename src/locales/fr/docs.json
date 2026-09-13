@@ -60,6 +60,33 @@
     "security": { "title": "Sécurité et responsabilité des données" },
     "troubleshooting": { "title": "Résolution des problèmes de connecteurs" }
   },
+  "bindings": {
+    "overview": { "title": "Aperçu des bindings" },
+    "react": {
+      "install-render": { "title": "Installer et afficher" },
+      "form-renderer": { "title": "FormRenderer" },
+      "values-snapshots-submission": { "title": "Valeurs, instantanés et soumission" },
+      "built-in-renderers": { "title": "Rendus intégrés" },
+      "custom-renderers": { "title": "Rendus personnalisés" },
+      "modes-placement-navigation": { "title": "Modes, emplacement et navigation" },
+      "themes-styling": { "title": "Thèmes et styles" },
+      "workers-performance": { "title": "Workers et performances" },
+      "api-reference": { "title": "Référence de l’API React" },
+      "troubleshooting": { "title": "Résolution des problèmes React" }
+    },
+    "react-native": {
+      "install-render": { "title": "Installer et afficher" },
+      "form-renderer": { "title": "FormRenderer" },
+      "values-snapshots-submission": { "title": "Valeurs, instantanés et envoi" },
+      "built-in-renderers": { "title": "Rendus intégrés" },
+      "custom-renderers": { "title": "Rendus personnalisés" },
+      "modes-navigation": { "title": "Modes et navigation" },
+      "themes-assets": { "title": "Thèmes, polices et images" },
+      "mobile-integration": { "title": "Intégration mobile" },
+      "api-reference": { "title": "Référence de l’API React Native" },
+      "troubleshooting": { "title": "Résolution des problèmes React Native" }
+    }
+  },
   "core": {
     "overview": {
       "title": "Overview"

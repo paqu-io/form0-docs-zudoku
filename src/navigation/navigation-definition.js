@@ -125,6 +125,56 @@ const documentationItems = [
     { icon: "nav-cpu" },
   ),
   category(
+    "Bindings",
+    [
+      doc("bindings/overview", "Overview"),
+      category(
+        "React",
+        [
+          doc("bindings/react/install-render", "Install and render"),
+          doc("bindings/react/form-renderer", "FormRenderer"),
+          doc("bindings/react/values-snapshots-submission", "Values, snapshots, and submission"),
+          category("Field renderers", [
+            doc("bindings/react/built-in-renderers", "Built-in renderers"),
+            doc("bindings/react/custom-renderers", "Custom renderers"),
+          ]),
+          category("Presentation", [
+            doc("bindings/react/modes-placement-navigation", "Modes, placement, and navigation"),
+            doc("bindings/react/themes-styling", "Themes and styling"),
+          ]),
+          doc("bindings/react/workers-performance", "Workers and performance"),
+          doc("bindings/react/api-reference", "API reference"),
+          doc("bindings/react/troubleshooting", "Troubleshooting"),
+        ],
+        { icon: "nav-react" },
+      ),
+      category(
+        "React Native",
+        [
+          doc("bindings/react-native/install-render", "Install and render"),
+          doc("bindings/react-native/form-renderer", "FormRenderer"),
+          doc(
+            "bindings/react-native/values-snapshots-submission",
+            "Values, snapshots, and submission",
+          ),
+          category("Field renderers", [
+            doc("bindings/react-native/built-in-renderers", "Built-in renderers"),
+            doc("bindings/react-native/custom-renderers", "Custom renderers"),
+          ]),
+          category("Presentation", [
+            doc("bindings/react-native/modes-navigation", "Modes and navigation"),
+            doc("bindings/react-native/themes-assets", "Themes, fonts, and images"),
+          ]),
+          doc("bindings/react-native/mobile-integration", "Mobile integration"),
+          doc("bindings/react-native/api-reference", "React Native API reference"),
+          doc("bindings/react-native/troubleshooting", "React Native troubleshooting"),
+        ],
+        { icon: "nav-react-native" },
+      ),
+    ],
+    { icon: "nav-blocks" },
+  ),
+  category(
     "Connectors",
     [
       doc("connectors/overview", "Overview"),
@@ -135,14 +185,22 @@ const documentationItems = [
         to: "/cli/connector-management",
       },
       doc("connectors/direct-integration", "Direct integration"),
-      category("PostgreSQL", [
-        doc("connectors/postgresql/setup", "Setup and configuration"),
-        doc("connectors/postgresql/storage", "Storage model and operations"),
-      ]),
-      category("SQLite", [
-        doc("connectors/sqlite/setup", "Setup and configuration"),
-        doc("connectors/sqlite/storage", "Storage model and operations"),
-      ]),
+      category(
+        "PostgreSQL",
+        [
+          doc("connectors/postgresql/setup", "Setup and configuration"),
+          doc("connectors/postgresql/storage", "Storage model and operations"),
+        ],
+        { icon: "nav-postgresql" },
+      ),
+      category(
+        "SQLite",
+        [
+          doc("connectors/sqlite/setup", "Setup and configuration"),
+          doc("connectors/sqlite/storage", "Storage model and operations"),
+        ],
+        { icon: "nav-sqlite" },
+      ),
       doc("connectors/security", "Security and data responsibility"),
       doc("connectors/troubleshooting", "Troubleshooting"),
     ],

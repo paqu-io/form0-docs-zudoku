@@ -1,0 +1,44 @@
+---
+title: Themes and styling
+description: Use built-in form0-react themes or supply a Vanilla Extract theme class.
+---
+
+Import the package stylesheet once in the application entry point:
+
+```js
+import "form0-react/index.css"
+```
+
+## Built-in themes
+
+`theme` accepts `standard`, `modal`, `simplified`, or `spotlight`. `colorMode` accepts `light`,
+`dark`, or `system`.
+
+```jsx
+<FormRenderer schema={schema} theme="standard" colorMode="system" />
+```
+
+The theme name and color mode select the corresponding built-in Vanilla Extract class. Placement
+does not automatically change the `theme` property, so an application can choose its own pairing.
+
+## Custom themes
+
+The `form0-react/theme.css.js` export exposes the `vars` theme contract:
+
+```js
+import { createTheme } from "@vanilla-extract/css"
+import { vars } from "form0-react/theme.css.js"
+
+export const appTheme = createTheme(vars, {
+  // Provide every color, type, spacing, and radius token in the contract.
+})
+```
+
+Pass the generated class to `theme`:
+
+```jsx
+<FormRenderer schema={schema} theme={appTheme} colorMode="light" />
+```
+
+Use `className` for form-level styling and ordinary wrapper elements for surrounding application
+layout. Custom field markup belongs in a [custom renderer](/bindings/react/custom-renderers).

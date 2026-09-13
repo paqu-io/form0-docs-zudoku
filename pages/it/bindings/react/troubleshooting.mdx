@@ -1,0 +1,35 @@
+---
+title: Risoluzione dei problemi React
+description: Diagnostica problemi comuni di installazione, rendering, stile e worker.
+---
+
+## Il modulo non ha stili
+
+Importa `form0-react/index.css` una volta e verifica che il bundler accetti CSS dalle dipendenze.
+
+## Un campo risulta non supportato
+
+Controlla il [catalogo campi](/it/core/fields/catalog). Se il tipo è noto, verifica che il componente
+sia registrato nello stesso sottoalbero `FieldRegistryProvider` di `FormRenderer`.
+
+## Lo schema fallisce durante il rendering
+
+`FormRenderer` richiede `schema.form.elements`. Esegui
+[`form0 validate`](/it/cli/schemas/validate-preview) prima di caricarlo.
+
+## La modalità worker non carica
+
+Torna prima a `engineMode="main-thread"`. Con Vite, mantieni statico il costruttore ed escludi
+`form0-react` dall’ottimizzazione come nello starter mantenuto. Gli altri bundler devono supportare
+worker ESM basati su `new URL(..., import.meta.url)`. `workerUrl` e `createWorker` non fanno parte
+dell’API pubblica di `FormRenderer`.
+
+## Le modifiche locali del pacchetto non appaiono
+
+Ricompila `form0-react`, riavvia il server e pulisci solo la cache delle dipendenze del bundler se
+necessario.
+
+## L’invio non viene eseguito
+
+Verifica che `onSubmit` sia una funzione, il modulo sia in modifica, `submitBlockedReason` sia vuoto
+e non ci siano errori di validazione.

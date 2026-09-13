@@ -1,0 +1,24 @@
+---
+title: Built-in field renderers
+description: Field types rendered by form0-react without application overrides.
+---
+
+`form0-react` includes accessible default UI for the public field types defined by `form0-core`.
+Schema behavior and accepted attributes remain defined by the [Field catalog](/core/fields/catalog).
+
+| Group | Rendered types |
+| --- | --- |
+| Text and numbers | `TextField`, `NumericField`, `CalculatedField` |
+| Choices | `SingleChoiceField`, `MultiChoiceField`, `BooleanField` |
+| Date and time | `DateField`, `TimeField` |
+| Display and record metadata | `LabelField`, `TitleField`, `StatusField`, `FormLinkField` |
+| Media | `PhotoField`, `VideoField`, `SignatureField` |
+
+`Section`, `RepeatableSection`, and `BuildingPlanSection` are structural nodes. `FormRenderer`
+handles their layout and nested records rather than resolving them through the field registry.
+
+Use `KNOWN_FIELD_TYPES` to inspect the registrable field-type set. In development,
+`getMissingFieldComponentTypes()` can help detect a missing default or custom renderer.
+
+The built-in media renderers manage browser-side interaction and preview state; persistence and
+media upload remain application responsibilities.

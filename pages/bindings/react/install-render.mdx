@@ -1,0 +1,52 @@
+---
+title: Install and render with React
+description: Install form0-react and render a schema in an existing React application.
+---
+
+For a new web application, use the [CLI quickstart](/getting-started/quickstart). The maintained
+React and Vite starter includes the binding, configuration, and example schemas.
+
+To add form0 to an existing application:
+
+```bash
+npm install form0-react form0-core
+```
+
+The host application must also provide compatible peer dependencies:
+
+- Node.js 22 or newer for installation and build tooling
+- React 18 or 19
+- React DOM 18 or 19
+- `@vanilla-extract/css` 1.17.4 or newer
+
+## Render a schema
+
+```jsx
+import { FormRenderer } from "form0-react"
+import "form0-react/index.css"
+import schema from "./contact.form0.json"
+
+export function ContactForm() {
+  return (
+    <FormRenderer
+      schema={schema}
+      onSubmit={(record, meta) => {
+        console.log(record)
+        console.log(meta.rawValues)
+      }}
+    />
+  )
+}
+```
+
+`schema` must contain a valid `form0-core` form object. Start with
+[Edit your first schema](/getting-started/schema-edit) or review the
+[Form object](/core/schema/form).
+
+`onSubmit` receives a structured form0 record. The second argument exposes raw values, repeatable
+state, timestamps, and the validation summary. See
+[Values, snapshots, and submission](/bindings/react/values-snapshots-submission).
+
+> [!NOTE]
+> `FormRenderer` runs the engine on the main thread by default. Vite applications can opt into the
+> packaged module worker with `engineMode="worker"`.

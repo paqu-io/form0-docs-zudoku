@@ -1,0 +1,33 @@
+---
+title: Workers and performance
+description: Choose the form0-react engine execution and React state subscription modes.
+---
+
+## Engine execution
+
+The default `engineMode="main-thread"` evaluates the form engine on the UI thread. Use
+`engineMode="worker"` to move engine evaluation into the packaged module worker when Web Workers
+are available:
+
+```jsx
+<FormRenderer schema={schema} engineMode="worker" />
+```
+
+Vite supports the static module-worker pattern used by the package and emits the worker during a
+production build. The maintained Vite starter excludes `form0-react` from dependency optimization
+so this worker remains available.
+
+The public `FormRenderer` API does not accept a custom worker URL or worker factory. Applications
+using another bundler should confirm that it supports
+`new Worker(new URL("./worker.js", import.meta.url), { type: "module" })`; otherwise use the default
+main-thread mode.
+
+If the browser has no Worker support, the binding falls back to main-thread execution.
+
+## React store mode
+
+`engineStoreMode="snapshot"` clones the engine snapshot into React state and is the default.
+`engineStoreMode="selector"` uses field subscriptions to reduce broad rerenders.
+
+Treat selector mode as an optimization: verify field errors, navigation summaries, repeatable
+sections, and submission behavior in the target application before adopting it.

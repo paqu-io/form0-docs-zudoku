@@ -1,0 +1,37 @@
+---
+title: React Native API reference
+description: Public components, registries, themes, contexts, typography, and assets exported by form0-react-native.
+---
+
+All supported exports are available from `form0-react-native`.
+
+## Rendering and themes
+
+- `FormRenderer` — render and manage a schema-driven native form.
+- `FormHeader` — the binding's native form header.
+- `ThemeProvider`, `ThemeContext`, `useTheme`
+- `lightTheme`, `darkTheme`, `mergeThemes`, `getThemeByName`
+
+See [FormRenderer](/bindings/react-native/form-renderer) and
+[Themes, fonts, and images](/bindings/react-native/themes-assets).
+
+## Field registry
+
+- `FieldRegistryProvider`, `FieldRegistryContext`, `useFieldRegistry`
+- `createFieldRegistry`, `defaultFieldRegistry`
+- `registerFieldComponent`, `unregisterFieldComponent`, `resetFieldComponents`
+- `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
+- `KNOWN_FIELD_TYPES`
+
+See [Custom field renderers](/bindings/react-native/custom-renderers).
+
+## Images and typography
+
+- `ImageResolverProvider`, `ImageResolverContext`, `useImageResolver`
+- `Text`, `TextInput`
+- `form0Fonts` and the `FORM0_FONT_FAMILY*` constants
+
+The package includes TypeScript declarations for `FormRenderer` props, snapshots, submission and
+save metadata, engine options, registry values, and custom field renderer props. Internal engine
+hooks, individual default components, repeatable controllers, and submission utilities are not
+public exports.

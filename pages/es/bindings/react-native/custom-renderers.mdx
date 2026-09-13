@@ -1,0 +1,26 @@
+---
+title: Renderizadores de campo personalizados
+description: Sustituye la presentación nativa globalmente o dentro de un subárbol de componentes.
+---
+
+Los renderizadores personalizados cambian la presentación sin sacar de `form0-core` los cálculos,
+la visibilidad, los requisitos ni la validación.
+
+```jsx
+import { FormRenderer } from "form0-react-native"
+import { PhotoField } from "./photo-field.jsx"
+
+<FormRenderer schema={schema} renderers={{ PhotoField }} />
+```
+
+El componente recibe `field`, `value`, `onChange`, `readOnly`, `required`, `error` e `inputProps`.
+Conserva las propiedades aplicables de `inputProps` y llama a `onChange` con la forma de valor que
+espera el esquema.
+
+Usa `FieldRegistryProvider` para un subárbol o
+`createFieldRegistry({ includeDefaults, renderers })` para un registro explícito. Los helpers
+`registerFieldComponent`, `unregisterFieldComponent` y `resetFieldComponents` mutan el registro
+global y conviene reservarlos para el arranque o las pruebas.
+
+Solo pueden registrarse tipos declarados por `form0-core`; un renderizador no amplía por sí solo el
+contrato del esquema.

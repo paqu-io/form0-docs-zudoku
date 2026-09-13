@@ -1,0 +1,31 @@
+---
+title: Modes and navigation
+description: Configure editing, headers, sections, repeatable entries, and validation navigation.
+---
+
+## Interaction mode and actions
+
+Set `mode="edit"` or `mode="readonly"`. A read-only form exposes the built-in edit action;
+`showPrimaryActionsInViewMode` controls its visibility.
+
+The built-in header shows submit or save according to `primaryActionMode`. Set `showHeader={false}`
+when the application provides its own screen header and actions. `onRequestClose` enables cancel
+behavior and protects dirty forms with a discard confirmation.
+
+## Sections and validation
+
+`FormRenderer` owns:
+
+- inline and drilldown section navigation;
+- repeatable-section list and editor screens;
+- a navigation sheet for sections and validation issues;
+- movement to the first invalid field after a failed submission;
+- keyboard-aware scrolling to focused or invalid fields.
+
+`forceShowNavigationPanel` makes the navigation entry point available even when the current form
+structure would not normally require it. `keyboardScrollOffset` adjusts the vertical destination
+for application headers or other overlays.
+
+`labelPosition` accepts `top` or `side`; use `labelWidthPercent` to size the label column in side
+layout. Keep conditional navigation behavior in the schema instead of duplicating it in component
+state.

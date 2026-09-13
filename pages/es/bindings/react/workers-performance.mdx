@@ -1,0 +1,26 @@
+---
+title: Workers y rendimiento
+description: Elige los modos de ejecución del motor y suscripción de estado React.
+---
+
+## Ejecución del motor
+
+`engineMode="main-thread"` es el valor predeterminado. Usa `engineMode="worker"` para trasladar la
+evaluación al worker de módulo incluido cuando el navegador lo permita:
+
+```jsx
+<FormRenderer schema={schema} engineMode="worker" />
+```
+
+Vite admite el patrón estático del paquete y emite el worker en producción. El proyecto inicial
+mantenido excluye `form0-react` de la optimización de dependencias para conservarlo.
+
+La API pública de `FormRenderer` no acepta una URL ni una fábrica de workers personalizada. Con
+otro bundler, confirma que admite el patrón estático `new Worker(new URL(...))` para workers de
+módulo; si no, usa el hilo principal. Sin soporte de Worker, el binding vuelve al hilo principal.
+
+## Modo del store React
+
+`engineStoreMode="snapshot"` es el valor predeterminado. `engineStoreMode="selector"` usa
+suscripciones por campo para reducir rerenders amplios. Trátalo como una optimización y verifica
+errores, navegación, secciones repetibles y envío en la aplicación objetivo.

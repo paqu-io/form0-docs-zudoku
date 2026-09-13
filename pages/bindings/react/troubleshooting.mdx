@@ -1,0 +1,40 @@
+---
+title: React troubleshooting
+description: Diagnose common form0-react installation, rendering, styling, and worker issues.
+---
+
+## The form is unstyled
+
+Import `form0-react/index.css` once in the application entry point. Confirm that the bundler allows
+CSS imports from dependencies.
+
+## A field says it is unsupported
+
+Confirm that the type is listed in the [Core field catalog](/core/fields/catalog). If the type is
+known but intentionally replaced, verify that the component is registered in the same
+`FieldRegistryProvider` subtree as `FormRenderer`.
+
+## The schema fails during rendering
+
+`FormRenderer` validates `schema.form` and requires `form.elements`. Use
+[`form0 validate`](/cli/schemas/validate-preview) before loading the schema in the application.
+
+## Worker mode cannot load the worker
+
+First return to `engineMode="main-thread"`. For Vite, keep the worker constructor statically
+analyzable and exclude `form0-react` from dependency optimization as shown in the maintained web
+starter. Other bundlers must support ESM module workers based on `new URL(..., import.meta.url)`.
+
+Custom `workerUrl` and `createWorker` options are not part of the public `FormRenderer` API.
+
+## Updates do not appear during local package development
+
+Rebuild `form0-react`, restart the consuming development server, and clear only that bundler’s
+dependency cache if necessary. Vite can retain an optimized copy of a linked or previously
+installed package.
+
+## Submission does not run
+
+Check that `onSubmit` is a function, the form is in edit mode, `submitBlockedReason` is empty, and
+the validation summary has no errors. For overlays returning a promise, handle rejection so the
+application can present the failure while the overlay remains open.

@@ -1,0 +1,43 @@
+---
+title: Installazione e rendering con React Native
+description: Installa form0-react-native e renderizza uno schema in un’app React Native o Expo.
+---
+
+Per una nuova app mobile, segui il [quickstart della CLI](/it/getting-started/quickstart). Lo starter
+React Native ed Expo mantenuto include binding, font, schemi di esempio, immagini di supporto e
+persistenza SQLite locale.
+
+Per aggiungere form0 a un’app esistente:
+
+```bash
+npm install form0-react-native form0-core lucide-react-native
+```
+
+Installa dipendenze native compatibili. In Expo:
+
+```bash
+npx expo install react-native-svg react-native-safe-area-context expo-font
+```
+
+Il pacchetto richiede Node.js 22 o successivo per installazione e strumenti, React 18 o 19 e React
+Native 0.72 o successivo. `react-native-safe-area-context` è opzionale, ma consente all’header
+integrato di rispettare l’area sicura. Se lo installi, avvolgi la radice dell’app in
+`SafeAreaProvider`.
+
+## Renderizzare uno schema
+
+```jsx
+import { FormRenderer } from "form0-react-native"
+import schema from "./contact.form0.json"
+
+export function ContactForm() {
+  return <FormRenderer schema={schema} onSubmit={(record) => console.log(record)} />
+}
+```
+
+`schema` deve contenere un oggetto modulo `form0-core` valido. Parti da
+[Modifica il tuo primo schema](/it/getting-started/schema-edit) o consulta
+[l’oggetto modulo](/it/core/schema/form).
+
+Carica i font inclusi prima del modulo. Consulta
+[Temi, font e immagini](/it/bindings/react-native/themes-assets).

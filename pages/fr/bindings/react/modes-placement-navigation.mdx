@@ -1,0 +1,27 @@
+---
+title: Modes, emplacement et navigation
+description: Configurez l’édition, les overlays, les libellés, les sections et les parcours simplifiés.
+---
+
+## Mode d’interaction
+
+Utilisez `mode="edit"` ou `mode="readonly"`. Un formulaire en lecture seule peut proposer l’édition
+avec `allowReadOnlyEditToggle` ; `readOnlyEditToggleDisabledReason` explique son indisponibilité.
+`showPrimaryActionsInViewMode` contrôle la visibilité des actions principales désactivées.
+
+## Emplacement
+
+`formPlacement` accepte `form-page`, `form-modal` et `form-spotlight`. Pour un overlay, fournissez
+`onRequestClose`. `autoCloseOverlayOnSubmit` ferme l’overlay après une soumission synchrone réussie
+ou la résolution de la promesse renvoyée. La confirmation d’abandon inclut `externalDirty`.
+
+## Mise en page et navigation
+
+- `labelPosition` accepte `top` ou `side`.
+- `labelWidthPercent` contrôle la colonne des libellés en disposition latérale.
+- `formWidth` accepte une largeur CSS.
+- `forceShowNavigationPanel` maintient la navigation par sections visible.
+- `simplifiedMode` affiche un champ à la fois ; `onSimplifiedNavigation` observe l’avancement.
+
+`FormRenderer` gère sections, entrées répétables, validation, focus et clavier. Conservez la logique
+conditionnelle dans le schéma plutôt que de la dupliquer dans l’état React.

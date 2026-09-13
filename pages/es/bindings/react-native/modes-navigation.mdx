@@ -1,0 +1,19 @@
+---
+title: Modos y navegación
+description: Configura edición, cabeceras, secciones, repetibles y navegación de validación.
+---
+
+Usa `mode="edit"` o `mode="readonly"`. El formulario de solo lectura puede mostrar la acción de
+edición integrada; `showPrimaryActionsInViewMode` controla su visibilidad.
+
+La cabecera usa envío o guardado según `primaryActionMode`. Configura `showHeader={false}` si la
+aplicación aporta su propia cabecera. `onRequestClose` habilita cancelar y protege formularios con
+cambios mediante una confirmación.
+
+`FormRenderer` gestiona secciones inline y drilldown, listas y editores repetibles, una hoja de
+navegación de secciones y errores, el salto al primer campo no válido y el desplazamiento adaptado
+al teclado.
+
+`forceShowNavigationPanel` fuerza el acceso a la navegación. `keyboardScrollOffset` ajusta el
+destino vertical cuando hay cabeceras superpuestas. `labelPosition` acepta `top` o `side`, y
+`labelWidthPercent` dimensiona la columna lateral.

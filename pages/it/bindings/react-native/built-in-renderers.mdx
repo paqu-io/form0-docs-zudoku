@@ -1,0 +1,23 @@
+---
+title: Renderer di campo integrati
+description: Tipi di campo renderizzati da form0-react-native senza override dell’applicazione.
+---
+
+`form0-react-native` fornisce componenti nativi per la maggior parte dei tipi pubblici definiti da
+`form0-core`. Il [catalogo dei campi](/it/core/fields/catalog) resta il contratto di riferimento.
+
+| Gruppo | Tipi renderizzati |
+| --- | --- |
+| Testo e numeri | `TextField`, `NumericField`, `CalculatedField` |
+| Scelte | `SingleChoiceField`, `MultiChoiceField`, `BooleanField` |
+| Data e ora | `DateField`, `TimeField` |
+| Visualizzazione e metadati | `LabelField`, `TitleField`, `StatusField` |
+| Firma | `SignatureField` |
+
+`Section` e `RepeatableSection` sono nodi strutturali gestiti da `FormRenderer`.
+
+`PhotoField`, `VideoField` e `FormLinkField` usano attualmente componenti provvisori. Fornisci
+renderer applicativi prima di usarli in produzione. Acquisizione, permessi, archiviazione, upload e
+conservazione dei media restano responsabilità dell’app.
+
+Usa `KNOWN_FIELD_TYPES` e `getMissingFieldComponentTypes()` per controllare la copertura.

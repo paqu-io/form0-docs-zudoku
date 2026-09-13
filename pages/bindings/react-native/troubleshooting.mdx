@@ -1,0 +1,39 @@
+---
+title: React Native troubleshooting
+description: Diagnose common form0-react-native installation, rendering, font, asset, and persistence issues.
+---
+
+## Metro cannot resolve a peer dependency
+
+Install compatible `lucide-react-native` and `react-native-svg` versions. In Expo, use
+`npx expo install react-native-svg react-native-safe-area-context expo-font` so the installed native
+packages match the active SDK, then restart Metro.
+
+## Text uses a fallback font
+
+Load `form0Fonts` with `expo-font` before rendering the form. If the application supplies a custom
+theme, keep its font-family tokens aligned with the names loaded into the native font registry.
+
+## A local supporting image is missing
+
+Local assets cannot be resolved from arbitrary runtime strings. Provide `imageResolver` with a
+static path-to-source map, regenerate the map if the starter owns it, and restart Metro after adding
+new assets.
+
+## A field says it is unsupported or provisional
+
+Check [Built-in field renderers](/bindings/react-native/built-in-renderers). `PhotoField`,
+`VideoField`, and `FormLinkField` need application overrides for production behavior. Ensure the
+override is passed to the same `FormRenderer` or registry provider that renders the form.
+
+## Submission does not run
+
+`onSubmit` is validation-gated. Confirm the form is in edit mode, provide a submit handler, and use
+the validation navigation sheet to inspect errors. For validation-tolerant drafts, provide `onSave`
+and set `primaryActionMode="save"`.
+
+## Drafts disappear after restart
+
+Snapshots are emitted but never stored by the binding. Persist them through `onSnapshotChange` or
+`onSave`, and restore the complete object with `initialSnapshot`. Do not replace it with only the
+raw field values when repeatable entries or timestamps matter.

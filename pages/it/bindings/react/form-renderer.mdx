@@ -1,0 +1,47 @@
+---
+title: FormRenderer
+description: Configura il componente React principale di form0.
+---
+
+`FormRenderer` valida e prepara uno schema, crea il motore, renderizza campi e sezioni e produce
+record strutturati al momento dell’invio.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialValues={{ name: "Ada" }}
+  mode="edit"
+  theme="standard"
+  colorMode="system"
+  labelPosition="top"
+  onSubmit={saveRecord}
+/>
+```
+
+## Proprietà essenziali
+
+| Proprietà | Scopo |
+| --- | --- |
+| `schema` | Uno schema form0 contenente `form.elements`. |
+| `initialValues` | Valori iniziali dei campi non ripetibili. |
+| `initialSnapshot` | Ripristina insieme valori, stato ripetibile e timestamp. |
+| `overrideValues` | Applica valori autorevoli sopra quelli iniziali. |
+| `onSubmit` | Riceve il record strutturato e i metadati dell’invio. |
+| `onSnapshotChange` | Osserva lo stato iniziale e le modifiche dell’utente. |
+| `mode` | Avvia in modalità `edit` o `readonly`. |
+
+## UI e stato gestiti dall’applicazione
+
+- `headerAccessory` renderizza un nodo React, o una funzione che riceve `{ mode }`, tra riepilogo e
+  corpo del modulo.
+- `recordMetadataFields` mostra metadati in sola lettura. Un `displayValue` non entra mai in valori,
+  snapshot o invii.
+- `externalDirty` include modifiche esterne nella conferma di abbandono degli overlay.
+- `submitBlockedReason` blocca l’invio finché un requisito esterno non è risolto.
+- `onSchemaReady` riceve lo schema preparato dopo aver assicurato chiavi stabili.
+
+Le proprietà standard aggiuntive, come `id`, `aria-*` ed eventi, vengono passate al `<form>`. Non
+usare questo percorso per configurare il motore.
+
+Continua con [Valori, snapshot e invio](/it/bindings/react/values-snapshots-submission) oppure
+[Modalità, posizionamento e navigazione](/it/bindings/react/modes-placement-navigation).

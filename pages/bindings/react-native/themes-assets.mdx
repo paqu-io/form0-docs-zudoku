@@ -1,0 +1,53 @@
+---
+title: Themes, fonts, and images
+description: Configure form0 React Native colors, typography, and supporting-image resolution.
+---
+
+## Color themes
+
+`colorMode` accepts `light` or `dark`. Supply a partial `customTheme` to override tokens; the
+binding deep-merges it with the selected built-in theme. An application can resolve the device
+preference with React Native's `useColorScheme` and pass the resulting mode.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  colorMode="dark"
+  customTheme={{ color: { primary: "#7c3aed" } }}
+/>
+```
+
+`lightTheme`, `darkTheme`, `mergeThemes`, and `getThemeByName` are exported for application-level
+theme composition. `ThemeProvider` and `useTheme` can keep surrounding native UI aligned with the
+form.
+
+## Packaged fonts
+
+The package exports its Figtree assets through `form0Fonts`. In Expo, load them at application
+startup before rendering the form:
+
+```jsx
+import { useFonts } from "expo-font"
+import { form0Fonts, FormRenderer } from "form0-react-native"
+
+const [fontsLoaded] = useFonts(form0Fonts)
+if (!fontsLoaded) return null
+
+return <FormRenderer schema={schema} />
+```
+
+## Supporting images
+
+Remote HTTP and HTTPS paths resolve to `{ uri }` by default. React Native requires bundled local
+images to be statically discoverable, so provide an `imageResolver` that maps schema paths to
+imported or required image sources:
+
+```jsx
+const images = {
+  "safety/helmet.png": require("./assets/safety/helmet.png"),
+}
+
+<FormRenderer schema={schema} imageResolver={(path) => images[path] ?? null} />
+```
+
+The maintained Expo starter generates this mapping when supporting-image assets change.

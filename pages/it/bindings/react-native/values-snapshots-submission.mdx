@@ -1,0 +1,30 @@
+---
+title: Valori, snapshot e invio
+description: Inizializza, persisti, ripristina, salva e invia lo stato form0 in React Native.
+---
+
+Usa `initialValues` per valori iniziali normali e `overrideValues` per valori autorevoli. Per un
+ripristino completo, preferisci `initialSnapshot`:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialSnapshot={savedDraft}
+  onSnapshotChange={(snapshot, change) => {
+    if (change.dirty) queueLocalDraft(snapshot)
+  }}
+  onSubmit={uploadRecord}
+/>
+```
+
+Lo snapshot conserva insieme `raw_values`, `repeatable` e i timestamp. La prima chiamata a
+`onSnapshotChange(snapshot, meta)` usa `{ kind: "seed", dirty: false }`; le modifiche successive
+usano `{ kind: "change", dirty }`.
+
+Imposta `primaryActionMode="save"` e `onSave(snapshot, meta)` per salvare una bozza anche con errori
+di validazione. L’invio predefinito valida prima. `onSubmit(record, meta)` riceve il
+[record strutturato](/it/core/output-records), valori grezzi, ripetibili, timestamp e riepilogo di
+validazione.
+
+Il binding non persiste né sincronizza questi dati. L’app deve archiviare gli snapshot, caricare i
+record, ritentare gli errori e risolvere i conflitti.

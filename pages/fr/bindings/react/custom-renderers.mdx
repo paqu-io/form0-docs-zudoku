@@ -1,0 +1,37 @@
+---
+title: Rendus de champs personnalisés
+description: Remplacez la présentation des champs globalement ou dans un sous-arbre React.
+---
+
+Les rendus personnalisés changent la présentation sans retirer à `form0-core` les calculs, la
+visibilité, les contraintes ni la validation.
+
+## Remplacements locaux
+
+Préférez `FieldRegistryProvider` lorsqu’une application, une route ou un test nécessite un registre
+isolé :
+
+```jsx
+import { FieldRegistryProvider, FormRenderer } from "form0-react"
+import { DateField } from "./date-field.jsx"
+
+export function AppForm({ schema }) {
+  return (
+    <FieldRegistryProvider renderers={{ DateField }}>
+      <FormRenderer schema={schema} />
+    </FieldRegistryProvider>
+  )
+}
+```
+
+Un rendu reçoit `{ field, value, onChange, readOnly, inputProps, className }`. Conservez les
+propriétés d’accessibilité fournies dans `inputProps`.
+
+## Registres et remplacements globaux
+
+Utilisez `createFieldRegistry({ includeDefaults, renderers })` pour une instance explicite. Les
+helpers `registerFieldComponent`, `unregisterFieldComponent` et `resetFieldComponents` modifient le
+registre partagé et conviennent surtout à l’initialisation ou aux tests.
+
+Seuls les types déclarés par `form0-core` peuvent être enregistrés. Un nouveau type doit d’abord
+être défini dans le noyau ; un rendu React seul n’étend pas le contrat du schéma.

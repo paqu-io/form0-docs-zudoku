@@ -10,6 +10,11 @@ Il flusso consigliato consiste nel gestirli con `form0-cli`: installare un conne
 nel progetto, verificare la connessione e controllarne lo stato. Un’applicazione può anche istanziare
 direttamente un connettore quando deve gestirne il ciclo di vita.
 
+| Pacchetto | Storage | Documentazione | Codice sorgente |
+| --- | --- | --- | --- |
+| [`form0-connector-pg`](https://www.npmjs.com/package/form0-connector-pg) | PostgreSQL | [Installazione e configurazione](/it/connectors/postgresql/setup) | [GitHub](https://github.com/paqu-io/form0-connector-pg) |
+| [`form0-connector-sqlite`](https://www.npmjs.com/package/form0-connector-sqlite) | SQLite | [Installazione e configurazione](/it/connectors/sqlite/setup) | [GitHub](https://github.com/paqu-io/form0-connector-sqlite) |
+
 I connettori vengono eseguiti nel processo Node.js locale. Non sono servizi di storage ospitati e
 non forniscono autenticazione, autorizzazione, backup, conservazione o amministrazione del database.
 Queste responsabilità restano all’applicazione e al proprietario del database.

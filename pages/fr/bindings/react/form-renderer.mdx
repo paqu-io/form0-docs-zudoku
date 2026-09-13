@@ -1,0 +1,47 @@
+---
+title: FormRenderer
+description: Configurez le composant React principal de form0.
+---
+
+`FormRenderer` valide et prépare un schéma, crée le moteur, affiche les champs et sections, puis
+produit un enregistrement structuré lors de la soumission.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialValues={{ name: "Ada" }}
+  mode="edit"
+  theme="standard"
+  colorMode="system"
+  labelPosition="top"
+  onSubmit={saveRecord}
+/>
+```
+
+## Propriétés essentielles
+
+| Propriété | Rôle |
+| --- | --- |
+| `schema` | Schéma form0 contenant `form.elements`. |
+| `initialValues` | Valeurs initiales des champs non répétables. |
+| `initialSnapshot` | Restaure ensemble valeurs, état répétable et horodatages. |
+| `overrideValues` | Applique des valeurs faisant autorité sur les valeurs initiales. |
+| `onSubmit` | Reçoit l’enregistrement structuré et les métadonnées de soumission. |
+| `onSnapshotChange` | Observe l’état initial et les modifications utilisateur. |
+| `mode` | Démarre en mode `edit` ou `readonly`. |
+
+## Interface et état appartenant à l’application
+
+- `headerAccessory` affiche un nœud React, ou une fonction recevant `{ mode }`, entre le résumé et
+  le corps du formulaire.
+- `recordMetadataFields` affiche des métadonnées en lecture seule. Un `displayValue` n’entre jamais
+  dans les valeurs, instantanés ou soumissions.
+- `externalDirty` inclut les modifications externes dans la confirmation d’abandon d’un overlay.
+- `submitBlockedReason` bloque la soumission tant qu’une exigence externe n’est pas résolue.
+- `onSchemaReady` reçoit le schéma préparé après l’ajout de clés stables.
+
+Les propriétés standard supplémentaires, comme `id`, `aria-*` et les événements, sont transmises à
+l’élément `<form>`. Ne les utilisez pas pour configurer le moteur.
+
+Continuez avec [Valeurs, instantanés et soumission](/fr/bindings/react/values-snapshots-submission)
+ou [Modes, emplacement et navigation](/fr/bindings/react/modes-placement-navigation).

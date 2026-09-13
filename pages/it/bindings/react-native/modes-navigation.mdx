@@ -1,0 +1,19 @@
+---
+title: Modalità e navigazione
+description: Configura modifica, header, sezioni, ripetibili e navigazione di validazione.
+---
+
+Usa `mode="edit"` o `mode="readonly"`. Un modulo in sola lettura può mostrare l’azione di modifica
+integrata; `showPrimaryActionsInViewMode` ne controlla la visibilità.
+
+L’header usa invio o salvataggio secondo `primaryActionMode`. Imposta `showHeader={false}` se l’app
+fornisce il proprio header. `onRequestClose` abilita l’annullamento e protegge le modifiche con una
+conferma.
+
+`FormRenderer` gestisce sezioni inline e drilldown, elenchi ed editor ripetibili, un pannello di
+navigazione per sezioni ed errori, lo spostamento al primo campo non valido e lo scorrimento
+adattato alla tastiera.
+
+`forceShowNavigationPanel` forza l’accesso alla navigazione. `keyboardScrollOffset` regola la
+destinazione verticale sotto header sovrapposti. `labelPosition` accetta `top` o `side`, mentre
+`labelWidthPercent` dimensiona la colonna laterale.

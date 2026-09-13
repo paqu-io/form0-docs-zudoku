@@ -1,0 +1,43 @@
+---
+title: React API reference
+description: Public components, hooks, registries, and utilities exported by form0-react.
+---
+
+All supported JavaScript exports are available from `form0-react` unless another path is shown.
+
+## Rendering
+
+- `FormRenderer` — render and manage a schema-driven form.
+- `ThemeProvider`, `ThemeContext`, `useThemeClass` — provide or read the active theme class.
+
+See [FormRenderer](/bindings/react/form-renderer) and
+[Themes and styling](/bindings/react/themes-styling).
+
+## Field registry
+
+- `FieldRegistryProvider`, `FieldRegistryContext`, `useFieldRegistry`
+- `createFieldRegistry`, `defaultFieldRegistry`
+- `registerFieldComponent`, `unregisterFieldComponent`, `resetFieldComponents`
+- `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
+- `KNOWN_FIELD_TYPES`
+
+See [Custom field renderers](/bindings/react/custom-renderers).
+
+## Schema utilities
+
+- `cloneDeep(value)` and `cloneSchema(schema)` create detached copies.
+- `ensureSchemaKeys(elements)` adds stable keys where required and reports whether it changed the
+  input.
+- `prepareSchema(schema)` clones a schema and ensures element keys on the copy.
+
+## Specialized integration
+
+- `useBuildingPlanController(options)` coordinates the renderer’s building-plan section UI with
+  repeatable data. It is specialized rather than a general form-state hook.
+
+The internal `useFormEngine`, worker client, individual default renderer components, and
+`FieldRenderer` are not package exports. Importing internal files is unsupported by the package
+export map.
+
+Theme tokens are exported separately from `form0-react/theme.css.js`. The compiled stylesheet is
+available as `form0-react/index.css`.

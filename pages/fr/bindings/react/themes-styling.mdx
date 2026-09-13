@@ -1,0 +1,30 @@
+---
+title: Thèmes et styles
+description: Utilisez les thèmes intégrés ou fournissez une classe de thème Vanilla Extract.
+---
+
+Importez une fois la feuille de style au point d’entrée :
+
+```js
+import "form0-react/index.css"
+```
+
+## Thèmes intégrés
+
+`theme` accepte `standard`, `modal`, `simplified` ou `spotlight`. `colorMode` accepte `light`,
+`dark` ou `system`.
+
+```jsx
+<FormRenderer schema={schema} theme="standard" colorMode="system" />
+```
+
+L’emplacement ne change pas automatiquement `theme` ; l’application choisit donc leur association.
+
+## Thèmes personnalisés
+
+L’export `form0-react/theme.css.js` expose le contrat `vars`. Créez une classe complète avec
+`createTheme` de `@vanilla-extract/css`, puis transmettez-la à `theme`.
+
+Utilisez `className` pour le formulaire et des wrappers ordinaires pour la mise en page de
+l’application. Le balisage spécifique d’un champ appartient à un
+[rendu personnalisé](/fr/bindings/react/custom-renderers).

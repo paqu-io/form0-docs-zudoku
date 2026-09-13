@@ -1,0 +1,26 @@
+---
+title: Workers et performances
+description: Choisissez les modes d’exécution du moteur et d’abonnement à l’état React.
+---
+
+## Exécution du moteur
+
+`engineMode="main-thread"` est le mode par défaut. Utilisez `engineMode="worker"` pour déplacer les
+évaluations dans le worker module fourni lorsque le navigateur le permet :
+
+```jsx
+<FormRenderer schema={schema} engineMode="worker" />
+```
+
+Vite prend en charge le motif statique du paquet et émet le worker lors du build. Le projet de
+démarrage maintenu exclut `form0-react` de l’optimisation des dépendances afin de le préserver.
+
+L’API publique de `FormRenderer` n’accepte ni URL ni fabrique de worker personnalisée. Avec un autre
+bundler, vérifiez la prise en charge du motif statique `new Worker(new URL(...))` pour les workers
+module ; sinon, utilisez le thread principal. Sans Worker, le binding revient au thread principal.
+
+## Mode du store React
+
+`engineStoreMode="snapshot"` est le mode par défaut. `engineStoreMode="selector"` emploie des
+abonnements par champ pour réduire les rerenders globaux. Considérez-le comme une optimisation et
+vérifiez erreurs, navigation, sections répétables et soumission dans l’application cible.

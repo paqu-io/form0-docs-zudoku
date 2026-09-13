@@ -1,0 +1,27 @@
+---
+title: Modos, ubicación y navegación
+description: Configura edición, overlays, etiquetas, secciones y flujos simplificados.
+---
+
+## Modo de interacción
+
+Usa `mode="edit"` o `mode="readonly"`. Los formularios de solo lectura pueden ofrecer edición con
+`allowReadOnlyEditToggle`; `readOnlyEditToggleDisabledReason` explica por qué no está disponible.
+`showPrimaryActionsInViewMode` controla si las acciones principales deshabilitadas siguen visibles.
+
+## Ubicación
+
+`formPlacement` acepta `form-page`, `form-modal` y `form-spotlight`. En overlays, proporciona
+`onRequestClose`. `autoCloseOverlayOnSubmit` cierra el overlay tras un envío síncrono correcto o
+cuando se resuelve la promesa devuelta. La confirmación de descarte incluye `externalDirty`.
+
+## Diseño y navegación
+
+- `labelPosition` acepta `top` o `side`.
+- `labelWidthPercent` controla la columna de etiquetas en el diseño lateral.
+- `formWidth` acepta un ancho CSS.
+- `forceShowNavigationPanel` mantiene visible la navegación por secciones.
+- `simplifiedMode` presenta un campo cada vez; `onSimplifiedNavigation` observa el avance.
+
+`FormRenderer` gestiona secciones, entradas repetibles, validación, foco y teclado. Mantén el
+comportamiento condicional en el esquema, no duplicado en estado React.

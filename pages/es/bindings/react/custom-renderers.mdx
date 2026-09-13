@@ -1,0 +1,36 @@
+---
+title: Renderizadores personalizados
+description: Sustituye la presentación de campos globalmente o dentro de un subárbol React.
+---
+
+Los renderizadores personalizados cambian la presentación sin sacar de `form0-core` los cálculos,
+la visibilidad, los requisitos ni la validación.
+
+## Personalizaciones acotadas
+
+Prefiere `FieldRegistryProvider` cuando una aplicación, ruta o prueba necesita un conjunto aislado:
+
+```jsx
+import { FieldRegistryProvider, FormRenderer } from "form0-react"
+import { DateField } from "./date-field.jsx"
+
+export function AppForm({ schema }) {
+  return (
+    <FieldRegistryProvider renderers={{ DateField }}>
+      <FormRenderer schema={schema} />
+    </FieldRegistryProvider>
+  )
+}
+```
+
+Un renderer recibe `{ field, value, onChange, readOnly, inputProps, className }`. Conserva las
+propiedades de accesibilidad suministradas en `inputProps`.
+
+## Registros y personalizaciones globales
+
+Usa `createFieldRegistry({ includeDefaults, renderers })` para una instancia explícita. Los helpers
+`registerFieldComponent`, `unregisterFieldComponent` y `resetFieldComponents` modifican el registro
+compartido y son más adecuados para el arranque de la aplicación o las pruebas.
+
+Solo pueden registrarse tipos declarados por `form0-core`. Un tipo nuevo debe definirse primero en
+Core; un renderer React por sí solo no amplía el contrato del esquema.

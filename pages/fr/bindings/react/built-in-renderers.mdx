@@ -1,0 +1,25 @@
+---
+title: Rendus de champs intégrés
+description: Types de champs affichés par form0-react sans remplacement applicatif.
+---
+
+`form0-react` fournit une interface accessible pour les types publics définis par `form0-core`.
+Le comportement et les attributs restent définis dans le
+[catalogue des champs](/fr/core/fields/catalog).
+
+| Groupe | Types affichés |
+| --- | --- |
+| Texte et nombres | `TextField`, `NumericField`, `CalculatedField` |
+| Choix | `SingleChoiceField`, `MultiChoiceField`, `BooleanField` |
+| Date et heure | `DateField`, `TimeField` |
+| Affichage et métadonnées | `LabelField`, `TitleField`, `StatusField`, `FormLinkField` |
+| Médias | `PhotoField`, `VideoField`, `SignatureField` |
+
+`Section`, `RepeatableSection` et `BuildingPlanSection` sont des nœuds structurels gérés par
+`FormRenderer`, et non par le registre de champs.
+
+Utilisez `KNOWN_FIELD_TYPES` pour connaître les types enregistrables. En développement,
+`getMissingFieldComponentTypes()` aide à détecter un rendu absent.
+
+Les rendus média gèrent l’interaction et l’aperçu dans le navigateur ; la persistance et le
+téléversement restent à la charge de l’application.
