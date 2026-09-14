@@ -29,9 +29,10 @@ The CLI remains the recommended creation path.
 
 ## Choose a development target
 
-Open the project with Expo Go when every native dependency is supported by that client. Use an
-Expo development build when you add native libraries or need an environment closer to the
-production application. You can also run an Android emulator, iOS Simulator, or the web target:
+Use an Expo development build for production-oriented work and whenever the application includes
+custom native code. Expo Go remains useful for learning and evaluation when a compatible SDK build
+is available for the target platform. You can also run an Android emulator, iOS Simulator, or the
+web target:
 
 ```bash
 npm run android
@@ -39,7 +40,8 @@ npm run ios
 npm run web
 ```
 
-The template requires Node.js 22 or newer. Native emulator and device setup follows the
+The template requires Node.js 22.13 or newer. Native builds support Android 7 or newer and iOS 16.4
+or newer; local iOS builds require Xcode 26.4 or newer. Native emulator and device setup follows the
 [Expo development environment guide](https://docs.expo.dev/get-started/set-up-your-environment/).
 
 Continue with [Project structure and configuration](./project-structure-configuration).

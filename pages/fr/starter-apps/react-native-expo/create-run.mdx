@@ -28,9 +28,12 @@ Le bouton GitHub **Use this template** permet aussi de copier le dépôt. La CLI
 
 ## Choisir une cible
 
-Utilisez Expo Go si tous les modules natifs sont compatibles. Utilisez un development build pour
-des bibliothèques natives supplémentaires ou un environnement proche de la production. Les scripts
-`npm run android`, `npm run ios` et `npm run web` ouvrent les autres cibles.
+Utilisez un development build pour un travail orienté production et dès que l’application comprend
+du code natif personnalisé. Expo Go reste utile pour l’apprentissage et l’évaluation lorsqu’un build
+compatible avec le SDK existe pour la plateforme cible. Les scripts `npm run android`, `npm run ios`
+et `npm run web` ouvrent les autres cibles.
 
-Node.js 22 ou plus récent est requis. Continuez avec
+Node.js 22.13 ou plus récent est requis. Les builds natifs prennent en charge Android 7 ou plus
+récent et iOS 16.4 ou plus récent ; les builds iOS locaux nécessitent Xcode 26.4 ou plus récent.
+Continuez avec
 [Structure et configuration](./project-structure-configuration).
