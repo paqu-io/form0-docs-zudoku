@@ -10,8 +10,8 @@
   "scripts": {
     "dev": "node scripts/write-page-metadata-index.mjs && zudoku dev",
     "build": "node scripts/write-page-metadata-index.mjs && zudoku build && node scripts/write-agent-files.mjs",
-    "format": "prettier --write \"pages/**/*.{md,mdx}\" src scripts tests .github/workflows package.json zudoku.config.jsx",
-    "format:check": "prettier --check \"pages/**/*.{md,mdx}\" src scripts tests .github/workflows package.json zudoku.config.jsx",
+    "format": "prettier --write \"*.md\" \"pages/**/*.{md,mdx}\" src scripts tests .github/workflows package.json zudoku.config.jsx",
+    "format:check": "prettier --check \"*.md\" \"pages/**/*.{md,mdx}\" src scripts tests .github/workflows package.json zudoku.config.jsx",
     "i18n:validate": "node scripts/validate-i18n.mjs",
     "navigation:validate": "node scripts/validate-navigation-source.mjs",
     "pages:validate": "node scripts/validate-page-parity.mjs",
