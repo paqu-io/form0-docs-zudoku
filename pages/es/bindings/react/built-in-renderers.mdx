@@ -3,17 +3,19 @@ title: Renderizadores de campos incluidos
 description: Tipos de campo que form0-react renderiza sin personalizaciones.
 ---
 
+<PageBadges />
+
 `form0-react` incluye una interfaz accesible para los tipos públicos definidos por `form0-core`.
 El comportamiento y los atributos aceptados siguen definidos por el
 [catálogo de campos](/es/core/fields/catalog).
 
-| Grupo | Tipos renderizados |
-| --- | --- |
-| Texto y números | `TextField`, `NumericField`, `CalculatedField` |
-| Opciones | `SingleChoiceField`, `MultiChoiceField`, `BooleanField` |
-| Fecha y hora | `DateField`, `TimeField` |
+| Grupo                    | Tipos renderizados                                         |
+| ------------------------ | ---------------------------------------------------------- |
+| Texto y números          | `TextField`, `NumericField`, `CalculatedField`             |
+| Opciones                 | `SingleChoiceField`, `MultiChoiceField`, `BooleanField`    |
+| Fecha y hora             | `DateField`, `TimeField`                                   |
 | Presentación y metadatos | `LabelField`, `TitleField`, `StatusField`, `FormLinkField` |
-| Multimedia | `PhotoField`, `VideoField`, `SignatureField` |
+| Multimedia               | `PhotoField`, `VideoField`, `SignatureField`               |
 
 `Section`, `RepeatableSection` y `BuildingPlanSection` son nodos estructurales gestionados por
 `FormRenderer`, no por el registro de campos.

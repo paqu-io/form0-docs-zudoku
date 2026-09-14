@@ -1,35 +1,41 @@
 ---
-title: Risoluzione dei problemi React Native
-description: Risolvi problemi di installazione, rendering, font, risorse e persistenza.
+title: Risoluzione dei problemi di React Native
+description: Diagnosticare i problemi comuni di installazione, rendering, font, risorse e persistenza di form0-react-native.
 ---
 
-## Metro non risolve una peer dependency
+<PageBadges />
 
-Installa versioni compatibili di `lucide-react-native` e `react-native-svg`. In Expo usa
-`npx expo install react-native-svg react-native-safe-area-context expo-font`, quindi riavvia Metro.
+## Metro non può risolvere una dipendenza peer
 
-## Il testo usa un font di fallback
+Installare le versioni compatibili `lucide-react-native` e `react-native-svg`. In Expo, utilizzare
+`npx expo install react-native-svg react-native-safe-area-context expo-font` quindi il nativo installato
+I pacchetti corrispondono a SDK attivo, quindi riavviare Metro.
 
-Carica `form0Fonts` con `expo-font` prima del modulo e allinea il tema personalizzato ai nomi
-registrati.
+## Il testo utilizza un carattere di fallback
 
-## Manca un’immagine locale
+Caricare `form0Fonts` con `expo-font` prima di eseguire il rendering del modulo.
+tema, mantenere i suoi token font-famiglia allineati con i nomi caricati nel registro dei font nativi.
 
-Fornisci a `imageResolver` una mappa statica, rigenerala se la gestisce lo starter e riavvia Metro
-dopo aver aggiunto risorse.
+## Manca un'immagine di supporto locale
 
-## Un campo è non supportato o provvisorio
+Le risorse locali non possono essere risolte da arbitrari runtime stringhe. Fornire `imageResolver` con a
+mappa statica path-to-source, rigenerare la mappa se starter la possiede e riavviare Metro dopo l'aggiunta
+nuovi asset.
 
-Consulta [Renderer integrati](/it/bindings/react-native/built-in-renderers). `PhotoField`,
-`VideoField` e `FormLinkField` richiedono override applicativi per la produzione.
+## Un campo dice che non è supportato o provvisorio
 
-## L’invio non viene eseguito
+Controllare [Campo integrato renderers](/it/bindings/react-native/built-in-renderers). `PhotoField`,
+`VideoField`, e `FormLinkField` hanno bisogno di override delle applicazioni per il comportamento di produzione.
+l'override viene passato allo stesso provider del Registro di sistema o `FormRenderer` che esegue il rendering del modulo.
 
-`onSubmit` è subordinato alla validazione. Verifica la modalità modifica, fornisci il callback e
-controlla gli errori nella navigazione. Per le bozze usa `onSave` e
-`primaryActionMode="save"`.
+## La presentazione non viene eseguita
 
-## Le bozze scompaiono al riavvio
+`onSubmit` è convalidato. Confermare che il modulo è in modalità di modifica, fornire un gestore di invio e utilizzare
+il foglio di navigazione di convalida per ispezionare gli errori. Per drafts tollerante di convalida, fornire `onSave`
+e impostare `primaryActionMode="save"`.
 
-Il binding emette gli snapshot ma non li memorizza. Persistili e ripristina l’oggetto completo con
-`initialSnapshot`, inclusi ripetibili e timestamp.
+## Le bozze scompaiono dopo il riavvio
+
+Le istantanee vengono emesse ma mai memorizzate da binding. Persistere attraverso `onSnapshotChange` o
+`onSave`, e ripristinare l'oggetto completo con `initialSnapshot`. Non sostituirlo con solo il
+I valori dei campi grezzi quando le voci o i timestamp ripetibili contano.

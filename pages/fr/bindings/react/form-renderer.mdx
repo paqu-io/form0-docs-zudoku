@@ -1,10 +1,12 @@
 ---
 title: FormRenderer
-description: Configurez le composant React principal de form0.
+description: Configurez le composant principal form0 React.
 ---
 
-`FormRenderer` valide et prépare un schéma, crée le moteur, affiche les champs et sections, puis
-produit un enregistrement structuré lors de la soumission.
+<PageBadges />
+
+`FormRenderer` valide et prépare un schema, crée le moteur de formulaire, rend les champs et
+et produit des enregistrements structurés sur submission.
 
 ```jsx
 <FormRenderer
@@ -20,28 +22,30 @@ produit un enregistrement structuré lors de la soumission.
 
 ## Propriétés essentielles
 
-| Propriété | Rôle |
-| --- | --- |
-| `schema` | Schéma form0 contenant `form.elements`. |
-| `initialValues` | Valeurs initiales des champs non répétables. |
-| `initialSnapshot` | Restaure ensemble valeurs, état répétable et horodatages. |
-| `overrideValues` | Applique des valeurs faisant autorité sur les valeurs initiales. |
-| `onSubmit` | Reçoit l’enregistrement structuré et les métadonnées de soumission. |
-| `onSnapshotChange` | Observe l’état initial et les modifications utilisateur. |
-| `mode` | Démarre en mode `edit` ou `readonly`. |
+| Biens              | Objet                                                                       |
+| ------------------ | --------------------------------------------------------------------------- |
+| `schema`           | Un form0 schema contenant `form.elements`.                                  |
+| `initialValues`    | Valeurs initiales des champs non répétables.                                |
+| `initialSnapshot`  | Restaurer les valeurs brutes, l'état répétable et les horodatages ensemble. |
+| `overrideValues`   | Appliquer des valeurs faisant autorité sur les valeurs initiales.           |
+| `onSubmit`         | Recevez l'enregistrement structuré et les métadonnées submission.           |
+| `onSnapshotChange` | Observer les graines et le changement d'utilisateur snapshots.              |
+| `mode`             | Démarrez en mode `edit` ou `readonly`.                                      |
 
-## Interface et état appartenant à l’application
+## UI appartenant aux consommateurs et État
 
-- `headerAccessory` affiche un nœud React, ou une fonction recevant `{ mode }`, entre le résumé et
-  le corps du formulaire.
-- `recordMetadataFields` affiche des métadonnées en lecture seule. Un `displayValue` n’entre jamais
-  dans les valeurs, instantanés ou soumissions.
-- `externalDirty` inclut les modifications externes dans la confirmation d’abandon d’un overlay.
-- `submitBlockedReason` bloque la soumission tant qu’une exigence externe n’est pas résolue.
-- `onSchemaReady` reçoit le schéma préparé après l’ajout de clés stables.
+- `headerAccessory` rend un nœud React, ou une fonction recevant `{ mode }`, entre le résumé
+  et former le corps.
+- `recordMetadataFields` affiche des métadonnées d'enregistrement en lecture seule. Un descripteur avec `displayValue` jamais
+  entre les valeurs du moteur, snapshots ou les valeurs soumises.
+- `externalDirty` inclut les modifications propres à l'application dans la confirmation des rejets de superposition.
+- `submitBlockedReason` désactive et protège submission tant qu'une exigence externe n'est pas résolue.
+- `onSchemaReady` reçoit le schema préparé après que les clés stables ont été assurées.
 
-Les propriétés standard supplémentaires, comme `id`, `aria-*` et les événements, sont transmises à
-l’élément `<form>`. Ne les utilisez pas pour configurer le moteur.
+## Propriétés de l'élément de formulaire
 
-Continuez avec [Valeurs, instantanés et soumission](/fr/bindings/react/values-snapshots-submission)
-ou [Modes, emplacement et navigation](/fr/bindings/react/modes-placement-navigation).
+Les propriétés de formulaire standard supplémentaires telles que `id`, `aria-*`, et les gestionnaires d'événements sont transférés à
+le rendu `<form>`. N'utilisez pas ce chemin pour la configuration du moteur.
+
+Continuer avec [Valeurs, snapshots et submission](/fr/bindings/react/values-snapshots-submission) ou
+[Modes, placement et navigation](/fr/bindings/react/modes-placement-navigation).

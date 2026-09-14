@@ -1,7 +1,122 @@
 ---
-title: containers (Coming soon)
+title: Contenedores
+description: Secciones, secciones repetibles y planos de construcción.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/fields/containers".
+import { Callout } from "zudoku/ui/Callout"
+
+## Sección
+
+```json
+{
+  "type": "Section",
+  "key": "details",
+  "data_name": "details",
+  "label": "Details",
+  "display": "inline",
+  "description": null,
+  "description_mode": null,
+  "visible": true,
+  "visible_conditions": null,
+  "elements": []
+}
+```
+
+Atributos adicionales:
+
+- `display`: `inline` o `drilldown`.
+- `elements`: Campos anidados.
+
+## Sección repetible
+
+```json
+{
+  "type": "RepeatableSection",
+  "key": "items",
+  "data_name": "items",
+  "label": "Items",
+  "display": "drilldown",
+  "description": null,
+  "description_mode": null,
+  "visible": true,
+  "visible_conditions": null,
+  "location_enabled": false,
+  "location_required": false,
+  "title_field": {
+    "type": "TitleField",
+    "key": "@title",
+    "data_name": "title",
+    "label": "Title",
+    "display": "default",
+    "enabled": true,
+    "visible": true,
+    "visible_conditions": null,
+    "read_only": true,
+    "read_only_conditions": null,
+    "elements": ["item_name", "item_date"]
+  },
+  "elements": [
+    {
+      "type": "TextField",
+      "key": "item_name",
+      "data_name": "item_name",
+      "label": "Item name"
+    },
+    {
+      "type": "DateField",
+      "key": "item_date",
+      "data_name": "item_date",
+      "label": "Item date"
+    }
+  ]
+}
+```
+
+Atributos adicionales:
+
+- `location_enabled`: Habilita los datos de ubicación de los elementos.
+- `location_required`: Requiere datos de ubicación para los elementos.
+- `title_field`: `TitleField` opcional usado para derivar el título de cada registro hijo. Use `null` cuando no
+  El título de entrada está configurado.
+
+Las secciones repetibles crean una matriz de registros secundarios en la salida. Un título de entrada configurado es
+Almacenado como `@title` en cada registro hijo. Si todas las partes del título están en blanco, `@title` es `null` ; renderers
+puede mostrar una etiqueta posicional como `Items 1`, pero esa reserva no persiste.
+
+Las referencias de título están limitadas al propio conjunto de datos de registro hijo del repetible. Pueden apuntar a campos
+dentro de los contenedores `Section` anidados ordinarios, pero no a los campos fuera del
+anidada `RepeatableSection` Los tipos elegibles son `TextField` , `NumericField` , `DateField` , `TimeField` ,
+`SingleChoiceField`, `MultiChoiceField`, `BooleanField`, y `CalculatedField`.
+preferido, mientras que las referencias `data_name` se aceptan para el autor schemas.
+
+## BuildingPlanSection
+
+```json
+{
+  "type": "BuildingPlanSection",
+  "key": "building_plan",
+  "data_name": "building_plan",
+  "label": "Building plan",
+  "description": null,
+  "description_mode": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "building_plan": { "nodes": [], "edges": [] },
+  "node_overrides": null,
+  "elements": []
+}
+```
+
+Atributos adicionales:
+
+- `building_plan`: Estructura que describe la topología del plan.
+- `node_overrides`: Anula los nodos generados.
+
+<Callout type="info" title="Building plan expansion">
+  BuildingPlanSection se expande en secciones anidadas repetibles en runtime. Vamos a ampliar esto
+  documentación con ejemplos completos próximamente.
+</Callout>

@@ -3,6 +3,8 @@ title: Configuración de SQLite
 description: Instala y configura el conector oficial SQLite para Node.js.
 ---
 
+<PageBadges />
+
 Instala y configura el conector mediante la CLI interactiva:
 
 ```text
@@ -13,12 +15,12 @@ form0> connector test form0-connector-sqlite
 
 Para usarlo directamente, ejecuta `npm install form0-connector-sqlite`.
 
-| Variable de entorno | Finalidad | Valor predeterminado |
-| --- | --- | --- |
-| `FORM0_CONNECTOR_SQLITE_PATH` | Ruta relativa o absoluta | `./form0.db` |
-| `FORM0_CONNECTOR_SQLITE_TABLE_NAME` | Tabla principal | `form0_submissions` |
+| Variable de entorno                       | Finalidad                   | Valor predeterminado         |
+| ----------------------------------------- | --------------------------- | ---------------------------- |
+| `FORM0_CONNECTOR_SQLITE_PATH`             | Ruta relativa o absoluta    | `./form0.db`                 |
+| `FORM0_CONNECTOR_SQLITE_TABLE_NAME`       | Tabla principal             | `form0_submissions`          |
 | `FORM0_CONNECTOR_SQLITE_CHILD_TABLE_NAME` | Tabla de registros anidados | `form0_submissions_children` |
-| `FORM0_CONNECTOR_SQLITE_DEBUG` | Registro detallado | `false` |
+| `FORM0_CONNECTOR_SQLITE_DEBUG`            | Registro detallado          | `false`                      |
 
 Las rutas relativas se resuelven desde el directorio de trabajo del proceso. El conector crea el
 directorio y el archivo cuando sea necesario, por lo que el proceso necesita permisos de escritura.

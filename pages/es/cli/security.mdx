@@ -1,8 +1,14 @@
 ---
 title: Seguridad
-description: Límites de confianza y prácticas seguras de desarrollo local para form0-cli.
+description: Límites de confianza y prácticas de desarrollo local seguras para form0-cli.
 ---
 
-Las expresiones y los eventos del esquema ejecutan JavaScript, y los conectores configurados se
-ejecutan como módulos de Node.js. Usa fuentes de confianza, conserva las credenciales en archivos
-locales ignorados y expón el servidor de previsualización únicamente en redes de confianza.
+<PageBadges />
+
+`form0-cli` es una herramienta de desarrollo local. Las expresiones de esquema y los scripts de eventos ejecutan JavaScript,
+y los conectores configurados se ejecutan como módulos Node.js. Use schemas, proyectos y paquetes de conectores
+de fuentes confiables.
+
+Mantenga las credenciales en los archivos de entorno local ignorados. El servidor de vista previa se une a `localhost` por
+por defecto; solo exponerlo en redes de confianza. Informe de vulnerabilidades sospechosas de forma privada a través de
+[Política de seguridad form0-cli](https://github.com/paqu-io/form0-cli/security/policy).

@@ -1,34 +1,48 @@
 ---
-title: Résolution des problèmes React et Vite
-description: Résolvez les problèmes courants de routes, schémas, rendus, workers et connecteurs.
+title: Dépannage React et Vite starter
+description: Résolvez les problèmes courants d'installation, de routage, de schema, renderer, worker et de connecteur.
 ---
 
-## Formulaire introuvable
+<PageBadges />
 
-Vérifiez que l’identifiant de l’URL correspond à `src/forms/registry.js` et que l’import dynamique
-vise un schéma existant.
+## Une route de formulaire indique que le formulaire n'a pas été trouvé
 
-## Échec du chargement du schéma
+Confirmez que l'identifiant URL correspond exactement à une entrée dans `src/forms/registry.js`.
+que son importation dynamique pointe vers un fichier schema existant.
 
-Examinez l’erreur d’import dans la console et validez le JSON avec form0-cli. Consultez
-[Valider et prévisualiser](/fr/cli/schemas/validate-preview).
+## Un schema ne se charge pas
 
-## Rendu personnalisé ignoré
+Ouvrez la console du navigateur pour l'erreur d'importation, puis exécutez schema Validation par form0-cli . JSON
+Les erreurs de syntaxe et les chemins d'importation relatifs incorrects sont les causes les plus courantes.
 
-Comparez le type de champ, le mapping de `form0.config.js` et l’identifiant de `resolver.js`.
+```bash
+form0
+```
 
-## La soumission n’atteint pas la CLI
+Charger le schema et courir `validate` . Voir [Valider et prévisualiser](/cli/schemas/validate-preview) .
 
-Exécutez `form0 serve --app`. Pour une autre adresse, définissez `FORM0_DEV_API_URL` et vérifiez que
-`devServer.apiBaseUrl` correspond à la route du proxy.
+## Un renderer personnalisé n'est pas utilisé
 
-## Échec du worker
+Vérifiez les trois noms: le type de champ schema, son mappage dans `form0.config.js` et le résolveur
+identifiant dans `src/field-renderers/resolver.js`. Le résolveur enregistre un avertissement pour les identifiants inconnus.
 
-Passez temporairement `engine.mode` à `main-thread`, puis contrôlez les routes d’assets et les types
-de contenu. Consultez [Workers et performances](/fr/bindings/react/workers-performance).
+## Les envois ne peuvent pas atteindre le serveur CLI
 
-## Les routes directes renvoient 404
+Exécuter `form0 serve --app` dans le répertoire du projet. Si la CLI serveur utilise une adresse différente,
+`FORM0_DEV_API_URL` avant de démarrer Vite ou dans le fichier `.env` local correspondant.
+`devServer.apiBaseUrl` correspond toujours au chemin du proxy Vite.
 
-Configurez `index.html` comme fallback. Pour le reste, consultez
-[React](/fr/bindings/react/troubleshooting) ou
-[Connecteurs](/fr/connectors/troubleshooting).
+## L’évaluation des travailleurs échoue
+
+Définissez temporairement `engine.mode` à `main-thread` pour isoler le chargement worker du comportement schema.
+Vérifiez la console du navigateur, les chemins d’accès aux ressources et le type de contenu de déploiement.
+[Travailleurs et performance](/fr/bindings/react/workers-performance).
+
+## La page 404 est retournée après le déploiement
+
+Configurez l'hôte statique pour revenir à `index.html` pour les chemins d'application inconnus. Ceci est un hôte
+problème de configuration, pas un problème de définition de route React.
+
+Pour les échecs de rendu au niveau du package, continuez avec
+[React dépannage](/fr/bindings/react/troubleshooting). Pour les échecs de base de données, utilisez
+[Dépannage du connecteur](/fr/connectors/troubleshooting).

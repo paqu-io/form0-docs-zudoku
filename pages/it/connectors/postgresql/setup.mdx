@@ -3,6 +3,8 @@ title: Installazione e configurazione di PostgreSQL
 description: Installa e configura il connettore PostgreSQL ufficiale.
 ---
 
+<PageBadges />
+
 Installa e configura il connettore tramite la CLI interattiva:
 
 ```text
@@ -16,22 +18,22 @@ Per l’uso diretto, esegui `npm install form0-connector-pg`.
 Nome del database, utente e password sono obbligatori. L’host predefinito è `localhost` e la porta
 è `5432`.
 
-| Variabile d’ambiente | Scopo | Valore predefinito |
-| --- | --- | --- |
-| `FORM0_CONNECTOR_PG_HOST` | Host PostgreSQL | `localhost` |
-| `FORM0_CONNECTOR_PG_PORT` | Porta PostgreSQL | `5432` |
-| `FORM0_CONNECTOR_PG_DATABASE` | Nome del database | Obbligatorio |
-| `FORM0_CONNECTOR_PG_USERNAME` | Ruolo del database | Obbligatorio |
-| `FORM0_CONNECTOR_PG_PASSWORD` | Password | Obbligatorio |
-| `FORM0_CONNECTOR_PG_SSL` | Abilita TLS | `false` |
-| `FORM0_CONNECTOR_PG_SSL_REJECT_UNAUTHORIZED` | Verifica il certificato server | `true` |
-| `FORM0_CONNECTOR_PG_MAX_CONNECTIONS` | Dimensione massima del pool | `10` |
-| `FORM0_CONNECTOR_PG_IDLE_TIMEOUT` | Timeout di inattività in millisecondi | `30000` |
-| `FORM0_CONNECTOR_PG_CONNECTION_TIMEOUT` | Timeout di connessione in millisecondi | `5000` |
-| `FORM0_CONNECTOR_PG_SCHEMA` | Schema esistente per le tabelle | `public` |
-| `FORM0_CONNECTOR_PG_TABLE_NAME` | Tabella principale | `form0_submissions` |
-| `FORM0_CONNECTOR_PG_CHILD_TABLE_NAME` | Tabella dei record annidati | `form0_submissions_children` |
-| `FORM0_CONNECTOR_PG_DEBUG` | Logging dettagliato | `false` |
+| Variabile d’ambiente                         | Scopo                                  | Valore predefinito           |
+| -------------------------------------------- | -------------------------------------- | ---------------------------- |
+| `FORM0_CONNECTOR_PG_HOST`                    | Host PostgreSQL                        | `localhost`                  |
+| `FORM0_CONNECTOR_PG_PORT`                    | Porta PostgreSQL                       | `5432`                       |
+| `FORM0_CONNECTOR_PG_DATABASE`                | Nome del database                      | Obbligatorio                 |
+| `FORM0_CONNECTOR_PG_USERNAME`                | Ruolo del database                     | Obbligatorio                 |
+| `FORM0_CONNECTOR_PG_PASSWORD`                | Password                               | Obbligatorio                 |
+| `FORM0_CONNECTOR_PG_SSL`                     | Abilita TLS                            | `false`                      |
+| `FORM0_CONNECTOR_PG_SSL_REJECT_UNAUTHORIZED` | Verifica il certificato server         | `true`                       |
+| `FORM0_CONNECTOR_PG_MAX_CONNECTIONS`         | Dimensione massima del pool            | `10`                         |
+| `FORM0_CONNECTOR_PG_IDLE_TIMEOUT`            | Timeout di inattività in millisecondi  | `30000`                      |
+| `FORM0_CONNECTOR_PG_CONNECTION_TIMEOUT`      | Timeout di connessione in millisecondi | `5000`                       |
+| `FORM0_CONNECTOR_PG_SCHEMA`                  | Schema esistente per le tabelle        | `public`                     |
+| `FORM0_CONNECTOR_PG_TABLE_NAME`              | Tabella principale                     | `form0_submissions`          |
+| `FORM0_CONNECTOR_PG_CHILD_TABLE_NAME`        | Tabella dei record annidati            | `form0_submissions_children` |
+| `FORM0_CONNECTOR_PG_DEBUG`                   | Logging dettagliato                    | `false`                      |
 
 I nomi di schema e tabelle devono essere identificatori PostgreSQL validi senza virgolette. Lo
 schema deve già esistere e il ruolo deve poter connettersi, creare tabelle, indici e trigger e

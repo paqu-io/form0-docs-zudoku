@@ -10,10 +10,11 @@
   "scripts": {
     "dev": "node scripts/write-page-metadata-index.mjs && zudoku dev",
     "build": "node scripts/write-page-metadata-index.mjs && zudoku build && node scripts/write-agent-files.mjs",
-    "format": "prettier --write src scripts tests .github/workflows package.json zudoku.config.jsx",
-    "format:check": "prettier --check src scripts tests .github/workflows package.json zudoku.config.jsx",
+    "format": "prettier --write \"pages/**/*.{md,mdx}\" src scripts tests .github/workflows package.json zudoku.config.jsx",
+    "format:check": "prettier --check \"pages/**/*.{md,mdx}\" src scripts tests .github/workflows package.json zudoku.config.jsx",
     "i18n:validate": "node scripts/validate-i18n.mjs",
     "navigation:validate": "node scripts/validate-navigation-source.mjs",
+    "pages:validate": "node scripts/validate-page-parity.mjs",
     "test": "node --test tests/*.test.js",
     "build:validate": "node scripts/validate-build-output.mjs",
     "lint": "npm run lint:advisory",
@@ -23,7 +24,7 @@
     "security:audit:prod": "npm audit --omit=dev --audit-level=high",
     "security:audit:all": "npm audit --audit-level=high",
     "preview": "zudoku preview",
-    "check": "npm run format:check && npm run i18n:validate && npm run navigation:validate && npm test && npm run lint:gate && npm run build && npm run build:validate"
+    "check": "npm run format:check && npm run i18n:validate && npm run navigation:validate && npm run pages:validate && npm test && npm run lint:gate && npm run build && npm run build:validate"
   },
   "dependencies": {
     "react": "^19.2.7",

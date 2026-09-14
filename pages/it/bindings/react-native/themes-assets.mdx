@@ -1,21 +1,28 @@
 ---
 title: Temi, font e immagini
-description: Configura colori, tipografia e immagini di supporto di form0 in React Native.
+description: Configura i colori, la tipografia e la risoluzione dell'immagine di supporto form0 React Native.
 ---
 
-`colorMode` accetta `light` o `dark`. Un `customTheme` parziale viene unito al tema integrato. L’app
-può risolvere la preferenza del dispositivo con `useColorScheme` e passare la modalità.
+<PageBadges />
+
+## Temi di colore
+
+`colorMode` accetta `light` o `dark`. Fornire un parziale `customTheme` per ignorare i token; il
+binding lo fonde in profondità con il tema incorporato selezionato. Un'applicazione può risolvere il dispositivo
+preferenza con React Native `useColorScheme` e passare la modalità risultante.
 
 ```jsx
 <FormRenderer schema={schema} colorMode="dark" customTheme={{ color: { primary: "#7c3aed" } }} />
 ```
 
-Sono esportati anche `lightTheme`, `darkTheme`, `mergeThemes`, `getThemeByName`, `ThemeProvider` e
-`useTheme`.
+`lightTheme`, `darkTheme`, `mergeThemes` e `getThemeByName` vengono esportati a livello di applicazione
+`ThemeProvider` e `useTheme` possono mantenere l'interfaccia utente nativa circostante allineata con la
+forma.
 
-## Font inclusi
+## Caratteri confezionati
 
-In Expo, carica `form0Fonts` prima del modulo:
+Il pacchetto esporta le sue attività Figtree attraverso `form0Fonts`. In Expo, caricarle a richiesta
+avvio prima di eseguire il rendering del modulo:
 
 ```jsx
 import { useFonts } from "expo-font"
@@ -23,18 +30,22 @@ import { form0Fonts, FormRenderer } from "form0-react-native"
 
 const [fontsLoaded] = useFonts(form0Fonts)
 if (!fontsLoaded) return null
+
 return <FormRenderer schema={schema} />
 ```
 
 ## Immagini di supporto
 
-Gli URL HTTP e HTTPS diventano `{ uri }`. Per immagini locali React Native richiede riferimenti
-statici: fornisci un `imageResolver` che associ i percorsi dello schema a sorgenti importate o
-caricate con `require`.
+I percorsi HTTP e HTTPS remoti si risolvono in `{ uri }` per impostazione predefinita. React Native richiede il raggruppamento locale
+immagini da scoprire staticamente, in modo da fornire un `imageResolver` che mappa i percorsi schema a
+sorgenti di immagini importate o richieste:
 
 ```jsx
-const images = { "safety/helmet.png": require("./assets/safety/helmet.png") }
+const images = {
+  "safety/helmet.png": require("./assets/safety/helmet.png"),
+}
+
 <FormRenderer schema={schema} imageResolver={(path) => images[path] ?? null} />
 ```
 
-Lo starter Expo mantenuto genera questa mappa quando cambiano le risorse.
+La Expo starter mantenuta genera questa mappatura quando le risorse di supporto-immagine cambiano.

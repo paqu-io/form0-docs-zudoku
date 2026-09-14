@@ -1,26 +1,35 @@
 ---
-title: Worker e prestazioni
-description: Scegli le modalità di esecuzione del motore e sottoscrizione allo stato React.
+title: Lavoratori e prestazioni
+description: Scegli le modalità di esecuzione del motore form0-react e di abbonamento allo stato React.
 ---
+
+<PageBadges />
 
 ## Esecuzione del motore
 
-`engineMode="main-thread"` è la modalità predefinita. Usa `engineMode="worker"` per spostare le
-valutazioni nel worker module incluso quando il browser lo consente:
+Lo `engineMode="main-thread"` predefinito valuta il motore del modulo sul thread dell'interfaccia utente.
+`engineMode="worker"` per spostare la valutazione del motore nel modulo confezionato worker quando Web Workers
+sono disponibili:
 
 ```jsx
 <FormRenderer schema={schema} engineMode="worker" />
 ```
 
-Vite supporta il pattern statico del pacchetto ed emette il worker durante la build. Lo starter
-mantenuto esclude `form0-react` dall’ottimizzazione delle dipendenze per preservarlo.
+Vite supporta il modello statico modulo- worker utilizzato dal pacchetto ed emette la worker durante un
+La versione mantenuta di Vite starter esclude `form0-react` dall'ottimizzazione delle dipendenze
+così questo worker rimane disponibile.
 
-L’API pubblica di `FormRenderer` non accetta URL o factory personalizzate per il worker. Con un altro
-bundler, verifica il supporto al pattern statico `new Worker(new URL(...))` per i worker module;
-altrimenti usa il thread principale. Senza supporto Worker, il binding torna al thread principale.
+Il pubblico `FormRenderer` API non accetta una fabbrica personalizzata worker URL o worker. Applicazioni
+Utilizzando un altro bundler dovrebbe confermare che supporta
+`new Worker(new URL("./worker.js", import.meta.url), { type: "module" })`; altrimenti utilizzare il valore predefinito
+modalità filo principale.
 
-## Modalità dello store React
+Se il browser non supporta Worker, binding torna all'esecuzione del thread principale.
 
-`engineStoreMode="snapshot"` è la modalità predefinita. `engineStoreMode="selector"` usa
-sottoscrizioni per campo per ridurre rerender ampi. Trattala come un’ottimizzazione e verifica errori,
-navigazione, sezioni ripetibili e invio nell’applicazione target.
+## Modalità negozio React
+
+`engineStoreMode="snapshot"` clona il motore snapshot nello stato React ed è quello predefinito.
+`engineStoreMode="selector"` utilizza gli abbonamenti di campo per ridurre i rerender di grandi dimensioni.
+
+Trattare la modalità selettore come un'ottimizzazione: verificare errori di campo, riassunti di navigazione, ripetibile
+sezioni e comportamento submission nell'applicazione di destinazione prima di adottarla.

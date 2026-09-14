@@ -3,52 +3,52 @@ title: Form object
 description: Top-level schema attributes and form metadata.
 ---
 
-import { Badge } from "zudoku/ui/Badge";
-import { Callout } from "zudoku/ui/Callout";
+<PageBadges />
 
-<Badge variant="default">Engine</Badge> <Badge variant="muted">Local</Badge> <Badge variant="muted">Schema</Badge>
+import { Callout } from "zudoku/ui/Callout"
 
 Every schema starts with a `form` object. It defines metadata, special fields, and events.
 
 ## Attributes
 
 <Callout type="info" title="Application-level attributes">
-  Attributes marked with ✓ in the **App-level** column are application-level metadata not processed directly by the engine.
-  They can be used when integrating with [reform](https://reformapp.io) SaaS product or when building similar functionality in your own application.
+  Attributes marked with ✓ in the **App-level** column are application-level metadata not processed
+  directly by the engine. They can be used when integrating with [reform](https://reformapp.io) SaaS
+  product or when building similar functionality in your own application.
 </Callout>
 
-| Attribute | Type | Required | App&#8209;level | Notes |
-| --- | :---: | :---: | :---: | --- |
-| `name` | string | ✓ | | Human-friendly form name. |
-| `description` | string | | | Form description. |
-| `id` | string | ✓ | | Unique form identifier. |
-| `record_count` | number | | ✓ | Platform-owned operational counter. Number of records in the form. |
-| `record_last_change_at` | string | | ✓ | Platform-owned operational counter. Last record change date/time (ISO 8601). |
-| `form_created_at` | string | | ✓ | Form creation date/time (ISO 8601). |
-| `form_updated_at` | string | | ✓ | Form last update date/time (ISO 8601). |
-| `form_created_by` | string | | ✓ | User who created the form. |
-| `form_updated_by` | string | | ✓ | User who last updated the form. |
-| `status` | string | | ✓ | Form status, usually `active` or `inactive`. |
-| `version` | string | | ✓ | Optional platform-owned schema version. form0-core does not increment it. |
-| `main_org_id` | string | | ✓ | Main organization ID. |
-| `main_org_metadata` | object | | ✓ | Main organization metadata fields. |
-| `sub_org_id` | string | | ✓ | Sub-organization ID. |
-| `sub_org_metadata` | object | | ✓ | Sub-organization metadata fields. |
-| `project_id` | string | | ✓ | Project ID. |
-| `project_metadata` | object | | ✓ | Project metadata fields. |
-| `ai` | object | | | AI metadata for form-level guidance (see [AI metadata](/core/ai-metadata)). |
-| `status_field` | object | ✓ | | Special status field definition (see [Meta fields](/core/fields/meta-fields#statusfield)). |
-| `title_field` | object | ✓ | | Special title field definition (see [Meta fields](/core/fields/meta-fields#titlefield)). |
-| `bounding_box` | array | | ✓ | `[min_lat, min_lng, max_lat, max_lng]` containing all records. |
-| `location_enabled` | boolean | | ✓ | Enables location capture. |
-| `location_required` | boolean | | ✓ | Requires location data when enabled. |
-| `image` | string | | ✓ | URL for the form icon (original). |
-| `image_thumbnail` | string | | ✓ | URL for thumbnail icon (160x160 px). |
-| `image_small` | string | | ✓ | URL for small icon (320x320 px). |
-| `image_large` | string | | ✓ | URL for large icon (640x640 px). |
-| `events` | object | | | Event code block (`events.code`). |
-| `form_links` | object | | | Links to/from other forms (used with `FormLinkField`, see [Meta fields](/core/fields/meta-fields#formlinkfield)). |
-| `elements` | array | ✓ | | Form fields and containers (see [Elements](/core/schema/elements)). |
+| Attribute               |  Type   | Required | App&#8209;level | Notes                                                                                                             |
+| ----------------------- | :-----: | :------: | :-------------: | ----------------------------------------------------------------------------------------------------------------- |
+| `name`                  | string  |    ✓     |                 | Human-friendly form name.                                                                                         |
+| `description`           | string  |          |                 | Form description.                                                                                                 |
+| `id`                    | string  |    ✓     |                 | Unique form identifier.                                                                                           |
+| `record_count`          | number  |          |        ✓        | Platform-owned operational counter. Number of records in the form.                                                |
+| `record_last_change_at` | string  |          |        ✓        | Platform-owned operational counter. Last record change date/time (ISO 8601).                                      |
+| `form_created_at`       | string  |          |        ✓        | Form creation date/time (ISO 8601).                                                                               |
+| `form_updated_at`       | string  |          |        ✓        | Form last update date/time (ISO 8601).                                                                            |
+| `form_created_by`       | string  |          |        ✓        | User who created the form.                                                                                        |
+| `form_updated_by`       | string  |          |        ✓        | User who last updated the form.                                                                                   |
+| `status`                | string  |          |        ✓        | Form status, usually `active` or `inactive`.                                                                      |
+| `version`               | string  |          |        ✓        | Optional platform-owned schema version. form0-core does not increment it.                                         |
+| `main_org_id`           | string  |          |        ✓        | Main organization ID.                                                                                             |
+| `main_org_metadata`     | object  |          |        ✓        | Main organization metadata fields.                                                                                |
+| `sub_org_id`            | string  |          |        ✓        | Sub-organization ID.                                                                                              |
+| `sub_org_metadata`      | object  |          |        ✓        | Sub-organization metadata fields.                                                                                 |
+| `project_id`            | string  |          |        ✓        | Project ID.                                                                                                       |
+| `project_metadata`      | object  |          |        ✓        | Project metadata fields.                                                                                          |
+| `ai`                    | object  |          |                 | AI metadata for form-level guidance (see [AI metadata](/core/ai-metadata)).                                       |
+| `status_field`          | object  |    ✓     |                 | Special status field definition (see [Meta fields](/core/fields/meta-fields#statusfield)).                        |
+| `title_field`           | object  |    ✓     |                 | Special title field definition (see [Meta fields](/core/fields/meta-fields#titlefield)).                          |
+| `bounding_box`          |  array  |          |        ✓        | `[min_lat, min_lng, max_lat, max_lng]` containing all records.                                                    |
+| `location_enabled`      | boolean |          |        ✓        | Enables location capture.                                                                                         |
+| `location_required`     | boolean |          |        ✓        | Requires location data when enabled.                                                                              |
+| `image`                 | string  |          |        ✓        | URL for the form icon (original).                                                                                 |
+| `image_thumbnail`       | string  |          |        ✓        | URL for thumbnail icon (160x160 px).                                                                              |
+| `image_small`           | string  |          |        ✓        | URL for small icon (320x320 px).                                                                                  |
+| `image_large`           | string  |          |        ✓        | URL for large icon (640x640 px).                                                                                  |
+| `events`                | object  |          |                 | Event code block (`events.code`).                                                                                 |
+| `form_links`            | object  |          |                 | Links to/from other forms (used with `FormLinkField`, see [Meta fields](/core/fields/meta-fields#formlinkfield)). |
+| `elements`              |  array  |    ✓     |                 | Form fields and containers (see [Elements](/core/schema/elements)).                                               |
 
 For detailed information on each attribute including defaults and choices, see [Form attributes](/core/schema/form-attributes).
 

@@ -1,26 +1,35 @@
 ---
-title: Workers et performances
-description: Choisissez les modes d’exécution du moteur et d’abonnement à l’état React.
+title: Les travailleurs et la performance
+description: Choisissez les modes d'exécution du moteur form0-react et d'abonnement à l'état React.
 ---
+
+<PageBadges />
 
 ## Exécution du moteur
 
-`engineMode="main-thread"` est le mode par défaut. Utilisez `engineMode="worker"` pour déplacer les
-évaluations dans le worker module fourni lorsque le navigateur le permet :
+Le `engineMode="main-thread"` par défaut évalue le moteur de formulaire sur le thread de l'interface utilisateur.
+`engineMode="worker"` pour déplacer l'évaluation du moteur dans le module packagé worker lorsque Web Workers
+sont disponibles:
 
 ```jsx
 <FormRenderer schema={schema} engineMode="worker" />
 ```
 
-Vite prend en charge le motif statique du paquet et émet le worker lors du build. Le projet de
-démarrage maintenu exclut `form0-react` de l’optimisation des dépendances afin de le préserver.
+Vite prend en charge le modèle de module statique worker utilisé par le paquet et émet le worker pendant une
+La version Vite starter maintenue exclut `form0-react` de l'optimisation des dépendances
+donc ce worker reste disponible.
 
-L’API publique de `FormRenderer` n’accepte ni URL ni fabrique de worker personnalisée. Avec un autre
-bundler, vérifiez la prise en charge du motif statique `new Worker(new URL(...))` pour les workers
-module ; sinon, utilisez le thread principal. Sans Worker, le binding revient au thread principal.
+Le `FormRenderer` API public n'accepte pas une usine worker URL ou worker personnalisée. Applications
+l'utilisation d'un autre bundler devrait confirmer qu'il prend en charge
+`new Worker(new URL("./worker.js", import.meta.url), { type: "module" })`; sinon utilisez la valeur par défaut
+mode fil principal.
 
-## Mode du store React
+Si le navigateur n'a pas de support Worker, le binding revient à l'exécution du fil principal.
 
-`engineStoreMode="snapshot"` est le mode par défaut. `engineStoreMode="selector"` emploie des
-abonnements par champ pour réduire les rerenders globaux. Considérez-le comme une optimisation et
-vérifiez erreurs, navigation, sections répétables et soumission dans l’application cible.
+## React mode de stockage
+
+`engineStoreMode="snapshot"` clone le moteur snapshot dans l'état React et est l'état par défaut.
+`engineStoreMode="selector"` utilise des abonnements sur le terrain pour réduire les grands rendus.
+
+Traiter le mode sélecteur comme une optimisation: vérifier les erreurs de champ, les résumés de navigation, répétable
+sections, et submission comportement dans l'application cible avant de l'adopter.

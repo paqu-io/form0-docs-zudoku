@@ -3,13 +3,13 @@ title: Modifica il tuo primo schema
 description: Aggiungi un NumericField e un CalculatedField usando la modalità di modifica dello schema.
 ---
 
-import { Badge } from "zudoku/ui/Badge";
-import { Callout } from "zudoku/ui/Callout";
-import { Stepper } from "zudoku/ui/Stepper";
+<PageBadges />
 
-<Badge variant="default">CLI</Badge> <Badge variant="muted">Local</Badge>
+import { Callout } from "zudoku/ui/Callout"
+import { Stepper } from "zudoku/ui/Stepper"
 
 ## Flusso di modifica live
+
 Questa pagina presuppone che tu abbia già eseguito `serve` e che l'anteprima live sia aperta su `http://localhost:3030`.
 
 <Stepper>
@@ -19,12 +19,15 @@ Questa pagina presuppone che tu abbia già eseguito `serve` e che l'anteprima li
    ```ansi
    form0(server)> schema edit
    ```
-   <Callout type="caution" title="Editor richiesto">
-      La modalità di modifica dello schema apre il tuo editor di codice. Assicurati che la variabile `EDITOR` o `VISUAL` sia configurata:
 
-      - **Linux/macOS**: Aggiungi `export EDITOR=code` a `~/.bashrc`, `~/.zshrc` o `~/.profile`, poi riavvia il terminale o esegui `source ~/.bashrc`.
-      - **Windows (PowerShell)**: Esegui `$env:EDITOR = "code"` per la sessione corrente, oppure aggiungilo al tuo profilo PowerShell (`$PROFILE`).
-      - **Windows (CMD)**: Usa `set EDITOR=code` per la sessione, oppure impostalo in modo permanente tramite *Proprietà del sistema → Variabili d'ambiente*.
+   <Callout type="caution" title="Editor richiesto">
+     La modalità di modifica dello schema apre il tuo editor di codice. Assicurati che la variabile
+     `EDITOR` o `VISUAL` sia configurata: - **Linux/macOS**: Aggiungi `export EDITOR=code` a
+     `~/.bashrc`, `~/.zshrc` o `~/.profile`, poi riavvia il terminale o esegui `source ~/.bashrc`. -
+     **Windows (PowerShell)**: Esegui `$env:EDITOR = "code"` per la sessione corrente, oppure
+     aggiungilo al tuo profilo PowerShell (`$PROFILE`). - **Windows (CMD)**: Usa `set EDITOR=code`
+     per la sessione, oppure impostalo in modo permanente tramite _Proprietà del sistema → Variabili
+     d'ambiente_.
    </Callout>
 
 1. Visualizza l'anteprima dello schema del form:
@@ -33,7 +36,7 @@ Questa pagina presuppone che tu abbia già eseguito `serve` e che l'anteprima li
    form0(server,schema)> preview
    ```
 
-1. Aggiungi un *NumericField* dopo un campo a tua scelta, usando il numero di riga mostrato all'inizio di ogni linea (ad esempio, `2` in `2 | TextField ...`) nell'anteprima dello schema:
+1. Aggiungi un _NumericField_ dopo un campo a tua scelta, usando il numero di riga mostrato all'inizio di ogni linea (ad esempio, `2` in `2 | TextField ...`) nell'anteprima dello schema:
 
    ```ansi
    form0(server,schema)> add NumericField after <id>
@@ -51,7 +54,7 @@ Questa pagina presuppone che tu abbia già eseguito `serve` e che l'anteprima li
    }
    ```
 
-1. Aggiungi un *CalculatedField* dopo il campo `quantity` appena creato:
+1. Aggiungi un _CalculatedField_ dopo il campo `quantity` appena creato:
 
    ```ansi
    form0(server,schema)> add CalculatedField after <new-id>
@@ -81,6 +84,7 @@ Questa pagina presuppone che tu abbia già eseguito `serve` e che l'anteprima li
    ```ansi
    form0(server,schema)> q
    ```
+
    E ferma il server di sviluppo:
 
    ```ansi

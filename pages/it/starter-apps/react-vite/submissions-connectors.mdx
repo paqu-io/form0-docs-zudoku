@@ -1,28 +1,40 @@
 ---
-title: Invii e connettori
-description: Comprendi record strutturati, invio locale e responsabilità di produzione.
+title: Contributi e connettori
+description: Comprendere i record strutturati, l'assistente locale submission di starter e le responsabilità dei dati di produzione.
 ---
 
-`Form0Form` fornisce un gestore di invio predefinito quando non riceve `onSubmit`. Crea o accetta un
-record form0 strutturato e lo registra durante lo sviluppo.
+<PageBadges />
 
-Se `devServer.submitToConnector` è `true`, chiama anche:
+`Form0Form` fornisce un gestore submission predefinito quando il chiamante non fornisce `onSubmit`.
+handler crea o accetta un record form0 strutturato e lo registra per lo sviluppo.
 
-1. `POST /api/create-record` se non esiste ancora un record strutturato completo.
-2. `POST /api/submit-record` per inviarlo ai connettori gestiti da form0-cli.
+Quando `devServer.submitToConnector` è `true`, chiama anche due endpoint locali:
 
-Avvia entrambi i server con `form0 serve --app`. Gestisci i connettori con la
-[CLI](/it/cli/connector-management) e confrontali in
-[Scegliere un connettore](/it/connectors/choose).
+1. `POST /api/create-record` quando renderer non ha già prodotto un record strutturato completo.
+2. `POST /api/submit-record` per inviare tale record ai connettori gestiti da form0-cli.
 
-Passa `onSubmit` a `Form0Form` per sostituire il gestore. Usa
-`useDefaultSubmitHandler={false}` per non fornire un percorso predefinito. Il contratto è descritto
-in [Valori, snapshot e invio](/it/bindings/react/values-snapshots-submission).
+Il proxy Vite inoltra `/api` al server di sviluppo CLI. Avviare entrambi i processi con:
 
-> [!WARNING]
-> Gli endpoint CLI e il proxy Vite sono strumenti di sviluppo locale, non un’API di produzione.
-> Un’app distribuita richiede autenticazione, autorizzazione, validazione, limiti e controlli di
-> archiviazione su un server attendibile. Non inviare mai credenziali al browser.
+```bash
+form0 serve --app
+```
 
-Usa solo schemi di autori attendibili. Consulta il
-[confine di fiducia di form0-core](/it/core/security).
+Utilizzare [CLI gestione connettore](/it/cli/connector-management) per installare, configurare, testare e ispezionare un
+Utilizzare [Scegliere un connettore](/it/connectors/choose) per confrontare PostgreSQL e SQLite.
+
+## Applicazione del rifornimento comportamento submission
+
+Passa da `onSubmit` a `Form0Form` per sostituire il gestore predefinito.
+`useDefaultSubmitHandler={false}` se il modulo deve essere visualizzato senza il percorso submission.
+
+Per il contratto completo di record di callback e metadati, vedere
+[Valori, snapshots e submission](/it/bindings/react/values-snapshots-submission).
+
+> [Attenzione]
+> Gli endpoint CLI e il proxy Vite sono aiutanti di sviluppo locale, non una produzione submission API.
+> Un'applicazione distribuita ha bisogno di un limite di server attendibile con autenticazione, autorizzazione,
+> convalida, limitazione della velocità e controlli di archiviazione appropriati.
+> codice del browser.
+
+Utilizzare solo schemas da autori attendibili. Espressioni di schema eseguire all'interno del documentato
+[form0-core trust border](/it/core/security).

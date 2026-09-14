@@ -1,7 +1,26 @@
 ---
-title: CHOICELABEL (Coming soon)
+title: CHOICELABEL
+description: Renvoie le libellé sélectionné d’un champ à choix unique.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/calculations-expressions/choicelabel".
+Renvoie le libellé sélectionné d’un champ à choix unique.
+
+## Exemple
+
+```js
+CHOICELABEL($city)
+```
+
+## Paramètres
+
+- choiceField : valeur de SingleChoiceField ou BooleanField
+
+## Valeur renvoyée
+
+Le libellé sélectionné ou null.
+
+## Remarques
+
+- Conserve les libellés numériques lorsque c’est possible.

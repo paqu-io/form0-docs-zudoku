@@ -1,27 +1,52 @@
 ---
-title: Moduli, route e presentazioni
-description: Registra gli schemi e offri esperienze standard, semplificate, modali e spotlight.
+title: Forme, percorsi e presentazioni
+description: Registrati al modulo schemas ed esporti esperienze standard, semplificate, modali e con i riflettori.
 ---
 
-Gli schemi si trovano in `src/forms`. Il registro `src/forms/registry.js` associa a ogni modulo una
-route, metadati, un import dinamico e valori iniziali opzionali.
+<PageBadges />
+
+Schema file live sotto `src/forms`. Il Registro di sistema in `src/forms/registry.js` dà ogni modulo un
+percorso dell'applicazione, visualizzazione dei metadati, importazione dinamica di schema e valori iniziali opzionali.
 
 ```js
 const forms = [
   {
-    id: "contatti",
-    title: "Contatti",
-    description: "Invia un messaggio al team.",
-    loadSchema: () => import("./contatti/schema.json"),
+    id: "contact",
+    title: "Contact us",
+    description: "Send a message to the team.",
+    loadSchema: () => import("./contact/schema.json"),
   },
 ]
 ```
 
-L’applicazione offre `/`, `/:formId` e `/:formId/:variant`. Le varianti di pagina sono `standard` e
-`simplified`; `modal` e `spotlight` compaiono come sovrapposizioni dalla home.
+Creare il file schema corrispondente, quindi aggiungere la voce del Registro di sistema.
+Pezzi di costruzione separati.
 
-Le impostazioni di layout sono in `form0.config.js`. Il wrapper passa a `FormRenderer` tema,
-posizionamento, interazione e dimensioni risolti.
+## Rotte
 
-Consulta [Modifica il tuo primo schema](/it/getting-started/schema-edit) e
-[Modalità, posizionamento e navigazione](/it/bindings/react/modes-placement-navigation).
+Lo starter fornisce:
+
+- `/` per l'elenco dei moduli e gli esempi di sovrapposizione;
+- `/:formId` per la presentazione standard predefinita; e
+- `/:formId/:variant` per le presentazioni delle pagine `standard` o `simplified`.
+
+`FormPage` convalida l'identificatore del modulo e la presentazione prima di caricare schema. `Home` possiede il
+esempi modali e di riflettore.
+
+## Presentazioni
+
+Le quattro chiavi di presentazione incluse sono:
+
+| Chiave       | Posizionamento             |
+| ------------ | -------------------------- |
+| `standard`   | Pagina del modulo completo |
+| `simplified` | Pagina passo-passo         |
+| `modal`      | Sovrapposizione di dialogo |
+| `spotlight`  | Sovrapposizione cassetto   |
+
+Layout predefinito per ogni presentazione live in `form0.config.js`. Il wrapper dell'applicazione passa il
+risolto tema, posizionamento, modalità di interazione e dimensionamento a `FormRenderer`.
+
+Usa [Modifica il tuo primo authoring schema](/it/getting-started/schema-edit) per schema e
+[Modalità, posizionamento e navigazione](/it/bindings/react/modes-placement-navigation) per il sottostante
+comportamento React binding.

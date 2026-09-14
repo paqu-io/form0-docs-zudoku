@@ -1,43 +1,53 @@
 ---
-title: Installer et afficher avec React Native
-description: Installez form0-react-native et affichez un schéma dans une application React Native ou Expo.
+title: Installation et rendu avec React Native
+description: Installez form0-react-native et rendez un schema dans une application React Native ou Expo.
 ---
 
-Pour une nouvelle application mobile, suivez le [démarrage rapide CLI](/fr/getting-started/quickstart).
-Le projet Expo maintenu inclut le binding, les polices, des schémas d’exemple, les images de support
-et une persistance SQLite locale.
+<PageBadges />
 
-Pour ajouter form0 à une application existante :
+Pour une nouvelle application mobile, utilisez le [CLI quickstart](/getting-started/quickstart) . L ' entretien
+React Native et Expo starter inclut le binding, le chargement de police, l'exemple schemas, le support
+images, et la persistance locale SQLite.
+
+Pour ajouter form0 à une application existante:
 
 ```bash
 npm install form0-react-native form0-core lucide-react-native
 ```
 
-Installez des dépendances natives compatibles. Avec Expo :
+Installez des dépendances natives avec des versions compatibles avec votre application. Dans Expo:
 
 ```bash
 npx expo install react-native-svg react-native-safe-area-context expo-font
 ```
 
-Le paquet requiert Node.js 22 ou plus récent pour l’installation et l’outillage, React 18 ou 19 et
-React Native 0.72 ou plus récent. `react-native-safe-area-context` est facultatif, mais permet à
-l’en-tête intégré de respecter la zone sûre. S’il est installé, entourez la racine de l’application
-avec `SafeAreaProvider`.
+Le paquet nécessite Node.js 22 ou plus récent pour l'installation et l'outillage, React 18 ou 19, et React
+Natif 0.72 ou plus récent. `react-native-safe-area-context` est facultatif mais laisse l'en-tête intégré
+respecter la zone de sécurité de l'appareil. Lorsqu'il est installé, enveloppez la racine de l'application dans son
+`SafeAreaProvider`.
 
-## Afficher un schéma
+## Rendre un schema
 
 ```jsx
 import { FormRenderer } from "form0-react-native"
 import schema from "./contact.form0.json"
 
 export function ContactForm() {
-  return <FormRenderer schema={schema} onSubmit={(record) => console.log(record)} />
+  return (
+    <FormRenderer
+      schema={schema}
+      onSubmit={(record, meta) => {
+        console.log(record)
+        console.log(meta.rawValues)
+      }}
+    />
+  )
 }
 ```
 
-`schema` doit contenir un objet formulaire `form0-core` valide. Commencez par
-[Modifier votre premier schéma](/fr/getting-started/schema-edit) ou consultez
-[l’objet formulaire](/fr/core/schema/form).
+`schema` doit contenir un objet de formulaire `form0-core` valide.
+[Modifier votre premier schema](/fr/getting-started/schema-edit) ou
+[Objet de formulaire](/fr/core/schema/form).
 
-Chargez les polices incluses avant d’afficher le formulaire. Consultez
+Chargez les polices empaquetées avant d'afficher le formulaire pour la typographie prévue. Voir
 [Thèmes, polices et images](/fr/bindings/react-native/themes-assets).

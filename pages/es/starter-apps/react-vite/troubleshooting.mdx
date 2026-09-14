@@ -1,35 +1,48 @@
 ---
-title: Solución de problemas de React y Vite
-description: Resuelve problemas habituales de rutas, esquemas, renderizadores, workers y conectores.
+title: React y Vite Solución de problemas starter
+description: Resolver problemas comunes de instalación, enrutamiento, schema, renderer, worker y conectores.
 ---
 
-## No se encuentra un formulario
+<PageBadges />
 
-Comprueba que el identificador de la URL coincide con `src/forms/registry.js` y que la importación
-dinámica apunta a un esquema existente.
+## Una ruta de formulario dice que el formulario no se encontró
 
-## El esquema no se carga
+Confirme que el identificador URL coincide exactamente con una entrada en `src/forms/registry.js`.
+que su importación dinámica apunta a un archivo schema existente.
 
-Revisa el error de importación en la consola y valida el JSON con form0-cli. Consulta
-[Validar y previsualizar](/es/cli/schemas/validate-preview).
+## Un schema no se carga
 
-## No se usa un renderizador personalizado
+Abra la consola del navegador para el error de importación, a continuación, ejecute la validación schema a través de form0-cli.
+Los errores de sintaxis y las rutas de importación relativas incorrectas son las causas más comunes.
 
-Compara el tipo de campo, el mapping de `form0.config.js` y el identificador de `resolver.js`.
+```bash
+form0
+```
 
-## El envío no alcanza la CLI
+Cargue el schema y ejecute `validate`. Consulte [Validar y previsualizar](/es/cli/schemas/validate-preview).
 
-Ejecuta `form0 serve --app`. Si la dirección es distinta, define `FORM0_DEV_API_URL` y confirma que
-`devServer.apiBaseUrl` coincide con la ruta del proxy.
+## No se utiliza un renderer personalizado
 
-## Falla la evaluación en worker
+Compruebe los tres nombres: el tipo de campo schema, su asignación en `form0.config.js` y el resolutor
+identificador en `src/field-renderers/resolver.js`. El solucionador registra una advertencia para identificadores desconocidos.
 
-Cambia temporalmente `engine.mode` a `main-thread` para separar la carga del worker del esquema.
-Después revisa rutas de assets y tipos de contenido. Consulta
-[Workers y rendimiento](/es/bindings/react/workers-performance).
+## Las presentaciones no pueden llegar al servidor CLI
 
-## Las rutas directas devuelven 404
+Ejecute `form0 serve --app` desde el directorio del proyecto. Si el servidor CLI utiliza una dirección diferente, establezca
+`FORM0_DEV_API_URL` antes de iniciar Vite o en el archivo `.env` local correspondiente. Confirme que
+`devServer.apiBaseUrl` todavía coincide con la ruta proxy Vite.
 
-Configura el alojamiento para usar `index.html` como fallback. Para otros problemas, consulta
-[React](/es/bindings/react/troubleshooting) o
-[Conectores](/es/connectors/troubleshooting).
+## La evaluación de los trabajadores falla
+
+Ajusta temporalmente `engine.mode` a `main-thread` para aislar la carga de worker del comportamiento de schema.
+verifique la consola del navegador, las rutas de los activos y el tipo de contenido de implementación. Ver
+[Trabajadores y rendimiento](/es/bindings/react/workers-performance).
+
+## Los enlaces directos devuelven 404 después de la implementación
+
+Configure el host estático para que vuelva a `index.html` para las rutas de aplicación desconocidas.
+problema de configuración, no un problema de definición de ruta React.
+
+Para fallas de renderización a nivel de paquete, continúe con
+[React solución de problemas](/es/bindings/react/troubleshooting). Para los fallos de la base de datos, utilizar
+[Conector solución de problemas](/es/connectors/troubleshooting).

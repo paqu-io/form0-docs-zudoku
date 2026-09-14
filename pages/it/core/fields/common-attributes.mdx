@@ -1,7 +1,52 @@
 ---
-title: common-attributes (Coming soon)
+title: Attributi comuni
+description: Attributi condivisi dalla maggior parte dei tipi di campo.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/fields/common-attributes".
+import { Callout } from "zudoku/ui/Callout"
+
+La maggior parte dei tipi di campo condivide un insieme di attributi principali. Le pagine specifiche del campo coprono tutto ciò che non è elencato
+Ecco.
+
+## Identità
+
+- `type`: Nome del tipo di campo (ad esempio, `TextField`).
+- `key`: Identificatore univoco stabile. Preferire le chiavi per condizioni e riferimenti.
+- `data_name`: Identificatore di valore utilizzato nello stato del motore.
+- `label`: Etichetta mostrata agli utenti.
+
+## Descrizione e visualizzazione
+
+- `description`: testo opzionale dell'helper.
+- `description_mode`: `default` o `subtext`.
+- `display`: Stile visivo, varia per tipo di campo.
+
+## Visibilità, richiesta e sola lettura
+
+- `visible`: Visibilità di base (boolean).
+- `visible_conditions`: Oggetto Condizione; sovrascrive `visible` quando presente.
+- `required`: requisito di base (booleano).
+- `required_conditions`: Oggetto Condizione; sovrascrive `required` quando presente.
+- `read_only`: Bandiera di sola lettura di base (boolean).
+- `read_only_conditions`: Oggetto Condizione; sovrascrive `read_only` quando presente.
+
+## Valore predefinito
+
+- `default_value`: Valore iniziale per il campo (si applicano regole specifiche del tipo).
+
+## Immagini di supporto
+
+- `supporting_image`: Abilita un'immagine di supporto.
+- `supporting_image_path`: Percorso immagine relativo o assoluto.
+- `supporting_image_display`: `default` o `dialog`.
+
+## metadati AI
+
+- `ai`: metadati AI opzionali per la guida a livello di campo.
+
+<Callout type="info" title="Field-specific rules">
+  Alcuni campi bloccano i valori (ad esempio, `CalculatedField.read_only` è sempre vero).
+  Controllare sempre la pagina del tipo di campo per vincoli specifici.
+</Callout>

@@ -1,7 +1,26 @@
 ---
-title: ON (Coming soon)
+title: ON
+description: Registra un controlador de eventos.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/events/on".
+Registra un controlador de eventos.
+
+## Ejemplo
+
+```js
+ON("change", "city", function (event) {
+  ALERT("City changed")
+})
+```
+
+## Parámetros
+
+- eventType: cadena
+- fieldKeyOrCallback: cadena|función
+- callback: función (opcional)
+
+## Devuelve
+
+El descriptor de la operación (utilizado por los clientes).

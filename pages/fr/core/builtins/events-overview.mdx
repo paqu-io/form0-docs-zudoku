@@ -1,7 +1,33 @@
 ---
-title: Events (Coming soon)
+title: Événements
+description: Construits disponibles dans les événements de formulaire.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/events".
+import { Badge } from "zudoku/ui/Badge"
+
+Les événements vivent dans `form.events.code` et sont évalués en runtime Utilisation `ON` pour enregistrer les gestionnaires
+et `SETVALUE` / `ALERT` pour interagir avec le formulaire.
+
+## Exemple rapide
+
+```js
+ON("change", "age", function (event) {
+  if ($age >= 18) {
+    SETVALUE("can_vote", "yes")
+  }
+})
+```
+
+## Évènement intégré
+
+### <Badge variant="secondary">Events</Badge>
+
+- [`ON`](/fr/core/builtins/events/on)
+- [`OFF`](/fr/core/builtins/events/off)
+- [`ALERT`](/fr/core/builtins/events/alert)
+- [`SETVALUE`](/fr/core/builtins/events/setvalue)
+
+Les gestionnaires d'événements peuvent également utiliser les fonctions intégrées de calcul listées dans
+[Calculs et expressions](/fr/core/builtins/calculations-expressions-overview).

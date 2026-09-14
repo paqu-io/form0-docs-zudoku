@@ -1,7 +1,38 @@
 ---
-title: output-records (Coming soon)
+title: Uscita e record
+description: Stato motore e uscita record strutturata.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/output-records".
+form0-core espone due uscite primarie:
+
+- Stato motore (`values`, `errors`, `visible`, `required`, `read_only`)
+- Record strutturati per la persistenza (`createStructuredRecord`)
+
+## Stato motore
+
+Dopo `engine.eval()`, chiamare `engine.getState()` per accedere allo stato più recente.
+
+## Uscita record strutturata
+
+`createStructuredRecord` trasforma lo stato del motore in un formato submission -friendly:
+
+- `form_values` utilizza le chiavi di campo per impostazione predefinita
+- Le sezioni ripetibili diventano matrici di record figlio
+- Le sezioni sono omesse (solo contenitori)
+
+### Modalità chiave campo
+
+È possibile passare ai tasti `data_name` utilizzando `fieldKeyMode`:
+
+```js
+const record = createStructuredRecord(state, fields, {
+  fieldKeyMode: "data-name",
+})
+```
+
+## Sezioni ripetibili
+
+Sezioni ripetibili creano record nidificati. Utilizzare `originalElements` per mantenere la nidificazione corretta
+Struttura quando si costruiscono i record.

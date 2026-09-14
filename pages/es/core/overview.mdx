@@ -1,7 +1,38 @@
 ---
-title: overview (Coming soon)
+title: Visión general
+description: De qué se encarga form0-core y cómo encaja en el ecosistema form0.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/overview".
+import { Callout } from "zudoku/ui/Callout"
+
+`form0-core` es el motor basado en esquemas que gestiona los cálculos, la visibilidad, los
+requisitos, la validación y los eventos. Es independiente del framework y se ejecuta en cualquier
+entorno JavaScript (Node.js, navegadores, React Native, etc.).
+
+## ⚙️ Qué hace form0-core
+
+- Valida los esquemas de formulario y las definiciones de campos
+- Evalúa campos calculados y expresiones
+- Aplica condiciones de visibilidad, obligatoriedad y solo lectura
+- Ejecuta los eventos definidos en `form.events.code`
+- Expone un estado estructurado (`values`, `errors`, `visible`, `required`, `read_only`)
+- Produce registros estructurados para el envío
+
+## 🚫 Qué no hace form0-core
+
+- Renderizado o diseño de la interfaz
+- Persistencia de datos o comunicaciones de red
+- Autenticación o gestión de usuarios
+
+<Callout type="info" title="Atributos y tipos de campo de la aplicación">
+  Algunos atributos del esquema son metadatos de la aplicación y determinados tipos de campo
+  requieren interactuar con otros formularios de la aplicación, por lo que el motor no los procesa
+  directamente. El motor sigue aceptando estos atributos y tipos de campo. Se pueden utilizar al
+  integrar [reform](https://reformapp.io), el producto SaaS creado por [paqu.io](https://paqu.io)
+  (el equipo responsable de form0), o al crear una funcionalidad similar en tu propia aplicación.
+  <br />
+  Para obtener más información, consulta los [atributos del formulario](/es/core/schema/form) y los
+  [tipos de campo](/es/core/fields/catalog).
+</Callout>

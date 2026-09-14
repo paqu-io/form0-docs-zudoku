@@ -1,41 +1,47 @@
 ---
-title: Créer et exécuter l’application React et Vite
-description: Créez l’application web maintenue avec form0-cli et démarrez son serveur Vite.
+title: Créer et exécuter les React et Vite starter
+description: Créez le web maintenu starter avec form0-cli et démarrez son serveur de développement Vite.
 ---
 
-## Prérequis
+<PageBadges />
 
-- Node.js 22 ou version ultérieure
-- Un gestionnaire de paquets pris en charge ; la source contient un lockfile npm
+## Ressources nécessaires
+
+- Node.js 22 ou plus récent
+- Un gestionnaire de paquets pris en charge; la source starter commit un fichier de verrouillage npm
 - Un navigateur moderne
 
-## Créer l’application
+## Créer l'application
+
+Installez le CLI, puis initialisez un projet web:
 
 ```bash
 npm install --global form0-cli
-form0 init mon-application-form0
+form0 init my-form-app
 ```
 
-Choisissez **Application web** puis **React + Vite**. Entrez dans le répertoire généré, installez les
-dépendances si nécessaire et démarrez l’application :
+Choisissez l'application Web \*\* ** et ** React + Vite \*\* lorsque vous y êtes invité.
+dépendances si le flux sélectionné ne l'a pas déjà fait, et lancez l'application:
 
 ```bash
-cd mon-application-form0
+cd my-form-app
 npm install
 npm run dev
 ```
 
-Ouvrez l’URL affichée par Vite, généralement `http://localhost:5173`. L’accueil présente les
-formulaires d’exemple et leurs présentations en page et en superposition.
+Ouvrez le URL imprimé par Vite, normalement `http://localhost:5173`. La page d'accueil
+exemples de formulaires et leur page et superposition de présentations.
 
-## Exécuter avec form0-cli
+## Exécutez avec form0-cli
 
-`form0 serve --app` démarre le serveur de l’application avec celui de la CLI. Utilisez ce mode pour
-que le gestionnaire de soumission par défaut atteigne les connecteurs locaux.
+À partir du répertoire du projet, `form0 serve --app` démarre le serveur d'applications configuré
+le serveur de développement CLI. Utilisez ce mode lorsque vous souhaitez que le gestionnaire par défaut de starter
+atteindre des connecteurs configurés localement.
 
 ```bash
 form0 serve --app
 ```
 
-Consultez [Serveurs d’application](/fr/cli/local-development/app-development-servers) et
-[Soumissions et connecteurs](/fr/starter-apps/react-vite/submissions-connectors).
+Voir [Serveurs de développement d'applications](/fr/cli/local-development/app-development-servers) et
+[Soumissions et connecteurs](/fr/starter-apps/react-vite/submissions-connectors) pour la frontière
+entre l'application du navigateur, le serveur CLI et le connecteur de base de données.

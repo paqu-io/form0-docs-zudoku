@@ -1,35 +1,41 @@
 ---
-title: Solución de problemas de React Native
-description: Resuelve problemas de instalación, renderizado, fuentes, recursos y persistencia.
+title: Solución de problemas React Native
+description: Diagnosticar problemas comunes de instalación, renderización, fuente, activo y persistencia de form0-react-native.
 ---
 
-## Metro no resuelve una dependencia peer
+<PageBadges />
 
-Instala versiones compatibles de `lucide-react-native` y `react-native-svg`. En Expo, usa
-`npx expo install react-native-svg react-native-safe-area-context expo-font` y reinicia Metro.
+## Metro no puede resolver una dependencia entre pares
 
-## El texto usa una fuente alternativa
+Instale las versiones compatibles `lucide-react-native` y `react-native-svg`. En Expo, use
+`npx expo install react-native-svg react-native-safe-area-context expo-font` para que el nativo instalado
+los paquetes coinciden con el SDK activo, luego reinicie Metro.
 
-Carga `form0Fonts` con `expo-font` antes del formulario y alinea cualquier tema personalizado con
-los nombres registrados.
+## El texto utiliza una fuente de reserva
 
-## Falta una imagen local
+Cargar `form0Fonts` con `expo-font` antes de renderizar el formulario. Si la aplicación suministra un personalizado
+mantenga sus tokens de familia de fuentes alineados con los nombres cargados en el registro de fuentes nativo.
 
-Proporciona `imageResolver` con un mapa estático, regenera el mapa si lo gestiona el starter y
-reinicia Metro tras añadir recursos.
+## Falta una imagen de apoyo local
 
-## Un campo aparece como no compatible o provisional
+Los activos locales no se pueden resolver de forma arbitraria. runtime cadenas. Proporcione `imageResolver` con un
+ruta estática al mapa de origen, regenerar el mapa si el starter lo posee, y reiniciar Metro después de agregar
+nuevos activos.
 
-Consulta [Renderizadores integrados](/es/bindings/react-native/built-in-renderers). `PhotoField`,
-`VideoField` y `FormLinkField` necesitan overrides de la aplicación para producción.
+## Un campo dice que no es compatible o provisional
 
-## El envío no se ejecuta
+Compruebe [Campo incorporado renderers](/es/bindings/react-native/built-in-renderers). `PhotoField`,
+`VideoField`, y `FormLinkField` necesitan anulaciones de aplicaciones para el comportamiento de producción.
+override se pasa al mismo `FormRenderer` o proveedor de registro que procesa el formulario.
 
-`onSubmit` exige una validación correcta. Verifica que el modo sea edición, proporciona el callback
-y revisa los errores en la navegación. Para borradores, usa `onSave` y
-`primaryActionMode="save"`.
+## La sumisión no se ejecuta
 
-## Los borradores desaparecen al reiniciar
+`onSubmit` está activado por validación. Confirme que el formulario está en modo de edición, proporcione un controlador de envío y use
+la hoja de navegación de validación para inspeccionar errores. Para la validación-tolerante drafts, proporcione `onSave`
+y establecer `primaryActionMode="save"`.
 
-El binding emite snapshots, pero no los almacena. Persístelos y restaura el objeto completo con
-`initialSnapshot`, incluidos repetibles y marcas temporales.
+## Los borradores desaparecen después de reiniciarse
+
+Las instantáneas son emitidas pero nunca almacenadas por el binding. Persistirlas a través de `onSnapshotChange` o
+`onSave`, y restaurar el objeto completo con `initialSnapshot`. No lo reemplace con solo el
+valores de campo raw cuando importan entradas o marcas de tiempo repetibles.

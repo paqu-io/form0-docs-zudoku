@@ -3,33 +3,47 @@ title: Risoluzione dei problemi dello starter React Native ed Expo
 description: Diagnostica dipendenze, rete, immagini, font e SQLite.
 ---
 
-## Dipendenze incompatibili
+<PageBadges />
 
-Usa i controlli compatibili con l’SDK Expo:
+## Expo segnala dipendenze incompatibili
+
+Usa i comandi Expo che tengono conto della compatibilità invece di installare versioni arbitrarie
+dei pacchetti nativi:
 
 ```bash
 npx expo install --check
 npx expo-doctor@latest
 ```
 
-Controlla le modifiche prima di `npx expo install --fix` e tratta il cambio di SDK come migrazione.
+Usa `npx expo install --fix` solo dopo aver esaminato le modifiche proposte. Tratta un aggiornamento
+dell’SDK Expo come una migrazione e segui la guida all’aggiornamento dell’SDK.
 
 ## Il dispositivo non apre il progetto
 
-Controlla LAN, firewall, VPN, isolamento Wi-Fi, porta e la scelta tra Expo Go e development build.
-Un URL pubblico non deve mostrare pagine intermedie.
+Verifica che il dispositivo possa raggiungere il computer di sviluppo tramite LAN. Controlla
+firewall, VPN, isolamento dei client Wi-Fi, porta configurata e se il client richiede Expo Go o un
+development build. Se usi un URL pubblico, verifica che non restituisca pagine intermedie prima
+degli endpoint Expo.
 Expo Go supporta una sola linea di SDK alla volta e la disponibilità della build compatibile varia
 in base alla piattaforma. Crea un nuovo development build dopo aver cambiato l’SDK Expo o le
 dipendenze native.
 
-## Immagine o font assente
+## Manca un’immagine di supporto
 
-Esegui `npm run generate-images`, registra il file generato e riavvia Metro se necessario. Attendi
-`useFonts(form0Fonts)` prima del rendering.
+Verifica che il percorso corrisponda allo schema, inserisci gli asset inclusi in
+`assets/supporting-images` ed esegui `npm run generate-images`. Registra il file rigenerato e riavvia
+Metro quando il grafo dei moduli non è aggiornato.
+
+## I font o i moduli nativi non vengono caricati
+
+Attendi `useFonts(form0Fonts)` prima del rendering. Installa i pacchetti Expo con `npx expo install`
+e usa un development build per i moduli nativi non disponibili in Expo Go.
 
 ## SQLite non scrive
 
-Verifica `databaseName`, `tableName` e i log, poi abilita temporaneamente `debug`. I nomi tabella
-accettano lettere, cifre e underscore. Cancellare i dati dell’app elimina il database nel sandbox.
+Verifica `databaseName` e `tableName`, controlla i log del dispositivo e abilita temporaneamente
+l’output di debug dello storage. I nomi delle tabelle accettano solo lettere, cifre e underscore; i
+valori non validi usano il valore predefinito. Ricorda che cancellare i dati dell’app elimina il
+database nel sandbox.
 
 Consulta anche [Risoluzione dei problemi React Native](/it/bindings/react-native/troubleshooting).

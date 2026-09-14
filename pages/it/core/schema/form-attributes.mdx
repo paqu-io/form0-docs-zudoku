@@ -1,7 +1,436 @@
 ---
-title: Form attributes (Coming soon)
+title: Attributi modulo
+description: Riferimento completo per tutti gli attributi oggetto modulo.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/form-attributes".
+import { Callout } from "zudoku/ui/Callout"
+
+Questa pagina documenta tutti gli attributi disponibili nell'oggetto `form`, inclusi i metadati a livello di applicazione.
+
+<Callout type="note" title="Attributi a livello di app">
+  Gli attributi contrassegnati come ** App-level ** sono metadati non elaborati direttamente dal
+  motore. Possono essere utilizzati quando si integra il prodotto SaaS
+  [reform](https://reformapp.io) o quando si creano funzionalità simili nella propria applicazione.
+</Callout>
+
+---
+
+## nome
+
+Nome del modulo di facile utilizzo visualizzato nell'interfaccia utente.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | ✓        |
+| Default      | -        |
+| Scelta       | -        |
+| App-level    | -        |
+
+---
+
+## descrizione
+
+Descrizione del modulo.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | -        |
+| Scelta       | -        |
+| App-level    | -        |
+
+---
+
+## id
+
+Identificatore unico del modulo. Formato UUID consigliato.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | ✓        |
+| Default      | -        |
+| Scelta       | -        |
+| App-level    | -        |
+
+---
+
+## record_count
+
+Contatore operativo di proprietà della piattaforma. Numero di record nel modulo.
+
+| Proprietà    | Valore       |
+| ------------ | ------------ |
+| Tipo         | `number`     |
+| Obbligatorio | -            |
+| Default      | Host-defined |
+| Scelta       | -            |
+| App-level    | ✓            |
+
+---
+
+## record_last_change_at
+
+Contatore operativo di proprietà della piattaforma. Data/ora dell'ultima modifica record nel formato ISO 8601.
+
+| Proprietà    | Valore       |
+| ------------ | ------------ |
+| Tipo         | `string`     |
+| Obbligatorio | -            |
+| Default      | Host-defined |
+| Scelta       | -            |
+| App-level    | ✓            |
+
+---
+
+## form_created_at
+
+Data/ora di creazione del modulo in formato ISO 8601.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## form_updated_at
+
+Data e ora dell'ultimo aggiornamento nel formato ISO 8601.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## form_created_by
+
+Utente che ha creato il form.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## form_updated_da
+
+Utente che ha aggiornato il modulo.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## stato
+
+Indicatore di stato del modulo.
+
+| Proprietà    | Valore               |
+| ------------ | -------------------- |
+| Tipo         | `string`             |
+| Obbligatorio | -                    |
+| Default      | -                    |
+| Scelta       | `active`, `inactive` |
+| App-level    | ✓                    |
+
+---
+
+## versione
+
+Versione schema di proprietà della piattaforma opzionale. form0-core non lo incrementa.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | -        |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## main_org_id
+
+Identificatore principale dell'organizzazione.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | -        |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## main_org_metadata
+
+Campi di metadati associati all'organizzazione principale.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `object` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## sub_org_id
+
+Identificatore di sotto-organizzazione.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## sub_org_metadata
+
+Campi dei metadati associati alla sub-organizzazione.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `object` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## project_id
+
+Identificatore del progetto.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## project_metadata
+
+Campi di metadati associati al progetto.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `object` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## ai
+
+I metadati AI per le linee guida a livello di modulo. Vedere [Metadati AI](/it/core/ai-metadata) per i dettagli.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `object` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | -        |
+
+---
+
+## status_field
+
+Per ulteriori dettagli, vedere [Campi Meta](/it/core/fields/meta-fields#statusfield).
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `object` |
+| Obbligatorio | ✓        |
+| Default      | -        |
+| Scelta       | -        |
+| App-level    | -        |
+
+---
+
+## title_field
+
+Per ulteriori dettagli, vedere [Campi Meta](/it/core/fields/meta-fields#titlefield).
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `object` |
+| Obbligatorio | ✓        |
+| Default      | -        |
+| Scelta       | -        |
+| App-level    | -        |
+
+---
+
+## bonding_box
+
+Contenitore contenente tutti i record dei moduli. Formato: `[min_lat, min_lng, max_lat, max_lng]`.
+
+| Proprietà    | Valore         |
+| ------------ | -------------- |
+| Tipo         | `array`        |
+| Obbligatorio | -              |
+| Default      | `[0, 0, 0, 0]` |
+| Scelta       | -              |
+| App-level    | ✓              |
+
+---
+
+## location_enabled
+
+Abilita l'acquisizione della posizione per i record.
+
+| Proprietà    | Valore          |
+| ------------ | --------------- |
+| Tipo         | `boolean`       |
+| Obbligatorio | -               |
+| Default      | -               |
+| Scelta       | `true`, `false` |
+| App-level    | ✓               |
+
+---
+
+## posizione_necessaria
+
+Richiede i dati di posizione quando `location_enabled` è `true`.
+
+| Proprietà    | Valore          |
+| ------------ | --------------- |
+| Tipo         | `boolean`       |
+| Obbligatorio | -               |
+| Default      | -               |
+| Scelta       | `true`, `false` |
+| App-level    | ✓               |
+
+---
+
+## immagine
+
+URL per l'icona del modulo (dimensione originale).
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## image_thumbnail
+
+URL per l'icona a forma di miniatura (160x160 px).
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## immagine_piccola
+
+URL per l'icona di forma di piccole dimensioni (320x320 px).
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## image_large
+
+URL per l'icona di forma di grandi dimensioni (640x640 px).
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `string` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | ✓        |
+
+---
+
+## eventi
+
+Blocco di codice evento contenente espressioni incorporate e JavaScript per gestori di eventi. Il codice viene inserito in `events.code`.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `object` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | -        |
+
+---
+
+## form_links
+
+Collegamenti a/da altre forme (usati con `FormLinkField`). Vedere [Campi Meta](/it/core/fields/meta-fields#formlinkfield) per i dettagli.
+
+| Proprietà    | Valore   |
+| ------------ | -------- |
+| Tipo         | `object` |
+| Obbligatorio | -        |
+| Default      | `null`   |
+| Scelta       | -        |
+| App-level    | -        |
+
+---
+
+## elementi
+
+Campi modulo e contenitori. Vedere [Elementi e nesting](/it/core/schema/elements).
+
+| Proprietà    | Valore  |
+| ------------ | ------- |
+| Tipo         | `array` |
+| Obbligatorio | ✓       |
+| Default      | `[]`    |
+| Scelta       | -       |
+| App-level    | -       |

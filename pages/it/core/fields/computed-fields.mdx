@@ -1,7 +1,69 @@
 ---
-title: computed-fields (Coming soon)
+title: Campi calcolati
+description: Campo calcolato e campo etichetta.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/fields/computed-fields".
+import { Callout } from "zudoku/ui/Callout"
+
+## CalcolatoCampo
+
+```json
+{
+  "type": "CalculatedField",
+  "key": "total",
+  "data_name": "total",
+  "label": "Total",
+  "display": { "style": "numeric" },
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": true,
+  "calculate": "$quantity * 2",
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null
+}
+```
+
+Attributi aggiuntivi:
+
+- `calculate`: stringa di espressione valutata dal motore.
+- `display.style`: `text`, `numeric`, `date` o `currency`.
+
+Note:
+
+- `required` è sempre `false`.
+- `read_only` è sempre `true`.
+
+## EtichettaCampo
+
+```json
+{
+  "type": "LabelField",
+  "key": "label_note",
+  "data_name": "label_note",
+  "label": "Note",
+  "display": "default",
+  "description": "Static label text",
+  "description_mode": "subtext",
+  "required": false,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": true,
+  "default_value": null,
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null
+}
+```
+
+LabelField è un campo non modificabile utile per il testo in linea e il raggruppamento dell'interfaccia utente.
+
+<Callout type="info" title="Expressions">
+  Utilizzare builtin (ad esempio, `IF`, `ROUND`, `CHOICEVALUE`) all'interno di `calculate`. Vedere
+  le pagine Builtin per l'elenco completo.
+</Callout>

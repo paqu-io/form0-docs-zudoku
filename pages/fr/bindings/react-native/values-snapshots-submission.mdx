@@ -1,10 +1,14 @@
 ---
-title: Valeurs, instantanés et envoi
-description: Initialisez, persistez, restaurez, sauvegardez et envoyez l’état form0 en React Native.
+title: Valeurs, snapshots et submission
+description: Ensemencer, persister, restaurer, enregistrer et soumettre l'état form0 React Native.
 ---
 
-Utilisez `initialValues` pour une initialisation ordinaire et `overrideValues` pour des valeurs
-faisant autorité. Pour une restauration complète, préférez `initialSnapshot` :
+<PageBadges />
+
+## État initial et restauration
+
+Utilisez `initialValues` pour une graine d'enregistrement ordinaire. `overrideValues` ont priorité et costume
+Pour une restauration complète, préférez `initialSnapshot`:
 
 ```jsx
 <FormRenderer
@@ -17,14 +21,32 @@ faisant autorité. Pour une restauration complète, préférez `initialSnapshot`
 />
 ```
 
-L’instantané conserve ensemble `raw_values`, `repeatable` et les horodatages `timestamps`.
-`onSnapshotChange(snapshot, meta)` indique d’abord `{ kind: "seed", dirty: false }`, puis les
-modifications utilisent `{ kind: "change", dirty }`.
+Le snapshot conserve les valeurs brutes, les entrées reproductibles imbriquées et les horodatages ensemble:
 
-Configurez `primaryActionMode="save"` et `onSave(snapshot, meta)` pour enregistrer un brouillon même
-si la validation échoue. L’envoi par défaut valide d’abord. `onSubmit(record, meta)` reçoit
-[l’enregistrement structuré](/fr/core/output-records), les valeurs brutes, répétables, horodatages
-et le résumé de validation.
+```js
+{
+  raw_values: {},
+  repeatable: {},
+  timestamps: {
+    created_at_client: null,
+    updated_at_client: null,
+    created_at_server: null,
+    updated_at_server: null,
+  },
+}
+```
 
-Le binding ne persiste ni ne synchronise ces données. L’application stocke les instantanés,
-transmet les enregistrements, réessaie les échecs et résout les conflits.
+`onSnapshotChange(snapshot, meta)` signale d'abord `{ kind: "seed", dirty: false }`; utilisateur ultérieur
+changements utilisent `{ kind: "change", dirty }`.
+
+## Enregistrer drafts ou soumettre des enregistrements
+
+Définissez `primaryActionMode="save"` et fournissez `onSave(snapshot, meta)` pour un draft tolérant à la validation
+action. `meta` contient le résumé de validation actuel et l'état sale.
+
+L'action de soumission par défaut valide en premier. `onSubmit(record, meta)` reçoit l'enregistrement structuré
+décrit dans [Sortie et enregistrements](/fr/core/output-records), plus valeurs brutes, état répétable,
+timestamps, et le résumé de validation.
+
+Le binding ne persiste ni ne synchronise la charge utile. Stocker snapshots localement, télécharger
+enregistre, réessaie les échecs et résout les conflits dans l'application hôte.

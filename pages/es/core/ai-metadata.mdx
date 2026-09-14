@@ -1,7 +1,63 @@
 ---
-title: ai-metadata (Coming soon)
+title: Metadatos de IA
+description: Indicaciones opcionales para IA en formularios y campos.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/ai-metadata".
+form0-core admite metadatos opcionales de IA para orientar a agentes externos. El motor ignora
+estos metadatos salvo que tus herramientas los lean.
+
+## IA a nivel de formulario
+
+`form.ai` admite las claves siguientes:
+
+- `context`: array de etiquetas de dominio.
+- `instructions`: array de instrucciones para herramientas de IA.
+- `namingPolicy`: objeto que describe las preferencias de nomenclatura.
+- `tasks`: array de tareas que se habilitarán (por ejemplo, `suggestFieldNames`).
+- `requiresConsent`: indicador booleano del consentimiento del usuario.
+- `allowCloud`: indicador booleano del procesamiento en la nube.
+
+Ejemplo:
+
+```json
+{
+  "ai": {
+    "context": ["safety_inspections"],
+    "instructions": ["Use snake_case"],
+    "namingPolicy": { "language": "en", "case": "snake", "asciiOnly": true },
+    "tasks": ["suggestFieldNames"],
+    "requiresConsent": true
+  }
+}
+```
+
+## IA a nivel de campo
+
+`field.ai` admite:
+
+- `context`, `instructions`, `tasks` (igual que en el formulario)
+- `examples`: valores de ejemplo
+- `synonyms`: etiquetas alternativas
+- `inferrable`: indicador booleano para la inferencia
+- `fillStrategy`: `infer_from_previous`, `require_explicit` o `suggest_options`
+- `priority`: número que indica la importancia
+- `dependencies`: array de identificadores de campo
+- `choicePolicy`: objeto que describe la estrategia de valores de selección
+- `providerHints`: indicaciones específicas del proveedor
+- `requiresConsent`, `allowCloud`
+
+Ejemplo:
+
+```json
+{
+  "ai": {
+    "examples": ["John", "Jane"],
+    "synonyms": ["First name"],
+    "inferrable": true,
+    "fillStrategy": "suggest_options",
+    "priority": 0.7
+  }
+}
+```

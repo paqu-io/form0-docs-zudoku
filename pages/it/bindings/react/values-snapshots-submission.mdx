@@ -1,14 +1,16 @@
 ---
-title: Valori, snapshot e invio
-description: Inizializza, osserva, ripristina e invia lo stato React di form0.
+title: Valori, snapshots e submission
+description: Seme, osservare, ripristinare e inviare lo stato form0 React.
 ---
+
+<PageBadges />
 
 ## Valori iniziali e override
 
-Usa `initialValues` per il record in modifica. `overrideValues` ha la precedenza ed è utile per
-valori autorevoli dell’applicazione host, come uno stato.
+Utilizzare `initialValues` per il record in fase di modifica. `overrideValues` ha la precedenza e sono utili
+per i valori host autorevoli come uno stato fornito da un'applicazione.
 
-Per un ripristino completo, preferisci `initialSnapshot`:
+Per il restauro completo, preferire `initialSnapshot`:
 
 ```jsx
 <FormRenderer
@@ -25,22 +27,35 @@ Per un ripristino completo, preferisci `initialSnapshot`:
 />
 ```
 
-Lo snapshot iniziale sostituisce `initialValues` per i campi e ripristina anche voci ripetibili
-annidate e timestamp come singolo stato coerente.
+Un primo snapshot sostituisce `initialValues` per i valori dei campi grezzi.
+voci ripetibili e timestamp client/server come uno stato coerente.
 
-## Osservare le bozze
+## Osservare drafts
 
-`onSnapshotChange(snapshot, change)` viene chiamato prima con `{ kind: "seed", dirty: false }`. Le
-modifiche successive usano `{ kind: "change", dirty: boolean }`.
+`onSnapshotChange(snapshot, change)` viene chiamato per primo con `{ kind: "seed", dirty: false }`. Più tardi
+modifiche utente utilizzare `{ kind: "change", dirty: boolean }`.
 
-Lo snapshot contiene `raw_values`, `repeatable` e `timestamps`, con date di creazione e aggiornamento
-del client e del server.
+Il snapshot contiene:
 
-## Inviare record
+```js
+{
+  raw_values: {},
+  repeatable: {},
+  timestamps: {
+    created_at_client: null,
+    updated_at_client: null,
+    created_at_server: null,
+    updated_at_server: null,
+  },
+}
+```
 
-`onSubmit(record, meta)` riceve il record descritto in [Output e record](/it/core/output-records).
-`meta` contiene `rawValues`, `repeatable`, `timestamps` e `validationSummary`.
+## Invia record
 
-Se `onSubmit` restituisce una promise, un overlay con `autoCloseOverlayOnSubmit` si chiude solo dopo
-la risoluzione. Usa `submitBlockedReason` per requisiti esterni allo schema ed `externalDirty` per
-stato dell’applicazione esterno al renderer.
+`onSubmit(record, meta)` riceve il record strutturato descritto in
+[Output e record](/it/core/output-records). `meta` contiene `rawValues`, `repeatable`, `timestamps`,
+e `validationSummary`.
+
+Se `onSubmit` restituisce una promessa, una sovrapposizione configurata con `autoCloseOverlayOnSubmit` chiude solo
+dopo che la promessa si risolve. Un rifiuto lo lascia aperto. Utilizzare `submitBlockedReason` per l'applicazione
+requisiti al di fuori di schema e `externalDirty` per lo stato dell'applicazione al di fuori di renderer.

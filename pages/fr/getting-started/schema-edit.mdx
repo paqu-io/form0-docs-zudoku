@@ -3,13 +3,13 @@ title: Modifiez votre premier schéma
 description: Ajoutez un NumericField et un CalculatedField en mode édition de schéma.
 ---
 
-import { Badge } from "zudoku/ui/Badge";
-import { Callout } from "zudoku/ui/Callout";
-import { Stepper } from "zudoku/ui/Stepper";
+<PageBadges />
 
-<Badge variant="default">CLI</Badge> <Badge variant="muted">Local</Badge>
+import { Callout } from "zudoku/ui/Callout"
+import { Stepper } from "zudoku/ui/Stepper"
 
 ## Flux d'édition en direct
+
 Cette page suppose que vous avez déjà exécuté `serve` et que l'aperçu en direct est ouvert à l'adresse `http://localhost:3030`.
 
 <Stepper>
@@ -19,12 +19,15 @@ Cette page suppose que vous avez déjà exécuté `serve` et que l'aperçu en di
    ```ansi
    form0(server)> schema edit
    ```
-   <Callout type="caution" title="Éditeur requis">
-      Le mode d'édition du schéma ouvre votre éditeur de code. Assurez-vous que la variable `EDITOR` ou `VISUAL` est configurée :
 
-      - **Linux/macOS** : Ajoutez `export EDITOR=code` à `~/.bashrc`, `~/.zshrc` ou `~/.profile`, puis redémarrez votre terminal ou exécutez `source ~/.bashrc`.
-      - **Windows (PowerShell)** : Exécutez `$env:EDITOR = "code"` pour la session en cours, ou ajoutez-le à votre profil PowerShell (`$PROFILE`).
-      - **Windows (CMD)** : Utilisez `set EDITOR=code` pour la session, ou configurez-le de façon permanente via *Propriétés système → Variables d'environnement*.
+   <Callout type="caution" title="Éditeur requis">
+     Le mode d'édition du schéma ouvre votre éditeur de code. Assurez-vous que la variable `EDITOR`
+     ou `VISUAL` est configurée : - **Linux/macOS** : Ajoutez `export EDITOR=code` à `~/.bashrc`,
+     `~/.zshrc` ou `~/.profile`, puis redémarrez votre terminal ou exécutez `source ~/.bashrc`. -
+     **Windows (PowerShell)** : Exécutez `$env:EDITOR = "code"` pour la session en cours, ou
+     ajoutez-le à votre profil PowerShell (`$PROFILE`). - **Windows (CMD)** : Utilisez `set
+     EDITOR=code` pour la session, ou configurez-le de façon permanente via _Propriétés système →
+     Variables d'environnement_.
    </Callout>
 
 1. Prévisualisez le schéma du formulaire :
@@ -33,7 +36,7 @@ Cette page suppose que vous avez déjà exécuté `serve` et que l'aperçu en di
    form0(server,schema)> preview
    ```
 
-1. Ajoutez un *NumericField* après un champ de votre choix, en utilisant le numéro de ligne affiché au début de chaque ligne (par exemple, `2` dans `2 | TextField ...`) dans l'aperçu du schéma :
+1. Ajoutez un _NumericField_ après un champ de votre choix, en utilisant le numéro de ligne affiché au début de chaque ligne (par exemple, `2` dans `2 | TextField ...`) dans l'aperçu du schéma :
 
    ```ansi
    form0(server,schema)> add NumericField after <id>
@@ -51,7 +54,7 @@ Cette page suppose que vous avez déjà exécuté `serve` et que l'aperçu en di
    }
    ```
 
-1. Ajoutez un *CalculatedField* après le champ `quantity` que vous venez de créer :
+1. Ajoutez un _CalculatedField_ après le champ `quantity` que vous venez de créer :
 
    ```ansi
    form0(server,schema)> add CalculatedField after <new-id>
@@ -81,6 +84,7 @@ Cette page suppose que vous avez déjà exécuté `serve` et que l'aperçu en di
    ```ansi
    form0(server,schema)> q
    ```
+
    Et arrêtez le serveur de développement :
 
    ```ansi

@@ -1,19 +1,33 @@
 ---
 title: Modalità e navigazione
-description: Configura modifica, header, sezioni, ripetibili e navigazione di validazione.
+description: Configura modifiche, intestazioni, sezioni, voci ripetibili e navigazione di convalida.
 ---
 
-Usa `mode="edit"` o `mode="readonly"`. Un modulo in sola lettura può mostrare l’azione di modifica
-integrata; `showPrimaryActionsInViewMode` ne controlla la visibilità.
+<PageBadges />
 
-L’header usa invio o salvataggio secondo `primaryActionMode`. Imposta `showHeader={false}` se l’app
-fornisce il proprio header. `onRequestClose` abilita l’annullamento e protegge le modifiche con una
-conferma.
+## Modalità di interazione e azioni
 
-`FormRenderer` gestisce sezioni inline e drilldown, elenchi ed editor ripetibili, un pannello di
-navigazione per sezioni ed errori, lo spostamento al primo campo non valido e lo scorrimento
-adattato alla tastiera.
+Imposta `mode="edit"` o `mode="readonly"`. Una forma di sola lettura espone l'azione di modifica incorporata;
+`showPrimaryActionsInViewMode` ne controlla la visibilità.
 
-`forceShowNavigationPanel` forza l’accesso alla navigazione. `keyboardScrollOffset` regola la
-destinazione verticale sotto header sovrapposti. `labelPosition` accetta `top` o `side`, mentre
-`labelWidthPercent` dimensiona la colonna laterale.
+L'intestazione incorporata mostra inviare o salvare in base a `primaryActionMode` . Imposta `showHeader={false}`
+quando l'applicazione fornisce la propria intestazione dello schermo e le azioni. `onRequestClose` consente di annullare
+comportamento e protegge le forme sporche con una conferma di scarto.
+
+## Sezioni e validazione
+
+`FormRenderer` possiede:
+
+- navigazione in linea e sezione drilldown;
+- elenco delle sezioni ripetibili e schermate dell'editor;
+- una scheda di navigazione per sezioni e problemi di convalida;
+- spostamento al primo campo non valido dopo un errore di submission;
+- keyboard-aware che scorre in campi focalizzati o non validi.
+
+`forceShowNavigationPanel` rende disponibile il punto di ingresso di navigazione anche quando il modulo corrente
+struttura normalmente non lo richiederebbe. `keyboardScrollOffset` regola la destinazione verticale
+per intestazioni di applicazioni o altre sovrapposizioni.
+
+`labelPosition` accetta `top` o `side`; utilizzare `labelWidthPercent` per dimensionare la colonna dell'etichetta sul lato
+Mantieni il comportamento di navigazione condizionale nello schema invece di duplicarlo nel componente
+Stato.

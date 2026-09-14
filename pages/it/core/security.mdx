@@ -1,7 +1,32 @@
 ---
-title: security (Coming soon)
+title: Sicurezza e sandboxing
+description: Modalità di sicurezza di espressione in form0-core.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/security".
+Le espressioni vengono valutate da form0-core in una modalità di sicurezza configurabile.
+
+## Modalità
+
+- `TRUSTED`: Accesso completo a JavaScript (predefinito).
+- `SAFE`: Globali limitati e modelli bloccati.
+- `CUSTOM`: Regole definite dall'utente.
+
+## Modalità provvisoria predefinita
+
+Modalità provvisoria blocchi modelli come `eval`, `Function`, `window`, `document`, `process`, `require`, e
+altri globali non sicuri. Inoltre limita il tempo di esecuzione e la profondità dello stack di chiamata.
+
+## Utilizzo di una configurazione di sicurezza
+
+```js
+import { createFormEngine, SAFE_SECURITY_CONFIG } from "form0-core"
+
+const engine = createFormEngine({
+  schema,
+  security: SAFE_SECURITY_CONFIG,
+})
+```
+
+La configurazione di sicurezza viene utilizzata per i campi calcolati e il codice evento.

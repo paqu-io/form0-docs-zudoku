@@ -1,17 +1,23 @@
 ---
-title: Referencia de la API de React Native
-description: Exportaciones públicas de form0-react-native.
+title: React Native Referencia API
+description: Componentes públicos, registros, temas, contextos, tipografía y activos exportados por form0-react-native.
 ---
 
-Todas las exportaciones compatibles están disponibles desde `form0-react-native`.
+<PageBadges />
 
-## Renderizado y temas
+Todas las exportaciones admitidas están disponibles desde `form0-react-native`.
 
-- `FormRenderer`, `FormHeader`
+## Representación y temas
+
+- `FormRenderer` — renderizar y administrar un formulario nativo impulsado por schema.
+- `FormHeader` — el encabezado del formulario nativo de binding.
 - `ThemeProvider`, `ThemeContext`, `useTheme`
 - `lightTheme`, `darkTheme`, `mergeThemes`, `getThemeByName`
 
-## Registro de campos
+Ver [FormRenderer](/es/bindings/react-native/form-renderer) y
+[Temas, fuentes e imágenes](/es/bindings/react-native/themes-assets).
+
+## Registro de campo
 
 - `FieldRegistryProvider`, `FieldRegistryContext`, `useFieldRegistry`
 - `createFieldRegistry`, `defaultFieldRegistry`
@@ -19,12 +25,15 @@ Todas las exportaciones compatibles están disponibles desde `form0-react-native
 - `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
 - `KNOWN_FIELD_TYPES`
 
+Ver [Campo personalizado renderers](/es/bindings/react-native/custom-renderers).
+
 ## Imágenes y tipografía
 
 - `ImageResolverProvider`, `ImageResolverContext`, `useImageResolver`
 - `Text`, `TextInput`
 - `form0Fonts` y las constantes `FORM0_FONT_FAMILY*`
 
-El paquete incluye declaraciones TypeScript para propiedades, snapshots, metadatos, opciones del
-motor, registros y renderizadores. Los hooks internos del motor y componentes predeterminados
-individuales no son exportaciones públicas.
+El paquete incluye declaraciones TypeScript para accesorios `FormRenderer`, snapshots, submission y
+guardar metadatos, opciones de motor, valores de registro y accesorios personalizados de campo. Motor interno
+ganchos, componentes predeterminados individuales, controladores repetibles y utilidades submission no son
+exportaciones públicas.

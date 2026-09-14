@@ -3,6 +3,8 @@ title: Integrazione diretta
 description: Gestisci direttamente il ciclo di vita di un connettore form0 in Node.js.
 ---
 
+<PageBadges />
+
 La CLI è il percorso di integrazione normale, ma entrambi i connettori ufficiali espongono lo stesso
 ciclo di vita:
 
@@ -13,19 +15,19 @@ ciclo di vita:
 - `destroy()` rilascia la connessione o il file locale.
 
 ```javascript
-import { Form0PostgreSQLConnector } from 'form0-connector-pg';
+import { Form0PostgreSQLConnector } from "form0-connector-pg"
 
-const connector = new Form0PostgreSQLConnector();
+const connector = new Form0PostgreSQLConnector()
 
-await connector.initialize();
-const health = await connector.healthCheck();
+await connector.initialize()
+const health = await connector.healthCheck()
 
 if (!health.healthy) {
-  throw new Error(health.message);
+  throw new Error(health.message)
 }
 
-const result = await connector.onFormSubmit(structuredRecord);
-await connector.destroy();
+const result = await connector.onFormSubmit(structuredRecord)
+await connector.destroy()
 ```
 
 La configurazione esplicita prevale sui valori dell’ambiente. Tieni le credenziali fuori dal

@@ -3,6 +3,8 @@ title: Custom field renderers
 description: Replace form0 React Native field presentation globally or within a component subtree.
 ---
 
+<PageBadges />
+
 Custom renderers change native presentation without moving calculations, visibility,
 requirements, or validation out of `form0-core`.
 
@@ -14,7 +16,7 @@ Pass a renderer map directly to `FormRenderer` for an isolated form:
 import { FormRenderer } from "form0-react-native"
 import { PhotoField } from "./photo-field.jsx"
 
-<FormRenderer schema={schema} renderers={{ PhotoField }} />
+;<FormRenderer schema={schema} renderers={{ PhotoField }} />
 ```
 
 A renderer receives the field and its evaluated interaction state:

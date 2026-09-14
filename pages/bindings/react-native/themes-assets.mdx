@@ -3,6 +3,8 @@ title: Themes, fonts, and images
 description: Configure form0 React Native colors, typography, and supporting-image resolution.
 ---
 
+<PageBadges />
+
 ## Color themes
 
 `colorMode` accepts `light` or `dark`. Supply a partial `customTheme` to override tokens; the
@@ -10,11 +12,7 @@ binding deep-merges it with the selected built-in theme. An application can reso
 preference with React Native's `useColorScheme` and pass the resulting mode.
 
 ```jsx
-<FormRenderer
-  schema={schema}
-  colorMode="dark"
-  customTheme={{ color: { primary: "#7c3aed" } }}
-/>
+<FormRenderer schema={schema} colorMode="dark" customTheme={{ color: { primary: "#7c3aed" } }} />
 ```
 
 `lightTheme`, `darkTheme`, `mergeThemes`, and `getThemeByName` are exported for application-level

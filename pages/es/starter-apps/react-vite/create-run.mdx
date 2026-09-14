@@ -1,41 +1,47 @@
 ---
-title: Crear y ejecutar la aplicación React y Vite
-description: Crea la aplicación web mantenida con form0-cli e inicia su servidor de desarrollo Vite.
+title: Crear y ejecutar el React y Vite starter
+description: Cree la web mantenida starter con form0-cli e inicie su servidor de desarrollo Vite.
 ---
 
-## Requisitos
+<PageBadges />
 
-- Node.js 22 o posterior
-- Un gestor de paquetes compatible; la plantilla fuente incluye un lockfile de npm
+## Necesidades
+
+- Node.js 22 o más reciente
+- Un administrador de paquetes compatible; la fuente starter confirma un archivo de bloqueo npm
 - Un navegador moderno
 
 ## Crear la aplicación
 
+Instale el CLI, luego inicialice un proyecto web:
+
 ```bash
 npm install --global form0-cli
-form0 init mi-aplicacion-form0
+form0 init my-form-app
 ```
 
-Elige **Aplicación web** y **React + Vite**. Entra en el directorio generado, instala las
-dependencias si es necesario e inicia la aplicación:
+Elija ** Aplicación web ** y ** React + Vite ** cuando se le solicite. Ingrese el directorio generado, instale su
+dependencias si el flujo seleccionado aún no lo ha hecho, e iniciar la aplicación:
 
 ```bash
-cd mi-aplicacion-form0
+cd my-form-app
 npm install
 npm run dev
 ```
 
-Abre la URL que muestra Vite, normalmente `http://localhost:5173`. La página inicial enumera los
-formularios de ejemplo y sus presentaciones en página y superposición.
+Abra el URL impreso por Vite, normalmente `http://localhost:5173`.
+ejemplos de formularios y sus presentaciones de página y superposición.
 
 ## Ejecutar con form0-cli
 
-`form0 serve --app` inicia el servidor de la aplicación configurado junto al servidor de desarrollo
-de la CLI. Usa este modo para que el manejador de envío predeterminado alcance los conectores locales.
+Desde el directorio del proyecto, `form0 serve --app` inicia el servidor de aplicaciones configurado junto
+Utilice este modo cuando desee que el controlador predeterminado de starter submission
+llegar a conectores configurados localmente.
 
 ```bash
 form0 serve --app
 ```
 
-Consulta [Servidores de aplicaciones](/es/cli/local-development/app-development-servers) y
-[Envíos y conectores](/es/starter-apps/react-vite/submissions-connectors).
+Ver [Servidores de desarrollo de aplicaciones](/es/cli/local-development/app-development-servers) y
+[Envíos y conectores](/es/starter-apps/react-vite/submissions-connectors) para el límite
+entre la aplicación del navegador, el servidor CLI y el conector de la base de datos.

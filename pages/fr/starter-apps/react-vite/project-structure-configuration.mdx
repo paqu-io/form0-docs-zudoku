@@ -1,39 +1,51 @@
 ---
 title: Structure et configuration du projet React et Vite
-description: Comprenez la structure et configurez le moteur, les présentations, les schémas et le serveur de développement.
+description: Comprendre la mise en page Web starter et configurer son moteur, sa présentation, schemas et son serveur de développement.
 ---
 
-Le starter est une application Vite normale. Les valeurs form0 se trouvent dans `form0.config.js` et
-le code applicatif reste sous `src`.
+<PageBadges />
+
+Le starter est une application normale Vite. Ses valeurs par défaut form0-specific vivent dans `form0.config.js`,
+alors que le code de l'application reste sous `src`.
 
 ```text
 .
 ├── form0.config.js
 ├── src/
-│   ├── components/        # wrappers et primitives d’interface
-│   ├── field-renderers/   # rendus propres à l’application
-│   ├── forms/             # schémas, registre et chargeur
-│   ├── pages/             # pages et routes
-│   ├── styles/            # styles form0 supplémentaires
-│   └── themes/            # thèmes Vanilla Extract facultatifs
-└── vite.config.js         # plugins, alias et proxy local
+│   ├── components/        # application form wrappers and UI primitives
+│   ├── field-renderers/   # application-owned renderer overrides
+│   ├── forms/             # schema files, registry, and loader
+│   ├── pages/             # home and form routes
+│   ├── styles/            # application-level form overrides
+│   └── themes/            # optional Vanilla Extract themes
+└── vite.config.js         # React plugins, aliases, and local API proxy
 ```
 
 ## Zones de configuration
 
-`form0.config.js` contrôle la mise en page, le mode et le stockage du moteur, le thème,
-l’interaction, le répertoire des schémas, le serveur de développement, les rendus de champs et le
-format de sortie. Les props peuvent remplacer les valeurs pertinentes pour un formulaire précis.
+Modifiez `form0.config.js` pour contrôler:
 
-> [!CAUTION]
-> Conservez `engine.store` à `snapshot`. La configuration incluse documente une limite connue des
-> messages de validation avec le mode `selector`.
+- `layout`: largeur par défaut, placement des étiquettes et disposition par présentation;
+- `engine`: évaluation du fil principal ou worker et stratégie du magasin React;
+- `theme`: clair, sombre, système, ou une classe de thème d'application;
+- `interaction`: comportement initial d'édition/lecture seule et comportement de recouvrement submission;
+- `schemas.directory`: le répertoire schema utilisé par l'outillage;
+- `devServer`: la commande app, le connecteur submission le commutateur, et API la base URL;
+- `fieldRenderers`: types de champs remplacés par l'application renderers; et
+- `output.useKeys`: si les enregistrements structurés préfèrent les clés schema ou les noms de données.
 
-## Proxy de développement
+Les accessoires de composant peuvent remplacer les valeurs par défaut pertinentes pour un formulaire spécifique.
+par défaut dans le comportement config et keep form dans le schema.
 
-Vite transmet `/api` à `http://localhost:3030` par défaut. Définissez `FORM0_DEV_API_URL` dans
-l’environnement du processus ou un fichier `.env` Vite local pour changer cette adresse. La valeur
-est consommée par la configuration Vite et n’est pas exposée au navigateur.
+> [ATTENTION]
+> Gardez le magasin de moteur réglé sur `snapshot` dans ce starter.
+> limitation de message de validation connue avec le mode `selector`.
 
-Ne placez jamais d’identifiants dans les variables client. Les identifiants de base de données
-appartiennent à l’environnement CLI ou serveur décrit dans [Connecteurs](/fr/connectors/overview).
+## Procuration de développement
+
+Le serveur Vite remplace `/api` par `http://localhost:3030` par défaut.
+`FORM0_DEV_API_URL` dans l'environnement de processus ou dans un fichier Vite `.env` local pour utiliser un autre serveur CLI
+La valeur est consommée par la configuration Vite et n'est pas exposée au code du navigateur.
+
+Ne placez pas d'identifiants dans les variables côté client. Les identifiants de base de données appartiennent à CLI ou
+environnement de connecteur côté serveur décrit dans la [documentation du connecteur](/fr/connectors/overview).

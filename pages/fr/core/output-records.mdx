@@ -1,7 +1,38 @@
 ---
-title: output-records (Coming soon)
+title: Produits et dossiers
+description: État du moteur et sortie d'enregistrement structurée.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/output-records".
+form0-core expose deux sorties principales:
+
+- État du moteur (`values`, `errors`, `visible`, `required`, `read_only`)
+- Enregistrements structurés pour la persistance (`createStructuredRecord`)
+
+## État du moteur
+
+Après `engine.eval()`, appelez `engine.getState()` pour accéder au dernier état.
+
+## Production d'enregistrements structurés
+
+`createStructuredRecord` transforme l'état du moteur en un format submission -friendly:
+
+- `form_values` utilise les clés de champ par défaut
+- Les sections répétables deviennent des tableaux d'enregistrements enfants
+- Les sections sont omises (conteneurs seulement)
+
+### Mode clé de champ
+
+Vous pouvez passer aux touches `data_name` en utilisant `fieldKeyMode`:
+
+```js
+const record = createStructuredRecord(state, fields, {
+  fieldKeyMode: "data-name",
+})
+```
+
+## Sections répétables
+
+Les sections répétables créent des enregistrements imbriqués. Utilisez `originalElements` pour préserver l'imbrication correcte
+structure lors de la construction des records.

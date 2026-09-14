@@ -1,7 +1,24 @@
 ---
-title: OFF (Coming soon)
+title: OFF
+description: Elimina controladores de eventos.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/events/off".
+Elimina controladores de eventos.
+
+## Ejemplo
+
+```js
+OFF("change", "city")
+```
+
+## Parámetros
+
+- eventType: cadena
+- fieldKeyOrCallback: cadena|función (opcional)
+- callback: función (opcional)
+
+## Devuelve
+
+El descriptor de la operación (utilizado por los clientes).

@@ -1,10 +1,12 @@
 ---
 title: FormRenderer
-description: Configura il componente React principale di form0.
+description: Configurare il componente primario form0 React.
 ---
 
-`FormRenderer` valida e prepara uno schema, crea il motore, renderizza campi e sezioni e produce
-record strutturati al momento dell’invio.
+<PageBadges />
+
+`FormRenderer` convalida e prepara uno schema, crea il motore del modulo, renderizza i campi e
+Sezioni e produce record strutturati su submission.
 
 ```jsx
 <FormRenderer
@@ -20,28 +22,30 @@ record strutturati al momento dell’invio.
 
 ## Proprietà essenziali
 
-| Proprietà | Scopo |
-| --- | --- |
-| `schema` | Uno schema form0 contenente `form.elements`. |
-| `initialValues` | Valori iniziali dei campi non ripetibili. |
-| `initialSnapshot` | Ripristina insieme valori, stato ripetibile e timestamp. |
-| `overrideValues` | Applica valori autorevoli sopra quelli iniziali. |
-| `onSubmit` | Riceve il record strutturato e i metadati dell’invio. |
-| `onSnapshotChange` | Osserva lo stato iniziale e le modifiche dell’utente. |
-| `mode` | Avvia in modalità `edit` o `readonly`. |
+| Proprietà          | Oggetto                                                           |
+| ------------------ | ----------------------------------------------------------------- |
+| `schema`           | Un form0 schema contenente `form.elements`.                       |
+| `initialValues`    | Valori di campo iniziali non ripetibili.                          |
+| `initialSnapshot`  | Ripristinare valori grezzi, stato ripetibile e timestamp insieme. |
+| `overrideValues`   | Applicare valori autorevoli rispetto ai valori iniziali.          |
+| `onSubmit`         | Ricevi il record strutturato e i metadati submission.             |
+| `onSnapshotChange` | Osservare seed e user-change snapshots.                           |
+| `mode`             | Avviare la modalità `edit` o `readonly`.                          |
 
-## UI e stato gestiti dall’applicazione
+## UI e Stato di proprietà dei consumatori
 
-- `headerAccessory` renderizza un nodo React, o una funzione che riceve `{ mode }`, tra riepilogo e
-  corpo del modulo.
-- `recordMetadataFields` mostra metadati in sola lettura. Un `displayValue` non entra mai in valori,
-  snapshot o invii.
-- `externalDirty` include modifiche esterne nella conferma di abbandono degli overlay.
-- `submitBlockedReason` blocca l’invio finché un requisito esterno non è risolto.
-- `onSchemaReady` riceve lo schema preparato dopo aver assicurato chiavi stabili.
+- `headerAccessory` rende un nodo React, o una funzione che riceve `{ mode }`, tra il sommario
+  e forma il corpo.
+- `recordMetadataFields` visualizza metadati dei record in sola lettura. Un descrittore con `displayValue` non
+  immette i valori del motore, snapshots, o i valori inviati.
+- `externalDirty` include modifiche di proprietà dell'applicazione nella conferma dello scarto di sovrapposizione.
+- `submitBlockedReason` disattiva e protegge submission mentre un requisito esterno è irrisolto.
+- `onSchemaReady` riceve la schema preparata dopo che sono state garantite chiavi stabili.
 
-Le proprietà standard aggiuntive, come `id`, `aria-*` ed eventi, vengono passate al `<form>`. Non
-usare questo percorso per configurare il motore.
+## Proprietà dell'elemento modulo
 
-Continua con [Valori, snapshot e invio](/it/bindings/react/values-snapshots-submission) oppure
+Ulteriori proprietà del modulo standard come `id`, `aria-*` e gestori di eventi vengono inoltrati a
+il reso `<form>`. Non utilizzare questo percorso per la configurazione del motore.
+
+Continua con [Valori, snapshots, e submission](/it/bindings/react/values-snapshots-submission) o
 [Modalità, posizionamento e navigazione](/it/bindings/react/modes-placement-navigation).

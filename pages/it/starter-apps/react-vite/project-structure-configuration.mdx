@@ -1,39 +1,51 @@
 ---
 title: Struttura e configurazione del progetto React e Vite
-description: Comprendi la struttura e configura motore, presentazioni, schemi e server di sviluppo.
+description: Comprendere il layout web starter e configurare il suo motore, la presentazione, schemas e il server di sviluppo.
 ---
 
-Lo starter è una normale applicazione Vite. Le impostazioni form0 sono in `form0.config.js`, mentre
-il codice dell’applicazione rimane in `src`.
+<PageBadges />
+
+Il starter è un'applicazione normale Vite. I suoi predefiniti form0-specific vivono in `form0.config.js`,
+mentre il codice dell'applicazione rimane sotto `src`.
 
 ```text
 .
 ├── form0.config.js
 ├── src/
-│   ├── components/        # wrapper e primitive dell’interfaccia
-│   ├── field-renderers/   # renderer dell’applicazione
-│   ├── forms/             # schemi, registro e loader
-│   ├── pages/             # pagine e route
-│   ├── styles/            # stili form0 aggiuntivi
-│   └── themes/            # temi Vanilla Extract opzionali
-└── vite.config.js         # plugin, alias e proxy locale
+│   ├── components/        # application form wrappers and UI primitives
+│   ├── field-renderers/   # application-owned renderer overrides
+│   ├── forms/             # schema files, registry, and loader
+│   ├── pages/             # home and form routes
+│   ├── styles/            # application-level form overrides
+│   └── themes/            # optional Vanilla Extract themes
+└── vite.config.js         # React plugins, aliases, and local API proxy
 ```
 
 ## Aree di configurazione
 
-`form0.config.js` controlla layout, modalità e store del motore, tema, interazione, directory degli
-schemi, server di sviluppo, renderer dei campi e formato di output. Le prop possono sostituire le
-impostazioni pertinenti per un singolo modulo.
+Modificare `form0.config.js` per controllare:
 
-> [!CAUTION]
-> Mantieni `engine.store` su `snapshot`. La configurazione inclusa documenta un limite noto dei
-> messaggi di validazione con la modalità `selector`.
+- `layout`: larghezza predefinita, posizionamento delle etichette e layout di presentazione;
+- `engine`: valutazione del filo principale o worker e strategia del negozio React;
+- `theme`: luce, buio, sistema, o una classe di tema di applicazione;
+- `interaction`: comportamento iniziale di modifica / sola lettura e comportamento di sovrapposizione submission;
+- `schemas.directory`: la directory schema utilizzata dagli strumenti;
+- `devServer`: il comando dell'app, lo switch submission del connettore e API base URL;
+- `fieldRenderers`: tipi di campo sostituiti dall'applicazione renderers; e
+- `output.useKeys`: se i record strutturati preferiscono chiavi schema o nomi di dati.
+
+I puntelli dei componenti possono ignorare le impostazioni predefinite pertinenti per un modulo specifico.
+default nella configurazione e mantenere il comportamento della forma in schema.
+
+> [!CAUZIONE]
+> Mantenere il motore impostato su `snapshot` in questo starter. La configurazione inclusa documenti a
+> limitazione nota di convalida-messaggio con la modalità `selector`.
 
 ## Proxy di sviluppo
 
-Vite inoltra `/api` a `http://localhost:3030` per impostazione predefinita. Definisci
-`FORM0_DEV_API_URL` nell’ambiente del processo o in un file `.env` locale di Vite per cambiare
-indirizzo. Il valore viene usato dalla configurazione Vite e non è esposto al browser.
+Il server Vite proxy `/api` a `http://localhost:3030` per impostazione predefinita.
+`FORM0_DEV_API_URL` nell'ambiente di processo o in un file locale Vite `.env` per utilizzare un altro server CLI
+indirizzo. Il valore viene consumato dalla configurazione di Vite e non è esposto al codice del browser.
 
-Non inserire credenziali nelle variabili client. Le credenziali del database appartengono
-all’ambiente CLI o server descritto in [Connettori](/it/connectors/overview).
+Non inserire le credenziali nelle variabili lato client. Le credenziali del database appartengono alla CLI o
+ambiente del connettore lato server descritto nella documentazione del connettore](/it/connectors/overview).

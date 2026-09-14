@@ -1,10 +1,12 @@
 ---
 title: FormRenderer
-description: Configura il componente principale form0 per React Native.
+description: Configurare il componente primario form0 React Native.
 ---
 
-`FormRenderer` valida e prepara lo schema, crea il motore, renderizza campi e sezioni native e
-produce record strutturati o snapshot ripristinabili.
+<PageBadges />
+
+`FormRenderer` convalida e prepara una schema, crea il motore del modulo, renderizza i campi nativi e
+Sezioni e produce record strutturati o ripristinabili snapshots.
 
 ```jsx
 <FormRenderer
@@ -19,25 +21,28 @@ produce record strutturati o snapshot ripristinabili.
 
 ## Proprietà essenziali
 
-| Proprietà | Scopo |
-| --- | --- |
-| `schema` | Schema form0 contenente `form.elements`. |
-| `initialValues` | Valori iniziali non ripetibili. |
-| `initialSnapshot` | Ripristina insieme valori, ripetibili e timestamp. |
-| `overrideValues` | Applica valori autorevoli sopra quelli iniziali. |
-| `onSubmit` | Riceve un record validato e i metadati. |
-| `onSave` | Riceve uno snapshot senza richiedere un modulo valido. |
-| `onSnapshotChange` | Osserva inizializzazione e modifiche utente. |
-| `mode` | Avvia in modalità `edit` o `readonly`. |
+| Proprietà          | Oggetto                                                           |
+| ------------------ | ----------------------------------------------------------------- |
+| `schema`           | Un form0 schema contenente `form.elements`.                       |
+| `initialValues`    | Valori di campo iniziali non ripetibili.                          |
+| `initialSnapshot`  | Ripristinare valori grezzi, stato ripetibile e timestamp insieme. |
+| `overrideValues`   | Applicare valori autorevoli rispetto ai valori iniziali.          |
+| `onSubmit`         | Ricevere un record strutturato con convalida e metadati.          |
+| `onSave`           | Ricevere una snapshot senza richiedere la validità del modulo.    |
+| `onSnapshotChange` | Osservare seed e user-change snapshots.                           |
+| `mode`             | Avviare la modalità `edit` o `readonly`.                          |
 
 ## Integrazione host
 
-- `onRequestClose` abilita l’annullamento e la conferma quando ci sono modifiche.
-- `headerAccessory` mostra contenuto sotto l’header; `showHeader` nasconde quello integrato.
-- `primaryActionMode`, `primaryActionLabel` e `showPrimaryActionsInViewMode` configurano l’azione
-  principale.
-- `onSchemaReady` riceve lo schema preparato.
-- `engineOptions` fornisce helper, sicurezza, avvisi, operazioni e osservazione del motore.
+- `onRequestClose` consente l'azione di annullamento della radice e riceve `{ reason: "cancel" }` dopo qualsiasi
+  necessaria conferma dello scarto.
+- `headerAccessory` rende il contenuto dell'applicazione immediatamente sotto l'intestazione incorporata.
+- `showHeader` nasconde l'intestazione incorporata quando l'host possiede la navigazione e le azioni circostanti.
+- `primaryActionMode`, `primaryActionLabel` e `showPrimaryActionsInViewMode` personalizzano il
+  azione primaria incorporata.
+- `onSchemaReady` riceve la schema preparata dopo che sono state garantite chiavi stabili.
+- `engineOptions` fornisce helper di base, configurazione di sicurezza, avvisi, gestione delle operazioni e
+  aggiornare l'osservazione.
 
-Continua con [Valori, snapshot e invio](/it/bindings/react-native/values-snapshots-submission) o
-[Modalità e navigazione](/it/bindings/react-native/modes-navigation).
+Continua con [Valori, snapshots e submission](/it/bindings/react-native/values-snapshots-submission)
+o [Modi e navigazione](/it/bindings/react-native/modes-navigation).

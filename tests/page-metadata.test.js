@@ -8,15 +8,15 @@ import {
   sitemapExcludedPaths,
 } from "../src/seo/page-metadata.js"
 
-test("published pages and placeholders have one shared indexability contract", () => {
+test("all substantive translations are published and indexable", () => {
   const pages = allPageMetadata()
   const placeholders = pages.filter((page) => page.status === "untranslated")
   const temporary = pages.filter((page) => page.status === "temporary")
 
-  assert.equal(placeholders.length, 141)
+  assert.equal(placeholders.length, 0)
   assert.equal(temporary.length, 4)
-  assert.ok(placeholders.every((page) => !page.indexable))
   assert.ok(temporary.every((page) => !page.indexable))
+  assert.equal(pages.filter((page) => page.indexable).length, 452)
   assert.ok(pages.filter((page) => page.indexable).every((page) => page.description))
   assert.deepEqual(
     new Set(sitemapExcludedPaths()),
@@ -24,7 +24,7 @@ test("published pages and placeholders have one shared indexability contract", (
   )
 })
 
-test("hreflang candidates contain only substantive translations", () => {
+test("hreflang candidates contain all published translations", () => {
   const quickstart = resolvePageMetadata("/getting-started/quickstart/")
   const overview = resolvePageMetadata("/core/overview")
 
@@ -32,7 +32,10 @@ test("hreflang candidates contain only substantive translations", () => {
     quickstart.alternates.map(({ locale }) => locale),
     ["en", "es", "fr", "it"],
   )
-  assert.deepEqual(overview.alternates, [{ locale: "en", pathname: "/core/overview" }])
+  assert.deepEqual(
+    overview.alternates.map(({ locale }) => locale),
+    ["en", "es", "fr", "it"],
+  )
 })
 
 test("canonical URLs normalize trailing slashes", () => {

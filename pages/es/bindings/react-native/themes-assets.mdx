@@ -1,21 +1,28 @@
 ---
 title: Temas, fuentes e imágenes
-description: Configura colores, tipografía e imágenes auxiliares de form0 en React Native.
+description: Configurar form0 React Native colores, tipografía y resolución de imagen de apoyo.
 ---
 
-`colorMode` acepta `light` o `dark`. Un `customTheme` parcial se combina con el tema integrado. La
-aplicación puede resolver la preferencia del dispositivo con `useColorScheme` y pasar el modo.
+<PageBadges />
+
+## Temas de color
+
+`colorMode` acepta `light` o `dark`. Proporcione un `customTheme` parcial para anular tokens; el
+binding lo fusiona profundamente con el tema incorporado seleccionado. Una aplicación puede resolver el dispositivo
+preferencia con React Native 's `useColorScheme` y pasar el modo resultante.
 
 ```jsx
 <FormRenderer schema={schema} colorMode="dark" customTheme={{ color: { primary: "#7c3aed" } }} />
 ```
 
-También se exportan `lightTheme`, `darkTheme`, `mergeThemes`, `getThemeByName`, `ThemeProvider` y
-`useTheme`.
+`lightTheme`, `darkTheme`, `mergeThemes` y `getThemeByName` se exportan para el nivel de aplicación
+`ThemeProvider` y `useTheme` pueden mantener la interfaz de usuario nativa circundante alineada con la
+forma.
 
-## Fuentes incluidas
+## Fuentes empaquetadas
 
-En Expo, carga `form0Fonts` antes de renderizar:
+El paquete exporta sus activos Figtree a través de `form0Fonts`. En Expo, cárguelos en la aplicación
+inicio antes de renderizar el formulario:
 
 ```jsx
 import { useFonts } from "expo-font"
@@ -23,18 +30,22 @@ import { form0Fonts, FormRenderer } from "form0-react-native"
 
 const [fontsLoaded] = useFonts(form0Fonts)
 if (!fontsLoaded) return null
+
 return <FormRenderer schema={schema} />
 ```
 
-## Imágenes auxiliares
+## Imágenes de apoyo
 
-Las URL HTTP y HTTPS se resuelven como `{ uri }`. Para imágenes locales, React Native requiere
-referencias estáticas; proporciona un `imageResolver` que mapee rutas del esquema a fuentes
-importadas o cargadas con `require`.
+Las rutas HTTP y HTTPS remotas se resuelven a `{ uri }` de forma predeterminada.
+imágenes para que se puedan descubrir estáticamente, así que proporcione un `imageResolver` que asigne rutas schema
+fuentes de imagen importadas o requeridas:
 
 ```jsx
-const images = { "safety/helmet.png": require("./assets/safety/helmet.png") }
+const images = {
+  "safety/helmet.png": require("./assets/safety/helmet.png"),
+}
+
 <FormRenderer schema={schema} imageResolver={(path) => images[path] ?? null} />
 ```
 
-El starter Expo mantenido genera este mapa al cambiar los recursos.
+El mantenimiento de Expo starter genera esta asignación al cambiar los activos de imagen de soporte.

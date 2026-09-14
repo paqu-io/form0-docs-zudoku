@@ -1,7 +1,84 @@
 ---
-title: form (Coming soon)
+title: Oggetto modulo
+description: Attributi schema di primo livello e metadati della forma.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/form".
+import { Callout } from "zudoku/ui/Callout"
+
+Ogni schema inizia con un oggetto `form`. Definisce metadati, campi speciali ed eventi.
+
+## Attributi
+
+<Callout type="info" title="Attributi a livello di app">
+  Gli attributi contrassegnati con ✓ nella colonna **A livello di app** sono metadati a livello di
+  applicazione non elaborati direttamente dal motore. Possono essere utilizzati quando si integra il
+  prodotto SaaS [reform](https://reformapp.io) o quando si creano funzionalità simili nella propria
+  applicazione.
+</Callout>
+
+| Attributo               |   Tipo   | Obbligatorio | A livello di app | Note                                                                                                                       |
+| ----------------------- | :------: | :----------: | :--------------: | -------------------------------------------------------------------------------------------------------------------------- |
+| `name`                  | stringa  |      ✓       |                  | Nome della forma umano-friendly.                                                                                           |
+| `description`           | stringa  |              |                  | Descrizione del modulo.                                                                                                    |
+| `id`                    | stringa  |      ✓       |                  | Identificatore unico del modulo.                                                                                           |
+| `record_count`          |  numero  |              |        ✓         | Contatore operativo di proprietà della piattaforma. Numero di record nel modulo.                                           |
+| `record_last_change_at` | stringa  |              |        ✓         | Contatore operativo di proprietà della piattaforma. Ultima modifica record data / ora (ISO 8601).                          |
+| `form_created_at`       | stringa  |              |        ✓         | Data/ora di creazione del modulo (ISO 8601).                                                                               |
+| `form_updated_at`       | stringa  |              |        ✓         | Modulo ultimo aggiornamento data/ora (ISO 8601).                                                                           |
+| `form_created_by`       | stringa  |              |        ✓         | Utente che ha creato il form.                                                                                              |
+| `form_updated_by`       | stringa  |              |        ✓         | Utente che ha aggiornato il modulo.                                                                                        |
+| `status`                | stringa  |              |        ✓         | Stato del modulo, solitamente `active` o `inactive`.                                                                       |
+| `version`               | stringa  |              |        ✓         | Versione schema di proprietà della piattaforma opzionale. form0-core non lo incrementa.                                    |
+| `main_org_id`           | stringa  |              |        ✓         | ID organizzazione principale.                                                                                              |
+| `main_org_metadata`     | oggetto  |              |        ✓         | Principali campi di metadati dell'organizzazione.                                                                          |
+| `sub_org_id`            | stringa  |              |        ✓         | ID di sotto-organizzazione.                                                                                                |
+| `sub_org_metadata`      | oggetto  |              |        ✓         | Campi di metadati di sotto-organizzazione.                                                                                 |
+| `project_id`            | stringa  |              |        ✓         | ID progetto.                                                                                                               |
+| `project_metadata`      | oggetto  |              |        ✓         | Campi dei metadati del progetto.                                                                                           |
+| `ai`                    | oggetto  |              |                  | Metadati AI per la guida a livello di modulo (vedere [Metadati AI](/it/core/ai-metadata)).                                 |
+| `status_field`          | oggetto  |      ✓       |                  | Definizione del campo di stato speciale (vedere [Metacampi](/it/core/fields/meta-fields#statusfield)).                     |
+| `title_field`           | oggetto  |      ✓       |                  | Definizione del campo titolo speciale (vedere [Metacampi](/it/core/fields/meta-fields#titlefield)).                        |
+| `bounding_box`          |  array   |              |        ✓         | `[min_lat, min_lng, max_lat, max_lng]` contiene tutti i record.                                                            |
+| `location_enabled`      | booleano |              |        ✓         | Abilita la cattura della posizione.                                                                                        |
+| `location_required`     | booleano |              |        ✓         | Richiede i dati di posizione quando abilitato.                                                                             |
+| `image`                 | stringa  |              |        ✓         | URL per l'icona del modulo (originale).                                                                                    |
+| `image_thumbnail`       | stringa  |              |        ✓         | URL per icona miniatura (160x160 px).                                                                                      |
+| `image_small`           | stringa  |              |        ✓         | URL per icona piccola (320x320 px).                                                                                        |
+| `image_large`           | stringa  |              |        ✓         | URL per icona di grandi dimensioni (640x640 px).                                                                           |
+| `events`                | oggetto  |              |                  | Blocco codice evento (`events.code`).                                                                                      |
+| `form_links`            | oggetto  |              |                  | Collegamenti a/da altre forme (usati con `FormLinkField`, vedere [Campi Meta](/it/core/fields/meta-fields#formlinkfield)). |
+| `elements`              |  array   |      ✓       |                  | Campi modulo e contenitori (vedere [Elementi](/it/core/schema/elements)).                                                  |
+
+Per informazioni dettagliate su ciascun attributo, inclusi i valori predefiniti e le scelte, vedere [Attributi modulo](/it/core/schema/form-attributes).
+
+## Campi speciali
+
+`status_field` e `title_field` sono definiti al livello superiore, non in `elements`.
+convalidati come i tipi di campo standard ma con comportamenti fissi. Vedere [Campi Meta](/it/core/fields/meta-fields) per i dettagli.
+
+## Eventi
+
+`events.code` contiene espressioni builtin e JavaScript che registrano gestori di eventi utilizzando builtin come
+`ON`, `OFF`, `ALERT`, `SETVALUE`, ecc Vedere [Eventi](/it/core/builtins/events-overview) per i dettagli.
+
+## Esempio
+
+```json
+{
+  "form": {
+    "name": "Inspection",
+    "description": "Weekly inspection form",
+    "id": "form_001",
+    "status": "active",
+    "version": "1",
+    "location_enabled": true,
+    "location_required": false,
+    "status_field": { "type": "StatusField", "label": "Status", "choices": [] },
+    "title_field": { "type": "TitleField", "label": "Title", "elements": [] },
+    "events": { "code": "ON('load-record', function (e) { ALERT('Ready'); })" },
+    "elements": []
+  }
+}
+```

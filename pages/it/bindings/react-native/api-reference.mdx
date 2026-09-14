@@ -1,15 +1,21 @@
 ---
-title: Riferimento API React Native
-description: Export pubblici di form0-react-native.
+title: Riferimento React Native API
+description: Componenti pubblici, registri, temi, contesti, tipografia e risorse esportate da form0-react-native.
 ---
 
-Tutti gli export supportati sono disponibili da `form0-react-native`.
+<PageBadges />
+
+Tutte le esportazioni supportate sono disponibili da `form0-react-native`.
 
 ## Rendering e temi
 
-- `FormRenderer`, `FormHeader`
+- `FormRenderer` — esegue il rendering e la gestione di un modulo nativo basato su schema.
+- `FormHeader` — l'intestazione di forma nativa di binding.
 - `ThemeProvider`, `ThemeContext`, `useTheme`
 - `lightTheme`, `darkTheme`, `mergeThemes`, `getThemeByName`
+
+Vedere [FormRenderer](/it/bindings/react-native/form-renderer) e
+[Temi, font e immagini](/it/bindings/react-native/themes-assets).
 
 ## Registro dei campi
 
@@ -19,12 +25,15 @@ Tutti gli export supportati sono disponibili da `form0-react-native`.
 - `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
 - `KNOWN_FIELD_TYPES`
 
+Vedere [Campo personalizzato renderers](/it/bindings/react-native/custom-renderers).
+
 ## Immagini e tipografia
 
 - `ImageResolverProvider`, `ImageResolverContext`, `useImageResolver`
 - `Text`, `TextInput`
 - `form0Fonts` e le costanti `FORM0_FONT_FAMILY*`
 
-Il pacchetto include dichiarazioni TypeScript per proprietà, snapshot, metadati, opzioni del motore,
-registri e renderer. Gli hook interni del motore e i singoli componenti predefiniti non sono export
-pubblici.
+Il pacchetto include dichiarazioni TypeScript per puntelli `FormRenderer`, snapshots, submission e
+salvare i metadati, le opzioni del motore, i valori del Registro di sistema e i props del campo personalizzato renderer.
+ganci, singoli componenti predefiniti, controller ripetibili e utilità submission non sono
+esportazioni pubbliche.

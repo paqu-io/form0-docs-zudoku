@@ -1,7 +1,38 @@
 ---
-title: overview (Coming soon)
+title: Aperçu général
+description: Qu'est-ce que form0-core est responsable et comment il s'intègre dans l'écosystème form0.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/overview".
+import { Callout } from "zudoku/ui/Callout"
+
+`form0-core` est le moteur schema qui alimente les calculs, la visibilité, les exigences,
+C'est framework -agnostique et s'exécute dans n'importe quel JavaScript runtime (Node.js,
+navigateurs, React Native, etc.).
+
+## Ce que fait form0-core
+
+- Valide les définitions de formulaire schemas et de champ
+- Évalue les champs et expressions calculés
+- Applique les conditions de visibilité, requises et en lecture seule
+- Exécute les événements définis dans `form.events.code`
+- Expose état structuré (`values`, `errors`, `visible`, `required`, `read_only`)
+- Produit des enregistrements structurés pour submission
+
+## Ce que form0-core ne fait pas
+
+- Rendu ou mise en page de l'interface utilisateur
+- Persistance des données ou mise en réseau
+- Authentification ou gestion des utilisateurs
+
+<Callout type="info" title="Application-level attributes and field types">
+  Certains attributs schema sont des métadonnées au niveau de l'application, et certains types de champs nécessitent une interaction avec d'autres formulaires de votre application,
+  Elles ne sont donc pas traitées directement par le moteur.
+
+Ces attributs et types de champs sont toujours acceptés par le moteur. Ils peuvent être utilisés lors de l'intégration avec [reform](https://reformapp.io),
+le produit SaaS construit par [paqu.io](https://paqu.io) (l'équipe derrière form0), ou lors de la création de fonctionnalités similaires dans votre propre application.
+
+  <br />
+  Pour plus de détails, consultez [formuler les attributs](/fr/core/schema/form) et [types de champs](/fr/core/fields/catalog).
+</Callout>

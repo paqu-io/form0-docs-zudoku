@@ -3,6 +3,8 @@ title: FormRenderer
 description: Configure the primary form0 React component.
 ---
 
+<PageBadges />
+
 `FormRenderer` validates and prepares a schema, creates the form engine, renders fields and
 sections, and produces structured records on submission.
 
@@ -20,15 +22,15 @@ sections, and produces structured records on submission.
 
 ## Essential properties
 
-| Property | Purpose |
-| --- | --- |
-| `schema` | A form0 schema containing `form.elements`. |
-| `initialValues` | Initial non-repeatable field values. |
-| `initialSnapshot` | Restore raw values, repeatable state, and timestamps together. |
-| `overrideValues` | Apply authoritative values over initial values. |
-| `onSubmit` | Receive the structured record and submission metadata. |
-| `onSnapshotChange` | Observe seed and user-change snapshots. |
-| `mode` | Start in `edit` or `readonly` mode. |
+| Property           | Purpose                                                        |
+| ------------------ | -------------------------------------------------------------- |
+| `schema`           | A form0 schema containing `form.elements`.                     |
+| `initialValues`    | Initial non-repeatable field values.                           |
+| `initialSnapshot`  | Restore raw values, repeatable state, and timestamps together. |
+| `overrideValues`   | Apply authoritative values over initial values.                |
+| `onSubmit`         | Receive the structured record and submission metadata.         |
+| `onSnapshotChange` | Observe seed and user-change snapshots.                        |
+| `mode`             | Start in `edit` or `readonly` mode.                            |
 
 ## Consumer-owned UI and state
 

@@ -13,10 +13,10 @@
   },
   "getting-started": {
     "quickstart": {
-      "title": "Quickstart"
+      "title": "Démarrage rapide"
     },
     "schema-edit": {
-      "title": "Edit your first schema"
+      "title": "Modifier votre premier schéma"
     }
   },
   "cli": {
@@ -115,57 +115,57 @@
   },
   "core": {
     "overview": {
-      "title": "Overview"
+      "title": "Vue d’ensemble"
     },
     "concepts": {
       "title": "Concepts"
     },
     "schema": {
       "form": {
-        "title": "Form object"
+        "title": "Objet formulaire"
       },
       "form-attributes": {
-        "title": "Form attributes"
+        "title": "Attributs du formulaire"
       },
       "elements": {
-        "title": "Elements and nesting"
+        "title": "Éléments et imbrication"
       },
       "conditions-operators": {
-        "title": "Conditions and operators"
+        "title": "Conditions et opérateurs"
       },
       "validation": {
-        "title": "Schema validation"
+        "title": "Validation du schéma"
       }
     },
     "fields": {
       "catalog": {
-        "title": "Field catalog"
+        "title": "Catalogue des champs"
       },
       "common-attributes": {
-        "title": "Common attributes"
+        "title": "Attributs communs"
       },
       "input-fields": {
-        "title": "Input fields"
+        "title": "Champs de saisie"
       },
       "computed-fields": {
-        "title": "Computed fields"
+        "title": "Champs calculés"
       },
       "media-fields": {
-        "title": "Media fields"
+        "title": "Champs multimédias"
       },
       "containers": {
-        "title": "Containers"
+        "title": "Conteneurs"
       },
       "meta-fields": {
-        "title": "Meta fields"
+        "title": "Métachamps"
       }
     },
     "builtins": {
       "index": {
-        "title": "Builtins overview"
+        "title": "Vue d’ensemble des fonctions intégrées"
       },
       "calculations-expressions": {
-        "title": "Calculations & expressions",
+        "title": "Calculs et expressions",
         "if": {
           "title": "IF"
         },
@@ -237,7 +237,7 @@
         }
       },
       "events": {
-        "title": "Events",
+        "title": "Événements",
         "on": {
           "title": "ON"
         },
@@ -253,13 +253,13 @@
       }
     },
     "ai-metadata": {
-      "title": "AI metadata"
+      "title": "Métadonnées d’IA"
     },
     "security": {
-      "title": "Security and sandboxing"
+      "title": "Sécurité et isolation"
     },
     "output-records": {
-      "title": "Output and records"
+      "title": "Sortie et enregistrements"
     }
   },
   "guides": {

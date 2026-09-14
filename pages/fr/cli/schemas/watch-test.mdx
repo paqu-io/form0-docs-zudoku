@@ -1,8 +1,12 @@
 ---
-title: Surveiller et tester
-description: Revalidez les schémas lors des modifications et exécutez les tests du projet.
+title: Regarder et tester
+description: Revalider schemas à mesure qu'ils changent et exécuter le script de test form0 d'un projet.
 ---
 
-Utilisez `form0 watch [schema]` pendant le développement. Ajoutez `--auto-validate` ou `--auto-run`
-pour répéter ces opérations après chaque enregistrement. Utilisez `form0 test [dir]` pour exécuter
-le fichier `test.js` du projet.
+<PageBadges />
+
+Utilisez `form0 watch [schema]` pendant le développement de schema. Ajoutez `--auto-validate` ou `--auto-run` pour répéter
+ces opérations après les modifications enregistrées; `--values` fournit les valeurs initiales pour les exécutions automatiques.
+
+Utilisez `form0 test [dir]` pour exécuter le `test.js` du projet. Gardez les tests déterministes et
+Comportement schema important pour le projet.

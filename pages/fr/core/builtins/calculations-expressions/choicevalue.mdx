@@ -1,7 +1,26 @@
 ---
-title: CHOICEVALUE (Coming soon)
+title: CHOICEVALUE
+description: Renvoie la valeur sélectionnée d’un champ à choix unique.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/calculations-expressions/choicevalue".
+Renvoie la valeur sélectionnée d’un champ à choix unique.
+
+## Exemple
+
+```js
+CHOICEVALUE($city)
+```
+
+## Paramètres
+
+- choiceField : valeur de SingleChoiceField ou BooleanField
+
+## Valeur renvoyée
+
+La valeur sélectionnée ou null.
+
+## Remarques
+
+- Conserve les valeurs numériques lorsque c’est possible.

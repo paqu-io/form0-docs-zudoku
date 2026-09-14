@@ -1,10 +1,14 @@
 ---
-title: Valores, snapshots y envío
-description: Inicializa, persiste, restaura, guarda y envía estado de form0 en React Native.
+title: Valores, snapshots, y submission
+description: Semilla, persistir, restaurar, guardar y enviar el estado form0 React Native.
 ---
 
-Usa `initialValues` para valores iniciales normales y `overrideValues` para valores autoritativos.
-Para una restauración completa, prefiere `initialSnapshot`:
+<PageBadges />
+
+## Estado inicial y restauración
+
+Utilice `initialValues` para una semilla de registro ordinaria. `overrideValues` tiene prioridad y palo
+Para una restauración completa, prefiera `initialSnapshot`:
 
 ```jsx
 <FormRenderer
@@ -17,14 +21,32 @@ Para una restauración completa, prefiere `initialSnapshot`:
 />
 ```
 
-El snapshot conserva conjuntamente `raw_values`, `repeatable` y las marcas de tiempo de
-`timestamps`. `onSnapshotChange(snapshot, meta)` informa primero
-`{ kind: "seed", dirty: false }`; los cambios posteriores usan `{ kind: "change", dirty }`.
+El snapshot mantiene los valores sin procesar, las entradas anidadas repetibles y las marcas de tiempo juntas:
 
-Configura `primaryActionMode="save"` y `onSave(snapshot, meta)` para guardar borradores aunque haya
-errores de validación. El envío predeterminado valida primero. `onSubmit(record, meta)` recibe el
-[registro estructurado](/es/core/output-records), además de valores sin procesar, repetibles, marcas
-temporales y el resumen de validación.
+```js
+{
+  raw_values: {},
+  repeatable: {},
+  timestamps: {
+    created_at_client: null,
+    updated_at_client: null,
+    created_at_server: null,
+    updated_at_server: null,
+  },
+}
+```
 
-El binding no persiste ni sincroniza estos datos. La aplicación debe almacenar snapshots, subir
-registros, reintentar fallos y resolver conflictos.
+`onSnapshotChange(snapshot, meta)` primero informa `{ kind: "seed", dirty: false }`; usuario posterior
+los cambios usan `{ kind: "change", dirty }`.
+
+## Guardar drafts o enviar registros
+
+Establecer `primaryActionMode="save"` y proporcionar `onSave(snapshot, meta)` para un draft tolerante a la validación
+`meta` contiene el resumen de validación actual y el estado sucio.
+
+La acción de envío predeterminada valida primero. `onSubmit(record, meta)` recibe el registro estructurado
+descrito en [Salida y registros](/es/core/output-records), más valores brutos, estado repetible,
+timestamps, y el resumen de validación.
+
+El binding no persiste ni sincroniza ninguna carga útil. Almacenar snapshots localmente, cargar
+registros, reintentos de fallos y resolución de conflictos en la aplicación host.

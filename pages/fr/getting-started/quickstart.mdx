@@ -3,19 +3,20 @@ title: Démarrage rapide
 description: Créez et prévisualisez votre premier schéma form0 en quelques minutes.
 ---
 
-import { Badge } from "zudoku/ui/Badge";
-import { Stepper } from "zudoku/ui/Stepper";
+<PageBadges />
 
-<Badge variant="default">CLI</Badge> <Badge variant="muted">Local</Badge>
+import { Stepper } from "zudoku/ui/Stepper"
 
 Créez un projet form0, lancez le serveur de développement et ouvrez un aperçu en direct. Ce flux utilise uniquement la CLI et le modèle de schéma fourni par défaut.
 
 ## Prérequis
-- **Node.js** `18.0.0+` - [Téléchargez-le ici](https://nodejs.org/)
+
+- **Node.js** `22.0.0+` - [Téléchargez-le ici](https://nodejs.org/)
 - Un terminal ou une invite de commande
 - Votre éditeur de code préféré
 
 ## Prêt en 5 étapes
+
 Créez et prévisualisez votre premier schéma form0 en quelques minutes.
 
 <Stepper>
@@ -31,6 +32,7 @@ Créez et prévisualisez votre premier schéma form0 en quelques minutes.
    ```bash
    npx form0-cli
    ```
+
    :::info
 
    La commande npx exécute la CLI sans nécessiter d'installation globale.
@@ -66,10 +68,10 @@ Créez et prévisualisez votre premier schéma form0 en quelques minutes.
 </Stepper>
 
 ## Ce que vous obtenez
+
 Les projets standard sont basés sur des fichiers et pilotés par la CLI.
 
 - `form.schema.json` avec un formulaire de démarrage
 - `form0.config.js` pour les paramètres de la CLI
 - `test.js` pour les vérifications locales du moteur
 - `supporting-images/` pour les ressources graphiques des champs
-

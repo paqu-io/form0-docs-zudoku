@@ -3,22 +3,38 @@ title: Développement sur appareil et réseau
 description: Connectez les appareils Expo au starter par LAN ou URL publique de développement.
 ---
 
-La configuration par défaut lance Expo sur le réseau local. L’appareil doit atteindre la machine de
-développement et le port 8081. Pare-feu, Wi-Fi isolé, VPN et conteneurs peuvent bloquer l’accès.
+<PageBadges />
 
-Exécutez `form0 serve --app` pour utiliser le bloc `devServer`. Consultez la
+Le fichier `form0.config.js` par défaut lance Expo sur le réseau local. Un appareil physique doit
+pouvoir atteindre la machine de développement et le port 8081. Les pare-feu de l’hôte, les réseaux
+Wi-Fi isolés, les VPN et le réseau des conteneurs peuvent bloquer la connexion.
+
+## Démarrer avec form0-cli
+
+Utilisez l’intégration du serveur d’application lorsque vous travaillez depuis form0-cli :
+
+```bash
+form0 serve --app
+```
+
+La CLI lit le bloc `devServer` de `form0.config.js`. Le comportement complet de la commande est
+décrit dans la
 [référence du serveur d’application](/fr/cli/local-development/app-development-servers).
 
-Sans accès LAN, définissez dans `.env.local` :
+## Publier une URL de développement
+
+Sans accès LAN, définissez la variable d’environnement configurée dans `.env.local` :
 
 ```text
 FORM0_APP_PUBLIC_URL=https://your-development-domain.example
 ```
 
-Démarrez le tunnel séparément, puis utilisez `form0 serve --app`, ou `--public-url` ponctuellement.
-L’URL doit servir directement manifeste, bundle, ressources et WebSocket Expo. Une page
-intermédiaire casse le client. Un tunnel n’est pas un déploiement de production et le bundle ne doit
-contenir aucun identifiant privilégié.
+Démarrez le tunnel séparément, puis exécutez `form0 serve --app`. Pour une seule exécution, utilisez
+`--public-url https://your-development-domain.example`.
+
+L’URL doit servir directement le manifeste, le bundle, les ressources et le trafic WebSocket Expo.
+Les pages intermédiaires et les défis d’accès cassent le client. Un tunnel de développement n’est
+pas un déploiement de production et le bundle mobile ne doit contenir aucun identifiant privilégié.
 
 Utilisez un [development build](https://docs.expo.dev/develop/development-builds/introduction/) pour
 un travail orienté production ou du code natif personnalisé. Expo Go est un client facultatif pour

@@ -1,9 +1,11 @@
 ---
-title: Thèmes et styles
-description: Utilisez les thèmes intégrés ou fournissez une classe de thème Vanilla Extract.
+title: Thèmes et style
+description: Utilisez des thèmes form0-react intégrés ou fournissez une classe de thème Vanilla Extract.
 ---
 
-Importez une fois la feuille de style au point d’entrée :
+<PageBadges />
+
+Importer la feuille de style du paquet une fois dans le point d'entrée de l'application:
 
 ```js
 import "form0-react/index.css"
@@ -18,13 +20,27 @@ import "form0-react/index.css"
 <FormRenderer schema={schema} theme="standard" colorMode="system" />
 ```
 
-L’emplacement ne change pas automatiquement `theme` ; l’application choisit donc leur association.
+Le nom du thème et le mode couleur sélectionnent la classe Vanilla Extract intégrée correspondante.
+ne modifie pas automatiquement la propriété `theme`, donc une application peut choisir son propre appariement.
 
 ## Thèmes personnalisés
 
-L’export `form0-react/theme.css.js` expose le contrat `vars`. Créez une classe complète avec
-`createTheme` de `@vanilla-extract/css`, puis transmettez-la à `theme`.
+L'exportation `form0-react/theme.css.js` expose le contrat de thème `vars`:
 
-Utilisez `className` pour le formulaire et des wrappers ordinaires pour la mise en page de
-l’application. Le balisage spécifique d’un champ appartient à un
-[rendu personnalisé](/fr/bindings/react/custom-renderers).
+```js
+import { createTheme } from "@vanilla-extract/css"
+import { vars } from "form0-react/theme.css.js"
+
+export const appTheme = createTheme(vars, {
+  // Provide every color, type, spacing, and radius token in the contract.
+})
+```
+
+Passez la classe générée à `theme`:
+
+```jsx
+<FormRenderer schema={schema} theme={appTheme} colorMode="light" />
+```
+
+Utilisez `className` pour le style au niveau de la forme et les éléments d'emballage ordinaires pour l'application environnante
+Le balisage de champ personnalisé appartient à un [custom renderer](/fr/bindings/react/custom-renderers).

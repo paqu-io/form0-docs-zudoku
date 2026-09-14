@@ -1,34 +1,37 @@
 ---
 title: Aperçu des applications de démarrage
-description: Choisissez une application form0 maintenue et créez-la avec form0-cli.
+description: Choisissez un form0 starter maintenu et créez une application via form0-cli.
 ---
 
-Les applications de démarrage associent les paquets form0 au routage, à la configuration, aux
-styles et aux conventions de développement local. Utilisez-les pour personnaliser une application
-fonctionnelle plutôt que pour intégrer un binding dans un projet existant.
+<PageBadges />
 
-| Application         | Recommandée pour                                                          | Code source                                                              |
-| ------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| React + Vite        | Applications web, formulaires personnalisés et hébergement statique       | [GitHub](https://github.com/paqu-io/form0-web-tmpl-react-vite)           |
-| React Native + Expo | Applications iOS et Android, fonctions de l’appareil et usages hors ligne | [GitHub](https://github.com/paqu-io/form0-mobile-tmpl-react-native-expo) |
+Les applications de démarrage sont des fondations d'application maintenues qui combinent des paquets form0 avec le routage,
+conventions de configuration, de style et de développement local. Ils sont utiles lorsque vous
+personnaliser plutôt que d'ajouter un binding à un projet existant.
 
-## Parcours de création recommandé
+| Démarrage         | Le meilleur pour                                                                   | Source                                                                   |
+| ----------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| React+Vite        | Applications de navigateur, formulaires Web personnalisés et hébergement statique  | [GitHub](https://github.com/paqu-io/form0-web-tmpl-react-vite)           |
+| React Native+Expo | Applications iOS et Android, capacités des appareils et flux de travail hors ligne | [GitHub](https://github.com/paqu-io/form0-mobile-tmpl-react-native-expo) |
 
-Utilisez [form0-cli](/fr/cli/overview). La CLI guide le choix du projet et du gestionnaire de paquets,
-puis produit une application normale qui vous appartient.
+## Chemin de création recommandé
+
+Utilisez [form0-cli](/fr/cli/overview) pour créer un starter.
+sélection et produit un dépôt d'application normal que vous possédez.
 
 ```bash
 npm install --global form0-cli
-form0 init mon-application-form0
+form0 init my-form-app
 ```
 
-Le bouton GitHub **Use this template** reste disponible pour créer directement un dépôt depuis la
-source. La CLI demeure le parcours d’intégration canonique.
+** Utilisez ce bouton de modèle ** est également disponible lorsque vous souhaitez explicitement
+Le CLI reste le chemin canonique d'intégration.
 
-Ces guides expliquent l’application autour de form0. Consultez les [Bindings](/fr/bindings/overview)
-pour les API et le [Core](/fr/core/overview) pour le comportement des schémas.
+Les guides de démarrage expliquent l'application autour de form0. Pour les API de package,
+[React et React Native binding documentation](/fr/bindings/overview). Pour le comportement schema,
+[Documentation de base](/fr/core/overview).
 
-Continuez avec le guide de votre starter :
+Continuez avec le guide pour votre starter:
 
 - [Créer et exécuter React et Vite](/fr/starter-apps/react-vite/create-run)
 - [Créer et exécuter React Native et Expo](/fr/starter-apps/react-native-expo/create-run)

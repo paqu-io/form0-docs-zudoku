@@ -1,18 +1,20 @@
 ---
-title: Renderizadores, temas y estilos
-description: Personaliza la aplicación React y Vite con renderizadores, temas y CSS propio.
+title: Renderistas, temas y estilo
+description: Personalizar el React y Vite starter a través de registro renderer, temas y aplicación CSS.
 ---
 
-La plantilla separa los contratos del paquete de la presentación de la aplicación. Importa
-`form0-react/index.css` una vez y añade después los estilos propios.
+<PageBadges />
 
-## Renderizadores de campos
+El starter mantiene los contratos de representación de paquetes separados de la presentación de la aplicación.
+`form0-react/index.css` una vez, luego capas de opciones específicas de la aplicación en la parte superior.
 
-Para añadir un renderizador en `src/field-renderers`:
+## Campo renderers
 
-1. Crea el componente React.
-2. Regístralo con un identificador estable en `resolver.js`.
-3. Asocia el tipo de campo al identificador en `form0.config.js`.
+Aplicación renderer anula vivir en `src/field-renderers`. Para agregar uno:
+
+1. Cree el componente React.
+2. Añádelo a `src/field-renderers/resolver.js` bajo un identificador estable.
+3. Asigna el tipo de campo form0 a ese identificador en `form0.config.js`.
 
 ```js
 fieldRenderers: {
@@ -20,14 +22,26 @@ fieldRenderers: {
 }
 ```
 
-Consulta el [contrato de renderizadores personalizados](/es/bindings/react/custom-renderers).
+La fecha incluida renderer demuestra la composición de los accesorios de campo form0 con primitivas shadcn/ui.
+Revise el contrato [personalizado renderer](/es/bindings/react/custom-renderers) antes de crear un contrato adicional
+Anulaciones.
 
-## Temas y CSS
+## Temas
 
-`theme.mode` admite `light`, `dark` y `system`. Para sustituir el tema del paquete, crea un tema de
-Vanilla Extract bajo `src/themes` y configura `theme.customTheme`. Debe implementar todo el contrato
-de `form0-react`; usa `custom-example.css.js` como base.
+Establezca `theme.mode` en `light`, `dark` o `system`. Para reemplazar el tema del paquete, cree una vainilla
+Extraiga el tema bajo `src/themes` y establezca `theme.customTheme` en su ruta de importación.
 
-Usa `src/index.css` para Tailwind y tokens de shadcn, `App.css` para el layout de la aplicación,
-`form0-overrides.css` para clases propias y los temas de Vanilla Extract para los tokens del paquete.
-Consulta [Temas y estilos](/es/bindings/react/themes-styling).
+El tema personalizado debe implementar el contrato completo del tema `form0-react`. Uso
+`src/themes/custom-example.css.js` como punto de partida y ver
+[Temas y estilo](/es/bindings/react/themes-styling) para el contrato.
+
+## CSS de aplicación
+
+Utilice estas capas para diferentes responsabilidades:
+
+- `src/index.css` para Tailwind, tokens shadcn y estilos de aplicaciones globales;
+- `src/App.css` para el diseño de aplicaciones;
+- `src/styles/form0-overrides.css` para las clases de formularios propiedad de la aplicación; y
+- Temas de Vanilla Extract para los tokens renderer del paquete.
+
+Prefiere los contratos de registro y temas de renderer sobre el código de edición dentro de los paquetes form0 instalados.

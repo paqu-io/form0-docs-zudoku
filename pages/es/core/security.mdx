@@ -1,7 +1,33 @@
 ---
-title: security (Coming soon)
+title: Seguridad y aislamiento
+description: Modos de seguridad para expresiones en form0-core.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/security".
+form0-core evalúa las expresiones con un modo de seguridad configurable.
+
+## Modos
+
+- `TRUSTED`: acceso completo a JavaScript (predeterminado).
+- `SAFE`: variables globales restringidas y patrones bloqueados.
+- `CUSTOM`: reglas definidas por el usuario.
+
+## Valores predeterminados del modo seguro
+
+El modo seguro bloquea patrones como `eval`, `Function`, `window`, `document`, `process`, `require`
+y otras variables globales no seguras. También limita el tiempo de ejecución y la profundidad de
+la pila de llamadas.
+
+## Usar una configuración de seguridad
+
+```js
+import { createFormEngine, SAFE_SECURITY_CONFIG } from "form0-core"
+
+const engine = createFormEngine({
+  schema,
+  security: SAFE_SECURITY_CONFIG,
+})
+```
+
+La configuración de seguridad se aplica a los campos calculados y al código de eventos.

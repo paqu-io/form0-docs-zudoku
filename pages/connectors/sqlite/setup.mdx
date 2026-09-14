@@ -3,6 +3,8 @@ title: SQLite setup and configuration
 description: Install and configure the official SQLite connector for Node.js.
 ---
 
+<PageBadges />
+
 Install and configure the connector through the interactive CLI:
 
 ```text
@@ -13,12 +15,12 @@ form0> connector test form0-connector-sqlite
 
 For direct use, install it with `npm install form0-connector-sqlite`.
 
-| Environment variable | Purpose | Default |
-| --- | --- | --- |
-| `FORM0_CONNECTOR_SQLITE_PATH` | Relative or absolute database path | `./form0.db` |
-| `FORM0_CONNECTOR_SQLITE_TABLE_NAME` | Main table | `form0_submissions` |
-| `FORM0_CONNECTOR_SQLITE_CHILD_TABLE_NAME` | Nested-record table | `form0_submissions_children` |
-| `FORM0_CONNECTOR_SQLITE_DEBUG` | Verbose connector logging | `false` |
+| Environment variable                      | Purpose                            | Default                      |
+| ----------------------------------------- | ---------------------------------- | ---------------------------- |
+| `FORM0_CONNECTOR_SQLITE_PATH`             | Relative or absolute database path | `./form0.db`                 |
+| `FORM0_CONNECTOR_SQLITE_TABLE_NAME`       | Main table                         | `form0_submissions`          |
+| `FORM0_CONNECTOR_SQLITE_CHILD_TABLE_NAME` | Nested-record table                | `form0_submissions_children` |
+| `FORM0_CONNECTOR_SQLITE_DEBUG`            | Verbose connector logging          | `false`                      |
 
 Relative database paths are resolved from the process working directory. The connector creates
 the parent directory and database file when necessary, so the process needs suitable write access.

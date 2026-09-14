@@ -1,7 +1,60 @@
 ---
-title: conditions-operators (Coming soon)
+title: Condizioni e operatori
+description: Visibilità condizionata, requisiti e regole di sola lettura.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/conditions-operators".
+Le condizioni sono utilizzate in `visible_conditions`, `required_conditions` e `read_only_conditions`.
+Essi fanno riferimento ad altri campi e valutano a vero o falso.
+
+## Forma delle condizioni
+
+```json
+{
+  "field_id": "age",
+  "operator": "greater_or_equal_than",
+  "value": 18
+}
+```
+
+È possibile combinare le condizioni con `and` o `or`:
+
+```json
+{
+  "and": [
+    { "field_id": "country", "operator": "equal_to", "value": "us" },
+    { "field_id": "age", "operator": "greater_or_equal_than", "value": 18 }
+  ]
+}
+```
+
+## Operatori
+
+| Operatore               | Significato                     |
+| ----------------------- | ------------------------------- |
+| `equal_to`              | Uguale al valore fornito        |
+| `not_equal_to`          | Non uguale al valore            |
+| `greater_than`          | superiore al valore             |
+| `less_than`             | inferiore al valore             |
+| `greater_or_equal_than` | maggiore o uguale a             |
+| `less_or_equal_than`    | inferiore o uguale a            |
+| `contains`              | Array contiene il valore        |
+| `starts_with`           | La stringa inizia con il valore |
+| `is_empty`              | Il valore è vuoto o nullo       |
+| `is_not_empty`          | Il valore non è vuoto           |
+
+### Supporto dell'operatore per tipo di campo
+
+Gli operatori sono convalidati rispetto al tipo di campo di riferimento. Ad esempio:
+
+- I campi di testo supportano `contains` e `starts_with`
+- I campi numerici/data supportano gli operatori di confronto
+- I campi di scelta supportano `equal_to` e `contains` (a scelta multipla)
+
+Se un operatore non è valido per il campo di riferimento, la convalida fallirà.
+
+## Riferimenti di campo
+
+`field_id` dovrebbe puntare al campo `key`. `data_name` è accettato come un fallback, ma `key` è
+consigliato perché non cambia mai quando cambiano le etichette.

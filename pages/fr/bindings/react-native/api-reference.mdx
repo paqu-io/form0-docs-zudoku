@@ -1,17 +1,23 @@
 ---
-title: Référence de l’API React Native
-description: Exportations publiques de form0-react-native.
+title: Référence React Native API
+description: Composantes publiques, registres, thèmes, contextes, typographie et actifs exportés par form0-react-native.
 ---
 
-Toutes les exportations prises en charge proviennent de `form0-react-native`.
+<PageBadges />
+
+Toutes les exportations prises en charge sont disponibles à partir de `form0-react-native`.
 
 ## Rendu et thèmes
 
-- `FormRenderer`, `FormHeader`
+- `FormRenderer` — rend et gère une forme native pilotée par schema.
+- `FormHeader` — l'en-tête de formulaire natif de binding.
 - `ThemeProvider`, `ThemeContext`, `useTheme`
 - `lightTheme`, `darkTheme`, `mergeThemes`, `getThemeByName`
 
-## Registre de champs
+Voir [FormRenderer](/fr/bindings/react-native/form-renderer) et
+[Thèmes, polices et images](/fr/bindings/react-native/themes-assets).
+
+## Registre sur le terrain
 
 - `FieldRegistryProvider`, `FieldRegistryContext`, `useFieldRegistry`
 - `createFieldRegistry`, `defaultFieldRegistry`
@@ -19,12 +25,15 @@ Toutes les exportations prises en charge proviennent de `form0-react-native`.
 - `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
 - `KNOWN_FIELD_TYPES`
 
+Voir [Champ personnalisé renderers](/fr/bindings/react-native/custom-renderers).
+
 ## Images et typographie
 
 - `ImageResolverProvider`, `ImageResolverContext`, `useImageResolver`
 - `Text`, `TextInput`
 - `form0Fonts` et les constantes `FORM0_FONT_FAMILY*`
 
-Le paquet inclut des déclarations TypeScript pour les propriétés, instantanés, métadonnées, options
-du moteur, registres et rendus. Les hooks internes du moteur et les composants par défaut
-individuels ne sont pas des exportations publiques.
+Le paquet comprend des déclarations TypeScript pour les accessoires `FormRenderer`, snapshots, submission et submission.
+enregistrer les métadonnées, les options du moteur, les valeurs de registre et les accessoires personnalisés du champ renderer.
+composants individuels par défaut, les contrôleurs reproductibles et les utilitaires submission ne sont pas
+exportations publiques.

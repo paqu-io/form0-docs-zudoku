@@ -1,7 +1,34 @@
 ---
-title: validation (Coming soon)
+title: Convalida dello schema
+description: Come form0-core convalida schemas e le condizioni.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/validation".
+form0-core convalida schemas prima di eseguire il motore. La convalida si concentra sulla struttura e
+attributo correttezza, non UI preoccupazioni.
+
+## Cosa è convalidato
+
+- Attributi richiesti per tipo di campo
+- Valori consentiti per gli attributi (ad esempio, opzioni `display`)
+- `key` e `data_name` unici
+- Formato `data_name` (bassa a-z, 0-9, sottolineatura, lunghezza massima 42)
+- I valori predefiniti corrispondono alle regole del tipo di campo
+- Gli operatori delle condizioni sono validi per il tipo di campo di riferimento
+- Forma dei metadati AI e chiavi consentite
+
+## Convalida runtime
+
+In runtime, i campi convalidano anche i loro valori quando il motore valuta:
+
+- Controlli numerici min/max
+- Corrispondenza modello per i campi di testo
+- I valori di scelta devono corrispondere a scelte definite
+
+## Errori tipici
+
+- Mancano gli attributi richiesti
+- Duplica `key` o `data_name`
+- Operatori non validi (ad esempio, `contains` su un campo numerico)
+- Valori predefiniti che non corrispondono al tipo di campo

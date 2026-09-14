@@ -3,6 +3,8 @@ title: Direct integration
 description: Own a form0 connector lifecycle directly in a Node.js application.
 ---
 
+<PageBadges />
+
 The CLI is the normal integration path, but both official connectors expose the same lifecycle:
 
 - `initialize(config, envVars)` opens storage and creates missing tables.
@@ -12,19 +14,19 @@ The CLI is the normal integration path, but both official connectors expose the 
 - `destroy()` releases the database connection or local file handle.
 
 ```javascript
-import { Form0PostgreSQLConnector } from 'form0-connector-pg';
+import { Form0PostgreSQLConnector } from "form0-connector-pg"
 
-const connector = new Form0PostgreSQLConnector();
+const connector = new Form0PostgreSQLConnector()
 
-await connector.initialize();
-const health = await connector.healthCheck();
+await connector.initialize()
+const health = await connector.healthCheck()
 
 if (!health.healthy) {
-  throw new Error(health.message);
+  throw new Error(health.message)
 }
 
-const result = await connector.onFormSubmit(structuredRecord);
-await connector.destroy();
+const result = await connector.onFormSubmit(structuredRecord)
+await connector.destroy()
 ```
 
 Explicit configuration values override environment-derived values. Keep credentials outside

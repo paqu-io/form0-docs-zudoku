@@ -3,22 +3,38 @@ title: Sviluppo su dispositivo e rete
 description: Collega dispositivi Expo allo starter tramite LAN o URL pubblico di sviluppo.
 ---
 
-La configurazione predefinita avvia Expo sulla rete locale. Il dispositivo deve raggiungere il
-computer di sviluppo e la porta 8081. Firewall, Wi-Fi isolato, VPN e container possono bloccarlo.
+<PageBadges />
 
-Esegui `form0 serve --app` per usare il blocco `devServer`. Consulta il
+Il file `form0.config.js` predefinito avvia Expo sulla rete locale. Un dispositivo fisico deve poter
+raggiungere il computer di sviluppo e la porta 8081. I firewall dell’host, le reti Wi-Fi isolate, le
+VPN e la rete dei container possono impedire la connessione.
+
+## Avvia tramite form0-cli
+
+Usa l’integrazione con il server applicativo quando lavori da form0-cli:
+
+```bash
+form0 serve --app
+```
+
+La CLI legge il blocco `devServer` in `form0.config.js`. Il comportamento completo del comando è
+descritto nel
 [riferimento del server applicativo](/it/cli/local-development/app-development-servers).
 
-Se la LAN non è disponibile, definisci in `.env.local`:
+## Pubblicizza un URL di sviluppo
+
+Se l’accesso LAN non è disponibile, definisci la variabile d’ambiente configurata in `.env.local`:
 
 ```text
 FORM0_APP_PUBLIC_URL=https://your-development-domain.example
 ```
 
-Avvia separatamente il tunnel e usa `form0 serve --app`, oppure `--public-url` per una singola
-esecuzione. L’URL deve servire direttamente manifesto, bundle, asset e WebSocket Expo. Le pagine
-intermedie interrompono il client. Un tunnel non è un deployment di produzione e il bundle non deve
-contenere credenziali privilegiate.
+Avvia separatamente il tunnel, quindi esegui `form0 serve --app`. Per una singola esecuzione usa
+`--public-url https://your-development-domain.example`.
+
+L’URL deve servire direttamente il manifesto, il bundle, gli asset e il traffico WebSocket Expo. Le
+pagine intermedie e le richieste di accesso interrompono il client. Un tunnel di sviluppo non è un
+deployment di produzione e il bundle mobile non deve contenere credenziali privilegiate.
 
 Usa un [development build](https://docs.expo.dev/develop/development-builds/introduction/) per il
 lavoro orientato alla produzione o per codice nativo personalizzato. Expo Go è un client opzionale

@@ -1,22 +1,36 @@
 ---
-title: Renderizadores, temas, fuentes e imágenes en el starter móvil
-description: Personaliza la presentación nativa y gestiona fuentes e imágenes auxiliares empaquetadas.
+title: Renderers, temas, fuentes e imágenes en el móvil starter
+description: Personalice la presentación del formulario nativo y administre las fuentes y las imágenes de soporte agrupadas.
 ---
 
-La raíz carga `form0Fonts` con `expo-font` antes de renderizar y envuelve la interfaz en
-`ThemeProvider`. Configura el modo de color y las personalizaciones en `form0.config.js`.
+<PageBadges />
 
-Asocia tipos de campo con identificadores en `form0.config.js` y esos identificadores con
-componentes en `src/field-renderers/resolver.js`. Esta separación mantiene la configuración
-serializable. Consulta [Renderizadores personalizados](/es/bindings/react-native/custom-renderers).
+## Tema y fuentes
 
-React Native necesita descubrir estáticamente las imágenes empaquetadas. Añádelas a
-`assets/supporting-images` y regenera el registro:
+La raíz de la aplicación carga `form0Fonts` con `expo-font` antes de renderizar y envuelve su interfaz de usuario en
+`ThemeProvider` . Configure el modo de color base y el tema opcional se anula en `form0.config.js` .
+Las pantallas circundantes de starter usan los mismos tokens de tema que el formulario.
+
+## El renderizador anula
+
+Asignar tipos de campo schema a identificadores renderer en `form0.config.js`, luego asignar esos identificadores a
+componentes en `src/field-renderers/resolver.js`. Mantener los componentes fuera del archivo de configuración
+preserva un límite de configuración fácil de serializar y fácil de usar.
+
+Para los accesorios y el comportamiento de registro de renderer, utilice la
+[custom renderer documentación](/es/bindings/react-native/custom-renderers).
+
+## Imágenes de apoyo
+
+React Native requiere referencias de imágenes agrupadas para poder ser descubiertas estáticamente.
+`assets/supporting-images`, luego regenerar la tabla de búsqueda:
 
 ```bash
 npm run generate-images
 ```
 
-Confirma tanto el recurso como `src/supporting-images/index.js`. Los scripts de inicio regeneran el
-archivo y CI comprueba que esté actualizado. Las imágenes HTTP y HTTPS remotas no requieren una
-entrada. Consulta [Temas, fuentes e imágenes](/es/bindings/react-native/themes-assets).
+Comprometer tanto el activo como `src/supporting-images/index.js`. Los scripts de inicio regeneran el archivo,
+y CI verifica que el registro comprometido esté actualizado. Las rutas de imagen HTTP y HTTPS remotas no
+necesita entradas de registro.
+
+Consulte [Temas, fuentes e imágenes](/es/bindings/react-native/themes-assets) para las API de nivel binding.

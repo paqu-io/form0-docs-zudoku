@@ -1,7 +1,34 @@
 ---
-title: validation (Coming soon)
+title: Validación de esquemas
+description: Cómo valida form0-core schemas y las condiciones.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/validation".
+form0-core valida schemas antes de ejecutar el motor. La validación se centra en la estructura y
+Corrección de atributos, no preocupaciones de UI.
+
+## Lo que está validado
+
+- Atributos requeridos por tipo de campo
+- Valores permitidos para atributos (por ejemplo, opciones `display`)
+- `key` y `data_name` únicos
+- Formato `data_name` (a-z minúscula, 0-9, subrayado, longitud máxima 42)
+- Reglas de tipo de campo de coincidencia de valores predeterminados
+- Los operadores de condición son válidos para el tipo de campo referenciado
+- Forma de metadatos AI y claves permitidas
+
+## Validación en tiempo de ejecución
+
+En runtime, los campos también validan sus valores cuando el motor evalúa:
+
+- Comprobaciones mínimas/máximas numéricas
+- Coincidencias de patrón para campos de texto
+- Los valores de elección deben coincidir con las opciones definidas
+
+## Errores típicos
+
+- Faltan los atributos requeridos
+- Duplicar `key` o `data_name`
+- Operadores no válidos (por ejemplo, `contains` en un campo numérico)
+- Valores predeterminados que no coinciden con el tipo de campo

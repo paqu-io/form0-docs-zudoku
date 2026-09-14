@@ -3,18 +3,20 @@ title: Elegir un conector
 description: Compara los conectores oficiales para PostgreSQL y SQLite.
 ---
 
+<PageBadges />
+
 Ambos conectores oficiales aceptan el mismo registro estructurado de form0 y conservan las
 relaciones entre secciones repetibles anidadas. Elige según dónde se ejecute la aplicación y cómo
 deban operarse sus datos.
 
-| Aspecto | PostgreSQL | SQLite |
-| --- | --- | --- |
-| Almacenamiento | Base de datos en red | Archivo de base de datos local |
-| Mejor opción | Aplicaciones servidor y despliegues compartidos | Herramientas locales y despliegues Node.js sencillos |
-| Concurrencia | Pool de conexiones y concurrencia gestionada por la base de datos | Restricciones de bloqueo de archivos de SQLite |
-| Operaciones | Roles, TLS, copias de seguridad y administración del servidor | Permisos de archivo, copias, copias de seguridad y retención |
-| Carga útil | JSONB y columnas proyectadas | Texto JSON y columnas proyectadas |
-| Plataforma | Node.js con acceso a PostgreSQL | Node.js con una compilación nativa compatible |
+| Aspecto        | PostgreSQL                                                        | SQLite                                                       |
+| -------------- | ----------------------------------------------------------------- | ------------------------------------------------------------ |
+| Almacenamiento | Base de datos en red                                              | Archivo de base de datos local                               |
+| Mejor opción   | Aplicaciones servidor y despliegues compartidos                   | Herramientas locales y despliegues Node.js sencillos         |
+| Concurrencia   | Pool de conexiones y concurrencia gestionada por la base de datos | Restricciones de bloqueo de archivos de SQLite               |
+| Operaciones    | Roles, TLS, copias de seguridad y administración del servidor     | Permisos de archivo, copias, copias de seguridad y retención |
+| Carga útil     | JSONB y columnas proyectadas                                      | Texto JSON y columnas proyectadas                            |
+| Plataforma     | Node.js con acceso a PostgreSQL                                   | Node.js con una compilación nativa compatible                |
 
 Usa PostgreSQL cuando varios procesos o despliegues compartan envíos, o cuando sean importantes
 las consultas y controles operativos de la base de datos. Usa SQLite cuando los datos deban

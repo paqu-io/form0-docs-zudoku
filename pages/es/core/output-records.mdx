@@ -1,7 +1,38 @@
 ---
-title: output-records (Coming soon)
+title: Salida y registros
+description: Estado del motor y salida de registros estructurados.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/output-records".
+form0-core expone dos salidas principales:
+
+- Estado del motor (`values`, `errors`, `visible`, `required`, `read_only`)
+- Registros estructurados para persistencia (`createStructuredRecord`)
+
+## Estado del motor
+
+Después de `engine.eval()`, llama a `engine.getState()` para acceder al estado más reciente.
+
+## Salida de registros estructurados
+
+`createStructuredRecord` transforma el estado del motor en un formato adecuado para el envío:
+
+- `form_values` utiliza las claves de campo de forma predeterminada
+- Las secciones repetibles se convierten en arrays de registros secundarios
+- Las secciones se omiten (solo son contenedores)
+
+### Modo de clave de campo
+
+Puedes cambiar a claves `data_name` mediante `fieldKeyMode`:
+
+```js
+const record = createStructuredRecord(state, fields, {
+  fieldKeyMode: "data-name",
+})
+```
+
+## Secciones repetibles
+
+Las secciones repetibles crean registros anidados. Utiliza `originalElements` para conservar la
+estructura de anidamiento correcta al crear registros.

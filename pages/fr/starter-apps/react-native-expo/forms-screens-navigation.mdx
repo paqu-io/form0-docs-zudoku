@@ -1,23 +1,34 @@
 ---
-title: Formulaires, écrans et navigation dans le starter mobile
-description: Enregistrez les schémas et adaptez le flux d’écrans au système de navigation de l’application.
+title: Formulaires, écrans et navigation dans le mobile starter
+description: Enregistrez schemas et adaptez le flux d'écran starter à un système de navigation d'application.
 ---
 
-Les schémas vivent dans `src/forms`. Enregistrez chaque formulaire dans `src/forms/registry.js` avec
-un identifiant stable, des métadonnées et `loadSchema`. Validez-les avec
-[form0-cli](/fr/cli/schemas/validate-preview).
+<PageBadges />
 
-`useFormSchema` expose le chargement, le schéma et l’erreur. Le flux inclus reste volontairement
-simple :
+## Enregistrer les formulaires
+
+Les schémas vivent sous `src/forms` . Ajouter chaque formulaire `src/forms/registry.js` avec un ID stable, afficher
+Métadonnées et A `loadSchema` Les importations statiques sont utiles pour le premier écran; dynamique
+Les importations peuvent différer le chargement d'autres formulaires.
+
+`useFormSchema` résout l'entrée de Registre sélectionnée et expose son chargement, schema et son erreur
+Validez schemas avec [form0-cli](/fr/cli/schemas/validate-preview) avant de les expédier.
+
+## Comprendre le flux d'écran
+
+Le starter utilise délibérément un petit flux basé sur l'état:
 
 ```text
 App → Home → FormPage → Form0Form
 ```
 
-`Home` liste les formulaires, `FormPage` charge le schéma et gère soumission et débogage, tandis que
-`Form0Form` transmet la configuration au `FormRenderer` natif.
+`Home` répertorie les formulaires enregistrés. `FormPage` charge le schema et possède submission et storage-debug
+`Form0Form` mappe la configuration de l'application dans le React Native `FormRenderer`.
 
-Ce flux est un point de départ, pas un routeur. Remplacez `activeFormId` par la navigation de votre
-application pour les liens profonds, onglets ou piles authentifiées. Le renderer gère défilement,
-clavier et écrans internes ; ne l’enveloppez pas dans un autre défilement vertical. Consultez
-[Modes et navigation](/fr/bindings/react-native/modes-navigation).
+Ceci est un point de départ compréhensible, pas un routage framework. Remplacer l'état `activeFormId`
+avec le routeur ou la bibliothèque de navigation utilisés par votre application lorsque vous avez besoin de liens profonds, d'onglets,
+piles authentifiées, ou état de navigation restauré.
+
+Le renderer possède des écrans de défilement, d'évitement de clavier et de drill-down à l'intérieur de son écran alloué
+zone. Évitez de l'envelopper dans une autre vue de défilement vertical. Voir
+[Modes et navigation](/fr/bindings/react-native/modes-navigation) pour le contrat renderer.

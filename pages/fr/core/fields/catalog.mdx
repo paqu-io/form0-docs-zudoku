@@ -1,7 +1,31 @@
 ---
-title: catalog (Coming soon)
+title: Catalogue de terrain
+description: Tous les types de champs et leurs catégories.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/fields/catalog".
+import { Badge } from "zudoku/ui/Badge"
+
+Le tableau ci-dessous répertorie tous les types de champs pris en charge par form0-core.
+
+| Type de champ         | Catégorie                                  | Désignation                                          |
+| --------------------- | ------------------------------------------ | ---------------------------------------------------- |
+| `TextField`           | <Badge variant="secondary">Input</Badge>   | Entrée de texte à une seule ligne.                   |
+| `NumericField`        | <Badge variant="secondary">Input</Badge>   | Entrée numérique avec min/max et format.             |
+| `SingleChoiceField`   | <Badge variant="secondary">Input</Badge>   | Sélection à choix unique.                            |
+| `MultiChoiceField`    | <Badge variant="secondary">Input</Badge>   | Sélection à choix multiples.                         |
+| `BooleanField`        | <Badge variant="secondary">Input</Badge>   | Choix booléen (oui/non ou tri-état).                 |
+| `DateField`           | <Badge variant="secondary">Input</Badge>   | Entrée de date.                                      |
+| `TimeField`           | <Badge variant="secondary">Input</Badge>   | Temps d'entrée.                                      |
+| `CalculatedField`     | <Badge variant="muted">Computed</Badge>    | Valeur calculée à partir des expressions.            |
+| `LabelField`          | <Badge variant="muted">Computed</Badge>    | Étiquette ou note non modifiable.                    |
+| `Section`             | <Badge variant="outline">Structure</Badge> | Conteneur pour champs imbriqués.                     |
+| `RepeatableSection`   | <Badge variant="outline">Structure</Badge> | Répéter le conteneur pour les enregistrements.       |
+| `BuildingPlanSection` | <Badge variant="outline">Structure</Badge> | Répétables pilotés par plan de construction.         |
+| `SignatureField`      | <Badge variant="secondary">Media</Badge>   | Capture de signature.                                |
+| `PhotoField`          | <Badge variant="secondary">Media</Badge>   | Capture/téléchargement de photos.                    |
+| `VideoField`          | <Badge variant="secondary">Media</Badge>   | Capture/téléchargement vidéo.                        |
+| `FormLinkField`       | <Badge variant="outline">Meta</Badge>      | Lien vers des enregistrements d'un autre formulaire. |
+| `StatusField`         | <Badge variant="outline">Meta</Badge>      | Sélecteur d'état de formulaire (niveau supérieur).   |
+| `TitleField`          | <Badge variant="outline">Meta</Badge>      | Titre composite (niveau supérieur).                  |

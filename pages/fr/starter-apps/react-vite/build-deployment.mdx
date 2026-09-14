@@ -1,22 +1,39 @@
 ---
-title: Builder et déployer l’application React et Vite
-description: Créez, prévisualisez et hébergez un build de production de l’application web.
+title: Construire et déployer les React et Vite starter
+description: Créer, prévisualiser et héberger une version de production du web maintenu starter.
 ---
+
+<PageBadges />
+
+Créer et prévisualiser une construction de production localement:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Vite écrit les fichiers statiques dans `dist`. Déployez ce répertoire chez un hébergeur statique ou
-derrière votre serveur.
+Vite écrit la sortie statique dans `dist`. Déployez ce répertoire avec un hôte statique ou placez-le derrière
+votre serveur d'applications.
 
-L’application utilise le routage navigateur. Configurez l’hébergeur pour renvoyer `index.html` sur
-les routes comme `/contact/standard`, sinon une navigation directe renverra une 404.
+## Exigences d'hébergement
 
-Le proxy des connecteurs n’existe qu’en développement. En production, utilisez un endpoint serveur
-contrôlé par votre application.
+Le starter utilise le routage du navigateur. Configurez l'hôte pour servir `index.html` comme
+les routes d'application telles que `/contact/standard`; sinon la navigation directe à ces URL peut
+Retourne la page 404 de l'hôte.
 
-Avant le déploiement, exécutez lint et build, examinez l’avertissement de taille du bundle, gardez
-les `.env` hors de Git, vérifiez les assets et testez la navigation directe. Toute variable exposée
-au navigateur est intégrée statiquement au build et doit être considérée comme publique.
+Le proxy de connecteur par défaut n'existe que dans le serveur de développement.
+Configurez explicitement ce point de terminaison plutôt que de supposer que le point de terminaison
+Le proxy `/api` sera présent après le déploiement.
+
+## Avant déploiement
+
+- Exécutez `npm run lint` et `npm run build`.
+- Revoir l'avertissement de taille de paquet généré et introduire le fractionnement de code lors de la croissance de l'application
+  rend le téléchargement initial inapproprié.
+- Gardez les fichiers `.env` locaux hors du contrôle de version.
+- Confirmez qu'aucun secret n'est inclus dans les ressources générées.
+- Testez la navigation directe vers chaque route d'application publique.
+- Consultez la [politique de sécurité](https://github.com/paqu-io/form0-web-tmpl-react-vite/blob/main/SECURITY.md).
+
+Les valeurs d'environnement Vite destinées au code du navigateur sont incorporées statiquement au moment de la construction.
+en tant que configuration publique, même lorsqu'elles proviennent d'un fichier d'environnement local.

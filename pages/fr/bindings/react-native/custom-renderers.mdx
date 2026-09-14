@@ -1,26 +1,41 @@
 ---
-title: Rendus de champs personnalisés
-description: Remplacez la présentation native globalement ou dans un sous-arbre de composants.
+title: Champ personnalisé renderers
+description: Remplacez la présentation des champs form0 React Native globalement ou dans une sous-arborescence de composants.
 ---
 
-Les rendus personnalisés changent la présentation sans retirer à `form0-core` les calculs, la
-visibilité, les obligations ou la validation.
+<PageBadges />
+
+renderers personnalisé change la présentation native sans déplacer les calculs, la visibilité,
+exigences, ou validation de `form0-core`.
+
+## Per-form remplace
+
+Passez une carte renderer directement à `FormRenderer` pour une forme isolée:
 
 ```jsx
 import { FormRenderer } from "form0-react-native"
 import { PhotoField } from "./photo-field.jsx"
 
-<FormRenderer schema={schema} renderers={{ PhotoField }} />
+;<FormRenderer schema={schema} renderers={{ PhotoField }} />
 ```
 
-Le composant reçoit `field`, `value`, `onChange`, `readOnly`, `required`, `error` et `inputProps`.
-Préservez les propriétés applicables de `inputProps` et appelez `onChange` avec la forme attendue
-par le schéma.
+Un renderer reçoit le champ et son état d'interaction évalué:
 
-Utilisez `FieldRegistryProvider` pour un sous-arbre ou
-`createFieldRegistry({ includeDefaults, renderers })` pour un registre explicite. Les helpers
-`registerFieldComponent`, `unregisterFieldComponent` et `resetFieldComponents` modifient le
-registre global ; réservez-les au démarrage ou aux tests.
+```jsx
+function PhotoField({ field, value, onChange, readOnly, required, error, inputProps }) {
+  // Render application-owned capture, preview, and removal controls.
+}
+```
 
-Seuls les types déclarés par `form0-core` peuvent être enregistrés ; un rendu seul n’étend pas le
-contrat du schéma.
+Préservez les propriétés applicables de `inputProps`, et appelez `onChange` avec la forme de valeur attendue
+par les limites schema et submission.
+
+## Fournisseurs, registres et remplacements globaux
+
+Utilisez `FieldRegistryProvider` pour une substitution de sous-arbre ou
+`createFieldRegistry({ includeDefaults, renderers })` pour une instance de Registre explicite.
+`registerFieldComponent`, `unregisterFieldComponent`, et `resetFieldComponents`
+helpers muter le registre par défaut partagé et sont mieux réservés pour le code ou les tests bootstrap.
+
+Seuls les types de champs déclarés par `form0-core` peuvent être enregistrés.
+défini dans Core; un renderer natif seul ne peut pas prolonger le contrat schema.

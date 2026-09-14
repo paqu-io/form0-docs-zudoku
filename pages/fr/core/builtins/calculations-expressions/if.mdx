@@ -1,7 +1,24 @@
 ---
-title: IF (Coming soon)
+title: IF
+description: Choisit entre deux valeurs selon une condition.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/calculations-expressions/if".
+Choisit entre deux valeurs selon une condition.
+
+## Exemple
+
+```js
+IF($age >= 18, "adult", "minor")
+```
+
+## Paramètres
+
+- condition : expression booléenne
+- trueValue : renvoyée lorsque condition est truthy
+- falseValue : renvoyée dans le cas contraire
+
+## Valeur renvoyée
+
+`trueValue` ou `falseValue`.

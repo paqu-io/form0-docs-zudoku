@@ -1,7 +1,31 @@
 ---
-title: catalog (Coming soon)
+title: Catalogo dei campi
+description: Tutti i tipi di campo e le loro categorie.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/fields/catalog".
+import { Badge } from "zudoku/ui/Badge"
+
+La tabella seguente elenca ogni tipo di campo supportato da form0-core.
+
+| Tipo di campo         | Categoria                                  | Descrizione                                   |
+| --------------------- | ------------------------------------------ | --------------------------------------------- |
+| `TextField`           | <Badge variant="secondary">Input</Badge>   | Input di testo a riga singola.                |
+| `NumericField`        | <Badge variant="secondary">Input</Badge>   | Ingresso numerico con min/max e formato.      |
+| `SingleChoiceField`   | <Badge variant="secondary">Input</Badge>   | Selezione a scelta singola.                   |
+| `MultiChoiceField`    | <Badge variant="secondary">Input</Badge>   | Selezione a scelta multipla.                  |
+| `BooleanField`        | <Badge variant="secondary">Input</Badge>   | Scelta booleana (sì/no o tri-stato).          |
+| `DateField`           | <Badge variant="secondary">Input</Badge>   | Data di inserimento.                          |
+| `TimeField`           | <Badge variant="secondary">Input</Badge>   | Input di tempo.                               |
+| `CalculatedField`     | <Badge variant="muted">Computed</Badge>    | Valore calcolato dalle espressioni.           |
+| `LabelField`          | <Badge variant="muted">Computed</Badge>    | Etichetta o nota non modificabile.            |
+| `Section`             | <Badge variant="outline">Structure</Badge> | Contenitore per campi nidificati.             |
+| `RepeatableSection`   | <Badge variant="outline">Structure</Badge> | Ripeti il contenitore per i record.           |
+| `BuildingPlanSection` | <Badge variant="outline">Structure</Badge> | Ripetizioni guidate dal piano di costruzione. |
+| `SignatureField`      | <Badge variant="secondary">Media</Badge>   | Acquisizione firma.                           |
+| `PhotoField`          | <Badge variant="secondary">Media</Badge>   | Cattura/caricamento foto.                     |
+| `VideoField`          | <Badge variant="secondary">Media</Badge>   | Acquisizione/upload video.                    |
+| `FormLinkField`       | <Badge variant="outline">Meta</Badge>      | Collegamento a record da un'altra forma.      |
+| `StatusField`         | <Badge variant="outline">Meta</Badge>      | Selettore stato modulo (livello superiore).   |
+| `TitleField`          | <Badge variant="outline">Meta</Badge>      | Titolo composito (livello superiore).         |

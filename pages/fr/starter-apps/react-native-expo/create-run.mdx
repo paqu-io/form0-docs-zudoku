@@ -3,6 +3,8 @@ title: Créer et exécuter le starter React Native et Expo
 description: Créez le starter mobile maintenu avec form0-cli et ouvrez-le sur un appareil ou un émulateur.
 ---
 
+<PageBadges />
+
 Le starter React Native et Expo est le chemin le plus rapide vers une application form0 mobile. Il
 inclut des schémas d’exemple, des renderers natifs, des polices, des images et une persistance SQLite.
 
@@ -15,8 +17,8 @@ npm install --global form0-cli
 form0 init my-mobile-form
 ```
 
-Choisissez **Application mobile** puis **React Native + Expo**. Entrez dans le répertoire, installez
-les dépendances si nécessaire et lancez Expo :
+Choisissez **Application mobile** puis **React Native + Expo**. Entrez dans le répertoire généré et
+installez les dépendances si le gestionnaire de paquets choisi ne l’a pas déjà fait.
 
 ```bash
 cd my-mobile-form
@@ -30,10 +32,19 @@ Le bouton GitHub **Use this template** permet aussi de copier le dépôt. La CLI
 
 Utilisez un development build pour un travail orienté production et dès que l’application comprend
 du code natif personnalisé. Expo Go reste utile pour l’apprentissage et l’évaluation lorsqu’un build
-compatible avec le SDK existe pour la plateforme cible. Les scripts `npm run android`, `npm run ios`
-et `npm run web` ouvrent les autres cibles.
+compatible avec le SDK existe pour la plateforme cible. Vous pouvez aussi ouvrir un émulateur
+Android, le simulateur iOS ou la cible web :
+
+```bash
+npm run android
+npm run ios
+npm run web
+```
 
 Node.js 22.13 ou plus récent est requis. Les builds natifs prennent en charge Android 7 ou plus
-récent et iOS 16.4 ou plus récent ; les builds iOS locaux nécessitent Xcode 26.4 ou plus récent.
+récent et iOS 16.4 ou plus récent ; les builds iOS locaux nécessitent Xcode 26.4 ou plus récent. La
+configuration des émulateurs et appareils natifs suit le
+[guide de l’environnement de développement Expo](https://docs.expo.dev/get-started/set-up-your-environment/).
+
 Continuez avec
 [Structure et configuration](./project-structure-configuration).

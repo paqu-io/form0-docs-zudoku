@@ -3,8 +3,9 @@ title: Events
 description: Builtins available in form events.
 ---
 
-import { Badge } from "zudoku/ui/Badge";
+<PageBadges />
 
+import { Badge } from "zudoku/ui/Badge"
 
 Events live in `form.events.code` and are evaluated at runtime. Use `ON` to register handlers
 and `SETVALUE`/`ALERT` to interact with the form.
@@ -12,11 +13,11 @@ and `SETVALUE`/`ALERT` to interact with the form.
 ## Quick example
 
 ```js
-ON('change', 'age', function (event) {
+ON("change", "age", function (event) {
   if ($age >= 18) {
-    SETVALUE('can_vote', 'yes');
+    SETVALUE("can_vote", "yes")
   }
-});
+})
 ```
 
 ## Event builtins

@@ -1,7 +1,12 @@
 ---
-title: Importer et exporter en CSV
-description: Convertissez les définitions de schéma entre JSON et la représentation CSV de la CLI.
+title: Importer et exporter des fichiers CSV
+description: Déplacer les définitions schema entre JSON et la représentation CSV du CLI.
 ---
 
-Utilisez `form0 schema export` pour créer un CSV à partir d’un schéma JSON et
-`form0 schema import` pour le reconvertir en JSON. Vérifiez et validez toujours le schéma généré.
+<PageBadges />
+
+Utilisez `form0 schema export` pour créer une représentation CSV d'un JSON schema et `form0 schema import`
+pour le convertir en JSON.
+
+Les deux commandes prennent en charge les chemins d'entrée ou de sortie explicites et `--force` pour le remplacement intentionnel.
+Validez et révisez le schema généré après l'avoir converti.

@@ -1,22 +1,36 @@
 ---
-title: Renderers, thèmes, polices et images dans le starter mobile
-description: Personnalisez la présentation native et gérez polices et images embarquées.
+title: Rendus, thèmes, polices et images dans le mobile starter
+description: Personnalisez la présentation des formulaires natifs et gérez les polices et les images prises en charge.
 ---
 
-La racine charge `form0Fonts` avec `expo-font` avant le rendu et enveloppe l’interface dans
-`ThemeProvider`. Configurez le mode de couleur et les surcharges dans `form0.config.js`.
+<PageBadges />
 
-Associez les types de champ à des identifiants dans `form0.config.js`, puis ces identifiants aux
-composants dans `src/field-renderers/resolver.js`. Cette séparation garde la configuration
-sérialisable. Consultez les [renderers personnalisés](/fr/bindings/react-native/custom-renderers).
+## Thème et polices
 
-React Native doit découvrir statiquement les images embarquées. Ajoutez-les dans
-`assets/supporting-images`, puis exécutez :
+La racine de l'application charge `form0Fonts` avec `expo-font` avant le rendu et enveloppe son interface utilisateur dans
+`ThemeProvider` . Configurez le mode de couleur de base et les remplacements facultatifs de thème dans `form0.config.js` .
+Les écrans starter environnants utilisent les mêmes jetons de thème que le formulaire.
+
+## Rendu overrides
+
+Map schema types de champ à renderer identifiants dans `form0.config.js`, puis mapper ces identifiants à
+composants dans `src/field-renderers/resolver.js`. Garder les composants hors du fichier de configuration
+préserve une limite de configuration sérialisable et conviviale pour les outils.
+
+Pour les props renderer et le comportement d'enregistrement,
+[documentation personnalisée renderer](/fr/bindings/react-native/custom-renderers).
+
+## Images de soutien
+
+React Native nécessite que les références d'image groupées soient détectables statiquement.
+`assets/supporting-images`, puis régénérez la table de correspondance:
 
 ```bash
 npm run generate-images
 ```
 
-Validez l’image et `src/supporting-images/index.js`. Les scripts de démarrage régénèrent ce fichier
-et la CI vérifie son actualité. Les images HTTP(S) distantes n’ont pas besoin d’entrée. Consultez
-[Thèmes, polices et images](/fr/bindings/react-native/themes-assets).
+Commit la ressource et `src/supporting-images/index.js`. Les scripts de démarrage régénèrent le fichier,
+et CI vérifie que le registre engagé est à jour. Les chemins d'image distants HTTP et HTTPS ne sont pas
+besoin d'entrées de registre.
+
+Voir [Thèmes, polices et images](/fr/bindings/react-native/themes-assets) pour les API de niveau binding.

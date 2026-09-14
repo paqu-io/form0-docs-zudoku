@@ -1,7 +1,63 @@
 ---
-title: ai-metadata (Coming soon)
+title: metadati AI
+description: Guida AI opzionale per moduli e campi.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/ai-metadata".
+form0-core supporta metadati AI opzionali per guidare gli agenti esterni. I metadati vengono ignorati dal
+motore a meno che il tuo strumento non lo legga.
+
+## AI a livello di modulo
+
+`form.ai` supporta le seguenti chiavi:
+
+- `context`: Array dei tag di dominio.
+- `instructions`: Serie di istruzioni per l'attrezzaggio AI.
+- `namingPolicy`: Oggetto che descrive le preferenze di denominazione.
+- `tasks`: array di attività da abilitare (ad esempio, `suggestFieldNames`).
+- `requiresConsent`: Bandiera booleana per il consenso dell'utente.
+- `allowCloud`: Bandiera booleana per l'elaborazione cloud.
+
+Esempio:
+
+```json
+{
+  "ai": {
+    "context": ["safety_inspections"],
+    "instructions": ["Use snake_case"],
+    "namingPolicy": { "language": "en", "case": "snake", "asciiOnly": true },
+    "tasks": ["suggestFieldNames"],
+    "requiresConsent": true
+  }
+}
+```
+
+## AI a livello di campo
+
+`field.ai` supporta:
+
+- `context`, `instructions`, `tasks` (stesso come forma)
+- `examples`: Valori di esempio
+- `synonyms`: Etichette alternative
+- `inferrable`: Bandiera booleana per inferenza
+- `fillStrategy`: `infer_from_previous`, `require_explicit` o `suggest_options`
+- `priority`: Numero che indica l'importanza
+- `dependencies`: Array degli identificatori di campo
+- `choicePolicy`: Oggetto che descrive la strategia del valore di scelta
+- `providerHints`: Suggerimenti specifici del fornitore
+- `requiresConsent`, `allowCloud`
+
+Esempio:
+
+```json
+{
+  "ai": {
+    "examples": ["John", "Jane"],
+    "synonyms": ["First name"],
+    "inferrable": true,
+    "fillStrategy": "suggest_options",
+    "priority": 0.7
+  }
+}
+```

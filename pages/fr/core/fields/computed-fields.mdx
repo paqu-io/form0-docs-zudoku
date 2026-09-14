@@ -1,7 +1,69 @@
 ---
-title: computed-fields (Coming soon)
+title: Champs calculés
+description: CalculatedField et LabelField
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/fields/computed-fields".
+import { Callout } from "zudoku/ui/Callout"
+
+## CalculatedField
+
+```json
+{
+  "type": "CalculatedField",
+  "key": "total",
+  "data_name": "total",
+  "label": "Total",
+  "display": { "style": "numeric" },
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": true,
+  "calculate": "$quantity * 2",
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null
+}
+```
+
+Attributs supplémentaires:
+
+- `calculate`: Chaîne d'expression évaluée par le moteur.
+- `display.style`: `text`, `numeric`, `date` ou `currency`.
+
+Remarques:
+
+- `required` est toujours `false`.
+- `read_only` est toujours `true`.
+
+## LabelField
+
+```json
+{
+  "type": "LabelField",
+  "key": "label_note",
+  "data_name": "label_note",
+  "label": "Note",
+  "display": "default",
+  "description": "Static label text",
+  "description_mode": "subtext",
+  "required": false,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": true,
+  "default_value": null,
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null
+}
+```
+
+LabelField est un champ non modifiable qui est utile pour le texte en ligne et le regroupement d'interface utilisateur.
+
+<Callout type="info" title="Expressions">
+  Utilisez les fonctions internes (par exemple, `IF`, `ROUND`, `CHOICEVALUE`) dans `calculate`. Voir
+  les pages de la liste complète.
+</Callout>

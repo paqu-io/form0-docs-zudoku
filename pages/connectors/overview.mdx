@@ -3,6 +3,8 @@ title: Connectors overview
 description: Persist form0 structured records through trusted connector packages.
 ---
 
+<PageBadges />
+
 Connectors receive structured records from a form0 project and write them to storage controlled by
 the host application. Official connectors currently support PostgreSQL and SQLite.
 
@@ -10,10 +12,10 @@ The recommended workflow is to manage connectors with `form0-cli`: install a con
 it in the project, test the connection, and inspect its status. Applications can also instantiate
 a connector directly when they need to own its lifecycle.
 
-| Package | Storage | Documentation | Source |
-| --- | --- | --- | --- |
-| [`form0-connector-pg`](https://www.npmjs.com/package/form0-connector-pg) | PostgreSQL | [Setup and configuration](/connectors/postgresql/setup) | [GitHub](https://github.com/paqu-io/form0-connector-pg) |
-| [`form0-connector-sqlite`](https://www.npmjs.com/package/form0-connector-sqlite) | SQLite | [Setup and configuration](/connectors/sqlite/setup) | [GitHub](https://github.com/paqu-io/form0-connector-sqlite) |
+| Package                                                                          | Storage    | Documentation                                           | Source                                                      |
+| -------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------- | ----------------------------------------------------------- |
+| [`form0-connector-pg`](https://www.npmjs.com/package/form0-connector-pg)         | PostgreSQL | [Setup and configuration](/connectors/postgresql/setup) | [GitHub](https://github.com/paqu-io/form0-connector-pg)     |
+| [`form0-connector-sqlite`](https://www.npmjs.com/package/form0-connector-sqlite) | SQLite     | [Setup and configuration](/connectors/sqlite/setup)     | [GitHub](https://github.com/paqu-io/form0-connector-sqlite) |
 
 Connectors run inside the local Node.js process. They are not hosted storage services and do not
 provide authentication, authorization, backups, retention, or database administration. Those

@@ -3,6 +3,8 @@ title: UI bindings overview
 description: Render form0 schemas in application frameworks while form0-core owns form behavior.
 ---
 
+<PageBadges />
+
 import { Callout } from "zudoku/ui/Callout"
 
 Bindings connect the framework-agnostic `form0-core` engine to application UI. The engine remains
@@ -14,15 +16,15 @@ Use a binding directly when integrating form0 into an existing application.
 
 ## Official bindings
 
-| Package | Platform | Documentation | Source |
-| --- | --- | --- | --- |
-| [`form0-react`](https://www.npmjs.com/package/form0-react) | React web applications | [Install and render](/bindings/react/install-render) | [GitHub](https://github.com/paqu-io/form0-react) |
+| Package                                                                  | Platform                           | Documentation                                               | Source                                                  |
+| ------------------------------------------------------------------------ | ---------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------- |
+| [`form0-react`](https://www.npmjs.com/package/form0-react)               | React web applications             | [Install and render](/bindings/react/install-render)        | [GitHub](https://github.com/paqu-io/form0-react)        |
 | [`form0-react-native`](https://www.npmjs.com/package/form0-react-native) | React Native and Expo applications | [Install and render](/bindings/react-native/install-render) | [GitHub](https://github.com/paqu-io/form0-react-native) |
 
 Bindings do not change schema semantics. Use the [Core documentation](/core/overview) for schemas,
 fields, expressions, validation, security, and output records.
 
 <Callout type="caution" title="Trusted schemas only">
-  Schema expressions and event scripts execute JavaScript. Only render schemas from trusted
-  authors. See [Security and sandboxing](/core/security).
+  Schema expressions and event scripts execute JavaScript. Only render schemas from trusted authors.
+  See [Security and sandboxing](/core/security).
 </Callout>

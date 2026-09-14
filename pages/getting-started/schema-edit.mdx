@@ -3,13 +3,13 @@ title: Edit your first schema
 description: Add a NumericField and a CalculatedField using schema edit mode.
 ---
 
-import { Badge } from "zudoku/ui/Badge";
-import { Callout } from "zudoku/ui/Callout";
-import { Stepper } from "zudoku/ui/Stepper";
+<PageBadges />
 
-<Badge variant="default">CLI</Badge> <Badge variant="muted">Local</Badge>
+import { Callout } from "zudoku/ui/Callout"
+import { Stepper } from "zudoku/ui/Stepper"
 
 ## Live editing workflow
+
 This page assumes you already ran `serve` and have the live preview open at `http://localhost:3030`.
 
 <Stepper>
@@ -19,12 +19,14 @@ This page assumes you already ran `serve` and have the live preview open at `htt
    ```ansi
    form0(server)> schema edit
    ```
-   <Callout type="caution" title="Editor required">
-      Schema edit mode launches your editor. Make sure `EDITOR` or `VISUAL` is set:
 
-      - **Linux/macOS**: Add `export EDITOR=code` to `~/.bashrc`, `~/.zshrc`, or `~/.profile`, then restart your terminal or run `source ~/.bashrc`.
-      - **Windows (PowerShell)**: Run `$env:EDITOR = "code"` for the current session, or add it to your PowerShell profile (`$PROFILE`).
-      - **Windows (CMD)**: Use `set EDITOR=code` for the session, or set it permanently via *System Properties → Environment Variables*.
+   <Callout type="caution" title="Editor required">
+     Schema edit mode launches your editor. Make sure `EDITOR` or `VISUAL` is set: -
+     **Linux/macOS**: Add `export EDITOR=code` to `~/.bashrc`, `~/.zshrc`, or `~/.profile`, then
+     restart your terminal or run `source ~/.bashrc`. - **Windows (PowerShell)**: Run `$env:EDITOR =
+     "code"` for the current session, or add it to your PowerShell profile (`$PROFILE`). - **Windows
+     (CMD)**: Use `set EDITOR=code` for the session, or set it permanently via _System Properties →
+     Environment Variables_.
    </Callout>
 
 1. Preview form schema:
@@ -33,7 +35,7 @@ This page assumes you already ran `serve` and have the live preview open at `htt
    form0(server,schema)> preview
    ```
 
-1. Add a *NumericField* after a field of your choice, using the row number shown at the beginning of each line (e.g., `2` in `2 | TextField ...`) in the form schema preview:
+1. Add a _NumericField_ after a field of your choice, using the row number shown at the beginning of each line (e.g., `2` in `2 | TextField ...`) in the form schema preview:
 
    ```ansi
    form0(server,schema)> add NumericField after <id>
@@ -51,7 +53,7 @@ This page assumes you already ran `serve` and have the live preview open at `htt
    }
    ```
 
-1. Add a *CalculatedField* after the `quantity` field you have just created:
+1. Add a _CalculatedField_ after the `quantity` field you have just created:
 
    ```ansi
    form0(server,schema)> add CalculatedField after <new-id>
@@ -81,11 +83,11 @@ This page assumes you already ran `serve` and have the live preview open at `htt
    ```ansi
    form0(server,schema)> q
    ```
-   And stop the dev server: 
+
+   And stop the dev server:
 
    ```ansi
    form0(server)> serve stop
    ```
 
 </Stepper>
-

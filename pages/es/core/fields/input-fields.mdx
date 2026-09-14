@@ -1,7 +1,238 @@
 ---
-title: input-fields (Coming soon)
+title: Campos de entrada
+description: Tipos de campos de texto, numéricos, de elección y de fecha y hora.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/fields/input-fields".
+import { Callout } from "zudoku/ui/Callout"
+
+Esta página enumera los tipos de campos de entrada y sus atributos adicionales más allá de los comunes.
+
+## TextField
+
+```json
+{
+  "type": "TextField",
+  "key": "first_name",
+  "data_name": "first_name",
+  "label": "First name",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "pattern": null,
+  "pattern_description": null,
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null
+}
+```
+
+Atributos adicionales:
+
+- `pattern`: Patrón Regex para validar la entrada.
+- `pattern_description`: Explicación opcional del patrón.
+
+## Campo numérico
+
+```json
+{
+  "type": "NumericField",
+  "key": "age",
+  "data_name": "age",
+  "label": "Age",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": true,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "min": 0,
+  "max": 120,
+  "format": "integer",
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null
+}
+```
+
+Atributos adicionales:
+
+- `min`: Valor mínimo permitido.
+- `max`: Valor máximo permitido.
+- `format`: `integer` o `float`.
+
+## ElecciónSingleField
+
+```json
+{
+  "type": "SingleChoiceField",
+  "key": "city",
+  "data_name": "city",
+  "label": "City",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": true,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "allow_other": false,
+  "choices": [
+    { "label": "Paris", "value": "paris" },
+    { "label": "Rome", "value": "rome" }
+  ],
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null,
+  "is_searchable": false,
+  "is_searchable_mode": null
+}
+```
+
+Atributos adicionales:
+
+- `choices`: Matriz de objetos `{ label, value }`.
+- `allow_other`: Activa una opción de texto libre.
+- `is_searchable`: Permite la búsqueda en listas grandes.
+- `is_searchable_mode`: Actualmente `default` o `null`.
+
+## MultielecciónCampo
+
+```json
+{
+  "type": "MultiChoiceField",
+  "key": "foods",
+  "data_name": "foods",
+  "label": "Favorite foods",
+  "display": "checkbox",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": ["pasta"],
+  "allow_other": false,
+  "choices": [
+    { "label": "Pasta", "value": "pasta" },
+    { "label": "Pizza", "value": "pizza" }
+  ],
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null,
+  "is_searchable": false,
+  "is_searchable_mode": null
+}
+```
+
+Atributos adicionales:
+
+- `choices`: Matriz de objetos `{ label, value }`.
+- `allow_other`: Habilita elementos de texto libre.
+- `display`: `default` o `checkbox`.
+
+## Campo booleano
+
+```json
+{
+  "type": "BooleanField",
+  "key": "newsletter",
+  "data_name": "newsletter",
+  "label": "Subscribe?",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "choices": [
+    { "label": "Yes", "value": "yes" },
+    { "label": "No", "value": "no" }
+  ],
+  "third_option_enabled": false,
+  "supporting_image": false,
+  "supporting_image_path": null,
+  "supporting_image_display": null
+}
+```
+
+Atributos adicionales:
+
+- `choices`: Por lo general, dos opciones (sí / no).
+- `third_option_enabled`: Activa una tercera opción neutral.
+
+## FechaCampo
+
+```json
+{
+  "type": "DateField",
+  "key": "visit_date",
+  "data_name": "visit_date",
+  "label": "Visit date",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": "now"
+}
+```
+
+Atributos adicionales:
+
+- `default_value`: `now` (o `null`).
+
+## TimeField
+
+```json
+{
+  "type": "TimeField",
+  "key": "visit_time",
+  "data_name": "visit_time",
+  "label": "Visit time",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": "now"
+}
+```
+
+Atributos adicionales:
+
+- `default_value`: `now` (o `null`).
+
+<Callout type="info" title="Choice values">
+  Los valores de elección deben coincidir con `^[a-z0-9_]+$`. Si una opción no proporciona un
+  `value`, form0-core generará uno de la etiqueta.
+</Callout>

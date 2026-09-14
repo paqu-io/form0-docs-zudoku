@@ -1,34 +1,48 @@
 ---
-title: Risoluzione dei problemi React e Vite
-description: Risolvi problemi comuni relativi a route, schemi, renderer, worker e connettori.
+title: Risoluzione dei problemi di React e Vite
+description: Risolvere i problemi comuni di installazione, routing, schema, renderer, worker e connettore.
 ---
 
-## Modulo non trovato
+<PageBadges />
 
-Verifica che l’identificatore nell’URL corrisponda a `src/forms/registry.js` e che l’import dinamico
-punti a uno schema esistente.
+## Un percorso del modulo dice che il modulo non è stato trovato
 
-## Lo schema non viene caricato
+Confermare che l'identificatore URL corrisponda esattamente a una voce in `src/forms/registry.js`.
+che la sua importazione dinamica punta a un file schema esistente.
 
-Controlla l’errore di import nella console e valida il JSON con form0-cli. Consulta
-[Validare e visualizzare l’anteprima](/it/cli/schemas/validate-preview).
+## Una schema non riesce a caricare
 
-## Il renderer personalizzato non viene usato
+Aprire la console del browser per l'errore di importazione, quindi eseguire la convalida schema tramite form0-cli.
+Gli errori di sintassi e i percorsi di importazione relativi errati sono le cause più comuni.
 
-Confronta il tipo di campo, la mappatura in `form0.config.js` e l’identificatore in `resolver.js`.
+```bash
+form0
+```
 
-## L’invio non raggiunge la CLI
+Caricare schema ed eseguire `validate`. Vedere [Validare e visualizzare in anteprima](/it/cli/schemas/validate-preview).
 
-Esegui `form0 serve --app`. Per un indirizzo diverso, definisci `FORM0_DEV_API_URL` e verifica che
-`devServer.apiBaseUrl` corrisponda alla route del proxy.
+## Una renderer personalizzata non viene utilizzata
 
-## Il worker non funziona
+Controlla tutti e tre i nomi: il tipo di campo schema, la sua mappatura in `form0.config.js` e il resolver
+identificatore in `src/field-renderers/resolver.js`. Il resolver registra un avviso per gli identificatori sconosciuti.
 
-Imposta temporaneamente `engine.mode` su `main-thread`, poi controlla route degli asset e content
-type. Consulta [Worker e prestazioni](/it/bindings/react/workers-performance).
+## I contributi non possono raggiungere il server CLI
 
-## Le route dirette restituiscono 404
+Eseguire `form0 serve --app` dalla directory del progetto. Se il server CLI utilizza un indirizzo diverso, impostare
+`FORM0_DEV_API_URL` prima di iniziare Vite o nel relativo file `.env` locale.
+`devServer.apiBaseUrl` corrisponde ancora al percorso proxy Vite.
 
-Configura `index.html` come fallback. Per altri problemi consulta
-[React](/it/bindings/react/troubleshooting) o
-[Connettori](/it/connectors/troubleshooting).
+## La valutazione dei lavoratori fallisce
+
+Imposta temporaneamente `engine.mode` su `main-thread` per isolare il caricamento di worker dal comportamento di schema.
+controllare la console del browser, i percorsi delle risorse e il tipo di contenuto di distribuzione.
+[Operatori e prestazioni](/it/bindings/react/workers-performance).
+
+## I link diretti ritornano 404 dopo la distribuzione
+
+Configurare l'host statico per tornare a `index.html` per percorsi di applicazione sconosciuti.
+problema di configurazione, non un problema di definizione del percorso React.
+
+Per errori di rendering a livello di pacchetto, continuare con
+[React risoluzione dei problemi](/it/bindings/react/troubleshooting). Per errori di database, utilizzare
+[Connettore risoluzione dei problemi](/it/connectors/troubleshooting).

@@ -2,6 +2,7 @@ import { DocsWordmark } from "./src/components/docs-wordmark.jsx"
 import { SiteFooter } from "./src/components/site-footer.jsx"
 import { LanguageSlot } from "./src/components/language-slot.jsx"
 import { MobileDrawerMenu } from "./src/components/mobile-drawer-menu.jsx"
+import { PageBadges } from "./src/components/page-badges.jsx"
 import { DesktopSectionTabs, TopNavHeightFix } from "./src/components/site-section-nav.jsx"
 import { createI18nPlugin } from "./src/plugins/i18n-plugin.jsx"
 import { createDefaultDarkThemePlugin } from "./src/plugins/default-dark-theme-plugin.jsx"
@@ -78,6 +79,11 @@ const config = {
       includeProtected: false,
     },
   },
+  mdx: {
+    components: {
+      PageBadges,
+    },
+  },
   plugins: [i18nPlugin, localizedNavigationPlugin, defaultDarkThemePlugin, docsSeoPlugin],
   // Pagefind search only works after build (index is generated at build time).
   // Dev mode will show errors in console but search will work in production.
@@ -144,6 +150,8 @@ const config = {
     },
     customCss: `
       :root {
+        --side-nav-width: 20rem;
+
         --chart-1: #e24414;
         --chart-2: #e88d1c;
         --chart-3: #3d9b68;

@@ -1,22 +1,33 @@
 ---
 title: Integrazione mobile
-description: Integra il binding nativo e definisci i confini di offline e media.
+description: Posizionare il nativo binding all'interno di uno schermo mobile e definire i confini offline e multimediali.
 ---
 
-Assegna a `FormRenderer` un’area dello schermo delimitata: gestisce scorrimento, tastiera, focus e
-schermate drilldown. Evita di inserirlo in un altro scroll verticale. Usa `keyboardScrollOffset`
-per header sovrapposti.
+<PageBadges />
 
-Installa `react-native-safe-area-context` e usa `SafeAreaProvider` alla radice perché l’header
-integrato rispetti l’area sicura. Se l’app la applica già, nascondi l’header con
-`showHeader={false}`.
+## Schermo, tastiera e area sicura
 
-Il motore locale consente flussi offline, ma il binding non include persistenza o sincronizzazione.
-Salva bozze da `onSnapshotChange` o `onSave`, ripristinale con `initialSnapshot` e accoda i record di
-`onSubmit`. L’app definisce ritentativi, conflitti, cifratura, conservazione ed eliminazione.
+Dare a `FormRenderer` un'area dello schermo delimitata; possiede la vista di scorrimento, l'evitamento della tastiera, il fuoco del campo,
+e le schermate di drilldown all'interno di quell'area. Evitare di avvolgerlo in un'altra visualizzazione di scorrimento verticale.
+`keyboardScrollOffset` quando un overlay o intestazione di proprietà dell'applicazione cambia la destinazione visibile.
 
-I connector Node.js `form0-connector-pg` e `form0-connector-sqlite` non funzionano in React Native.
-Usa storage nativo come `expo-sqlite` e un’API autenticata per i dati remoti.
+Installare `react-native-safe-area-context` e avvolgere la radice dell'applicazione in `SafeAreaProvider` per lasciare
+l'intestazione incorporata include l'inserto dell'area di sicurezza superiore. Se l'applicazione applica già l'area di sicurezza
+imbottitura, impostare `showHeader={false}` e fornire la navigazione circostante stessa.
 
-Foto e video richiedono renderer personalizzati che gestiscano permessi, acquisizione,
-identificatori durevoli, upload e pulizia.
+## Confine offline
+
+La binding è offline perché la valutazione di schema è locale, ma non è una persistenza o
+Utilizzare `onSnapshotChange` o `onSave` per scrivere drafts su piattaforma nativa
+archiviazione, ripristinarli tramite `initialSnapshot` e record `onSubmit` convalidati in coda per l'upload.
+L'applicazione deve definire il comportamento di riprova, conflitto, crittografia, conservazione e cancellazione.
+
+I pacchetti Node.js `form0-connector-pg` e `form0-connector-sqlite` non vengono eseguiti in React Native.
+Utilizzare un database nativo della piattaforma come `expo-sqlite` per i dati sul dispositivo e un file autenticato
+applicazione API per lo storage remoto.
+
+## Limite dei media
+
+La cattura di foto e video richiede renderers personalizzato. Quelli renderers possiedono le autorizzazioni runtime, cattura,
+identificatori locali, anteprime, caricamento in background e pulizia. Mantieni gli identificatori durevoli nella forma
+valori; non presumere che un file temporaneo URI rimarrà valido per tutti i riavvii dell'applicazione.

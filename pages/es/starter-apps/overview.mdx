@@ -1,34 +1,37 @@
 ---
-title: Visión general de aplicaciones iniciales
-description: Elige una aplicación inicial mantenida de form0 y créala con form0-cli.
+title: Visión general de las aplicaciones de inicio
+description: Elija una form0 mantenida starter y cree una aplicación a través de form0-cli.
 ---
 
-Las aplicaciones iniciales combinan los paquetes de form0 con rutas, configuración, estilos y
-convenciones de desarrollo local. Úsalas cuando prefieras personalizar una aplicación funcional en
-lugar de integrar un binding en un proyecto existente.
+<PageBadges />
 
-| Aplicación          | Recomendada para                                                             | Código fuente                                                            |
-| ------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| React + Vite        | Aplicaciones web, formularios personalizados y alojamiento estático          | [GitHub](https://github.com/paqu-io/form0-web-tmpl-react-vite)           |
-| React Native + Expo | Aplicaciones iOS y Android, funciones del dispositivo y trabajo sin conexión | [GitHub](https://github.com/paqu-io/form0-mobile-tmpl-react-native-expo) |
+Las aplicaciones de inicio son bases de aplicaciones mantenidas que combinan paquetes form0 con enrutamiento,
+configuración, estilo y convenciones de desarrollo local. Son útiles cuando se
+aplicación para personalizar en lugar de agregar un binding a un proyecto existente.
+
+| Arranque            | Mejor para                                                                                            | Fuente                                                                   |
+| ------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| React + Vite        | Aplicaciones de navegador, formularios web personalizados y alojamiento estático                      | [GitHub](https://github.com/paqu-io/form0-web-tmpl-react-vite)           |
+| React Native + Expo | Aplicaciones iOS y Android, capacidades de dispositivos y flujos de trabajo orientados fuera de línea | [GitHub](https://github.com/paqu-io/form0-mobile-tmpl-react-native-expo) |
 
 ## Ruta de creación recomendada
 
-Usa [form0-cli](/es/cli/overview) para crear el proyecto. La CLI guía la selección del tipo de
-aplicación y del gestor de paquetes y genera un repositorio normal que te pertenece.
+Utilice [form0-cli](/es/cli/overview) para crear un starter. El CLI guía el proyecto y el administrador de paquetes
+selección y produce un repositorio de aplicaciones normal que usted posee.
 
 ```bash
 npm install --global form0-cli
-form0 init mi-aplicacion-form0
+form0 init my-form-app
 ```
 
-También puedes usar **Use this template** en GitHub cuando quieras crear el repositorio directamente
-desde la plantilla. La CLI sigue siendo la ruta de incorporación canónica.
+** de GitHub Utilice esta plantilla El botón ** también está disponible cuando desee crear una
+Repositorio desde la fuente starter . El CLI sigue siendo la ruta canónica de incorporación.
 
-Estas guías explican la aplicación alrededor de form0. Consulta [Bindings](/es/bindings/overview)
-para las API de los paquetes y [Core](/es/core/overview) para el comportamiento del esquema.
+Las guías de inicio explican la aplicación en torno a form0. Para las API de paquetes, use la
+[React y React Native binding documentación](/bindings/overview) . por schema comportamiento, utilice el
+[Core documentación](/es/core/overview).
 
-Continúa con la guía de tu starter:
+Continúe con la guía para su starter:
 
 - [Crear y ejecutar React y Vite](/es/starter-apps/react-vite/create-run)
 - [Crear y ejecutar React Native y Expo](/es/starter-apps/react-native-expo/create-run)

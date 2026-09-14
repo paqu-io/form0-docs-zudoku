@@ -13,10 +13,10 @@
   },
   "getting-started": {
     "quickstart": {
-      "title": "Quickstart"
+      "title": "Avvio rapido"
     },
     "schema-edit": {
-      "title": "Edit your first schema"
+      "title": "Modifica il tuo primo schema"
     }
   },
   "cli": {
@@ -115,57 +115,57 @@
   },
   "core": {
     "overview": {
-      "title": "Overview"
+      "title": "Panoramica"
     },
     "concepts": {
-      "title": "Concepts"
+      "title": "Concetti"
     },
     "schema": {
       "form": {
-        "title": "Form object"
+        "title": "Oggetto form"
       },
       "form-attributes": {
-        "title": "Form attributes"
+        "title": "Attributi del form"
       },
       "elements": {
-        "title": "Elements and nesting"
+        "title": "Elementi e annidamento"
       },
       "conditions-operators": {
-        "title": "Conditions and operators"
+        "title": "Condizioni e operatori"
       },
       "validation": {
-        "title": "Schema validation"
+        "title": "Validazione dello schema"
       }
     },
     "fields": {
       "catalog": {
-        "title": "Field catalog"
+        "title": "Catalogo dei campi"
       },
       "common-attributes": {
-        "title": "Common attributes"
+        "title": "Attributi comuni"
       },
       "input-fields": {
-        "title": "Input fields"
+        "title": "Campi di input"
       },
       "computed-fields": {
-        "title": "Computed fields"
+        "title": "Campi calcolati"
       },
       "media-fields": {
-        "title": "Media fields"
+        "title": "Campi multimediali"
       },
       "containers": {
-        "title": "Containers"
+        "title": "Contenitori"
       },
       "meta-fields": {
-        "title": "Meta fields"
+        "title": "Metacampi"
       }
     },
     "builtins": {
       "index": {
-        "title": "Builtins overview"
+        "title": "Panoramica delle funzioni integrate"
       },
       "calculations-expressions": {
-        "title": "Calculations & expressions",
+        "title": "Calcoli ed espressioni",
         "if": {
           "title": "IF"
         },
@@ -237,7 +237,7 @@
         }
       },
       "events": {
-        "title": "Events",
+        "title": "Eventi",
         "on": {
           "title": "ON"
         },
@@ -253,13 +253,13 @@
       }
     },
     "ai-metadata": {
-      "title": "AI metadata"
+      "title": "Metadati IA"
     },
     "security": {
-      "title": "Security and sandboxing"
+      "title": "Sicurezza e isolamento"
     },
     "output-records": {
-      "title": "Output and records"
+      "title": "Output e record"
     }
   },
   "guides": {

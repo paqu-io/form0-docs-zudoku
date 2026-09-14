@@ -1,7 +1,83 @@
 ---
-title: form (Coming soon)
+title: Objeto de formulario
+description: Atributos schema de nivel superior y metadatos de formulario.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/form".
+import { Callout } from "zudoku/ui/Callout"
+
+Cada schema comienza con un objeto `form`. Define metadatos, campos especiales y eventos.
+
+## Atributos
+
+<Callout type="info" title="Atributos a nivel de aplicación">
+  Los atributos marcados con ✓ en la columna **A nivel de aplicación** son metadatos de nivel de
+  aplicación no procesados directamente por el motor. Se pueden usar al integrar el producto SaaS
+  [reform](https://reformapp.io) o al crear una funcionalidad similar en tu propia aplicación.
+</Callout>
+
+| Atributo                |   Tipo   | Requerido | Nivel de aplicación | Notas                                                                                                                                       |
+| ----------------------- | :------: | :-------: | :-----------------: | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`                  |  cadena  |     ✓     |                     | Nombre de formulario amigable para humanos.                                                                                                 |
+| `description`           |  cadena  |           |                     | Descripción del formulario.                                                                                                                 |
+| `id`                    |  cadena  |     ✓     |                     | Identificador de formulario único.                                                                                                          |
+| `record_count`          |  número  |           |          ✓          | Contador operativo propiedad de la plataforma. Número de registros en el formulario.                                                        |
+| `record_last_change_at` |  cadena  |           |          ✓          | Contador operacional propiedad de la plataforma. Última fecha/hora de cambio del registro (ISO 8601).                                       |
+| `form_created_at`       |  cadena  |           |          ✓          | Fecha/hora de creación del formulario (ISO 8601).                                                                                           |
+| `form_updated_at`       |  cadena  |           |          ✓          | Fecha/hora de la última actualización del formulario (ISO 8601).                                                                            |
+| `form_created_by`       |  cadena  |           |          ✓          | Usuario que creó el formulario.                                                                                                             |
+| `form_updated_by`       |  cadena  |           |          ✓          | Usuario que actualizó el formulario por última vez.                                                                                         |
+| `status`                |  cadena  |           |          ✓          | Estado del formulario, generalmente `active` o `inactive`.                                                                                  |
+| `version`               |  cadena  |           |          ✓          | Versión opcional de schema propiedad de la plataforma. form0-core no la incrementa.                                                         |
+| `main_org_id`           |  cadena  |           |          ✓          | Identificación de la organización principal.                                                                                                |
+| `main_org_metadata`     |  objeto  |           |          ✓          | Principales campos de metadatos de la organización.                                                                                         |
+| `sub_org_id`            |  cadena  |           |          ✓          | Identificación de la suborganización.                                                                                                       |
+| `sub_org_metadata`      |  objeto  |           |          ✓          | Campos de metadatos de suborganización.                                                                                                     |
+| `project_id`            |  cadena  |           |          ✓          | ID del proyecto.                                                                                                                            |
+| `project_metadata`      |  objeto  |           |          ✓          | Campos de metadatos del proyecto.                                                                                                           |
+| `ai`                    |  objeto  |           |                     | Metadatos de AI para obtener orientación a nivel de formulario (consulte [metadatos de AI](/es/core/ai-metadata)).                          |
+| `status_field`          |  objeto  |     ✓     |                     | Definición del campo de estado especial (ver [Campos de metadatos](/es/core/fields/meta-fields#statusfield)).                               |
+| `title_field`           |  objeto  |     ✓     |                     | Definición del campo de título especial (ver [Campos de metadatos](/es/core/fields/meta-fields#titlefield)).                                |
+| `bounding_box`          |  array   |           |          ✓          | `[min_lat, min_lng, max_lat, max_lng]` contiene todos los registros.                                                                        |
+| `location_enabled`      | booleano |           |          ✓          | Permite la captura de ubicación.                                                                                                            |
+| `location_required`     | booleano |           |          ✓          | Requiere datos de ubicación cuando está habilitado.                                                                                         |
+| `image`                 |  cadena  |           |          ✓          | URL para el icono de formulario (original).                                                                                                 |
+| `image_thumbnail`       |  cadena  |           |          ✓          | URL para el icono de miniatura (160x160 px).                                                                                                |
+| `image_small`           |  cadena  |           |          ✓          | URL para icono pequeño (320x320 px).                                                                                                        |
+| `image_large`           |  cadena  |           |          ✓          | URL para el icono grande (640x640 px).                                                                                                      |
+| `events`                |  objeto  |           |                     | Bloque de código de evento (`events.code`).                                                                                                 |
+| `form_links`            |  objeto  |           |                     | Enlaces a/desde otros formularios (utilizados con `FormLinkField`, véase [Campos de metadatos](/es/core/fields/meta-fields#formlinkfield)). |
+| `elements`              |  array   |     ✓     |                     | Formulario campos y contenedores (ver [Elementos](/es/core/schema/elements)).                                                               |
+
+Para obtener información detallada sobre cada atributo, incluidos los valores predeterminados y las opciones, consulte [Atributos del formulario](/es/core/schema/form-attributes).
+
+## Campos especiales
+
+`status_field` y `title_field` se definen en el nivel superior, no en `elements`. Ellos son
+Para obtener más información, consulte [Campos de metadatos](/es/core/fields/meta-fields) para obtener más información.
+
+## Eventos
+
+`events.code` contiene expresiones builtin y JavaScript que registran controladores de eventos usando builtins como
+`ON`, `OFF`, `ALERT`, `SETVALUE`, etc Ver [Eventos](/es/core/builtins/events-overview) para más detalles.
+
+## Ejemplo
+
+```json
+{
+  "form": {
+    "name": "Inspection",
+    "description": "Weekly inspection form",
+    "id": "form_001",
+    "status": "active",
+    "version": "1",
+    "location_enabled": true,
+    "location_required": false,
+    "status_field": { "type": "StatusField", "label": "Status", "choices": [] },
+    "title_field": { "type": "TitleField", "label": "Title", "elements": [] },
+    "events": { "code": "ON('load-record', function (e) { ALERT('Ready'); })" },
+    "elements": []
+  }
+}
+```

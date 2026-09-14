@@ -3,16 +3,16 @@ title: Form attributes
 description: Complete reference for all form object attributes.
 ---
 
-import { Badge } from "zudoku/ui/Badge";
-import { Callout } from "zudoku/ui/Callout";
+<PageBadges />
 
-<Badge variant="default">Engine</Badge> <Badge variant="muted">Local</Badge> <Badge variant="muted">Schema</Badge>
+import { Callout } from "zudoku/ui/Callout"
 
 This page documents all attributes available on the `form` object, including application-level metadata.
 
 <Callout type="note" title="Application-level attributes">
-  Attributes marked as **App-level** are metadata not processed directly by the engine.
-  They can be used when integrating with [reform](https://reformapp.io) SaaS product or when building similar functionality in your own application.
+  Attributes marked as **App-level** are metadata not processed directly by the engine. They can be
+  used when integrating with [reform](https://reformapp.io) SaaS product or when building similar
+  functionality in your own application.
 </Callout>
 
 ---
@@ -21,13 +21,13 @@ This page documents all attributes available on the `form` object, including app
 
 Human-friendly form name displayed in the UI.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | ✓ |
-| Default | - |
-| Choices | - |
-| App-level | - |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | ✓        |
+| Default   | -        |
+| Choices   | -        |
+| App-level | -        |
 
 ---
 
@@ -35,13 +35,13 @@ Human-friendly form name displayed in the UI.
 
 Form description.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | - |
-| Choices | - |
-| App-level | - |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | -        |
+| Choices   | -        |
+| App-level | -        |
 
 ---
 
@@ -49,13 +49,13 @@ Form description.
 
 Unique form identifier. UUID format recommended.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | ✓ |
-| Default | - |
-| Choices | - |
-| App-level | - |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | ✓        |
+| Default   | -        |
+| Choices   | -        |
+| App-level | -        |
 
 ---
 
@@ -63,13 +63,13 @@ Unique form identifier. UUID format recommended.
 
 Platform-owned operational counter. Number of records in the form.
 
-| Property | Value |
-| --- | --- |
-| Type | `number` |
-| Required | - |
-| Default | Host-defined |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value        |
+| --------- | ------------ |
+| Type      | `number`     |
+| Required  | -            |
+| Default   | Host-defined |
+| Choices   | -            |
+| App-level | ✓            |
 
 ---
 
@@ -77,13 +77,13 @@ Platform-owned operational counter. Number of records in the form.
 
 Platform-owned operational counter. Date/time of the last record change in ISO 8601 format.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | Host-defined |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value        |
+| --------- | ------------ |
+| Type      | `string`     |
+| Required  | -            |
+| Default   | Host-defined |
+| Choices   | -            |
+| App-level | ✓            |
 
 ---
 
@@ -91,13 +91,13 @@ Platform-owned operational counter. Date/time of the last record change in ISO 8
 
 Form creation date/time in ISO 8601 format.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -105,13 +105,13 @@ Form creation date/time in ISO 8601 format.
 
 Form last update date/time in ISO 8601 format.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -119,13 +119,13 @@ Form last update date/time in ISO 8601 format.
 
 User who created the form.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -133,13 +133,13 @@ User who created the form.
 
 User who last updated the form.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -147,13 +147,13 @@ User who last updated the form.
 
 Form status indicator.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | - |
-| Choices | `active`, `inactive` |
-| App-level | ✓ |
+| Property  | Value                |
+| --------- | -------------------- |
+| Type      | `string`             |
+| Required  | -                    |
+| Default   | -                    |
+| Choices   | `active`, `inactive` |
+| App-level | ✓                    |
 
 ---
 
@@ -161,13 +161,13 @@ Form status indicator.
 
 Optional platform-owned schema version. form0-core does not increment it.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | - |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | -        |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -175,13 +175,13 @@ Optional platform-owned schema version. form0-core does not increment it.
 
 Main organization identifier.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | - |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | -        |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -189,13 +189,13 @@ Main organization identifier.
 
 Metadata fields associated with the main organization.
 
-| Property | Value |
-| --- | --- |
-| Type | `object` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `object` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -203,13 +203,13 @@ Metadata fields associated with the main organization.
 
 Sub-organization identifier.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -217,13 +217,13 @@ Sub-organization identifier.
 
 Metadata fields associated with the sub-organization.
 
-| Property | Value |
-| --- | --- |
-| Type | `object` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `object` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -231,13 +231,13 @@ Metadata fields associated with the sub-organization.
 
 Project identifier.
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -245,13 +245,13 @@ Project identifier.
 
 Metadata fields associated with the project.
 
-| Property | Value |
-| --- | --- |
-| Type | `object` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `object` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -259,13 +259,13 @@ Metadata fields associated with the project.
 
 AI metadata for form-level guidance. See [AI metadata](/core/ai-metadata) for details.
 
-| Property | Value |
-| --- | --- |
-| Type | `object` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | - |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `object` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | -        |
 
 ---
 
@@ -273,13 +273,13 @@ AI metadata for form-level guidance. See [AI metadata](/core/ai-metadata) for de
 
 Special status field definition. See [Meta fields](/core/fields/meta-fields#statusfield) for details.
 
-| Property | Value |
-| --- | --- |
-| Type | `object` |
-| Required | ✓ |
-| Default | - |
-| Choices | - |
-| App-level | - |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `object` |
+| Required  | ✓        |
+| Default   | -        |
+| Choices   | -        |
+| App-level | -        |
 
 ---
 
@@ -287,13 +287,13 @@ Special status field definition. See [Meta fields](/core/fields/meta-fields#stat
 
 Special title field definition. See [Meta fields](/core/fields/meta-fields#titlefield) for details.
 
-| Property | Value |
-| --- | --- |
-| Type | `object` |
-| Required | ✓ |
-| Default | - |
-| Choices | - |
-| App-level | - |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `object` |
+| Required  | ✓        |
+| Default   | -        |
+| Choices   | -        |
+| App-level | -        |
 
 ---
 
@@ -301,13 +301,13 @@ Special title field definition. See [Meta fields](/core/fields/meta-fields#title
 
 Bounding box containing all form records. Format: `[min_lat, min_lng, max_lat, max_lng]`.
 
-| Property | Value |
-| --- | --- |
-| Type | `array` |
-| Required | - |
-| Default | `[0, 0, 0, 0]` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value          |
+| --------- | -------------- |
+| Type      | `array`        |
+| Required  | -              |
+| Default   | `[0, 0, 0, 0]` |
+| Choices   | -              |
+| App-level | ✓              |
 
 ---
 
@@ -315,13 +315,13 @@ Bounding box containing all form records. Format: `[min_lat, min_lng, max_lat, m
 
 Enables location capture for records.
 
-| Property | Value |
-| --- | --- |
-| Type | `boolean` |
-| Required | - |
-| Default | - |
-| Choices | `true`, `false` |
-| App-level | ✓ |
+| Property  | Value           |
+| --------- | --------------- |
+| Type      | `boolean`       |
+| Required  | -               |
+| Default   | -               |
+| Choices   | `true`, `false` |
+| App-level | ✓               |
 
 ---
 
@@ -329,13 +329,13 @@ Enables location capture for records.
 
 Requires location data when `location_enabled` is `true`.
 
-| Property | Value |
-| --- | --- |
-| Type | `boolean` |
-| Required | - |
-| Default | - |
-| Choices | `true`, `false` |
-| App-level | ✓ |
+| Property  | Value           |
+| --------- | --------------- |
+| Type      | `boolean`       |
+| Required  | -               |
+| Default   | -               |
+| Choices   | `true`, `false` |
+| App-level | ✓               |
 
 ---
 
@@ -343,13 +343,13 @@ Requires location data when `location_enabled` is `true`.
 
 URL for the form icon (original size).
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -357,13 +357,13 @@ URL for the form icon (original size).
 
 URL for the thumbnail-sized form icon (160x160 px).
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -371,13 +371,13 @@ URL for the thumbnail-sized form icon (160x160 px).
 
 URL for the small-sized form icon (320x320 px).
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -385,13 +385,13 @@ URL for the small-sized form icon (320x320 px).
 
 URL for the large-sized form icon (640x640 px).
 
-| Property | Value |
-| --- | --- |
-| Type | `string` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | ✓ |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `string` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | ✓        |
 
 ---
 
@@ -399,13 +399,13 @@ URL for the large-sized form icon (640x640 px).
 
 Event code block containing builtin and JavaScript expressions for event handlers. Code is placed in `events.code`.
 
-| Property | Value |
-| --- | --- |
-| Type | `object` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | - |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `object` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | -        |
 
 ---
 
@@ -413,13 +413,13 @@ Event code block containing builtin and JavaScript expressions for event handler
 
 Links to/from other forms (used with `FormLinkField`). See [Meta fields](/core/fields/meta-fields#formlinkfield) for details.
 
-| Property | Value |
-| --- | --- |
-| Type | `object` |
-| Required | - |
-| Default | `null` |
-| Choices | - |
-| App-level | - |
+| Property  | Value    |
+| --------- | -------- |
+| Type      | `object` |
+| Required  | -        |
+| Default   | `null`   |
+| Choices   | -        |
+| App-level | -        |
 
 ---
 
@@ -427,10 +427,10 @@ Links to/from other forms (used with `FormLinkField`). See [Meta fields](/core/f
 
 Form fields and containers. See [Elements and nesting](/core/schema/elements).
 
-| Property | Value |
-| --- | --- |
-| Type | `array` |
-| Required | ✓ |
-| Default | `[]` |
-| Choices | - |
-| App-level | - |
+| Property  | Value   |
+| --------- | ------- |
+| Type      | `array` |
+| Required  | ✓       |
+| Default   | `[]`    |
+| Choices   | -       |
+| App-level | -       |

@@ -1,10 +1,12 @@
 ---
 title: FormRenderer
-description: Configura el componente React principal de form0.
+description: Configurar el primario form0 React componente.
 ---
 
-`FormRenderer` valida y prepara un esquema, crea el motor, renderiza campos y secciones y produce
-registros estructurados al enviar.
+<PageBadges />
+
+`FormRenderer` valida y prepara un schema, crea el motor de formularios, renderiza campos y
+secciones, y produce registros estructurados en submission.
 
 ```jsx
 <FormRenderer
@@ -20,28 +22,30 @@ registros estructurados al enviar.
 
 ## Propiedades esenciales
 
-| Propiedad | Finalidad |
-| --- | --- |
-| `schema` | Un esquema form0 que contiene `form.elements`. |
-| `initialValues` | Valores iniciales de campos no repetibles. |
-| `initialSnapshot` | Restaura juntos valores, estado repetible y marcas de tiempo. |
-| `overrideValues` | Aplica valores autoritativos sobre los iniciales. |
-| `onSubmit` | Recibe el registro estructurado y los metadatos del envío. |
-| `onSnapshotChange` | Observa instantáneas iniciales y cambios del usuario. |
-| `mode` | Empieza en modo `edit` o `readonly`. |
+| Propiedad          | Finalidad                                                                   |
+| ------------------ | --------------------------------------------------------------------------- |
+| `schema`           | form0 schema que contiene `form.elements`.                                  |
+| `initialValues`    | Valores de campo iniciales no repetibles.                                   |
+| `initialSnapshot`  | Restaurar valores sin procesar, estado repetible y marcas de tiempo juntos. |
+| `overrideValues`   | Aplicar valores autoritativos sobre valores iniciales.                      |
+| `onSubmit`         | Recibe el registro estructurado y los metadatos de submission.              |
+| `onSnapshotChange` | Observe la semilla y el cambio de usuario snapshots.                        |
+| `mode`             | Comience en el modo `edit` o `readonly`.                                    |
 
-## Interfaz y estado de la aplicación
+## UI y estado de propiedad del consumidor
 
-- `headerAccessory` renderiza un nodo React, o una función que recibe `{ mode }`, entre el resumen
-  y el cuerpo del formulario.
-- `recordMetadataFields` muestra metadatos de solo lectura. Un descriptor con `displayValue` nunca
-  entra en valores, instantáneas ni envíos.
-- `externalDirty` incluye cambios externos al confirmar el descarte en overlays.
-- `submitBlockedReason` bloquea el envío mientras no se resuelva un requisito externo.
-- `onSchemaReady` recibe el esquema preparado después de asegurar claves estables.
+- `headerAccessory` representa un nodo React, o una función que recibe `{ mode }`, entre el resumen
+  y formar el cuerpo.
+- `recordMetadataFields` muestra metadatos de registro de solo lectura. Un descriptor con `displayValue` nunca
+  ingresa los valores del motor, snapshots, o los valores enviados.
+- `externalDirty` incluye cambios propios de la aplicación en la confirmación de descarte de superposición.
+- `submitBlockedReason` desactiva y protege submission mientras no se resuelve un requisito externo.
+- `onSchemaReady` recibe el schema preparado después de que se hayan asegurado las claves estables.
 
-Las propiedades estándar adicionales del formulario, como `id`, `aria-*` y eventos, se reenvían al
-elemento `<form>`. No uses esa vía para configurar el motor.
+## Propiedades del elemento de formulario
 
-Continúa con [Valores, instantáneas y envío](/es/bindings/react/values-snapshots-submission) o
+Las propiedades de formulario estándar adicionales, como `id`, `aria-*` y los controladores de eventos, se reenvían a
+el renderizado `<form>` . No utilice esta ruta para la configuración del motor.
+
+Continuar con [Valores, snapshots, y submission](/es/bindings/react/values-snapshots-submission) o
 [Modos, ubicación y navegación](/es/bindings/react/modes-placement-navigation).

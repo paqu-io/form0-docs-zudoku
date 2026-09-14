@@ -1,10 +1,12 @@
 ---
 title: FormRenderer
-description: Configura el componente principal de form0 para React Native.
+description: Configure el componente form0 principal.
 ---
 
-`FormRenderer` valida y prepara el esquema, crea el motor, renderiza campos y secciones nativos y
-produce registros estructurados o snapshots restaurables.
+<PageBadges />
+
+`FormRenderer` valida y prepara un schema, crea el motor de formularios, renderiza campos nativos y
+secciones y produce registros estructurados o snapshots restaurable.
 
 ```jsx
 <FormRenderer
@@ -19,25 +21,28 @@ produce registros estructurados o snapshots restaurables.
 
 ## Propiedades esenciales
 
-| Propiedad | Finalidad |
-| --- | --- |
-| `schema` | Esquema form0 con `form.elements`. |
-| `initialValues` | Valores iniciales no repetibles. |
-| `initialSnapshot` | Restaura valores, repetibles y marcas temporales conjuntamente. |
-| `overrideValues` | Aplica valores autoritativos sobre los iniciales. |
-| `onSubmit` | Recibe un registro validado y sus metadatos. |
-| `onSave` | Recibe un snapshot sin exigir que el formulario sea válido. |
-| `onSnapshotChange` | Observa el estado inicial y los cambios del usuario. |
-| `mode` | Inicia en modo `edit` o `readonly`. |
+| Propiedad          | Finalidad                                                                   |
+| ------------------ | --------------------------------------------------------------------------- |
+| `schema`           | form0 schema que contiene `form.elements`.                                  |
+| `initialValues`    | Valores de campo iniciales no repetibles.                                   |
+| `initialSnapshot`  | Restaurar valores sin procesar, estado repetible y marcas de tiempo juntos. |
+| `overrideValues`   | Aplicar valores autoritativos sobre valores iniciales.                      |
+| `onSubmit`         | Recibir un registro estructurado de validación y metadatos.                 |
+| `onSave`           | Recibir un snapshot sin necesidad de que el formulario sea válido.          |
+| `onSnapshotChange` | Observe la semilla y el cambio de usuario snapshots.                        |
+| `mode`             | Comience en el modo `edit` o `readonly`.                                    |
 
-## Integración con la aplicación
+## Integración de host
 
-- `onRequestClose` habilita cancelar y confirma el descarte cuando hay cambios.
-- `headerAccessory` muestra contenido bajo la cabecera; `showHeader` oculta la cabecera integrada.
-- `primaryActionMode`, `primaryActionLabel` y `showPrimaryActionsInViewMode` configuran la acción
-  principal.
-- `onSchemaReady` recibe el esquema preparado.
-- `engineOptions` proporciona helpers, seguridad, avisos, operaciones y observación del motor.
+- `onRequestClose` habilita la acción de cancelación raíz y recibe `{ reason: "cancel" }` después de cualquier
+  Requiere confirmación de descarte.
+- `headerAccessory` muestra el contenido de la aplicación inmediatamente debajo del encabezado incorporado.
+- `showHeader` oculta el encabezado incorporado cuando el host posee la navegación y las acciones circundantes.
+- `primaryActionMode`, `primaryActionLabel`, y `showPrimaryActionsInViewMode` personalizar el
+  Incorporación de la acción primaria.
+- `onSchemaReady` recibe el schema preparado después de que se hayan asegurado las claves estables.
+- `engineOptions` suministra ayudantes de núcleo, configuración de seguridad, advertencias, manejo de operación y
+  Actualización de la observación.
 
-Continúa con [Valores, snapshots y envío](/es/bindings/react-native/values-snapshots-submission) o
-[Modos y navegación](/es/bindings/react-native/modes-navigation).
+Continuar con [Valores, snapshots y submission](/es/bindings/react-native/values-snapshots-submission)
+o [Modos y navegación](/es/bindings/react-native/modes-navigation).

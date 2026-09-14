@@ -1,7 +1,24 @@
 ---
-title: OFF (Coming soon)
+title: OFF
+description: Supprime des gestionnaires d’événements.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/events/off".
+Supprime des gestionnaires d’événements.
+
+## Exemple
+
+```js
+OFF("change", "city")
+```
+
+## Paramètres
+
+- eventType : chaîne
+- fieldKeyOrCallback : chaîne|fonction (facultatif)
+- callback : fonction (facultative)
+
+## Valeur renvoyée
+
+Le descripteur de l’opération (utilisé par les clients).

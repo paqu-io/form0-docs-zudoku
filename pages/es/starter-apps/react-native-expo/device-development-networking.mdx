@@ -3,22 +3,38 @@ title: Desarrollo en dispositivos y red
 description: Conecta dispositivos Expo al starter mediante LAN o una URL pública de desarrollo.
 ---
 
-La configuración predeterminada inicia Expo en la red local. El dispositivo debe alcanzar el equipo
-de desarrollo y el puerto 8081. Firewalls, Wi-Fi aislado, VPN y contenedores pueden impedirlo.
+<PageBadges />
 
-Ejecuta `form0 serve --app` para usar la integración definida en `devServer`. Consulta la
+El archivo `form0.config.js` predeterminado inicia Expo en la red local. Un dispositivo físico debe
+poder alcanzar el equipo de desarrollo y el puerto 8081. Los firewalls del host, las redes Wi-Fi
+aisladas, las VPN y la red de contenedores pueden impedir la conexión.
+
+## Iniciar mediante form0-cli
+
+Usa la integración con el servidor de aplicaciones cuando trabajes desde form0-cli:
+
+```bash
+form0 serve --app
+```
+
+La CLI lee el bloque `devServer` de `form0.config.js`. El comportamiento completo del comando se
+describe en la
 [referencia del servidor de aplicaciones](/es/cli/local-development/app-development-servers).
 
-Si la LAN no está disponible, define la URL configurada en `.env.local`:
+## Publicar una URL de desarrollo
+
+Si el acceso por LAN no está disponible, define la variable de entorno configurada en `.env.local`:
 
 ```text
 FORM0_APP_PUBLIC_URL=https://your-development-domain.example
 ```
 
-Inicia el túnel por separado y ejecuta `form0 serve --app`, o usa `--public-url` para una ejecución.
-La URL debe servir directamente el manifiesto, bundle, recursos y WebSocket de Expo. Las páginas
-intermedias rompen el cliente. No uses un túnel como despliegue de producción ni incluyas
-credenciales privilegiadas en el bundle.
+Inicia el túnel por separado y después ejecuta `form0 serve --app`. Para una sola ejecución, usa
+`--public-url https://your-development-domain.example`.
+
+La URL debe servir directamente el manifiesto, el bundle, los recursos y el tráfico WebSocket de
+Expo. Las páginas intermedias y los desafíos de acceso rompen el cliente. No uses un túnel de
+desarrollo como despliegue de producción ni incluyas credenciales privilegiadas en el bundle móvil.
 
 Usa un [development build](https://docs.expo.dev/develop/development-builds/introduction/) para
 trabajo orientado a producción o código nativo personalizado. Expo Go es un cliente opcional para

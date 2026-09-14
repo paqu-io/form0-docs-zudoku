@@ -1,7 +1,26 @@
 ---
-title: CHOICELABEL (Coming soon)
+title: CHOICELABEL
+description: Restituisce l’etichetta selezionata di un campo a scelta singola.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/calculations-expressions/choicelabel".
+Restituisce l’etichetta selezionata di un campo a scelta singola.
+
+## Esempio
+
+```js
+CHOICELABEL($city)
+```
+
+## Parametri
+
+- choiceField: valore di SingleChoiceField o BooleanField
+
+## Valore restituito
+
+L’etichetta selezionata o null.
+
+## Note
+
+- Mantiene le etichette numeriche quando possibile.

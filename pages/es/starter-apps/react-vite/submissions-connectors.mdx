@@ -1,28 +1,40 @@
 ---
 title: Envíos y conectores
-description: Comprende los registros estructurados, el envío local y las responsabilidades de producción.
+description: Comprenda los registros estructurados, el ayudante local submission de starter y las responsabilidades de los datos de producción.
 ---
 
-`Form0Form` proporciona un manejador de envío predeterminado cuando no recibe `onSubmit`. Crea o
-acepta un registro estructurado de form0 y lo registra durante el desarrollo.
+<PageBadges />
 
-Si `devServer.submitToConnector` es `true`, también llama a:
+`Form0Form` proporciona un controlador predeterminado de submission cuando el llamante no proporciona `onSubmit`.
+El controlador crea o acepta un registro estructurado form0 y lo registra para su desarrollo.
 
-1. `POST /api/create-record` cuando todavía no existe un registro estructurado completo.
-2. `POST /api/submit-record` para enviarlo a los conectores gestionados por form0-cli.
+Cuando `devServer.submitToConnector` es `true`, también llama a dos puntos finales locales:
 
-Inicia ambos servidores con `form0 serve --app`. Gestiona los conectores con la
-[guía de la CLI](/es/cli/connector-management) y compáralos en
-[Elegir un conector](/es/connectors/choose).
+1. `POST /api/create-record` cuando el renderer aún no ha producido un registro estructurado completo.
+2. `POST /api/submit-record` para enviar ese registro a los conectores administrados por form0-cli.
 
-Pasa `onSubmit` a `Form0Form` para sustituir el manejador. Usa
-`useDefaultSubmitHandler={false}` para no proporcionar ninguna ruta predeterminada. El contrato se
-describe en [Valores, snapshots y envío](/es/bindings/react/values-snapshots-submission).
+El proxy Vite reenvía `/api` al servidor de desarrollo CLI. Inicie ambos procesos con:
 
-> [!WARNING]
-> Los endpoints de la CLI y el proxy de Vite son herramientas de desarrollo local, no una API de
-> producción. Una aplicación desplegada necesita autenticación, autorización, validación, límites
-> y controles de almacenamiento en un servidor de confianza. Nunca envíes credenciales al navegador.
+```bash
+form0 serve --app
+```
 
-Usa únicamente esquemas de autores de confianza. Consulta el
-[límite de confianza de form0-core](/es/core/security).
+Utilice [Administración de conectores CLI](/es/cli/connector-management) para instalar, configurar, probar e inspeccionar un
+Utilice [Elegir un conector](/es/connectors/choose) para comparar PostgreSQL y SQLite.
+
+## Comportamiento de la aplicación de suministro submission
+
+Pase `onSubmit` a `Form0Form` para reemplazar el controlador predeterminado.
+`useDefaultSubmitHandler={false}` si el formulario debe procesarse sin ninguna ruta submission.
+
+Para obtener el registro de devolución de llamada completo y el contrato de metadatos, consulte
+[Valores, snapshots y submission](/es/bindings/react/values-snapshots-submission).
+
+> [!ADVERTENCIA]
+> Los terminales CLI y el proxy Vite son ayudantes de desarrollo local, no un submission de producción.
+> Una aplicación implementada necesita un límite de servidor de confianza con autenticación, autorización,
+> validación, limitación de velocidad y controles de almacenamiento adecuados. Nunca envíe credenciales de base de datos a
+> código del navegador.
+
+Solo use schemas de autores de confianza. Las expresiones de esquema se ejecutan dentro del documento
+[Límite de confianza form0-core](/es/core/security).

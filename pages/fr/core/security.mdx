@@ -1,7 +1,32 @@
 ---
-title: security (Coming soon)
+title: Sécurité et sandboxing
+description: Modes de sécurité d'expression dans form0-core.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/security".
+Les expressions sont évaluées par form0-core dans un mode de sécurité configurable.
+
+## Modes
+
+- `TRUSTED`: Accès JavaScript complet (par défaut).
+- `SAFE`: Globales restreintes et motifs bloqués.
+- `CUSTOM`: Règles définies par l'utilisateur.
+
+## Mode sans échec par défaut
+
+Le mode sans échec bloque des modèles comme `eval`, `Function`, `window`, `document`, `process`, `require`, et
+Il limite également le temps d'exécution et la profondeur de la pile d'appels.
+
+## Utiliser une configuration de sécurité
+
+```js
+import { createFormEngine, SAFE_SECURITY_CONFIG } from "form0-core"
+
+const engine = createFormEngine({
+  schema,
+  security: SAFE_SECURITY_CONFIG,
+})
+```
+
+La configuration de sécurité est utilisée pour les champs calculés et le code d'événement.

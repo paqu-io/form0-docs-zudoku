@@ -1,7 +1,26 @@
 ---
-title: CHOICEVALUE (Coming soon)
+title: CHOICEVALUE
+description: Devuelve el valor seleccionado de un campo de selección única.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/calculations-expressions/choicevalue".
+Devuelve el valor seleccionado de un campo de selección única.
+
+## Ejemplo
+
+```js
+CHOICEVALUE($city)
+```
+
+## Parámetros
+
+- choiceField: valor de SingleChoiceField o BooleanField
+
+## Devuelve
+
+El valor seleccionado o null.
+
+## Notas
+
+- Conserva los valores numéricos cuando es posible.

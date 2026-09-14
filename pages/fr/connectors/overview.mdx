@@ -3,6 +3,8 @@ title: Vue d’ensemble des connecteurs
 description: Conservez les enregistrements structurés form0 avec des connecteurs de confiance.
 ---
 
+<PageBadges />
+
 Les connecteurs reçoivent les enregistrements structurés d’un projet form0 et les écrivent dans un
 stockage contrôlé par l’application hôte. Les connecteurs officiels prennent actuellement en charge
 PostgreSQL et SQLite.
@@ -11,10 +13,10 @@ Le parcours recommandé consiste à les gérer avec `form0-cli` : installer un c
 configurer dans le projet, tester la connexion et consulter son état. Une application peut aussi
 instancier directement un connecteur lorsqu’elle doit gérer son cycle de vie.
 
-| Paquet | Stockage | Documentation | Code source |
-| --- | --- | --- | --- |
-| [`form0-connector-pg`](https://www.npmjs.com/package/form0-connector-pg) | PostgreSQL | [Installation et configuration](/fr/connectors/postgresql/setup) | [GitHub](https://github.com/paqu-io/form0-connector-pg) |
-| [`form0-connector-sqlite`](https://www.npmjs.com/package/form0-connector-sqlite) | SQLite | [Installation et configuration](/fr/connectors/sqlite/setup) | [GitHub](https://github.com/paqu-io/form0-connector-sqlite) |
+| Paquet                                                                           | Stockage   | Documentation                                                    | Code source                                                 |
+| -------------------------------------------------------------------------------- | ---------- | ---------------------------------------------------------------- | ----------------------------------------------------------- |
+| [`form0-connector-pg`](https://www.npmjs.com/package/form0-connector-pg)         | PostgreSQL | [Installation et configuration](/fr/connectors/postgresql/setup) | [GitHub](https://github.com/paqu-io/form0-connector-pg)     |
+| [`form0-connector-sqlite`](https://www.npmjs.com/package/form0-connector-sqlite) | SQLite     | [Installation et configuration](/fr/connectors/sqlite/setup)     | [GitHub](https://github.com/paqu-io/form0-connector-sqlite) |
 
 Les connecteurs s’exécutent dans le processus Node.js local. Ce ne sont pas des services de stockage
 hébergés et ils ne fournissent ni authentification, ni autorisation, ni sauvegardes, ni rétention,

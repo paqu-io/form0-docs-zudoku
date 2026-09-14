@@ -1,14 +1,16 @@
 ---
-title: Valores, instantáneas y envío
-description: Inicializa, observa, restaura y envía el estado React de form0.
+title: Valores, snapshots, y submission
+description: Semilla, observar, restaurar y enviar el estado form0 React.
 ---
 
-## Valores iniciales y sobrescrituras
+<PageBadges />
 
-Usa `initialValues` para el registro editado. `overrideValues` tiene prioridad y resulta útil para
-valores autoritativos del anfitrión, como un estado proporcionado por la aplicación.
+## Valores iniciales y anulaciones
 
-Para una restauración completa, prefiere `initialSnapshot`:
+Utilice `initialValues` para el registro que se está editando. `overrideValues` tienen prioridad y son útiles
+para valores de host autorizados, como un estado proporcionado por una aplicación.
+
+Para una restauración completa, prefiera `initialSnapshot`:
 
 ```jsx
 <FormRenderer
@@ -25,23 +27,35 @@ Para una restauración completa, prefiere `initialSnapshot`:
 />
 ```
 
-La instantánea inicial sustituye `initialValues` para los valores de campos y también restaura las
-entradas repetibles anidadas y las marcas de tiempo como un único estado coherente.
+Un snapshot inicial reemplaza a `initialValues` para los valores de campo sin procesar. También restaura anidado
+entradas repetibles y marcas de tiempo cliente/servidor como un estado coherente.
 
-## Observar borradores
+## Observar drafts
 
-`onSnapshotChange(snapshot, change)` se invoca primero con `{ kind: "seed", dirty: false }`. Los
-cambios posteriores usan `{ kind: "change", dirty: boolean }`.
+`onSnapshotChange(snapshot, change)` se llama primero con `{ kind: "seed", dirty: false }`. Más tarde
+los cambios de usuario usan `{ kind: "change", dirty: boolean }`.
 
-La instantánea contiene `raw_values`, `repeatable` y `timestamps`, con las marcas de creación y
-actualización de cliente y servidor.
+El snapshot contiene:
+
+```js
+{
+  raw_values: {},
+  repeatable: {},
+  timestamps: {
+    created_at_client: null,
+    updated_at_client: null,
+    created_at_server: null,
+    updated_at_server: null,
+  },
+}
+```
 
 ## Enviar registros
 
-`onSubmit(record, meta)` recibe el registro descrito en
-[Salida y registros](/es/core/output-records). `meta` contiene `rawValues`, `repeatable`,
-`timestamps` y `validationSummary`.
+`onSubmit(record, meta)` recibe el registro estructurado descrito en
+[Salida y registros](/es/core/output-records). `meta` contiene `rawValues`, `repeatable`, `timestamps`,
+y `validationSummary`.
 
-Si `onSubmit` devuelve una promesa, un overlay con `autoCloseOverlayOnSubmit` se cierra solo cuando
-se resuelve. Usa `submitBlockedReason` para requisitos externos al esquema y `externalDirty` para
-estado de la aplicación externo al renderer.
+Si `onSubmit` devuelve una promesa, una superposición configurada con `autoCloseOverlayOnSubmit` se cierra solo
+después de que se resuelva la promesa. Un rechazo lo deja abierto. Use `submitBlockedReason` para la aplicación
+requisitos fuera de schema y `externalDirty` para el estado de la aplicación fuera de renderer.

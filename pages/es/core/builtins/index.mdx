@@ -1,7 +1,33 @@
 ---
-title: Builtins overview (Coming soon)
+title: Visión general de las funciones integradas
+description: Funciones integradas disponibles en cálculos y eventos.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins".
+import { Badge } from "zudoku/ui/Badge"
+
+Las builtins son funciones disponibles dentro de las expresiones form0. Puede usarlas en campos calculados
+y en `form.events.code` sin importar nada.
+
+## Donde se utilizan los builtins
+
+- ** expresiones de campo calculado ** (`calculate`)
+- ** Código de evento ** (`form.events.code`)
+
+## Categorías
+
+| Categoría                                  | Ejemplo builtins                 |
+| ------------------------------------------ | -------------------------------- |
+| <Badge variant="secondary">Logical</Badge> | `IF`, `AND`, `OR`                |
+| <Badge variant="secondary">Math</Badge>    | `ROUND`, `CEILING`               |
+| <Badge variant="secondary">String</Badge>  | `UPPER`                          |
+| <Badge variant="secondary">Choice</Badge>  | `CHOICEVALUE`, `CHOICELABEL`     |
+| <Badge variant="secondary">Schema</Badge>  | `DATANAMES`                      |
+| <Badge variant="secondary">Control</Badge> | `SETRESULT`, `EVAL`              |
+| <Badge variant="secondary">Events</Badge>  | `ON`, `OFF`, `ALERT`, `SETVALUE` |
+
+Siguiente:
+
+- [Calculaciones y expresiones](/es/core/builtins/calculations-expressions-overview)
+- [Eventos](/es/core/builtins/events-overview)

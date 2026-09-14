@@ -1,26 +1,41 @@
 ---
-title: Renderer di campo personalizzati
-description: Sostituisci la presentazione nativa globalmente o in un sottoalbero di componenti.
+title: Campo personalizzato renderers
+description: Sostituire la presentazione del campo form0 React Native a livello globale o all'interno di un sottoalbero di componenti.
 ---
 
-I renderer personalizzati cambiano la presentazione senza spostare fuori da `form0-core` calcoli,
-visibilità, obbligatorietà o validazione.
+<PageBadges />
+
+Personalizzato renderers cambiare presentazione nativa senza spostare i calcoli, visibilità,
+requisiti, o convalida da `form0-core`.
+
+## Sovrapposizioni per forma
+
+Passare una mappa renderer direttamente a `FormRenderer` per una forma isolata:
 
 ```jsx
 import { FormRenderer } from "form0-react-native"
 import { PhotoField } from "./photo-field.jsx"
 
-<FormRenderer schema={schema} renderers={{ PhotoField }} />
+;<FormRenderer schema={schema} renderers={{ PhotoField }} />
 ```
 
-Il componente riceve `field`, `value`, `onChange`, `readOnly`, `required`, `error` e `inputProps`.
-Conserva le proprietà applicabili di `inputProps` e chiama `onChange` con la forma attesa dallo
-schema.
+Una renderer riceve il campo e il suo stato di interazione valutato:
 
-Usa `FieldRegistryProvider` per un sottoalbero o
-`createFieldRegistry({ includeDefaults, renderers })` per un registro esplicito. Gli helper
-`registerFieldComponent`, `unregisterFieldComponent` e `resetFieldComponents` modificano il
-registro globale e vanno riservati all’avvio o ai test.
+```jsx
+function PhotoField({ field, value, onChange, readOnly, required, error, inputProps }) {
+  // Render application-owned capture, preview, and removal controls.
+}
+```
 
-Si possono registrare solo tipi dichiarati da `form0-core`; un renderer non estende da solo il
-contratto dello schema.
+Mantieni le proprietà applicabili da `inputProps` e chiama `onChange` con la forma del valore prevista
+dal confine schema e submission.
+
+## Fornitori, registri e override globali
+
+Utilizzare `FieldRegistryProvider` per un'override sottoalbero o
+`createFieldRegistry({ includeDefaults, renderers })` per un'istanza del Registro di sistema esplicita.
+livello di modulo `registerFieldComponent`, `unregisterFieldComponent` e `resetFieldComponents`
+helper mutano il registro predefinito condiviso e sono meglio riservati per il codice bootstrap o test.
+
+È possibile registrare solo i tipi di campo dichiarati da `form0-core`. Un nuovo tipo di campo schema deve prima essere
+definito in Core; uno renderer nativo da solo non può estendere il contratto schema.

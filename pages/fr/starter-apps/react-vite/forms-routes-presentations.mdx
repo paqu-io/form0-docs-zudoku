@@ -1,27 +1,52 @@
 ---
-title: Formulaires, routes et présentations
-description: Enregistrez des schémas et proposez des expériences standard, simplifiées, modales et spotlight.
+title: Formulaires, itinéraires et présentations
+description: Inscrivez-vous au formulaire schemas et exposez des expériences standard, simplifiées, modales et projecteurs.
 ---
 
-Les schémas résident dans `src/forms`. Le registre `src/forms/registry.js` associe à chaque
-formulaire une route, des métadonnées, un import dynamique et des valeurs initiales facultatives.
+<PageBadges />
+
+Les fichiers de schéma vivent sous `src/forms`. Le registre dans `src/forms/registry.js` donne à chaque formulaire un
+route de l'application, affichage des métadonnées, une importation dynamique schema et des valeurs initiales facultatives.
 
 ```js
 const forms = [
   {
     id: "contact",
-    title: "Contact",
-    description: "Envoyez un message à l’équipe.",
+    title: "Contact us",
+    description: "Send a message to the team.",
     loadSchema: () => import("./contact/schema.json"),
   },
 ]
 ```
 
-L’application fournit `/`, `/:formId` et `/:formId/:variant`. Les variantes de page sont `standard`
-et `simplified`; `modal` et `spotlight` apparaissent en superposition depuis l’accueil.
+Créez le fichier schema correspondant, puis ajoutez l'entrée de registre. Les importations dynamiques conservent les fichiers schema dans
+construire des chunks séparés.
 
-Les valeurs de mise en page résident dans `form0.config.js`. Le wrapper transmet à `FormRenderer`
-le thème, le placement, l’interaction et les dimensions résolus.
+## Routes
 
-Consultez [Modifier votre premier schéma](/fr/getting-started/schema-edit) et
-[Modes, emplacement et navigation](/fr/bindings/react/modes-placement-navigation).
+Le starter fournit:
+
+- `/` pour la liste de formulaires et les exemples de superposition;
+- `/:formId` pour la présentation standard par défaut; et
+- `/:formId/:variant` pour les présentations de pages `standard` ou `simplified`.
+
+`FormPage` valide l'identifiant de formulaire et la présentation avant de charger schema . `Home` Possède le
+modal et spotlight exemples.
+
+## Exposés
+
+Les quatre clés de présentation incluses sont:
+
+| Clé          | Placement                |
+| ------------ | ------------------------ |
+| `standard`   | Formulaire complet       |
+| `simplified` | Page étape par étape     |
+| `modal`      | Incrustation de dialogue |
+| `spotlight`  | Superposition du tiroir  |
+
+Les valeurs par défaut de mise en page pour chaque présentation en direct dans `form0.config.js`.
+thème résolu, placement, mode d'interaction et dimensionnement à `FormRenderer`.
+
+Utilisez [Modifier votre première création schema](/fr/getting-started/schema-edit) pour schema et
+[Modes, placement et navigation](/fr/bindings/react/modes-placement-navigation) pour le sous-jacent
+Comportement React binding.

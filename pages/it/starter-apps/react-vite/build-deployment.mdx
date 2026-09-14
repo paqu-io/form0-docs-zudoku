@@ -1,22 +1,39 @@
 ---
-title: Build e distribuzione dell’app React e Vite
-description: Crea, visualizza in anteprima e ospita una build di produzione dell’app web.
+title: Creare e distribuire React e Vite starter
+description: Creare, visualizzare in anteprima e ospitare una build di produzione del web mantenuto starter.
 ---
+
+<PageBadges />
+
+Creare e visualizzare in anteprima una build di produzione localmente:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Vite scrive i file statici in `dist`. Distribuisci la directory su un host statico o dietro il tuo
-server.
+Vite scrive l'output statico su `dist`. Distribuisci quella directory con un host statico o posizionala dietro
+il tuo server di applicazioni.
 
-L’app usa il routing del browser. Configura l’host affinché restituisca `index.html` come fallback
-per route come `/contatti/standard`; altrimenti la navigazione diretta restituirà 404.
+## Requisiti di hosting
 
-Il proxy dei connettori esiste solo in sviluppo. In produzione usa un endpoint server controllato
-dall’applicazione.
+starter utilizza il routing del browser. Configurare l'host per servire `index.html` come fallback per
+percorsi di applicazione come `/contact/standard`; altrimenti la navigazione diretta a tali URL può
+restituisce la pagina 404 dell'host.
 
-Prima della distribuzione esegui lint e build, valuta l’avviso sulla dimensione del bundle, mantieni
-i `.env` fuori da Git, controlla gli asset e prova la navigazione diretta. Le variabili esposte al
-browser sono incorporate staticamente nella build e devono essere considerate pubbliche.
+Il proxy del connettore predefinito esiste solo nel server di sviluppo. Produzione submission deve utilizzare
+un endpoint server di proprietà dell'applicazione. Configurare tale endpoint in modo esplicito piuttosto che assumere il
+Il proxy `/api` sarà presente dopo la distribuzione.
+
+## Prima della distribuzione
+
+- Eseguire `npm run lint` e `npm run build`.
+- Rivedere l'avviso di dimensione del bundle generato e introdurre la divisione del codice quando la crescita dell'applicazione
+  rende il download iniziale inappropriato.
+- Mantieni i file `.env` locali fuori dal controllo della versione.
+- Confermare che nessun segreto è incorporato nelle risorse generate.
+- Testa la navigazione diretta su ogni percorso di applicazione pubblica.
+- Rivedere la [politica di sicurezza](https://github.com/paqu-io/form0-web-tmpl-react-vite/blob/main/SECURITY.md).
+
+I valori di ambiente Vite destinati al codice del browser sono staticamente incorporati al momento della compilazione.
+li come configurazione pubblica, anche quando hanno origine in un file di ambiente locale.

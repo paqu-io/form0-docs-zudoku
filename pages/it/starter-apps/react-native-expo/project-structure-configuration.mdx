@@ -1,10 +1,12 @@
 ---
-title: Struttura e configurazione del progetto React Native ed Expo
-description: Comprendi i file dello starter e configura il comportamento form0 ed Expo.
+title: Struttura e configurazione del progetto React Native e Expo
+description: Comprendere i file mobili starter e configurare il suo comportamento form0 e Expo.
 ---
 
-Lo starter è una normale applicazione Expo. Identità e impostazioni native sono in `app.json`;
-le convenzioni form0 sono in `form0.config.js`.
+<PageBadges />
+
+starter è una normale applicazione Expo. L'identità dell'applicazione e le impostazioni native vivono in
+`app.json`; form0 convenzioni di applicazione live in `form0.config.js`.
 
 ```text
 .
@@ -21,13 +23,26 @@ le convenzioni form0 sono in `form0.config.js`.
     └── supporting-images/
 ```
 
-Usa `app.json` per nome, slug, versione, orientamento, icone, splash e opzioni di piattaforma.
-Sostituisci i valori di esempio prima della distribuzione.
+## Configurazione Expo
 
-`form0.config.js` controlla layout, tema, interazione, tastiera, renderer, formato di output,
-archiviazione SQLite e server Expo usato da `form0 serve --app`.
+Utilizzare `app.json` per il nome dell'app, slug, versione, orientamento, icone, splash screen, opzioni della piattaforma,
+e altre impostazioni di Expo. Esaminare questi valori segnaposto prima di distribuire un'applicazione.
 
-Conserva gli URL specifici della macchina in `.env.local`. Non inserire segreti nella configurazione
-Expo pubblica o nel bundle client. Consulta la
-[configurazione CLI](/it/cli/project-configuration), poi
-[Moduli, schermate e navigazione](./forms-screens-navigation).
+## Configurazione form0
+
+Controlli `form0.config.js`:
+
+- layout del modulo e posizionamento dell'etichetta;
+- modalità del tema e override del tema;
+- modificare o visualizzare il comportamento iniziale;
+- offset di scorrimento della tastiera;
+- identificatori renderer;
+- selezione campo-chiave di uscita;
+- archiviazione locale SQLite; e
+- Integrazione sviluppo-server Expo utilizzato da `form0 serve --app`.
+
+Mantieni gli URL di sviluppo pubblico specifici della macchina in `.env.local`. Non inserire segreti in Expo pubblico
+configurazione o in valori raggruppati nell'applicazione client.
+
+Il [CLI riferimento di configurazione del progetto](/it/cli/project-configuration) documenti condivisi form0
+Impostazioni. Continua con [Forma, schermate e navigazione](./forms-screens-navigation).

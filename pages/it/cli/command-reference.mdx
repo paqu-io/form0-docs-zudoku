@@ -1,10 +1,20 @@
 ---
-title: Riferimento dei comandi
-description: Indice dei comandi e dei gruppi di comandi di form0-cli.
+title: Riferimento al comando
+description: Indice rivolto all'utente dei comandi e dei gruppi di comando form0-cli.
 ---
 
-Esegui `form0 --help` per l’elenco relativo alla versione installata e
-`form0 <command> --help` per le opzioni di un comando.
+<PageBadges />
 
-I gruppi principali sono `init`, `validate`, `preview`, `run`, `watch`, `serve`, `test`, `schema`,
-`connector`, `reform`, `theme`, `locale` e `interactive`.
+Eseguire `form0 --help` per l'elenco dei comandi autorevole della versione installata e
+`form0 <command> --help` per le opzioni specifiche dei comandi.
+
+- `init` crea un progetto.
+- `validate`, `preview`, `run`, `watch`, `serve` e `test` operano su schemas e progetti.
+- `schema` crea, importa, esporta e converte schemas.
+- `connector` gestisce i connettori dati.
+- `reform` gestisce l'autenticazione, l'ambito e la sincronizzazione opzionali con reform.
+- `theme` e `locale` gestiscono le preferenze CLI.
+- `interactive` o `shell` avvia una sessione interattiva.
+
+L'esecuzione di `form0` senza un comando avvia anche la shell interattiva, il cui output `help` riflette
+la modalità di sessione corrente.

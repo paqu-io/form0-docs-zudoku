@@ -1,7 +1,52 @@
 ---
-title: common-attributes (Coming soon)
+title: Attributs communs
+description: Attributs partagés par la plupart des types de champs.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/fields/common-attributes".
+import { Callout } from "zudoku/ui/Callout"
+
+La plupart des types de champs partagent un ensemble d'attributs de base.
+Voilà.
+
+## Identité
+
+- `type`: Nom du type de champ (par exemple, `TextField`).
+- `key`: Identifiant unique stable. Préférez les clés pour les conditions et les références.
+- `data_name`: Identificateur de valeur utilisé dans l'état du moteur.
+- `label`: Étiquette montrée aux utilisateurs.
+
+## Description et affichage
+
+- `description`: Texte d'aide facultatif.
+- `description_mode`: `default` ou `subtext`.
+- `display`: Style visuel, varie selon le type de champ.
+
+## Visibilité, requis et en lecture seule
+
+- `visible`: Visibilité de base (boolean).
+- `visible_conditions`: Condition object; remplace `visible` lorsqu'il est présent.
+- `required`: Exigences de base (booléen).
+- `required_conditions`: Condition object; remplace `required` lorsqu'il est présent.
+- `read_only`: Drapeau en lecture seule de base (boolean).
+- `read_only_conditions`: Condition object; remplace `read_only` lorsqu'il est présent.
+
+## Valeur par défaut
+
+- `default_value`: Valeur initiale pour le champ (des règles spécifiques au type s'appliquent).
+
+## Images de soutien
+
+- `supporting_image`: Active une image de support.
+- `supporting_image_path`: Chemin d'image relatif ou absolu.
+- `supporting_image_display`: `default` ou `dialog`.
+
+## Métadonnées IA
+
+- `ai`: métadonnées AI optionnelles pour le guidage au niveau du terrain.
+
+<Callout type="info" title="Field-specific rules">
+  Certains champs verrouillent les valeurs (par exemple, `CalculatedField.read_only` est toujours
+  vrai). Vérifiez toujours la page de type de champ pour les contraintes spécifiques.
+</Callout>

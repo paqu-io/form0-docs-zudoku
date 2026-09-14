@@ -1,7 +1,44 @@
 ---
-title: concepts (Coming soon)
+title: Conceptos
+description: El modelo mental basado en esquemas de form0-core.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/concepts".
+## El esquema como punto de partida
+
+Un esquema form0 es un documento JSON con un objeto `form` de nivel superior. El esquema define la
+estructura, las reglas y el comportamiento de un formulario sin código de interfaz.
+
+## Campos y valores
+
+- Cada campo tiene un `data_name` (identificador legible) y una `key` (identificador interno, normalmente derivado de `data_name`).
+- Los valores del motor se almacenan por `data_name`.
+- Las condiciones hacen referencia a los campos mediante `field_id`. Puedes utilizar `key` o `data_name`; `data_name` suele ser más práctico al escribir esquemas manualmente porque resulta más fácil de recordar.
+
+## Estado del motor
+
+El motor evalúa el esquema y produce un objeto de estado con:
+
+- `values`: valores actuales de los campos
+- `errors`: errores de validación
+- `visible`: indicadores de visibilidad por campo
+- `required`: indicadores de obligatoriedad por campo
+- `read_only`: indicadores de solo lectura por campo
+
+## Flujo de datos
+
+1. Carga el esquema y crea el motor
+2. Proporciona valores iniciales (opcional)
+3. Dispara los eventos de inicialización
+4. Evalúa los cálculos, las condiciones y la validación
+5. Con cada cambio de valor:
+   - Actualiza el valor
+   - Vuelve a evaluar (validación en tiempo real)
+   - Dispara los eventos de cambio definidos
+6. Lee el estado o crea un registro estructurado para enviarlo
+
+## Eventos y expresiones
+
+- Los campos calculados utilizan expresiones en la propiedad `calculate`, como `$age + 1`, para derivar valores de otros campos.
+- Los eventos se encuentran en `form.events.code` y pueden reaccionar a cambios del formulario en tiempo de ejecución (por ejemplo, al cargar un registro o cambiar un campo).

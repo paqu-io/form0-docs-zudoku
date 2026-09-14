@@ -1,31 +1,46 @@
 ---
-title: Temi e stili
-description: Usa i temi inclusi o fornisci una classe di tema Vanilla Extract.
+title: Temi e styling
+description: Utilizzare i temi integrati form0-react o fornire una classe di tema Estratto di vaniglia.
 ---
 
-Importa una volta il foglio di stile nel punto di ingresso:
+<PageBadges />
+
+Importare il foglio di stile del pacchetto una volta nel punto di entrata dell'applicazione:
 
 ```js
 import "form0-react/index.css"
 ```
 
-## Temi inclusi
+## Temi incorporati
 
-`theme` accetta `standard`, `modal`, `simplified` o `spotlight`. `colorMode` accetta `light`, `dark`
-o `system`.
+`theme` accetta `standard`, `modal`, `simplified` o `spotlight`. `colorMode` accetta `light`,
+`dark` o `system`.
 
 ```jsx
 <FormRenderer schema={schema} theme="standard" colorMode="system" />
 ```
 
-Il posizionamento non cambia automaticamente `theme`, quindi l’applicazione può scegliere la
-combinazione.
+Il nome del tema e la modalità colore selezionano la corrispondente classe di estratto di vaniglia incorporata.
+non modifica automaticamente la proprietà `theme`, quindi un'applicazione può scegliere il proprio accoppiamento.
 
 ## Temi personalizzati
 
-L’export `form0-react/theme.css.js` espone il contratto `vars`. Crea una classe completa con
-`createTheme` di `@vanilla-extract/css` e passala a `theme`.
+L'esportazione `form0-react/theme.css.js` espone il contratto a tema `vars`:
 
-Usa `className` per gli stili del modulo e normali wrapper per il layout dell’applicazione. Il markup
-specifico dei campi appartiene a un
-[renderer personalizzato](/it/bindings/react/custom-renderers).
+```js
+import { createTheme } from "@vanilla-extract/css"
+import { vars } from "form0-react/theme.css.js"
+
+export const appTheme = createTheme(vars, {
+  // Provide every color, type, spacing, and radius token in the contract.
+})
+```
+
+Passa la classe generata a `theme`:
+
+```jsx
+<FormRenderer schema={schema} theme={appTheme} colorMode="light" />
+```
+
+Utilizzare `className` per lo styling a livello di forma e gli elementi ordinari del wrapper per l'applicazione circostante
+layout. Il markup del campo personalizzato appartiene a [custom renderer](/it/bindings/react/custom-renderers).

@@ -3,18 +3,20 @@ title: Scegliere un connettore
 description: Confronta i connettori ufficiali PostgreSQL e SQLite.
 ---
 
+<PageBadges />
+
 Entrambi i connettori ufficiali accettano la stessa struttura di record form0 e preservano le
 relazioni delle sezioni ripetibili annidate. Scegli in base all’ambiente di esecuzione e alle
 modalità operative richieste per i dati.
 
-| Aspetto | PostgreSQL | SQLite |
-| --- | --- | --- |
-| Storage | Database di rete | File di database locale |
-| Uso ideale | Applicazioni server e deploy condivisi | Strumenti locali e semplici deploy Node.js |
-| Concorrenza | Pool di connessioni e concorrenza gestita dal database | Vincoli di locking dei file SQLite |
-| Operatività | Ruoli, TLS, backup e amministrazione server | Permessi, copie, backup e conservazione dei file |
-| Payload | JSONB e colonne proiettate | Testo JSON e colonne proiettate |
-| Piattaforma | Node.js con accesso a PostgreSQL | Node.js con una build nativa supportata |
+| Aspetto     | PostgreSQL                                             | SQLite                                           |
+| ----------- | ------------------------------------------------------ | ------------------------------------------------ |
+| Storage     | Database di rete                                       | File di database locale                          |
+| Uso ideale  | Applicazioni server e deploy condivisi                 | Strumenti locali e semplici deploy Node.js       |
+| Concorrenza | Pool di connessioni e concorrenza gestita dal database | Vincoli di locking dei file SQLite               |
+| Operatività | Ruoli, TLS, backup e amministrazione server            | Permessi, copie, backup e conservazione dei file |
+| Payload     | JSONB e colonne proiettate                             | Testo JSON e colonne proiettate                  |
+| Piattaforma | Node.js con accesso a PostgreSQL                       | Node.js con una build nativa supportata          |
 
 Usa PostgreSQL quando più processi o deploy condividono le submission o quando sono importanti le
 query e i controlli operativi del database. Usa SQLite quando i dati devono rimanere in un file

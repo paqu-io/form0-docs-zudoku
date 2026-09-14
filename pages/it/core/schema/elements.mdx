@@ -1,7 +1,64 @@
 ---
-title: elements (Coming soon)
+title: Elementi e nesting
+description: Come i campi e le sezioni sono organizzati in un schema.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/elements".
+`form.elements` è una serie ordinata di campi e contenitori.
+campi tramite il proprio array `elements`.
+
+## Chiavi e nomi di dati
+
+- `data_name`: identificatore leggibile dall'uomo utilizzato come chiave di valore nello stato del motore (unico, minuscolo a-z, 0-9, solo sottolineatura, massimo 42 caratteri)
+- `key`: identificatore interno, tipicamente derivato da `data_name` (unico, esadecimale, 8 caratteri)
+
+Quando si fa riferimento ai campi in condizioni o `title_field.elements`, è possibile utilizzare `key` o `data_name`. L'utilizzo di `data_name` è spesso più pratico quando si scrive schemas manualmente poiché è più memorabile.
+
+## Contenitori
+
+I seguenti tipi di campo possono contenere elementi nidificati:
+
+- `Section` – raggruppa visivamente i campi
+- `RepeatableSection` – consente più istanze dei suoi figli
+
+`BuildingPlanSection` supporta anche elementi nidificati, ma ha un comportamento specializzato per la generazione di moduli dinamici. Vedere [BuildingPlanSection](/it/core/fields/containers#buildingplansection) per i dettagli.
+
+## Esempio
+
+```json
+{
+  "type": "Section",
+  "key": "personal_section",
+  "data_name": "personal_section",
+  "label": "Personal info",
+  "display": "inline",
+  "description": null,
+  "description_mode": null,
+  "visible": true,
+  "visible_conditions": null,
+  "elements": [
+    {
+      "type": "TextField",
+      "key": "first_name",
+      "data_name": "first_name",
+      "label": "First name",
+      "display": "default",
+      "description": null,
+      "description_mode": null,
+      "required": true,
+      "required_conditions": null,
+      "visible": true,
+      "visible_conditions": null,
+      "read_only": false,
+      "read_only_conditions": null,
+      "default_value": null,
+      "pattern": null,
+      "pattern_description": null,
+      "supporting_image": false,
+      "supporting_image_path": null,
+      "supporting_image_display": null
+    }
+  ]
+}
+```

@@ -1,7 +1,88 @@
 ---
-title: media-fields (Coming soon)
+title: Campos de medios
+description: Firma, foto y captura de video.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/fields/media-fields".
+## FirmaCampo
+
+```json
+{
+  "type": "SignatureField",
+  "key": "signature",
+  "data_name": "signature",
+  "label": "Signature",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": true,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "agreement_text": "I confirm the information is accurate."
+}
+```
+
+Atributos adicionales:
+
+- `agreement_text`: texto de consentimiento opcional que se muestra cerca de la firma.
+
+## PhotoField
+
+```json
+{
+  "type": "PhotoField",
+  "key": "photos",
+  "data_name": "photos",
+  "label": "Photos",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "min_length": 0,
+  "max_length": 5
+}
+```
+
+Atributos adicionales:
+
+- `min_length`: Número mínimo de fotos requeridas.
+- `max_length`: Número máximo de fotos permitidas.
+
+## VideoCampo
+
+```json
+{
+  "type": "VideoField",
+  "key": "videos",
+  "data_name": "videos",
+  "label": "Videos",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "min_length": 0,
+  "max_length": 2
+}
+```
+
+Atributos adicionales:
+
+- `min_length`: Número mínimo de videos requeridos.
+- `max_length`: Número máximo de vídeos permitidos.

@@ -1,7 +1,437 @@
 ---
-title: Form attributes (Coming soon)
+title: Attributs du formulaire
+description: Référence complète pour tous les attributs d'objet de formulaire.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/form-attributes".
+import { Callout } from "zudoku/ui/Callout"
+
+Cette page documente tous les attributs disponibles sur l'objet `form`, y compris les métadonnées au niveau de l'application.
+
+<Callout type="note" title="Attributs au niveau de l’application">
+  Les attributs marqués comme ** au niveau de l'application ** sont des métadonnées qui ne sont pas
+  traitées directement par le moteur. Ils peuvent être utilisés lors de l'intégration avec le
+  produit SaaS [reform](https://reformapp.io) ou lors de la création de fonctionnalités similaires
+  dans votre propre application.
+</Callout>
+
+---
+
+## Nom
+
+Nom de formulaire convivial affiché dans l'interface utilisateur.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | ✓        |
+| Par défaut | -        |
+| Choix      | -        |
+| Niveau app | -        |
+
+---
+
+## description
+
+Description du formulaire.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | -        |
+| Choix      | -        |
+| Niveau app | -        |
+
+---
+
+## id
+
+Identificateur de formulaire unique. Format UUID recommandé.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | ✓        |
+| Par défaut | -        |
+| Choix      | -        |
+| Niveau app | -        |
+
+---
+
+## record_count
+
+Comptoir opérationnel appartenant à la plate-forme. Nombre d'enregistrements dans le formulaire.
+
+| Biens      | Valeur      |
+| ---------- | ----------- |
+| Type       | `number`    |
+| Requis     | -           |
+| Par défaut | Hôte-défini |
+| Choix      | -           |
+| Niveau app | ✓           |
+
+---
+
+## record_last_change_at
+
+Date/heure du dernier changement d'enregistrement au format ISO 8601.
+
+| Biens      | Valeur      |
+| ---------- | ----------- |
+| Type       | `string`    |
+| Requis     | -           |
+| Par défaut | Hôte-défini |
+| Choix      | -           |
+| Niveau app | ✓           |
+
+---
+
+## form_created_at
+
+Date/heure de création du formulaire au format ISO 8601.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## form_updated_at
+
+Date/heure de la dernière mise à jour du formulaire au format ISO 8601.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## form_created_by
+
+L'utilisateur qui a créé le formulaire.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## form_updated_by
+
+Utilisateur qui a mis à jour le formulaire.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## état
+
+Indicateur d'état du formulaire.
+
+| Biens      | Valeur               |
+| ---------- | -------------------- |
+| Type       | `string`             |
+| Requis     | -                    |
+| Par défaut | -                    |
+| Choix      | `active`, `inactive` |
+| Niveau app | ✓                    |
+
+---
+
+## version
+
+Version schema appartenant à la plateforme en option. form0-core ne l'incrémente pas.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | -        |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## principal_org_id
+
+Identifiant de l'organisation principale.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | -        |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## main_org_metadata
+
+Champs de métadonnées associés à l'organisation principale.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `object` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## sub_org_id
+
+Identifiant de la sous-organisation.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## sub_org_metadata
+
+Champs de métadonnées associés à la sous-organisation.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `object` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## project_id
+
+Identifiant du projet.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## project_metadata
+
+Champs de métadonnées associés au projet.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `object` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## ai
+
+Voir [Métadonnées AI](/fr/core/ai-metadata) pour plus de détails.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `object` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | -        |
+
+---
+
+## status_field
+
+Voir [Champs méta](/fr/core/fields/meta-fields#statusfield) pour plus de détails.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `object` |
+| Requis     | ✓        |
+| Par défaut | -        |
+| Choix      | -        |
+| Niveau app | -        |
+
+---
+
+## \_champ de titre
+
+Voir [Champs méta](/fr/core/fields/meta-fields#titlefield) pour plus de détails.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `object` |
+| Requis     | ✓        |
+| Par défaut | -        |
+| Choix      | -        |
+| Niveau app | -        |
+
+---
+
+## \_Boîte de délimitation
+
+Boîte de délimitation contenant tous les enregistrements de formulaire. Format: `[min_lat, min_lng, max_lat, max_lng]`.
+
+| Biens      | Valeur         |
+| ---------- | -------------- |
+| Type       | `array`        |
+| Requis     | -              |
+| Par défaut | `[0, 0, 0, 0]` |
+| Choix      | -              |
+| Niveau app | ✓              |
+
+---
+
+## location_enabled
+
+Permet la capture d'emplacement pour les enregistrements.
+
+| Biens      | Valeur          |
+| ---------- | --------------- |
+| Type       | `boolean`       |
+| Requis     | -               |
+| Par défaut | -               |
+| Choix      | `true`, `false` |
+| Niveau app | ✓               |
+
+---
+
+## location_required
+
+Nécessite des données de localisation lorsque `location_enabled` est `true`.
+
+| Biens      | Valeur          |
+| ---------- | --------------- |
+| Type       | `boolean`       |
+| Requis     | -               |
+| Par défaut | -               |
+| Choix      | `true`, `false` |
+| Niveau app | ✓               |
+
+---
+
+## image
+
+URL pour l'icône de formulaire (taille originale).
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## image_thumbnail
+
+URL pour l'icône de forme miniature (160x160 px).
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## image_petite
+
+URL pour l'icône de forme de petite taille (320x320 px).
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## image_large
+
+URL pour l'icône de forme de grande taille (640x640 px).
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `string` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | ✓        |
+
+---
+
+## événements
+
+Bloc de code d'événement contenant les expressions intégrées et JavaScript pour les gestionnaires d'événements. Le code est placé dans `events.code`.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `object` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | -        |
+
+---
+
+## form_links
+
+Liens vers/depuis d'autres formulaires (utilisés avec `FormLinkField`). Voir [Champs méta](/fr/core/fields/meta-fields#formlinkfield) pour plus de détails.
+
+| Biens      | Valeur   |
+| ---------- | -------- |
+| Type       | `object` |
+| Requis     | -        |
+| Par défaut | `null`   |
+| Choix      | -        |
+| Niveau app | -        |
+
+---
+
+## éléments
+
+Voir [Éléments et imbrication](/fr/core/schema/elements).
+
+| Biens      | Valeur  |
+| ---------- | ------- |
+| Type       | `array` |
+| Requis     | ✓       |
+| Par défaut | `[]`    |
+| Choix      | -       |
+| Niveau app | -       |

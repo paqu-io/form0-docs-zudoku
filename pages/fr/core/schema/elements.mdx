@@ -1,7 +1,64 @@
 ---
-title: elements (Coming soon)
+title: Éléments et nidification
+description: Comment les champs et les sections sont organisés dans un schema.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/elements".
+`form.elements` est un tableau ordonné de champs et de conteneurs. Les conteneurs peuvent
+via leur propre tableau `elements`.
+
+## Clés et noms de données
+
+- `data_name`: identifiant lisible par l'homme utilisé comme clé de valeur dans l'état moteur (unique, minuscules a-z, 0-9, soulignement seulement, maximum 42 caractères)
+- `key`: identifiant interne, typiquement dérivé de `data_name` (unique, hexadécimal, 8 caractères)
+
+Lorsque vous référencez des champs dans des conditions ou `title_field.elements`, vous pouvez utiliser `key` ou `data_name`. L'utilisation de `data_name` est souvent plus pratique lors de l'écriture manuelle de schemas car il est plus mémorable.
+
+## Conteneurs
+
+Les types de champs suivants peuvent contenir des éléments imbriqués:
+
+- `Section` – regroupe visuellement les champs
+- `RepeatableSection` – permet plusieurs instances de ses enfants
+
+`BuildingPlanSection` prend également en charge les éléments imbriqués, mais a un comportement spécialisé pour la génération de formulaires dynamiques.](/core/fields/containers#buildingplansection) pour plus de détails.
+
+## Exemple
+
+```json
+{
+  "type": "Section",
+  "key": "personal_section",
+  "data_name": "personal_section",
+  "label": "Personal info",
+  "display": "inline",
+  "description": null,
+  "description_mode": null,
+  "visible": true,
+  "visible_conditions": null,
+  "elements": [
+    {
+      "type": "TextField",
+      "key": "first_name",
+      "data_name": "first_name",
+      "label": "First name",
+      "display": "default",
+      "description": null,
+      "description_mode": null,
+      "required": true,
+      "required_conditions": null,
+      "visible": true,
+      "visible_conditions": null,
+      "read_only": false,
+      "read_only_conditions": null,
+      "default_value": null,
+      "pattern": null,
+      "pattern_description": null,
+      "supporting_image": false,
+      "supporting_image_path": null,
+      "supporting_image_display": null
+    }
+  ]
+}
+```

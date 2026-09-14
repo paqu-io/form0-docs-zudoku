@@ -1,22 +1,36 @@
 ---
-title: Renderer, temi, font e immagini nello starter mobile
-description: Personalizza la presentazione nativa e gestisci font e immagini di supporto integrate.
+title: Renderer, temi, caratteri e immagini nel cellulare starter
+description: Personalizza la presentazione dei moduli nativi e gestisci i font e le immagini di supporto in bundle.
 ---
 
-La radice carica `form0Fonts` con `expo-font` prima del rendering e avvolge l’interfaccia in
-`ThemeProvider`. Configura modalità colore e personalizzazioni in `form0.config.js`.
+<PageBadges />
 
-Associa i tipi di campo a identificatori in `form0.config.js`, poi gli identificatori ai componenti
-in `src/field-renderers/resolver.js`. La separazione mantiene serializzabile la configurazione.
-Consulta i [renderer personalizzati](/it/bindings/react-native/custom-renderers).
+## Tema e font
 
-React Native deve scoprire staticamente le immagini integrate. Aggiungile in
-`assets/supporting-images`, quindi esegui:
+La radice dell'applicazione carica `form0Fonts` con `expo-font` prima di eseguire il rendering e avvolge la sua UI in
+`ThemeProvider`. Configurare la modalità colore di base e le sovrascrizioni opzionali del tema in `form0.config.js`.
+Le schermate starter circostanti utilizzano gli stessi token del tema del modulo.
+
+## Renderer overrides
+
+Mappa i tipi di campo schema agli identificatori renderer in `form0.config.js`, quindi mappa quegli identificatori a
+componenti in `src/field-renderers/resolver.js`. Mantenere i componenti fuori dal file di configurazione
+preserva un limite di configurazione serializzabile e facile da usare.
+
+Per gli oggetti di scena renderer e il comportamento di registrazione, utilizzare il
+[documentazione personalizzata renderer](/it/bindings/react-native/custom-renderers).
+
+## Immagini di supporto
+
+React Native richiede che i riferimenti alle immagini in bundle siano staticamente rilevabili.
+`assets/supporting-images`, quindi rigenerare la tabella di ricerca:
 
 ```bash
 npm run generate-images
 ```
 
-Registra sia l’asset sia `src/supporting-images/index.js`. Gli script di avvio rigenerano il file e
-la CI ne verifica l’aggiornamento. Le immagini HTTP(S) remote non richiedono una voce. Consulta
-[Temi, font e immagini](/it/bindings/react-native/themes-assets).
+Commetti sia l'asset che `src/supporting-images/index.js`. Gli script di avvio rigenerano il file,
+e CI verifica che il registro impegnato sia aggiornato. I percorsi di immagine HTTP e HTTPS remoti non
+bisogno di voci di registro.
+
+Vedere [Temi, font e immagini di](/it/bindings/react-native/themes-assets) per le API di livello binding.

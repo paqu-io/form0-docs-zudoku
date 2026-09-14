@@ -1,7 +1,33 @@
 ---
-title: Events (Coming soon)
+title: Eventi
+description: Builtin disponibili in eventi di forma.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/events".
+import { Badge } from "zudoku/ui/Badge"
+
+Gli eventi in diretta in `form.events.code` e sono valutati in runtime. Utilizza `ON` per registrare i gestori
+e `SETVALUE` / `ALERT` per interagire con il modulo.
+
+## Esempio rapido
+
+```js
+ON("change", "age", function (event) {
+  if ($age >= 18) {
+    SETVALUE("can_vote", "yes")
+  }
+})
+```
+
+## Creati eventi
+
+### <Badge variant="secondary">Events</Badge>
+
+- [`ON`](/it/core/builtins/events/on)
+- [`OFF`](/it/core/builtins/events/off)
+- [`ALERT`](/it/core/builtins/events/alert)
+- [`SETVALUE`](/it/core/builtins/events/setvalue)
+
+I gestori di eventi possono anche utilizzare il calcolo incorporato elencato in
+[Calcolazioni ed espressioni](/it/core/builtins/calculations-expressions-overview).

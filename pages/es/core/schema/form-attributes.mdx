@@ -1,7 +1,436 @@
 ---
-title: Form attributes (Coming soon)
+title: Atributos de formulario
+description: Referencia completa para todos los atributos de objeto de formulario.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/form-attributes".
+import { Callout } from "zudoku/ui/Callout"
+
+Esta página documenta todos los atributos disponibles en el objeto `form`, incluidos los metadatos a nivel de aplicación.
+
+<Callout type="note" title="Atributos a nivel de aplicación">
+  Los atributos marcados como ** nivel de aplicación ** son metadatos no procesados directamente por
+  el motor. Se pueden usar al integrar el producto SaaS [reform](https://reformapp.io) o al crear
+  una funcionalidad similar en tu propia aplicación.
+</Callout>
+
+---
+
+## nombre
+
+Nombre de formulario amigable para las personas que se muestra en la interfaz de usuario.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | ✓        |
+| Predeterminado      | -        |
+| Opciones            | -        |
+| Nivel de aplicación | -        |
+
+---
+
+## descripción
+
+Descripción del formulario.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | -        |
+| Opciones            | -        |
+| Nivel de aplicación | -        |
+
+---
+
+## id
+
+Se recomienda el formato UUID.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | ✓        |
+| Predeterminado      | -        |
+| Opciones            | -        |
+| Nivel de aplicación | -        |
+
+---
+
+## record_count
+
+Contador operativo propiedad de la plataforma. Número de registros en el formulario.
+
+| Propiedad           | Valor        |
+| ------------------- | ------------ |
+| Tipo                | `number`     |
+| Requerido           | -            |
+| Predeterminado      | Host-defined |
+| Opciones            | -            |
+| Nivel de aplicación | ✓            |
+
+---
+
+## record_last_change_at
+
+Contador operativo propiedad de la plataforma. Fecha/hora del último cambio de registro en formato ISO 8601.
+
+| Propiedad           | Valor        |
+| ------------------- | ------------ |
+| Tipo                | `string`     |
+| Requerido           | -            |
+| Predeterminado      | Host-defined |
+| Opciones            | -            |
+| Nivel de aplicación | ✓            |
+
+---
+
+## form_created_at
+
+Fecha/hora de creación del formulario en formato ISO 8601.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## form_updated_at
+
+Forma fecha/hora de la última actualización en formato ISO 8601.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## form_created_by
+
+Usuario que creó el formulario.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## form_updated_by
+
+Usuario que actualizó el formulario por última vez.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## estado
+
+Indicador de estado del formulario.
+
+| Propiedad           | Valor                |
+| ------------------- | -------------------- |
+| Tipo                | `string`             |
+| Requerido           | -                    |
+| Predeterminado      | -                    |
+| Opciones            | `active`, `inactive` |
+| Nivel de aplicación | ✓                    |
+
+---
+
+## versión
+
+Versión opcional de schema propiedad de la plataforma. form0-core no la incrementa.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | -        |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## main_org_id
+
+Identificador de organización principal.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | -        |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## main_org_metadata
+
+Campos de metadatos asociados con la organización principal.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `object` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## sub_org_id
+
+Identificador de suborganización.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## sub_org_metadata
+
+Campos de metadatos asociados con la suborganización.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `object` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## project_id
+
+Identificador del proyecto.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## project_metadata
+
+Campos de metadatos asociados con el proyecto.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `object` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## ia
+
+Consulta [Metadatos de AI](/es/core/ai-metadata) para obtener más información.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `object` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | -        |
+
+---
+
+## status_field
+
+Para obtener más información, consulte [Campos de metadatos](/es/core/fields/meta-fields#statusfield).
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `object` |
+| Requerido           | ✓        |
+| Predeterminado      | -        |
+| Opciones            | -        |
+| Nivel de aplicación | -        |
+
+---
+
+## title_field
+
+Consulte [Campos de metadatos](/es/core/fields/meta-fields#titlefield) para obtener más información.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `object` |
+| Requerido           | ✓        |
+| Predeterminado      | -        |
+| Opciones            | -        |
+| Nivel de aplicación | -        |
+
+---
+
+## bounding_box
+
+Cuadro de borde que contiene todos los registros de formulario. Formato: `[min_lat, min_lng, max_lat, max_lng]`.
+
+| Propiedad           | Valor          |
+| ------------------- | -------------- |
+| Tipo                | `array`        |
+| Requerido           | -              |
+| Predeterminado      | `[0, 0, 0, 0]` |
+| Opciones            | -              |
+| Nivel de aplicación | ✓              |
+
+---
+
+## location_enabled
+
+Permite la captura de ubicación para los registros.
+
+| Propiedad           | Valor           |
+| ------------------- | --------------- |
+| Tipo                | `boolean`       |
+| Requerido           | -               |
+| Predeterminado      | -               |
+| Opciones            | `true`, `false` |
+| Nivel de aplicación | ✓               |
+
+---
+
+## location_required
+
+Requiere datos de ubicación cuando `location_enabled` es `true`.
+
+| Propiedad           | Valor           |
+| ------------------- | --------------- |
+| Tipo                | `boolean`       |
+| Requerido           | -               |
+| Predeterminado      | -               |
+| Opciones            | `true`, `false` |
+| Nivel de aplicación | ✓               |
+
+---
+
+## imagen
+
+URL para el icono de formulario (tamaño original).
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## image_thumbnail
+
+URL para el icono de formulario en miniatura (160x160 px).
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## image_small
+
+URL para el icono de formulario de tamaño pequeño (320x320 px).
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## image_large
+
+URL para el icono de formulario de gran tamaño (640x640 px).
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `string` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | ✓        |
+
+---
+
+## eventos
+
+Bloque de código de evento que contiene expresiones incorporadas y JavaScript para los controladores de eventos. El código se coloca en `events.code`.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `object` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | -        |
+
+---
+
+## form_links
+
+Enlaces a/desde otros formularios (utilizados con `FormLinkField`). Consulte [Campos de metadatos](/es/core/fields/meta-fields#formlinkfield) para obtener más detalles.
+
+| Propiedad           | Valor    |
+| ------------------- | -------- |
+| Tipo                | `object` |
+| Requerido           | -        |
+| Predeterminado      | `null`   |
+| Opciones            | -        |
+| Nivel de aplicación | -        |
+
+---
+
+## elementos
+
+Campos de formulario y contenedores. Consulte [Elementos y anidación](/es/core/schema/elements).
+
+| Propiedad           | Valor   |
+| ------------------- | ------- |
+| Tipo                | `array` |
+| Requerido           | ✓       |
+| Predeterminado      | `[]`    |
+| Opciones            | -       |
+| Nivel de aplicación | -       |

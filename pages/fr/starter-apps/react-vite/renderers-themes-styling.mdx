@@ -1,18 +1,20 @@
 ---
-title: Rendus, thèmes et styles
-description: Personnalisez l’application React et Vite avec des rendus, des thèmes et du CSS applicatif.
+title: Rendus, thèmes et style
+description: Personnalisez les React et Vite starter via l'enregistrement renderer, les thèmes et l'application CSS.
 ---
 
-Le starter sépare les contrats du paquet de la présentation applicative. Importez
-`form0-react/index.css` une fois, puis ajoutez les choix propres à l’application.
+<PageBadges />
 
-## Rendus de champs
+Le starter conserve les contrats de rendu des paquets séparés de la présentation de l'application.
+`form0-react/index.css` une fois, puis superposez les choix spécifiques à l'application sur le dessus.
 
-Pour ajouter un rendu dans `src/field-renderers` :
+## Champ renderers
+
+L'application renderer remplace live dans `src/field-renderers`. Pour en ajouter un:
 
 1. Créez le composant React.
-2. Enregistrez-le sous un identifiant stable dans `resolver.js`.
-3. Associez le type de champ à cet identifiant dans `form0.config.js`.
+2. Ajoutez-le à `src/field-renderers/resolver.js` sous un identifiant stable.
+3. Assignez le type de champ form0 à cet identifiant dans `form0.config.js`.
 
 ```js
 fieldRenderers: {
@@ -20,14 +22,26 @@ fieldRenderers: {
 }
 ```
 
-Consultez le [contrat des rendus personnalisés](/fr/bindings/react/custom-renderers).
+La date incluse renderer montre la composition des props de champ form0 avec les primitives shadcn/ui.
+Examinez le [contrat personnalisé renderer](/fr/bindings/react/custom-renderers) avant de créer des
+overrides.
 
-## Thèmes et CSS
+## Thèmes
 
-`theme.mode` accepte `light`, `dark` et `system`. Pour remplacer le thème du paquet, créez un thème
-Vanilla Extract sous `src/themes` et renseignez `theme.customTheme`. Il doit implémenter tout le
-contrat `form0-react`; partez de `custom-example.css.js`.
+Définissez `theme.mode` sur `light`, `dark`, ou `system`. Pour remplacer le thème du paquet, créez un
+Extrayez le thème sous `src/themes` et définissez `theme.customTheme` sur son chemin d'importation.
 
-Utilisez `src/index.css` pour Tailwind et shadcn, `App.css` pour la mise en page,
-`form0-overrides.css` pour vos classes et les thèmes Vanilla Extract pour les tokens du paquet.
-Consultez [Thèmes et styles](/fr/bindings/react/themes-styling).
+Le thème personnalisé doit mettre en œuvre le contrat complet du thème `form0-react`.
+`src/themes/custom-example.css.js` comme point de départ et voir
+[Thèmes et style](/fr/bindings/react/themes-styling) pour le contrat.
+
+## Application CSS
+
+Utilisez ces couches pour différentes responsabilités:
+
+- `src/index.css` pour Tailwind, les jetons shadcn et les styles d'application globaux;
+- `src/App.css` pour la mise en page d'application;
+- `src/styles/form0-overrides.css` pour les classes de formulaires appartenant à l'application; et
+- Thèmes pour le paquet renderer.
+
+Préférez les contrats d'enregistrement et de thème renderer à l'édition de code dans les paquets form0 installés.

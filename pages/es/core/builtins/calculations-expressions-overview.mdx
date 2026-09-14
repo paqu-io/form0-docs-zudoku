@@ -1,7 +1,60 @@
 ---
-title: Calculations & expressions (Coming soon)
+title: Cálculos y expresiones
+description: Funciones integradas disponibles en campos calculados y expresiones.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/calculations-expressions".
+import { Badge } from "zudoku/ui/Badge"
+
+Los campos calculados evalúan las expresiones JavaScript almacenadas en `calculate`.
+disponible como variables `$field_name`.
+
+## Ejemplo rápido
+
+```js
+ROUND($price * $qty, 2)
+```
+
+## Construcciones por categoría
+
+### <Badge variant="secondary">Logical</Badge>
+
+- [`IF`](/es/core/builtins/calculations-expressions/if)
+- [`AND`](/es/core/builtins/calculations-expressions/and)
+- [`OR`](/es/core/builtins/calculations-expressions/or)
+- [`COUNT`](/es/core/builtins/calculations-expressions/count)
+- [`COUNTA`](/es/core/builtins/calculations-expressions/counta)
+- [`COUNTBLANK`](/es/core/builtins/calculations-expressions/countblank)
+- [`ARRAY`](/es/core/builtins/calculations-expressions/array)
+
+### <Badge variant="secondary">Math</Badge>
+
+- [`ABS`](/es/core/builtins/calculations-expressions/abs)
+- [`CEILING`](/es/core/builtins/calculations-expressions/ceiling)
+- [`COS`](/es/core/builtins/calculations-expressions/cos)
+- [`SIN`](/es/core/builtins/calculations-expressions/sin)
+- [`ROUND`](/es/core/builtins/calculations-expressions/round)
+
+### <Badge variant="secondary">String</Badge>
+
+- [`UPPER`](/es/core/builtins/calculations-expressions/upper)
+
+### <Badge variant="secondary">Choice</Badge>
+
+- [`CHOICEVALUE`](/es/core/builtins/calculations-expressions/choicevalue)
+- [`CHOICELABEL`](/es/core/builtins/calculations-expressions/choicelabel)
+- [`CHOICEVALUES`](/es/core/builtins/calculations-expressions/choicevalues)
+- [`CHOICELABELS`](/es/core/builtins/calculations-expressions/choicelabels)
+- [`HASOTHER`](/es/core/builtins/calculations-expressions/hasother)
+- [`OTHER`](/es/core/builtins/calculations-expressions/other)
+
+### <Badge variant="secondary">Schema</Badge>
+
+- [`FORM`](/es/core/builtins/calculations-expressions/form)
+- [`DATANAMES`](/es/core/builtins/calculations-expressions/datanames)
+
+### <Badge variant="secondary">Control</Badge>
+
+- [`SETRESULT`](/es/core/builtins/calculations-expressions/setresult)
+- [`EVAL`](/es/core/builtins/calculations-expressions/eval)

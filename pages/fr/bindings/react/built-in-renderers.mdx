@@ -3,17 +3,19 @@ title: Rendus de champs intégrés
 description: Types de champs affichés par form0-react sans remplacement applicatif.
 ---
 
+<PageBadges />
+
 `form0-react` fournit une interface accessible pour les types publics définis par `form0-core`.
 Le comportement et les attributs restent définis dans le
 [catalogue des champs](/fr/core/fields/catalog).
 
-| Groupe | Types affichés |
-| --- | --- |
-| Texte et nombres | `TextField`, `NumericField`, `CalculatedField` |
-| Choix | `SingleChoiceField`, `MultiChoiceField`, `BooleanField` |
-| Date et heure | `DateField`, `TimeField` |
+| Groupe                   | Types affichés                                             |
+| ------------------------ | ---------------------------------------------------------- |
+| Texte et nombres         | `TextField`, `NumericField`, `CalculatedField`             |
+| Choix                    | `SingleChoiceField`, `MultiChoiceField`, `BooleanField`    |
+| Date et heure            | `DateField`, `TimeField`                                   |
 | Affichage et métadonnées | `LabelField`, `TitleField`, `StatusField`, `FormLinkField` |
-| Médias | `PhotoField`, `VideoField`, `SignatureField` |
+| Médias                   | `PhotoField`, `VideoField`, `SignatureField`               |
 
 `Section`, `RepeatableSection` et `BuildingPlanSection` sont des nœuds structurels gérés par
 `FormRenderer`, et non par le registre de champs.

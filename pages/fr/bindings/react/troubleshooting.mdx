@@ -1,35 +1,42 @@
 ---
-title: Résolution des problèmes React
-description: Diagnostiquez les problèmes courants d’installation, d’affichage, de styles et de workers.
+title: Dépannage React
+description: Diagnostiquez les problèmes courants d'installation, de rendu, de style et de worker.
 ---
 
-## Le formulaire n’est pas stylé
+<PageBadges />
 
-Importez `form0-react/index.css` une fois et vérifiez que le bundler accepte le CSS des dépendances.
+## La forme n'est pas stylisée
 
-## Un champ est indiqué comme non pris en charge
+Importez `form0-react/index.css` une fois dans le point d'entrée de l'application.
+Importation CSS à partir de dépendances.
 
-Vérifiez le [catalogue des champs](/fr/core/fields/catalog). Si le type est connu, assurez-vous que
-le composant est enregistré dans le même sous-arbre `FieldRegistryProvider` que `FormRenderer`.
+## Un champ indique qu'il n'est pas supporté
 
-## Le schéma échoue pendant l’affichage
+Confirmez que le type est répertorié dans le [Catalogue de champs de base](/fr/core/fields/catalog).
+connu mais intentionnellement remplacé, vérifiez que le composant est enregistré dans le même
+`FieldRegistryProvider` sous-arbre comme `FormRenderer`.
 
-`FormRenderer` exige `schema.form.elements`. Exécutez
-[`form0 validate`](/fr/cli/schemas/validate-preview) avant son chargement.
+## Le schema échoue pendant le rendu
 
-## Le mode worker ne charge pas
+`FormRenderer` valide `schema.form` et nécessite `form.elements`. Utilisation
+[`form0 validate`](/fr/cli/schemas/validate-preview) avant de charger le schema dans l'application.
 
-Revenez d’abord à `engineMode="main-thread"`. Avec Vite, conservez le constructeur statique et
-excluez `form0-react` de l’optimisation comme dans le projet de démarrage. Les autres bundlers
-doivent gérer les workers ESM fondés sur `new URL(..., import.meta.url)`. `workerUrl` et
-`createWorker` ne font pas partie de l’API publique de `FormRenderer`.
+## Le mode travailleur ne peut pas charger le worker
 
-## Les modifications locales du paquet n’apparaissent pas
+Premier retour à `engineMode="main-thread"`. Pour Vite, garder le constructeur worker statiquement
+analysable et exclure `form0-react` de l'optimisation des dépendances comme indiqué dans le web maintenu
+Les autres bundlers doivent supporter le module ESM workers basé sur `new URL(..., import.meta.url)`.
 
-Recompilez `form0-react`, redémarrez le serveur et ne videz que le cache de dépendances du bundler
-si nécessaire.
+Les options personnalisées `workerUrl` et `createWorker` ne font pas partie du `FormRenderer` API public.
 
-## La soumission ne s’exécute pas
+## Les mises à jour n'apparaissent pas pendant le développement des paquets locaux
 
-Vérifiez que `onSubmit` est une fonction, que le formulaire est en édition, que
-`submitBlockedReason` est vide et qu’aucune erreur de validation ne subsiste.
+Reconstruire `form0-react`, redémarrer le serveur de développement consommateur, et effacer uniquement les paquets
+si nécessaire. Vite peut conserver une copie optimisée d'une
+package installé.
+
+## La soumission ne fonctionne pas
+
+Vérifiez que `onSubmit` est une fonction, que le formulaire est en mode édition, que `submitBlockedReason` est vide, et
+le résumé de validation ne contient pas d'erreurs. Pour les superpositions renvoyant une promesse,
+L'application peut présenter l'échec tant que l'overlay reste ouvert.

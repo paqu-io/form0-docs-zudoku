@@ -3,6 +3,8 @@ title: Visión general de conectores
 description: Guarda registros estructurados de form0 mediante paquetes de conectores de confianza.
 ---
 
+<PageBadges />
+
 Los conectores reciben registros estructurados de un proyecto form0 y los escriben en un
 almacenamiento controlado por la aplicación anfitriona. Los conectores oficiales admiten
 actualmente PostgreSQL y SQLite.
@@ -11,10 +13,10 @@ El flujo recomendado es gestionarlos con `form0-cli`: instalar un conector, conf
 proyecto, probar la conexión y consultar su estado. Una aplicación también puede crear el conector
 directamente cuando necesite controlar su ciclo de vida.
 
-| Paquete | Almacenamiento | Documentación | Código fuente |
-| --- | --- | --- | --- |
-| [`form0-connector-pg`](https://www.npmjs.com/package/form0-connector-pg) | PostgreSQL | [Configuración](/es/connectors/postgresql/setup) | [GitHub](https://github.com/paqu-io/form0-connector-pg) |
-| [`form0-connector-sqlite`](https://www.npmjs.com/package/form0-connector-sqlite) | SQLite | [Configuración](/es/connectors/sqlite/setup) | [GitHub](https://github.com/paqu-io/form0-connector-sqlite) |
+| Paquete                                                                          | Almacenamiento | Documentación                                    | Código fuente                                               |
+| -------------------------------------------------------------------------------- | -------------- | ------------------------------------------------ | ----------------------------------------------------------- |
+| [`form0-connector-pg`](https://www.npmjs.com/package/form0-connector-pg)         | PostgreSQL     | [Configuración](/es/connectors/postgresql/setup) | [GitHub](https://github.com/paqu-io/form0-connector-pg)     |
+| [`form0-connector-sqlite`](https://www.npmjs.com/package/form0-connector-sqlite) | SQLite         | [Configuración](/es/connectors/sqlite/setup)     | [GitHub](https://github.com/paqu-io/form0-connector-sqlite) |
 
 Los conectores se ejecutan dentro del proceso local de Node.js. No son servicios de almacenamiento
 alojados ni proporcionan autenticación, autorización, copias de seguridad, retención o

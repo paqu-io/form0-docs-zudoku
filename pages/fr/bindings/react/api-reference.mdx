@@ -1,17 +1,21 @@
 ---
-title: Référence de l’API React
-description: Composants, hooks, registres et utilitaires publics de form0-react.
+title: Référence React API
+description: Composants publics, crochets, registres et utilitaires exportés par form0-react.
 ---
 
-Toutes les exportations JavaScript prises en charge proviennent de `form0-react`, sauf indication
-d’un autre chemin.
+<PageBadges />
 
-## Affichage et thèmes
+Toutes les exportations JavaScript prises en charge sont disponibles à partir de `form0-react`, sauf si un autre chemin est affiché.
 
-- `FormRenderer`
-- `ThemeProvider`, `ThemeContext`, `useThemeClass`
+## Rendu
 
-## Registre de champs
+- `FormRenderer` — rend et gère un formulaire piloté par schema.
+- `ThemeProvider`, `ThemeContext`, `useThemeClass` — fournissent ou lisent la classe de thème active.
+
+Voir [FormRenderer](/fr/bindings/react/form-renderer) et
+[Thèmes et styles](/fr/bindings/react/themes-styling).
+
+## Registre sur le terrain
 
 - `FieldRegistryProvider`, `FieldRegistryContext`, `useFieldRegistry`
 - `createFieldRegistry`, `defaultFieldRegistry`
@@ -19,17 +23,23 @@ d’un autre chemin.
 - `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
 - `KNOWN_FIELD_TYPES`
 
-## Utilitaires de schéma
+Voir [Champ personnalisé renderers](/fr/bindings/react/custom-renderers).
 
-- `cloneDeep(value)` et `cloneSchema(schema)` créent des copies indépendantes.
-- `ensureSchemaKeys(elements)` ajoute les clés stables et indique une modification.
-- `prepareSchema(schema)` clone un schéma et assure les clés sur la copie.
+## Schema utilities
+
+- `cloneDeep(value)` et `cloneSchema(schema)` créent des copies détachées.
+- `ensureSchemaKeys(elements)` ajoute des clés stables si nécessaire et indique s'il a changé le
+  entrée.
+- `prepareSchema(schema)` clone un schema et assure les clés des éléments sur la copie.
 
 ## Intégration spécialisée
 
-- `useBuildingPlanController(options)` coordonne l’interface des plans avec les données répétables ;
-  ce n’est pas un hook général d’état de formulaire.
+- `useBuildingPlanController(options)` coordonne l’interface utilisateur de la section
+  données reproductibles. Il est spécialisé plutôt qu'un crochet de forme-état général.
 
-`useFormEngine`, le client worker, `FieldRenderer` et les rendus individuels sont internes et absents
-de la carte d’exports. Les jetons de thème proviennent de `form0-react/theme.css.js` et la feuille
-compilée de `form0-react/index.css`.
+Le client interne `useFormEngine`, worker, les composants individuels par défaut renderer, et
+`FieldRenderer` ne sont pas des exportations de paquets. L'importation de fichiers internes n'est pas prise en charge par le paquet
+export map.
+
+Les jetons de thème sont exportés séparément de `form0-react/theme.css.js`. La feuille de style compilée est
+disponible en tant que `form0-react/index.css`.

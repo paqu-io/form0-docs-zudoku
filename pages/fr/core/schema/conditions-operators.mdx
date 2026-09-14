@@ -1,7 +1,60 @@
 ---
-title: conditions-operators (Coming soon)
+title: Conditions et opérateurs
+description: Visibilité conditionnelle, exigences et règles en lecture seule.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/schema/conditions-operators".
+Les conditions sont utilisées dans `visible_conditions`, `required_conditions` et `read_only_conditions`.
+Ils font référence à d'autres domaines et évaluent à vrai ou faux.
+
+## Forme
+
+```json
+{
+  "field_id": "age",
+  "operator": "greater_or_equal_than",
+  "value": 18
+}
+```
+
+Vous pouvez combiner les conditions avec `and` ou `or`:
+
+```json
+{
+  "and": [
+    { "field_id": "country", "operator": "equal_to", "value": "us" },
+    { "field_id": "age", "operator": "greater_or_equal_than", "value": 18 }
+  ]
+}
+```
+
+## Opérateurs
+
+| Opérateur               | Signification                    |
+| ----------------------- | -------------------------------- |
+| `equal_to`              | Égale à la valeur fournie        |
+| `not_equal_to`          | Pas égal à la valeur             |
+| `greater_than`          | Plus grand que la valeur         |
+| `less_than`             | Moins que la valeur              |
+| `greater_or_equal_than` | Supérieur ou égal à              |
+| `less_or_equal_than`    | inférieur ou égal à              |
+| `contains`              | Le tableau contient la valeur    |
+| `starts_with`           | La chaîne commence par la valeur |
+| `is_empty`              | La valeur est vide ou null       |
+| `is_not_empty`          | La valeur n'est pas vide         |
+
+### Support opérateur par type de terrain
+
+Les opérateurs sont validés par rapport au type de champ référencé. Par exemple:
+
+- Les champs de texte prennent en charge `contains` et `starts_with`
+- Les champs numériques/date supportent les opérateurs de comparaison
+- Les champs de choix prennent en charge `equal_to` et `contains` (multi-choix)
+
+Si un opérateur n'est pas valide pour le champ référencé, la validation échoue.
+
+## Références des champs
+
+`field_id` devrait pointer vers le champ `key`. `data_name` est accepté comme une solution de secours, mais `key` est
+recommandé car il ne change jamais lorsque les étiquettes changent.

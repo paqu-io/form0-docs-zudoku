@@ -3,17 +3,16 @@ title: ON
 description: Registers an event handler.
 ---
 
-import { Badge } from "zudoku/ui/Badge";
-
-
-<Badge variant="secondary">Events</Badge>
+<PageBadges />
 
 Registers an event handler.
 
 ## Example
 
 ```js
-ON('change', 'city', function (event) { ALERT('City changed'); })
+ON("change", "city", function (event) {
+  ALERT("City changed")
+})
 ```
 
 ## Parameters

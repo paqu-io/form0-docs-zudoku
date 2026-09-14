@@ -1,7 +1,44 @@
 ---
-title: concepts (Coming soon)
+title: Concetti
+description: Il schema -primo modello mentale dietro form0-core.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/concepts".
+## Schema-primo
+
+A form0 schema è un JSON documento con un livello superiore `form` oggetto. Il schema definisce il
+struttura, regole e comportamento di un modulo senza alcun codice UI.
+
+## Campi e valori
+
+- Ogni campo ha un `data_name` (identificatore leggibile dall'uomo) e un `key` (identificatore interno, tipicamente derivato da `data_name`).
+- I valori del motore sono memorizzati da `data_name`.
+- Campi di riferimento delle condizioni per `field_id` . Potete usare sia `key` oppure `data_name` ; utilizzando `data_name` è spesso più pratico quando si scrive schemas manualmente poiché è più memorabile.
+
+## Stato motore
+
+Il motore valuta la schema e produce un oggetto di stato con:
+
+- `values`: valori di campo correnti
+- `errors`: errori di convalida
+- `visible`: bandiere di visibilità per campo
+- `required`: bandiere obbligatorie per campo
+- `read_only`: flag di sola lettura per campo
+
+## Flusso di dati
+
+1. Caricare la schema e creare il motore
+2. Indicare i valori iniziali (opzionale)
+3. Accendere eventuali eventi di inizializzazione
+4. Valutazione: calcoli, condizioni e convalida
+5. Per ogni cambio di valore:
+   - Aggiorna il valore
+   - rivalutazione (live validation)
+   - Eventi di cambiamento di fuoco se definiti
+6. Leggi lo stato o crea un record strutturato per submission
+
+## Eventi ed espressioni
+
+- I campi calcolati utilizzano espressioni, all'interno della proprietà `calculate`, come `$age + 1` per ricavare valori da altri campi.
+- Gli eventi vivono in `form.events.code` e possono reagire ai cambiamenti di forma in runtime (ad esempio, quando un record viene caricato o un campo cambia).

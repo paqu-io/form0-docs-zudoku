@@ -1,7 +1,63 @@
 ---
-title: ai-metadata (Coming soon)
+title: Métadonnées IA
+description: Guide d'IA facultatif pour les formulaires et les champs.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/ai-metadata".
+form0-core prend en charge les métadonnées AI facultatives pour guider les agents externes.
+moteur à moins que votre outillage ne le lise.
+
+## Niveau de forme AI
+
+`form.ai` prend en charge les clés suivantes:
+
+- `context`: Tableau de balises de domaine.
+- `instructions`: Tableau d'instructions pour l'outillage d'IA.
+- `namingPolicy`: Objet décrivant les préférences de nommage.
+- `tasks`: Tableau de tâches à activer (par exemple, `suggestFieldNames`).
+- `requiresConsent`: Drapeau booléen pour le consentement de l'utilisateur.
+- `allowCloud`: Drapeau booléen pour le traitement du cloud.
+
+Exemple:
+
+```json
+{
+  "ai": {
+    "context": ["safety_inspections"],
+    "instructions": ["Use snake_case"],
+    "namingPolicy": { "language": "en", "case": "snake", "asciiOnly": true },
+    "tasks": ["suggestFieldNames"],
+    "requiresConsent": true
+  }
+}
+```
+
+## IA sur le terrain
+
+`field.ai` supporte:
+
+- `context`, `instructions`, `tasks` (même forme)
+- `examples`: Exemples de valeurs
+- `synonyms`: Étiquettes alternatives
+- `inferrable`: Drapeau booléen pour inférence
+- `fillStrategy`: `infer_from_previous`, `require_explicit` ou `suggest_options`
+- `priority`: Numéro indiquant l'importance
+- `dependencies`: Tableau d'identifiants de champs
+- `choicePolicy`: Objet décrivant la stratégie de valeur de choix
+- `providerHints`: Conseils spécifiques au fournisseur
+- `requiresConsent`, `allowCloud`
+
+Exemple:
+
+```json
+{
+  "ai": {
+    "examples": ["John", "Jane"],
+    "synonyms": ["First name"],
+    "inferrable": true,
+    "fillStrategy": "suggest_options",
+    "priority": 0.7
+  }
+}
+```

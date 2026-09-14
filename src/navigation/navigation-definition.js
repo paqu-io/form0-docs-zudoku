@@ -77,7 +77,7 @@ const documentationItems = [
       ]),
       doc("cli/project-configuration", "Project configuration"),
       doc("cli/connector-management", "Connector management"),
-      category("Reform integration", [
+      category("reform integration", [
         doc("cli/reform/sign-in-organization", "Sign in and select an organization"),
         doc("cli/reform/sync-forms", "Sync forms"),
       ]),

@@ -1,7 +1,111 @@
 ---
-title: meta-fields (Coming soon)
+title: Meta campos
+description: FormLinkField, StatusField y TitleField.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/fields/meta-fields".
+import { Callout } from "zudoku/ui/Callout"
+
+## FormLinkField
+
+```json
+{
+  "type": "FormLinkField",
+  "key": "related_record",
+  "data_name": "related_record",
+  "label": "Related record",
+  "display": "default",
+  "description": null,
+  "description_mode": null,
+  "required": false,
+  "required_conditions": null,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": null,
+  "allow_creating_records": true,
+  "allow_existing_records": true,
+  "allow_updating_records": false,
+  "allow_multiple_records": false,
+  "form_id": "target-form-id",
+  "record_conditions": null,
+  "record_defaults": null
+}
+```
+
+Atributos adicionales:
+
+- `allow_creating_records`, `allow_existing_records`, `allow_updating_records`
+- `allow_multiple_records`
+- `form_id`: Identificador de formulario de destino
+- `record_conditions`: Filtros para registros vinculados
+- `record_defaults`: Asignaciones de campo predeterminadas al crear nuevos registros
+
+Las entradas de `record_defaults` usan asignaciones como:
+
+```json
+{
+  "source_field_id": "source_field_key",
+  "destination_field_id": "target_field_key"
+}
+```
+
+## EstadoCampo
+
+```json
+{
+  "type": "StatusField",
+  "key": "@status",
+  "data_name": "status",
+  "label": "Status",
+  "display": "default",
+  "enabled": true,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": false,
+  "read_only_conditions": null,
+  "default_value": "pending",
+  "choices": [
+    { "label": "Open", "value": "open" },
+    { "label": "Closed", "value": "closed" }
+  ]
+}
+```
+
+StatusField se define en `form.status_field` (no dentro de `elements`).
+
+## TítuloCampo
+
+```json
+{
+  "type": "TitleField",
+  "key": "@title",
+  "data_name": "title",
+  "label": "Title",
+  "display": "default",
+  "enabled": true,
+  "visible": true,
+  "visible_conditions": null,
+  "read_only": true,
+  "read_only_conditions": null,
+  "elements": ["first_name", "last_name"]
+}
+```
+
+TitleField utiliza los valores de las teclas de campo ordenadas (preferidas) o `data_name`.
+Se unió con `", "` ; los campos de elección utilizan sus schema etiquetas y el resultado es `null` cuando no
+parte se resuelve.
+
+En la raíz, TitleField se define en `form.title_field` y puede hacer referencia a los campos raíz dentro de
+secciones ordinarias, pero nunca descendientes repetibles. La misma forma completa se puede asignar a
+`RepeatableSection.title_field`, donde las referencias se incluyen en el ámbito de ese conjunto de datos de registro hijo.
+[Sección repetible](/es/core/fields/containers#repeatablesection) para persistencia y recuperación de la interfaz de usuario
+comportamiento.
+
+<Callout type="info" title="Detalles de reform">
+  Los campos FormLink, Status y Title tienen un comportamiento más profundo en reform. Los detalles
+  adicionales se enlazarán en una revisión posterior en
+  [docs.reformapp.io](https://docs.reformapp.io).
+</Callout>

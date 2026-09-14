@@ -1,7 +1,26 @@
 ---
-title: EVAL (Coming soon)
+title: EVAL
+description: Évalue une expression dynamique dans un contexte restreint.
 ---
 
-This page is not translated yet.
+<PageBadges />
 
-Read the English version at "/core/builtins/calculations-expressions/eval".
+Évalue une expression dynamique dans un contexte restreint.
+
+## Exemple
+
+```js
+EVAL("$" + fieldName)
+```
+
+## Paramètres
+
+- expression : chaîne
+
+## Valeur renvoyée
+
+Le résultat de l’expression ou null.
+
+## Remarques
+
+- EVAL applique des règles de sécurité supplémentaires ; gardez les expressions simples.
