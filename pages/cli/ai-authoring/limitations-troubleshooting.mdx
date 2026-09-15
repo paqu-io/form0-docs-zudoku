@@ -1,0 +1,88 @@
+---
+title: AI authoring limitations and troubleshooting
+description: Understand preview boundaries and resolve authentication, model, context, provider, draft, and documentation failures.
+---
+
+<PageBadges />
+
+## Current preview boundaries
+
+AI authoring is intentionally limited to interactive creation and editing of form0 schemas. This
+preview does not include:
+
+- unattended or headless generation and automatic application
+- record completion, extraction, inference, or submission analysis
+- arbitrary filesystem, shell, web, MCP, extension, or third-party skill access
+- image, PDF, or other multimodal form generation
+- general custom-helper generation outside calculations and form-event code
+- embeddings, vector databases, or a hosted retrieval service
+- automatic truncation, compaction, or sectioning of oversized forms
+- a form0-hosted provider gateway, billing, telemetry, or credit reporting
+- AI interfaces in form0 bindings, playgrounds, landing pages, or reform
+
+Commands, provider availability, prompts, and mutation behavior do not yet have stable compatibility
+guarantees.
+
+## No model is selected
+
+Authentication and model selection are separate. Inspect providers, authenticate if necessary, and
+select an exact model identifier:
+
+```ansi
+form0(ai)> /providers
+form0(ai)> /login <provider> <api_key|oauth>
+form0(ai)> /models <provider>
+form0(ai)> /model <provider>/<model>
+```
+
+Use `/status` or `/model` without arguments to verify the current selection.
+
+## A saved model changes after restart
+
+The selected model is restored from the per-schema Pi conversation. If it no longer exists or its
+credential is unavailable, the CLI displays Pi's fallback warning. Reauthenticate the original
+provider or select another model. The schema itself is unchanged.
+
+## Authentication succeeds but requests fail
+
+Successful authentication does not prove that an account has remaining credits, an active
+subscription entitlement, model access, or a reachable endpoint. Provider failures and usage-limit
+messages are surfaced by the CLI. Resolve the account or provider issue, then retry; `/status` does
+not contact the provider or report balances.
+
+For OAuth in a headless environment, choose a device-code method when the provider offers one. A
+browser flow returns to the AI prompt automatically after successful authentication.
+
+## The complete form does not fit
+
+The CLI estimates whether the complete schema, installed authoring catalog, request, and response
+allowance fit the selected model context window. If they do not, the request is refused before data
+is sent. The preview does not truncate or divide the form. Choose a model with a larger context window
+or reduce the schema outside AI mode.
+
+## Apply reports a stale revision
+
+The schema changed on disk after the proposal was created. Apply is deliberately blocked. Discard the
+draft, reload the current schema, repeat or revise the request, and inspect the new diff. The CLI does
+not automatically merge external edits into an AI proposal.
+
+## Remote documentation is unavailable
+
+Remote form0 documentation is supplementary. Timeouts, redirects, unsupported responses, offline
+operation, or an unavailable documentation host do not grant broader web access and do not weaken
+validation. The agent continues with the installed core catalog.
+
+## A request appears stuck
+
+Use `/status` to inspect activity and the follow-up queue. Use `/cancel` to abort the current provider
+request and clear queued messages. If cancellation itself fails, the CLI reports that error and keeps
+the session available.
+
+## A proposal is repeatedly invalid
+
+Read the returned diagnostics and make the intent more explicit: identify fields by label or key,
+state expected types, clarify repeatable scope, and describe calculation or event behavior. Installed
+schema validation remains authoritative; do not bypass diagnostics by asking for raw file output.
+
+See [Commands and status](/cli/ai-authoring/commands-status) and
+[Authoring workflow](/cli/ai-authoring/authoring-workflow) for the associated recovery commands.

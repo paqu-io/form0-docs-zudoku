@@ -1,0 +1,81 @@
+---
+title: Confidentialité et sécurité de la création avec IA
+description: Comprenez l'envoi du schéma, la politique cloud, le consentement, le stockage et la documentation restreinte.
+---
+
+<PageBadges />
+
+## Contenu envoyé au modèle
+
+Chaque requête contient le schéma courant complet et le catalogue de création form0 installé. Ce
+contexte permet de préserver la structure, résoudre les références et valider calculs, conditions,
+sections répétables et événements.
+
+Le modèle ne reçoit pas :
+
+- valeurs d'enregistrements ou soumissions
+- fichiers locaux arbitraires du projet
+- contenu des images d'accompagnement
+- identifiants de fournisseurs
+- accès au shell, au système de fichiers, à MCP, aux extensions ou skills tiers
+
+Les attributs du schéma, notamment chemins et métadonnées AI déjà présents, appartiennent au schéma
+complet et sont donc inclus.
+
+## Politique cloud issue des métadonnées
+
+Les [Métadonnées AI](/fr/core/ai-metadata) existantes ont une sémantique appliquée dans la CLI :
+
+```json
+{
+  "form": {
+    "ai": {
+      "allowCloud": false,
+      "requiresConsent": true
+    }
+  }
+}
+```
+
+Si `form.ai.allowCloud: false` ou un `field.ai.allowCloud: false` est présent, tous les fournisseurs
+cloud sont bloqués pour ce formulaire. Les modèles locaux restent disponibles. Aucune dérogation.
+
+Si le formulaire ou un champ définit `requiresConsent: true`, la CLI demande un accord avant la
+première requête cloud et après tout changement de fournisseur cloud. Sinon, entrer dans le mode AI
+et sélectionner ou authentifier un fournisseur cloud vaut consentement après l'avis d'envoi.
+
+Utilisez `/privacy` pour consulter la politique effective et les entrées responsables.
+
+## Identifiants et conversations
+
+L'état AI réside sous `~/.form0-cli/ai/`, hors du projet. Les dossiers sont réservés à l'utilisateur
+actuel et les fichiers d'identifiants et de conversations ont des droits exclusifs. Les identifiants
+d'environnement restent pris en charge et ne sont pas copiés dans les schémas.
+
+L'historique est associé au chemin canonique du schéma et peut contenir le schéma complet. Utilisez
+`/clear` pour effacer l'historique du formulaire courant. Un formulaire non enregistré emploie une
+identité temporaire réattribuée après sa première application réussie.
+
+:::warning
+
+Le JavaScript généré pour les calculs et événements est validé structurellement, mais reste du code
+produit. Vérifiez le diff et le comportement avant application, surtout pour un formulaire sensible.
+
+:::
+
+## Accès restreint à la documentation
+
+L'agent ne peut demander de documentation complémentaire qu'à `https://docs.form0.dev`. La lecture
+commence par `llms.txt` et ne suit que les pages Markdown HTTPS pertinentes de même origine. URLs et
+redirections externes, contenus non pris en charge, réponses trop grandes et délais sont refusés ;
+les réponses réussies sont mises en cache pour la session.
+
+Le texte récupéré est une référence non fiable. Il ne peut changer instructions, permissions ou
+politique cloud. S'il contredit le catalogue form0-core installé, le catalogue prévaut. La création
+continue sans documentation distante hors ligne.
+
+## Responsabilité du fournisseur
+
+Les requêtes cloud vont directement au fournisseur sélectionné avec l'identifiant ou l'abonnement de
+l'utilisateur. form0 ne sert pas de proxy, ne mesure pas l'usage, n'indique pas les crédits et ne
+contrôle pas la conservation. Consultez les conditions et contrôles actuels avant d'envoyer un schéma.

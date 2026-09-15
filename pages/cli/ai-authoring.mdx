@@ -1,15 +1,21 @@
 ---
-title: AI authoring (preview)
+title: AI authoring
 description: Generate and edit form0 schemas through reviewed, validated AI mutation batches.
 ---
 
 <PageBadges />
 
-> [!WARNING]
-> AI authoring is a preview. Commands, provider availability, prompts, and the mutation protocol can
-> change before a stable release. Review generated calculations and event JavaScript.
+:::warning
 
-Start AI mode directly or from a running shell:
+AI authoring is in preview. Commands, provider availability, prompts, and the mutation protocol can
+change before a stable release. Review generated calculations and event JavaScript.
+
+:::
+
+AI authoring adds a conversational schema-authoring mode to form0-cli. It works with ordinary form0
+schemas: the final file contains no conversation history, provider configuration, or mutation data.
+
+Start directly with a schema, or enter AI mode from the interactive shell:
 
 ```bash
 form0 ai [schema]
@@ -21,59 +27,27 @@ form0(server)> ai
 form0(server,ai)> Add a calculated total from quantity and unit price
 ```
 
-AI does not start the preview server. If one is already running, valid drafts appear immediately
-with an **AI draft** source label. They remain in memory until `/apply`; `/discard` or `/exit`
-restores the committed preview.
+AI mode does not start the preview server. When a server is already running, validated drafts are
+broadcast to the browser with an **AI draft** source label without being written to disk.
 
-## Review and save
+## How authoring works
 
-The agent receives the complete current form and the installed core authoring catalog. It can only
-inspect that context, propose semantic schema mutations, and read restricted form0 documentation.
-Core applies each batch to a clone, checks the entire schema—including references, conditions,
-calculation dependencies and cycles, expressions, repeatable scope, and events—and returns
-diagnostics. Invalid batches never become drafts.
+1. The selected model receives the complete current form and the installed core authoring catalog.
+2. The agent proposes a coherent batch of semantic mutations rather than replacing the schema file.
+3. form0-core applies the batch to a clone and validates the complete result.
+4. A valid draft can be inspected, revised, discarded, or explicitly applied.
+5. Apply checks the on-disk revision again and writes the schema atomically.
 
-Use `/preview` and `/diff`, ask for revisions in natural language, then explicitly choose `/apply`
-or `/discard`. Apply rechecks the on-disk revision and writes atomically. External changes block an
-outdated draft. `/undo` stages the previous saved schema and requires another `/apply`. New forms
-start from the canonical empty schema and use the normal path and overwrite confirmation.
+Invalid proposals never become drafts. Exiting or discarding restores the committed schema in the
+browser. The output remains an ordinary form0 schema with no automatic AI metadata additions.
 
-The final file is an ordinary form0 schema. Mutations, conversations, provider choices, and history
-are not stored in it, and no AI metadata is added automatically.
+## Explore this section
 
-## Providers, sessions, and privacy
+- [Getting started](/cli/ai-authoring/getting-started) covers setup and a first authoring session.
+- [Providers and models](/cli/ai-authoring/providers-models) explains Pi authentication and model persistence.
+- [Authoring workflow](/cli/ai-authoring/authoring-workflow) covers drafts, validation, approval, and conflicts.
+- [Commands and status](/cli/ai-authoring/commands-status) documents every AI-mode command and busy behavior.
+- [Privacy and security](/cli/ai-authoring/privacy-security) defines data boundaries and cloud policy.
+- [Limitations and troubleshooting](/cli/ai-authoring/limitations-troubleshooting) describes preview constraints and common failures.
 
-Pi supplies the provider catalog. The manually covered preview baseline is OpenAI key and Codex
-OAuth, Anthropic key and Claude OAuth, Gemini key, OpenRouter key/OAuth, and local Ollama models.
-Use `/providers`, `/login <provider> <api_key|oauth>`, and `/model <provider>/<model>`.
-Environment credentials are also recognized.
-
-`/status` locally summarizes the schema, draft, selected provider and model, configured
-authentication sources, cloud policy, and conversation persistence. It does not contact a provider
-or report provider credit balances. Use `/model` without an argument to show the current model.
-
-Credentials and per-schema conversations live under `~/.form0-cli/ai/` with user-only permissions.
-Stored conversations may contain the full schema. `/new` starts another conversation; `/clear`
-deletes stored history for the current form.
-
-The CLI always states that the complete schema is transmitted. `form.ai.allowCloud: false` or
-`field.ai.allowCloud: false` blocks every cloud provider without an override; local models remain
-available. Any `requiresConsent: true` asks before the first cloud request and again after changing
-cloud provider. Otherwise entering AI mode and selecting/authenticating a cloud provider is consent.
-Use `/privacy` to see the effective policy and its form or field causes.
-
-No record values, project files, supporting images, or credentials enter model context. Forms that
-cannot fit completely in the model context are refused, not truncated.
-
-## Documentation and limits
-
-When necessary, the agent starts at `https://docs.form0.dev/llms.txt` and reads only relevant,
-same-origin HTTPS Markdown with redirect, timeout, type, and size controls. It works offline and
-treats fetched instructions as untrusted reference text. Installed core catalogs are authoritative.
-
-This preview does not provide filesystem or shell tools, arbitrary web access, extensions, skills,
-MCP, unattended application, custom-helper generation, record completion, images/PDFs, hosted RAG,
-telemetry, billing, or a form0 AI gateway. It does not integrate with reform or form0 UI packages.
-
-Commands: `/help`, `/status`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
-`/discard`, `/undo`, `/new`, `/clear`, and `/exit`.
+For schema-level agent guidance and cloud controls, see [AI metadata](/core/ai-metadata).

@@ -1,14 +1,21 @@
 ---
-title: Creazione con IA (anteprima)
-description: Genera e modifica schemi form0 con batch convalidati e approvati.
+title: Creazione con IA
+description: Genera e modifica schemi form0 con batch di mutazioni convalidati e approvati.
 ---
 
 <PageBadges />
 
-> [!WARNING]
-> Questa funzione è in anteprima. Controlla sempre calcoli e JavaScript degli eventi.
+:::warning
 
-Avvia la modalità direttamente o da una shell attiva:
+La creazione con IA è in anteprima. Comandi, provider, prompt e protocollo di mutazione possono
+cambiare prima di una versione stabile. Controlla calcoli e JavaScript degli eventi.
+
+:::
+
+La creazione con IA aggiunge a form0-cli una modalità conversazionale per modificare gli schemi.
+Lavora con normali schemi form0: il file finale non contiene conversazioni, provider o mutazioni.
+
+Avviala direttamente con uno schema oppure entra in modalità AI dalla shell interattiva:
 
 ```bash
 form0 ai [schema]
@@ -20,47 +27,27 @@ form0(server)> ai
 form0(server,ai)> Add a calculated total from quantity and unit price
 ```
 
-L'IA non avvia il server. Se è attivo, la bozza appare come **AI draft** senza essere salvata fino a
-`/apply`; `/discard` o `/exit` ripristina la versione confermata.
+La modalità AI non avvia il server di anteprima. Se è già attivo, le bozze convalidate vengono
+inviate al browser con l'indicazione **AI draft** senza essere scritte su disco.
 
-## Esaminare e salvare
+## Come funziona la creazione
 
-L'agente riceve il modulo completo e il catalogo del core installato. Può solo ispezionarli, proporre
-mutazioni semantiche e leggere documentazione form0 limitata. Il core convalida una copia completa:
-riferimenti, condizioni, dipendenze, cicli, ambiti ripetibili ed eventi.
+1. Il modello selezionato riceve il modulo completo e il catalogo del core installato.
+2. L'agente propone un batch coerente di mutazioni semantiche invece di sostituire il file.
+3. form0-core applica il batch a una copia e convalida l'intero risultato.
+4. Una bozza valida può essere ispezionata, rivista, scartata o applicata esplicitamente.
+5. L'applicazione ricontrolla la revisione su disco e scrive lo schema atomicamente.
 
-Usa `/preview` e `/diff`, chiedi revisioni e scegli `/apply` o `/discard`. L'applicazione ricontrolla
-la revisione su disco e scrive atomicamente. Modifiche esterne bloccano una bozza obsoleta. `/undo`
-prepara la versione precedente e richiede un nuovo `/apply`. I nuovi moduli partono dallo schema vuoto
-canonico e seguono la conferma normale. Il file finale resta uno schema form0 normale.
+Le proposte non valide non diventano mai bozze. Uscire o scartare ripristina nel browser lo schema
+confermato. Il risultato resta un normale schema form0 senza metadati AI aggiunti automaticamente.
 
-## Provider, sessioni e privacy
+## Esplora questa sezione
 
-Pi fornisce il catalogo. La base manuale copre OpenAI/Codex, Anthropic/Claude, Gemini, OpenRouter e
-Ollama locale. Usa `/providers`, `/login <provider> <api_key|oauth>` e
-`/model <provider>/<model>`. Sono supportate anche le credenziali d'ambiente.
+- [Per iniziare](/it/cli/ai-authoring/getting-started) descrive configurazione e prima sessione.
+- [Provider e modelli](/it/cli/ai-authoring/providers-models) spiega autenticazione Pi e persistenza del modello.
+- [Flusso di creazione](/it/cli/ai-authoring/authoring-workflow) tratta bozze, convalida, approvazione e conflitti.
+- [Comandi e stato](/it/cli/ai-authoring/commands-status) documenta i comandi e lo stato occupato.
+- [Privacy e sicurezza](/it/cli/ai-authoring/privacy-security) definisce limiti dei dati e politica cloud.
+- [Limiti e risoluzione dei problemi](/it/cli/ai-authoring/limitations-troubleshooting) descrive vincoli ed errori comuni.
 
-`/status` riepiloga localmente schema, bozza, provider e modello selezionati, fonti di autenticazione
-configurate, politica cloud e persistenza della conversazione. Non contatta alcun provider e non
-mostra saldi di crediti. Usa `/model` senza argomenti per mostrare il modello corrente.
-
-Credenziali e conversazioni risiedono in `~/.form0-cli/ai/` con permessi solo utente e possono
-contenere lo schema completo. `/new` avvia una conversazione; `/clear` elimina la cronologia.
-
-La CLI dichiara che lo schema completo viene trasmesso. `form.ai.allowCloud: false` o
-`field.ai.allowCloud: false` blocca il cloud senza eccezioni. Ogni `requiresConsent: true` chiede
-conferma prima della prima richiesta e dopo il cambio di provider. Negli altri casi, selezionare o
-autenticare un provider vale come consenso. `/privacy` mostra politica e cause. Non vengono inviati
-record, file, immagini o credenziali; un modulo troppo grande viene rifiutato.
-
-## Documentazione e limiti
-
-Se necessario, l'agente parte da `https://docs.form0.dev/llms.txt` e legge solo Markdown HTTPS della
-stessa origine con controlli e cache. È testo non attendibile; prevale il core installato.
-
-Nessun accesso generale a file, shell, web, MCP, estensioni o skill, né applicazione automatica,
-helper personalizzati, dati dei moduli, multimodalità, RAG, telemetria, fatturazione, gateway form0 o
-integrazione con reform o interfacce form0.
-
-Comandi: `/help`, `/status`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
-`/discard`, `/undo`, `/new`, `/clear` e `/exit`.
+Per guidare l'agente e controllare il cloud nello schema, consulta [Metadati AI](/it/core/ai-metadata).

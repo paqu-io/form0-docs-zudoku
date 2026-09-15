@@ -1,0 +1,95 @@
+---
+title: Flujo de creación con IA
+description: Comprende las mutaciones, validación completa, revisión, aprobación, reversión y conflictos.
+---
+
+<PageBadges />
+
+## Contexto completo, acciones limitadas
+
+Cada solicitud incluye el esquema actual completo y un catálogo de creación versionado del
+form0-core instalado. El catálogo describe campos, atributos, operadores, builtins, eventos,
+referencias, cálculos y metadatos AI existentes.
+
+El agente no puede sustituir el documento raíz ni escribir archivos. Puede proponer estas operaciones:
+
+- `updateForm`
+- `addField`, `updateField`, `moveField` y `removeField`
+- `setTitleField` y `setStatusField`
+- `setCalculation`
+- `setFormEventCode`
+
+Los campos se identifican por claves estables. Los cambios de nombre seguros actualizan referencias;
+las eliminaciones inseguras y los destinos no resueltos se rechazan.
+
+## Validación antes de la vista previa
+
+form0-core aplica el lote propuesto a una copia en memoria. El esquema original no se modifica.
+Después valida el resultado completo, incluidos:
+
+- reglas del esquema y los atributos
+- condiciones y referencias a campos
+- expresiones calculadas, dependencias y ciclos
+- ámbito de secciones repetibles
+- tipos de eventos, referencias y sintaxis JavaScript
+
+Los lotes no válidos devuelven diagnósticos al agente y nunca sustituyen el borrador. El core
+instalado prevalece si la documentación remota discrepa. Consulta
+[cálculos y expresiones](/es/core/builtins/calculations-expressions-overview) y
+[eventos de formulario](/es/core/builtins/events-overview) para conocer las funciones del esquema.
+
+## Revisar y modificar
+
+Tras una propuesta válida, inspecciona el borrador y ambas representaciones del diff:
+
+```ansi
+form0(ai)> /preview
+form0(ai)> /diff
+```
+
+El diff semántico explica la intención por campo; el diff JSON muestra cambios del documento. Pide
+una modificación en lenguaje natural para producir otro lote coherente. Solo se revisa una propuesta
+pendiente cada vez.
+
+Si el servidor está activo, el borrador válido se envía de inmediato con la indicación **AI draft**.
+Sigue siendo una vista previa en memoria.
+
+## Aplicar o descartar
+
+Aplicar es la única operación que escribe la propuesta:
+
+```ansi
+form0(ai)> /apply [schema-path]
+```
+
+Antes de escribir, la CLI recalcula la revisión en disco. Si coincide, escribe de forma atómica y
+actualiza el motor y el navegador. Para un formulario nuevo, solicita una ruta y confirma antes de
+sobrescribir un archivo existente.
+
+Descartar abandona la propuesta y restaura la versión confirmada en el navegador:
+
+```ansi
+form0(ai)> /discard
+```
+
+Salir del modo AI tiene el mismo comportamiento de restauración.
+
+## Revertir
+
+La reversión no reescribe el archivo silenciosamente. Prepara como propuesta el último esquema
+guardado durante la sesión AI actual:
+
+```ansi
+form0(ai)> /undo
+form0(ai)> /diff
+form0(ai)> /apply
+```
+
+Inspecciona y aplica explícitamente esa propuesta. La reversión pertenece a la sesión, no es un
+historial persistente del esquema.
+
+## Cambios externos y borradores obsoletos
+
+Si el watcher detecta un cambio en disco después de crear la propuesta, el borrador queda obsoleto.
+La aplicación se bloquea en vez de fusionar cambios incompatibles. Recarga el esquema confirmado,
+pide al agente que adapte la solicitud a la nueva revisión y vuelve a comprobarla.

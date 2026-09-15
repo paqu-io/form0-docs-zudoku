@@ -208,6 +208,28 @@ for (const locale of SUPPORTED_LOCALES) {
     failures.push(`Missing dist/${calloutPath}`)
   }
 
+  const aiAuthoringPath = `${prefix}cli/ai-authoring.html`
+  try {
+    const aiAuthoringHtml = await readFile(path.join(outputRoot, aiAuthoringPath), "utf8")
+    if (
+      !aiAuthoringHtml.includes('role="note"') ||
+      !aiAuthoringHtml.includes("--callout-color:var(--callout-caution)") ||
+      !aiAuthoringHtml.includes("lucide-triangle-alert")
+    ) {
+      failures.push(`${aiAuthoringPath} does not contain the expected warning callout styling`)
+    }
+
+    const previewBadge = `"badge":{"label":"${commonMessages[locale].nav.preview}","color":"yellow"}`
+    const previewBadgeCount = aiAuthoringHtml.split(previewBadge).length - 1
+    if (previewBadgeCount < 2) {
+      failures.push(
+        `${aiAuthoringPath} does not contain localized Preview badges for AI authoring and AI metadata`,
+      )
+    }
+  } catch {
+    failures.push(`Missing dist/${aiAuthoringPath}`)
+  }
+
   if (locale !== DEFAULT_LOCALE) {
     const unprefixedQuickstart = `href="/${representativeDocument}"`
     const occurrences = html.split(unprefixedQuickstart).length - 1

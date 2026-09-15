@@ -10,6 +10,7 @@ const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url))
 const collectDocuments = (items) =>
   items.flatMap((item) => [
     ...(item.type === "doc" ? [item] : []),
+    ...(item.type === "category" && item.link?.type === "doc" ? [item.link] : []),
     ...(item.items ? collectDocuments(item.items) : []),
   ])
 

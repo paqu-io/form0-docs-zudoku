@@ -24,7 +24,15 @@
     "install-update": { "title": "Instalar y actualizar" },
     "initialize-project": { "title": "Inicializar un proyecto" },
     "interactive-shell": { "title": "Shell interactivo" },
-    "ai-authoring": { "title": "Creación con IA (vista previa)" },
+    "ai-authoring": {
+      "title": "Creación con IA",
+      "getting-started": { "title": "Primeros pasos" },
+      "providers-models": { "title": "Proveedores y modelos" },
+      "authoring-workflow": { "title": "Flujo de creación" },
+      "commands-status": { "title": "Comandos y estado" },
+      "privacy-security": { "title": "Privacidad y seguridad" },
+      "limitations-troubleshooting": { "title": "Limitaciones y solución de problemas" }
+    },
     "schemas": {
       "load-edit": { "title": "Cargar y editar esquemas" },
       "validate-preview": { "title": "Validar y previsualizar" },

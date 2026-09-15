@@ -1,0 +1,76 @@
+---
+title: Comandos y estado de creación con IA
+description: Referencia de comandos, estado, prompts ocupados, cola de seguimientos y cancelación.
+---
+
+<PageBadges />
+
+## Referencia de comandos
+
+El modo AI acepta solicitudes en lenguaje natural y comandos con barra:
+
+| Comando                     | Propósito                                                                     |
+| --------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `/help`                     | Muestra el resumen alineado de comandos AI.                                   |
+| `/status`                   | Muestra esquema, borrador, modelo, autenticación, política, actividad y cola. |
+| `/providers`                | Lista proveedores Pi, métodos de autenticación y cantidades de modelos.       |
+| `/models <provider>`        | Lista los identificadores de modelos de un proveedor.                         |
+| `/login <provider> <api_key | oauth>`                                                                       | Autentica con el flujo definido por Pi para el proveedor. |
+| `/model <provider>/<model>` | Selecciona el modelo; sin argumentos, muestra el actual.                      |
+| `/privacy`                  | Explica la política efectiva de nube y consentimiento del esquema.            |
+| `/preview`                  | Imprime el esquema completo del borrador actual.                              |
+| `/diff`                     | Muestra las mutaciones semánticas y el diff JSON de la propuesta.             |
+| `/apply [schema-path]`      | Comprueba y guarda atómicamente la propuesta pendiente.                       |
+| `/discard`                  | Abandona el borrador y restaura la vista previa confirmada.                   |
+| `/undo`                     | Prepara el último esquema guardado en esta sesión para aprobarlo.             |
+| `/new`                      | Inicia una conversación conservando el modelo seleccionado.                   |
+| `/clear`                    | Borra el historial de este formulario y conserva el modelo.                   |
+| `/cancel`                   | Cancela la solicitud activa y vacía la cola de seguimientos.                  |
+| `/exit`                     | Descarta el borrador y vuelve al estado anterior de la shell.                 |
+
+## Estado
+
+El estado es local: no contacta al proveedor ni consulta saldos de créditos:
+
+```ansi
+form0(ai)> /status
+
+AI authoring status
+  Schema:             /project/form.schema.json
+  Draft:              none
+  Provider:           openai-codex
+  Model:              gpt-5.6-luna
+  Cloud policy:       allowed
+  Conversation:       persisted
+  Activity:           idle
+  Queued follow-ups:  0
+  Authentication:
+    openai-codex  oauth (stored, subscription) [selected]
+```
+
+La autenticación identifica la fuente y el tipo, pero nunca imprime una credencial. Un proveedor
+puede estar autenticado sin estar seleccionado y la autenticación no implica créditos disponibles.
+
+## Prompts disponible y ocupado
+
+Una solicitud cambia el estado del prompt y muestra el modelo activo:
+
+```ansi
+[AI] Thinking with openai-codex/gpt-5.6-luna…
+form0(ai,busy)>
+```
+
+Con el servidor activo, el prompt es `form0(server,ai,busy)>`. Al terminar vuelve a
+`form0(ai)>` o `form0(server,ai)>`.
+
+Pulsar Enter en una línea vacía no hace nada y redibuja el prompt. El texto escrito mientras está
+ocupado se pone en cola FIFO y se confirma indicando su posición.
+
+## Comandos disponibles mientras está ocupado
+
+Durante una solicitud siguen disponibles `/help`, `/status`, `/privacy` y `/cancel`. Los demás
+comandos con barra se rechazan hasta que termine, para evitar cambios de modelo, conversación o
+borrador bajo una solicitud activa.
+
+La cancelación pide a Pi detener la solicitud y vacía todos los seguimientos. Si tiene éxito, vuelve
+al prompt disponible sin mostrar la cancelación del proveedor como un segundo error.

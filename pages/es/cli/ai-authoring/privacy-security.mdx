@@ -1,0 +1,81 @@
+---
+title: Privacidad y seguridad en la creación con IA
+description: Comprende la transmisión del esquema, política cloud, consentimiento, almacenamiento y documentación restringida.
+---
+
+<PageBadges />
+
+## Qué entra en el contexto del modelo
+
+Cada solicitud contiene el esquema completo actual y el catálogo de creación form0 instalado. Este
+contexto permite conservar la estructura, resolver referencias y validar cálculos, condiciones,
+secciones repetibles y eventos.
+
+El modelo no recibe:
+
+- valores de registros o envíos
+- archivos locales arbitrarios del proyecto
+- contenido de imágenes de apoyo
+- credenciales de proveedores
+- acceso a shell, sistema de archivos, MCP, extensiones o skills de terceros
+
+Los atributos del esquema, incluidas rutas y metadatos AI ya presentes, forman parte del esquema
+completo y, por tanto, se incluyen.
+
+## Política cloud desde los metadatos
+
+Los [Metadatos de AI](/es/core/ai-metadata) existentes tienen semántica aplicada en la CLI:
+
+```json
+{
+  "form": {
+    "ai": {
+      "allowCloud": false,
+      "requiresConsent": true
+    }
+  }
+}
+```
+
+Si existe `form.ai.allowCloud: false` o cualquier `field.ai.allowCloud: false`, todos los proveedores
+cloud quedan bloqueados para ese formulario. Los modelos locales siguen disponibles. No hay excepción.
+
+Si el formulario o un campo define `requiresConsent: true`, la CLI pregunta antes de la primera
+solicitud cloud y de nuevo al cambiar de proveedor cloud. En los demás casos, entrar en el modo AI y
+seleccionar o autenticar un proveedor cloud cuenta como consentimiento después del aviso de envío.
+
+Usa `/privacy` para consultar la política efectiva y las entradas de formulario o campo responsables.
+
+## Credenciales y conversaciones
+
+El estado AI reside bajo `~/.form0-cli/ai/`, fuera del proyecto. Los directorios solo son accesibles
+por el usuario actual y los archivos de credenciales y conversaciones usan permisos exclusivos. Las
+credenciales de entorno siguen disponibles y no se copian a los esquemas.
+
+El historial se limita a la ruta canónica del esquema y puede contener el esquema completo. Usa
+`/clear` para borrar el historial del formulario actual. Un formulario sin guardar usa una identidad
+temporal que se reasigna después de la primera aplicación correcta.
+
+:::warning
+
+El JavaScript generado para cálculos y eventos se valida estructuralmente, pero sigue siendo código
+creado. Revisa el diff y el comportamiento antes de aplicarlo, especialmente en formularios sensibles.
+
+:::
+
+## Acceso restringido a documentación
+
+El agente solo puede solicitar documentación complementaria de `https://docs.form0.dev`. La lectura
+empieza en `llms.txt` y sigue páginas Markdown HTTPS relevantes del mismo origen. Se rechazan URLs y
+redirecciones externas, contenido no compatible, respuestas demasiado grandes y timeouts; las
+respuestas correctas se guardan en caché durante la sesión.
+
+El texto recuperado es referencia no confiable. No puede cambiar instrucciones, permisos ni política
+cloud. Si contradice al catálogo de form0-core instalado, prevalece el catálogo. La creación continúa
+sin documentación remota cuando no hay conexión.
+
+## Responsabilidad del proveedor
+
+Las solicitudes cloud van directamente al proveedor seleccionado con la credencial o suscripción del
+usuario. form0 no actúa como proxy, no mide el uso, no informa de saldos ni controla la retención.
+Consulta las condiciones y controles actuales del proveedor antes de enviar un esquema.

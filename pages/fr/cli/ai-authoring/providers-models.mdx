@@ -1,0 +1,73 @@
+---
+title: Fournisseurs et modèles d'IA
+description: Authentifiez-vous auprès des fournisseurs Pi, choisissez un modèle et comprenez sa persistance.
+---
+
+<PageBadges />
+
+## Catalogue des fournisseurs
+
+form0 utilise le catalogue de fournisseurs et de modèles de Pi sans les renommer ni remplacer leurs
+capacités d'authentification. Le catalogue peut évoluer avec la dépendance Pi verrouillée ; consultez
+la version installée plutôt qu'une liste statique.
+
+```ansi
+form0(ai)> /providers
+form0(ai)> /models <provider>
+```
+
+La base d'aperçu testée manuellement couvre :
+
+- OpenAI avec une clé API
+- OpenAI Codex avec l'OAuth d'abonnement
+- Anthropic avec une clé API ou l'OAuth d'abonnement Claude
+- Google Gemini avec une clé API
+- OpenRouter avec une clé API ou OAuth
+- Les modèles Ollama locaux
+
+D'autres fournisseurs exposés par Pi peuvent fonctionner, sans appartenir à la base vérifiée.
+
+## Authentification
+
+Utilisez le type d'authentification indiqué par le catalogue :
+
+```ansi
+form0(ai)> /login <provider> <api_key|oauth>
+```
+
+OAuth peut proposer un flux navigateur ou code d'appareil selon le fournisseur. Les clés API passent
+par une invite secrète. Les identifiants d'environnement reconnus par Pi restent disponibles.
+
+L'accès API OpenAI et un abonnement ChatGPT/Codex sont deux parcours distincts. Utilisez le
+fournisseur OpenAI pour une clé API et OpenAI Codex pour l'OAuth d'abonnement.
+
+L'authentification ne choisit pas automatiquement un modèle. Listez-en puis sélectionnez-en un :
+
+```ansi
+form0(ai)> /models openai-codex
+form0(ai)> /model openai-codex/gpt-5.6-luna
+```
+
+## Sélection et persistance du modèle
+
+Le modèle sélectionné est inscrit dans la conversation Pi du chemin canonique du schéma. Quitter
+puis revenir au même schéma restaure ce choix. Il ne figure ni dans le schéma ni dans le projet.
+
+Utilisez `/model` sans argument ou `/status` pour voir la sélection. `/new` et `/clear` démarrent une
+nouvelle conversation tout en conservant le modèle actif. Si celui-ci disparaît ou perd son
+authentification, la CLI affiche l'avertissement de repli de Pi.
+
+## Stockage local
+
+Identifiants, catalogue et conversations résident sous `~/.form0-cli/ai/`. Les dossiers sont réservés
+à l'utilisateur actuel et les fichiers d'identifiants et de sessions ont des droits exclusifs. Les
+conversations enregistrées peuvent contenir le schéma complet.
+
+Rien n'est écrit dans un schéma form0 avant l'application d'une proposition approuvée. Identifiants
+et choix de modèle ne sont jamais ajoutés à la configuration du projet.
+
+## Modèles locaux et cloud
+
+La découverte Ollama interroge le service local et expose ses modèles via Pi. Les modèles locaux
+restent disponibles si la politique bloque le cloud. La sélection cloud est refusée si le formulaire
+ou un champ définit `allowCloud: false` ; consultez [Confidentialité et sécurité](/fr/cli/ai-authoring/privacy-security).

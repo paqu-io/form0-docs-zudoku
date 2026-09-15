@@ -566,11 +566,173 @@
       }
     ]
   },
+  "/cli/ai-authoring/authoring-workflow": {
+    "pathname": "/cli/ai-authoring/authoring-workflow",
+    "translationKey": "/cli/ai-authoring/authoring-workflow",
+    "locale": "en",
+    "title": "AI authoring workflow",
+    "description": "Understand semantic mutations, full-schema validation, draft review, approval, undo, and conflicts.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/authoring-workflow"
+      }
+    ]
+  },
+  "/cli/ai-authoring/commands-status": {
+    "pathname": "/cli/ai-authoring/commands-status",
+    "translationKey": "/cli/ai-authoring/commands-status",
+    "locale": "en",
+    "title": "AI authoring commands and status",
+    "description": "Reference AI-mode commands, status output, busy prompts, queued follow-ups, and cancellation.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/commands-status"
+      }
+    ]
+  },
+  "/cli/ai-authoring/getting-started": {
+    "pathname": "/cli/ai-authoring/getting-started",
+    "translationKey": "/cli/ai-authoring/getting-started",
+    "locale": "en",
+    "title": "Getting started with AI authoring",
+    "description": "Configure a provider, select a model, and complete a first reviewed form0 AI edit.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/getting-started"
+      }
+    ]
+  },
+  "/cli/ai-authoring/limitations-troubleshooting": {
+    "pathname": "/cli/ai-authoring/limitations-troubleshooting",
+    "translationKey": "/cli/ai-authoring/limitations-troubleshooting",
+    "locale": "en",
+    "title": "AI authoring limitations and troubleshooting",
+    "description": "Understand preview boundaries and resolve authentication, model, context, provider, draft, and documentation failures.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/limitations-troubleshooting"
+      }
+    ]
+  },
+  "/cli/ai-authoring/privacy-security": {
+    "pathname": "/cli/ai-authoring/privacy-security",
+    "translationKey": "/cli/ai-authoring/privacy-security",
+    "locale": "en",
+    "title": "AI authoring privacy and security",
+    "description": "Understand full-schema transmission, cloud policy, consent, local storage, and restricted documentation access.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/privacy-security"
+      }
+    ]
+  },
+  "/cli/ai-authoring/providers-models": {
+    "pathname": "/cli/ai-authoring/providers-models",
+    "translationKey": "/cli/ai-authoring/providers-models",
+    "locale": "en",
+    "title": "AI providers and models",
+    "description": "Authenticate with Pi providers, select a model, and understand per-schema persistence.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/providers-models"
+      }
+    ]
+  },
   "/cli/ai-authoring": {
     "pathname": "/cli/ai-authoring",
     "translationKey": "/cli/ai-authoring",
     "locale": "en",
-    "title": "AI authoring (preview)",
+    "title": "AI authoring",
     "description": "Generate and edit form0 schemas through reviewed, validated AI mutation batches.",
     "indexable": true,
     "status": "published",
@@ -3158,12 +3320,174 @@
       }
     ]
   },
+  "/es/cli/ai-authoring/authoring-workflow": {
+    "pathname": "/es/cli/ai-authoring/authoring-workflow",
+    "translationKey": "/cli/ai-authoring/authoring-workflow",
+    "locale": "es",
+    "title": "Flujo de creación con IA",
+    "description": "Comprende las mutaciones, validación completa, revisión, aprobación, reversión y conflictos.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/authoring-workflow"
+      }
+    ]
+  },
+  "/es/cli/ai-authoring/commands-status": {
+    "pathname": "/es/cli/ai-authoring/commands-status",
+    "translationKey": "/cli/ai-authoring/commands-status",
+    "locale": "es",
+    "title": "Comandos y estado de creación con IA",
+    "description": "Referencia de comandos, estado, prompts ocupados, cola de seguimientos y cancelación.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/commands-status"
+      }
+    ]
+  },
+  "/es/cli/ai-authoring/getting-started": {
+    "pathname": "/es/cli/ai-authoring/getting-started",
+    "translationKey": "/cli/ai-authoring/getting-started",
+    "locale": "es",
+    "title": "Primeros pasos con la creación con IA",
+    "description": "Configura un proveedor, selecciona un modelo y completa una primera edición AI revisada.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/getting-started"
+      }
+    ]
+  },
+  "/es/cli/ai-authoring/limitations-troubleshooting": {
+    "pathname": "/es/cli/ai-authoring/limitations-troubleshooting",
+    "translationKey": "/cli/ai-authoring/limitations-troubleshooting",
+    "locale": "es",
+    "title": "Limitaciones y solución de problemas de creación con IA",
+    "description": "Comprende los límites y resuelve fallos de autenticación, modelo, contexto, proveedor, borrador y documentación.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/limitations-troubleshooting"
+      }
+    ]
+  },
+  "/es/cli/ai-authoring/privacy-security": {
+    "pathname": "/es/cli/ai-authoring/privacy-security",
+    "translationKey": "/cli/ai-authoring/privacy-security",
+    "locale": "es",
+    "title": "Privacidad y seguridad en la creación con IA",
+    "description": "Comprende la transmisión del esquema, política cloud, consentimiento, almacenamiento y documentación restringida.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/privacy-security"
+      }
+    ]
+  },
+  "/es/cli/ai-authoring/providers-models": {
+    "pathname": "/es/cli/ai-authoring/providers-models",
+    "translationKey": "/cli/ai-authoring/providers-models",
+    "locale": "es",
+    "title": "Proveedores y modelos de IA",
+    "description": "Autentícate con proveedores Pi, selecciona un modelo y conoce la persistencia por esquema.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/providers-models"
+      }
+    ]
+  },
   "/es/cli/ai-authoring": {
     "pathname": "/es/cli/ai-authoring",
     "translationKey": "/cli/ai-authoring",
     "locale": "es",
-    "title": "Creación con IA (vista previa)",
-    "description": "Genera y edita esquemas form0 mediante lotes revisados y validados.",
+    "title": "Creación con IA",
+    "description": "Genera y edita esquemas form0 mediante lotes de mutaciones revisados y validados.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6246,12 +6570,174 @@
       }
     ]
   },
+  "/fr/cli/ai-authoring/authoring-workflow": {
+    "pathname": "/fr/cli/ai-authoring/authoring-workflow",
+    "translationKey": "/cli/ai-authoring/authoring-workflow",
+    "locale": "fr",
+    "title": "Flux de création avec IA",
+    "description": "Comprenez les mutations, la validation complète, la vérification, l'approbation et les conflits.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/authoring-workflow"
+      }
+    ]
+  },
+  "/fr/cli/ai-authoring/commands-status": {
+    "pathname": "/fr/cli/ai-authoring/commands-status",
+    "translationKey": "/cli/ai-authoring/commands-status",
+    "locale": "fr",
+    "title": "Commandes et état de la création avec IA",
+    "description": "Référence des commandes, de l'état, des invites occupées, de la file et de l'annulation.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/commands-status"
+      }
+    ]
+  },
+  "/fr/cli/ai-authoring/getting-started": {
+    "pathname": "/fr/cli/ai-authoring/getting-started",
+    "translationKey": "/cli/ai-authoring/getting-started",
+    "locale": "fr",
+    "title": "Prise en main de la création avec IA",
+    "description": "Configurez un fournisseur, choisissez un modèle et réalisez une première modification AI vérifiée.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/getting-started"
+      }
+    ]
+  },
+  "/fr/cli/ai-authoring/limitations-troubleshooting": {
+    "pathname": "/fr/cli/ai-authoring/limitations-troubleshooting",
+    "translationKey": "/cli/ai-authoring/limitations-troubleshooting",
+    "locale": "fr",
+    "title": "Limites et résolution des problèmes de création avec IA",
+    "description": "Comprenez les limites et corrigez les erreurs d'authentification, modèle, contexte, fournisseur, brouillon et documentation.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/limitations-troubleshooting"
+      }
+    ]
+  },
+  "/fr/cli/ai-authoring/privacy-security": {
+    "pathname": "/fr/cli/ai-authoring/privacy-security",
+    "translationKey": "/cli/ai-authoring/privacy-security",
+    "locale": "fr",
+    "title": "Confidentialité et sécurité de la création avec IA",
+    "description": "Comprenez l'envoi du schéma, la politique cloud, le consentement, le stockage et la documentation restreinte.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/privacy-security"
+      }
+    ]
+  },
+  "/fr/cli/ai-authoring/providers-models": {
+    "pathname": "/fr/cli/ai-authoring/providers-models",
+    "translationKey": "/cli/ai-authoring/providers-models",
+    "locale": "fr",
+    "title": "Fournisseurs et modèles d'IA",
+    "description": "Authentifiez-vous auprès des fournisseurs Pi, choisissez un modèle et comprenez sa persistance.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/providers-models"
+      }
+    ]
+  },
   "/fr/cli/ai-authoring": {
     "pathname": "/fr/cli/ai-authoring",
     "translationKey": "/cli/ai-authoring",
     "locale": "fr",
-    "title": "Création avec IA (aperçu)",
-    "description": "Générez et modifiez des schémas form0 avec des lots validés et approuvés.",
+    "title": "Création avec IA",
+    "description": "Générez et modifiez des schémas form0 avec des lots de mutations validés et approuvés.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9398,12 +9884,174 @@
       }
     ]
   },
+  "/it/cli/ai-authoring/authoring-workflow": {
+    "pathname": "/it/cli/ai-authoring/authoring-workflow",
+    "translationKey": "/cli/ai-authoring/authoring-workflow",
+    "locale": "it",
+    "title": "Flusso di creazione con IA",
+    "description": "Comprendi mutazioni, convalida completa, revisione, approvazione, annullamento e conflitti.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/authoring-workflow"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/authoring-workflow"
+      }
+    ]
+  },
+  "/it/cli/ai-authoring/commands-status": {
+    "pathname": "/it/cli/ai-authoring/commands-status",
+    "translationKey": "/cli/ai-authoring/commands-status",
+    "locale": "it",
+    "title": "Comandi e stato della creazione con IA",
+    "description": "Riferimento per comandi, stato, prompt occupati, coda dei follow-up e annullamento.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/commands-status"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/commands-status"
+      }
+    ]
+  },
+  "/it/cli/ai-authoring/getting-started": {
+    "pathname": "/it/cli/ai-authoring/getting-started",
+    "translationKey": "/cli/ai-authoring/getting-started",
+    "locale": "it",
+    "title": "Per iniziare con la creazione con IA",
+    "description": "Configura un provider, seleziona un modello e completa una prima modifica AI verificata.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/getting-started"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/getting-started"
+      }
+    ]
+  },
+  "/it/cli/ai-authoring/limitations-troubleshooting": {
+    "pathname": "/it/cli/ai-authoring/limitations-troubleshooting",
+    "translationKey": "/cli/ai-authoring/limitations-troubleshooting",
+    "locale": "it",
+    "title": "Limiti e risoluzione dei problemi della creazione con IA",
+    "description": "Comprendi i limiti e risolvi errori di autenticazione, modello, contesto, provider, bozza e documentazione.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/limitations-troubleshooting"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/limitations-troubleshooting"
+      }
+    ]
+  },
+  "/it/cli/ai-authoring/privacy-security": {
+    "pathname": "/it/cli/ai-authoring/privacy-security",
+    "translationKey": "/cli/ai-authoring/privacy-security",
+    "locale": "it",
+    "title": "Privacy e sicurezza nella creazione con IA",
+    "description": "Comprendi invio dello schema, politica cloud, consenso, archiviazione e documentazione limitata.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/privacy-security"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/privacy-security"
+      }
+    ]
+  },
+  "/it/cli/ai-authoring/providers-models": {
+    "pathname": "/it/cli/ai-authoring/providers-models",
+    "translationKey": "/cli/ai-authoring/providers-models",
+    "locale": "it",
+    "title": "Provider e modelli AI",
+    "description": "Autenticati con i provider Pi, seleziona un modello e comprendi la persistenza per schema.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/providers-models"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/providers-models"
+      }
+    ]
+  },
   "/it/cli/ai-authoring": {
     "pathname": "/it/cli/ai-authoring",
     "translationKey": "/cli/ai-authoring",
     "locale": "it",
-    "title": "Creazione con IA (anteprima)",
-    "description": "Genera e modifica schemi form0 con batch convalidati e approvati.",
+    "title": "Creazione con IA",
+    "description": "Genera e modifica schemi form0 con batch di mutazioni convalidati e approvati.",
     "indexable": true,
     "status": "published",
     "alternates": [

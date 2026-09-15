@@ -1,0 +1,95 @@
+---
+title: Flux de création avec IA
+description: Comprenez les mutations, la validation complète, la vérification, l'approbation et les conflits.
+---
+
+<PageBadges />
+
+## Contexte complet, actions limitées
+
+Chaque requête inclut le schéma courant complet et un catalogue de création versionné provenant du
+form0-core installé. Le catalogue décrit champs, attributs, opérateurs, builtins, événements,
+références, calculs et métadonnées AI existantes.
+
+L'agent ne peut ni remplacer le document racine ni écrire de fichiers. Il peut proposer ces opérations :
+
+- `updateForm`
+- `addField`, `updateField`, `moveField` et `removeField`
+- `setTitleField` et `setStatusField`
+- `setCalculation`
+- `setFormEventCode`
+
+Les champs sont ciblés par des clés stables. Les renommages sûrs mettent à jour les références ; les
+suppressions dangereuses et les cibles introuvables sont refusées.
+
+## Validation avant l'aperçu
+
+form0-core applique le lot proposé à une copie en mémoire. Le schéma d'origine n'est pas modifié. Il
+valide ensuite le résultat complet, notamment :
+
+- règles du schéma et des attributs
+- conditions et références aux champs
+- expressions calculées, dépendances et cycles
+- portée des sections répétables
+- types d'événements, références et syntaxe JavaScript
+
+Les lots invalides renvoient des diagnostics à l'agent et ne remplacent jamais le brouillon. Le core
+installé prévaut si la documentation distante diffère. Consultez
+[calculs et expressions](/fr/core/builtins/calculations-expressions-overview) et
+[événements de formulaire](/fr/core/builtins/events-overview) pour les fonctions du schéma.
+
+## Vérifier et réviser
+
+Après une proposition valide, inspectez le brouillon et les deux représentations du diff :
+
+```ansi
+form0(ai)> /preview
+form0(ai)> /diff
+```
+
+Le diff sémantique explique l'intention par champ ; le diff JSON montre les changements du document.
+Demandez une révision en langage naturel pour produire un autre lot cohérent. Une seule proposition
+est examinée à la fois.
+
+Si le serveur d'aperçu fonctionne, le brouillon valide est immédiatement envoyé avec l'indication
+**AI draft**. Il reste un aperçu en mémoire.
+
+## Appliquer ou écarter
+
+L'application est la seule opération qui écrit la proposition :
+
+```ansi
+form0(ai)> /apply [schema-path]
+```
+
+Avant l'écriture, la CLI recalcule la révision sur disque. Si elle correspond, elle écrit
+atomiquement puis actualise le moteur et le navigateur. Pour un nouveau formulaire, elle demande un
+chemin et confirme avant d'écraser un fichier existant.
+
+Écarter abandonne la proposition et restaure la version validée dans le navigateur :
+
+```ansi
+form0(ai)> /discard
+```
+
+Quitter le mode AI produit la même restauration de l'aperçu.
+
+## Annuler
+
+L'annulation ne réécrit pas silencieusement le fichier. Elle prépare comme proposition le dernier
+schéma enregistré pendant la session AI actuelle :
+
+```ansi
+form0(ai)> /undo
+form0(ai)> /diff
+form0(ai)> /apply
+```
+
+Inspectez puis appliquez explicitement cette proposition. L'annulation appartient à la session et
+ne constitue pas un historique persistant du schéma.
+
+## Modifications externes et brouillons périmés
+
+Si le watcher détecte un changement sur disque après la création de la proposition, le brouillon
+devient périmé. L'application est bloquée plutôt que de fusionner des changements incompatibles.
+Rechargez le schéma validé, demandez une révision adaptée et vérifiez-la à nouveau.

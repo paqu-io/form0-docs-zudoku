@@ -1,14 +1,22 @@
 ---
-title: Création avec IA (aperçu)
-description: Générez et modifiez des schémas form0 avec des lots validés et approuvés.
+title: Création avec IA
+description: Générez et modifiez des schémas form0 avec des lots de mutations validés et approuvés.
 ---
 
 <PageBadges />
 
-> [!WARNING]
-> Cette fonction est en aperçu. Vérifiez toujours les calculs et le JavaScript des événements.
+:::warning
 
-Lancez le mode directement ou depuis un shell actif :
+La création avec IA est en aperçu. Les commandes, fournisseurs, prompts et le protocole de mutation
+peuvent changer avant une version stable. Vérifiez les calculs et le JavaScript des événements.
+
+:::
+
+La création avec IA ajoute à form0-cli un mode conversationnel pour modifier les schémas. Elle
+travaille avec des schémas form0 ordinaires : le fichier final ne contient ni conversation, ni
+configuration de fournisseur, ni mutation.
+
+Lancez-le directement avec un schéma ou entrez dans le mode AI depuis le shell interactif :
 
 ```bash
 form0 ai [schema]
@@ -20,50 +28,27 @@ form0(server)> ai
 form0(server,ai)> Add a calculated total from quantity and unit price
 ```
 
-L'IA ne lance pas le serveur. S'il est actif, le brouillon apparaît comme **AI draft** sans être
-enregistré avant `/apply` ; `/discard` ou `/exit` restaure la version validée.
+Le mode AI ne lance pas le serveur d'aperçu. S'il est déjà actif, les brouillons validés sont envoyés
+au navigateur avec l'indication **AI draft**, sans écriture sur disque.
 
-## Vérifier et enregistrer
+## Fonctionnement de la création
 
-L'agent reçoit le formulaire complet et le catalogue du core installé. Il peut seulement les
-inspecter, proposer des mutations sémantiques et lire une documentation form0 restreinte. Le core
-valide une copie complète : références, conditions, dépendances, cycles, portées répétables et événements.
+1. Le modèle sélectionné reçoit le formulaire complet et le catalogue du core installé.
+2. L'agent propose un lot cohérent de mutations sémantiques au lieu de remplacer le fichier.
+3. form0-core applique le lot à une copie et valide le résultat complet.
+4. Un brouillon valide peut être inspecté, révisé, écarté ou appliqué explicitement.
+5. L'application revérifie la révision sur disque et écrit le schéma atomiquement.
 
-Utilisez `/preview` et `/diff`, demandez des révisions, puis choisissez `/apply` ou `/discard`.
-L'application revérifie la révision sur disque et écrit atomiquement. Une modification externe bloque
-un brouillon périmé. `/undo` prépare la version précédente et exige un nouvel `/apply`. Un nouveau
-formulaire part du schéma vide canonique et suit la confirmation habituelle. Le fichier final reste un
-schéma form0 normal.
+Une proposition invalide ne devient jamais un brouillon. Quitter ou écarter restaure le schéma
+validé dans le navigateur. Le résultat reste un schéma form0 ordinaire sans métadonnées AI ajoutées.
 
-## Fournisseurs, sessions et confidentialité
+## Explorer cette section
 
-Pi fournit le catalogue. La base manuelle couvre OpenAI/Codex, Anthropic/Claude, Gemini, OpenRouter et
-Ollama local. Utilisez `/providers`, `/login <provider> <api_key|oauth>` et
-`/model <provider>/<model>`. Les variables d'environnement sont également prises en charge.
+- [Prise en main](/fr/cli/ai-authoring/getting-started) couvre la configuration et la première session.
+- [Fournisseurs et modèles](/fr/cli/ai-authoring/providers-models) explique l'authentification Pi et la persistance du modèle.
+- [Flux de création](/fr/cli/ai-authoring/authoring-workflow) couvre les brouillons, la validation, l'approbation et les conflits.
+- [Commandes et état](/fr/cli/ai-authoring/commands-status) documente les commandes et l'état occupé.
+- [Confidentialité et sécurité](/fr/cli/ai-authoring/privacy-security) définit les limites des données et la politique cloud.
+- [Limites et résolution des problèmes](/fr/cli/ai-authoring/limitations-troubleshooting) décrit les contraintes et erreurs courantes.
 
-`/status` résume localement le schéma, le brouillon, le fournisseur et le modèle sélectionnés, les
-sources d'authentification configurées, la politique cloud et la persistance de la conversation. Il
-ne contacte aucun fournisseur et n'affiche aucun solde de crédits. Utilisez `/model` sans argument
-pour afficher le modèle actuel.
-
-Identifiants et conversations résident dans `~/.form0-cli/ai/` avec des droits réservés à
-l'utilisateur et peuvent contenir le schéma complet. `/new` démarre une conversation ; `/clear`
-supprime l'historique.
-
-La CLI indique que le schéma complet est transmis. `form.ai.allowCloud: false` ou
-`field.ai.allowCloud: false` bloque le cloud sans dérogation. Chaque `requiresConsent: true` demande
-un accord avant le premier appel et après un changement de fournisseur. Sinon, sélectionner ou
-authentifier un fournisseur vaut consentement. `/privacy` montre la politique et ses causes. Aucun
-enregistrement, fichier, image ou identifiant n'est transmis ; un formulaire trop grand est refusé.
-
-## Documentation et limites
-
-Au besoin, l'agent part de `https://docs.form0.dev/llms.txt` et ne lit que du Markdown HTTPS de même
-origine avec contrôles et cache. Ce texte est non fiable ; le core installé prévaut.
-
-Pas d'accès général aux fichiers, au shell, au web, à MCP, aux extensions ou skills, ni application
-automatique, helpers personnalisés, données de formulaires, multimodal, RAG, télémétrie, facturation,
-passerelle form0 ou intégration avec reform ou les interfaces form0.
-
-Commandes : `/help`, `/status`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
-`/discard`, `/undo`, `/new`, `/clear` et `/exit`.
+Pour guider l'agent et contrôler le cloud dans le schéma, consultez [Métadonnées AI](/fr/core/ai-metadata).

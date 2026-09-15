@@ -1,0 +1,84 @@
+---
+title: Limites et résolution des problèmes de création avec IA
+description: Comprenez les limites et corrigez les erreurs d'authentification, modèle, contexte, fournisseur, brouillon et documentation.
+---
+
+<PageBadges />
+
+## Limites actuelles de l'aperçu
+
+La création avec IA est volontairement limitée à la création et la modification interactives de
+schémas form0. Cet aperçu n'inclut pas :
+
+- génération sans surveillance ou headless et application automatique
+- complétion, extraction, inférence ou analyse des soumissions
+- accès arbitraire aux fichiers, au shell, au web, à MCP, aux extensions ou skills tiers
+- génération depuis des images, PDF ou autres médias
+- génération générale de helpers hors calculs et code d'événements
+- embeddings, bases vectorielles ou service de recherche hébergé
+- troncature, compactage ou découpage automatique des grands formulaires
+- passerelle de fournisseurs, facturation, télémétrie ou crédits hébergés par form0
+- interfaces AI dans les bindings, playgrounds, landing pages ou reform
+
+Commandes, fournisseurs, prompts et mutations n'ont pas encore de garanties de compatibilité stable.
+
+## Aucun modèle n'est sélectionné
+
+Authentification et sélection sont distinctes. Consultez les fournisseurs, authentifiez-vous si
+nécessaire et choisissez un identifiant exact :
+
+```ansi
+form0(ai)> /providers
+form0(ai)> /login <provider> <api_key|oauth>
+form0(ai)> /models <provider>
+form0(ai)> /model <provider>/<model>
+```
+
+Utilisez `/status` ou `/model` sans argument pour vérifier la sélection courante.
+
+## Un modèle enregistré change au redémarrage
+
+Le modèle est restauré depuis la conversation Pi du schéma. S'il disparaît ou si son identifiant
+n'est plus disponible, la CLI affiche l'avertissement de repli de Pi. Réauthentifiez le fournisseur
+initial ou sélectionnez un autre modèle. Le schéma ne change pas.
+
+## L'authentification réussit mais les requêtes échouent
+
+Une authentification réussie ne garantit ni crédits, ni abonnement actif, ni accès au modèle, ni
+endpoint joignable. La CLI affiche erreurs et limites du fournisseur. Corrigez le problème puis
+réessayez ; `/status` ne contacte pas le fournisseur et ne consulte pas les crédits.
+
+Dans un environnement headless, choisissez le code d'appareil si le fournisseur OAuth le propose.
+Un flux navigateur revient automatiquement à l'invite AI après authentification.
+
+## Le formulaire complet ne tient pas
+
+La CLI estime si le schéma complet, le catalogue installé, la requête et la réserve de réponse
+tiennent dans le contexte du modèle. Sinon, elle refuse avant tout envoi. L'aperçu ne tronque ni ne
+découpe le formulaire. Choisissez un contexte plus grand ou réduisez le schéma hors du mode AI.
+
+## L'application signale une révision périmée
+
+Le schéma a changé sur disque après la proposition. L'application est bloquée. Écartez le brouillon,
+rechargez le schéma, répétez ou révisez la demande et vérifiez le nouveau diff. La CLI ne fusionne pas
+automatiquement des modifications externes dans une proposition AI.
+
+## La documentation distante est indisponible
+
+La documentation form0 distante est complémentaire. Délais, redirections, réponses non prises en
+charge, travail hors ligne ou hôte indisponible n'élargissent pas l'accès web et n'affaiblissent pas
+la validation. L'agent continue avec le catalogue du core installé.
+
+## Une requête semble bloquée
+
+Utilisez `/status` pour voir l'activité et la file. Utilisez `/cancel` pour arrêter la requête et vider
+les messages. Si l'annulation échoue, la CLI affiche l'erreur et garde la session disponible.
+
+## Une proposition reste invalide
+
+Lisez les diagnostics et précisez l'intention : identifiez les champs par libellé ou clé, indiquez les
+types, clarifiez la portée répétable et décrivez le calcul ou l'événement. La validation installée
+reste l'autorité ; ne la contournez pas en demandant un fichier brut.
+
+Consultez [Commandes et état](/fr/cli/ai-authoring/commands-status) et
+[Flux de création](/fr/cli/ai-authoring/authoring-workflow) pour les commandes de récupération.

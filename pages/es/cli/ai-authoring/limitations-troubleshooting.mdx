@@ -1,0 +1,84 @@
+---
+title: Limitaciones y solución de problemas de creación con IA
+description: Comprende los límites y resuelve fallos de autenticación, modelo, contexto, proveedor, borrador y documentación.
+---
+
+<PageBadges />
+
+## Límites actuales de la vista previa
+
+La creación con IA se limita deliberadamente a crear y editar esquemas form0 de forma interactiva.
+Esta vista previa no incluye:
+
+- generación desatendida o headless y aplicación automática
+- finalización, extracción, inferencia o análisis de envíos
+- acceso arbitrario a archivos, shell, web, MCP, extensiones o skills de terceros
+- generación de formularios desde imágenes, PDF u otros medios
+- generación general de helpers fuera de cálculos y código de eventos
+- embeddings, bases vectoriales o un servicio de recuperación alojado
+- truncamiento, compactación o división automática de formularios grandes
+- gateway de proveedores, facturación, telemetría o saldos alojados por form0
+- interfaces AI en bindings, playgrounds, landing pages o reform
+
+Los comandos, proveedores, prompts y mutaciones aún no tienen garantías estables de compatibilidad.
+
+## No hay un modelo seleccionado
+
+La autenticación y la selección son pasos distintos. Consulta proveedores, autentícate si hace falta
+y selecciona un identificador exacto:
+
+```ansi
+form0(ai)> /providers
+form0(ai)> /login <provider> <api_key|oauth>
+form0(ai)> /models <provider>
+form0(ai)> /model <provider>/<model>
+```
+
+Usa `/status` o `/model` sin argumentos para comprobar la selección actual.
+
+## Un modelo guardado cambia al reiniciar
+
+El modelo se restaura desde la conversación Pi del esquema. Si deja de existir o su credencial no
+está disponible, la CLI muestra el aviso de sustitución de Pi. Vuelve a autenticar el proveedor
+original o selecciona otro modelo. El esquema no cambia.
+
+## La autenticación funciona pero las solicitudes fallan
+
+Autenticarse no demuestra que queden créditos, exista una suscripción activa, haya acceso al modelo o
+el endpoint responda. La CLI muestra los errores y límites del proveedor. Resuelve el problema y
+reintenta; `/status` no contacta al proveedor ni consulta saldos.
+
+En un entorno headless, elige un método de código de dispositivo si el proveedor OAuth lo ofrece. Un
+flujo de navegador vuelve automáticamente al prompt AI tras autenticarse.
+
+## El formulario completo no cabe
+
+La CLI estima si el esquema completo, el catálogo instalado, la solicitud y la reserva de respuesta
+caben en el contexto del modelo. Si no, rechaza antes de enviar datos. La vista previa no trunca ni
+divide el formulario. Elige un modelo con más contexto o reduce el esquema fuera del modo AI.
+
+## La aplicación indica una revisión obsoleta
+
+El esquema cambió en disco después de crear la propuesta. La aplicación se bloquea. Descarta el
+borrador, recarga el esquema, repite o modifica la solicitud y revisa el nuevo diff. La CLI no fusiona
+automáticamente ediciones externas con una propuesta AI.
+
+## La documentación remota no está disponible
+
+La documentación form0 remota es complementaria. Timeouts, redirecciones, respuestas no compatibles,
+trabajo offline o un host no disponible no amplían el acceso web ni debilitan la validación. El agente
+continúa con el catálogo del core instalado.
+
+## Una solicitud parece bloqueada
+
+Usa `/status` para consultar la actividad y la cola. Usa `/cancel` para detener la solicitud y vaciar
+los mensajes. Si la propia cancelación falla, la CLI muestra el error y mantiene la sesión disponible.
+
+## Una propuesta es inválida repetidamente
+
+Lee los diagnósticos y concreta la intención: identifica campos por etiqueta o clave, indica tipos,
+aclara el ámbito repetible y describe el cálculo o evento. La validación instalada sigue siendo la
+autoridad; no intentes evitarla solicitando un archivo sin procesar.
+
+Consulta [Comandos y estado](/es/cli/ai-authoring/commands-status) y
+[Flujo de creación](/es/cli/ai-authoring/authoring-workflow) para los comandos de recuperación.

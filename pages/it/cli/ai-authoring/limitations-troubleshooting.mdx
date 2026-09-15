@@ -1,0 +1,84 @@
+---
+title: Limiti e risoluzione dei problemi della creazione con IA
+description: Comprendi i limiti e risolvi errori di autenticazione, modello, contesto, provider, bozza e documentazione.
+---
+
+<PageBadges />
+
+## Limiti attuali dell'anteprima
+
+La creazione con IA è volutamente limitata alla creazione e modifica interattiva di schemi form0.
+Questa anteprima non include:
+
+- generazione automatica o headless e applicazione automatica
+- completamento, estrazione, inferenza o analisi degli invii
+- accesso arbitrario a file, shell, web, MCP, estensioni o skill di terze parti
+- generazione da immagini, PDF o altri contenuti multimediali
+- generazione generale di helper fuori da calcoli e codice degli eventi
+- embedding, database vettoriali o servizio di recupero ospitato
+- troncamento, compattazione o suddivisione automatica dei moduli grandi
+- gateway di provider, fatturazione, telemetria o crediti ospitati da form0
+- interfacce AI in binding, playground, landing page o reform
+
+Comandi, provider, prompt e mutazioni non hanno ancora garanzie di compatibilità stabile.
+
+## Nessun modello selezionato
+
+Autenticazione e selezione sono separate. Controlla i provider, autenticati se necessario e seleziona
+un identificatore esatto:
+
+```ansi
+form0(ai)> /providers
+form0(ai)> /login <provider> <api_key|oauth>
+form0(ai)> /models <provider>
+form0(ai)> /model <provider>/<model>
+```
+
+Usa `/status` o `/model` senza argomenti per verificare la selezione corrente.
+
+## Un modello salvato cambia dopo il riavvio
+
+Il modello viene ripristinato dalla conversazione Pi dello schema. Se non esiste più o la credenziale
+non è disponibile, la CLI mostra l'avviso di fallback di Pi. Autentica nuovamente il provider
+originale o seleziona un altro modello. Lo schema non cambia.
+
+## L'autenticazione riesce ma le richieste falliscono
+
+L'autenticazione non garantisce crediti, abbonamento attivo, accesso al modello o endpoint
+raggiungibile. La CLI mostra errori e limiti del provider. Risolvi il problema e riprova; `/status` non
+contatta il provider e non recupera i saldi.
+
+In un ambiente headless, scegli il codice dispositivo se il provider OAuth lo offre. Un flusso
+browser torna automaticamente al prompt AI dopo l'autenticazione.
+
+## Il modulo completo non entra nel contesto
+
+La CLI stima se schema completo, catalogo installato, richiesta e riserva di risposta entrano nel
+contesto del modello. In caso contrario rifiuta prima di inviare dati. L'anteprima non tronca né divide
+il modulo. Scegli un contesto più grande o riduci lo schema fuori dalla modalità AI.
+
+## L'applicazione segnala una revisione obsoleta
+
+Lo schema è cambiato su disco dopo la proposta. L'applicazione viene bloccata. Scarta la bozza,
+ricarica lo schema, ripeti o modifica la richiesta e controlla il nuovo diff. La CLI non unisce
+automaticamente modifiche esterne a una proposta AI.
+
+## La documentazione remota non è disponibile
+
+La documentazione form0 remota è supplementare. Timeout, reindirizzamenti, risposte non supportate,
+lavoro offline o host non disponibile non ampliano l'accesso web né indeboliscono la convalida.
+L'agente continua con il catalogo del core installato.
+
+## Una richiesta sembra bloccata
+
+Usa `/status` per vedere attività e coda. Usa `/cancel` per interrompere la richiesta e svuotare i
+messaggi. Se l'annullamento fallisce, la CLI mostra l'errore e mantiene disponibile la sessione.
+
+## Una proposta resta non valida
+
+Leggi la diagnostica e specifica meglio l'intento: identifica i campi per etichetta o chiave, indica i
+tipi, chiarisci l'ambito ripetibile e descrivi calcolo o evento. La convalida installata resta
+autorevole; non aggirarla chiedendo un file grezzo.
+
+Consulta [Comandi e stato](/it/cli/ai-authoring/commands-status) e
+[Flusso di creazione](/it/cli/ai-authoring/authoring-workflow) per i comandi di ripristino.

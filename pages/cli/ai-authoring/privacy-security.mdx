@@ -1,0 +1,82 @@
+---
+title: AI authoring privacy and security
+description: Understand full-schema transmission, cloud policy, consent, local storage, and restricted documentation access.
+---
+
+<PageBadges />
+
+## What enters model context
+
+Each request contains the complete current form schema and the installed form0 authoring catalog.
+This full context is required so the agent can preserve structure, resolve references, and validate
+changes across calculations, conditions, repeatable sections, and events.
+
+The model does not receive:
+
+- record values or submissions
+- arbitrary local project files
+- supporting-image contents
+- provider credentials
+- shell, filesystem, MCP, extension, or third-party skill access
+
+Schema attributes, including paths and AI metadata already present in the form, are part of the
+complete schema and are therefore included.
+
+## Cloud policy from schema metadata
+
+Existing [AI metadata](/core/ai-metadata) has enforced semantics in CLI authoring:
+
+```json
+{
+  "form": {
+    "ai": {
+      "allowCloud": false,
+      "requiresConsent": true
+    }
+  }
+}
+```
+
+If `form.ai.allowCloud: false` or any `field.ai.allowCloud: false` is present, every cloud provider
+is blocked for that form. Local models remain available. There is no CLI override.
+
+If the form or any field sets `requiresConsent: true`, the CLI asks before the first cloud request in
+the AI session and asks again after switching cloud providers. Otherwise, entering AI mode and
+selecting or authenticating a cloud provider counts as consent after the CLI explains that the full
+schema is transmitted.
+
+Use `/privacy` to inspect the effective policy and the form or field entries responsible for it.
+
+## Credentials and conversations
+
+AI state lives below `~/.form0-cli/ai/`, outside the project. Directories are accessible only to the
+current user; credential and conversation files use user-only permissions. Environment credentials
+remain supported and are not copied into schemas.
+
+Conversation history is scoped to the canonical schema path and may contain the complete schema.
+Use `/clear` to delete stored history for the current form. An unsaved form uses a temporary identity
+that is reassigned after its first successful apply.
+
+:::warning
+
+Generated calculation and form-event JavaScript is validated structurally, but it is still authored
+code. Review the diff and intended behavior before applying it, especially for sensitive forms.
+
+:::
+
+## Restricted documentation access
+
+The agent can request supplementary documentation only from `https://docs.form0.dev`. Retrieval
+starts at `llms.txt` and follows only relevant same-origin HTTPS Markdown pages. Off-origin URLs and
+redirects, unsupported content, oversized responses, and timeouts are rejected; successful responses
+are cached for the session.
+
+Retrieved text is untrusted reference material. It cannot alter system instructions, tool
+permissions, or the cloud policy. If remote documentation conflicts with the installed form0-core
+catalog, the installed catalog wins. Authoring continues without remote documentation when offline.
+
+## Provider responsibility
+
+Cloud requests are sent directly to the selected provider using the user's credential or
+subscription. form0 does not proxy requests, meter usage, report credit balances, or control provider
+retention. Review the selected provider's current terms and data controls before sending a schema.

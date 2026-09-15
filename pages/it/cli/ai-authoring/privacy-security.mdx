@@ -1,0 +1,81 @@
+---
+title: Privacy e sicurezza nella creazione con IA
+description: Comprendi invio dello schema, politica cloud, consenso, archiviazione e documentazione limitata.
+---
+
+<PageBadges />
+
+## Cosa entra nel contesto del modello
+
+Ogni richiesta contiene lo schema corrente completo e il catalogo di creazione form0 installato.
+Questo contesto serve a preservare la struttura, risolvere riferimenti e convalidare calcoli,
+condizioni, sezioni ripetibili ed eventi.
+
+Il modello non riceve:
+
+- valori dei record o invii
+- file locali arbitrari del progetto
+- contenuto delle immagini di supporto
+- credenziali dei provider
+- accesso a shell, file system, MCP, estensioni o skill di terze parti
+
+Gli attributi dello schema, inclusi percorsi e metadati AI già presenti, fanno parte dello schema
+completo e vengono quindi inclusi.
+
+## Politica cloud dai metadati
+
+I [Metadati AI](/it/core/ai-metadata) esistenti hanno semantica applicata nella CLI:
+
+```json
+{
+  "form": {
+    "ai": {
+      "allowCloud": false,
+      "requiresConsent": true
+    }
+  }
+}
+```
+
+Se è presente `form.ai.allowCloud: false` o un qualsiasi `field.ai.allowCloud: false`, tutti i provider
+cloud sono bloccati per il modulo. I modelli locali restano disponibili. Non esiste un'eccezione CLI.
+
+Se il modulo o un campo imposta `requiresConsent: true`, la CLI chiede conferma prima della prima
+richiesta cloud e dopo il cambio di provider cloud. Negli altri casi, entrare in modalità AI e
+selezionare o autenticare un provider cloud vale come consenso dopo l'avviso di invio.
+
+Usa `/privacy` per vedere la politica effettiva e le voci responsabili del modulo o dei campi.
+
+## Credenziali e conversazioni
+
+Lo stato AI risiede sotto `~/.form0-cli/ai/`, fuori dal progetto. Le directory sono riservate
+all'utente corrente e i file di credenziali e conversazioni hanno permessi esclusivi. Le credenziali
+d'ambiente restano supportate e non vengono copiate negli schemi.
+
+La cronologia è associata al percorso canonico e può contenere lo schema completo. Usa `/clear` per
+eliminare la cronologia del modulo corrente. Un modulo non salvato usa un'identità temporanea che
+viene riassegnata dopo la prima applicazione riuscita.
+
+:::warning
+
+Il JavaScript generato per calcoli ed eventi viene convalidato strutturalmente, ma resta codice
+prodotto. Controlla il diff e il comportamento prima di applicarlo, soprattutto per moduli sensibili.
+
+:::
+
+## Accesso limitato alla documentazione
+
+L'agente può richiedere documentazione supplementare solo da `https://docs.form0.dev`. La lettura
+inizia da `llms.txt` e segue solo pagine Markdown HTTPS pertinenti della stessa origine. URL e
+reindirizzamenti esterni, contenuti non supportati, risposte troppo grandi e timeout vengono rifiutati;
+le risposte riuscite vengono memorizzate nella cache della sessione.
+
+Il testo recuperato è materiale di riferimento non attendibile. Non può modificare istruzioni,
+permessi o politica cloud. Se contraddice il catalogo form0-core installato, prevale il catalogo. La
+creazione continua senza documentazione remota quando offline.
+
+## Responsabilità del provider
+
+Le richieste cloud vanno direttamente al provider selezionato con la credenziale o l'abbonamento
+dell'utente. form0 non fa da proxy, non misura l'uso, non mostra saldi e non controlla la conservazione.
+Consulta condizioni e controlli correnti del provider prima di inviare uno schema.

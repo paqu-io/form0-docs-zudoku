@@ -1,0 +1,76 @@
+---
+title: Comandi e stato della creazione con IA
+description: Riferimento per comandi, stato, prompt occupati, coda dei follow-up e annullamento.
+---
+
+<PageBadges />
+
+## Riferimento dei comandi
+
+La modalità AI accetta richieste in linguaggio naturale e comandi con barra:
+
+| Comando                     | Scopo                                                                     |
+| --------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------- |
+| `/help`                     | Mostra il riepilogo allineato dei comandi AI.                             |
+| `/status`                   | Mostra schema, bozza, modello, autenticazione, politica, attività e coda. |
+| `/providers`                | Elenca provider Pi, metodi di autenticazione e numero di modelli.         |
+| `/models <provider>`        | Elenca gli identificatori dei modelli di un provider.                     |
+| `/login <provider> <api_key | oauth>`                                                                   | Autentica con il flusso Pi definito dal provider. |
+| `/model <provider>/<model>` | Seleziona il modello; senza argomenti, mostra quello corrente.            |
+| `/privacy`                  | Spiega la politica cloud e di consenso effettiva dello schema.            |
+| `/preview`                  | Stampa lo schema completo della bozza corrente.                           |
+| `/diff`                     | Mostra mutazioni semantiche e diff JSON della proposta.                   |
+| `/apply [schema-path]`      | Ricontrolla e salva atomicamente la proposta in sospeso.                  |
+| `/discard`                  | Abbandona la bozza e ripristina l'anteprima confermata.                   |
+| `/undo`                     | Prepara l'ultimo schema salvato nella sessione per l'approvazione.        |
+| `/new`                      | Avvia una conversazione mantenendo il modello selezionato.                |
+| `/clear`                    | Elimina la cronologia del modulo e mantiene il modello.                   |
+| `/cancel`                   | Annulla la richiesta attiva e svuota la coda dei follow-up.               |
+| `/exit`                     | Scarta la bozza e torna allo stato precedente della shell.                |
+
+## Stato
+
+Lo stato è locale: non contatta il provider né recupera saldi di crediti:
+
+```ansi
+form0(ai)> /status
+
+AI authoring status
+  Schema:             /project/form.schema.json
+  Draft:              none
+  Provider:           openai-codex
+  Model:              gpt-5.6-luna
+  Cloud policy:       allowed
+  Conversation:       persisted
+  Activity:           idle
+  Queued follow-ups:  0
+  Authentication:
+    openai-codex  oauth (stored, subscription) [selected]
+```
+
+L'autenticazione identifica origine e tipo, ma non stampa mai una credenziale. Un provider può
+essere autenticato senza essere selezionato e l'autenticazione non implica crediti disponibili.
+
+## Prompt pronto e occupato
+
+Una richiesta cambia lo stato del prompt e mostra il modello attivo:
+
+```ansi
+[AI] Thinking with openai-codex/gpt-5.6-luna…
+form0(ai,busy)>
+```
+
+Con il server attivo, il prompt è `form0(server,ai,busy)>`. Al termine torna a
+`form0(ai)>` o `form0(server,ai)>`.
+
+Premere Invio su una riga vuota non esegue operazioni e ridisegna il prompt. Il testo inserito mentre
+è occupato viene accodato in ordine FIFO e viene confermato con la sua posizione.
+
+## Comandi disponibili mentre è occupato
+
+Durante una richiesta restano disponibili `/help`, `/status`, `/privacy` e `/cancel`. Gli altri
+comandi con barra vengono rifiutati fino al termine, evitando modifiche a modello, conversazione o
+bozza sotto una richiesta attiva.
+
+L'annullamento chiede a Pi di interrompere la richiesta e svuota tutti i follow-up. Se riesce, torna
+al prompt pronto senza mostrare l'annullamento del provider come un secondo errore.

@@ -1,0 +1,76 @@
+---
+title: AI authoring commands and status
+description: Reference AI-mode commands, status output, busy prompts, queued follow-ups, and cancellation.
+---
+
+<PageBadges />
+
+## Command reference
+
+AI mode accepts natural-language requests and slash commands:
+
+| Command                     | Purpose                                                                       |
+| --------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------- |
+| `/help`                     | Show the aligned AI command summary.                                          |
+| `/status`                   | Show schema, draft, model, authentication, policy, activity, and queue state. |
+| `/providers`                | List Pi providers, authentication methods, and model counts.                  |
+| `/models <provider>`        | List model identifiers for one provider.                                      |
+| `/login <provider> <api_key | oauth>`                                                                       | Authenticate with a provider using its Pi-defined flow. |
+| `/model <provider>/<model>` | Select the active model; without arguments, show the current model.           |
+| `/privacy`                  | Explain the effective schema cloud and consent policy.                        |
+| `/preview`                  | Print the complete current draft schema.                                      |
+| `/diff`                     | Show semantic mutations and the JSON diff for the pending proposal.           |
+| `/apply [schema-path]`      | Recheck and atomically save the pending proposal.                             |
+| `/discard`                  | Abandon the draft and restore the committed browser preview.                  |
+| `/undo`                     | Stage the last schema saved in this session for explicit approval.            |
+| `/new`                      | Start a new conversation while retaining the selected model.                  |
+| `/clear`                    | Delete stored history for this form and start again with the selected model.  |
+| `/cancel`                   | Abort the active request and clear queued follow-ups.                         |
+| `/exit`                     | Discard any draft and return to the previous shell state.                     |
+
+## Status
+
+Status is local and does not contact a provider or retrieve credit balances:
+
+```ansi
+form0(ai)> /status
+
+AI authoring status
+  Schema:             /project/form.schema.json
+  Draft:              none
+  Provider:           openai-codex
+  Model:              gpt-5.6-luna
+  Cloud policy:       allowed
+  Conversation:       persisted
+  Activity:           idle
+  Queued follow-ups:  0
+  Authentication:
+    openai-codex  oauth (stored, subscription) [selected]
+```
+
+Authentication output identifies the source and type but never prints a credential. A provider can
+be authenticated without being selected, and authentication does not imply available credits.
+
+## Ready and busy prompts
+
+A request changes the prompt state and prints the active model:
+
+```ansi
+[AI] Thinking with openai-codex/gpt-5.6-luna…
+form0(ai,busy)>
+```
+
+With the preview server running, the prompt is `form0(server,ai,busy)>`. When processing completes,
+it returns to `form0(ai)>` or `form0(server,ai)>`.
+
+Pressing Enter on an empty line is a no-op that redraws the current prompt. Natural-language input
+entered while busy is queued in FIFO order and acknowledged with its queue position.
+
+## Commands available while busy
+
+While a provider request is active, `/help`, `/status`, `/privacy`, and `/cancel` remain available.
+Other slash commands are rejected until processing finishes, preventing model, conversation, or
+draft state from changing underneath the active request.
+
+Cancellation asks Pi to abort the current request and clears every queued follow-up. A successful
+cancellation returns to the ready prompt without surfacing the provider abort as a second error.

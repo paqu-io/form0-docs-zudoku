@@ -1,0 +1,82 @@
+---
+title: Prise en main de la création avec IA
+description: Configurez un fournisseur, choisissez un modèle et réalisez une première modification AI vérifiée.
+---
+
+<PageBadges />
+
+## Avant de commencer
+
+Installez form0-cli avec Node.js 22.19.0 ou une version ultérieure. Il faut un identifiant de
+fournisseur pris en charge ou un modèle Ollama local accessible. Le schéma est facultatif : sans lui,
+la création avec IA part du formulaire vide canonique.
+
+Consultez [Installation et mise à jour](/fr/cli/install-update) pour les prérequis de la CLI.
+
+## Entrer dans le mode AI
+
+Ouvrez directement un schéma connu :
+
+```bash
+form0 ai form.schema.json
+```
+
+Ou combinez la création avec IA avec le serveur d'aperçu interactif :
+
+```ansi
+form0> load form.schema.json
+form0> serve
+form0(server)> ai
+form0(server,ai)>
+```
+
+Le démarrage du mode AI ne lance pas automatiquement un serveur. Un serveur existant reste actif et
+affiche immédiatement les brouillons validés.
+
+## S'authentifier et choisir un modèle
+
+Listez le catalogue, authentifiez-vous, consultez les identifiants et choisissez un modèle :
+
+```ansi
+form0(ai)> /providers
+form0(ai)> /login openai-codex oauth
+form0(ai)> /models openai-codex
+form0(ai)> /model openai-codex/gpt-5.6-luna
+form0(ai)> /status
+```
+
+Les identifiants de fournisseur et d'authentification viennent directement de Pi. Pour une clé API,
+la CLI demande le secret sans l'ajouter au projet ni au schéma. Consultez
+[Fournisseurs et modèles](/fr/cli/ai-authoring/providers-models) pour la base prise en charge et le
+stockage.
+
+## Effectuer et vérifier une première modification
+
+Décrivez le comportement souhaité, et non des modifications JSON brutes :
+
+```ansi
+form0(ai)> Add quantity and unit price fields, then a calculated total rounded to two decimals.
+```
+
+L'agent peut poser des questions ou renvoyer des diagnostics pendant la construction d'un lot valide.
+Lorsque la proposition est prête :
+
+```ansi
+form0(ai)> /preview
+form0(ai)> /diff
+form0(ai)> /apply
+```
+
+Rien n'est écrit avant la confirmation. Le guide du flux explique la
+[vérification, les révisions, l'annulation et les conflits](/fr/cli/ai-authoring/authoring-workflow).
+
+## Commencer sans schéma
+
+Exécutez la commande sans chemin pour partir d'un formulaire vide :
+
+```bash
+form0 ai
+```
+
+La première application demande un chemin et utilise la confirmation normale si le fichier existe.
+Après l'enregistrement, l'identité temporaire de conversation rejoint le chemin canonique du schéma.

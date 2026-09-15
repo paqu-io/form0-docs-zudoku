@@ -1,0 +1,74 @@
+---
+title: AI providers and models
+description: Authenticate with Pi providers, select a model, and understand per-schema persistence.
+---
+
+<PageBadges />
+
+## Provider catalog
+
+form0 uses Pi's provider and model catalog without renaming providers or overriding their
+authentication capabilities. The catalog can evolve with the pinned Pi dependency; inspect the
+installed version rather than relying on a static list.
+
+```ansi
+form0(ai)> /providers
+form0(ai)> /models <provider>
+```
+
+The manually exercised preview baseline covers:
+
+- OpenAI with an API key
+- OpenAI Codex with subscription OAuth
+- Anthropic with an API key or Claude subscription OAuth
+- Google Gemini with an API key
+- OpenRouter with an API key or OAuth
+- Ollama local models
+
+Other providers exposed by Pi may work, but they are not part of the manually verified baseline.
+
+## Authentication
+
+Use the authentication type shown by the provider catalog:
+
+```ansi
+form0(ai)> /login <provider> <api_key|oauth>
+```
+
+OAuth may offer browser or device-code flows depending on the provider. API keys are entered through
+a secret prompt. Environment-variable credentials recognized by Pi remain available.
+
+OpenAI API access and a ChatGPT/Codex subscription are separate authentication paths. Use the
+OpenAI provider for an API key and the OpenAI Codex provider for subscription OAuth.
+
+Authentication does not automatically choose a model. After login, list and select one explicitly:
+
+```ansi
+form0(ai)> /models openai-codex
+form0(ai)> /model openai-codex/gpt-5.6-luna
+```
+
+## Model selection and persistence
+
+The selected model is recorded in the Pi conversation for the canonical schema path. Leaving AI
+mode and returning to the same schema restores that selection. It is not stored in the schema or in
+project configuration.
+
+Use `/model` without arguments or `/status` to inspect the current selection. `/new` and `/clear`
+start a new conversation while retaining the active model. If the saved model no longer exists or
+its authentication is unavailable, the CLI displays Pi's fallback warning.
+
+## Local storage
+
+Credentials, model catalog data, and conversations are stored below `~/.form0-cli/ai/`. Directories
+are restricted to the current user, and credential and session files use user-only permissions.
+Stored conversations can contain the complete schema.
+
+Nothing is written to a form0 schema until an approved proposal is applied. Provider credentials and
+model choices are never added to project configuration.
+
+## Local and cloud models
+
+Ollama discovery checks the local service and exposes discovered models through Pi. Local models
+remain available when schema policy blocks cloud providers. Cloud selection is rejected when the
+form or any field sets `allowCloud: false`; see [Privacy and security](/cli/ai-authoring/privacy-security).

@@ -1,0 +1,95 @@
+---
+title: Flusso di creazione con IA
+description: Comprendi mutazioni, convalida completa, revisione, approvazione, annullamento e conflitti.
+---
+
+<PageBadges />
+
+## Contesto completo, azioni limitate
+
+Ogni richiesta include lo schema corrente completo e un catalogo di creazione versionato dal
+form0-core installato. Il catalogo descrive campi, attributi, operatori, builtins, eventi,
+riferimenti, calcoli e metadati AI esistenti.
+
+L'agente non può sostituire il documento radice o scrivere file. Può proporre queste operazioni:
+
+- `updateForm`
+- `addField`, `updateField`, `moveField` e `removeField`
+- `setTitleField` e `setStatusField`
+- `setCalculation`
+- `setFormEventCode`
+
+I campi sono identificati da chiavi stabili. Le rinominazioni sicure aggiornano i riferimenti; le
+rimozioni non sicure e le destinazioni irrisolte vengono rifiutate.
+
+## Convalida prima dell'anteprima
+
+form0-core applica il batch proposto a una copia in memoria. Lo schema originale non viene modificato.
+Quindi convalida l'intero risultato, inclusi:
+
+- regole dello schema e degli attributi
+- condizioni e riferimenti ai campi
+- espressioni calcolate, dipendenze e cicli
+- ambito delle sezioni ripetibili
+- tipi di evento, riferimenti e sintassi JavaScript
+
+I batch non validi restituiscono diagnostica all'agente e non sostituiscono mai la bozza. Il core
+installato prevale se la documentazione remota è in disaccordo. Consulta
+[calcoli ed espressioni](/it/core/builtins/calculations-expressions-overview) ed
+[eventi del modulo](/it/core/builtins/events-overview) per le funzionalità dello schema.
+
+## Esaminare e modificare
+
+Dopo una proposta valida, ispeziona la bozza e le due rappresentazioni del diff:
+
+```ansi
+form0(ai)> /preview
+form0(ai)> /diff
+```
+
+Il diff semantico spiega l'intento per campo; il diff JSON mostra le modifiche al documento. Chiedi
+una revisione in linguaggio naturale per produrre un altro batch coerente. Si esamina una sola
+proposta in sospeso alla volta.
+
+Se il server di anteprima è attivo, la bozza valida viene inviata subito con l'indicazione
+**AI draft**. Rimane comunque un'anteprima in memoria.
+
+## Applicare o scartare
+
+L'applicazione è l'unica operazione che scrive la proposta:
+
+```ansi
+form0(ai)> /apply [schema-path]
+```
+
+Prima di scrivere, la CLI ricalcola la revisione su disco. Se coincide, scrive atomicamente e
+aggiorna motore e browser. Per un nuovo modulo, richiede un percorso e conferma prima di
+sovrascrivere un file esistente.
+
+Scartare abbandona la proposta e ripristina nel browser la versione confermata:
+
+```ansi
+form0(ai)> /discard
+```
+
+Uscire dalla modalità AI ripristina l'anteprima allo stesso modo.
+
+## Annullare
+
+L'annullamento non riscrive il file silenziosamente. Prepara come proposta l'ultimo schema salvato
+durante la sessione AI corrente:
+
+```ansi
+form0(ai)> /undo
+form0(ai)> /diff
+form0(ai)> /apply
+```
+
+Ispeziona e applica esplicitamente la proposta. L'annullamento riguarda la sessione e non è una
+cronologia persistente dello schema.
+
+## Modifiche esterne e bozze obsolete
+
+Se il watcher rileva una modifica su disco dopo la creazione della proposta, la bozza diventa
+obsoleta. L'applicazione viene bloccata invece di unire modifiche incompatibili. Ricarica lo schema
+confermato, chiedi all'agente di adattare la richiesta alla nuova revisione e controlla di nuovo.

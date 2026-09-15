@@ -143,6 +143,21 @@ test("translation resolution has deterministic locale and English fallbacks", ()
   assert.equal(resolveLabel({ label: "Untranslated", locale: "fr" }), "Untranslated")
 })
 
+test("AI authoring navigation is grouped, localized, and marked as preview", () => {
+  const [documentation] = localizeNavigation(navigationDefinition, "es", ({ label }) => {
+    if (label === "AI authoring") return "Creación con IA"
+    if (label === "Preview") return "Vista previa"
+    return label
+  })
+  const cli = documentation.items.find(({ label }) => label === "CLI")
+  const ai = cli.items.find(({ label }) => label === "Creación con IA")
+
+  assert.equal(ai.type, "category")
+  assert.deepEqual(ai.badge, { label: "Vista previa", color: "yellow" })
+  assert.equal(ai.link.path, "/es/cli/ai-authoring")
+  assert.equal(ai.items.length, 6)
+})
+
 test("the immutable source definition is never mutated", () => {
   const before = JSON.stringify(navigationDefinition)
 

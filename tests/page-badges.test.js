@@ -6,6 +6,7 @@ import { badgesForPath } from "../src/navigation/page-badges.js"
 test("badges describe each documentation surface", () => {
   assert.deepEqual(badgesForPath("/getting-started/quickstart"), ["CLI"])
   assert.deepEqual(badgesForPath("/fr/cli/reform/sync-forms"), ["CLI", "reform"])
+  assert.deepEqual(badgesForPath("/it/cli/ai-authoring/providers-models"), ["CLI"])
   assert.deepEqual(badgesForPath("/starter-apps/react-vite/create-run"), ["React", "Vite"])
   assert.deepEqual(badgesForPath("/es/starter-apps/react-native-expo/create-run"), [
     "React Native",

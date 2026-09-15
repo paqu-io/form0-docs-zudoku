@@ -24,7 +24,15 @@
     "install-update": { "title": "Install and update" },
     "initialize-project": { "title": "Initialize a project" },
     "interactive-shell": { "title": "Interactive shell" },
-    "ai-authoring": { "title": "AI authoring (preview)" },
+    "ai-authoring": {
+      "title": "AI authoring",
+      "getting-started": { "title": "Getting started" },
+      "providers-models": { "title": "Providers and models" },
+      "authoring-workflow": { "title": "Authoring workflow" },
+      "commands-status": { "title": "Commands and status" },
+      "privacy-security": { "title": "Privacy and security" },
+      "limitations-troubleshooting": { "title": "Limitations and troubleshooting" }
+    },
     "schemas": {
       "load-edit": { "title": "Load and edit schemas" },
       "validate-preview": { "title": "Validate and preview" },

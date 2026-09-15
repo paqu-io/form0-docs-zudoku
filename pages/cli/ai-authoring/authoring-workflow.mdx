@@ -1,0 +1,94 @@
+---
+title: AI authoring workflow
+description: Understand semantic mutations, full-schema validation, draft review, approval, undo, and conflicts.
+---
+
+<PageBadges />
+
+## Complete context, constrained actions
+
+Every request includes the complete current schema and a versioned authoring catalog from the
+installed form0-core. The catalog describes fields, attributes, operators, builtins, events,
+references, calculations, and existing AI metadata.
+
+The agent cannot replace the root document or write files. It can propose these semantic operations:
+
+- `updateForm`
+- `addField`, `updateField`, `moveField`, and `removeField`
+- `setTitleField` and `setStatusField`
+- `setCalculation`
+- `setFormEventCode`
+
+Fields are targeted by stable keys. Safe renames update recognized references; unsafe removals and
+unresolved targets are rejected.
+
+## Validation before preview
+
+form0-core applies a proposed batch to an in-memory clone. The original schema is not mutated. It
+then validates the complete result, including:
+
+- schema and attribute rules
+- conditions and field references
+- calculated expressions, dependencies, and cycles
+- repeatable-section scoping
+- form-event types, references, and JavaScript syntax
+
+Invalid batches return diagnostics to the agent and never replace the current draft. Installed core
+capabilities are authoritative if remote documentation disagrees. See
+[calculations and expressions](/core/builtins/calculations-expressions-overview) and
+[form events](/core/builtins/events-overview) for the underlying schema features.
+
+## Review and revise
+
+After a valid proposal, inspect the whole draft and both diff representations:
+
+```ansi
+form0(ai)> /preview
+form0(ai)> /diff
+```
+
+The semantic diff explains field-level intent; the JSON diff shows document-level changes. Ask for a
+revision in natural language to produce a new coherent batch. Only one pending proposal is reviewed
+at a time.
+
+If the preview server is running, the valid draft is broadcast immediately with an **AI draft**
+label. This is still an in-memory preview.
+
+## Apply or discard
+
+Apply is the only operation that writes the proposal:
+
+```ansi
+form0(ai)> /apply [schema-path]
+```
+
+Before writing, the CLI recomputes the on-disk revision. A matching revision is written atomically,
+then the engine and browser preview receive the committed schema. For a new form, apply asks for a
+path and confirms before overwriting an existing file.
+
+Discard abandons the pending proposal and restores the committed browser preview:
+
+```ansi
+form0(ai)> /discard
+```
+
+Exiting AI mode has the same preview-restoration behavior.
+
+## Undo
+
+Undo does not silently rewrite the file. It stages the last schema saved during the current AI
+session as a new proposal:
+
+```ansi
+form0(ai)> /undo
+form0(ai)> /diff
+form0(ai)> /apply
+```
+
+Inspect and apply that proposal explicitly. Undo is session-scoped, not a persistent schema history.
+
+## External changes and stale drafts
+
+If a watcher detects that the schema changed on disk after the proposal was created, the draft
+becomes stale. Apply is blocked rather than merging potentially incompatible changes. Reload the
+committed schema, ask the agent to revise the request against the new revision, and review again.

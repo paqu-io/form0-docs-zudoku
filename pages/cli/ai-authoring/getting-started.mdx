@@ -1,0 +1,83 @@
+---
+title: Getting started with AI authoring
+description: Configure a provider, select a model, and complete a first reviewed form0 AI edit.
+---
+
+<PageBadges />
+
+## Before you start
+
+Install form0-cli on Node.js 22.19.0 or newer. You need either a supported provider credential or a
+reachable local Ollama model. A schema is optional: without one, AI authoring starts from the
+canonical empty form.
+
+See [Install and update](/cli/install-update) for CLI installation and runtime requirements.
+
+## Enter AI mode
+
+Open a known schema directly:
+
+```bash
+form0 ai form.schema.json
+```
+
+Or compose AI authoring with the interactive preview server:
+
+```ansi
+form0> load form.schema.json
+form0> serve
+form0(server)> ai
+form0(server,ai)>
+```
+
+Starting AI mode does not automatically start a server. An existing server remains active and shows
+validated drafts immediately.
+
+## Authenticate and select a model
+
+List the provider catalog, authenticate, inspect model identifiers, and select one:
+
+```ansi
+form0(ai)> /providers
+form0(ai)> /login openai-codex oauth
+form0(ai)> /models openai-codex
+form0(ai)> /model openai-codex/gpt-5.6-luna
+form0(ai)> /status
+```
+
+Provider and authentication identifiers come directly from Pi. For API-key authentication, the CLI
+asks for the secret without adding it to the project or schema. See
+[Providers and models](/cli/ai-authoring/providers-models) for the supported baseline and storage
+behavior.
+
+## Make and review a first change
+
+Describe the desired form behavior, not raw JSON edits:
+
+```ansi
+form0(ai)> Add quantity and unit price fields, then a calculated total rounded to two decimals.
+```
+
+The agent may ask questions or return diagnostics while it constructs a valid mutation batch. Once a
+proposal is ready:
+
+```ansi
+form0(ai)> /preview
+form0(ai)> /diff
+form0(ai)> /apply
+```
+
+Nothing is written until apply is confirmed. Use the workflow guide to understand
+[draft review, revisions, undo, and conflicts](/cli/ai-authoring/authoring-workflow).
+
+## Start without a schema
+
+Run the command without a path to begin from an empty form:
+
+```bash
+form0 ai
+```
+
+The first apply asks for a schema path and uses the normal overwrite confirmation if that file
+already exists. After saving, the temporary conversation identity is reassigned to the canonical
+schema path.

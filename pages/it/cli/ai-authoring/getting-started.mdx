@@ -1,0 +1,81 @@
+---
+title: Per iniziare con la creazione con IA
+description: Configura un provider, seleziona un modello e completa una prima modifica AI verificata.
+---
+
+<PageBadges />
+
+## Prima di iniziare
+
+Installa form0-cli con Node.js 22.19.0 o successivo. Serve una credenziale di un provider supportato
+oppure un modello Ollama locale raggiungibile. Lo schema è facoltativo: senza, la creazione con IA
+parte dal modulo vuoto canonico.
+
+Consulta [Installazione e aggiornamento](/it/cli/install-update) per i requisiti della CLI.
+
+## Entrare in modalità AI
+
+Apri direttamente uno schema noto:
+
+```bash
+form0 ai form.schema.json
+```
+
+Oppure combina la creazione con IA con il server di anteprima interattivo:
+
+```ansi
+form0> load form.schema.json
+form0> serve
+form0(server)> ai
+form0(server,ai)>
+```
+
+L'avvio della modalità AI non avvia automaticamente un server. Un server esistente resta attivo e
+mostra subito le bozze convalidate.
+
+## Autenticarsi e selezionare un modello
+
+Elenca il catalogo, autenticati, consulta gli identificatori e seleziona un modello:
+
+```ansi
+form0(ai)> /providers
+form0(ai)> /login openai-codex oauth
+form0(ai)> /models openai-codex
+form0(ai)> /model openai-codex/gpt-5.6-luna
+form0(ai)> /status
+```
+
+Gli identificatori di provider e autenticazione arrivano direttamente da Pi. Per una chiave API, la
+CLI richiede il segreto senza aggiungerlo al progetto o allo schema. Consulta
+[Provider e modelli](/it/cli/ai-authoring/providers-models) per la base supportata e l'archiviazione.
+
+## Eseguire e verificare la prima modifica
+
+Descrivi il comportamento desiderato, non modifiche JSON grezze:
+
+```ansi
+form0(ai)> Add quantity and unit price fields, then a calculated total rounded to two decimals.
+```
+
+L'agente può fare domande o restituire diagnostica mentre costruisce un batch valido. Quando la
+proposta è pronta:
+
+```ansi
+form0(ai)> /preview
+form0(ai)> /diff
+form0(ai)> /apply
+```
+
+Nulla viene scritto prima della conferma. La guida al flusso spiega
+[revisione, modifiche, annullamento e conflitti](/it/cli/ai-authoring/authoring-workflow).
+
+## Iniziare senza schema
+
+Esegui il comando senza percorso per partire da un modulo vuoto:
+
+```bash
+form0 ai
+```
+
+La prima applicazione richiede un percorso e usa la conferma normale se il file esiste. Dopo il
+salvataggio, l'identità temporanea della conversazione viene riassegnata al percorso canonico.

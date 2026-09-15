@@ -1,0 +1,82 @@
+---
+title: Primeros pasos con la creación con IA
+description: Configura un proveedor, selecciona un modelo y completa una primera edición AI revisada.
+---
+
+<PageBadges />
+
+## Antes de empezar
+
+Instala form0-cli sobre Node.js 22.19.0 o posterior. Necesitas una credencial de un proveedor
+compatible o un modelo Ollama local accesible. El esquema es opcional: sin él, la creación con IA
+parte del formulario vacío canónico.
+
+Consulta [Instalar y actualizar](/es/cli/install-update) para conocer la instalación y los requisitos.
+
+## Entrar en el modo AI
+
+Abre directamente un esquema conocido:
+
+```bash
+form0 ai form.schema.json
+```
+
+O combina la creación con IA con el servidor de vista previa interactivo:
+
+```ansi
+form0> load form.schema.json
+form0> serve
+form0(server)> ai
+form0(server,ai)>
+```
+
+Iniciar el modo AI no arranca automáticamente un servidor. Si ya existe, permanece activo y muestra
+los borradores validados inmediatamente.
+
+## Autenticar y seleccionar un modelo
+
+Lista el catálogo, autentícate, consulta los identificadores y selecciona un modelo:
+
+```ansi
+form0(ai)> /providers
+form0(ai)> /login openai-codex oauth
+form0(ai)> /models openai-codex
+form0(ai)> /model openai-codex/gpt-5.6-luna
+form0(ai)> /status
+```
+
+Los identificadores de proveedor y autenticación proceden directamente de Pi. Con una clave API,
+la CLI solicita el secreto sin añadirlo al proyecto ni al esquema. Consulta
+[Proveedores y modelos](/es/cli/ai-authoring/providers-models) para conocer la base compatible y el
+almacenamiento.
+
+## Realizar y revisar el primer cambio
+
+Describe el comportamiento deseado, no ediciones de JSON sin procesar:
+
+```ansi
+form0(ai)> Add quantity and unit price fields, then a calculated total rounded to two decimals.
+```
+
+El agente puede hacer preguntas o devolver diagnósticos mientras construye un lote válido. Cuando
+la propuesta esté lista:
+
+```ansi
+form0(ai)> /preview
+form0(ai)> /diff
+form0(ai)> /apply
+```
+
+No se escribe nada hasta confirmar la aplicación. La guía de flujo explica la
+[revisión, las modificaciones, la reversión y los conflictos](/es/cli/ai-authoring/authoring-workflow).
+
+## Empezar sin un esquema
+
+Ejecuta el comando sin ruta para partir de un formulario vacío:
+
+```bash
+form0 ai
+```
+
+La primera aplicación solicita una ruta y usa la confirmación normal si el archivo ya existe. Tras
+guardar, la identidad temporal de la conversación se reasigna a la ruta canónica del esquema.
