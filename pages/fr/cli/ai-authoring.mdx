@@ -41,6 +41,11 @@ Pi fournit le catalogue. La base manuelle couvre OpenAI/Codex, Anthropic/Claude,
 Ollama local. Utilisez `/providers`, `/login <provider> <api_key|oauth>` et
 `/model <provider>/<model>`. Les variables d'environnement sont également prises en charge.
 
+`/status` résume localement le schéma, le brouillon, le fournisseur et le modèle sélectionnés, les
+sources d'authentification configurées, la politique cloud et la persistance de la conversation. Il
+ne contacte aucun fournisseur et n'affiche aucun solde de crédits. Utilisez `/model` sans argument
+pour afficher le modèle actuel.
+
 Identifiants et conversations résident dans `~/.form0-cli/ai/` avec des droits réservés à
 l'utilisateur et peuvent contenir le schéma complet. `/new` démarre une conversation ; `/clear`
 supprime l'historique.
@@ -60,5 +65,5 @@ Pas d'accès général aux fichiers, au shell, au web, à MCP, aux extensions ou
 automatique, helpers personnalisés, données de formulaires, multimodal, RAG, télémétrie, facturation,
 passerelle form0 ou intégration avec reform ou les interfaces form0.
 
-Commandes : `/help`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
+Commandes : `/help`, `/status`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
 `/discard`, `/undo`, `/new`, `/clear` et `/exit`.

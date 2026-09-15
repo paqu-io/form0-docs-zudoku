@@ -48,6 +48,10 @@ OAuth, Anthropic key and Claude OAuth, Gemini key, OpenRouter key/OAuth, and loc
 Use `/providers`, `/login <provider> <api_key|oauth>`, and `/model <provider>/<model>`.
 Environment credentials are also recognized.
 
+`/status` locally summarizes the schema, draft, selected provider and model, configured
+authentication sources, cloud policy, and conversation persistence. It does not contact a provider
+or report provider credit balances. Use `/model` without an argument to show the current model.
+
 Credentials and per-schema conversations live under `~/.form0-cli/ai/` with user-only permissions.
 Stored conversations may contain the full schema. `/new` starts another conversation; `/clear`
 deletes stored history for the current form.
@@ -71,5 +75,5 @@ This preview does not provide filesystem or shell tools, arbitrary web access, e
 MCP, unattended application, custom-helper generation, record completion, images/PDFs, hosted RAG,
 telemetry, billing, or a form0 AI gateway. It does not integrate with reform or form0 UI packages.
 
-Commands: `/help`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
+Commands: `/help`, `/status`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
 `/discard`, `/undo`, `/new`, `/clear`, and `/exit`.

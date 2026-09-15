@@ -40,6 +40,10 @@ Pi proporciona el catálogo. La base manual cubre OpenAI/Codex, Anthropic/Claude
 Ollama local. Usa `/providers`, `/login <provider> <api_key|oauth>` y
 `/model <provider>/<model>`. También se admiten credenciales de entorno.
 
+`/status` resume localmente el esquema, borrador, proveedor y modelo seleccionados, fuentes de
+autenticación configuradas, política de nube y persistencia de la conversación. No contacta con el
+proveedor ni muestra saldos de créditos. Usa `/model` sin argumentos para mostrar el modelo actual.
+
 Las credenciales y conversaciones se guardan en `~/.form0-cli/ai/` con permisos solo de usuario y
 pueden contener el esquema completo. `/new` inicia otra conversación; `/clear` elimina el historial.
 
@@ -58,5 +62,5 @@ No hay acceso general a archivos, shell, web, MCP, extensiones o skills, aplicac
 helpers personalizados, registros, multimodalidad, RAG, telemetría, facturación, gateway form0 ni
 integración con reform o interfaces form0.
 
-Comandos: `/help`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
+Comandos: `/help`, `/status`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
 `/discard`, `/undo`, `/new`, `/clear` y `/exit`.
