@@ -1,0 +1,64 @@
+---
+title: Création avec IA (aperçu)
+description: Générez et modifiez des schémas form0 avec des lots validés et approuvés.
+---
+
+<PageBadges />
+
+> [!WARNING]
+> Cette fonction est en aperçu. Vérifiez toujours les calculs et le JavaScript des événements.
+
+Lancez le mode directement ou depuis un shell actif :
+
+```bash
+form0 ai [schema]
+```
+
+```ansi
+form0> serve
+form0(server)> ai
+form0(server,ai)> Add a calculated total from quantity and unit price
+```
+
+L'IA ne lance pas le serveur. S'il est actif, le brouillon apparaît comme **AI draft** sans être
+enregistré avant `/apply` ; `/discard` ou `/exit` restaure la version validée.
+
+## Vérifier et enregistrer
+
+L'agent reçoit le formulaire complet et le catalogue du core installé. Il peut seulement les
+inspecter, proposer des mutations sémantiques et lire une documentation form0 restreinte. Le core
+valide une copie complète : références, conditions, dépendances, cycles, portées répétables et événements.
+
+Utilisez `/preview` et `/diff`, demandez des révisions, puis choisissez `/apply` ou `/discard`.
+L'application revérifie la révision sur disque et écrit atomiquement. Une modification externe bloque
+un brouillon périmé. `/undo` prépare la version précédente et exige un nouvel `/apply`. Un nouveau
+formulaire part du schéma vide canonique et suit la confirmation habituelle. Le fichier final reste un
+schéma form0 normal.
+
+## Fournisseurs, sessions et confidentialité
+
+Pi fournit le catalogue. La base manuelle couvre OpenAI/Codex, Anthropic/Claude, Gemini, OpenRouter et
+Ollama local. Utilisez `/providers`, `/login <provider> <api_key|oauth>` et
+`/model <provider>/<model>`. Les variables d'environnement sont également prises en charge.
+
+Identifiants et conversations résident dans `~/.form0-cli/ai/` avec des droits réservés à
+l'utilisateur et peuvent contenir le schéma complet. `/new` démarre une conversation ; `/clear`
+supprime l'historique.
+
+La CLI indique que le schéma complet est transmis. `form.ai.allowCloud: false` ou
+`field.ai.allowCloud: false` bloque le cloud sans dérogation. Chaque `requiresConsent: true` demande
+un accord avant le premier appel et après un changement de fournisseur. Sinon, sélectionner ou
+authentifier un fournisseur vaut consentement. `/privacy` montre la politique et ses causes. Aucun
+enregistrement, fichier, image ou identifiant n'est transmis ; un formulaire trop grand est refusé.
+
+## Documentation et limites
+
+Au besoin, l'agent part de `https://docs.form0.dev/llms.txt` et ne lit que du Markdown HTTPS de même
+origine avec contrôles et cache. Ce texte est non fiable ; le core installé prévaut.
+
+Pas d'accès général aux fichiers, au shell, au web, à MCP, aux extensions ou skills, ni application
+automatique, helpers personnalisés, données de formulaires, multimodal, RAG, télémétrie, facturation,
+passerelle form0 ou intégration avec reform ou les interfaces form0.
+
+Commandes : `/help`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
+`/discard`, `/undo`, `/new`, `/clear` et `/exit`.

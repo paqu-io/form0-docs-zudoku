@@ -1,0 +1,62 @@
+---
+title: Creación con IA (vista previa)
+description: Genera y edita esquemas form0 mediante lotes revisados y validados.
+---
+
+<PageBadges />
+
+> [!WARNING]
+> La función está en vista previa. Revisa siempre los cálculos y el JavaScript de eventos.
+
+Inicia el modo directamente o desde una shell activa:
+
+```bash
+form0 ai [schema]
+```
+
+```ansi
+form0> serve
+form0(server)> ai
+form0(server,ai)> Add a calculated total from quantity and unit price
+```
+
+La IA no inicia el servidor. Si ya está activo, la bozza aparece como **AI draft** sin guardarse hasta
+`/apply`; `/discard` o `/exit` restaura la versión confirmada.
+
+## Revisar y guardar
+
+El agente recibe el formulario completo y el catálogo del core instalado. Solo puede inspeccionarlos,
+proponer mutaciones semánticas y leer documentación form0 restringida. El core valida una copia
+completa, incluidas referencias, condiciones, dependencias, ciclos, ámbitos repetibles y eventos.
+
+Usa `/preview` y `/diff`, solicita revisiones y elige `/apply` o `/discard`. Aplicar vuelve a comprobar
+la revisión del disco y escribe de forma atómica. Los cambios externos bloquean borradores obsoletos.
+`/undo` prepara la versión anterior y requiere otro `/apply`. El formulario nuevo parte del esquema
+vacío canónico y usa la confirmación normal. El archivo final sigue siendo un esquema form0 normal.
+
+## Proveedores, sesiones y privacidad
+
+Pi proporciona el catálogo. La base manual cubre OpenAI/Codex, Anthropic/Claude, Gemini, OpenRouter y
+Ollama local. Usa `/providers`, `/login <provider> <api_key|oauth>` y
+`/model <provider>/<model>`. También se admiten credenciales de entorno.
+
+Las credenciales y conversaciones se guardan en `~/.form0-cli/ai/` con permisos solo de usuario y
+pueden contener el esquema completo. `/new` inicia otra conversación; `/clear` elimina el historial.
+
+La CLI avisa de que transmite el esquema completo. `form.ai.allowCloud: false` o
+`field.ai.allowCloud: false` bloquea la nube sin excepción. Cualquier `requiresConsent: true` pide
+permiso antes de la primera solicitud y tras cambiar de proveedor. En los demás casos, seleccionar o
+autenticar un proveedor implica consentimiento. `/privacy` muestra la política y sus causas. No se
+envían registros, archivos, imágenes ni credenciales; un formulario demasiado grande se rechaza.
+
+## Documentación y límites
+
+Cuando hace falta, el agente parte de `https://docs.form0.dev/llms.txt` y solo lee Markdown HTTPS del
+mismo origen con controles y caché. Es referencia no confiable; el core instalado prevalece.
+
+No hay acceso general a archivos, shell, web, MCP, extensiones o skills, aplicación automática,
+helpers personalizados, registros, multimodalidad, RAG, telemetría, facturación, gateway form0 ni
+integración con reform o interfaces form0.
+
+Comandos: `/help`, `/providers`, `/login`, `/model`, `/privacy`, `/preview`, `/diff`, `/apply`,
+`/discard`, `/undo`, `/new`, `/clear` y `/exit`.

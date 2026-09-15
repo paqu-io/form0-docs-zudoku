@@ -64,6 +64,7 @@ const documentationItems = [
       doc("cli/install-update", "Install and update"),
       doc("cli/initialize-project", "Initialize a project"),
       doc("cli/interactive-shell", "Interactive shell"),
+      doc("cli/ai-authoring", "AI authoring (preview)"),
       category("Working with schemas", [
         doc("cli/schemas/load-edit", "Load and edit schemas"),
         doc("cli/schemas/validate-preview", "Validate and preview"),
