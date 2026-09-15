@@ -566,6 +566,33 @@
       }
     ]
   },
+  "/cli/ai-authoring": {
+    "pathname": "/cli/ai-authoring",
+    "translationKey": "/cli/ai-authoring",
+    "locale": "en",
+    "title": "AI authoring (preview)",
+    "description": "Generate and edit form0 schemas through reviewed, validated AI mutation batches.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring"
+      }
+    ]
+  },
   "/cli/command-reference": {
     "pathname": "/cli/command-reference",
     "translationKey": "/cli/command-reference",
@@ -3128,6 +3155,33 @@
       {
         "locale": "it",
         "pathname": "/it/bindings/react-native/values-snapshots-submission"
+      }
+    ]
+  },
+  "/es/cli/ai-authoring": {
+    "pathname": "/es/cli/ai-authoring",
+    "translationKey": "/cli/ai-authoring",
+    "locale": "es",
+    "title": "Creación con IA (vista previa)",
+    "description": "Genera y edita esquemas form0 mediante lotes revisados y validados.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring"
       }
     ]
   },
@@ -6189,6 +6243,33 @@
       {
         "locale": "it",
         "pathname": "/it/bindings/react-native/values-snapshots-submission"
+      }
+    ]
+  },
+  "/fr/cli/ai-authoring": {
+    "pathname": "/fr/cli/ai-authoring",
+    "translationKey": "/cli/ai-authoring",
+    "locale": "fr",
+    "title": "Création avec IA (aperçu)",
+    "description": "Générez et modifiez des schémas form0 avec des lots validés et approuvés.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring"
       }
     ]
   },
@@ -9314,6 +9395,33 @@
       {
         "locale": "it",
         "pathname": "/it/bindings/react-native/values-snapshots-submission"
+      }
+    ]
+  },
+  "/it/cli/ai-authoring": {
+    "pathname": "/it/cli/ai-authoring",
+    "translationKey": "/cli/ai-authoring",
+    "locale": "it",
+    "title": "Creazione con IA (anteprima)",
+    "description": "Genera e modifica schemi form0 con batch convalidati e approvati.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring"
       }
     ]
   },

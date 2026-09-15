@@ -24,6 +24,7 @@
     "install-update": { "title": "Install and update" },
     "initialize-project": { "title": "Initialize a project" },
     "interactive-shell": { "title": "Interactive shell" },
+    "ai-authoring": { "title": "AI authoring (preview)" },
     "schemas": {
       "load-edit": { "title": "Load and edit schemas" },
       "validate-preview": { "title": "Validate and preview" },

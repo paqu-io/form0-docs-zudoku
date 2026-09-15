@@ -1,6 +1,7 @@
 import assert from "node:assert/strict"
 import test from "node:test"
 
+import { SUPPORTED_LOCALES } from "../src/i18n/constants.js"
 import {
   allPageMetadata,
   canonicalUrl,
@@ -11,12 +12,14 @@ import {
 test("all substantive translations are published and indexable", () => {
   const pages = allPageMetadata()
   const placeholders = pages.filter((page) => page.status === "untranslated")
+  const published = pages.filter((page) => page.status === "published")
   const temporary = pages.filter((page) => page.status === "temporary")
 
   assert.equal(placeholders.length, 0)
-  assert.equal(temporary.length, 4)
+  assert.equal(temporary.length, SUPPORTED_LOCALES.length)
+  assert.equal(pages.length, published.length + temporary.length)
+  assert.ok(published.every((page) => page.indexable))
   assert.ok(temporary.every((page) => !page.indexable))
-  assert.equal(pages.filter((page) => page.indexable).length, 452)
   assert.ok(pages.filter((page) => page.indexable).every((page) => page.description))
   assert.deepEqual(
     new Set(sitemapExcludedPaths()),

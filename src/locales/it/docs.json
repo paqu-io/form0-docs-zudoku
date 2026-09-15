@@ -24,6 +24,7 @@
     "install-update": { "title": "Installare e aggiornare" },
     "initialize-project": { "title": "Inizializzare un progetto" },
     "interactive-shell": { "title": "Shell interattiva" },
+    "ai-authoring": { "title": "Creazione con IA (anteprima)" },
     "schemas": {
       "load-edit": { "title": "Caricare e modificare gli schemi" },
       "validate-preview": { "title": "Validare e visualizzare l’anteprima" },
