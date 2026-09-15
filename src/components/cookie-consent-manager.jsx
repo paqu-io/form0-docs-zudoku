@@ -17,7 +17,7 @@ const CONSENT_COOKIE_DOMAIN = "form0.dev"
 const guiOptions = {
   consentModal: {
     layout: "box",
-    position: "bottom right",
+    position: "bottom left",
     equalWeightButtons: true,
     flipButtons: false,
   },

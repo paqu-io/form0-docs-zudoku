@@ -3,6 +3,7 @@ import { SiteFooter } from "./src/components/site-footer.jsx"
 import { LanguageSlot } from "./src/components/language-slot.jsx"
 import { MobileDrawerMenu } from "./src/components/mobile-drawer-menu.jsx"
 import { PageBadges } from "./src/components/page-badges.jsx"
+import { Context7Widget } from "./src/components/context7-widget.jsx"
 import { DesktopSectionTabs, TopNavHeightFix } from "./src/components/site-section-nav.jsx"
 import { createI18nPlugin } from "./src/plugins/i18n-plugin.jsx"
 import { createDefaultDarkThemePlugin } from "./src/plugins/default-dark-theme-plugin.jsx"
@@ -57,7 +58,12 @@ const config = {
     "head-navigation-end": () => <LanguageSlot />,
     "top-navigation-before": () => <DesktopSectionTabs />,
     "top-navigation-after": () => <TopNavHeightFix />,
-    "layout-after-head": () => <MobileDrawerMenu />,
+    "layout-after-head": () => (
+      <>
+        <MobileDrawerMenu />
+        <Context7Widget />
+      </>
+    ),
     "footer-before": () => <SiteFooter />,
   },
   docs: {
@@ -362,6 +368,10 @@ const config = {
       }
 
       /* CookieConsent tweaks */
+      html.show--consent #context7-widget,
+      html.show--preferences #context7-widget {
+        display: none;
+      }
       #cc-main .cm__btn--close,
       #cc-main .cm__close,
       #cc-main [data-cc="c-close"] {
