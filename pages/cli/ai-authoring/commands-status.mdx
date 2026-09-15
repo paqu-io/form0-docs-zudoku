@@ -9,24 +9,24 @@ description: Reference AI-mode commands, status output, busy prompts, queued fol
 
 AI mode accepts natural-language requests and slash commands:
 
-| Command                     | Purpose                                                                       |
-| --------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------- |
-| `/help`                     | Show the aligned AI command summary.                                          |
-| `/status`                   | Show schema, draft, model, authentication, policy, activity, and queue state. |
-| `/providers`                | List Pi providers, authentication methods, and model counts.                  |
-| `/models <provider>`        | List model identifiers for one provider.                                      |
-| `/login <provider> <api_key | oauth>`                                                                       | Authenticate with a provider using its Pi-defined flow. |
-| `/model <provider>/<model>` | Select the active model; without arguments, show the current model.           |
-| `/privacy`                  | Explain the effective schema cloud and consent policy.                        |
-| `/preview`                  | Print the complete current draft schema.                                      |
-| `/diff`                     | Show semantic mutations and the JSON diff for the pending proposal.           |
-| `/apply [schema-path]`      | Recheck and atomically save the pending proposal.                             |
-| `/discard`                  | Abandon the draft and restore the committed browser preview.                  |
-| `/undo`                     | Stage the last schema saved in this session for explicit approval.            |
-| `/new`                      | Start a new conversation while retaining the selected model.                  |
-| `/clear`                    | Delete stored history for this form and start again with the selected model.  |
-| `/cancel`                   | Abort the active request and clear queued follow-ups.                         |
-| `/exit`                     | Discard any draft and return to the previous shell state.                     |
+| Command                      | Purpose                                                                       |
+| ---------------------------- | ----------------------------------------------------------------------------- |
+| `/help`                      | Show the aligned AI command summary.                                          |
+| `/status`                    | Show schema, draft, model, authentication, policy, activity, and queue state. |
+| `/providers`                 | List Pi providers, authentication methods, and model counts.                  |
+| `/models <provider>`         | List model identifiers for one provider.                                      |
+| `/login <provider> <method>` | Authenticate using the Pi-defined `api_key` or `oauth` flow.                  |
+| `/model <provider>/<model>`  | Select the active model; without arguments, show the current model.           |
+| `/privacy`                   | Explain the effective schema cloud and consent policy.                        |
+| `/preview`                   | Print the complete current draft schema.                                      |
+| `/diff`                      | Show semantic mutations and the JSON diff for the pending proposal.           |
+| `/apply [schema-path]`       | Recheck and atomically save the pending proposal.                             |
+| `/discard`                   | Abandon the draft and restore the committed browser preview.                  |
+| `/undo`                      | Stage the last schema saved in this session for explicit approval.            |
+| `/new`                       | Start a new conversation while retaining the selected model.                  |
+| `/clear`                     | Delete stored history for this form and start again with the selected model.  |
+| `/cancel`                    | Abort the active request and clear queued follow-ups.                         |
+| `/exit`                      | Discard any draft and return to the previous shell state.                     |
 
 ## Status
 

@@ -64,21 +64,17 @@ const documentationItems = [
       doc("cli/install-update", "Install and update"),
       doc("cli/initialize-project", "Initialize a project"),
       doc("cli/interactive-shell", "Interactive shell"),
-      category(
-        "AI authoring",
-        [
-          doc("cli/ai-authoring/getting-started", "Getting started"),
-          doc("cli/ai-authoring/providers-models", "Providers and models"),
-          doc("cli/ai-authoring/authoring-workflow", "Authoring workflow"),
-          doc("cli/ai-authoring/commands-status", "Commands and status"),
-          doc("cli/ai-authoring/privacy-security", "Privacy and security"),
-          doc("cli/ai-authoring/limitations-troubleshooting", "Limitations and troubleshooting"),
-        ],
-        {
+      category("AI authoring", [
+        doc("cli/ai-authoring/overview", "Overview", {
           badge: { label: "Preview", color: "yellow" },
-          link: doc("cli/ai-authoring", "AI authoring"),
-        },
-      ),
+        }),
+        doc("cli/ai-authoring/getting-started", "Getting started"),
+        doc("cli/ai-authoring/providers-models", "Providers and models"),
+        doc("cli/ai-authoring/authoring-workflow", "Authoring workflow"),
+        doc("cli/ai-authoring/commands-status", "Commands and status"),
+        doc("cli/ai-authoring/privacy-security", "Privacy and security"),
+        doc("cli/ai-authoring/limitations-troubleshooting", "Limitations and troubleshooting"),
+      ]),
       category("Working with schemas", [
         doc("cli/schemas/load-edit", "Load and edit schemas"),
         doc("cli/schemas/validate-preview", "Validate and preview"),

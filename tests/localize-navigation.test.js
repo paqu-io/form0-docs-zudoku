@@ -143,9 +143,10 @@ test("translation resolution has deterministic locale and English fallbacks", ()
   assert.equal(resolveLabel({ label: "Untranslated", locale: "fr" }), "Untranslated")
 })
 
-test("AI authoring navigation is grouped, localized, and marked as preview", () => {
+test("AI authoring navigation is expand-only with a localized preview overview", () => {
   const [documentation] = localizeNavigation(navigationDefinition, "es", ({ label }) => {
     if (label === "AI authoring") return "Creación con IA"
+    if (label === "Overview") return "Descripción general"
     if (label === "Preview") return "Vista previa"
     return label
   })
@@ -153,9 +154,16 @@ test("AI authoring navigation is grouped, localized, and marked as preview", () 
   const ai = cli.items.find(({ label }) => label === "Creación con IA")
 
   assert.equal(ai.type, "category")
-  assert.deepEqual(ai.badge, { label: "Vista previa", color: "yellow" })
-  assert.equal(ai.link.path, "/es/cli/ai-authoring")
-  assert.equal(ai.items.length, 6)
+  assert.equal(ai.badge, undefined)
+  assert.equal(ai.link, undefined)
+  assert.deepEqual(ai.items[0], {
+    type: "doc",
+    file: "es/cli/ai-authoring/overview",
+    label: "Descripción general",
+    path: "/es/cli/ai-authoring/overview",
+    badge: { label: "Vista previa", color: "yellow" },
+  })
+  assert.equal(ai.items.length, 7)
 })
 
 test("the immutable source definition is never mutated", () => {

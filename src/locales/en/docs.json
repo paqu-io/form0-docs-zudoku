@@ -25,7 +25,7 @@
     "initialize-project": { "title": "Initialize a project" },
     "interactive-shell": { "title": "Interactive shell" },
     "ai-authoring": {
-      "title": "AI authoring",
+      "overview": { "title": "Overview" },
       "getting-started": { "title": "Getting started" },
       "providers-models": { "title": "Providers and models" },
       "authoring-workflow": { "title": "Authoring workflow" },

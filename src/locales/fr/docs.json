@@ -25,7 +25,7 @@
     "initialize-project": { "title": "Initialiser un projet" },
     "interactive-shell": { "title": "Shell interactif" },
     "ai-authoring": {
-      "title": "Création avec IA",
+      "overview": { "title": "Vue d’ensemble" },
       "getting-started": { "title": "Prise en main" },
       "providers-models": { "title": "Fournisseurs et modèles" },
       "authoring-workflow": { "title": "Flux de création" },

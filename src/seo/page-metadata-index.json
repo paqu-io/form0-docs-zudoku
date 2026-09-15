@@ -674,6 +674,33 @@
       }
     ]
   },
+  "/cli/ai-authoring/overview": {
+    "pathname": "/cli/ai-authoring/overview",
+    "translationKey": "/cli/ai-authoring/overview",
+    "locale": "en",
+    "title": "AI authoring",
+    "description": "Generate and edit form0 schemas through reviewed, validated AI mutation batches.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/overview"
+      }
+    ]
+  },
   "/cli/ai-authoring/privacy-security": {
     "pathname": "/cli/ai-authoring/privacy-security",
     "translationKey": "/cli/ai-authoring/privacy-security",
@@ -725,33 +752,6 @@
       {
         "locale": "it",
         "pathname": "/it/cli/ai-authoring/providers-models"
-      }
-    ]
-  },
-  "/cli/ai-authoring": {
-    "pathname": "/cli/ai-authoring",
-    "translationKey": "/cli/ai-authoring",
-    "locale": "en",
-    "title": "AI authoring",
-    "description": "Generate and edit form0 schemas through reviewed, validated AI mutation batches.",
-    "indexable": true,
-    "status": "published",
-    "alternates": [
-      {
-        "locale": "en",
-        "pathname": "/cli/ai-authoring"
-      },
-      {
-        "locale": "es",
-        "pathname": "/es/cli/ai-authoring"
-      },
-      {
-        "locale": "fr",
-        "pathname": "/fr/cli/ai-authoring"
-      },
-      {
-        "locale": "it",
-        "pathname": "/it/cli/ai-authoring"
       }
     ]
   },
@@ -3428,6 +3428,33 @@
       }
     ]
   },
+  "/es/cli/ai-authoring/overview": {
+    "pathname": "/es/cli/ai-authoring/overview",
+    "translationKey": "/cli/ai-authoring/overview",
+    "locale": "es",
+    "title": "Creación con IA",
+    "description": "Genera y edita esquemas form0 mediante lotes de mutaciones revisados y validados.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/overview"
+      }
+    ]
+  },
   "/es/cli/ai-authoring/privacy-security": {
     "pathname": "/es/cli/ai-authoring/privacy-security",
     "translationKey": "/cli/ai-authoring/privacy-security",
@@ -3479,33 +3506,6 @@
       {
         "locale": "it",
         "pathname": "/it/cli/ai-authoring/providers-models"
-      }
-    ]
-  },
-  "/es/cli/ai-authoring": {
-    "pathname": "/es/cli/ai-authoring",
-    "translationKey": "/cli/ai-authoring",
-    "locale": "es",
-    "title": "Creación con IA",
-    "description": "Genera y edita esquemas form0 mediante lotes de mutaciones revisados y validados.",
-    "indexable": true,
-    "status": "published",
-    "alternates": [
-      {
-        "locale": "en",
-        "pathname": "/cli/ai-authoring"
-      },
-      {
-        "locale": "es",
-        "pathname": "/es/cli/ai-authoring"
-      },
-      {
-        "locale": "fr",
-        "pathname": "/fr/cli/ai-authoring"
-      },
-      {
-        "locale": "it",
-        "pathname": "/it/cli/ai-authoring"
       }
     ]
   },
@@ -6678,6 +6678,33 @@
       }
     ]
   },
+  "/fr/cli/ai-authoring/overview": {
+    "pathname": "/fr/cli/ai-authoring/overview",
+    "translationKey": "/cli/ai-authoring/overview",
+    "locale": "fr",
+    "title": "Création avec IA",
+    "description": "Générez et modifiez des schémas form0 avec des lots de mutations validés et approuvés.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/overview"
+      }
+    ]
+  },
   "/fr/cli/ai-authoring/privacy-security": {
     "pathname": "/fr/cli/ai-authoring/privacy-security",
     "translationKey": "/cli/ai-authoring/privacy-security",
@@ -6729,33 +6756,6 @@
       {
         "locale": "it",
         "pathname": "/it/cli/ai-authoring/providers-models"
-      }
-    ]
-  },
-  "/fr/cli/ai-authoring": {
-    "pathname": "/fr/cli/ai-authoring",
-    "translationKey": "/cli/ai-authoring",
-    "locale": "fr",
-    "title": "Création avec IA",
-    "description": "Générez et modifiez des schémas form0 avec des lots de mutations validés et approuvés.",
-    "indexable": true,
-    "status": "published",
-    "alternates": [
-      {
-        "locale": "en",
-        "pathname": "/cli/ai-authoring"
-      },
-      {
-        "locale": "es",
-        "pathname": "/es/cli/ai-authoring"
-      },
-      {
-        "locale": "fr",
-        "pathname": "/fr/cli/ai-authoring"
-      },
-      {
-        "locale": "it",
-        "pathname": "/it/cli/ai-authoring"
       }
     ]
   },
@@ -9992,6 +9992,33 @@
       }
     ]
   },
+  "/it/cli/ai-authoring/overview": {
+    "pathname": "/it/cli/ai-authoring/overview",
+    "translationKey": "/cli/ai-authoring/overview",
+    "locale": "it",
+    "title": "Creazione con IA",
+    "description": "Genera e modifica schemi form0 con batch di mutazioni convalidati e approvati.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/cli/ai-authoring/overview"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/cli/ai-authoring/overview"
+      }
+    ]
+  },
   "/it/cli/ai-authoring/privacy-security": {
     "pathname": "/it/cli/ai-authoring/privacy-security",
     "translationKey": "/cli/ai-authoring/privacy-security",
@@ -10043,33 +10070,6 @@
       {
         "locale": "it",
         "pathname": "/it/cli/ai-authoring/providers-models"
-      }
-    ]
-  },
-  "/it/cli/ai-authoring": {
-    "pathname": "/it/cli/ai-authoring",
-    "translationKey": "/cli/ai-authoring",
-    "locale": "it",
-    "title": "Creazione con IA",
-    "description": "Genera e modifica schemi form0 con batch di mutazioni convalidati e approvati.",
-    "indexable": true,
-    "status": "published",
-    "alternates": [
-      {
-        "locale": "en",
-        "pathname": "/cli/ai-authoring"
-      },
-      {
-        "locale": "es",
-        "pathname": "/es/cli/ai-authoring"
-      },
-      {
-        "locale": "fr",
-        "pathname": "/fr/cli/ai-authoring"
-      },
-      {
-        "locale": "it",
-        "pathname": "/it/cli/ai-authoring"
       }
     ]
   },

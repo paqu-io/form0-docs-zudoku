@@ -9,24 +9,24 @@ description: Referencia de comandos, estado, prompts ocupados, cola de seguimien
 
 El modo AI acepta solicitudes en lenguaje natural y comandos con barra:
 
-| Comando                     | Propósito                                                                     |
-| --------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `/help`                     | Muestra el resumen alineado de comandos AI.                                   |
-| `/status`                   | Muestra esquema, borrador, modelo, autenticación, política, actividad y cola. |
-| `/providers`                | Lista proveedores Pi, métodos de autenticación y cantidades de modelos.       |
-| `/models <provider>`        | Lista los identificadores de modelos de un proveedor.                         |
-| `/login <provider> <api_key | oauth>`                                                                       | Autentica con el flujo definido por Pi para el proveedor. |
-| `/model <provider>/<model>` | Selecciona el modelo; sin argumentos, muestra el actual.                      |
-| `/privacy`                  | Explica la política efectiva de nube y consentimiento del esquema.            |
-| `/preview`                  | Imprime el esquema completo del borrador actual.                              |
-| `/diff`                     | Muestra las mutaciones semánticas y el diff JSON de la propuesta.             |
-| `/apply [schema-path]`      | Comprueba y guarda atómicamente la propuesta pendiente.                       |
-| `/discard`                  | Abandona el borrador y restaura la vista previa confirmada.                   |
-| `/undo`                     | Prepara el último esquema guardado en esta sesión para aprobarlo.             |
-| `/new`                      | Inicia una conversación conservando el modelo seleccionado.                   |
-| `/clear`                    | Borra el historial de este formulario y conserva el modelo.                   |
-| `/cancel`                   | Cancela la solicitud activa y vacía la cola de seguimientos.                  |
-| `/exit`                     | Descarta el borrador y vuelve al estado anterior de la shell.                 |
+| Comando                      | Propósito                                                                     |
+| ---------------------------- | ----------------------------------------------------------------------------- |
+| `/help`                      | Muestra el resumen alineado de comandos AI.                                   |
+| `/status`                    | Muestra esquema, borrador, modelo, autenticación, política, actividad y cola. |
+| `/providers`                 | Lista proveedores Pi, métodos de autenticación y cantidades de modelos.       |
+| `/models <provider>`         | Lista los identificadores de modelos de un proveedor.                         |
+| `/login <provider> <method>` | Autentica mediante el flujo `api_key` u `oauth` definido por Pi.              |
+| `/model <provider>/<model>`  | Selecciona el modelo; sin argumentos, muestra el actual.                      |
+| `/privacy`                   | Explica la política efectiva de nube y consentimiento del esquema.            |
+| `/preview`                   | Imprime el esquema completo del borrador actual.                              |
+| `/diff`                      | Muestra las mutaciones semánticas y el diff JSON de la propuesta.             |
+| `/apply [schema-path]`       | Comprueba y guarda atómicamente la propuesta pendiente.                       |
+| `/discard`                   | Abandona el borrador y restaura la vista previa confirmada.                   |
+| `/undo`                      | Prepara el último esquema guardado en esta sesión para aprobarlo.             |
+| `/new`                       | Inicia una conversación conservando el modelo seleccionado.                   |
+| `/clear`                     | Borra el historial de este formulario y conserva el modelo.                   |
+| `/cancel`                    | Cancela la solicitud activa y vacía la cola de seguimientos.                  |
+| `/exit`                      | Descarta el borrador y vuelve al estado anterior de la shell.                 |
 
 ## Estado
 

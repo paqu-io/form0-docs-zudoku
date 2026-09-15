@@ -9,24 +9,24 @@ description: Riferimento per comandi, stato, prompt occupati, coda dei follow-up
 
 La modalità AI accetta richieste in linguaggio naturale e comandi con barra:
 
-| Comando                     | Scopo                                                                     |
-| --------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------- |
-| `/help`                     | Mostra il riepilogo allineato dei comandi AI.                             |
-| `/status`                   | Mostra schema, bozza, modello, autenticazione, politica, attività e coda. |
-| `/providers`                | Elenca provider Pi, metodi di autenticazione e numero di modelli.         |
-| `/models <provider>`        | Elenca gli identificatori dei modelli di un provider.                     |
-| `/login <provider> <api_key | oauth>`                                                                   | Autentica con il flusso Pi definito dal provider. |
-| `/model <provider>/<model>` | Seleziona il modello; senza argomenti, mostra quello corrente.            |
-| `/privacy`                  | Spiega la politica cloud e di consenso effettiva dello schema.            |
-| `/preview`                  | Stampa lo schema completo della bozza corrente.                           |
-| `/diff`                     | Mostra mutazioni semantiche e diff JSON della proposta.                   |
-| `/apply [schema-path]`      | Ricontrolla e salva atomicamente la proposta in sospeso.                  |
-| `/discard`                  | Abbandona la bozza e ripristina l'anteprima confermata.                   |
-| `/undo`                     | Prepara l'ultimo schema salvato nella sessione per l'approvazione.        |
-| `/new`                      | Avvia una conversazione mantenendo il modello selezionato.                |
-| `/clear`                    | Elimina la cronologia del modulo e mantiene il modello.                   |
-| `/cancel`                   | Annulla la richiesta attiva e svuota la coda dei follow-up.               |
-| `/exit`                     | Scarta la bozza e torna allo stato precedente della shell.                |
+| Comando                      | Scopo                                                                     |
+| ---------------------------- | ------------------------------------------------------------------------- |
+| `/help`                      | Mostra il riepilogo allineato dei comandi AI.                             |
+| `/status`                    | Mostra schema, bozza, modello, autenticazione, politica, attività e coda. |
+| `/providers`                 | Elenca provider Pi, metodi di autenticazione e numero di modelli.         |
+| `/models <provider>`         | Elenca gli identificatori dei modelli di un provider.                     |
+| `/login <provider> <method>` | Autentica tramite il flusso `api_key` o `oauth` definito da Pi.           |
+| `/model <provider>/<model>`  | Seleziona il modello; senza argomenti, mostra quello corrente.            |
+| `/privacy`                   | Spiega la politica cloud e di consenso effettiva dello schema.            |
+| `/preview`                   | Stampa lo schema completo della bozza corrente.                           |
+| `/diff`                      | Mostra mutazioni semantiche e diff JSON della proposta.                   |
+| `/apply [schema-path]`       | Ricontrolla e salva atomicamente la proposta in sospeso.                  |
+| `/discard`                   | Abbandona la bozza e ripristina l'anteprima confermata.                   |
+| `/undo`                      | Prepara l'ultimo schema salvato nella sessione per l'approvazione.        |
+| `/new`                       | Avvia una conversazione mantenendo il modello selezionato.                |
+| `/clear`                     | Elimina la cronologia del modulo e mantiene il modello.                   |
+| `/cancel`                    | Annulla la richiesta attiva e svuota la coda dei follow-up.               |
+| `/exit`                      | Scarta la bozza e torna allo stato precedente della shell.                |
 
 ## Stato
 

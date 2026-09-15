@@ -208,7 +208,7 @@ for (const locale of SUPPORTED_LOCALES) {
     failures.push(`Missing dist/${calloutPath}`)
   }
 
-  const aiAuthoringPath = `${prefix}cli/ai-authoring.html`
+  const aiAuthoringPath = `${prefix}cli/ai-authoring/overview.html`
   try {
     const aiAuthoringHtml = await readFile(path.join(outputRoot, aiAuthoringPath), "utf8")
     if (
@@ -219,15 +219,63 @@ for (const locale of SUPPORTED_LOCALES) {
       failures.push(`${aiAuthoringPath} does not contain the expected warning callout styling`)
     }
 
-    const previewBadge = `"badge":{"label":"${commonMessages[locale].nav.preview}","color":"yellow"}`
-    const previewBadgeCount = aiAuthoringHtml.split(previewBadge).length - 1
-    if (previewBadgeCount < 2) {
+    const previewLabel = commonMessages[locale].nav.preview
+    const hasRenderedPreviewBadge = (source, href) => {
+      const linkStart = source.indexOf(`href="${href}"`)
+      const linkEnd = source.indexOf("</a>", linkStart)
+      if (linkStart < 0 || linkEnd < 0) return false
+      const linkHtml = source.slice(linkStart, linkEnd)
+      return linkHtml.includes(`>${previewLabel}</span>`) && linkHtml.includes("bg-yellow-")
+    }
+    if (!hasRenderedPreviewBadge(aiAuthoringHtml, `/${prefix}cli/ai-authoring/overview`)) {
       failures.push(
-        `${aiAuthoringPath} does not contain localized Preview badges for AI authoring and AI metadata`,
+        `${aiAuthoringPath} does not render its localized Preview badge in the navigation link`,
       )
     }
   } catch {
     failures.push(`Missing dist/${aiAuthoringPath}`)
+  }
+
+  const aiMetadataPath = `${prefix}core/ai-metadata.html`
+  try {
+    const aiMetadataHtml = await readFile(path.join(outputRoot, aiMetadataPath), "utf8")
+    const previewLabel = commonMessages[locale].nav.preview
+    const metadataHref = `/${prefix}core/ai-metadata`
+    const linkStart = aiMetadataHtml.indexOf(`href="${metadataHref}"`)
+    const linkEnd = aiMetadataHtml.indexOf("</a>", linkStart)
+    const linkHtml = linkStart >= 0 && linkEnd >= 0 ? aiMetadataHtml.slice(linkStart, linkEnd) : ""
+    if (!linkHtml.includes(`>${previewLabel}</span>`) || !linkHtml.includes("bg-yellow-")) {
+      failures.push(`${aiMetadataPath} does not render its localized Preview badge`)
+    }
+  } catch {
+    failures.push(`Missing dist/${aiMetadataPath}`)
+  }
+
+  const legacyAIPath = `${prefix}cli/ai-authoring.html`
+  try {
+    const legacyAIHtml = await readFile(path.join(outputRoot, legacyAIPath), "utf8")
+    const overviewHref = `/${prefix}cli/ai-authoring/overview`
+    if (!legacyAIHtml.includes(`location.href=${JSON.stringify(overviewHref)}`)) {
+      failures.push(`${legacyAIPath} does not redirect to ${overviewHref}`)
+    }
+  } catch {
+    failures.push(`Missing dist/${legacyAIPath}`)
+  }
+
+  const aiCommandsPath = `${prefix}cli/ai-authoring/commands-status.html`
+  try {
+    const aiCommandsHtml = await readFile(path.join(outputRoot, aiCommandsPath), "utf8")
+    const commandTable = aiCommandsHtml.match(/<table\b[\s\S]*?<\/table>/)?.[0]
+    const commandRows = [...(commandTable?.matchAll(/<tr\b[\s\S]*?<\/tr>/g) ?? [])]
+    if (
+      !commandTable ||
+      commandRows.length === 0 ||
+      commandRows.some(([row]) => (row.match(/<t[hd]\b/g) ?? []).length !== 2)
+    ) {
+      failures.push(`${aiCommandsPath} does not contain a consistent two-column command table`)
+    }
+  } catch {
+    failures.push(`Missing dist/${aiCommandsPath}`)
   }
 
   if (locale !== DEFAULT_LOCALE) {

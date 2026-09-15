@@ -9,24 +9,24 @@ description: Référence des commandes, de l'état, des invites occupées, de la
 
 Le mode AI accepte des demandes en langage naturel et des commandes préfixées :
 
-| Commande                    | Rôle                                                                              |
-| --------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------- |
-| `/help`                     | Affiche le résumé aligné des commandes AI.                                        |
-| `/status`                   | Affiche schéma, brouillon, modèle, authentification, politique, activité et file. |
-| `/providers`                | Liste fournisseurs Pi, méthodes d'authentification et nombres de modèles.         |
-| `/models <provider>`        | Liste les identifiants de modèles d'un fournisseur.                               |
-| `/login <provider> <api_key | oauth>`                                                                           | Authentifie avec le flux Pi du fournisseur. |
-| `/model <provider>/<model>` | Sélectionne le modèle ; sans argument, affiche le modèle actuel.                  |
-| `/privacy`                  | Explique la politique cloud et de consentement effective du schéma.               |
-| `/preview`                  | Affiche le schéma complet du brouillon courant.                                   |
-| `/diff`                     | Affiche les mutations sémantiques et le diff JSON de la proposition.              |
-| `/apply [schema-path]`      | Revérifie et enregistre atomiquement la proposition.                              |
-| `/discard`                  | Abandonne le brouillon et restaure l'aperçu validé.                               |
-| `/undo`                     | Prépare le dernier schéma enregistré dans cette session pour approbation.         |
-| `/new`                      | Démarre une conversation en conservant le modèle sélectionné.                     |
-| `/clear`                    | Efface l'historique du formulaire et conserve le modèle.                          |
-| `/cancel`                   | Annule la requête active et vide la file des suivis.                              |
-| `/exit`                     | Écarte le brouillon et revient à l'état précédent du shell.                       |
+| Commande                     | Rôle                                                                              |
+| ---------------------------- | --------------------------------------------------------------------------------- |
+| `/help`                      | Affiche le résumé aligné des commandes AI.                                        |
+| `/status`                    | Affiche schéma, brouillon, modèle, authentification, politique, activité et file. |
+| `/providers`                 | Liste fournisseurs Pi, méthodes d'authentification et nombres de modèles.         |
+| `/models <provider>`         | Liste les identifiants de modèles d'un fournisseur.                               |
+| `/login <provider> <method>` | Authentifie via le flux `api_key` ou `oauth` défini par Pi.                       |
+| `/model <provider>/<model>`  | Sélectionne le modèle ; sans argument, affiche le modèle actuel.                  |
+| `/privacy`                   | Explique la politique cloud et de consentement effective du schéma.               |
+| `/preview`                   | Affiche le schéma complet du brouillon courant.                                   |
+| `/diff`                      | Affiche les mutations sémantiques et le diff JSON de la proposition.              |
+| `/apply [schema-path]`       | Revérifie et enregistre atomiquement la proposition.                              |
+| `/discard`                   | Abandonne le brouillon et restaure l'aperçu validé.                               |
+| `/undo`                      | Prépare le dernier schéma enregistré dans cette session pour approbation.         |
+| `/new`                       | Démarre une conversation en conservant le modèle sélectionné.                     |
+| `/clear`                     | Efface l'historique du formulaire et conserve le modèle.                          |
+| `/cancel`                    | Annule la requête active et vide la file des suivis.                              |
+| `/exit`                      | Écarte le brouillon et revient à l'état précédent du shell.                       |
 
 ## État
 

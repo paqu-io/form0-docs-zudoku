@@ -52,7 +52,13 @@ const config = {
     defaultTitle: TAB_DEFAULT_TITLE,
   },
   navigation: [],
-  redirects: [{ from: "/", to: "/getting-started/quickstart" }],
+  redirects: [
+    { from: "/", to: "/getting-started/quickstart" },
+    { from: "/cli/ai-authoring", to: "/cli/ai-authoring/overview" },
+    { from: "/es/cli/ai-authoring", to: "/es/cli/ai-authoring/overview" },
+    { from: "/fr/cli/ai-authoring", to: "/fr/cli/ai-authoring/overview" },
+    { from: "/it/cli/ai-authoring", to: "/it/cli/ai-authoring/overview" },
+  ],
   slots: {
     "head-navigation-start": () => <DocsWordmark />,
     "head-navigation-end": () => <LanguageSlot />,
