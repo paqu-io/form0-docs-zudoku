@@ -33,6 +33,18 @@ form0(server,ai)>
 L'avvio della modalità AI non avvia automaticamente un server. Un server esistente resta attivo e
 mostra subito le bozze convalidate.
 
+Puoi anche avviarli entrambi dalla modalità AI, anche se il modulo non è ancora stato salvato:
+
+```ansi
+form0> ai
+form0(ai)> /serve --app
+form0(server,ai)>
+```
+
+Il server riceve lo schema di lavoro corrente, inclusa una proposta convalidata non applicata. In
+modalità AI, l'input senza prefisso è sempre una richiesta al modello; usa comandi con barra come
+`/serve`, `/validate` e `/preview` per le azioni della CLI.
+
 ## Autenticarsi e selezionare un modello
 
 Elenca il catalogo, autenticati, consulta gli identificatori e seleziona un modello:

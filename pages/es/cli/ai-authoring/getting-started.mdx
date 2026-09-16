@@ -33,6 +33,18 @@ form0(server,ai)>
 Iniciar el modo AI no arranca automáticamente un servidor. Si ya existe, permanece activo y muestra
 los borradores validados inmediatamente.
 
+También puedes iniciar ambos desde el modo AI, incluso si el formulario aún no se ha guardado:
+
+```ansi
+form0> ai
+form0(ai)> /serve --app
+form0(server,ai)>
+```
+
+El servidor recibe el esquema de trabajo actual, incluida una propuesta validada sin aplicar. En el
+modo AI, el texto sin prefijo siempre es una solicitud al modelo; usa comandos con barra como
+`/serve`, `/validate` y `/preview` para las acciones de la CLI.
+
 ## Autenticar y seleccionar un modelo
 
 Lista el catálogo, autentícate, consulta los identificadores y selecciona un modelo:

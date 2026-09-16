@@ -40,16 +40,22 @@ installato prevale se la documentazione remota è in disaccordo. Consulta
 
 ## Esaminare e modificare
 
-Dopo una proposta valida, ispeziona la bozza e le due rappresentazioni del diff:
+Dopo una proposta valida, ispeziona il modulo di lavoro e il diff cumulativo:
 
 ```ansi
 form0(ai)> /preview
 form0(ai)> /diff
 ```
 
-Il diff semantico spiega l'intento per campo; il diff JSON mostra le modifiche al documento. Chiedi
-una revisione in linguaggio naturale per produrre un altro batch coerente. Si esamina una sola
-proposta in sospeso alla volta.
+`/diff` confronta lo schema all'ingresso in modalità AI con lo schema di lavoro, incluse le modifiche
+applicate e in sospeso. `/diff --pending` confronta l'ultimo schema applicato con la sola proposta in
+sospeso. Usa `/json` per vedere lo schema di lavoro grezzo. Chiedi una revisione in linguaggio
+naturale per produrre un altro batch coerente. Si esamina una sola proposta in sospeso alla volta.
+
+Il modello spiega brevemente una proposta completata. Se invia mutazioni valide senza testo di
+risposta, la CLI mostra un breve riepilogo deterministico prima dei comandi di revisione. Le richieste
+di ispezione, spiegazione o diagnosi senza implementazione devono restituire una spiegazione e nessuna
+proposta.
 
 Se il server di anteprima è attivo, la bozza valida viene inviata subito con l'indicazione
 **AI draft**. Rimane comunque un'anteprima in memoria.
@@ -72,7 +78,8 @@ Scartare abbandona la proposta e ripristina nel browser la versione confermata:
 form0(ai)> /discard
 ```
 
-Uscire dalla modalità AI ripristina l'anteprima allo stesso modo.
+Uscire dalla modalità AI ripristina l'anteprima allo stesso modo. Se una proposta non è stata
+applicata, `/exit` chiede conferma prima di scartarla.
 
 ## Annullare
 

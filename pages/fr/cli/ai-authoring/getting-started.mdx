@@ -33,6 +33,19 @@ form0(server,ai)>
 Le démarrage du mode AI ne lance pas automatiquement un serveur. Un serveur existant reste actif et
 affiche immédiatement les brouillons validés.
 
+Vous pouvez aussi lancer les deux depuis le mode AI, même si le formulaire n'a pas encore été
+enregistré :
+
+```ansi
+form0> ai
+form0(ai)> /serve --app
+form0(server,ai)>
+```
+
+Le serveur reçoit le schéma de travail courant, y compris une proposition validée non appliquée. En
+mode AI, toute saisie sans préfixe est une demande au modèle ; utilisez des commandes préfixées comme
+`/serve`, `/validate` et `/preview` pour les actions de la CLI.
+
 ## S'authentifier et choisir un modèle
 
 Listez le catalogue, authentifiez-vous, consultez les identifiants et choisissez un modèle :

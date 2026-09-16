@@ -1,13 +1,35 @@
 ---
-title: Coque interactive
-description: Travaillez avec un formulaire chargé schema dans une session form0-cli persistante.
+title: Shell interactif
+description: Travaillez avec un schéma chargé dans une session form0-cli persistante.
 ---
 
 <PageBadges />
 
-Exécutez `form0` sans arguments pour démarrer le shell interactif. Une session peut garder un schema chargé
-pendant que vous validez, prévisualisez, exécutez, regardez, modifiez ou servez.
+Exécutez `form0` sans argument pour démarrer le shell interactif. Une session peut conserver un
+schéma chargé pendant sa validation, son aperçu, son exécution, sa surveillance ou sa modification.
 
-Utilisez `help` pour lister les commandes disponibles dans le mode courant, `status` pour inspecter la session, et
-`exit` pour quitter le CLI . Commandes telles que `load` , `schema edit` et `serve` Mettre à jour l'invite
-Affiche l'état de la session active.
+Utilisez `help` pour lister les commandes du mode courant, `status` pour inspecter la session et
+`exit` pour quitter la CLI. Des commandes comme `load`, `schema edit` et `serve` actualisent l'invite
+afin d'indiquer l'état actif.
+
+## Syntaxe selon le mode
+
+| Invite              | Comportement de la saisie                                                                                             |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `form0>`            | Saisissez les commandes du shell sans préfixe.                                                                        |
+| `form0(server)>`    | Utilisez les commandes sûres affichées par `help`, comme `validate`, `preview`, `serve status`, `serve stop` ou `ai`. |
+| `form0(schema)>`    | Saisissez les commandes de l'éditeur de schéma sans préfixe.                                                          |
+| `form0(ai)>`        | Le texte sans préfixe va au modèle ; les actions de la CLI commencent toujours par `/`.                               |
+| `form0(server,ai)>` | Utilisez les commandes AI préfixées, dont `/preview`, `/validate`, `/serve status` et `/serve stop`.                  |
+
+Les demandes en langage naturel restent ainsi sans ambiguïté en mode AI, tandis que les autres modes
+conservent une syntaxe concise.
+
+L'installation d'un connecteur est une commande de terminal et non une action du shell interactif :
+
+```bash
+form0 connector install <name-or-path>
+form0 connector --help
+```
+
+Dans le shell, utilisez `connector help` pour charger, configurer, tester et inspecter les connecteurs.

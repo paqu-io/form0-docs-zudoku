@@ -40,16 +40,21 @@ capabilities are authoritative if remote documentation disagrees. See
 
 ## Review and revise
 
-After a valid proposal, inspect the whole draft and both diff representations:
+After a valid proposal, inspect the working form and cumulative diff:
 
 ```ansi
 form0(ai)> /preview
 form0(ai)> /diff
 ```
 
-The semantic diff explains field-level intent; the JSON diff shows document-level changes. Ask for a
-revision in natural language to produce a new coherent batch. Only one pending proposal is reviewed
-at a time.
+`/diff` compares the schema from AI entry with the current working schema, including applied and
+pending changes. `/diff --pending` compares the most recently applied schema with only the pending
+proposal. Use `/json` when you need the raw working schema. Ask for a revision in natural language to
+produce a new coherent batch. Only one pending proposal is reviewed at a time.
+
+The model briefly explains a completed proposal. If it submits valid mutations without response
+text, the CLI prints a short deterministic mutation summary before the review commands. Requests to
+inspect, explain, or diagnose without implementing should return an explanation and no proposal.
 
 If the preview server is running, the valid draft is broadcast immediately with an **AI draft**
 label. This is still an in-memory preview.
@@ -72,7 +77,8 @@ Discard abandons the pending proposal and restores the committed browser preview
 form0(ai)> /discard
 ```
 
-Exiting AI mode has the same preview-restoration behavior.
+Exiting AI mode has the same preview-restoration behavior. If a proposal is still unapplied, `/exit`
+asks for confirmation before discarding it.
 
 ## Undo
 

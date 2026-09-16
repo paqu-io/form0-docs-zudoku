@@ -7,26 +7,32 @@ description: Referencia de comandos, estado, prompts ocupados, cola de seguimien
 
 ## Referencia de comandos
 
-El modo AI acepta solicitudes en lenguaje natural y comandos con barra:
+El modo AI acepta solicitudes en lenguaje natural y comandos con barra. Todo texto sin prefijo se
+envía al modelo; cada comando determinista empieza por `/`. Por ejemplo, usa `/preview`, no `preview`.
 
-| Comando                      | Propósito                                                                     |
-| ---------------------------- | ----------------------------------------------------------------------------- |
-| `/help`                      | Muestra el resumen alineado de comandos AI.                                   |
-| `/status`                    | Muestra esquema, borrador, modelo, autenticación, política, actividad y cola. |
-| `/providers`                 | Lista proveedores Pi, métodos de autenticación y cantidades de modelos.       |
-| `/models <provider>`         | Lista los identificadores de modelos de un proveedor.                         |
-| `/login <provider> <method>` | Autentica mediante el flujo `api_key` u `oauth` definido por Pi.              |
-| `/model <provider>/<model>`  | Selecciona el modelo; sin argumentos, muestra el actual.                      |
-| `/privacy`                   | Explica la política efectiva de nube y consentimiento del esquema.            |
-| `/preview`                   | Imprime el esquema completo del borrador actual.                              |
-| `/diff`                      | Muestra las mutaciones semánticas y el diff JSON de la propuesta.             |
-| `/apply [schema-path]`       | Comprueba y guarda atómicamente la propuesta pendiente.                       |
-| `/discard`                   | Abandona el borrador y restaura la vista previa confirmada.                   |
-| `/undo`                      | Prepara el último esquema guardado en esta sesión para aprobarlo.             |
-| `/new`                       | Inicia una conversación conservando el modelo seleccionado.                   |
-| `/clear`                     | Borra el historial de este formulario y conserva el modelo.                   |
-| `/cancel`                    | Cancela la solicitud activa y vacía la cola de seguimientos.                  |
-| `/exit`                      | Descarta el borrador y vuelve al estado anterior de la shell.                 |
+| Comando                        | Propósito                                                                     |
+| ------------------------------ | ----------------------------------------------------------------------------- |
+| `/help`                        | Muestra el resumen alineado de comandos AI.                                   |
+| `/status`                      | Muestra esquema, borrador, modelo, autenticación, política, actividad y cola. |
+| `/providers`                   | Lista proveedores Pi, métodos de autenticación y cantidades de modelos.       |
+| `/models <provider>`           | Lista los identificadores de modelos de un proveedor.                         |
+| `/login <provider> <method>`   | Autentica mediante el flujo `api_key` u `oauth` definido por Pi.              |
+| `/model [provider/model]`      | Abre el selector o elige un proveedor y modelo explícitos.                    |
+| `/privacy`                     | Explica la política efectiva de nube y consentimiento del esquema.            |
+| `/preview`                     | Muestra el árbol de formulario legible del esquema de trabajo.                |
+| `/json`                        | Imprime el esquema de trabajo como JSON sin procesar.                         |
+| `/validate`                    | Valida el esquema de trabajo, incluida una propuesta sin aplicar.             |
+| `/serve [options]`             | Inicia la vista previa; `--app` inicia también la app configurada.            |
+| `/serve status`, `/serve stop` | Consulta o detiene los servidores sin salir del modo AI.                      |
+| `/diff`                        | Muestra los cambios acumulados desde que se entró en el modo AI.              |
+| `/diff --pending`              | Muestra solo los cambios desde la última aplicación.                          |
+| `/apply [schema-path]`         | Comprueba y guarda atómicamente la propuesta pendiente.                       |
+| `/discard`                     | Abandona el borrador y restaura la vista previa confirmada.                   |
+| `/undo`                        | Prepara el último esquema guardado en esta sesión para aprobarlo.             |
+| `/new`                         | Inicia una conversación conservando el modelo seleccionado.                   |
+| `/clear`                       | Borra el historial de este formulario y conserva el modelo.                   |
+| `/cancel`                      | Cancela la solicitud activa y vacía la cola de seguimientos.                  |
+| `/exit`                        | Vuelve a la shell; pide confirmación si hay una propuesta sin aplicar.        |
 
 ## Estado
 
@@ -68,9 +74,9 @@ ocupado se pone en cola FIFO y se confirma indicando su posición.
 
 ## Comandos disponibles mientras está ocupado
 
-Durante una solicitud siguen disponibles `/help`, `/status`, `/privacy` y `/cancel`. Los demás
-comandos con barra se rechazan hasta que termine, para evitar cambios de modelo, conversación o
-borrador bajo una solicitud activa.
+Durante una solicitud siguen disponibles `/help`, `/status`, `/privacy`, `/cancel`, `/serve status`
+y `/serve stop`. Los demás comandos con barra se rechazan hasta que termine, para evitar cambios de
+modelo, conversación o borrador bajo una solicitud activa.
 
 La cancelación pide a Pi detener la solicitud y vacía todos los seguimientos. Si tiene éxito, vuelve
 al prompt disponible sin mostrar la cancelación del proveedor como un segundo error.

@@ -33,6 +33,18 @@ form0(server,ai)>
 Starting AI mode does not automatically start a server. An existing server remains active and shows
 validated drafts immediately.
 
+You can also start both from AI mode, including when the form has not been saved yet:
+
+```ansi
+form0> ai
+form0(ai)> /serve --app
+form0(server,ai)>
+```
+
+The server receives the current working schema, including a validated unapplied proposal. In AI
+mode, unprefixed input is always a model request; use slash commands such as `/serve`, `/validate`,
+and `/preview` for CLI actions.
+
 ## Authenticate and select a model
 
 List the provider catalog, authenticate, inspect model identifiers, and select one:

@@ -40,16 +40,22 @@ installé prévaut si la documentation distante diffère. Consultez
 
 ## Vérifier et réviser
 
-Après une proposition valide, inspectez le brouillon et les deux représentations du diff :
+Après une proposition valide, inspectez le formulaire de travail et le diff cumulé :
 
 ```ansi
 form0(ai)> /preview
 form0(ai)> /diff
 ```
 
-Le diff sémantique explique l'intention par champ ; le diff JSON montre les changements du document.
-Demandez une révision en langage naturel pour produire un autre lot cohérent. Une seule proposition
-est examinée à la fois.
+`/diff` compare le schéma à l'entrée en mode AI avec le schéma de travail, changements appliqués et
+en attente inclus. `/diff --pending` compare le dernier schéma appliqué avec la seule proposition en
+attente. Utilisez `/json` pour afficher le schéma de travail brut. Demandez une révision en langage
+naturel pour produire un autre lot cohérent. Une seule proposition est examinée à la fois.
+
+Le modèle explique brièvement une proposition terminée. S'il envoie des mutations valides sans texte
+de réponse, la CLI affiche un court résumé déterministe avant les commandes de vérification. Une
+demande d'inspection, d'explication ou de diagnostic sans mise en œuvre doit produire une explication
+et aucune proposition.
 
 Si le serveur d'aperçu fonctionne, le brouillon valide est immédiatement envoyé avec l'indication
 **AI draft**. Il reste un aperçu en mémoire.
@@ -72,7 +78,8 @@ chemin et confirme avant d'écraser un fichier existant.
 form0(ai)> /discard
 ```
 
-Quitter le mode AI produit la même restauration de l'aperçu.
+Quitter le mode AI produit la même restauration de l'aperçu. Si une proposition reste non appliquée,
+`/exit` demande confirmation avant de l'écarter.
 
 ## Annuler
 

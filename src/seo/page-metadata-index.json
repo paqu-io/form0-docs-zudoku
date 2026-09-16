@@ -3622,7 +3622,7 @@
     "translationKey": "/cli/interactive-shell",
     "locale": "es",
     "title": "Shell interactivo",
-    "description": "Trabaje con un formulario cargado schema en una sesión persistente de form0-cli.",
+    "description": "Trabaja con un esquema cargado en una sesión persistente de form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6871,8 +6871,8 @@
     "pathname": "/fr/cli/interactive-shell",
     "translationKey": "/cli/interactive-shell",
     "locale": "fr",
-    "title": "Coque interactive",
-    "description": "Travaillez avec un formulaire chargé schema dans une session form0-cli persistante.",
+    "title": "Shell interactif",
+    "description": "Travaillez avec un schéma chargé dans une session form0-cli persistante.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10185,8 +10185,8 @@
     "pathname": "/it/cli/interactive-shell",
     "translationKey": "/cli/interactive-shell",
     "locale": "it",
-    "title": "shell interattiva",
-    "description": "Lavorare con un modulo caricato schema in una sessione form0-cli persistente.",
+    "title": "Shell interattiva",
+    "description": "Lavora con uno schema caricato in una sessione form0-cli persistente.",
     "indexable": true,
     "status": "published",
     "alternates": [

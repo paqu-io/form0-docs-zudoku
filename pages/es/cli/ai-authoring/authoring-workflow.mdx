@@ -40,16 +40,22 @@ instalado prevalece si la documentación remota discrepa. Consulta
 
 ## Revisar y modificar
 
-Tras una propuesta válida, inspecciona el borrador y ambas representaciones del diff:
+Tras una propuesta válida, inspecciona el formulario de trabajo y el diff acumulado:
 
 ```ansi
 form0(ai)> /preview
 form0(ai)> /diff
 ```
 
-El diff semántico explica la intención por campo; el diff JSON muestra cambios del documento. Pide
-una modificación en lenguaje natural para producir otro lote coherente. Solo se revisa una propuesta
-pendiente cada vez.
+`/diff` compara el esquema al entrar en el modo AI con el esquema de trabajo, incluidos los cambios
+aplicados y pendientes. `/diff --pending` compara el último esquema aplicado solo con la propuesta
+pendiente. Usa `/json` para ver el esquema de trabajo sin procesar. Pide una modificación en lenguaje
+natural para producir otro lote coherente. Solo se revisa una propuesta pendiente cada vez.
+
+El modelo explica brevemente una propuesta terminada. Si envía mutaciones válidas sin texto de
+respuesta, la CLI muestra un breve resumen determinista antes de los comandos de revisión. Las
+solicitudes para inspeccionar, explicar o diagnosticar sin implementar deben devolver una explicación
+y ninguna propuesta.
 
 Si el servidor está activo, el borrador válido se envía de inmediato con la indicación **AI draft**.
 Sigue siendo una vista previa en memoria.
@@ -72,7 +78,8 @@ Descartar abandona la propuesta y restaura la versión confirmada en el navegado
 form0(ai)> /discard
 ```
 
-Salir del modo AI tiene el mismo comportamiento de restauración.
+Salir del modo AI tiene el mismo comportamiento de restauración. Si queda una propuesta sin aplicar,
+`/exit` pide confirmación antes de descartarla.
 
 ## Revertir
 
