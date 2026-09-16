@@ -81,6 +81,13 @@ form0(ai)> /discard
 Salir del modo AI tiene el mismo comportamiento de restauración. Si queda una propuesta sin aplicar,
 `/exit` pide confirmación antes de descartarla.
 
+## Cambiar de formulario
+
+Usa `/load [file|form]` para cargar otro formulario sin salir del modo AI. El destino se valida antes
+del cambio, se restaura su conversación específica, el historial del diff acumulado vuelve a empezar
+desde el esquema cargado y se actualiza el servidor activo. Si hay una propuesta sin aplicar, la CLI
+pide confirmación antes de descartarla.
+
 ## Revertir
 
 La reversión no reescribe el archivo silenciosamente. Prepara como propuesta el último esquema

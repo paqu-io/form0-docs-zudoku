@@ -80,6 +80,13 @@ form0(ai)> /discard
 Exiting AI mode has the same preview-restoration behavior. If a proposal is still unapplied, `/exit`
 asks for confirmation before discarding it.
 
+## Switch forms
+
+Use `/load [file|form]` to load another form without leaving AI mode. The target is validated before
+the switch, its schema-specific conversation is restored, cumulative diff history starts again from
+the loaded schema, and a running preview server is updated. If the current form has an unapplied
+proposal, the CLI asks for confirmation before discarding it.
+
 ## Undo
 
 Undo does not silently rewrite the file. It stages the last schema saved during the current AI

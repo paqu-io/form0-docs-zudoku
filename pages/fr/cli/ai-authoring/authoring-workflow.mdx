@@ -81,6 +81,13 @@ form0(ai)> /discard
 Quitter le mode AI produit la même restauration de l'aperçu. Si une proposition reste non appliquée,
 `/exit` demande confirmation avant de l'écarter.
 
+## Changer de formulaire
+
+Utilisez `/load [file|form]` pour charger un autre formulaire sans quitter le mode AI. La cible est
+validée avant le changement, sa conversation propre est restaurée, l'historique du diff cumulé
+redémarre depuis le schéma chargé et le serveur actif est actualisé. Si une proposition n'est pas
+appliquée, la CLI demande confirmation avant de l'écarter.
+
 ## Annuler
 
 L'annulation ne réécrit pas silencieusement le fichier. Elle prépare comme proposition le dernier

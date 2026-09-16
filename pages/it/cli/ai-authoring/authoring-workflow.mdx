@@ -81,6 +81,13 @@ form0(ai)> /discard
 Uscire dalla modalità AI ripristina l'anteprima allo stesso modo. Se una proposta non è stata
 applicata, `/exit` chiede conferma prima di scartarla.
 
+## Cambiare modulo
+
+Usa `/load [file|form]` per caricare un altro modulo senza uscire dalla modalità AI. La destinazione
+viene convalidata prima del passaggio, viene ripristinata la sua conversazione specifica, la cronologia
+del diff cumulativo riparte dallo schema caricato e il server attivo viene aggiornato. Se una proposta
+non è applicata, la CLI chiede conferma prima di scartarla.
+
 ## Annullare
 
 L'annullamento non riscrive il file silenziosamente. Prepara come proposta l'ultimo schema salvato
