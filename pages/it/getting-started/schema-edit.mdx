@@ -20,14 +20,17 @@ Questa pagina presuppone che tu abbia già eseguito `serve` e che l'anteprima li
    form0(server)> schema edit
    ```
 
+   {/* prettier-ignore */}
    <Callout type="caution" title="Editor richiesto">
-     La modalità di modifica dello schema apre il tuo editor di codice. Assicurati che la variabile
-     `EDITOR` o `VISUAL` sia configurata: - **Linux/macOS**: Aggiungi `export EDITOR=code` a
-     `~/.bashrc`, `~/.zshrc` o `~/.profile`, poi riavvia il terminale o esegui `source ~/.bashrc`. -
-     **Windows (PowerShell)**: Esegui `$env:EDITOR = "code"` per la sessione corrente, oppure
-     aggiungilo al tuo profilo PowerShell (`$PROFILE`). - **Windows (CMD)**: Usa `set EDITOR=code`
-     per la sessione, oppure impostalo in modo permanente tramite _Proprietà del sistema → Variabili
-     d'ambiente_.
+
+   La modalità di modifica dello schema apre il tuo editor. Assicurati che la variabile `EDITOR` o `VISUAL` sia configurata:
+
+   - **Linux/macOS**: Aggiungi `export EDITOR=nano` a `~/.bashrc`, `~/.zshrc` o `~/.profile`, poi riavvia il terminale o esegui `source ~/.bashrc`.
+   - **Windows (PowerShell)**: Esegui `$env:EDITOR = "notepad"` per la sessione corrente, oppure aggiungilo al tuo profilo PowerShell (`$PROFILE`).
+   - **Windows (CMD)**: Usa `set EDITOR=notepad` per la sessione, oppure impostalo in modo permanente tramite _Proprietà del sistema → Variabili d'ambiente_.
+
+   Per usare VS Code, imposta `EDITOR` a `code --wait`, non `code`. Senza `--wait`, la CLI prosegue prima che tu salvi e le modifiche vanno perse. Altri editor grafici richiedono lo stesso flag (ad esempio, `subl -w`, `zed --wait`).
+
    </Callout>
 
 1. Visualizza l'anteprima dello schema del form:

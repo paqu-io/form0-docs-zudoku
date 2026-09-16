@@ -20,13 +20,17 @@ This page assumes you already ran `serve` and have the live preview open at `htt
    form0(server)> schema edit
    ```
 
+   {/* prettier-ignore */}
    <Callout type="caution" title="Editor required">
-     Schema edit mode launches your editor. Make sure `EDITOR` or `VISUAL` is set: -
-     **Linux/macOS**: Add `export EDITOR=code` to `~/.bashrc`, `~/.zshrc`, or `~/.profile`, then
-     restart your terminal or run `source ~/.bashrc`. - **Windows (PowerShell)**: Run `$env:EDITOR =
-     "code"` for the current session, or add it to your PowerShell profile (`$PROFILE`). - **Windows
-     (CMD)**: Use `set EDITOR=code` for the session, or set it permanently via _System Properties →
-     Environment Variables_.
+
+   Schema edit mode launches your editor. Make sure `EDITOR` or `VISUAL` is set:
+
+   - **Linux/macOS**: Add `export EDITOR=nano` to `~/.bashrc`, `~/.zshrc`, or `~/.profile`, then restart your terminal or run `source ~/.bashrc`.
+   - **Windows (PowerShell)**: Run `$env:EDITOR = "notepad"` for the current session, or add it to your PowerShell profile (`$PROFILE`).
+   - **Windows (CMD)**: Use `set EDITOR=notepad` for the session, or set it permanently via _System Properties → Environment Variables_.
+
+   To use VS Code, set `EDITOR` to `code --wait`, not `code`. Without `--wait`, the CLI continues before you save and your changes are lost. Other GUI editors need the same flag (e.g., `subl -w`, `zed --wait`).
+
    </Callout>
 
 1. Preview form schema:

@@ -20,14 +20,17 @@ Cette page suppose que vous avez déjà exécuté `serve` et que l'aperçu en di
    form0(server)> schema edit
    ```
 
+   {/* prettier-ignore */}
    <Callout type="caution" title="Éditeur requis">
-     Le mode d'édition du schéma ouvre votre éditeur de code. Assurez-vous que la variable `EDITOR`
-     ou `VISUAL` est configurée : - **Linux/macOS** : Ajoutez `export EDITOR=code` à `~/.bashrc`,
-     `~/.zshrc` ou `~/.profile`, puis redémarrez votre terminal ou exécutez `source ~/.bashrc`. -
-     **Windows (PowerShell)** : Exécutez `$env:EDITOR = "code"` pour la session en cours, ou
-     ajoutez-le à votre profil PowerShell (`$PROFILE`). - **Windows (CMD)** : Utilisez `set
-     EDITOR=code` pour la session, ou configurez-le de façon permanente via _Propriétés système →
-     Variables d'environnement_.
+
+   Le mode d'édition du schéma ouvre votre éditeur. Assurez-vous que la variable `EDITOR` ou `VISUAL` est configurée :
+
+   - **Linux/macOS** : Ajoutez `export EDITOR=nano` à `~/.bashrc`, `~/.zshrc` ou `~/.profile`, puis redémarrez votre terminal ou exécutez `source ~/.bashrc`.
+   - **Windows (PowerShell)** : Exécutez `$env:EDITOR = "notepad"` pour la session en cours, ou ajoutez-le à votre profil PowerShell (`$PROFILE`).
+   - **Windows (CMD)** : Utilisez `set EDITOR=notepad` pour la session, ou configurez-le de façon permanente via _Propriétés système → Variables d'environnement_.
+
+   Pour utiliser VS Code, définissez `EDITOR` sur `code --wait`, et non `code`. Sans `--wait`, la CLI continue avant que vous n'enregistriez et vos modifications sont perdues. Les autres éditeurs graphiques nécessitent la même option (par exemple, `subl -w`, `zed --wait`).
+
    </Callout>
 
 1. Prévisualisez le schéma du formulaire :
