@@ -88,6 +88,7 @@
     "copyright": "Copyright © {year} - All rights reserved",
     "madeBy": "Made by 🦙 from",
     "privacy": "Privacy notice",
+    "socialLabel": "paqu.io on {network}",
     "manageCookies": "Manage cookies"
   },
   "seo": {

@@ -67,7 +67,7 @@ export function SiteFooter() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={social.label}
+              aria-label={t("common.footer.socialLabel", { network: social.label }, { locale })}
               title={social.label}
               className="text-muted-foreground/60 transition-colors hover:text-foreground"
               data-umami-event="social-click"
