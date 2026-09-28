@@ -36,14 +36,22 @@ d'événements depuis leurs composants `FormRenderer` :
 | `edit-record` | Lorsque l'enregistrement principal passe en mode édition       |
 | `change`      | Après la modification d'un champ de l'enregistrement principal |
 
+Les éditeurs de lignes répétables ne déclenchent pas automatiquement ces événements. En
+particulier, l'ouverture d'une ligne ne relance pas les gestionnaires `load-record` ou `edit-record`
+de l'enregistrement principal, et la modification d'un champ de la ligne ne déclenche pas `change`.
+Pour l'instant, l'application gère les événements du cycle de vie des éléments répétables.
+
 Le registre du noyau accepte également `new-record`, `save-record`, `validate-record`, `blur`,
 `focus`, `click` et les événements `*-repeatable`. Ils dépendent du cycle de vie et des choix
-d'interface propres à l'application ; les moteurs de rendu officiels ne les déclenchent donc pas
-automatiquement. Une application qui intègre directement `form0-core` peut les déclencher avec
-`engine.trigger(eventType, fieldKey, metadata)` au moment approprié de son propre flux.
+d'interface propres à l'application ; les moteurs de rendu officiels ne les déclenchent donc
+actuellement pas automatiquement. Une application qui intègre directement `form0-core` peut les
+déclencher avec `engine.trigger(eventType, fieldKey, metadata)` au moment approprié de son propre flux.
 
-L'enregistrement d'un gestionnaire avec `ON` ne rend pas l'événement automatique. N'utilisez un
-événement dans un schéma que si l'application hôte ou le binding indique qu'il le déclenche.
+Le déclenchement automatique d'autres événements peut être étudié au cas par cas, mais il ne découle
+pas de leur seule présence dans le noyau. Un schéma ne doit dépendre que des événements que son
+application hôte ou son binding déclare prendre en charge.
+
+L'enregistrement d'un gestionnaire avec `ON` ne rend pas l'événement automatique.
 
 ## Builtins d'événement
 

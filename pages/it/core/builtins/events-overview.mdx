@@ -36,14 +36,22 @@ eventi dai propri componenti `FormRenderer`:
 | `edit-record` | Quando il record principale entra in modalità di modifica |
 | `change`      | Dopo che l'utente modifica un campo del record principale |
 
+Gli editor delle righe ripetibili non attivano automaticamente questi eventi. In particolare,
+l'apertura di una riga non riesegue i gestori `load-record` o `edit-record` del record principale e
+la modifica di un campo della riga non attiva `change`. Per ora, gli eventi del ciclo di vita dei
+ripetibili sono gestiti dall'applicazione.
+
 Il registro del core accetta anche `new-record`, `save-record`, `validate-record`, `blur`, `focus`,
 `click` e gli eventi `*-repeatable`. Questi dipendono dal ciclo di vita e dalle scelte di interfaccia
-specifiche dell'applicazione, quindi i renderer ufficiali non li attivano automaticamente.
+specifiche dell'applicazione, quindi i renderer ufficiali attualmente non li attivano automaticamente.
 Un'applicazione che integra direttamente `form0-core` può attivarli con
 `engine.trigger(eventType, fieldKey, metadata)` nel punto appropriato del proprio flusso.
 
-Registrare uno di questi gestori con `ON` non rende automatico l'evento. Usa un evento in uno schema
-solo quando l'applicazione host o il binding documentano che lo attivano.
+L'attivazione automatica di altri eventi può essere valutata caso per caso, ma non è implicita nel
+fatto che un evento sia disponibile nel core. Gli schemi dovrebbero dipendere solo dagli eventi che
+l'applicazione host o il binding dichiarano di supportare.
+
+Registrare uno di questi gestori con `ON` non rende automatico l'evento.
 
 ## Builtin per gli eventi
 

@@ -93,11 +93,13 @@ value and runs `eval()` again, but it does not dispatch another `change` event. 
 cannot start a chain of change events by setting other fields.
 
 <Callout type="info" title="Event support in the bindings">
-  form0-core defines more events than `change`, including record, field, and repeatable-section
-  events, and more are planned. The official renderers currently dispatch `load-record`,
-  `edit-record`, and `change`, and support for the other events will be added to the bindings. Until
-  then, your application can dispatch any event with `engine.trigger(...)`. See [Event dispatch in
-  official bindings](/core/builtins/events-overview).
+  form0-core defines a broader event vocabulary, including record, field, and repeatable-section
+  events. The official renderers currently dispatch the portable lifecycle events `load-record`,
+  `edit-record`, and `change`. Other events are not dispatched automatically because their timing
+  depends on the host application's workflow and UI. Applications can dispatch them explicitly with
+  `engine.trigger(...)`. Additional automatic dispatch may be considered individually, but schemas
+  should rely only on events documented by their host or binding. See [Event dispatch in official
+  bindings](/core/builtins/events-overview).
 </Callout>
 
 ## Using the engine without a renderer
@@ -117,6 +119,15 @@ engine.eval()
 // Then dispatch the change event and apply the operations it returns.
 const operations = engine.trigger("change", "quantity")
 ```
+
+<Callout type="caution" title="Choice fields use runtime value shapes">
+  `initialValues` and direct writes to `engine.getState().values` must use the engine's live value
+  shape. For example, a `SingleChoiceField` or `BooleanField` uses
+  `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`, while a
+  `MultiChoiceField` uses `choices` instead of `choice`. This differs from a choice field's scalar or
+  array `default_value` in the schema. Official renderer field components produce these live shapes;
+  form0-core does not currently provide a public value-setting and normalization method.
+</Callout>
 
 Your application is responsible for applying the returned operations and for deciding when an
 empty required field blocks submission.

@@ -35,14 +35,22 @@ eventos desde sus componentes `FormRenderer`:
 | `edit-record` | Cuando el registro principal entra en modo de edición            |
 | `change`      | Después de que el usuario cambie un campo del registro principal |
 
+Los editores de filas repetibles no disparan estos eventos automáticamente. En particular, abrir
+una fila no vuelve a ejecutar los controladores `load-record` o `edit-record` del registro principal,
+y cambiar un campo de la fila no dispara `change`. Por ahora, la aplicación controla los eventos del
+ciclo de vida de los repetibles.
+
 El registro del núcleo también acepta `new-record`, `save-record`, `validate-record`, `blur`,
 `focus`, `click` y los eventos `*-repeatable`. Estos dependen del ciclo de vida y de decisiones de
-interfaz propias de cada aplicación, por lo que los renderizadores oficiales no los disparan
-automáticamente. Una aplicación que integre `form0-core` directamente puede dispararlos mediante
-`engine.trigger(eventType, fieldKey, metadata)` en el punto adecuado de su flujo.
+interfaz propias de cada aplicación, por lo que los renderizadores oficiales actualmente no los
+disparan automáticamente. Una aplicación que integre `form0-core` directamente puede dispararlos
+mediante `engine.trigger(eventType, fieldKey, metadata)` en el punto adecuado de su flujo.
 
-Registrar uno de estos controladores con `ON` no convierte el evento en automático. Usa un evento en
-un esquema solo cuando la aplicación host o el binding documenten que lo disparan.
+La activación automática de eventos adicionales puede estudiarse individualmente, pero no está
+implícita por el hecho de que un evento exista en el núcleo. Los esquemas solo deben depender de los
+eventos que su aplicación host o binding documenten como compatibles.
+
+Registrar uno de estos controladores con `ON` no convierte el evento en automático.
 
 ## Builtins de eventos
 
