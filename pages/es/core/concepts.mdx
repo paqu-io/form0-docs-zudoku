@@ -21,10 +21,14 @@ estructura, las reglas y el comportamiento de un formulario sin código de inter
 El motor evalúa el esquema y produce un objeto de estado con:
 
 - `values`: valores actuales de los campos
-- `errors`: errores de validación
+- `errors`: errores de validación de valores y formatos
 - `visible`: indicadores de visibilidad por campo
 - `required`: indicadores de obligatoriedad por campo
 - `read_only`: indicadores de solo lectura por campo
+
+Los mapas `required` y `errors` cumplen funciones distintas. El motor indica si un campo es
+obligatorio, pero no añade automáticamente a `errors` un campo obligatorio vacío. El renderer o la
+aplicación host aplican las reglas de envío.
 
 ## Flujo de datos
 

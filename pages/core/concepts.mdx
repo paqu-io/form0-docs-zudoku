@@ -21,10 +21,14 @@ structure, rules, and behavior of a form without any UI code.
 The engine evaluates the schema and produces a state object with:
 
 - `values`: current field values
-- `errors`: validation errors
+- `errors`: value and format validation errors
 - `visible`: visibility flags per field
 - `required`: requirement flags per field
 - `read_only`: read-only flags per field
+
+The `required` and `errors` maps have different roles. The engine reports whether a field is
+required, but an empty required field is not automatically added to `errors`. Submission rules are
+applied by the renderer or host application.
 
 ## Data flow
 

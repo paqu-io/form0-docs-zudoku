@@ -21,10 +21,14 @@ structure, règles et comportement d'un formulaire sans code d'interface utilisa
 Le moteur évalue le schema et produit un objet d'état avec:
 
 - `values`: valeurs du champ courant
-- `errors`: erreurs de validation
+- `errors`: erreurs de validation des valeurs et des formats
 - `visible`: indicateurs de visibilité par champ
 - `required`: flags des exigences par champ
 - `read_only`: drapeaux en lecture seule par champ
+
+Les maps `required` et `errors` ont des rôles différents. Le moteur indique si un champ est
+obligatoire, mais il n'ajoute pas automatiquement à `errors` un champ obligatoire vide. Le renderer
+ou l'application hôte applique les règles d'envoi.
 
 ## Flux de données
 

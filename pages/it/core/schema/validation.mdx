@@ -26,6 +26,20 @@ In runtime, i campi convalidano anche i loro valori quando il motore valuta:
 - Corrispondenza modello per i campi di testo
 - I valori di scelta devono corrispondere a scelte definite
 
+La convalida dei valori in runtime viene eseguita per tutti i campi, inclusi quelli attualmente
+nascosti. Il risultato è disponibile nella mappa `errors` dello stato del motore.
+
+### Campi obbligatori e invio
+
+Il motore calcola un indicatore `required` per ogni campo, ma non aggiunge un errore solo perché un
+campo obbligatorio è vuoto. Il controllo dei campi obbligatori riguarda l'invio: i renderer ufficiali
+combinano `visible`, `required` e il valore corrente, ignorano i campi nascosti e decidono quando
+mostrare l'errore.
+
+Se utilizzi form0-core senza un renderer, applica la stessa politica nell'applicazione. Nella maggior
+parte dei casi, un campo vuoto dovrebbe bloccare l'invio solo quando è visibile e obbligatorio.
+Includi nel controllo anche gli errori di valore e formato prodotti dal motore.
+
 ## Errori tipici
 
 - Mancano gli attributi richiesti

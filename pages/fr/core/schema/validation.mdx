@@ -26,6 +26,20 @@ Chez runtime, les champs valident également leurs valeurs lorsque le moteur év
 - Correspondances de modèle pour les champs de texte
 - Les valeurs de choix doivent correspondre aux choix définis
 
+La validation des valeurs à l'exécution s'applique à tous les champs, y compris ceux qui sont
+actuellement masqués. Le résultat est disponible dans la map `errors` de l'état du moteur.
+
+### Champs obligatoires et envoi
+
+Le moteur calcule un indicateur `required` pour chaque champ, mais il n'ajoute pas une erreur
+simplement parce qu'un champ obligatoire est vide. Le contrôle des champs obligatoires relève de
+l'envoi : les renderers officiels combinent `visible`, `required` et la valeur actuelle, ignorent les
+champs masqués et décident quand afficher l'erreur.
+
+Si vous utilisez form0-core sans renderer, appliquez la même politique dans votre application. Dans
+la plupart des cas, un champ vide ne doit bloquer l'envoi que s'il est visible et obligatoire.
+Incluez également les erreurs de valeur et de format du moteur dans ce contrôle.
+
 ## Erreurs typiques
 
 - Attributs requis manquants

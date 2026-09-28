@@ -21,10 +21,14 @@ struttura, regole e comportamento di un modulo senza alcun codice UI.
 Il motore valuta la schema e produce un oggetto di stato con:
 
 - `values`: valori di campo correnti
-- `errors`: errori di convalida
+- `errors`: errori di convalida del valore e del formato
 - `visible`: bandiere di visibilità per campo
 - `required`: bandiere obbligatorie per campo
 - `read_only`: flag di sola lettura per campo
+
+Le mappe `required` ed `errors` hanno ruoli diversi. Il motore indica se un campo è obbligatorio, ma
+non aggiunge automaticamente a `errors` un campo obbligatorio vuoto. Il renderer o l'applicazione
+host applicano le regole di invio.
 
 ## Flusso di dati
 
