@@ -158,7 +158,10 @@ const documentationItems = [
     [
       doc("core/overview", "Overview"),
       doc("core/concepts", "Concepts"),
-      category("How the engine works", [doc("core/engine/evaluation-cycle", "Evaluation cycle")]),
+      category("How the engine works", [
+        doc("core/engine/evaluation-cycle", "Evaluation cycle"),
+        doc("core/engine/calculations-dependencies", "Calculations and dependencies"),
+      ]),
       category("Schema", [
         doc("core/schema/form", "Form object"),
         doc("core/schema/form-attributes", "Form attributes"),

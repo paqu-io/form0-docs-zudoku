@@ -132,6 +132,9 @@
     "engine": {
       "evaluation-cycle": {
         "title": "Evaluation cycle"
+      },
+      "calculations-dependencies": {
+        "title": "Calculations and dependencies"
       }
     },
     "schema": {
@@ -303,6 +306,18 @@
       "hostApplies": "Host applies",
       "loopTitle": "SETVALUE → eval again",
       "loopNote": "no second change event"
+    },
+    "calculationOrder": {
+      "ariaLabel": "Calculated fields run after the fields they reference: subtotal uses qty and price and runs first, tax uses subtotal and runs second, total uses subtotal and tax and runs third. Fields a and b reference each other, so both are set to null and an error is reported; field c references a and runs with a null input.",
+      "caption": "Schema order does not matter: each calculated field runs after the fields it references. Fields in a cycle are set to null, and everything else still runs.",
+      "orderTitle": "Runs in dependency order",
+      "cycleTitle": "A cycle is skipped",
+      "input": "input field",
+      "runsFirst": "runs 1st",
+      "runsSecond": "runs 2nd",
+      "runsThird": "runs 3rd",
+      "cycleResult": "set to null + error",
+      "runsWithNull": "runs with null input"
     }
   }
 }

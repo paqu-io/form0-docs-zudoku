@@ -2348,6 +2348,21 @@
       }
     ]
   },
+  "/core/engine/calculations-dependencies": {
+    "pathname": "/core/engine/calculations-dependencies",
+    "translationKey": "/core/engine/calculations-dependencies",
+    "locale": "en",
+    "title": "Calculations and dependencies",
+    "description": "How the form0 engine orders calculated fields, handles cycles and failing expressions, and resolves EVAL().",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/calculations-dependencies"
+      }
+    ]
+  },
   "/core/engine/evaluation-cycle": {
     "pathname": "/core/engine/evaluation-cycle",
     "translationKey": "/core/engine/evaluation-cycle",
