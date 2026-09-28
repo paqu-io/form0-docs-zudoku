@@ -129,6 +129,11 @@
     "concepts": {
       "title": "Concepts"
     },
+    "engine": {
+      "evaluation-cycle": {
+        "title": "Evaluation cycle"
+      }
+    },
     "schema": {
       "form": {
         "title": "Form object"
@@ -274,6 +279,30 @@
   "guides": {
     "coming-soon": {
       "title": "Coming soon"
+    }
+  },
+  "diagrams": {
+    "evaluationCycle": {
+      "ariaLabel": "A value change runs one full eval pass in a fixed order: calculations, required, visible, read-only, value errors. The renderer then dispatches a change event. Its handler returns operations that the host applies, and a SETVALUE runs the pass again without dispatching another change event.",
+      "caption": "One edit runs one ordered pass. Event handlers never change the form directly: they return operations, and the host applies them.",
+      "userEdits": "User edits",
+      "onePass": "one full pass, same order every time",
+      "calculations": "Calculations",
+      "required": "Required",
+      "visible": "Visible",
+      "readOnly": "Read-only",
+      "valueErrorsLine1": "Value",
+      "valueErrorsLine2": "errors",
+      "state": "state",
+      "renderer": "Renderer",
+      "rerenders": "re-renders fields",
+      "handlerRuns": "handler runs",
+      "returns": "returns",
+      "operations": "Operations",
+      "toHost": "to host",
+      "hostApplies": "Host applies",
+      "loopTitle": "SETVALUE → eval again",
+      "loopNote": "no second change event"
     }
   }
 }
