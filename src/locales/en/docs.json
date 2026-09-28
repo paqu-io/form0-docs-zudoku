@@ -135,6 +135,9 @@
       },
       "calculations-dependencies": {
         "title": "Calculations and dependencies"
+      },
+      "parent-child-scopes": {
+        "title": "Parent and child scopes"
       }
     },
     "schema": {
@@ -318,6 +321,17 @@
       "runsThird": "runs 3rd",
       "cycleResult": "set to null + error",
       "runsWithNull": "runs with null input"
+    },
+    "repeatableScope": {
+      "ariaLabel": "The main form has the fields customer and discount_pct. A RepeatableSection called line_items has two rows, and each row runs its own engine instance with the fields qty, price, and line_total. The main-form values are copied into each row, so line_total can use discount_pct. The two rows cannot see each other.",
+      "caption": "Each row is evaluated by its own engine with a copy of the parent values. Rows never read each other's values.",
+      "mainForm": "Main form",
+      "row1": "Row 1",
+      "row2": "Row 2",
+      "ownEngine": "own engine instance",
+      "sameFields": "same fields, separate values",
+      "parentCopied": "parent values copied in",
+      "isolated": "rows can't see each other"
     }
   }
 }

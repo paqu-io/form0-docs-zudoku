@@ -2,10 +2,12 @@ import { useUrlLocale } from "../hooks/use-locale-path.js"
 import { t } from "../utils/i18n.js"
 import { CalculationOrderDiagram } from "./diagrams/calculation-order-diagram.jsx"
 import { EvaluationCycleDiagram } from "./diagrams/evaluation-cycle-diagram.jsx"
+import { RepeatableScopeDiagram } from "./diagrams/repeatable-scope-diagram.jsx"
 
 const DIAGRAMS = {
   "evaluation-cycle": { key: "evaluationCycle", Component: EvaluationCycleDiagram },
   "calculation-order": { key: "calculationOrder", Component: CalculationOrderDiagram },
+  "repeatable-scope": { key: "repeatableScope", Component: RepeatableScopeDiagram },
 }
 
 /**

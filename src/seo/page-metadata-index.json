@@ -2378,6 +2378,21 @@
       }
     ]
   },
+  "/core/engine/parent-child-scopes": {
+    "pathname": "/core/engine/parent-child-scopes",
+    "translationKey": "/core/engine/parent-child-scopes",
+    "locale": "en",
+    "title": "Parent and child scopes",
+    "description": "How the form0 engine evaluates repeatable-section rows and which fields each calculation, condition, and event handler can read.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/parent-child-scopes"
+      }
+    ]
+  },
   "/core/fields/catalog": {
     "pathname": "/core/fields/catalog",
     "translationKey": "/core/fields/catalog",

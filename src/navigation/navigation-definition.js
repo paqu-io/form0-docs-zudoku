@@ -161,6 +161,7 @@ const documentationItems = [
       category("How the engine works", [
         doc("core/engine/evaluation-cycle", "Evaluation cycle"),
         doc("core/engine/calculations-dependencies", "Calculations and dependencies"),
+        doc("core/engine/parent-child-scopes", "Parent and child scopes"),
       ]),
       category("Schema", [
         doc("core/schema/form", "Form object"),
