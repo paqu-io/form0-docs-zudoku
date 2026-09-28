@@ -7,8 +7,12 @@ description: Funciones integradas disponibles en eventos del formulario.
 
 import { Badge } from "zudoku/ui/Badge"
 
-Eventos en vivo `form.events.code` y son evaluados en runtime . Uso `ON` para registrar los controladores
-y `SETVALUE` / `ALERT` para interactuar con el formulario.
+Los eventos se definen en `form.events.code` y se evalúan durante la ejecución. Usa `ON` para
+registrar controladores y `SETVALUE`/`ALERT` para interactuar con el formulario.
+
+Al crear el motor, `events.code` se ejecuta una vez para registrar los controladores. Esto no dispara
+ningún evento. Un evento solo se ejecuta cuando el host llama a `engine.trigger(...)` o cuando un
+binding lo dispara por una interacción del usuario o una transición del ciclo de vida de la aplicación.
 
 ## Ejemplo rápido
 
@@ -20,14 +24,34 @@ ON("change", "age", function (event) {
 })
 ```
 
-## Event builtins
+## Despacho de eventos en los bindings oficiales
 
-### <Badge variant="secondary">Events</Badge>
+`form0-react` y `form0-react-native` disparan intencionadamente un conjunto pequeño y portable de
+eventos desde sus componentes `FormRenderer`:
+
+| Evento        | Cuándo se dispara                                                |
+| ------------- | ---------------------------------------------------------------- |
+| `load-record` | Cuando el motor del registro principal está listo                |
+| `edit-record` | Cuando el registro principal entra en modo de edición            |
+| `change`      | Después de que el usuario cambie un campo del registro principal |
+
+El registro del núcleo también acepta `new-record`, `save-record`, `validate-record`, `blur`,
+`focus`, `click` y los eventos `*-repeatable`. Estos dependen del ciclo de vida y de decisiones de
+interfaz propias de cada aplicación, por lo que los renderizadores oficiales no los disparan
+automáticamente. Una aplicación que integre `form0-core` directamente puede dispararlos mediante
+`engine.trigger(eventType, fieldKey, metadata)` en el punto adecuado de su flujo.
+
+Registrar uno de estos controladores con `ON` no convierte el evento en automático. Usa un evento en
+un esquema solo cuando la aplicación host o el binding documenten que lo disparan.
+
+## Builtins de eventos
+
+### <Badge variant="secondary">Eventos</Badge>
 
 - [`ON`](/es/core/builtins/events/on)
 - [`OFF`](/es/core/builtins/events/off)
 - [`ALERT`](/es/core/builtins/events/alert)
 - [`SETVALUE`](/es/core/builtins/events/setvalue)
 
-Los controladores de eventos también pueden usar los buildins de cálculo listados en
+Los controladores de eventos también pueden usar los builtins de cálculo incluidos en
 [Calculaciones y expresiones](/es/core/builtins/calculations-expressions-overview).

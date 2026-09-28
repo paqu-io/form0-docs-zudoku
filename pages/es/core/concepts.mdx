@@ -30,15 +30,16 @@ El motor evalúa el esquema y produce un objeto de estado con:
 
 1. Carga el esquema y crea el motor
 2. Proporciona valores iniciales (opcional)
-3. Dispara los eventos de inicialización
+3. Registra los controladores definidos en `form.events.code`
 4. Evalúa los cálculos, las condiciones y la validación
 5. Con cada cambio de valor:
    - Actualiza el valor
    - Vuelve a evaluar (validación en tiempo real)
-   - Dispara los eventos de cambio definidos
+   - Permite que el host o el binding dispare `change` si admite ese evento
 6. Lee el estado o crea un registro estructurado para enviarlo
 
 ## Eventos y expresiones
 
 - Los campos calculados utilizan expresiones en la propiedad `calculate`, como `$age + 1`, para derivar valores de otros campos.
-- Los eventos se encuentran en `form.events.code` y pueden reaccionar a cambios del formulario en tiempo de ejecución (por ejemplo, al cargar un registro o cambiar un campo).
+- Los eventos se definen en `form.events.code`. El núcleo registra sus controladores, mientras que la
+  aplicación host o el binding decide cuándo disparar cada evento.

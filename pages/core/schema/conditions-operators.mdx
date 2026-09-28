@@ -52,6 +52,14 @@ Operators are validated against the referenced field type. For example:
 - Numeric/date fields support comparison operators
 - Choice fields support `equal_to` and `contains` (multi-choice)
 
+Choice conditions compare answer values rather than the renderer's wrapper object:
+
+- `SingleChoiceField` and `BooleanField` compare the selected choice `value`.
+- `MultiChoiceField` uses an array of selected values. `contains` checks one value, while `equal_to`
+  checks the complete selection without depending on order.
+- A non-empty custom “other” answer participates as its `value` or label, so emptiness operators
+  reflect what the user entered.
+
 If an operator is invalid for the referenced field, validation will fail.
 
 ## Field references

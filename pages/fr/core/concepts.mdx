@@ -30,15 +30,16 @@ Le moteur évalue le schema et produit un objet d'état avec:
 
 1. Chargez le schema et créez le moteur
 2. Fournir les valeurs initiales (facultatif)
-3. Incendie de tout événement d'initialisation
-4. Évaluer: calculs, conditions et validation
-5. A chaque changement de valeur:
-   - Mettre à jour la valeur
-   - Réévaluer (validation en direct)
-   - Événements de changement d'incendie si défini
-6. Lire l'état ou construire un enregistrement structuré pour submission
+3. Enregistrez les gestionnaires définis dans `form.events.code`
+4. Évaluez les calculs, les conditions et la validation
+5. À chaque changement de valeur :
+   - Mettez à jour la valeur
+   - Réévaluez le formulaire (validation en direct)
+   - Laissez l'hôte ou le binding déclencher `change` s'il prend en charge cet événement
+6. Lisez l'état ou construisez un enregistrement structuré pour l'envoyer
 
 ## Événements et expressions
 
 - Les champs calculés utilisent des expressions, à l'intérieur de la propriété `calculate`, comme `$age + 1` pour dériver des valeurs d'autres champs.
-- Les événements se déroulent dans `form.events.code` et peuvent réagir aux changements de formulaire dans runtime (par exemple, lorsqu'un enregistrement est chargé ou qu'un champ change).
+- Les événements sont définis dans `form.events.code`. Le noyau enregistre leurs gestionnaires,
+  tandis que l'application hôte ou le binding décide quand déclencher chaque événement.

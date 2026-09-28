@@ -7,8 +7,13 @@ description: Builtin disponibili in eventi di forma.
 
 import { Badge } from "zudoku/ui/Badge"
 
-Gli eventi in diretta in `form.events.code` e sono valutati in runtime. Utilizza `ON` per registrare i gestori
-e `SETVALUE` / `ALERT` per interagire con il modulo.
+Gli eventi sono definiti in `form.events.code` e valutati durante l'esecuzione. Usa `ON` per
+registrare i gestori e `SETVALUE`/`ALERT` per interagire con il modulo.
+
+Quando il motore viene creato, `events.code` viene eseguito una volta per registrare i gestori. Questo
+non attiva alcun evento. Un evento viene eseguito solo quando l'host chiama `engine.trigger(...)` o
+quando un binding lo attiva in risposta a un'interazione dell'utente o a una transizione del ciclo di
+vita dell'applicazione.
 
 ## Esempio rapido
 
@@ -20,14 +25,34 @@ ON("change", "age", function (event) {
 })
 ```
 
-## Creati eventi
+## Attivazione degli eventi nei binding ufficiali
 
-### <Badge variant="secondary">Events</Badge>
+`form0-react` e `form0-react-native` attivano intenzionalmente un insieme ridotto e portabile di
+eventi dai propri componenti `FormRenderer`:
+
+| Evento        | Quando viene attivato                                     |
+| ------------- | --------------------------------------------------------- |
+| `load-record` | Quando il motore del record principale è pronto           |
+| `edit-record` | Quando il record principale entra in modalità di modifica |
+| `change`      | Dopo che l'utente modifica un campo del record principale |
+
+Il registro del core accetta anche `new-record`, `save-record`, `validate-record`, `blur`, `focus`,
+`click` e gli eventi `*-repeatable`. Questi dipendono dal ciclo di vita e dalle scelte di interfaccia
+specifiche dell'applicazione, quindi i renderer ufficiali non li attivano automaticamente.
+Un'applicazione che integra direttamente `form0-core` può attivarli con
+`engine.trigger(eventType, fieldKey, metadata)` nel punto appropriato del proprio flusso.
+
+Registrare uno di questi gestori con `ON` non rende automatico l'evento. Usa un evento in uno schema
+solo quando l'applicazione host o il binding documentano che lo attivano.
+
+## Builtin per gli eventi
+
+### <Badge variant="secondary">Eventi</Badge>
 
 - [`ON`](/it/core/builtins/events/on)
 - [`OFF`](/it/core/builtins/events/off)
 - [`ALERT`](/it/core/builtins/events/alert)
 - [`SETVALUE`](/it/core/builtins/events/setvalue)
 
-I gestori di eventi possono anche utilizzare il calcolo incorporato elencato in
-[Calcolazioni ed espressioni](/it/core/builtins/calculations-expressions-overview).
+I gestori di eventi possono usare anche i builtin di calcolo elencati in
+[Calcoli ed espressioni](/it/core/builtins/calculations-expressions-overview).

@@ -7,8 +7,13 @@ description: Construits disponibles dans les événements de formulaire.
 
 import { Badge } from "zudoku/ui/Badge"
 
-Les événements vivent dans `form.events.code` et sont évalués en runtime Utilisation `ON` pour enregistrer les gestionnaires
-et `SETVALUE` / `ALERT` pour interagir avec le formulaire.
+Les événements sont définis dans `form.events.code` et évalués à l'exécution. Utilisez `ON` pour
+enregistrer des gestionnaires et `SETVALUE`/`ALERT` pour interagir avec le formulaire.
+
+Lors de la création du moteur, `events.code` s'exécute une fois afin d'enregistrer les gestionnaires.
+Cela ne déclenche aucun événement. Un événement s'exécute uniquement lorsque l'hôte appelle
+`engine.trigger(...)` ou lorsqu'un binding le déclenche en réponse à une interaction utilisateur ou
+à une transition du cycle de vie de l'application.
 
 ## Exemple rapide
 
@@ -20,9 +25,29 @@ ON("change", "age", function (event) {
 })
 ```
 
-## Évènement intégré
+## Déclenchement des événements dans les bindings officiels
 
-### <Badge variant="secondary">Events</Badge>
+`form0-react` et `form0-react-native` déclenchent volontairement un petit ensemble portable
+d'événements depuis leurs composants `FormRenderer` :
+
+| Événement     | Moment du déclenchement                                        |
+| ------------- | -------------------------------------------------------------- |
+| `load-record` | Lorsque le moteur de l'enregistrement principal est prêt       |
+| `edit-record` | Lorsque l'enregistrement principal passe en mode édition       |
+| `change`      | Après la modification d'un champ de l'enregistrement principal |
+
+Le registre du noyau accepte également `new-record`, `save-record`, `validate-record`, `blur`,
+`focus`, `click` et les événements `*-repeatable`. Ils dépendent du cycle de vie et des choix
+d'interface propres à l'application ; les moteurs de rendu officiels ne les déclenchent donc pas
+automatiquement. Une application qui intègre directement `form0-core` peut les déclencher avec
+`engine.trigger(eventType, fieldKey, metadata)` au moment approprié de son propre flux.
+
+L'enregistrement d'un gestionnaire avec `ON` ne rend pas l'événement automatique. N'utilisez un
+événement dans un schéma que si l'application hôte ou le binding indique qu'il le déclenche.
+
+## Builtins d'événement
+
+### <Badge variant="secondary">Événements</Badge>
 
 - [`ON`](/fr/core/builtins/events/on)
 - [`OFF`](/fr/core/builtins/events/off)

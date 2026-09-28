@@ -10,6 +10,10 @@ import { Badge } from "zudoku/ui/Badge"
 Events live in `form.events.code` and are evaluated at runtime. Use `ON` to register handlers
 and `SETVALUE`/`ALERT` to interact with the form.
 
+Creating an engine runs `events.code` once to register handlers. It does not dispatch an event.
+An event runs only when the host calls `engine.trigger(...)` or a binding dispatches it for a user
+interaction or application lifecycle transition.
+
 ## Quick example
 
 ```js
@@ -19,6 +23,26 @@ ON("change", "age", function (event) {
   }
 })
 ```
+
+## Event dispatch in official bindings
+
+`form0-react` and `form0-react-native` intentionally dispatch a small, portable set of events from
+their `FormRenderer` components:
+
+| Event         | When it is dispatched                           |
+| ------------- | ----------------------------------------------- |
+| `load-record` | After the main record engine is ready           |
+| `edit-record` | When the main record enters edit mode           |
+| `change`      | After a user changes a field in the main record |
+
+The core registry also accepts `new-record`, `save-record`, `validate-record`, `blur`, `focus`,
+`click`, and the `*-repeatable` events. These depend on application-specific lifecycle and UI
+decisions, so the official renderers do not dispatch them automatically. An application integrating
+`form0-core` directly can dispatch them with `engine.trigger(eventType, fieldKey, metadata)` at the
+appropriate point in its own workflow.
+
+Registering one of these handlers with `ON` does not make the event automatic. Only use an event in
+a schema when its host application or binding documents that it dispatches that event.
 
 ## Event builtins
 

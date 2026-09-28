@@ -30,15 +30,16 @@ The engine evaluates the schema and produces a state object with:
 
 1. Load the schema and create the engine
 2. Provide initial values (optional)
-3. Fire any initialization events
-4. Evaluate: calculations, conditions, and validation
+3. Register the handlers in `form.events.code`
+4. Evaluate calculations, conditions, and validation
 5. On each value change:
    - Update the value
    - Re-evaluate (live validation)
-   - Fire change events if defined
+   - Let the host or binding dispatch `change` if it supports that event
 6. Read state or build a structured record for submission
 
 ## Events and expressions
 
 - Calculated fields use expressions, inside `calculate` property, like `$age + 1` to derive values from other fields.
-- Events live in `form.events.code` and can react to form changes at runtime (e.g., when a record is loaded or a field changes).
+- Events live in `form.events.code`. Core registers their handlers, while the host application or
+  binding decides when to dispatch each event.
