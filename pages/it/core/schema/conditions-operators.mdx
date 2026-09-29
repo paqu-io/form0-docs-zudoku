@@ -1,12 +1,12 @@
 ---
 title: Condizioni e operatori
-description: Visibilità condizionata, requisiti e regole di sola lettura.
+description: Regole condizionali di visibilità, obbligatorietà e sola lettura.
 ---
 
 <PageBadges />
 
-Le condizioni sono utilizzate in `visible_conditions`, `required_conditions` e `read_only_conditions`.
-Essi fanno riferimento ad altri campi e valutano a vero o falso.
+Le condizioni si usano in `visible_conditions`, `required_conditions` e `read_only_conditions`.
+Fanno riferimento ad altri campi e restituiscono vero o falso.
 
 ## Forma delle condizioni
 
@@ -18,7 +18,7 @@ Essi fanno riferimento ad altri campi e valutano a vero o falso.
 }
 ```
 
-È possibile combinare le condizioni con `and` o `or`:
+Puoi combinare le condizioni con `and` o `or`:
 
 ```json
 {
@@ -33,36 +33,36 @@ Essi fanno riferimento ad altri campi e valutano a vero o falso.
 
 | Operatore               | Significato                     |
 | ----------------------- | ------------------------------- |
-| `equal_to`              | Uguale al valore fornito        |
-| `not_equal_to`          | Non uguale al valore            |
-| `greater_than`          | superiore al valore             |
-| `less_than`             | inferiore al valore             |
+| `equal_to`              | Uguale al valore indicato       |
+| `not_equal_to`          | Diverso dal valore              |
+| `greater_than`          | Maggiore del valore             |
+| `less_than`             | Minore del valore               |
 | `greater_or_equal_than` | maggiore o uguale a             |
-| `less_or_equal_than`    | inferiore o uguale a            |
-| `contains`              | Array contiene il valore        |
+| `less_or_equal_than`    | Minore o uguale a               |
+| `contains`              | L'array contiene il valore      |
 | `starts_with`           | La stringa inizia con il valore |
 | `is_empty`              | Il valore è vuoto o nullo       |
 | `is_not_empty`          | Il valore non è vuoto           |
 
-### Supporto dell'operatore per tipo di campo
+### Operatori supportati per tipo di campo
 
-Gli operatori sono convalidati rispetto al tipo di campo di riferimento. Ad esempio:
+Gli operatori vengono validati in base al tipo di campo referenziato. Ad esempio:
 
 - I campi di testo supportano `contains` e `starts_with`
 - I campi numerici/data supportano gli operatori di confronto
-- I campi di scelta supportano `equal_to` e `contains` (a scelta multipla)
+- I campi di scelta supportano `equal_to` e `contains` (scelta multipla)
 
 Le condizioni dei campi di scelta confrontano i valori della risposta, non l'oggetto contenitore del renderer:
 
 - `SingleChoiceField` e `BooleanField` confrontano il `value` della scelta selezionata.
 - `MultiChoiceField` usa un array di valori selezionati. `contains` verifica un singolo valore, mentre
   `equal_to` verifica l'intera selezione senza dipendere dall'ordine.
-- Una risposta personalizzata “other” non vuota partecipa tramite il proprio `value` o la propria
+- Una risposta personalizzata “other” non vuota viene considerata tramite il proprio `value` o la propria
   etichetta, così gli operatori di vuoto riflettono ciò che l'utente ha inserito.
 
-Se un operatore non è valido per il campo di riferimento, la convalida fallirà.
+Se un operatore non è valido per il campo referenziato, la validazione non riesce.
 
-## Riferimenti di campo
+## Riferimenti ai campi
 
-`field_id` dovrebbe puntare al campo `key`. `data_name` è accettato come un fallback, ma `key` è
-consigliato perché non cambia mai quando cambiano le etichette.
+`field_id` deve puntare alla `key` del campo. `data_name` è accettato come alternativa, ma è
+consigliato `key` perché non cambia mai quando cambiano le etichette.

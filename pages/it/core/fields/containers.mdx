@@ -7,7 +7,7 @@ description: Sezioni, sezioni ripetibili e piani di costruzione.
 
 import { Callout } from "zudoku/ui/Callout"
 
-## Sezione
+## Section
 
 ```json
 {
@@ -27,9 +27,9 @@ import { Callout } from "zudoku/ui/Callout"
 Attributi aggiuntivi:
 
 - `display`: `inline` o `drilldown`.
-- `elements`: Campi nidificati.
+- `elements`: campi annidati.
 
-## RipetibileSezione
+## RepeatableSection
 
 ```json
 {
@@ -76,22 +76,22 @@ Attributi aggiuntivi:
 
 Attributi aggiuntivi:
 
-- `location_enabled`: Abilita i dati di posizione per gli elementi.
-- `location_required`: Richiede i dati di posizione per gli elementi.
-- `title_field`: `TitleField` opzionale utilizzato per derivare il titolo di ogni record figlio. Utilizzare `null` quando non
-  Il titolo di entrata è configurato.
+- `location_enabled`: abilita i dati di posizione per gli elementi.
+- `location_required`: rende obbligatori i dati di posizione per gli elementi.
+- `title_field`: `TitleField` facoltativo usato per ricavare il titolo di ogni record figlio. Usa `null` se non
+  è configurato alcun titolo della voce.
 
-Sezioni ripetibili creano una matrice di record figlio nell'output.
-memorizzato come `@title` su ogni record figlio. Se tutte le parti del titolo sono vuote, `@title` è `null`; renderers
-potrebbe mostrare un'etichetta posizionale come `Items 1`, ma tale fallback non è persistente.
+Le sezioni ripetibili producono un array di record figli nell'output. Il titolo della voce configurato viene
+salvato come `@title` in ogni record figlio. Se tutte le parti del titolo sono vuote, `@title` è `null`; i renderer
+possono mostrare un'etichetta posizionale come `Items 1`, ma questo valore di ripiego non viene salvato.
 
-I riferimenti al titolo sono inclusi nel set di dati del record figlio del ripetibile.
-all'interno di contenitori `Section` nidificati ordinari, ma non ai campi all'esterno del ripetibile o all'interno di un
-annidato `RepeatableSection` . I tipi ammissibili sono `TextField` , `NumericField` , `DateField` , `TimeField` ,
-`SingleChoiceField`, `MultiChoiceField`, `BooleanField` e `CalculatedField`. I tasti di campo ordinati sono
-preferito, mentre `data_name` riferimenti sono accettati per autore schemas.
+I riferimenti del titolo sono limitati ai dati dei record figli della sezione ripetibile stessa. Possono puntare a campi
+all'interno di normali contenitori `Section` annidati, ma non a campi esterni alla sezione ripetibile o all'interno di una
+`RepeatableSection` annidata. I tipi ammessi sono `TextField`, `NumericField`, `DateField`, `TimeField`,
+`SingleChoiceField`, `MultiChoiceField`, `BooleanField` e `CalculatedField`. Sono preferibili le chiavi dei campi ordinate,
+mentre negli schemi scritti a mano sono accettati anche i riferimenti tramite `data_name`.
 
-## BuildingPlanSezione
+## BuildingPlanSection
 
 ```json
 {
@@ -113,10 +113,10 @@ preferito, mentre `data_name` riferimenti sono accettati per autore schemas.
 
 Attributi aggiuntivi:
 
-- `building_plan`: Struttura che descrive la topologia del piano.
-- `node_overrides`: Override per i nodi generati.
+- `building_plan`: struttura che descrive la topologia del piano.
+- `node_overrides`: override per i nodi generati.
 
 <Callout type="info" title="Building plan expansion">
-  BuildingPlanSection si espande in sezioni ripetibili nidificate a runtime. Espansione di questo
-  documentazione con esempi completi a breve.
+  BuildingPlanSection si espande in RepeatableSection annidate in fase di esecuzione. Presto
+  amplieremo questa documentazione con esempi completi.
 </Callout>

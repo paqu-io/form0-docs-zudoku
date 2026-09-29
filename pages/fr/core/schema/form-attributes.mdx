@@ -1,34 +1,34 @@
 ---
 title: Attributs du formulaire
-description: Référence complète pour tous les attributs d'objet de formulaire.
+description: Référence complète de tous les attributs de l'objet formulaire.
 ---
 
 <PageBadges />
 
 import { Callout } from "zudoku/ui/Callout"
 
-Cette page documente tous les attributs disponibles sur l'objet `form`, y compris les métadonnées au niveau de l'application.
+Cette page documente tous les attributs disponibles sur l'objet `form`, y compris les métadonnées propres à l'application.
 
-<Callout type="note" title="Attributs au niveau de l’application">
-  Les attributs marqués comme ** au niveau de l'application ** sont des métadonnées qui ne sont pas
-  traitées directement par le moteur. Ils peuvent être utilisés lors de l'intégration avec le
-  produit SaaS [reform](https://reformapp.io) ou lors de la création de fonctionnalités similaires
-  dans votre propre application.
+<Callout type="note" title="Attributs propres à l'application">
+  Les attributs marqués **Application** sont des métadonnées que le moteur ne traite pas
+  directement. Vous pouvez les utiliser pour une intégration avec le produit SaaS
+  [reform](https://reformapp.io) ou pour créer des fonctionnalités similaires dans votre propre
+  application.
 </Callout>
 
 ---
 
-## Nom
+## name
 
-Nom de formulaire convivial affiché dans l'interface utilisateur.
+Nom lisible du formulaire affiché dans l'interface.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | ✓        |
-| Par défaut | -        |
-| Choix      | -        |
-| Niveau app | -        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | ✓        |
+| Par défaut  | -        |
+| Choix       | -        |
+| Application | -        |
 
 ---
 
@@ -36,153 +36,153 @@ Nom de formulaire convivial affiché dans l'interface utilisateur.
 
 Description du formulaire.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | -        |
-| Choix      | -        |
-| Niveau app | -        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | -        |
+| Choix       | -        |
+| Application | -        |
 
 ---
 
 ## id
 
-Identificateur de formulaire unique. Format UUID recommandé.
+Identifiant unique du formulaire. Le format UUID est recommandé.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | ✓        |
-| Par défaut | -        |
-| Choix      | -        |
-| Niveau app | -        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | ✓        |
+| Par défaut  | -        |
+| Choix       | -        |
+| Application | -        |
 
 ---
 
 ## record_count
 
-Comptoir opérationnel appartenant à la plate-forme. Nombre d'enregistrements dans le formulaire.
+Compteur opérationnel géré par la plateforme. Nombre d'enregistrements du formulaire.
 
-| Biens      | Valeur      |
-| ---------- | ----------- |
-| Type       | `number`    |
-| Requis     | -           |
-| Par défaut | Hôte-défini |
-| Choix      | -           |
-| Niveau app | ✓           |
+| Propriété   | Valeur             |
+| ----------- | ------------------ |
+| Type        | `number`           |
+| Obligatoire | -                  |
+| Par défaut  | Défini par le host |
+| Choix       | -                  |
+| Application | ✓                  |
 
 ---
 
 ## record_last_change_at
 
-Date/heure du dernier changement d'enregistrement au format ISO 8601.
+Compteur opérationnel géré par la plateforme. Date et heure de la dernière modification d'un enregistrement, au format ISO 8601.
 
-| Biens      | Valeur      |
-| ---------- | ----------- |
-| Type       | `string`    |
-| Requis     | -           |
-| Par défaut | Hôte-défini |
-| Choix      | -           |
-| Niveau app | ✓           |
+| Propriété   | Valeur             |
+| ----------- | ------------------ |
+| Type        | `string`           |
+| Obligatoire | -                  |
+| Par défaut  | Défini par le host |
+| Choix       | -                  |
+| Application | ✓                  |
 
 ---
 
 ## form_created_at
 
-Date/heure de création du formulaire au format ISO 8601.
+Date et heure de création du formulaire, au format ISO 8601.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
 ## form_updated_at
 
-Date/heure de la dernière mise à jour du formulaire au format ISO 8601.
+Date et heure de la dernière mise à jour du formulaire, au format ISO 8601.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
 ## form_created_by
 
-L'utilisateur qui a créé le formulaire.
+Utilisateur qui a créé le formulaire.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
 ## form_updated_by
 
-Utilisateur qui a mis à jour le formulaire.
+Dernier utilisateur à avoir mis à jour le formulaire.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
-## état
+## status
 
-Indicateur d'état du formulaire.
+Indicateur du statut du formulaire.
 
-| Biens      | Valeur               |
-| ---------- | -------------------- |
-| Type       | `string`             |
-| Requis     | -                    |
-| Par défaut | -                    |
-| Choix      | `active`, `inactive` |
-| Niveau app | ✓                    |
+| Propriété   | Valeur               |
+| ----------- | -------------------- |
+| Type        | `string`             |
+| Obligatoire | -                    |
+| Par défaut  | -                    |
+| Choix       | `active`, `inactive` |
+| Application | ✓                    |
 
 ---
 
 ## version
 
-Version schema appartenant à la plateforme en option. form0-core ne l'incrémente pas.
+Version facultative du schéma gérée par la plateforme. form0-core ne l'incrémente pas.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | -        |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | -        |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
-## principal_org_id
+## main_org_id
 
 Identifiant de l'organisation principale.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | -        |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | -        |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
@@ -190,13 +190,13 @@ Identifiant de l'organisation principale.
 
 Champs de métadonnées associés à l'organisation principale.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `object` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `object` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
@@ -204,13 +204,13 @@ Champs de métadonnées associés à l'organisation principale.
 
 Identifiant de la sous-organisation.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
@@ -218,13 +218,13 @@ Identifiant de la sous-organisation.
 
 Champs de métadonnées associés à la sous-organisation.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `object` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `object` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
@@ -232,13 +232,13 @@ Champs de métadonnées associés à la sous-organisation.
 
 Identifiant du projet.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
@@ -246,192 +246,192 @@ Identifiant du projet.
 
 Champs de métadonnées associés au projet.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `object` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `object` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
 ## ai
 
-Voir [Métadonnées AI](/fr/core/ai-metadata) pour plus de détails.
+Métadonnées d'IA pour guider au niveau du formulaire. Voir [Métadonnées d'IA](/fr/core/ai-metadata) pour plus de détails.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `object` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | -        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `object` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | -        |
 
 ---
 
 ## status_field
 
-Voir [Champs méta](/fr/core/fields/meta-fields#statusfield) pour plus de détails.
+Définition du champ spécial de statut. Voir [Champs méta](/fr/core/fields/meta-fields#statusfield) pour plus de détails.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `object` |
-| Requis     | ✓        |
-| Par défaut | -        |
-| Choix      | -        |
-| Niveau app | -        |
-
----
-
-## \_champ de titre
-
-Voir [Champs méta](/fr/core/fields/meta-fields#titlefield) pour plus de détails.
-
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `object` |
-| Requis     | ✓        |
-| Par défaut | -        |
-| Choix      | -        |
-| Niveau app | -        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `object` |
+| Obligatoire | ✓        |
+| Par défaut  | -        |
+| Choix       | -        |
+| Application | -        |
 
 ---
 
-## \_Boîte de délimitation
+## title_field
 
-Boîte de délimitation contenant tous les enregistrements de formulaire. Format: `[min_lat, min_lng, max_lat, max_lng]`.
+Définition du champ spécial de titre. Voir [Champs méta](/fr/core/fields/meta-fields#titlefield) pour plus de détails.
 
-| Biens      | Valeur         |
-| ---------- | -------------- |
-| Type       | `array`        |
-| Requis     | -              |
-| Par défaut | `[0, 0, 0, 0]` |
-| Choix      | -              |
-| Niveau app | ✓              |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `object` |
+| Obligatoire | ✓        |
+| Par défaut  | -        |
+| Choix       | -        |
+| Application | -        |
+
+---
+
+## bounding_box
+
+Rectangle englobant tous les enregistrements du formulaire. Format : `[min_lat, min_lng, max_lat, max_lng]`.
+
+| Propriété   | Valeur         |
+| ----------- | -------------- |
+| Type        | `array`        |
+| Obligatoire | -              |
+| Par défaut  | `[0, 0, 0, 0]` |
+| Choix       | -              |
+| Application | ✓              |
 
 ---
 
 ## location_enabled
 
-Permet la capture d'emplacement pour les enregistrements.
+Active la capture de la position pour les enregistrements.
 
-| Biens      | Valeur          |
-| ---------- | --------------- |
-| Type       | `boolean`       |
-| Requis     | -               |
-| Par défaut | -               |
-| Choix      | `true`, `false` |
-| Niveau app | ✓               |
+| Propriété   | Valeur          |
+| ----------- | --------------- |
+| Type        | `boolean`       |
+| Obligatoire | -               |
+| Par défaut  | -               |
+| Choix       | `true`, `false` |
+| Application | ✓               |
 
 ---
 
 ## location_required
 
-Nécessite des données de localisation lorsque `location_enabled` est `true`.
+Exige des données de localisation lorsque `location_enabled` vaut `true`.
 
-| Biens      | Valeur          |
-| ---------- | --------------- |
-| Type       | `boolean`       |
-| Requis     | -               |
-| Par défaut | -               |
-| Choix      | `true`, `false` |
-| Niveau app | ✓               |
+| Propriété   | Valeur          |
+| ----------- | --------------- |
+| Type        | `boolean`       |
+| Obligatoire | -               |
+| Par défaut  | -               |
+| Choix       | `true`, `false` |
+| Application | ✓               |
 
 ---
 
 ## image
 
-URL pour l'icône de formulaire (taille originale).
+URL de l'icône du formulaire (taille originale).
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
 ## image_thumbnail
 
-URL pour l'icône de forme miniature (160x160 px).
+URL de l'icône du formulaire au format miniature (160x160 px).
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
-## image_petite
+## image_small
 
-URL pour l'icône de forme de petite taille (320x320 px).
+URL de l'icône du formulaire en petit format (320x320 px).
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
 ## image_large
 
-URL pour l'icône de forme de grande taille (640x640 px).
+URL de l'icône du formulaire en grand format (640x640 px).
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `string` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | ✓        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `string` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | ✓        |
 
 ---
 
-## événements
+## events
 
-Bloc de code d'événement contenant les expressions intégrées et JavaScript pour les gestionnaires d'événements. Le code est placé dans `events.code`.
+Bloc de code des événements contenant des builtins et des expressions JavaScript pour les gestionnaires d'événements. Le code se place dans `events.code`.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `object` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | -        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `object` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | -        |
 
 ---
 
 ## form_links
 
-Liens vers/depuis d'autres formulaires (utilisés avec `FormLinkField`). Voir [Champs méta](/fr/core/fields/meta-fields#formlinkfield) pour plus de détails.
+Liens vers et depuis d'autres formulaires (utilisés avec `FormLinkField`). Voir [Champs méta](/fr/core/fields/meta-fields#formlinkfield) pour plus de détails.
 
-| Biens      | Valeur   |
-| ---------- | -------- |
-| Type       | `object` |
-| Requis     | -        |
-| Par défaut | `null`   |
-| Choix      | -        |
-| Niveau app | -        |
+| Propriété   | Valeur   |
+| ----------- | -------- |
+| Type        | `object` |
+| Obligatoire | -        |
+| Par défaut  | `null`   |
+| Choix       | -        |
+| Application | -        |
 
 ---
 
-## éléments
+## elements
 
-Voir [Éléments et imbrication](/fr/core/schema/elements).
+Champs et conteneurs du formulaire. Voir [Éléments et imbrication](/fr/core/schema/elements).
 
-| Biens      | Valeur  |
-| ---------- | ------- |
-| Type       | `array` |
-| Requis     | ✓       |
-| Par défaut | `[]`    |
-| Choix      | -       |
-| Niveau app | -       |
+| Propriété   | Valeur  |
+| ----------- | ------- |
+| Type        | `array` |
+| Obligatoire | ✓       |
+| Par défaut  | `[]`    |
+| Choix       | -       |
+| Application | -       |

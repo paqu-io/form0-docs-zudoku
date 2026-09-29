@@ -1,23 +1,23 @@
 ---
 title: Metadati IA
-description: Guida AI opzionale per moduli e campi.
+description: Indicazioni facoltative per l'IA a livello di modulo e di campo.
 ---
 
 <PageBadges />
 
-form0-core supporta metadati AI opzionali per guidare gli agenti esterni. I metadati vengono ignorati dal
-motore a meno che il tuo strumento non lo legga.
+form0-core supporta metadati IA facoltativi per guidare agenti esterni. Il motore ignora questi
+metadati, che vengono usati solo se i tuoi strumenti li leggono.
 
-## AI a livello di modulo
+## IA a livello di modulo
 
 `form.ai` supporta le seguenti chiavi:
 
-- `context`: Array dei tag di dominio.
-- `instructions`: Serie di istruzioni per l'attrezzaggio AI.
-- `namingPolicy`: Oggetto che descrive le preferenze di denominazione.
-- `tasks`: array di attività da abilitare (ad esempio, `suggestFieldNames`).
-- `requiresConsent`: Bandiera booleana per il consenso dell'utente.
-- `allowCloud`: Bandiera booleana per l'elaborazione cloud.
+- `context`: array di tag di dominio.
+- `instructions`: array di istruzioni per gli strumenti di IA.
+- `namingPolicy`: oggetto che descrive le preferenze di denominazione.
+- `tasks`: array delle attività da abilitare (ad esempio, `suggestFieldNames`).
+- `requiresConsent`: booleano che indica se è richiesto il consenso dell'utente.
+- `allowCloud`: booleano che indica se è consentita l'elaborazione nel cloud.
 
 Esempio:
 
@@ -33,19 +33,19 @@ Esempio:
 }
 ```
 
-## AI a livello di campo
+## IA a livello di campo
 
 `field.ai` supporta:
 
-- `context`, `instructions`, `tasks` (stesso come forma)
-- `examples`: Valori di esempio
-- `synonyms`: Etichette alternative
-- `inferrable`: Bandiera booleana per inferenza
+- `context`, `instructions`, `tasks` (come per il modulo)
+- `examples`: valori di esempio
+- `synonyms`: etichette alternative
+- `inferrable`: booleano che indica se il valore può essere dedotto
 - `fillStrategy`: `infer_from_previous`, `require_explicit` o `suggest_options`
-- `priority`: Numero che indica l'importanza
-- `dependencies`: Array degli identificatori di campo
-- `choicePolicy`: Oggetto che descrive la strategia del valore di scelta
-- `providerHints`: Suggerimenti specifici del fornitore
+- `priority`: numero che indica l'importanza
+- `dependencies`: array di identificatori di campo
+- `choicePolicy`: oggetto che descrive la strategia per i valori di scelta
+- `providerHints`: indicazioni specifiche del provider
 - `requiresConsent`, `allowCloud`
 
 Esempio:

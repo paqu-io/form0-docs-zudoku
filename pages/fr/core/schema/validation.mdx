@@ -1,48 +1,48 @@
 ---
 title: Validation du schéma
-description: Comment form0-core valide schemas et conditions.
+description: Comment form0-core valide les schémas et les conditions.
 ---
 
 <PageBadges />
 
-form0-core valide schemas avant d'exécuter le moteur. La validation se concentre sur la structure et
-l'exactitude des attributs, pas les préoccupations de l'IU.
+form0-core valide les schémas avant d'exécuter le moteur. La validation porte sur la structure et
+l'exactitude des attributs, pas sur les questions d'interface.
 
 ## Ce qui est validé
 
 - Attributs requis par type de champ
 - Valeurs autorisées pour les attributs (par exemple, les options `display`)
-- Unique `key` et `data_name`
-- Format `data_name` (en minuscules a-z, 0-9, soulignement, longueur maximale 42)
-- Les valeurs par défaut correspondent aux règles de type de champ
-- Les opérateurs de condition sont valides pour le type de champ référencé
-- Forme des métadonnées AI et clés autorisées
+- Unicité de `key` et de `data_name`
+- Format de `data_name` (minuscules a-z, 0-9, tiret bas, 42 caractères maximum)
+- Conformité des valeurs par défaut aux règles du type de champ
+- Validité des opérateurs de condition pour le type de champ référencé
+- Structure et clés autorisées des métadonnées d'IA
 
-## Validation de l'exécution
+## Validation à l'exécution
 
-Chez runtime, les champs valident également leurs valeurs lorsque le moteur évalue:
+À l'exécution, les champs valident aussi leurs valeurs lorsque le moteur évalue le formulaire :
 
-- Contrôles numériques min/max
-- Correspondances de modèle pour les champs de texte
-- Les valeurs de choix doivent correspondre aux choix définis
+- Contrôles numériques de minimum et de maximum
+- Correspondance avec un motif pour les champs texte
+- Correspondance des valeurs de choix avec les choix définis
 
 La validation des valeurs à l'exécution s'applique à tous les champs, y compris ceux qui sont
 actuellement masqués. Le résultat est disponible dans la map `errors` de l'état du moteur.
 
-### Champs obligatoires et envoi
+### Champs obligatoires et soumission
 
 Le moteur calcule un indicateur `required` pour chaque champ, mais il n'ajoute pas une erreur
-simplement parce qu'un champ obligatoire est vide. Le contrôle des champs obligatoires relève de
-l'envoi : les renderers officiels combinent `visible`, `required` et la valeur actuelle, ignorent les
+simplement parce qu'un champ obligatoire est vide. Le contrôle des champs obligatoires relève de la
+soumission : les renderers officiels combinent `visible`, `required` et la valeur actuelle, ignorent les
 champs masqués et décident quand afficher l'erreur.
 
 Si vous utilisez form0-core sans renderer, appliquez la même politique dans votre application. Dans
-la plupart des cas, un champ vide ne doit bloquer l'envoi que s'il est visible et obligatoire.
+la plupart des cas, un champ vide ne doit bloquer la soumission que s'il est visible et obligatoire.
 Incluez également les erreurs de valeur et de format du moteur dans ce contrôle.
 
-## Erreurs typiques
+## Erreurs courantes
 
-- Attributs requis manquants
-- Dupliquer `key` ou `data_name`
+- Attributs obligatoires manquants
+- `key` ou `data_name` en double
 - Opérateurs non valides (par exemple, `contains` sur un champ numérique)
 - Valeurs par défaut qui ne correspondent pas au type de champ

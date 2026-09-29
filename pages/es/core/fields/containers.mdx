@@ -7,7 +7,7 @@ description: Secciones, secciones repetibles y planos de construcción.
 
 import { Callout } from "zudoku/ui/Callout"
 
-## Sección
+## Section
 
 ```json
 {
@@ -27,9 +27,9 @@ import { Callout } from "zudoku/ui/Callout"
 Atributos adicionales:
 
 - `display`: `inline` o `drilldown`.
-- `elements`: Campos anidados.
+- `elements`: campos anidados.
 
-## Sección repetible
+## RepeatableSection
 
 ```json
 {
@@ -76,20 +76,20 @@ Atributos adicionales:
 
 Atributos adicionales:
 
-- `location_enabled`: Habilita los datos de ubicación de los elementos.
-- `location_required`: Requiere datos de ubicación para los elementos.
-- `title_field`: `TitleField` opcional usado para derivar el título de cada registro hijo. Use `null` cuando no
-  El título de entrada está configurado.
+- `location_enabled`: habilita los datos de ubicación de los elementos.
+- `location_required`: exige datos de ubicación para los elementos.
+- `title_field`: `TitleField` opcional que se usa para obtener el título de cada registro hijo. Usa `null` si no
+  hay ningún título de entrada configurado.
 
-Las secciones repetibles crean una matriz de registros secundarios en la salida. Un título de entrada configurado es
-Almacenado como `@title` en cada registro hijo. Si todas las partes del título están en blanco, `@title` es `null` ; renderers
-puede mostrar una etiqueta posicional como `Items 1`, pero esa reserva no persiste.
+Las secciones repetibles generan un array de registros hijos en la salida. El título de entrada configurado se
+guarda como `@title` en cada registro hijo. Si todas las partes del título están vacías, `@title` es `null`; los renderers
+pueden mostrar una etiqueta posicional como `Items 1`, pero ese valor alternativo no se guarda.
 
-Las referencias de título están limitadas al propio conjunto de datos de registro hijo del repetible. Pueden apuntar a campos
-dentro de los contenedores `Section` anidados ordinarios, pero no a los campos fuera del
-anidada `RepeatableSection` Los tipos elegibles son `TextField` , `NumericField` , `DateField` , `TimeField` ,
-`SingleChoiceField`, `MultiChoiceField`, `BooleanField`, y `CalculatedField`.
-preferido, mientras que las referencias `data_name` se aceptan para el autor schemas.
+Las referencias del título se limitan al conjunto de datos de los registros hijos de la propia sección repetible. Pueden apuntar a campos
+dentro de contenedores `Section` anidados normales, pero no a campos fuera de la sección repetible ni dentro de otra
+`RepeatableSection` anidada. Los tipos admitidos son `TextField`, `NumericField`, `DateField`, `TimeField`,
+`SingleChoiceField`, `MultiChoiceField`, `BooleanField` y `CalculatedField`. Se recomiendan las claves de campo ordenadas,
+aunque en los esquemas escritos a mano también se aceptan referencias por `data_name`.
 
 ## BuildingPlanSection
 
@@ -113,10 +113,10 @@ preferido, mientras que las referencias `data_name` se aceptan para el autor sch
 
 Atributos adicionales:
 
-- `building_plan`: Estructura que describe la topología del plan.
-- `node_overrides`: Anula los nodos generados.
+- `building_plan`: estructura que describe la topología del plano.
+- `node_overrides`: modificaciones que se aplican a los nodos generados.
 
 <Callout type="info" title="Building plan expansion">
-  BuildingPlanSection se expande en secciones anidadas repetibles en runtime. Vamos a ampliar esto
-  documentación con ejemplos completos próximamente.
+  BuildingPlanSection se expande en RepeatableSection anidadas en tiempo de ejecución. Pronto
+  ampliaremos esta documentación con ejemplos completos.
 </Callout>

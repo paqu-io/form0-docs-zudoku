@@ -1,25 +1,25 @@
 ---
-title: Métadonnées IA
-description: Guide d'IA facultatif pour les formulaires et les champs.
+title: Métadonnées d’IA
+description: Indications facultatives pour l'IA au niveau des formulaires et des champs.
 ---
 
 <PageBadges />
 
-form0-core prend en charge les métadonnées AI facultatives pour guider les agents externes.
-moteur à moins que votre outillage ne le lise.
+form0-core prend en charge des métadonnées d'IA facultatives pour guider des agents externes. Le
+moteur ignore ces métadonnées ; seuls vos outils les exploitent s'ils les lisent.
 
-## Niveau de forme AI
+## IA au niveau du formulaire
 
-`form.ai` prend en charge les clés suivantes:
+`form.ai` accepte les clés suivantes :
 
-- `context`: Tableau de balises de domaine.
-- `instructions`: Tableau d'instructions pour l'outillage d'IA.
-- `namingPolicy`: Objet décrivant les préférences de nommage.
-- `tasks`: Tableau de tâches à activer (par exemple, `suggestFieldNames`).
-- `requiresConsent`: Drapeau booléen pour le consentement de l'utilisateur.
-- `allowCloud`: Drapeau booléen pour le traitement du cloud.
+- `context` : tableau d'étiquettes de domaine.
+- `instructions` : tableau d'instructions destinées aux outils d'IA.
+- `namingPolicy` : objet décrivant les préférences de nommage.
+- `tasks` : tableau des tâches à activer (par exemple, `suggestFieldNames`).
+- `requiresConsent` : booléen indiquant si le consentement de l'utilisateur est requis.
+- `allowCloud` : booléen indiquant si le traitement dans le cloud est autorisé.
 
-Exemple:
+Exemple :
 
 ```json
 {
@@ -33,22 +33,22 @@ Exemple:
 }
 ```
 
-## IA sur le terrain
+## IA au niveau du champ
 
-`field.ai` supporte:
+`field.ai` accepte :
 
-- `context`, `instructions`, `tasks` (même forme)
-- `examples`: Exemples de valeurs
-- `synonyms`: Étiquettes alternatives
-- `inferrable`: Drapeau booléen pour inférence
-- `fillStrategy`: `infer_from_previous`, `require_explicit` ou `suggest_options`
-- `priority`: Numéro indiquant l'importance
-- `dependencies`: Tableau d'identifiants de champs
-- `choicePolicy`: Objet décrivant la stratégie de valeur de choix
-- `providerHints`: Conseils spécifiques au fournisseur
+- `context`, `instructions`, `tasks` (comme pour le formulaire)
+- `examples` : exemples de valeurs
+- `synonyms` : libellés alternatifs
+- `inferrable` : booléen indiquant si la valeur peut être déduite
+- `fillStrategy` : `infer_from_previous`, `require_explicit` ou `suggest_options`
+- `priority` : nombre indiquant l'importance
+- `dependencies` : tableau d'identifiants de champs
+- `choicePolicy` : objet décrivant la stratégie pour les valeurs de choix
+- `providerHints` : indications propres à chaque fournisseur
 - `requiresConsent`, `allowCloud`
 
-Exemple:
+Exemple :
 
 ```json
 {

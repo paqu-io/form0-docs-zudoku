@@ -152,7 +152,7 @@
     },
     "schema": {
       "form": {
-        "title": "Oggetto form"
+        "title": "Oggetto modulo"
       },
       "form-attributes": {
         "title": "Attributi del modulo"
@@ -187,7 +187,7 @@
         "title": "Contenitori"
       },
       "meta-fields": {
-        "title": "Metacampi"
+        "title": "Campi meta"
       }
     },
     "builtins": {

@@ -1,28 +1,28 @@
 ---
 title: Elementi e annidamento
-description: Come i campi e le sezioni sono organizzati in un schema.
+description: Come sono organizzati i campi e le sezioni in uno schema.
 ---
 
 <PageBadges />
 
-`form.elements` è una serie ordinata di campi e contenitori.
+`form.elements` è un array ordinato di campi e contenitori. I contenitori possono annidare altri
 campi tramite il proprio array `elements`.
 
 ## Chiavi e nomi di dati
 
-- `data_name`: identificatore leggibile dall'uomo utilizzato come chiave di valore nello stato del motore (unico, minuscolo a-z, 0-9, solo sottolineatura, massimo 42 caratteri)
-- `key`: identificatore interno, tipicamente derivato da `data_name` (unico, esadecimale, 8 caratteri)
+- `data_name`: identificatore leggibile usato come chiave del valore nello stato del motore (univoco; solo minuscole a-z, 0-9 e underscore; massimo 42 caratteri)
+- `key`: identificatore interno, di solito derivato da `data_name` (univoco, esadecimale, 8 caratteri)
 
-Quando si fa riferimento ai campi in condizioni o `title_field.elements`, è possibile utilizzare `key` o `data_name`. L'utilizzo di `data_name` è spesso più pratico quando si scrive schemas manualmente poiché è più memorabile.
+Per fare riferimento ai campi nelle condizioni o in `title_field.elements`, puoi usare `key` oppure `data_name`. Quando scrivi uno schema a mano, `data_name` è spesso più pratico perché è più facile da ricordare.
 
 ## Contenitori
 
-I seguenti tipi di campo possono contenere elementi nidificati:
+I seguenti tipi di campo possono contenere elementi annidati:
 
 - `Section` – raggruppa visivamente i campi
-- `RepeatableSection` – consente più istanze dei suoi figli
+- `RepeatableSection` – consente più istanze dei propri elementi figli
 
-`BuildingPlanSection` supporta anche elementi nidificati, ma ha un comportamento specializzato per la generazione di moduli dinamici. Vedere [BuildingPlanSection](/it/core/fields/containers#buildingplansection) per i dettagli.
+Anche `BuildingPlanSection` supporta elementi annidati, ma ha un comportamento specifico per generare moduli dinamici. Vedi [BuildingPlanSection](/it/core/fields/containers#buildingplansection) per i dettagli.
 
 ## Esempio
 

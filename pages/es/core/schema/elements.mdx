@@ -1,19 +1,19 @@
 ---
 title: Elementos y anidamiento
-description: Cómo se organizan los campos y las secciones en un schema.
+description: Cómo se organizan los campos y las secciones en un esquema.
 ---
 
 <PageBadges />
 
-`form.elements` es un conjunto ordenado de campos y contenedores. Los contenedores pueden anidar otros
-campos a través de su propia matriz `elements`.
+`form.elements` es un array ordenado de campos y contenedores. Los contenedores pueden anidar otros
+campos mediante su propio array `elements`.
 
 ## Claves y nombres de datos
 
-- `data_name`: identificador legible por humanos utilizado como clave de valor en el estado del motor (único, minúscula a-z, 0-9, subrayado solamente, máximo 42 caracteres)
-- `key`: identificador interno, típicamente derivado de `data_name` (único, hexadecimal, 8 caracteres)
+- `data_name`: identificador legible que se usa como clave del valor en el estado del motor (único; solo minúsculas a-z, 0-9 y guion bajo; máximo 42 caracteres)
+- `key`: identificador interno, normalmente derivado de `data_name` (único, hexadecimal, 8 caracteres)
 
-Al hacer referencia a campos en condiciones o `title_field.elements`, puede usar `key` o `data_name`.Usar `data_name` a menudo es más práctico al escribir schemas manualmente ya que es más memorable.
+Para hacer referencia a campos en condiciones o en `title_field.elements`, puedes usar `key` o `data_name`. Al escribir esquemas a mano, `data_name` suele ser más práctico porque es más fácil de recordar.
 
 ## Contenedores
 
@@ -22,7 +22,7 @@ Los siguientes tipos de campos pueden contener elementos anidados:
 - `Section` – agrupa campos visualmente
 - `RepeatableSection` – permite múltiples instancias de sus hijos
 
-`BuildingPlanSection` también es compatible con elementos anidados, pero tiene un comportamiento especializado para la generación dinámica de formularios. Vea [BuildingPlanSection](/es/core/fields/containers#buildingplansection) para más detalles.
+`BuildingPlanSection` también admite elementos anidados, pero tiene un comportamiento específico para generar formularios dinámicos. Consulta [BuildingPlanSection](/es/core/fields/containers#buildingplansection) para más detalles.
 
 ## Ejemplo
 
