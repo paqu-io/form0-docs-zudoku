@@ -1,18 +1,18 @@
 ---
 title: Intégration directe
-description: Gérez directement le cycle de vie d’un connecteur form0 dans Node.js.
+description: Gérez directement le cycle de vie d’un connecteur form0 dans une application Node.js.
 ---
 
 <PageBadges />
 
-La CLI est le parcours d’intégration habituel, mais les deux connecteurs officiels exposent le même
+La CLI est la voie d’intégration habituelle, mais les deux connecteurs officiels exposent le même
 cycle de vie :
 
 - `initialize(config, envVars)` ouvre le stockage et crée les tables manquantes.
 - `onFormSubmit(record)` stocke un enregistrement structuré canonique.
-- `healthCheck()` indique si le stockage initialisé est accessible.
-- `getMetadata()` décrit le connecteur installé et sa configuration sans exposer de secrets.
-- `destroy()` libère la connexion ou le fichier local.
+- `healthCheck()` indique si le stockage initialisé est joignable.
+- `getMetadata()` décrit le connecteur installé et la configuration active sans exposer de secrets.
+- `destroy()` libère la connexion à la base de données ou le descripteur du fichier local.
 
 ```javascript
 import { Form0PostgreSQLConnector } from "form0-connector-pg"
@@ -30,9 +30,11 @@ const result = await connector.onFormSubmit(structuredRecord)
 await connector.destroy()
 ```
 
-La configuration explicite remplace les valeurs issues de l’environnement. Conservez les
-identifiants hors du contrôle de version et libérez toujours le connecteur à l’arrêt de l’application.
+Les valeurs de configuration explicites l’emportent sur celles issues des variables
+d’environnement. Gardez les identifiants hors du contrôle de version et libérez toujours le
+connecteur à l’arrêt de l’application.
 
-La structure acceptée est décrite dans [Sortie et enregistrements de Core](/fr/core/output-records).
-Les connecteurs ajoutent des horodatages côté serveur et renvoient le détail des enregistrements
-principal et imbriqués écrits.
+La forme d’enregistrement acceptée est documentée dans
+[Sortie et enregistrements du noyau](/fr/core/output-records). Les connecteurs ajoutent des
+horodatages côté serveur avant le stockage et renvoient un résultat décrivant l’enregistrement
+principal et les enregistrements imbriqués qui ont été écrits.

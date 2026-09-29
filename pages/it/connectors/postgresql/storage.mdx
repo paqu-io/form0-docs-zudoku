@@ -1,25 +1,29 @@
 ---
 title: Modello di archiviazione e operatività di PostgreSQL
-description: Comprendi tabelle, payload JSONB, indici e confine operativo del connettore PostgreSQL.
+description: Comprendi tabelle, contenuto JSONB, indici e limiti operativi del connettore PostgreSQL.
 ---
 
 <PageBadges />
 
-L’inizializzazione crea due tabelle quando non esistono:
+L'inizializzazione crea due tabelle se non esistono già:
 
-- `form0_submissions` contiene i record principali.
-- `form0_submissions_children` contiene i record delle sezioni ripetibili annidate.
+- `form0_submissions` memorizza i record principali.
+- `form0_submissions_children` memorizza i record delle sezioni ripetibili annidate.
 
-I nomi sono configurabili. Ogni tabella proietta i metadati comuni in colonne tipizzate e salva il
-record completo in `form_values` come JSONB. La tabella figlia conserva gli identificatori del
-record principale e del genitore immediato per ricostruire le relazioni annidate.
+I nomi sono configurabili. Ogni tabella proietta i metadati comuni del record in colonne tipizzate e
+memorizza il contenuto completo del record in `form_values` come JSONB. La tabella figlia conserva
+sia l'identificatore del record principale sia quello del genitore diretto, così da poter
+ricostruire le relazioni annidate.
 
-Il connettore crea indici per stato, form, timestamp, bozza, versione, changeset e autore, oltre a
-un indice GIN per `form_values` e trigger che aggiornano i timestamp del database.
+Il connettore crea indici per i campi comuni di stato, modulo, timestamp, bozza, versione, changeset
+e autore. Crea inoltre un indice GIN per `form_values` e dei trigger che mantengono aggiornati i
+timestamp di aggiornamento del database.
 
-`onFormSubmit()` inserisce prima il record principale e poi quelli annidati ricorsivamente. È un
-confine di scrittura, non un’API pubblica di query né un servizio di sincronizzazione. Le
-applicazioni devono usare un proprio livello di accesso e decidere come gestire gli ID duplicati.
+`onFormSubmit()` inserisce il record principale e poi inserisce ricorsivamente i record annidati. È
+un punto di scrittura, non un'API pubblica di query né un servizio di sincronizzazione. Le
+applicazioni devono interrogare le tabelle tramite il proprio livello di accesso ai dati e decidere
+come gestire gli identificatori di record duplicati.
 
-Il proprietario del database resta responsabile di migrazioni, backup, test di ripristino,
-conservazione, monitoraggio, capacità, controllo degli accessi e requisiti normativi.
+I proprietari del database restano responsabili delle migrazioni dello schema, dei backup, dei test
+di ripristino, della conservazione dei dati, del monitoraggio, della capacità, del controllo degli
+accessi e dei requisiti normativi.

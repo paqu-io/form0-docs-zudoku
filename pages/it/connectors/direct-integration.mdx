@@ -1,18 +1,18 @@
 ---
 title: Integrazione diretta
-description: Gestisci direttamente il ciclo di vita di un connettore form0 in Node.js.
+description: Gestisci direttamente il ciclo di vita di un connettore form0 in un'applicazione Node.js.
 ---
 
 <PageBadges />
 
-La CLI è il percorso di integrazione normale, ma entrambi i connettori ufficiali espongono lo stesso
+La CLI è il percorso di integrazione abituale, ma entrambi i connettori ufficiali espongono lo stesso
 ciclo di vita:
 
-- `initialize(config, envVars)` apre lo storage e crea le tabelle mancanti.
+- `initialize(config, envVars)` apre l'archiviazione e crea le tabelle mancanti.
 - `onFormSubmit(record)` salva un record strutturato canonico.
-- `healthCheck()` indica se lo storage inizializzato è raggiungibile.
-- `getMetadata()` descrive il connettore installato e la configurazione senza esporre segreti.
-- `destroy()` rilascia la connessione o il file locale.
+- `healthCheck()` indica se l'archiviazione inizializzata è raggiungibile.
+- `getMetadata()` descrive il connettore installato e la configurazione attiva senza esporre segreti.
+- `destroy()` rilascia la connessione al database o l'handle del file locale.
 
 ```javascript
 import { Form0PostgreSQLConnector } from "form0-connector-pg"
@@ -30,9 +30,10 @@ const result = await connector.onFormSubmit(structuredRecord)
 await connector.destroy()
 ```
 
-La configurazione esplicita prevale sui valori dell’ambiente. Tieni le credenziali fuori dal
-controllo versione e rilascia sempre il connettore durante l’arresto dell’applicazione.
+I valori di configurazione espliciti hanno la precedenza su quelli ricavati dalle variabili
+d'ambiente. Tieni le credenziali fuori dal controllo di versione e rilascia sempre il connettore
+alla chiusura dell'applicazione.
 
-La struttura accettata è descritta in [Output e record di Core](/it/core/output-records). I
-connettori aggiungono timestamp lato server e restituiscono il dettaglio dei record principale e
-annidati scritti.
+La forma di record accettata è documentata in [Output e record del nucleo](/it/core/output-records).
+I connettori aggiungono timestamp lato server prima del salvataggio e restituiscono un risultato che
+descrive il record principale e i record annidati scritti.

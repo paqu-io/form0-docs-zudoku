@@ -102,6 +102,8 @@ renderer, binding, host, starter, snapshot, worker, builtin, drilldown.
   builtins, not funciones integradas.
 - Translate the adjective "built-in" when it describes another noun: built-in renderers becomes
   renderers integrados, renderers intégrés, and renderer integrati.
+- "host" stays in English only for the host application or process. A network host, such as a
+  database hostname, uses each language's usual term: host in Spanish and Italian, hôte in French.
 
 ## Diagrams
 

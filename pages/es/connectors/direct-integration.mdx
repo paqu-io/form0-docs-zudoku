@@ -1,18 +1,18 @@
 ---
 title: Integración directa
-description: Controla directamente el ciclo de vida de un conector form0 en Node.js.
+description: Controla directamente el ciclo de vida de un conector de form0 en una aplicación Node.js.
 ---
 
 <PageBadges />
 
-La CLI es la vía habitual de integración, pero ambos conectores oficiales exponen el mismo ciclo
+La CLI es la vía de integración habitual, pero los dos conectores oficiales exponen el mismo ciclo
 de vida:
 
 - `initialize(config, envVars)` abre el almacenamiento y crea las tablas que falten.
 - `onFormSubmit(record)` guarda un registro estructurado canónico.
 - `healthCheck()` indica si el almacenamiento inicializado está accesible.
 - `getMetadata()` describe el conector instalado y la configuración activa sin exponer secretos.
-- `destroy()` libera la conexión o el archivo local.
+- `destroy()` libera la conexión a la base de datos o el descriptor del archivo local.
 
 ```javascript
 import { Form0PostgreSQLConnector } from "form0-connector-pg"
@@ -30,9 +30,11 @@ const result = await connector.onFormSubmit(structuredRecord)
 await connector.destroy()
 ```
 
-La configuración explícita prevalece sobre las variables de entorno. Mantén las credenciales
-fuera del control de versiones y libera siempre el conector al cerrar la aplicación.
+Los valores de configuración explícitos prevalecen sobre los que se obtienen de las variables de
+entorno. Mantén las credenciales fuera del control de versiones y libera siempre el conector al
+cerrar la aplicación.
 
-El formato aceptado se documenta en [Salida y registros de Core](/es/core/output-records). Los
-conectores añaden marcas de tiempo del servidor y devuelven un resultado que describe los
-registros principal y anidados escritos.
+La forma de registro admitida se documenta en
+[Salida y registros del núcleo](/es/core/output-records). Los conectores añaden marcas de tiempo
+del servidor antes de guardar los datos y devuelven un resultado que describe el registro principal
+y los registros anidados que se han escrito.

@@ -1,17 +1,17 @@
 ---
 title: Vue d’ensemble des connecteurs
-description: Conservez les enregistrements structurés form0 avec des connecteurs de confiance.
+description: Conservez les enregistrements structurés form0 grâce à des paquets de connecteurs de confiance.
 ---
 
 <PageBadges />
 
 Les connecteurs reçoivent les enregistrements structurés d’un projet form0 et les écrivent dans un
-stockage contrôlé par l’application hôte. Les connecteurs officiels prennent actuellement en charge
+stockage contrôlé par l’application host. Les connecteurs officiels prennent actuellement en charge
 PostgreSQL et SQLite.
 
-Le parcours recommandé consiste à les gérer avec `form0-cli` : installer un connecteur, le
-configurer dans le projet, tester la connexion et consulter son état. Une application peut aussi
-instancier directement un connecteur lorsqu’elle doit gérer son cycle de vie.
+Le parcours recommandé consiste à gérer les connecteurs avec `form0-cli` : installer un connecteur,
+le configurer dans le projet, tester la connexion et consulter son état. Une application peut aussi
+instancier directement un connecteur lorsqu’elle doit en gérer le cycle de vie.
 
 | Paquet                                                                           | Stockage   | Documentation                                                    | Code source                                                 |
 | -------------------------------------------------------------------------------- | ---------- | ---------------------------------------------------------------- | ----------------------------------------------------------- |
@@ -19,9 +19,9 @@ instancier directement un connecteur lorsqu’elle doit gérer son cycle de vie.
 | [`form0-connector-sqlite`](https://www.npmjs.com/package/form0-connector-sqlite) | SQLite     | [Installation et configuration](/fr/connectors/sqlite/setup)     | [GitHub](https://github.com/paqu-io/form0-connector-sqlite) |
 
 Les connecteurs s’exécutent dans le processus Node.js local. Ce ne sont pas des services de stockage
-hébergés et ils ne fournissent ni authentification, ni autorisation, ni sauvegardes, ni rétention,
-ni administration de base de données. Ces responsabilités restent celles de l’application et du
-propriétaire de la base de données.
+hébergés, et ils ne fournissent ni authentification, ni autorisation, ni sauvegardes, ni
+conservation des données, ni administration de base de données. Ces responsabilités restent à la
+charge de l’application et du propriétaire de la base de données.
 
 Commencez par [Choisir un connecteur](/fr/connectors/choose) ou consultez le
 [guide de gestion des connecteurs de la CLI](/fr/cli/connector-management).

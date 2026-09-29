@@ -1,25 +1,29 @@
 ---
 title: Modèle de stockage et exploitation de PostgreSQL
-description: Comprenez les tables, données JSONB, index et limites opérationnelles du connecteur PostgreSQL.
+description: Comprenez les tables, le contenu JSONB, les index et les limites d’exploitation du connecteur PostgreSQL.
 ---
 
 <PageBadges />
 
-L’initialisation crée deux tables si elles n’existent pas :
+L’initialisation crée deux tables lorsqu’elles n’existent pas encore :
 
 - `form0_submissions` stocke les enregistrements principaux.
-- `form0_submissions_children` stocke les sections répétables imbriquées.
+- `form0_submissions_children` stocke les enregistrements des sections répétables imbriquées.
 
-Leurs noms sont configurables. Chaque table projette les métadonnées courantes dans des colonnes
-typées et stocke l’enregistrement complet dans `form_values` au format JSONB. La table enfant garde
-les identifiants de l’enregistrement principal et du parent immédiat pour reconstruire les relations.
+Les noms sont configurables. Chaque table projette les métadonnées communes des enregistrements dans
+des colonnes typées et stocke le contenu complet de l’enregistrement dans `form_values` au format
+JSONB. La table enfant conserve à la fois l’identifiant de l’enregistrement principal et celui du
+parent immédiat, afin de pouvoir reconstruire les relations imbriquées.
 
-Le connecteur crée des index pour l’état, le formulaire, les horodatages, le brouillon, la version,
-le changeset et le créateur, ainsi qu’un index GIN pour `form_values` et des triggers d’horodatage.
+Le connecteur crée des index pour les champs communs de statut, de formulaire, d’horodatage, de
+brouillon, de version, de changeset et de créateur. Il crée aussi un index GIN pour `form_values` et
+des triggers qui tiennent à jour les horodatages de mise à jour de la base de données.
 
-`onFormSubmit()` insère l’enregistrement principal puis les enregistrements imbriqués récursivement.
-C’est une frontière d’écriture, pas une API publique de requête ou un service de synchronisation.
-Les applications doivent utiliser leur propre couche d’accès et définir le traitement des doublons.
+`onFormSubmit()` insère l’enregistrement principal, puis insère récursivement les enregistrements
+imbriqués. C’est un point d’écriture, et non une API publique de requête ni un service de
+synchronisation. Les applications doivent interroger les tables via leur propre couche d’accès aux
+données et décider de la façon de traiter les identifiants d’enregistrement en double.
 
-Le propriétaire de la base reste responsable des migrations, sauvegardes, tests de restauration,
-de la rétention, supervision, capacité, gestion des accès et exigences réglementaires.
+Les propriétaires de la base de données restent responsables des migrations de schéma, des
+sauvegardes, des tests de restauration, de la conservation des données, de la supervision, de la
+capacité, du contrôle d’accès et des exigences réglementaires.

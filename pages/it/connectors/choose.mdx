@@ -5,22 +5,23 @@ description: Confronta i connettori ufficiali PostgreSQL e SQLite.
 
 <PageBadges />
 
-Entrambi i connettori ufficiali accettano la stessa struttura di record form0 e preservano le
-relazioni delle sezioni ripetibili annidate. Scegli in base all’ambiente di esecuzione e alle
-modalità operative richieste per i dati.
+Entrambi i connettori ufficiali accettano la stessa forma di record strutturato di form0 e
+conservano le relazioni delle sezioni ripetibili annidate. Scegli in base a dove viene eseguita
+l'applicazione e a come devono essere gestiti i suoi dati.
 
-| Aspetto     | PostgreSQL                                             | SQLite                                           |
-| ----------- | ------------------------------------------------------ | ------------------------------------------------ |
-| Storage     | Database di rete                                       | File di database locale                          |
-| Uso ideale  | Applicazioni server e deploy condivisi                 | Strumenti locali e semplici deploy Node.js       |
-| Concorrenza | Pool di connessioni e concorrenza gestita dal database | Vincoli di locking dei file SQLite               |
-| Operatività | Ruoli, TLS, backup e amministrazione server            | Permessi, copie, backup e conservazione dei file |
-| Payload     | JSONB e colonne proiettate                             | Testo JSON e colonne proiettate                  |
-| Piattaforma | Node.js con accesso a PostgreSQL                       | Node.js con una build nativa supportata          |
+| Aspetto       | PostgreSQL                                                   | SQLite                                                    |
+| ------------- | ------------------------------------------------------------ | --------------------------------------------------------- |
+| Archiviazione | Database di rete                                             | File di database locale                                   |
+| Uso ideale    | Applicazioni server e deployment condivisi                   | Strumenti locali e deployment Node.js semplici            |
+| Concorrenza   | Pool di connessioni e concorrenza gestita dal database       | Vincoli del locking dei file di SQLite                    |
+| Operatività   | Ruoli del database, TLS, backup e amministrazione del server | Permessi dei file, copie, backup e conservazione dei dati |
+| Contenuto     | JSONB più colonne proiettate                                 | Testo JSON più colonne proiettate                         |
+| Piattaforma   | Node.js con accesso a PostgreSQL                             | Node.js con una build nativa supportata                   |
 
-Usa PostgreSQL quando più processi o deploy condividono le submission o quando sono importanti le
-query e i controlli operativi del database. Usa SQLite quando i dati devono rimanere in un file
-locale e l’applicazione può rispettarne il modello di concorrenza.
+Usa PostgreSQL quando più processi o deployment condividono gli invii, oppure quando contano le query
+e i controlli operativi a livello di database. Usa SQLite quando i dati devono restare in un file
+locale e l'applicazione può funzionare entro il modello di concorrenza di SQLite.
 
-Il connettore SQLite per Node.js non è compatibile con React Native o Expo. Le applicazioni mobile
-devono usare storage nativo come `expo-sqlite` e definire il proprio confine di sincronizzazione.
+Il connettore SQLite per Node.js non è compatibile con React Native né con Expo. Le applicazioni
+mobile devono usare un'archiviazione nativa della piattaforma, come `expo-sqlite`, e definire un
+proprio livello di sincronizzazione.
