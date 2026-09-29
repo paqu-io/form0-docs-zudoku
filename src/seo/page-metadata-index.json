@@ -4999,7 +4999,7 @@
     "translationKey": "/core/builtins/calculations-expressions-overview",
     "locale": "es",
     "title": "Cálculos y expresiones",
-    "description": "Funciones integradas disponibles en campos calculados y expresiones.",
+    "description": "Builtins disponibles en campos calculados y expresiones.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5053,7 +5053,7 @@
     "translationKey": "/core/builtins/events/off",
     "locale": "es",
     "title": "OFF",
-    "description": "Elimina controladores de eventos.",
+    "description": "Elimina manejadores de eventos.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5080,7 +5080,7 @@
     "translationKey": "/core/builtins/events/on",
     "locale": "es",
     "title": "ON",
-    "description": "Registra un controlador de eventos.",
+    "description": "Registra un manejador de eventos.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5134,7 +5134,7 @@
     "translationKey": "/core/builtins/events-overview",
     "locale": "es",
     "title": "Eventos",
-    "description": "Funciones integradas disponibles en eventos del formulario.",
+    "description": "Builtins disponibles en los eventos del formulario.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5160,8 +5160,8 @@
     "pathname": "/es/core/builtins/index",
     "translationKey": "/core/builtins/index",
     "locale": "es",
-    "title": "Visión general de las funciones integradas",
-    "description": "Funciones integradas disponibles en cálculos y eventos.",
+    "title": "Visión general de los builtins",
+    "description": "Builtins disponibles en cálculos y eventos.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8384,7 +8384,7 @@
     "translationKey": "/core/builtins/calculations-expressions-overview",
     "locale": "fr",
     "title": "Calculs et expressions",
-    "description": "Construits disponibles dans les champs et expressions calculés.",
+    "description": "Builtins disponibles dans les champs calculés et les expressions.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8519,7 +8519,7 @@
     "translationKey": "/core/builtins/events-overview",
     "locale": "fr",
     "title": "Événements",
-    "description": "Construits disponibles dans les événements de formulaire.",
+    "description": "Builtins disponibles dans les événements du formulaire.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8545,8 +8545,8 @@
     "pathname": "/fr/core/builtins/index",
     "translationKey": "/core/builtins/index",
     "locale": "fr",
-    "title": "Vue d’ensemble des fonctions intégrées",
-    "description": "Fonctions intégrées disponibles dans les calculs et les événements.",
+    "title": "Vue d’ensemble des builtins",
+    "description": "Builtins disponibles dans les calculs et les événements.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -11860,7 +11860,7 @@
     "translationKey": "/core/builtins/calculations-expressions-overview",
     "locale": "it",
     "title": "Calcoli ed espressioni",
-    "description": "Builtin disponibili in campi ed espressioni calcolati.",
+    "description": "Builtin disponibili nei campi calcolati e nelle espressioni.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -11995,7 +11995,7 @@
     "translationKey": "/core/builtins/events-overview",
     "locale": "it",
     "title": "Eventi",
-    "description": "Builtin disponibili in eventi di forma.",
+    "description": "Builtin disponibili negli eventi del modulo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12021,8 +12021,8 @@
     "pathname": "/it/core/builtins/index",
     "translationKey": "/core/builtins/index",
     "locale": "it",
-    "title": "Panoramica delle funzioni integrate",
-    "description": "Funzioni integrate disponibili in calcoli ed eventi.",
+    "title": "Panoramica dei builtin",
+    "description": "Builtin disponibili nei calcoli e negli eventi.",
     "indexable": true,
     "status": "published",
     "alternates": [

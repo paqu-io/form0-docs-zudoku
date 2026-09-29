@@ -1,13 +1,13 @@
 ---
 title: Calcoli ed espressioni
-description: Builtin disponibili in campi ed espressioni calcolati.
+description: Builtin disponibili nei campi calcolati e nelle espressioni.
 ---
 
 <PageBadges />
 
 import { Badge } from "zudoku/ui/Badge"
 
-I campi calcolati valutano le espressioni JavaScript memorizzate in `calculate`.
+I campi calcolati valutano le espressioni JavaScript memorizzate in `calculate`. I valori dei campi sono
 disponibili come variabili `$field_name`.
 
 ## Esempio rapido
@@ -18,7 +18,7 @@ ROUND($price * $qty, 2)
 
 ## Builtin per categoria
 
-### <Badge variant="secondary">Logical</Badge>
+### <Badge variant="secondary">Logica</Badge>
 
 - [`IF`](/it/core/builtins/calculations-expressions/if)
 - [`AND`](/it/core/builtins/calculations-expressions/and)
@@ -28,7 +28,7 @@ ROUND($price * $qty, 2)
 - [`COUNTBLANK`](/it/core/builtins/calculations-expressions/countblank)
 - [`ARRAY`](/it/core/builtins/calculations-expressions/array)
 
-### <Badge variant="secondary">Math</Badge>
+### <Badge variant="secondary">Matematica</Badge>
 
 - [`ABS`](/it/core/builtins/calculations-expressions/abs)
 - [`CEILING`](/it/core/builtins/calculations-expressions/ceiling)
@@ -36,11 +36,11 @@ ROUND($price * $qty, 2)
 - [`SIN`](/it/core/builtins/calculations-expressions/sin)
 - [`ROUND`](/it/core/builtins/calculations-expressions/round)
 
-### <Badge variant="secondary">String</Badge>
+### <Badge variant="secondary">Testo</Badge>
 
 - [`UPPER`](/it/core/builtins/calculations-expressions/upper)
 
-### <Badge variant="secondary">Choice</Badge>
+### <Badge variant="secondary">Scelta</Badge>
 
 - [`CHOICEVALUE`](/it/core/builtins/calculations-expressions/choicevalue)
 - [`CHOICELABEL`](/it/core/builtins/calculations-expressions/choicelabel)
@@ -54,7 +54,7 @@ ROUND($price * $qty, 2)
 - [`FORM`](/it/core/builtins/calculations-expressions/form)
 - [`DATANAMES`](/it/core/builtins/calculations-expressions/datanames)
 
-### <Badge variant="secondary">Control</Badge>
+### <Badge variant="secondary">Controllo</Badge>
 
 - [`SETRESULT`](/it/core/builtins/calculations-expressions/setresult)
 - [`EVAL`](/it/core/builtins/calculations-expressions/eval)

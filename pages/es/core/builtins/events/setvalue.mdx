@@ -15,9 +15,9 @@ Establece el valor de un campo durante un evento.
 SETVALUE("age", 18)
 ```
 
-<Callout type="caution" title="Usa las formas de valor en tiempo de ejecución para los campos de elección">
+<Callout type="caution" title="Usa la forma de valor en tiempo de ejecución en los campos de selección">
   No todos los bindings oficiales normalizan de la misma forma los valores primitivos de los campos de
-  elección. Para que el código de eventos sea portable, asigna un `SingleChoiceField` o un
+  selección. Para que el código de eventos sea portable, asigna un `SingleChoiceField` o un
   `BooleanField` con `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`. Asigna un
   `MultiChoiceField` con `{ "choices": [...], "other": [] }`. Los campos de texto, numéricos y demás
   campos escalares siguen aceptando sus valores escalares habituales.
