@@ -1,39 +1,39 @@
 ---
 title: Compilare e distribuire lo starter React e Vite
-description: Creare, visualizzare in anteprima e ospitare una build di produzione del web mantenuto starter.
+description: Crea, visualizza in anteprima e pubblica una build di produzione dello starter web mantenuto.
 ---
 
 <PageBadges />
 
-Creare e visualizzare in anteprima una build di produzione localmente:
+Crea una build di produzione e visualizzala in anteprima in locale:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Vite scrive l'output statico su `dist`. Distribuisci quella directory con un host statico o posizionala dietro
-il tuo server di applicazioni.
+Vite scrive l'output statico in `dist`. Pubblica quella directory su un hosting statico o servila
+dietro il server della tua applicazione.
 
 ## Requisiti di hosting
 
-starter utilizza il routing del browser. Configurare l'host per servire `index.html` come fallback per
-percorsi di applicazione come `/contact/standard`; altrimenti la navigazione diretta a tali URL può
-restituisce la pagina 404 dell'host.
+Lo starter usa il routing lato browser. Configura l'hosting in modo che serva `index.html` come
+fallback per le route dell'applicazione come `/contact/standard`; altrimenti la navigazione diretta a
+quegli URL può restituire la pagina 404 dell'hosting.
 
-Il proxy del connettore predefinito esiste solo nel server di sviluppo. Produzione submission deve utilizzare
-un endpoint server di proprietà dell'applicazione. Configurare tale endpoint in modo esplicito piuttosto che assumere il
-Il proxy `/api` sarà presente dopo la distribuzione.
+Il proxy predefinito verso i connettori esiste solo nel server di sviluppo. In produzione l'invio
+deve passare da un endpoint server gestito dall'applicazione. Configura quell'endpoint in modo
+esplicito, invece di presumere che il proxy `/api` di sviluppo sia presente dopo il deployment.
 
-## Prima della distribuzione
+## Prima del deployment
 
-- Eseguire `npm run lint` e `npm run build`.
-- Rivedere l'avviso di dimensione del bundle generato e introdurre la divisione del codice quando la crescita dell'applicazione
-  rende il download iniziale inappropriato.
-- Mantieni i file `.env` locali fuori dal controllo della versione.
-- Confermare che nessun segreto è incorporato nelle risorse generate.
-- Testa la navigazione diretta su ogni percorso di applicazione pubblica.
-- Rivedere la [politica di sicurezza](https://github.com/paqu-io/form0-web-tmpl-react-vite/blob/main/SECURITY.md).
+- Esegui `npm run lint` e `npm run build`.
+- Controlla l'avviso sulla dimensione del bundle generato e introduci il code splitting quando la crescita dell'applicazione rende eccessivo il download iniziale.
+- Tieni i file `.env` locali fuori dal controllo di versione.
+- Verifica che nessun segreto sia incorporato negli asset generati.
+- Prova la navigazione diretta a ogni route pubblica dell'applicazione.
+- Leggi la [policy di sicurezza](https://github.com/paqu-io/form0-web-tmpl-react-vite/blob/main/SECURITY.md).
 
-I valori di ambiente Vite destinati al codice del browser sono staticamente incorporati al momento della compilazione.
-li come configurazione pubblica, anche quando hanno origine in un file di ambiente locale.
+I valori d'ambiente di Vite destinati al codice del browser vengono incorporati staticamente in fase
+di build. Trattali come configurazione pubblica, anche quando provengono da un file d'ambiente
+locale.

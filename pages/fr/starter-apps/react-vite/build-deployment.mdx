@@ -1,39 +1,40 @@
 ---
 title: Compiler et déployer le starter React et Vite
-description: Créer, prévisualiser et héberger une version de production du web maintenu starter.
+description: Créez, prévisualisez et hébergez un build de production du starter web maintenu.
 ---
 
 <PageBadges />
 
-Créer et prévisualiser une construction de production localement:
+Créez et prévisualisez un build de production en local :
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Vite écrit la sortie statique dans `dist`. Déployez ce répertoire avec un hôte statique ou placez-le derrière
-votre serveur d'applications.
+Vite écrit la sortie statique dans `dist`. Déployez ce répertoire sur un hébergement statique ou
+placez-le derrière le serveur de votre application.
 
-## Exigences d'hébergement
+## Exigences d’hébergement
 
-Le starter utilise le routage du navigateur. Configurez l'hôte pour servir `index.html` comme
-les routes d'application telles que `/contact/standard`; sinon la navigation directe à ces URL peut
-Retourne la page 404 de l'hôte.
+Le starter utilise le routage côté navigateur. Configurez l’hébergement pour qu’il serve
+`index.html` en repli pour les routes de l’application comme `/contact/standard` ; sinon, un accès
+direct à ces URL peut renvoyer la page 404 de l’hébergeur.
 
-Le proxy de connecteur par défaut n'existe que dans le serveur de développement.
-Configurez explicitement ce point de terminaison plutôt que de supposer que le point de terminaison
-Le proxy `/api` sera présent après le déploiement.
+Le proxy de connecteurs par défaut n’existe que dans le serveur de développement. En production, la
+soumission doit passer par un endpoint serveur géré par l’application. Configurez cet endpoint
+explicitement plutôt que de supposer que le proxy `/api` de développement sera présent après le
+déploiement.
 
-## Avant déploiement
+## Avant le déploiement
 
 - Exécutez `npm run lint` et `npm run build`.
-- Revoir l'avertissement de taille de paquet généré et introduire le fractionnement de code lors de la croissance de l'application
-  rend le téléchargement initial inapproprié.
+- Examinez l’avertissement de taille du bundle généré et introduisez le code splitting lorsque la croissance de l’application rend le téléchargement initial trop lourd.
 - Gardez les fichiers `.env` locaux hors du contrôle de version.
-- Confirmez qu'aucun secret n'est inclus dans les ressources générées.
-- Testez la navigation directe vers chaque route d'application publique.
+- Vérifiez qu’aucun secret n’est intégré dans les ressources générées.
+- Testez l’accès direct à chaque route publique de l’application.
 - Consultez la [politique de sécurité](https://github.com/paqu-io/form0-web-tmpl-react-vite/blob/main/SECURITY.md).
 
-Les valeurs d'environnement Vite destinées au code du navigateur sont incorporées statiquement au moment de la construction.
-en tant que configuration publique, même lorsqu'elles proviennent d'un fichier d'environnement local.
+Les valeurs d’environnement Vite destinées au code du navigateur sont intégrées statiquement au
+moment du build. Traitez-les comme une configuration publique, même lorsqu’elles proviennent d’un
+fichier d’environnement local.

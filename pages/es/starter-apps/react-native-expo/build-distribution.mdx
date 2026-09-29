@@ -1,24 +1,29 @@
 ---
 title: Compilar y distribuir el starter de React Native y Expo
-description: Prepara configuración y recursos para builds nativas de desarrollo y producción.
+description: Prepara la configuración y los recursos del starter para las compilaciones nativas de desarrollo y de producción.
 ---
 
 <PageBadges />
 
-El repositorio no impone cuentas de tiendas, firma, proyecto EAS, política de actualizaciones ni
-flujo de releases. Define esas decisiones para tu aplicación.
+El repositorio no impone una cuenta de tienda, un sistema de firma, un proyecto de EAS, una política
+de actualizaciones ni un flujo de publicación. Añade esas decisiones como parte del diseño del
+despliegue de tu aplicación.
 
-Antes de crear un build distribuible:
+Antes de crear una compilación distribuible:
 
-1. Sustituye nombre, slug, versión, iconos y splash de ejemplo en `app.json`.
-2. Define identificadores Android/iOS y permisos de plataforma.
-3. Elimina logs de almacenamiento y túneles exclusivos de desarrollo.
-4. Verifica la seguridad de esquemas, registros, multimedia, retención y API remota.
-5. Prueba en dispositivos físicos compatibles.
-6. Configura firma, builds, envíos y actualizaciones con el flujo Expo elegido.
+1. Sustituye en `app.json` el nombre de la aplicación, el slug, la versión, los iconos y los recursos de la pantalla de inicio de ejemplo.
+2. Define los identificadores de aplicación de Android e iOS y los permisos específicos de cada plataforma.
+3. Elimina el registro de almacenamiento solo para desarrollo y la configuración del túnel público.
+4. Verifica los límites de seguridad de los esquemas, los registros, los archivos multimedia, la conservación de datos y la API remota.
+5. Prueba en los dispositivos físicos compatibles con una development build o una preview build.
+6. Configura la firma, las compilaciones, los envíos a las tiendas y las actualizaciones con el flujo de Expo elegido.
 
-Usa [development builds](https://docs.expo.dev/develop/development-builds/introduction/) para el
-desarrollo orientado a producción y crea uno nuevo después de actualizar el SDK Expo o una
-dependencia nativa. Consulta [EAS Build](https://docs.expo.dev/build/introduction/). La exportación
-de bundles en CI es una prueba rápida, no un build firmado ni un sustituto de las pruebas en
-dispositivos.
+Usa las [development builds de Expo](https://docs.expo.dev/develop/development-builds/introduction/)
+para el desarrollo orientado a producción y siempre que la aplicación incluya código nativo
+personalizado. Después de actualizar el SDK de Expo o una dependencia nativa, crea una nueva
+development build. Sigue la
+[documentación de compilación de Expo](https://docs.expo.dev/build/introduction/) para configurar
+EAS Build y la distribución actuales.
+
+La CI exporta bundles de JavaScript de producción como prueba básica, pero una exportación no es una
+compilación firmada de Android o iOS y no sustituye a las pruebas en dispositivos.

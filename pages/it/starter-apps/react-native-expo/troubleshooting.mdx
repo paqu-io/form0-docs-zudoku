@@ -1,13 +1,13 @@
 ---
 title: Risoluzione dei problemi dello starter React Native ed Expo
-description: Diagnostica dipendenze, rete, immagini, font e SQLite.
+description: Diagnostica problemi di dipendenze, rete dei dispositivi, registro delle immagini, font e SQLite.
 ---
 
 <PageBadges />
 
 ## Expo segnala dipendenze incompatibili
 
-Usa i comandi Expo che tengono conto della compatibilità invece di installare versioni arbitrarie
+Usa i comandi di Expo che tengono conto della compatibilità invece di installare versioni arbitrarie
 dei pacchetti nativi:
 
 ```bash
@@ -15,35 +15,35 @@ npx expo install --check
 npx expo-doctor@latest
 ```
 
-Usa `npx expo install --fix` solo dopo aver esaminato le modifiche proposte. Tratta un aggiornamento
-dell’SDK Expo come una migrazione e segui la guida all’aggiornamento dell’SDK.
+Usa `npx expo install --fix` solo dopo aver esaminato le modifiche proposte. Tratta un
+aggiornamento dell'SDK di Expo come una migrazione e segui la guida all'aggiornamento dell'SDK.
 
-## Il dispositivo non apre il progetto
+## Un dispositivo non riesce ad aprire il progetto
 
-Verifica che il dispositivo possa raggiungere il computer di sviluppo tramite LAN. Controlla
-firewall, VPN, isolamento dei client Wi-Fi, porta configurata e se il client richiede Expo Go o un
-development build. Se usi un URL pubblico, verifica che non restituisca pagine intermedie prima
-degli endpoint Expo.
-Expo Go supporta una sola linea di SDK alla volta e la disponibilità della build compatibile varia
-in base alla piattaforma. Crea un nuovo development build dopo aver cambiato l’SDK Expo o le
-dipendenze native.
+Verifica che il dispositivo possa raggiungere il computer di sviluppo tramite la LAN. Controlla
+firewall, VPN, isolamento dei client Wi-Fi, porta configurata e se il client si aspetta Expo Go o una
+development build. Se usi un URL pubblico, verifica che non restituisca una pagina interstiziale
+prima degli endpoint di Expo. Expo Go supporta una sola versione dell'SDK alla volta e la
+distribuzione compatibile varia a seconda della piattaforma. Crea una nuova development build dopo
+aver cambiato l'SDK di Expo o le dipendenze native.
 
-## Manca un’immagine di supporto
+## Manca un'immagine di supporto
 
-Verifica che il percorso corrisponda allo schema, inserisci gli asset inclusi in
-`assets/supporting-images` ed esegui `npm run generate-images`. Registra il file rigenerato e riavvia
-Metro quando il grafo dei moduli non è aggiornato.
+Verifica che il percorso corrisponda a quello dello schema, inserisci gli asset inclusi nel bundle in
+`assets/supporting-images` ed esegui `npm run generate-images`. Esegui il commit del registro
+rigenerato e riavvia Metro quando il grafo dei moduli non è aggiornato.
 
-## I font o i moduli nativi non vengono caricati
+## I font o i moduli nativi non si caricano
 
 Attendi `useFonts(form0Fonts)` prima del rendering. Installa i pacchetti Expo con `npx expo install`
-e usa un development build per i moduli nativi non disponibili in Expo Go.
+e usa una development build per i moduli nativi non disponibili in Expo Go.
 
-## SQLite non scrive
+## Le scritture in SQLite non riescono
 
-Verifica `databaseName` e `tableName`, controlla i log del dispositivo e abilita temporaneamente
-l’output di debug dello storage. I nomi delle tabelle accettano solo lettere, cifre e underscore; i
-valori non validi usano il valore predefinito. Ricorda che cancellare i dati dell’app elimina il
-database nel sandbox.
+Valida `databaseName` e `tableName`, esamina i log del dispositivo e attiva temporaneamente l'output
+di debug dell'archiviazione. I nomi delle tabelle accettano solo lettere, cifre e underscore; i
+valori non validi tornano al valore predefinito. Ricorda che cancellare i dati dell'app elimina il
+database nella sandbox.
 
-Consulta anche [Risoluzione dei problemi React Native](/it/bindings/react-native/troubleshooting).
+Per gli errori specifici dei componenti, prosegui con
+[Risoluzione dei problemi di React Native](/it/bindings/react-native/troubleshooting).

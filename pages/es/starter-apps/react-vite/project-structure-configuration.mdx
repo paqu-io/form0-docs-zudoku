@@ -1,12 +1,12 @@
 ---
-title: Estructura y configuración de proyectos React y Vite
-description: Comprender el diseño web de starter y configurar su motor, presentación, schemas y servidor de desarrollo.
+title: Estructura y configuración del proyecto React y Vite
+description: Conoce la estructura del starter web y configura su motor, su presentación, sus esquemas y su servidor de desarrollo.
 ---
 
 <PageBadges />
 
-La starter es una aplicación Vite normal. Sus valores predeterminados form0-specific viven en `form0.config.js`,
-mientras que el código de la aplicación permanece bajo `src`.
+El starter es una aplicación Vite normal. Sus valores predeterminados específicos de form0 están en
+`form0.config.js`, mientras que el código de la aplicación sigue en `src`.
 
 ```text
 .
@@ -25,27 +25,30 @@ mientras que el código de la aplicación permanece bajo `src`.
 
 Edita `form0.config.js` para controlar:
 
-- `layout`: ancho predeterminado, colocación de etiquetas y diseño por presentación;
-- `engine`: hilo principal o evaluación worker y la estrategia de la tienda React;
-- `theme`: luz, oscuridad, sistema o una clase de tema de aplicación;
-- `interaction`: comportamiento inicial de edición/solo lectura y comportamiento de superposición submission;
-- `schemas.directory`: el directorio schema utilizado por las herramientas;
-- `devServer`: el comando de aplicación, el conmutador conector submission y la base API URL;
-- `fieldRenderers`: tipos de campo reemplazados por la aplicación renderers; y
-- `output.useKeys`: si los registros estructurados prefieren las claves schema o los nombres de datos.
+- `layout`: el ancho predeterminado, la posición de las etiquetas y el diseño de cada presentación;
+- `engine`: la evaluación en el hilo principal o en un worker y la estrategia del store de React;
+- `theme`: claro, oscuro, del sistema o una clase de tema de la aplicación;
+- `interaction`: el comportamiento inicial de edición o solo lectura y el envío en los overlays;
+- `schemas.directory`: el directorio de esquemas que usan las herramientas;
+- `devServer`: el comando de la aplicación, el interruptor de envío a conectores y la URL base de la API;
+- `fieldRenderers`: los tipos de campo que se sustituyen por renderers de la aplicación; y
+- `output.useKeys`: si los registros estructurados usan preferentemente las claves del esquema o los nombres de datos.
 
-Los accesorios de componentes pueden anular los valores predeterminados relevantes para un formulario específico.
-Por defecto en la configuración y mantener el comportamiento del formulario en el schema.
+Las propiedades de los componentes pueden sustituir los valores predeterminados correspondientes en
+un formulario concreto. Mantén en la configuración los valores predeterminados reutilizables de la
+aplicación y en el esquema el comportamiento del formulario.
 
 > [!CAUTION]
-> Mantenga el almacén de motores configurado en `snapshot` en este starter. Los documentos de configuración incluidos a
-> conocida limitación de mensajes de validación con el modo `selector`.
+> Mantén el store del motor en `snapshot` en este starter. La configuración incluida documenta una
+> limitación conocida de los mensajes de validación con el modo `selector`.
 
 ## Proxy de desarrollo
 
-De forma predeterminada, el servidor Vite convierte `/api` en `http://localhost:3030`.
-`FORM0_DEV_API_URL` en el entorno de proceso o en un archivo Vite local `.env` para usar otro servidor CLI
-dirección. El valor es consumido por la configuración de Vite y no está expuesto al código del navegador.
+El servidor de Vite redirige `/api` a `http://localhost:3030` de forma predeterminada. Establece
+`FORM0_DEV_API_URL` en el entorno del proceso o en un archivo `.env` local de Vite para usar otra
+dirección del servidor de la CLI. La configuración de Vite consume este valor y no lo expone al
+código del navegador.
 
-No coloque credenciales en variables del lado del cliente. Las credenciales de la base de datos pertenecen a la CLI o
-Entorno de conector del lado del servidor descrito en la documentación de conector](/es/connectors/overview).
+No pongas credenciales en variables del lado del cliente. Las credenciales de la base de datos
+pertenecen al entorno de la CLI o del conector del lado del servidor, descrito en la
+[documentación de los conectores](/es/connectors/overview).

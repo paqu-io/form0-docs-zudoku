@@ -1,13 +1,13 @@
 ---
-title: Résolution des problèmes du starter React Native et Expo
-description: Diagnostiquez dépendances, réseau, images, polices et SQLite.
+title: Dépannage du starter React Native et Expo
+description: Diagnostiquez les problèmes de dépendances, de réseau des appareils, de registre d’images, de polices et de SQLite.
 ---
 
 <PageBadges />
 
 ## Expo signale des dépendances incompatibles
 
-Utilisez les commandes d’Expo qui tiennent compte de la compatibilité au lieu d’installer des
+Utilisez les commandes d’Expo qui tiennent compte de la compatibilité plutôt que d’installer des
 versions arbitraires de paquets natifs :
 
 ```bash
@@ -15,35 +15,35 @@ npx expo install --check
 npx expo-doctor@latest
 ```
 
-Utilisez `npx expo install --fix` seulement après avoir examiné les changements proposés. Traitez
-une mise à niveau du SDK Expo comme une migration et suivez son guide de mise à niveau.
+N’utilisez `npx expo install --fix` qu’après avoir examiné les modifications proposées. Traitez une
+mise à niveau du SDK Expo comme une migration et suivez le guide de mise à niveau du SDK.
 
-## L’appareil n’ouvre pas le projet
+## Un appareil ne parvient pas à ouvrir le projet
 
-Vérifiez que l’appareil peut atteindre la machine de développement par LAN. Contrôlez les pare-feu,
-les VPN, l’isolation des clients Wi-Fi, le port configuré et si le client attend Expo Go ou un
-development build. Avec une URL publique, vérifiez qu’elle ne renvoie aucune page intermédiaire
-avant les endpoints Expo.
-Expo Go ne prend en charge qu’une ligne de SDK à la fois et sa distribution compatible varie selon
-la plateforme. Créez un nouveau development build après tout changement du SDK Expo ou des
-dépendances natives.
+Vérifiez que l’appareil peut joindre l’ordinateur de développement par le réseau local. Contrôlez les
+pare-feu, les VPN, l’isolation des clients Wi-Fi, le port configuré et si le client attend Expo Go ou
+un development build. Si vous utilisez une URL publique, vérifiez qu’elle ne renvoie pas de page
+interstitielle avant les endpoints Expo. Expo Go ne prend en charge qu’une seule version du SDK à la
+fois, et la distribution compatible varie selon la plateforme. Créez un nouveau development build
+après avoir changé le SDK Expo ou les dépendances natives.
 
-## Une image auxiliaire est absente
+## Une image d’appui est introuvable
 
-Vérifiez que son chemin correspond au schéma, placez les ressources incluses dans
-`assets/supporting-images`, puis exécutez `npm run generate-images`. Validez le registre régénéré et
-redémarrez Metro si le graphe de modules est obsolète.
+Vérifiez que son chemin correspond au schéma, placez les ressources intégrées dans
+`assets/supporting-images` et exécutez `npm run generate-images`. Commitez le registre régénéré et
+redémarrez Metro lorsque le graphe de modules est obsolète.
 
-## Les polices ou modules natifs ne se chargent pas
+## Les polices ou les modules natifs ne se chargent pas
 
-Attendez `useFonts(form0Fonts)` avant le rendu. Installez les paquets Expo avec `npx expo install` et
-utilisez un development build pour les modules natifs indisponibles dans Expo Go.
+Attendez `useFonts(form0Fonts)` avant l’affichage. Installez les paquets Expo avec `npx expo install`
+et utilisez un development build pour les modules natifs indisponibles dans Expo Go.
 
-## Échec SQLite
+## Les écritures SQLite échouent
 
-Vérifiez `databaseName` et `tableName`, consultez les journaux de l’appareil, puis activez
-temporairement la sortie de débogage du stockage. Les noms de table n’acceptent que les lettres, les
-chiffres et les underscores ; les valeurs invalides utilisent la valeur par défaut. Effacer les
-données de l’application supprime la base du sandbox.
+Validez `databaseName` et `tableName`, examinez les journaux de l’appareil et activez temporairement
+la sortie de débogage du stockage. Les noms de table n’acceptent que des lettres, des chiffres et des
+underscores ; les valeurs non valides reviennent à la valeur par défaut. N’oubliez pas qu’effacer les
+données de l’application supprime la base de données du sandbox.
 
-Consultez aussi la [résolution des problèmes React Native](/fr/bindings/react-native/troubleshooting).
+Pour les erreurs propres aux composants, poursuivez avec
+[Dépannage React Native](/fr/bindings/react-native/troubleshooting).

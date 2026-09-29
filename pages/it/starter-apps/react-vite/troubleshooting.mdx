@@ -1,48 +1,52 @@
 ---
 title: Risoluzione dei problemi dello starter React e Vite
-description: Risolvere i problemi comuni di installazione, routing, schema, renderer, worker e connettore.
+description: Risolvi i problemi più comuni di installazione, routing, schemi, renderer, worker e connettori.
 ---
 
 <PageBadges />
 
-## Un percorso del modulo dice che il modulo non è stato trovato
+## Una route indica che il modulo non è stato trovato
 
-Confermare che l'identificatore URL corrisponda esattamente a una voce in `src/forms/registry.js`.
-che la sua importazione dinamica punta a un file schema esistente.
+Verifica che l'identificatore nell'URL corrisponda esattamente a una voce di `src/forms/registry.js`.
+Verifica anche che il suo import dinamico punti a un file di schema esistente.
 
-## Una schema non riesce a caricare
+## Uno schema non si carica
 
-Aprire la console del browser per l'errore di importazione, quindi eseguire la convalida schema tramite form0-cli.
-Gli errori di sintassi e i percorsi di importazione relativi errati sono le cause più comuni.
+Apri la console del browser per leggere l'errore di import, poi valida lo schema con form0-cli. Gli
+errori di sintassi JSON e i percorsi di import relativi errati sono le cause più comuni.
 
 ```bash
 form0
 ```
 
-Caricare schema ed eseguire `validate`. Vedere [Validare e visualizzare in anteprima](/it/cli/schemas/validate-preview).
+Carica lo schema ed esegui `validate`. Vedi
+[Validare e visualizzare l'anteprima](/it/cli/schemas/validate-preview).
 
-## Una renderer personalizzata non viene utilizzata
+## Un renderer personalizzato non viene usato
 
-Controlla tutti e tre i nomi: il tipo di campo schema, la sua mappatura in `form0.config.js` e il resolver
-identificatore in `src/field-renderers/resolver.js`. Il resolver registra un avviso per gli identificatori sconosciuti.
+Controlla tutti e tre i nomi: il tipo di campo dello schema, la sua associazione in `form0.config.js`
+e l'identificatore del resolver in `src/field-renderers/resolver.js`. Il resolver registra un
+avviso per gli identificatori sconosciuti.
 
-## I contributi non possono raggiungere il server CLI
+## Gli invii non raggiungono il server della CLI
 
-Eseguire `form0 serve --app` dalla directory del progetto. Se il server CLI utilizza un indirizzo diverso, impostare
-`FORM0_DEV_API_URL` prima di iniziare Vite o nel relativo file `.env` locale.
-`devServer.apiBaseUrl` corrisponde ancora al percorso proxy Vite.
+Esegui `form0 serve --app` dalla directory del progetto. Se il server della CLI usa un indirizzo
+diverso, imposta `FORM0_DEV_API_URL` prima di avviare Vite o nel file `.env` locale pertinente.
+Verifica che `devServer.apiBaseUrl` corrisponda ancora al percorso del proxy di Vite.
 
-## La valutazione dei lavoratori fallisce
+## La valutazione nel worker non riesce
 
-Imposta temporaneamente `engine.mode` su `main-thread` per isolare il caricamento di worker dal comportamento di schema.
-controllare la console del browser, i percorsi delle risorse e il tipo di contenuto di distribuzione.
-[Operatori e prestazioni](/it/bindings/react/workers-performance).
+Imposta temporaneamente `engine.mode` su `main-thread` per distinguere il caricamento del worker dal
+comportamento dello schema. Poi controlla la console del browser, i percorsi degli asset e il
+content type servito dal deployment. Vedi
+[Worker e prestazioni](/it/bindings/react/workers-performance).
 
-## I link diretti ritornano 404 dopo la distribuzione
+## I link diretti restituiscono 404 dopo il deployment
 
-Configurare l'host statico per tornare a `index.html` per percorsi di applicazione sconosciuti.
-problema di configurazione, non un problema di definizione del percorso React.
+Configura l'hosting statico in modo che usi `index.html` come fallback per i percorsi sconosciuti
+dell'applicazione. È un problema di configurazione dell'hosting, non della definizione delle route
+React.
 
-Per errori di rendering a livello di pacchetto, continuare con
-[React risoluzione dei problemi](/it/bindings/react/troubleshooting). Per errori di database, utilizzare
-[Connettore risoluzione dei problemi](/it/connectors/troubleshooting).
+Per gli errori di rendering a livello di pacchetto, prosegui con
+[Risoluzione dei problemi di React](/it/bindings/react/troubleshooting). Per gli errori del database,
+consulta [Risoluzione dei problemi dei connettori](/it/connectors/troubleshooting).

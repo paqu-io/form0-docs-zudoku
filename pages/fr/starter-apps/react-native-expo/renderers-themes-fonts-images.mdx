@@ -1,36 +1,40 @@
 ---
 title: Renderers, thèmes, polices et images dans le starter mobile
-description: Personnalisez la présentation des formulaires natifs et gérez les polices et les images prises en charge.
+description: Personnalisez la présentation native des formulaires et gérez les polices et les images d’appui intégrées.
 ---
 
 <PageBadges />
 
 ## Thème et polices
 
-La racine de l'application charge `form0Fonts` avec `expo-font` avant le rendu et enveloppe son interface utilisateur dans
-`ThemeProvider` . Configurez le mode de couleur de base et les remplacements facultatifs de thème dans `form0.config.js` .
-Les écrans starter environnants utilisent les mêmes jetons de thème que le formulaire.
+La racine de l’application charge `form0Fonts` avec `expo-font` avant l’affichage et enveloppe son
+interface dans `ThemeProvider`. Configurez le mode de couleur de base et les surcharges de thème
+facultatives dans `form0.config.js`. Les écrans du starter qui entourent le formulaire utilisent les
+mêmes jetons de thème que lui.
 
-## Rendu overrides
+## Surcharges de renderers
 
-Map schema types de champ à renderer identifiants dans `form0.config.js`, puis mapper ces identifiants à
-composants dans `src/field-renderers/resolver.js`. Garder les composants hors du fichier de configuration
-préserve une limite de configuration sérialisable et conviviale pour les outils.
+Associez les types de champs du schéma à des identifiants de renderer dans `form0.config.js`, puis
+associez ces identifiants à des composants dans `src/field-renderers/resolver.js`. Garder les
+composants hors du fichier de configuration préserve une configuration sérialisable et facile à
+exploiter par les outils.
 
-Pour les props renderer et le comportement d'enregistrement,
-[documentation personnalisée renderer](/fr/bindings/react-native/custom-renderers).
+Pour les propriétés des renderers et le fonctionnement de l’enregistrement, consultez la
+[documentation des renderers personnalisés](/fr/bindings/react-native/custom-renderers).
 
-## Images de soutien
+## Images d’appui
 
-React Native nécessite que les références d'image groupées soient détectables statiquement.
-`assets/supporting-images`, puis régénérez la table de correspondance:
+React Native exige que les références aux images intégrées au bundle soient détectables de façon
+statique. Ajoutez les fichiers dans `assets/supporting-images`, puis régénérez la table de
+correspondance :
 
 ```bash
 npm run generate-images
 ```
 
-Commit la ressource et `src/supporting-images/index.js`. Les scripts de démarrage régénèrent le fichier,
-et CI vérifie que le registre engagé est à jour. Les chemins d'image distants HTTP et HTTPS ne sont pas
-besoin d'entrées de registre.
+Commitez à la fois la ressource et `src/supporting-images/index.js`. Les scripts de démarrage
+régénèrent le fichier, et la CI vérifie que le registre commité est à jour. Les chemins d’image
+HTTP et HTTPS distants n’ont pas besoin d’entrée dans le registre.
 
-Voir [Thèmes, polices et images](/fr/bindings/react-native/themes-assets) pour les API de niveau binding.
+Consultez [Thèmes, polices et images](/fr/bindings/react-native/themes-assets) pour les API du
+binding.

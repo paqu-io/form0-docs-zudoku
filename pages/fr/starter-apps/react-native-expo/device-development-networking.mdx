@@ -1,29 +1,30 @@
 ---
 title: Développement sur appareil et réseau
-description: Connectez les appareils Expo au starter par LAN ou URL publique de développement.
+description: Connectez des appareils Expo au starter mobile via le réseau local ou une URL publique de développement.
 ---
 
 <PageBadges />
 
-Le fichier `form0.config.js` par défaut lance Expo sur le réseau local. Un appareil physique doit
-pouvoir atteindre la machine de développement et le port 8081. Les pare-feu de l’hôte, les réseaux
-Wi-Fi isolés, les VPN et le réseau des conteneurs peuvent bloquer la connexion.
+Le `form0.config.js` par défaut démarre Expo sur le réseau local. Un appareil physique doit pouvoir
+joindre l’ordinateur de développement et le port 8081. Les pare-feu de la machine, les réseaux Wi-Fi
+isolés, les VPN et les réseaux de conteneurs peuvent empêcher cette connexion.
 
 ## Démarrer avec form0-cli
 
-Utilisez l’intégration du serveur d’application lorsque vous travaillez depuis form0-cli :
+Utilisez l’intégration du serveur d’application lorsque vous travaillez depuis la CLI form0 :
 
 ```bash
 form0 serve --app
 ```
 
-La CLI lit le bloc `devServer` de `form0.config.js`. Le comportement complet de la commande est
-décrit dans la
-[référence du serveur d’application](/fr/cli/local-development/app-development-servers).
+La CLI lit le bloc `devServer` de `form0.config.js`. Le comportement complet de la commande est décrit
+dans la
+[référence des serveurs de développement d’applications](/fr/cli/local-development/app-development-servers).
 
-## Publier une URL de développement
+## Annoncer une URL publique de développement
 
-Sans accès LAN, définissez la variable d’environnement configurée dans `.env.local` :
+Lorsque l’accès par le réseau local n’est pas possible, définissez la variable d’environnement
+configurée dans `.env.local` :
 
 ```text
 FORM0_APP_PUBLIC_URL=https://your-development-domain.example
@@ -32,11 +33,11 @@ FORM0_APP_PUBLIC_URL=https://your-development-domain.example
 Démarrez le tunnel séparément, puis exécutez `form0 serve --app`. Pour une seule exécution, utilisez
 `--public-url https://your-development-domain.example`.
 
-L’URL doit servir directement le manifeste, le bundle, les ressources et le trafic WebSocket Expo.
-Les pages intermédiaires et les défis d’accès cassent le client. Un tunnel de développement n’est
-pas un déploiement de production et le bundle mobile ne doit contenir aucun identifiant privilégié.
+L’URL doit servir directement le manifeste Expo, le bundle, les ressources et le trafic WebSocket.
+Les pages interstitielles du navigateur et les pages de vérification d’accès empêchent les clients
+Expo de fonctionner. Ne traitez jamais un tunnel de développement comme un déploiement de production
+et ne placez jamais d’identifiants privilégiés dans le bundle mobile.
 
 Utilisez un [development build](https://docs.expo.dev/develop/development-builds/introduction/) pour
-un travail orienté production ou du code natif personnalisé. Expo Go est un client facultatif pour
-l’apprentissage et l’évaluation lorsqu’un build compatible avec le SDK existe pour la plateforme
-cible.
+le travail orienté production ou le code natif personnalisé. Expo Go est un client facultatif pour
+apprendre et évaluer lorsqu’une version compatible du SDK est disponible pour la plateforme cible.
