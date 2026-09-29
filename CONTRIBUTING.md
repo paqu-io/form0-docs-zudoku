@@ -73,6 +73,10 @@ When a recurring term is not listed, follow the reviewed pages and propose addin
 
 These rules apply to prose. Inline code such as `schema` or `load-record` stays unchanged.
 
+Quote CLI interface text, such as menu choices and messages, as the CLI shows it in that language.
+Take the wording from `src/locales/<locale>.json` in the `form0-cli` repository. Commands and
+prompts such as `form0(server)>` stay unchanged.
+
 ### Translated terms
 
 | English    | Spanish    | French         | Italian |
