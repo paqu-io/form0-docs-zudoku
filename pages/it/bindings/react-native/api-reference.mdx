@@ -1,6 +1,6 @@
 ---
 title: Riferimento API di React Native
-description: Componenti pubblici, registri, temi, contesti, tipografia e risorse esportate da form0-react-native.
+description: Componenti, registri, temi, contesti, tipografia e risorse pubblici esportati da form0-react-native.
 ---
 
 <PageBadges />
@@ -9,12 +9,12 @@ Tutte le esportazioni supportate sono disponibili da `form0-react-native`.
 
 ## Rendering e temi
 
-- `FormRenderer` — esegue il rendering e la gestione di un modulo nativo basato su schema.
-- `FormHeader` — l'intestazione di forma nativa di binding.
+- `FormRenderer`: esegue il rendering e gestisce un modulo nativo basato su schema.
+- `FormHeader`: l'intestazione nativa del modulo fornita dal binding.
 - `ThemeProvider`, `ThemeContext`, `useTheme`
 - `lightTheme`, `darkTheme`, `mergeThemes`, `getThemeByName`
 
-Vedere [FormRenderer](/it/bindings/react-native/form-renderer) e
+Vedi [FormRenderer](/it/bindings/react-native/form-renderer) e
 [Temi, font e immagini](/it/bindings/react-native/themes-assets).
 
 ## Registro dei campi
@@ -25,7 +25,7 @@ Vedere [FormRenderer](/it/bindings/react-native/form-renderer) e
 - `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
 - `KNOWN_FIELD_TYPES`
 
-Vedere [Campo personalizzato renderers](/it/bindings/react-native/custom-renderers).
+Vedi [Renderer di campo personalizzati](/it/bindings/react-native/custom-renderers).
 
 ## Immagini e tipografia
 
@@ -33,7 +33,7 @@ Vedere [Campo personalizzato renderers](/it/bindings/react-native/custom-rendere
 - `Text`, `TextInput`
 - `form0Fonts` e le costanti `FORM0_FONT_FAMILY*`
 
-Il pacchetto include dichiarazioni TypeScript per puntelli `FormRenderer`, snapshots, submission e
-salvare i metadati, le opzioni del motore, i valori del Registro di sistema e i props del campo personalizzato renderer.
-ganci, singoli componenti predefiniti, controller ripetibili e utilità submission non sono
-esportazioni pubbliche.
+Il pacchetto include dichiarazioni TypeScript per le proprietà di `FormRenderer`, gli snapshot, i
+metadati di invio e di salvataggio, le opzioni del motore, i valori del registro e le proprietà dei
+renderer di campo personalizzati. Gli hook interni del motore, i singoli componenti predefiniti, i
+controller delle sezioni ripetibili e le utility di invio non sono esportazioni pubbliche.

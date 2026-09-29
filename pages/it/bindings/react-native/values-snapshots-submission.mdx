@@ -1,14 +1,15 @@
 ---
 title: Valori, snapshot e invio
-description: Seme, persistere, ripristinare, salvare e inviare lo stato form0 React Native.
+description: Inizializza, rendi persistente, ripristina, salva e invia lo stato di form0 in React Native.
 ---
 
 <PageBadges />
 
-## Stato iniziale e restauro
+## Stato iniziale e ripristino
 
-Usa `initialValues` per un normale seme da record. `overrideValues` ha la precedenza e la tuta
-valori host autorevoli. Per il restauro completo, preferire `initialSnapshot`:
+Usa `initialValues` per inizializzare un record nel modo consueto. `overrideValues` ha la precedenza
+ed è utile per i valori che devono prevalere lato host. Per un ripristino completo, preferisci
+`initialSnapshot`:
 
 ```jsx
 <FormRenderer
@@ -21,7 +22,7 @@ valori host autorevoli. Per il restauro completo, preferire `initialSnapshot`:
 />
 ```
 
-snapshot mantiene insieme i valori grezzi, le voci ripetibili annidate e i timestamp:
+Lo snapshot mantiene insieme valori grezzi, voci ripetibili annidate e timestamp:
 
 ```js
 {
@@ -36,17 +37,19 @@ snapshot mantiene insieme i valori grezzi, le voci ripetibili annidate e i times
 }
 ```
 
-`onSnapshotChange(snapshot, meta)` segnala per la prima volta `{ kind: "seed", dirty: false }`; utente successivo
-modifiche utilizzare `{ kind: "change", dirty }`.
+`onSnapshotChange(snapshot, meta)` segnala prima `{ kind: "seed", dirty: false }`; le modifiche
+successive dell'utente usano `{ kind: "change", dirty }`.
 
-## Salvare drafts o inviare record
+## Salvare bozze o inviare record
 
-Imposta `primaryActionMode="save"` e fornisci `onSave(snapshot, meta)` per una draft tollerante alla convalida
-azione. `meta` contiene il riepilogo di convalida corrente e lo stato sporco.
+Imposta `primaryActionMode="save"` e fornisci `onSave(snapshot, meta)` per un'azione di salvataggio
+delle bozze che non richiede il superamento della validazione. `meta` contiene il riepilogo della
+validazione corrente e lo stato delle modifiche non salvate.
 
-L'azione di invio predefinita convalida per prima. `onSubmit(record, meta)` riceve il record strutturato
-descritto in [Output e record](/it/core/output-records), più valori grezzi, stato ripetibile,
-timestamp e il riepilogo della convalida.
+L'azione di invio predefinita esegue prima la validazione. `onSubmit(record, meta)` riceve il record
+strutturato descritto in [Output e record](/it/core/output-records), insieme ai valori grezzi, allo
+stato delle sezioni ripetibili, ai timestamp e al riepilogo della validazione.
 
-Lo binding non persiste o non sincronizza nessuno dei due payload.
-record, riprovare errori e risolvere i conflitti nell'applicazione host.
+Il binding non rende persistenti né sincronizza nessuno dei due contenuti. Memorizza gli snapshot in
+locale, carica i record, ripeti i tentativi non riusciti e risolvi i conflitti nell'applicazione
+host.

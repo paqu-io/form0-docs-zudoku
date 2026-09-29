@@ -1,23 +1,23 @@
 ---
 title: Referencia de la API de React Native
-description: Componentes públicos, registros, temas, contextos, tipografía y activos exportados por form0-react-native.
+description: Componentes, registros, temas, contextos, tipografía y recursos públicos que exporta form0-react-native.
 ---
 
 <PageBadges />
 
-Todas las exportaciones admitidas están disponibles desde `form0-react-native`.
+Todas las exportaciones admitidas están disponibles en `form0-react-native`.
 
-## Representación y temas
+## Renderizado y temas
 
-- `FormRenderer` — renderizar y administrar un formulario nativo impulsado por schema.
-- `FormHeader` — el encabezado del formulario nativo de binding.
+- `FormRenderer`: renderiza y gestiona un formulario nativo basado en un esquema.
+- `FormHeader`: el encabezado nativo de formulario del binding.
 - `ThemeProvider`, `ThemeContext`, `useTheme`
 - `lightTheme`, `darkTheme`, `mergeThemes`, `getThemeByName`
 
-Ver [FormRenderer](/es/bindings/react-native/form-renderer) y
+Consulta [FormRenderer](/es/bindings/react-native/form-renderer) y
 [Temas, fuentes e imágenes](/es/bindings/react-native/themes-assets).
 
-## Registro de campo
+## Registro de campos
 
 - `FieldRegistryProvider`, `FieldRegistryContext`, `useFieldRegistry`
 - `createFieldRegistry`, `defaultFieldRegistry`
@@ -25,7 +25,7 @@ Ver [FormRenderer](/es/bindings/react-native/form-renderer) y
 - `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
 - `KNOWN_FIELD_TYPES`
 
-Ver [Campo personalizado renderers](/es/bindings/react-native/custom-renderers).
+Consulta [Renderers de campo personalizados](/es/bindings/react-native/custom-renderers).
 
 ## Imágenes y tipografía
 
@@ -33,7 +33,8 @@ Ver [Campo personalizado renderers](/es/bindings/react-native/custom-renderers).
 - `Text`, `TextInput`
 - `form0Fonts` y las constantes `FORM0_FONT_FAMILY*`
 
-El paquete incluye declaraciones TypeScript para accesorios `FormRenderer`, snapshots, submission y
-guardar metadatos, opciones de motor, valores de registro y accesorios personalizados de campo. Motor interno
-ganchos, componentes predeterminados individuales, controladores repetibles y utilidades submission no son
-exportaciones públicas.
+El paquete incluye declaraciones de TypeScript para las propiedades de `FormRenderer`, los
+snapshots, los metadatos de envío y de guardado, las opciones del motor, los valores del registro y
+las propiedades de los renderers de campo personalizados. Los hooks internos del motor, los
+componentes predeterminados individuales, los controladores de secciones repetibles y las utilidades
+de envío no son exportaciones públicas.

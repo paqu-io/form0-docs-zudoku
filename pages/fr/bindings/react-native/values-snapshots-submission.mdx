@@ -1,14 +1,15 @@
 ---
 title: Valeurs, snapshots et soumission
-description: Ensemencer, persister, restaurer, enregistrer et soumettre l'état form0 React Native.
+description: Initialisez, persistez, restaurez, enregistrez et soumettez l’état de form0 dans React Native.
 ---
 
 <PageBadges />
 
 ## État initial et restauration
 
-Utilisez `initialValues` pour une graine d'enregistrement ordinaire. `overrideValues` ont priorité et costume
-Pour une restauration complète, préférez `initialSnapshot`:
+Utilisez `initialValues` pour initialiser un enregistrement de façon ordinaire. `overrideValues` est
+prioritaire et sert aux valeurs qui doivent l’emporter côté host. Pour une restauration complète,
+privilégiez `initialSnapshot` :
 
 ```jsx
 <FormRenderer
@@ -21,7 +22,7 @@ Pour une restauration complète, préférez `initialSnapshot`:
 />
 ```
 
-Le snapshot conserve les valeurs brutes, les entrées reproductibles imbriquées et les horodatages ensemble:
+Le snapshot regroupe les valeurs brutes, les entrées répétables imbriquées et les horodatages :
 
 ```js
 {
@@ -36,17 +37,19 @@ Le snapshot conserve les valeurs brutes, les entrées reproductibles imbriquées
 }
 ```
 
-`onSnapshotChange(snapshot, meta)` signale d'abord `{ kind: "seed", dirty: false }`; utilisateur ultérieur
-changements utilisent `{ kind: "change", dirty }`.
+`onSnapshotChange(snapshot, meta)` signale d’abord `{ kind: "seed", dirty: false }` ; les
+modifications ultérieures de l’utilisateur utilisent `{ kind: "change", dirty }`.
 
-## Enregistrer drafts ou soumettre des enregistrements
+## Enregistrer des brouillons ou soumettre des enregistrements
 
-Définissez `primaryActionMode="save"` et fournissez `onSave(snapshot, meta)` pour un draft tolérant à la validation
-action. `meta` contient le résumé de validation actuel et l'état sale.
+Définissez `primaryActionMode="save"` et fournissez `onSave(snapshot, meta)` pour une action
+d’enregistrement de brouillon qui ne dépend pas de la validation. `meta` contient le résumé de
+validation actuel et l’état de modification.
 
-L'action de soumission par défaut valide en premier. `onSubmit(record, meta)` reçoit l'enregistrement structuré
-décrit dans [Sortie et enregistrements](/fr/core/output-records), plus valeurs brutes, état répétable,
-timestamps, et le résumé de validation.
+L’action de soumission par défaut valide d’abord le formulaire. `onSubmit(record, meta)` reçoit
+l’enregistrement structuré décrit dans [Sortie et enregistrements](/fr/core/output-records), ainsi
+que les valeurs brutes, l’état des sections répétables, les horodatages et le résumé de validation.
 
-Le binding ne persiste ni ne synchronise la charge utile. Stocker snapshots localement, télécharger
-enregistre, réessaie les échecs et résout les conflits dans l'application hôte.
+Le binding ne persiste ni ne synchronise aucune de ces deux données. Stockez les snapshots
+localement, envoyez les enregistrements, relancez les échecs et résolvez les conflits dans
+l’application host.

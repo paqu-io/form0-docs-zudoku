@@ -1,33 +1,38 @@
 ---
 title: Intégration mobile
-description: Placez le binding natif à l'intérieur d'un écran mobile et définissez les limites hors ligne et médias.
+description: Placez le binding natif dans un écran mobile et définissez les limites du mode hors ligne et des médias.
 ---
 
 <PageBadges />
 
 ## Écran, clavier et zone de sécurité
 
-Donnez à `FormRenderer` une zone d'écran délimitée; il possède la vue de défilement, l'évitement de clavier, le focus de champ,
-et drilldown écrans à l'intérieur de cette zone. Évitez de l'envelopper dans une autre vue de défilement vertical. Utilisez
-`keyboardScrollOffset` lorsqu'une superposition ou un en-tête appartenant à l'application modifie la cible visible.
+Donnez à `FormRenderer` une zone d’écran délimitée. Dans cette zone, le composant gère la vue de
+défilement, l’évitement du clavier, le focus des champs et les écrans drilldown.
+Évitez de l’envelopper dans une autre vue de défilement verticale. Utilisez `keyboardScrollOffset`
+lorsqu’une superposition ou un en-tête géré par l’application modifie la position cible visible.
 
-Installez `react-native-safe-area-context` et enveloppez la racine de l'application dans `SafeAreaProvider` pour laisser
-l'en-tête intégré inclut l'encart de la zone de sécurité supérieure. Si l'application applique déjà la zone de sécurité
-rembourrage, définissez `showHeader={false}` et fournissez la navigation environnante elle-même.
+Installez `react-native-safe-area-context` et enveloppez la racine de l’application dans
+`SafeAreaProvider` pour que l’en-tête intégré tienne compte de la marge supérieure de la zone de
+sécurité. Si l’application applique déjà cette marge, définissez `showHeader={false}` et fournissez
+vous-même la navigation environnante.
 
-## Limite hors ligne
+## Limites du mode hors ligne
 
-Le binding est hors ligne parce que l'évaluation schema est locale, mais ce n'est pas une persistance ou
-Utilisez `onSnapshotChange` ou `onSave` pour écrire drafts en natif plate-forme.
-stockage, les restaurer via `initialSnapshot` et les enregistrements `onSubmit` validés en file d'attente pour le téléchargement.
-L'application doit définir un comportement de réessai, de conflit, de chiffrement, de rétention et de suppression.
+Le binding fonctionne hors ligne, car l’évaluation du schéma est locale, mais ce n’est pas une
+couche de persistance ni de synchronisation. Utilisez `onSnapshotChange` ou `onSave` pour écrire les
+brouillons dans le stockage natif de la plateforme, restaurez-les avec `initialSnapshot` et mettez
+en file d’attente les enregistrements validés par `onSubmit` en vue de leur envoi. L’application
+doit définir les nouvelles tentatives, la gestion des conflits, le chiffrement, la conservation et
+la suppression des données.
 
-Les paquets Node.js `form0-connector-pg` et `form0-connector-sqlite` ne s'exécutent pas dans React Native.
-Utilisez une base de données native de plate-forme telle que `expo-sqlite` pour les données sur l'appareil et une
-application API pour le stockage à distance.
+Les paquets Node.js `form0-connector-pg` et `form0-connector-sqlite` ne s’exécutent pas dans React
+Native. Utilisez une base de données native de la plateforme, comme `expo-sqlite`, pour les données
+sur l’appareil, et une API authentifiée de l’application pour le stockage distant.
 
-## Limite des médias
+## Limites des médias
 
-La capture de photos et de vidéos nécessite renderers personnalisé. Ces renderers possèdent les autorisations runtime, la capture,
-les identificateurs locaux, les aperçus, le téléchargement en arrière-plan et le nettoyage. Gardez les identificateurs durables en forme
-valeurs; ne supposez pas qu'un fichier temporaire URI restera valide lors du redémarrage de l'application.
+La capture de photos et de vidéos nécessite des renderers personnalisés. Ces renderers gèrent les
+autorisations d’exécution, la capture, les identifiants locaux, les aperçus, l’envoi en arrière-plan
+et le nettoyage. Conservez des identifiants durables dans les valeurs du formulaire ; ne supposez
+pas que l’URI d’un fichier temporaire restera valide après un redémarrage de l’application.

@@ -1,33 +1,39 @@
 ---
 title: Integración móvil
-description: Coloque el binding nativo dentro de una pantalla móvil y defina los límites fuera de línea y de medios.
+description: Coloca el binding nativo dentro de una pantalla móvil y define los límites del modo sin conexión y de los archivos multimedia.
 ---
 
 <PageBadges />
 
 ## Pantalla, teclado y área segura
 
-Dale a `FormRenderer` un área de pantalla limitada; posee la vista de desplazamiento, la evitación del teclado, el enfoque de campo,
-y pantallas de perforación dentro de esa área. Evite envolverlo en otra vista de desplazamiento vertical. Uso
-`keyboardScrollOffset` cuando una superposición o encabezado propiedad de la aplicación cambia el destino visible.
+Asigna a `FormRenderer` un área de pantalla delimitada. Dentro de esa área, el componente gestiona la
+vista de desplazamiento, la adaptación al teclado, el foco de los campos y las pantallas
+drilldown. No lo envuelvas en otra vista de desplazamiento vertical. Usa
+`keyboardScrollOffset` cuando una capa superpuesta o un encabezado propios de la aplicación cambien
+la posición visible de destino.
 
-Instale `react-native-safe-area-context` y envuelva la raíz de la aplicación en `SafeAreaProvider` para permitir
-el encabezado incorporado incluye el recuadro superior de área segura. Si la aplicación ya se aplica área segura
-el relleno, ajuste `showHeader={false}` y proporcione la navegación circundante sí mismo.
+Instala `react-native-safe-area-context` y envuelve la raíz de la aplicación en `SafeAreaProvider`
+para que el encabezado integrado incluya el margen superior del área segura. Si la aplicación ya
+aplica el relleno del área segura, establece `showHeader={false}` y proporciona tú mismo la
+navegación que lo rodea.
 
-## Límite sin conexión
+## Límites del modo sin conexión
 
-El binding está habilitado sin conexión porque la evaluación schema es local, pero
-Utilice `onSnapshotChange` o `onSave` para escribir drafts a nativo de plataforma
-almacenamiento, restaurarlos a través de `initialSnapshot`, y la cola validado registros `onSubmit` para la carga.
-La aplicación debe definir el comportamiento de reintento, conflicto, cifrado, retención y eliminación.
+El binding puede funcionar sin conexión porque el esquema se evalúa en local, pero no es una capa de
+persistencia ni de sincronización. Usa `onSnapshotChange` u `onSave` para guardar borradores en el
+almacenamiento nativo de la plataforma, restáuralos con `initialSnapshot` y pon en cola para su
+subida los registros validados de `onSubmit`. La aplicación debe definir los reintentos, la
+resolución de conflictos, el cifrado, la conservación y la eliminación de los datos.
 
-Los paquetes Node.js `form0-connector-pg` y `form0-connector-sqlite` no se ejecutan en React Native.
-Utilice una base de datos nativa de plataforma, como `expo-sqlite`, para obtener datos en el dispositivo y una autenticación.
-aplicación API para el almacenamiento remoto.
+Los paquetes de Node.js `form0-connector-pg` y `form0-connector-sqlite` no se ejecutan en React
+Native. Usa una base de datos nativa de la plataforma, como `expo-sqlite`, para los datos en el
+dispositivo y una API autenticada de la aplicación para el almacenamiento remoto.
 
-## Límite de medios
+## Límites de los archivos multimedia
 
-La captura de fotos y videos requiere renderers personalizado. Esos renderers poseen permisos runtime, captura,
-identificadores locales, vistas previas, carga en segundo plano y limpieza. Mantenga los identificadores duraderos en forma
-valores; no asuma que un archivo temporal URI seguirá siendo válido en todos los reinicios de aplicaciones.
+La captura de fotos y vídeos requiere renderers personalizados. Esos renderers se encargan de los
+permisos en tiempo de ejecución, la captura, los identificadores locales, las vistas previas, la
+subida en segundo plano y la limpieza. Guarda identificadores duraderos en los valores del
+formulario; no des por hecho que el URI de un archivo temporal seguirá siendo válido tras reiniciar
+la aplicación.

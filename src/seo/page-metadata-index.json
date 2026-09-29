@@ -3163,7 +3163,7 @@
     "translationKey": "/bindings/react-native/api-reference",
     "locale": "es",
     "title": "Referencia de la API de React Native",
-    "description": "Componentes públicos, registros, temas, contextos, tipografía y activos exportados por form0-react-native.",
+    "description": "Componentes, registros, temas, contextos, tipografía y recursos públicos que exporta form0-react-native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3189,8 +3189,8 @@
     "pathname": "/es/bindings/react-native/built-in-renderers",
     "translationKey": "/bindings/react-native/built-in-renderers",
     "locale": "es",
-    "title": "Renderizadores de campo integrados",
-    "description": "Tipos de campo renderizados por form0-react-native sin personalizaciones.",
+    "title": "Renderers de campo integrados",
+    "description": "Tipos de campo que form0-react-native renderiza sin que la aplicación los sustituya.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3216,8 +3216,8 @@
     "pathname": "/es/bindings/react-native/custom-renderers",
     "translationKey": "/bindings/react-native/custom-renderers",
     "locale": "es",
-    "title": "Renderizadores de campo personalizados",
-    "description": "Reemplazar la presentación de campo form0 React Native globalmente o dentro de un subárbol de componentes.",
+    "title": "Renderers de campo personalizados",
+    "description": "Sustituye la presentación de los campos de form0 en React Native de forma global o en un subárbol de componentes.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3244,7 +3244,7 @@
     "translationKey": "/bindings/react-native/form-renderer",
     "locale": "es",
     "title": "FormRenderer",
-    "description": "Configure el componente form0 principal.",
+    "description": "Configura el componente principal de form0 para React Native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3271,7 +3271,7 @@
     "translationKey": "/bindings/react-native/install-render",
     "locale": "es",
     "title": "Instalar y renderizar con React Native",
-    "description": "Instale form0-react-native y reproduzca un schema en una aplicación React Native o Expo.",
+    "description": "Instala form0-react-native y renderiza un esquema en una aplicación React Native o Expo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3298,7 +3298,7 @@
     "translationKey": "/bindings/react-native/mobile-integration",
     "locale": "es",
     "title": "Integración móvil",
-    "description": "Coloque el binding nativo dentro de una pantalla móvil y defina los límites fuera de línea y de medios.",
+    "description": "Coloca el binding nativo dentro de una pantalla móvil y define los límites del modo sin conexión y de los archivos multimedia.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3325,7 +3325,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "es",
     "title": "Modos y navegación",
-    "description": "Configurar edición, encabezados, secciones, entradas repetibles y navegación de validación.",
+    "description": "Configura la edición, los encabezados, las secciones, las entradas repetibles y la navegación de validación.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3352,7 +3352,7 @@
     "translationKey": "/bindings/react-native/themes-assets",
     "locale": "es",
     "title": "Temas, fuentes e imágenes",
-    "description": "Configurar form0 React Native colores, tipografía y resolución de imagen de apoyo.",
+    "description": "Configura los colores, la tipografía y la resolución de las imágenes de apoyo de form0 en React Native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3379,7 +3379,7 @@
     "translationKey": "/bindings/react-native/troubleshooting",
     "locale": "es",
     "title": "Solución de problemas de React Native",
-    "description": "Diagnosticar problemas comunes de instalación, renderización, fuente, activo y persistencia de form0-react-native.",
+    "description": "Diagnostica problemas habituales de form0-react-native con la instalación, el renderizado, las fuentes, los recursos y la persistencia.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3406,7 +3406,7 @@
     "translationKey": "/bindings/react-native/values-snapshots-submission",
     "locale": "es",
     "title": "Valores, snapshots y envío",
-    "description": "Semilla, persistir, restaurar, guardar y enviar el estado form0 React Native.",
+    "description": "Inicializa, guarda, restaura y envía el estado de form0 en React Native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6548,7 +6548,7 @@
     "translationKey": "/bindings/react-native/api-reference",
     "locale": "fr",
     "title": "Référence de l'API React Native",
-    "description": "Composantes publiques, registres, thèmes, contextes, typographie et actifs exportés par form0-react-native.",
+    "description": "Composants, registres, thèmes, contextes, typographie et ressources publics exportés par form0-react-native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6575,7 +6575,7 @@
     "translationKey": "/bindings/react-native/built-in-renderers",
     "locale": "fr",
     "title": "Renderers de champ intégrés",
-    "description": "Types de champs affichés par form0-react-native sans remplacement applicatif.",
+    "description": "Types de champs affichés par form0-react-native sans surcharge de l’application.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6602,7 +6602,7 @@
     "translationKey": "/bindings/react-native/custom-renderers",
     "locale": "fr",
     "title": "Renderers de champ personnalisés",
-    "description": "Remplacez la présentation des champs form0 React Native globalement ou dans une sous-arborescence de composants.",
+    "description": "Remplacez la présentation des champs form0 dans React Native de façon globale ou dans un sous-arbre de composants.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6629,7 +6629,7 @@
     "translationKey": "/bindings/react-native/form-renderer",
     "locale": "fr",
     "title": "FormRenderer",
-    "description": "Configurez le composant principal form0 React Native.",
+    "description": "Configurez le composant principal de form0 pour React Native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6656,7 +6656,7 @@
     "translationKey": "/bindings/react-native/install-render",
     "locale": "fr",
     "title": "Installer et afficher avec React Native",
-    "description": "Installez form0-react-native et rendez un schema dans une application React Native ou Expo.",
+    "description": "Installez form0-react-native et affichez un schéma dans une application React Native ou Expo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6683,7 +6683,7 @@
     "translationKey": "/bindings/react-native/mobile-integration",
     "locale": "fr",
     "title": "Intégration mobile",
-    "description": "Placez le binding natif à l'intérieur d'un écran mobile et définissez les limites hors ligne et médias.",
+    "description": "Placez le binding natif dans un écran mobile et définissez les limites du mode hors ligne et des médias.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6710,7 +6710,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "fr",
     "title": "Modes et navigation",
-    "description": "Configurez l'édition, les en-têtes, les sections, les entrées reproductibles et la navigation de validation.",
+    "description": "Configurez l’édition, les en-têtes, les sections, les entrées répétables et la navigation de validation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6737,7 +6737,7 @@
     "translationKey": "/bindings/react-native/themes-assets",
     "locale": "fr",
     "title": "Thèmes, polices et images",
-    "description": "Configurez les couleurs, la typographie et la résolution de l'image prise en charge form0.",
+    "description": "Configurez les couleurs, la typographie et la résolution des images d’appui de form0 dans React Native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6764,7 +6764,7 @@
     "translationKey": "/bindings/react-native/troubleshooting",
     "locale": "fr",
     "title": "Dépannage React Native",
-    "description": "Diagnostiquez les problèmes courants d'installation, de rendu, de police, de ressource et de persistance form0-react-native.",
+    "description": "Diagnostiquez les problèmes courants de form0-react-native liés à l’installation, à l’affichage, aux polices, aux ressources et à la persistance.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6791,7 +6791,7 @@
     "translationKey": "/bindings/react-native/values-snapshots-submission",
     "locale": "fr",
     "title": "Valeurs, snapshots et soumission",
-    "description": "Ensemencer, persister, restaurer, enregistrer et soumettre l'état form0 React Native.",
+    "description": "Initialisez, persistez, restaurez, enregistrez et soumettez l’état de form0 dans React Native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10024,7 +10024,7 @@
     "translationKey": "/bindings/react-native/api-reference",
     "locale": "it",
     "title": "Riferimento API di React Native",
-    "description": "Componenti pubblici, registri, temi, contesti, tipografia e risorse esportate da form0-react-native.",
+    "description": "Componenti, registri, temi, contesti, tipografia e risorse pubblici esportati da form0-react-native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10051,7 +10051,7 @@
     "translationKey": "/bindings/react-native/built-in-renderers",
     "locale": "it",
     "title": "Renderer di campo integrati",
-    "description": "Tipi di campo renderizzati da form0-react-native senza override dell’applicazione.",
+    "description": "Tipi di campo visualizzati da form0-react-native senza override da parte dell'applicazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10078,7 +10078,7 @@
     "translationKey": "/bindings/react-native/custom-renderers",
     "locale": "it",
     "title": "Renderer di campo personalizzati",
-    "description": "Sostituire la presentazione del campo form0 React Native a livello globale o all'interno di un sottoalbero di componenti.",
+    "description": "Sostituisci la presentazione dei campi di form0 in React Native a livello globale o in un sottoalbero di componenti.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10105,7 +10105,7 @@
     "translationKey": "/bindings/react-native/form-renderer",
     "locale": "it",
     "title": "FormRenderer",
-    "description": "Configurare il componente primario form0 React Native.",
+    "description": "Configura il componente principale di form0 per React Native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10132,7 +10132,7 @@
     "translationKey": "/bindings/react-native/install-render",
     "locale": "it",
     "title": "Installazione e rendering con React Native",
-    "description": "Installare form0-react-native e rendere un schema in un'applicazione React Native o Expo.",
+    "description": "Installa form0-react-native ed esegui il rendering di uno schema in un'applicazione React Native o Expo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10159,7 +10159,7 @@
     "translationKey": "/bindings/react-native/mobile-integration",
     "locale": "it",
     "title": "Integrazione mobile",
-    "description": "Posizionare il nativo binding all'interno di uno schermo mobile e definire i confini offline e multimediali.",
+    "description": "Inserisci il binding nativo in una schermata mobile e definisci i limiti del funzionamento offline e dei contenuti multimediali.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10186,7 +10186,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "it",
     "title": "Modalità e navigazione",
-    "description": "Configura modifiche, intestazioni, sezioni, voci ripetibili e navigazione di convalida.",
+    "description": "Configura modifica, intestazioni, sezioni, voci ripetibili e navigazione della validazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10213,7 +10213,7 @@
     "translationKey": "/bindings/react-native/themes-assets",
     "locale": "it",
     "title": "Temi, font e immagini",
-    "description": "Configura i colori, la tipografia e la risoluzione dell'immagine di supporto form0 React Native.",
+    "description": "Configura colori, tipografia e risoluzione delle immagini di supporto di form0 in React Native.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10240,7 +10240,7 @@
     "translationKey": "/bindings/react-native/troubleshooting",
     "locale": "it",
     "title": "Risoluzione dei problemi di React Native",
-    "description": "Diagnosticare i problemi comuni di installazione, rendering, font, risorse e persistenza di form0-react-native.",
+    "description": "Diagnostica i problemi più comuni di form0-react-native con installazione, rendering, font, risorse e persistenza.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10267,7 +10267,7 @@
     "translationKey": "/bindings/react-native/values-snapshots-submission",
     "locale": "it",
     "title": "Valori, snapshot e invio",
-    "description": "Seme, persistere, ripristinare, salvare e inviare lo stato form0 React Native.",
+    "description": "Inizializza, rendi persistente, ripristina, salva e invia lo stato di form0 in React Native.",
     "indexable": true,
     "status": "published",
     "alternates": [

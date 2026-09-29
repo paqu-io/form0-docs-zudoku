@@ -1,28 +1,29 @@
 ---
 title: Thèmes, polices et images
-description: Configurez les couleurs, la typographie et la résolution de l'image prise en charge form0.
+description: Configurez les couleurs, la typographie et la résolution des images d’appui de form0 dans React Native.
 ---
 
 <PageBadges />
 
 ## Thèmes de couleur
 
-`colorMode` accepte `light` ou `dark`. Fournissez un `customTheme` partiel pour surcharger des jetons;
-binding le fond avec le thème intégré sélectionné. Une application peut résoudre le périphérique
-préférence avec React Native 's `useColorScheme` et passer le mode résultant.
+`colorMode` accepte `light` ou `dark`. Fournissez un `customTheme` partiel pour surcharger des
+jetons ; le binding le fusionne en profondeur avec le thème intégré sélectionné. Une application
+peut déterminer la préférence de l’appareil avec `useColorScheme` de React Native et transmettre le
+mode obtenu.
 
 ```jsx
 <FormRenderer schema={schema} colorMode="dark" customTheme={{ color: { primary: "#7c3aed" } }} />
 ```
 
-`lightTheme`, `darkTheme`, `mergeThemes`, et `getThemeByName` sont exportés au niveau de l'application
-composition du thème. `ThemeProvider` et `useTheme` peuvent garder l'interface utilisateur native
-forme.
+`lightTheme`, `darkTheme`, `mergeThemes` et `getThemeByName` sont exportés pour composer des thèmes
+au niveau de l’application. `ThemeProvider` et `useTheme` permettent d’harmoniser l’interface native
+qui entoure le formulaire avec celui-ci.
 
-## Polices empaquetées
+## Polices fournies
 
-Le paquet exporte ses actifs Figtree via `form0Fonts`. Dans Expo, chargez-les à l'application
-Démarrage avant le rendu du formulaire:
+Le paquet exporte ses fichiers de police Figtree via `form0Fonts`. Avec Expo, chargez-les au
+démarrage de l’application, avant d’afficher le formulaire :
 
 ```jsx
 import { useFonts } from "expo-font"
@@ -34,11 +35,12 @@ if (!fontsLoaded) return null
 return <FormRenderer schema={schema} />
 ```
 
-## Images de soutien
+## Images d’appui
 
-Les chemins HTTP et HTTPS distants sont résolus par défaut en `{ uri }`. React Native nécessite des paquets locaux
-images à découvrir statiquement, alors fournissez un `imageResolver` qui mappe les chemins schema à
-Sources d'images importées ou requises:
+Par défaut, les chemins HTTP et HTTPS distants sont résolus en `{ uri }`. React Native exige que les
+images locales intégrées au bundle soient détectables de façon statique : fournissez donc un
+`imageResolver` qui associe les chemins du schéma à des sources d’image importées ou chargées avec
+require :
 
 ```jsx
 const images = {
@@ -48,4 +50,4 @@ const images = {
 <FormRenderer schema={schema} imageResolver={(path) => images[path] ?? null} />
 ```
 
-Le Expo starter maintenu génère ce mappage lorsque les ressources d'image de support changent.
+Le starter maintenu Expo génère cette table de correspondance lorsque les images d’appui changent.
