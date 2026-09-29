@@ -1,0 +1,156 @@
+---
+title: Événements et opérations
+description: Comment les gestionnaires d'événements form0 sont enregistrés et exécutés, ce qu'ils peuvent lire et comment les opérations qu'ils renvoient parviennent à l'application host.
+---
+
+<PageBadges />
+
+import { Callout } from "zudoku/ui/Callout"
+
+Les gestionnaires d'événements permettent à un schéma de réagir à ce qui se passe dans un
+formulaire, comme le chargement d'un enregistrement ou la modification d'un champ. Un gestionnaire
+ne modifie jamais directement le formulaire. Il décrit ce qui doit se passer sous forme d'une liste
+d'opérations, et l'application host les applique. Cette page explique comment les gestionnaires sont
+enregistrés, ce qu'ils peuvent lire et comment leurs opérations sont appliquées.
+
+Pour savoir quels événements les renderers officiels déclenchent, voir
+[Déclenchement des événements dans les bindings officiels](/fr/core/builtins/events-overview).
+
+## Enregistrer des gestionnaires
+
+Le code de `form.events.code` s'exécute une fois, à la création du moteur. Chaque appel à `ON`
+enregistre un gestionnaire, et chaque appel à `OFF` en supprime un :
+
+```js
+ON("change", "age", function onAgeChange(event) {
+  if ($age >= 18) {
+    SETVALUE("adult_note", "Adult")
+  }
+})
+
+ON("change", function onAnyChange(event) {
+  // Runs for every field
+})
+
+ON("load-record", function onLoad() {
+  ALERT("Welcome", "Review the details before editing.")
+})
+```
+
+- Les bindings officiels identifient le champ par son `data_name` : les gestionnaires des événements
+  de champ déclenchés par les bindings doivent donc eux aussi s'enregistrer avec le `data_name`. Le
+  core compare la chaîne d'enregistrement à l'identique et ne convertit pas entre `key` et
+  `data_name`.
+- Omettez le champ pour exécuter le gestionnaire pour tous les champs.
+- Un type d'événement inconnu affiche un avertissement, et le gestionnaire n'est pas enregistré.
+- Enregistrez chaque gestionnaire au niveau supérieur de `form.events.code`. `ON` et `OFF` appelés à
+  l'intérieur d'un gestionnaire n'ont aucun effet.
+
+## Quand les gestionnaires s'exécutent
+
+Un gestionnaire ne s'exécute que lorsque son événement est déclenché, soit par un binding, soit par
+votre application avec `engine.trigger(eventType, fieldDataName, metadata)`. Créer le moteur ou
+exécuter `eval()` ne déclenche aucun événement.
+
+Pour un même déclenchement, les gestionnaires enregistrés pour ce champ s'exécutent d'abord, dans
+l'ordre de leur enregistrement. Les gestionnaires enregistrés pour tous les champs s'exécutent
+ensuite. Si un gestionnaire lève une erreur, le moteur affiche `[form0] Expression evaluation failed`
+dans la console et les autres gestionnaires s'exécutent quand même.
+
+## Ce qu'un gestionnaire peut lire
+
+Un gestionnaire lit les valeurs des champs avec `$data_name`, comme un calcul. Il voit les valeurs du
+moment où l'événement a été déclenché. Pour un événement `change` venant d'un renderer officiel,
+c'est après la passe d'évaluation qui a suivi la modification : les champs calculés sont donc déjà à
+jour.
+
+Les champs qu'un gestionnaire peut lire dépendent de l'événement :
+
+- **Les événements d'enregistrement**, comme `load-record` et `edit-record`, ne peuvent lire que les
+  champs du formulaire principal.
+- **Les événements de champ**, comme `change`, suivent les mêmes règles qu'un calcul défini sur le
+  champ qui les a déclenchés. Voir [Portées parent et enfant](/fr/core/engine/parent-child-scopes).
+
+Chaque gestionnaire reçoit aussi un objet `event` avec `type`, `fieldKey` (le `data_name` du champ)
+et `timestamp`, ainsi que les métadonnées éventuellement passées à `trigger()`. Les renderers
+officiels ajoutent la nouvelle `value` et la définition `field` aux événements `change`.
+
+Les gestionnaires peuvent utiliser les builtins d'expression partagés, comme `IF` et `CHOICEVALUE`,
+en plus des builtins d'événement. Les builtins réservés aux calculs, comme `SETRESULT`, ne sont pas
+disponibles.
+
+<Callout type="info" title="SETVALUE ne met pas à jour ce que lit le gestionnaire">
+  `SETVALUE` ne fait qu'enregistrer une opération. Pour le reste du gestionnaire, `$data_name`
+  renvoie toujours la valeur du moment où l'événement a été déclenché. La nouvelle valeur est
+  visible une fois que le host a appliqué l'opération.
+</Callout>
+
+## Opérations
+
+`SETVALUE` et `ALERT` ajoutent chacun une opération à la liste renvoyée par `engine.trigger()` :
+
+```js
+// SETVALUE("adult_note", "Adult")
+{ type: "FIELD_OPERATION", operation: "SETVALUE", params: { fieldDataName: "adult_note", valueToSet: "Adult" } }
+
+// ALERT("Welcome", "Review the details before editing.")
+{ type: "UI_OPERATION", operation: "ALERT", params: { title: "Welcome", message: "Review the details before editing." } }
+```
+
+Les opérations de tous les gestionnaires d'un même déclenchement sont renvoyées ensemble, dans
+l'ordre d'exécution des gestionnaires.
+
+### Les opérations sont vérifiées avant d'être renvoyées
+
+Avant que `trigger()` ne renvoie son résultat, le moteur vérifie chaque `SETVALUE` par rapport à la
+portée du gestionnaire. Un `SETVALUE` qui cible un champ que le gestionnaire ne peut pas lire, ou un
+champ absent du schéma, est retiré de la liste, et le moteur signale un avertissement. Chaque
+`SETVALUE` renvoyé par `trigger()` cible un champ que le gestionnaire a le droit de modifier.
+
+### Comment les bindings officiels appliquent les opérations
+
+Par défaut, les renderers officiels :
+
+- affichent chaque `ALERT` dans leur propre boîte de dialogue ; et
+- écrivent la valeur de chaque `SETVALUE` dans le formulaire et exécutent une nouvelle passe
+  d'évaluation.
+
+<Callout type="caution" title="Les valeurs SETVALUE des champs à choix doivent être portables">
+  Le binding React convertit une valeur de choix primitive comme `"it"` dans la forme de valeur
+  d'exécution du champ, mais React Native n'effectue pas encore cette conversion. Tant que les
+  bindings ne partagent pas un contrat de normalisation unique, utilisez les formes canoniques
+  d'exécution quand `SETVALUE` cible un champ à choix. Voir la [référence de
+  `SETVALUE`](/fr/core/builtins/events/setvalue) pour des exemples.
+</Callout>
+
+Le `FormRenderer` de React Native permet à une application de traiter les opérations autres que les
+alertes en passant `engineOptions.onOperations`. Il continue d'afficher les opérations `ALERT` dans
+sa propre boîte de dialogue et transmet les autres opérations à votre callback. Le `FormRenderer` de
+React traite actuellement les opérations en interne et n'expose pas de callback personnalisé.
+
+```js
+function onOperations(operations, meta, applyDefault) {
+  // meta is { eventType, fieldKey, metadata }
+  console.log(`${meta.eventType} returned ${operations.length} operations`)
+  applyDefault(operations, meta)
+}
+```
+
+Appelez `applyDefault` avec les opérations que React Native doit traiter comme d'habitude.
+
+### Appliquer les opérations sans renderer
+
+Si vous utilisez form0-core directement, appliquez vous-même la liste renvoyée. Pour `SETVALUE`,
+écrivez la valeur et exécutez `eval()`, comme décrit dans
+[Cycle d'évaluation](/fr/core/engine/evaluation-cycle). Les champs à choix nécessitent leur forme de
+valeur d'exécution, et non une simple valeur de choix.
+
+## Pas de chaîne d'événements de modification
+
+Appliquer un `SETVALUE` exécute une nouvelle passe d'évaluation, mais ne déclenche pas `change` pour
+le champ défini. Un gestionnaire `change` pour `age` qui définit `adult_note` n'exécute pas les
+gestionnaires `change` de `adult_note`.
+
+Si la définition d'un champ doit aussi déclencher la logique d'un autre, placez les deux dans le
+même gestionnaire, ou utilisez un `CalculatedField` quand la valeur peut être dérivée d'autres
+champs.

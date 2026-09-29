@@ -52,6 +52,14 @@ Los operadores se validan contra el tipo de campo referenciado. Por ejemplo:
 - Los campos numéricos/de fecha admiten operadores de comparación
 - Los campos de opción admiten `equal_to` y `contains` (opción múltiple)
 
+Las condiciones de opción comparan los valores de respuesta, no el objeto contenedor del renderer:
+
+- `SingleChoiceField` y `BooleanField` comparan el `value` de la opción seleccionada.
+- `MultiChoiceField` usa un array de valores seleccionados. `contains` comprueba un valor, mientras
+  que `equal_to` comprueba la selección completa sin depender del orden.
+- Una respuesta personalizada “other” no vacía participa mediante su `value` o etiqueta, por lo que
+  los operadores de vacío reflejan lo que introdujo el usuario.
+
 Si un operador no es válido para el campo de referencia, la validación fallará.
 
 ## Referencias de campo

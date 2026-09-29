@@ -5,6 +5,8 @@ description: Establece el valor de un campo durante un evento.
 
 <PageBadges />
 
+import { Callout } from "zudoku/ui/Callout"
+
 Establece el valor de un campo durante un evento.
 
 ## Ejemplo
@@ -12,6 +14,14 @@ Establece el valor de un campo durante un evento.
 ```js
 SETVALUE("age", 18)
 ```
+
+<Callout type="caution" title="Usa las formas de valor en tiempo de ejecución para los campos de elección">
+  No todos los bindings oficiales normalizan de la misma forma los valores primitivos de los campos de
+  elección. Para que el código de eventos sea portable, asigna un `SingleChoiceField` o un
+  `BooleanField` con `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`. Asigna un
+  `MultiChoiceField` con `{ "choices": [...], "other": [] }`. Los campos de texto, numéricos y demás
+  campos escalares siguen aceptando sus valores escalares habituales.
+</Callout>
 
 ## Parámetros
 

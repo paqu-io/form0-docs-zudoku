@@ -17,6 +17,9 @@
     },
     "schema-edit": {
       "title": "Edit your first schema"
+    },
+    "how-form0-compares": {
+      "title": "How form0 compares"
     }
   },
   "cli": {
@@ -128,6 +131,20 @@
     },
     "concepts": {
       "title": "Concepts"
+    },
+    "engine": {
+      "evaluation-cycle": {
+        "title": "Evaluation cycle"
+      },
+      "calculations-dependencies": {
+        "title": "Calculations and dependencies"
+      },
+      "parent-child-scopes": {
+        "title": "Parent and child scopes"
+      },
+      "events-operations": {
+        "title": "Events and operations"
+      }
     },
     "schema": {
       "form": {
@@ -265,7 +282,7 @@
       "title": "AI metadata"
     },
     "security": {
-      "title": "Security and sandboxing"
+      "title": "Executable schema security"
     },
     "output-records": {
       "title": "Output and records"
@@ -274,6 +291,53 @@
   "guides": {
     "coming-soon": {
       "title": "Coming soon"
+    }
+  },
+  "diagrams": {
+    "evaluationCycle": {
+      "ariaLabel": "A value change runs one full eval pass in a fixed order: calculations, required, visible, read-only, value errors. The renderer then dispatches a change event. Its handler returns operations that the host applies, and a SETVALUE runs the pass again without dispatching another change event.",
+      "caption": "One edit runs one ordered pass. Event handlers never change the form directly: they return operations, and the host applies them.",
+      "userEdits": "User edits",
+      "onePass": "one full pass, same order every time",
+      "calculations": "Calculations",
+      "required": "Required",
+      "visible": "Visible",
+      "readOnly": "Read-only",
+      "valueErrorsLine1": "Value",
+      "valueErrorsLine2": "errors",
+      "state": "state",
+      "renderer": "Renderer",
+      "rerenders": "re-renders fields",
+      "handlerRuns": "handler runs",
+      "returns": "returns",
+      "operations": "Operations",
+      "toHost": "to host",
+      "hostApplies": "Host applies",
+      "loopTitle": "SETVALUE → eval again",
+      "loopNote": "no second change event"
+    },
+    "calculationOrder": {
+      "ariaLabel": "Calculated fields run after the fields they reference: subtotal uses qty and price and runs first, tax uses subtotal and runs second, total uses subtotal and tax and runs third. Fields a and b reference each other, so both are set to null and an error is reported; field c references a and runs with a null input.",
+      "caption": "Schema order does not matter: each calculated field runs after the fields it references. Fields in a cycle are set to null, and everything else still runs.",
+      "orderTitle": "Runs in dependency order",
+      "cycleTitle": "A cycle is skipped",
+      "input": "input field",
+      "runsFirst": "runs 1st",
+      "runsSecond": "runs 2nd",
+      "runsThird": "runs 3rd",
+      "cycleResult": "set to null + error",
+      "runsWithNull": "runs with null input"
+    },
+    "repeatableScope": {
+      "ariaLabel": "The main form has the fields customer and discount_pct. A RepeatableSection called line_items has two rows, and each row runs its own engine instance with the fields qty, price, and line_total. The main-form values are copied into each row, so line_total can use discount_pct. The two rows cannot see each other.",
+      "caption": "Each row is evaluated by its own engine with a copy of the parent values. Rows never read each other's values.",
+      "mainForm": "Main form",
+      "row1": "Row 1",
+      "row2": "Row 2",
+      "ownEngine": "own engine instance",
+      "sameFields": "same fields, separate values",
+      "parentCopied": "parent values copied in",
+      "isolated": "rows can't see each other"
     }
   }
 }

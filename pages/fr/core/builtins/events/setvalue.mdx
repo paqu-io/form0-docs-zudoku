@@ -5,6 +5,8 @@ description: Définit la valeur d’un champ pendant un événement.
 
 <PageBadges />
 
+import { Callout } from "zudoku/ui/Callout"
+
 Définit la valeur d’un champ pendant un événement.
 
 ## Exemple
@@ -12,6 +14,14 @@ Définit la valeur d’un champ pendant un événement.
 ```js
 SETVALUE("age", 18)
 ```
+
+<Callout type="caution" title="Utilisez les formes de valeur d'exécution pour les champs à choix">
+  Les valeurs primitives des champs à choix ne sont pas encore normalisées de la même façon par tous
+  les bindings officiels. Pour un code d'événement portable, définissez un `SingleChoiceField` ou un
+  `BooleanField` avec `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`. Définissez
+  un `MultiChoiceField` avec `{ "choices": [...], "other": [] }`. Les champs texte, numériques et les
+  autres champs scalaires acceptent toujours leurs valeurs scalaires habituelles.
+</Callout>
 
 ## Paramètres
 

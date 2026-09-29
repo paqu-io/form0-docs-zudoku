@@ -26,6 +26,20 @@ En runtime, los campos también validan sus valores cuando el motor evalúa:
 - Coincidencias de patrón para campos de texto
 - Los valores de elección deben coincidir con las opciones definidas
 
+La validación de valores en runtime se ejecuta para todos los campos, incluidos los que están
+ocultos en ese momento. El resultado está disponible en el mapa `errors` del estado del motor.
+
+### Campos obligatorios y envío
+
+El motor calcula un indicador `required` para cada campo, pero no añade un error solo porque un
+campo obligatorio esté vacío. La comprobación de campos obligatorios forma parte del envío: los
+renderers oficiales combinan `visible`, `required` y el valor actual, omiten los campos ocultos y
+deciden cuándo mostrar el error.
+
+Si utilizas form0-core sin un renderer, aplica la misma política en tu aplicación. En la mayoría de
+los casos, un campo vacío solo debe impedir el envío cuando sea visible y obligatorio. Incluye
+también en esa comprobación los errores de valor y formato generados por el motor.
+
 ## Errores típicos
 
 - Faltan los atributos requeridos

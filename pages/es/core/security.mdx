@@ -1,23 +1,41 @@
 ---
-title: Seguridad y aislamiento
-description: Modos de seguridad para expresiones en form0-core.
+title: Seguridad de los esquemas ejecutables
+description: Límites de confianza y controles de validación de expresiones en form0-core.
 ---
 
 <PageBadges />
 
-form0-core evalúa las expresiones con un modo de seguridad configurable.
+Los esquemas de form0 pueden contener expresiones JavaScript y scripts de eventos imperativos. Son
+código ejecutable, por lo que los esquemas que los contengan deben proceder de autores de confianza.
+
+## Modelo de confianza
+
+Los modos `SAFE` y `CUSTOM` proporcionan controles de validación y configuración. No son entornos
+aislados y no deben utilizarse como límite de seguridad para ejecutar esquemas adversarios en un
+navegador, servidor, CLI o entorno móvil con privilegios.
+
+Las aplicaciones son responsables de autenticar a los autores de los esquemas, autorizar los
+cambios y aislar la ejecución cuando no se pueda confiar en los esquemas.
 
 ## Modos
 
-- `TRUSTED`: acceso completo a JavaScript (predeterminado).
-- `SAFE`: variables globales restringidas y patrones bloqueados.
-- `CUSTOM`: reglas definidas por el usuario.
+- `TRUSTED`: ejecuta JavaScript sin las reglas de validación adicionales de `SAFE`. Es el modo
+  predeterminado.
+- `SAFE`: rechaza patrones de texto configurados y proporciona un conjunto configurado de variables
+  globales al contexto de la expresión.
+- `CUSTOM`: utiliza una configuración de validación y contexto definida por la aplicación.
 
-## Valores predeterminados del modo seguro
+Los tres modos utilizan el entorno JavaScript de la aplicación anfitriona. Ninguno proporciona
+aislamiento de procesos, del origen del navegador, del sistema de archivos o de la red.
 
-El modo seguro bloquea patrones como `eval`, `Function`, `window`, `document`, `process`, `require`
-y otras variables globales no seguras. También limita el tiempo de ejecución y la profundidad de
-la pila de llamadas.
+## Valores predeterminados de SAFE
+
+El modo Safe rechaza expresiones que contienen patrones configurados como `eval`, `Function`,
+`window`, `document`, `process`, `require` y otros nombres sensibles. También construye el contexto
+de la expresión con una lista configurada de variables globales permitidas.
+
+Son comprobaciones defensivas para flujos de trabajo de confianza, no garantías de que JavaScript
+hostil no pueda eludirlas. En particular, la búsqueda de patrones no es un mecanismo de aislamiento.
 
 ## Usar una configuración de seguridad
 
@@ -31,3 +49,17 @@ const engine = createFormEngine({
 ```
 
 La configuración de seguridad se aplica a los campos calculados y al código de eventos.
+
+## Esquemas no confiables
+
+Si usuarios que no son autores de confianza pueden controlar expresiones o scripts de eventos,
+ejecuta esos esquemas dentro de un límite de aislamiento adecuado para los privilegios y el modelo
+de amenazas de tu aplicación. No dependas únicamente de los modos `SAFE` o `CUSTOM`.
+
+## Informar de una vulnerabilidad
+
+Informa de posibles violaciones de los límites de forma privada mediante la
+[política de seguridad de form0-core](https://github.com/paqu-io/form0-core/security/policy). Los
+[análisis de seguridad](https://github.com/paqu-io/form0-core/tree/main/analyses) públicos del
+repositorio contienen el modelo de amenazas, las limitaciones conocidas y el trabajo de aislamiento
+previsto para los mantenedores.

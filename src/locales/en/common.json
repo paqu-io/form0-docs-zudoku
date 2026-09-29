@@ -15,6 +15,7 @@
     "preview": "Preview",
     "aiAuthoring": "AI authoring",
     "core": "Core",
+    "howTheEngineWorks": "How the engine works",
     "cli": "CLI",
     "starterApps": "Starter apps",
     "bindings": "Bindings",
@@ -72,7 +73,7 @@
     "builtinsOverview": "Builtins overview",
     "overview": "Overview",
     "aiMetadata": "AI metadata",
-    "securityAndSandboxing": "Security and sandboxing",
+    "executableSchemaSecurity": "Executable schema security",
     "outputAndRecords": "Output and records"
   },
   "language": {

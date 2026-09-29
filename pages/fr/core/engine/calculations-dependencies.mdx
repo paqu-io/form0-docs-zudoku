@@ -1,0 +1,153 @@
+---
+title: Calculs et dépendances
+description: Comment le moteur form0 ordonne les champs calculés, gère les cycles et les expressions en échec, et résout EVAL().
+---
+
+<PageBadges />
+
+import { Callout } from "zudoku/ui/Callout"
+
+Chaque `CalculatedField` possède une expression `calculate`. Les calculs sont la première étape de
+chaque [passe d'évaluation](/fr/core/engine/evaluation-cycle) : les conditions et la validation
+voient donc toujours des valeurs calculées à jour. Cette page explique dans quel ordre les calculs
+s'exécutent et ce qui se passe quand une expression ne peut pas produire de valeur.
+
+## Référencer des champs
+
+Dans une expression, `$data_name` lit la valeur actuelle d'un champ. Les expressions référencent les
+champs par leur `data_name`, tandis que les conditions utilisent `field_id`.
+
+Les valeurs gardent la forme sous laquelle le moteur les stocke. Un `NumericField` fournit un nombre,
+mais un champ à choix fournit un objet contenant les choix sélectionnés. Utilisez des builtins comme
+[`CHOICEVALUE`](/fr/core/builtins/calculations-expressions/choicevalue) et
+[`CHOICELABEL`](/fr/core/builtins/calculations-expressions/choicelabel) pour lire les champs à choix.
+
+Une expression est du JavaScript. Pour une logique qui ne tient pas sur une ligne, écrivez du code
+sur plusieurs lignes et renvoyez le résultat avec
+[`SETRESULT`](/fr/core/builtins/calculations-expressions/setresult).
+
+## Ordre des dépendances
+
+À la création d'un moteur, celui-ci lit une fois chaque expression `calculate` et note les
+`$fields` qu'elle référence. Pendant l'évaluation, un champ calculé s'exécute toujours après les
+champs calculés dont il dépend. L'ordre des champs dans le schéma n'a pas d'importance.
+
+Par exemple, ces champs sont déclarés dans l'ordre inverse :
+
+| Champ (ordre dans le schéma) | `calculate`        |
+| ---------------------------- | ------------------ |
+| `total`                      | `$subtotal + $tax` |
+| `tax`                        | `$subtotal * 0.2`  |
+| `subtotal`                   | `$qty * $price`    |
+
+Avec `qty` à 2 et `price` à 10, le moteur exécute d'abord `subtotal` (20), puis `tax` (4), puis
+`total` (24). Une seule passe suffit, quelle que soit la longueur de la chaîne.
+
+<EngineDiagram name="calculation-order">
+
+```mermaid
+flowchart LR
+  subgraph ORDER["Runs in dependency order"]
+    qty["qty (input field)"] --> subtotal["subtotal: runs 1st"]
+    price["price (input field)"] --> subtotal
+    subtotal --> tax["tax: runs 2nd"]
+    subtotal --> total["total: runs 3rd"]
+    tax --> total
+  end
+  subgraph CYCLE["A cycle is skipped"]
+    a["a = null"] <-->|"set to null + error"| b["b = null"]
+    a --> c["c: runs with null input"]
+  end
+```
+
+</EngineDiagram>
+
+## Cycles
+
+Un cycle apparaît quand des champs calculés dépendent les uns des autres en boucle, soit directement
+(`a` utilise `$a`), soit par d'autres champs (`a` utilise `$b` et `b` utilise `$a`). Le moteur ne
+peut pas ordonner ces champs, donc il :
+
+- met à `null` chaque champ du cycle ;
+- émet, via `WarningSystem`, un diagnostic de dépendance qui nomme le cycle, par exemple
+  `CalculatedField dependency cycle detected: a -> b` ; et
+- calcule quand même tous les autres champs.
+
+Le diagnostic de cycle n'est pas ajouté à la table `errors` de validation des valeurs dans l'état du
+formulaire.
+
+Un champ qui référence un champ du cycle s'exécute quand même, avec `null` en entrée. En JavaScript,
+`null * 2` vaut `0`, donc `c` avec `$a * 2` affiche `0` et non `null`.
+
+Un cycle ne rend pas le schéma invalide : la création du moteur réussit. Le diagnostic apparaît lors
+de l'évaluation du formulaire. Pour le corriger, cassez la boucle, par exemple en transformant l'un
+des champs en champ de saisie.
+
+## Quand une expression échoue
+
+Si une expression lève une erreur, par exemple parce qu'elle appelle une méthode sur `null`, ce champ
+calculé est mis à `null` pour cette passe. Les autres champs calculés s'exécutent quand même ; un
+champ qui dépend du champ en échec reçoit `null` et peut produire une autre valeur ou échouer à son
+tour.
+
+Si une expression référence un champ qui n'existe pas dans le schéma, le moteur signale aussi un
+avertissement qui nomme ce champ. Dans le [mode de sécurité](/fr/core/security) `SAFE`, une
+expression qui utilise quelque chose que le mode n'autorise pas est rejetée et le champ est mis à
+`null`.
+
+## Références dynamiques avec EVAL()
+
+[`EVAL`](/fr/core/builtins/calculations-expressions/eval) lit un champ dont le nom est fourni sous
+forme de chaîne. La façon dont le moteur l'ordonne dépend de cette chaîne :
+
+- **Un nom fixe**, comme `EVAL('$price')`, est traité comme `$price` et ordonné normalement.
+- **Un nom construit à l'exécution**, comme `EVAL('$' + $unit + '_price')`, ne peut pas être connu à
+  l'avance.
+
+Dès qu'un champ calculé utilise un nom construit à l'exécution, le moteur ne peut plus garantir
+l'ordre. Il exécute alors tous les champs calculés de façon répétée jusqu'à ce qu'aucune valeur ne
+change, avec au plus une passe par champ calculé (au moins deux). Si des valeurs changent encore après
+la dernière passe, il signale un avertissement qui nomme ces champs. Il signale aussi un
+avertissement pour chaque champ qui utilise un nom construit à l'exécution.
+
+<Callout type="tip" title="Préférez les références directes">
+  Écrivez `$price` plutôt que `EVAL('$price')` chaque fois que le nom du champ est connu. Les
+  références directes conservent une seule passe ordonnée et rendent les dépendances visibles pour
+  toute personne qui lit le schéma.
+</Callout>
+
+## Voir les erreurs et les avertissements
+
+Le moteur signale comme avertissements les cycles, les noms construits à l'exécution dans `EVAL()`,
+les valeurs qui ne se stabilisent pas et les références à des champs inexistants. En développement,
+il les affiche dans la console. Node.js est considéré en développement sauf si `NODE_ENV` vaut
+`production`. Dans un navigateur, les pages sur `localhost`, `127.0.0.1` ou une URL avec un port
+explicite sont considérées en développement.
+
+Pour collecter ces avertissements dans votre application, passez votre propre `WarningSystem` :
+
+```js
+import { createFormEngine, WarningSystem } from "form0-core"
+
+const warningSystem = new WarningSystem({ enableCollection: true })
+const engine = createFormEngine({ schema, warningSystem })
+engine.eval()
+
+for (const warning of warningSystem.getCollectedWarnings()) {
+  console.log(warning.message, warning.suggestion)
+}
+```
+
+Vous pouvez aussi enregistrer un callback avec `warningSystem.addWarningHandler(handler)`. Le même
+avertissement répété en moins d'une seconde n'est signalé qu'une fois.
+
+Une expression qui lève une erreur n'est pas un avertissement. Le moteur l'affiche dans la console
+sous la forme `[form0] Expression evaluation failed`, dans tous les environnements, et met le champ
+à `null`.
+
+## Champs calculés dans les sections répétables
+
+Un champ calculé placé dans une `RepeatableSection` s'exécute une fois par ligne. Il peut référencer
+les champs du formulaire principal, les champs de sa propre ligne et les champs des lignes qui la
+contiennent. Une référence à un champ hors de cette portée lit `undefined` et produit un
+avertissement. Voir [Portées parent et enfant](/fr/core/engine/parent-child-scopes).

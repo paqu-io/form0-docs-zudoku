@@ -26,6 +26,20 @@ At runtime, fields also validate their values when the engine evaluates:
 - Pattern matches for text fields
 - Choice values must match defined choices
 
+Runtime value validation runs for every field, including fields that are currently hidden. The
+result is available in the engine state's `errors` map.
+
+### Required fields and submission
+
+The engine computes a `required` flag for each field, but it does not add an error merely because a
+required field is empty. Required-field enforcement is a submission concern: the official
+renderers combine `visible`, `required`, and the current value, skip hidden fields, and decide when
+to display the error.
+
+If you use form0-core without a renderer, apply the same policy in your application. In most cases,
+an empty field should block submission only when it is both visible and required. Keep the engine's
+value and format errors in that submission check as well.
+
 ## Typical errors
 
 - Missing required attributes

@@ -54,6 +54,7 @@ const documentationItems = [
     [
       doc("getting-started/quickstart", "Quickstart"),
       doc("getting-started/schema-edit", "Edit your first schema"),
+      doc("getting-started/how-form0-compares", "How form0 compares"),
     ],
     { icon: "nav-sparkles" },
   ),
@@ -158,6 +159,12 @@ const documentationItems = [
     [
       doc("core/overview", "Overview"),
       doc("core/concepts", "Concepts"),
+      category("How the engine works", [
+        doc("core/engine/evaluation-cycle", "Evaluation cycle"),
+        doc("core/engine/calculations-dependencies", "Calculations and dependencies"),
+        doc("core/engine/parent-child-scopes", "Parent and child scopes"),
+        doc("core/engine/events-operations", "Events and operations"),
+      ]),
       category("Schema", [
         doc("core/schema/form", "Form object"),
         doc("core/schema/form-attributes", "Form attributes"),
@@ -185,7 +192,7 @@ const documentationItems = [
       doc("core/ai-metadata", "AI metadata", {
         badge: { label: "Preview", color: "yellow" },
       }),
-      doc("core/security", "Security and sandboxing"),
+      doc("core/security", "Executable schema security"),
       doc("core/output-records", "Output and records"),
     ],
     { icon: "nav-cpu" },

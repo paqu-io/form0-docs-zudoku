@@ -17,6 +17,9 @@
     },
     "schema-edit": {
       "title": "Editar tu primer esquema"
+    },
+    "how-form0-compares": {
+      "title": "form0 frente a otras soluciones"
     }
   },
   "cli": {
@@ -37,11 +40,11 @@
       "load-edit": { "title": "Cargar y editar esquemas" },
       "validate-preview": { "title": "Validar y previsualizar" },
       "run-values": { "title": "Ejecutar con valores" },
-      "watch-test": { "title": "Observar y probar" },
+      "watch-test": { "title": "Observar cambios y probar" },
       "import-export-csv": { "title": "Importar y exportar CSV" }
     },
     "local-development": {
-      "live-preview": { "title": "Servidor de previsualización" },
+      "live-preview": { "title": "Servidor de vista previa en vivo" },
       "app-development-servers": { "title": "Servidores de desarrollo de aplicaciones" }
     },
     "project-configuration": { "title": "Configuración del proyecto" },
@@ -57,23 +60,27 @@
   "starter-apps": {
     "overview": { "title": "Visión general de aplicaciones iniciales" },
     "react-vite": {
-      "create-run": { "title": "Crear y ejecutar la aplicación React y Vite" },
+      "create-run": { "title": "Crear y ejecutar el starter de React y Vite" },
       "project-structure-configuration": {
         "title": "Estructura y configuración del proyecto React y Vite"
       },
       "forms-routes-presentations": { "title": "Formularios, rutas y presentaciones" },
       "renderers-themes-styling": { "title": "Renderizadores, temas y estilos" },
       "submissions-connectors": { "title": "Envíos y conectores" },
-      "build-deployment": { "title": "Compilar y desplegar la aplicación React y Vite" },
-      "troubleshooting": { "title": "Solución de problemas de React y Vite" }
+      "build-deployment": { "title": "Compilar y desplegar el starter de React y Vite" },
+      "troubleshooting": { "title": "Solución de problemas del starter de React y Vite" }
     },
     "react-native-expo": {
       "create-run": { "title": "Crear y ejecutar el starter de React Native y Expo" },
       "project-structure-configuration": {
         "title": "Estructura y configuración del proyecto React Native y Expo"
       },
-      "forms-screens-navigation": { "title": "Formularios, pantallas y navegación" },
-      "renderers-themes-fonts-images": { "title": "Renderizadores, temas, fuentes e imágenes" },
+      "forms-screens-navigation": {
+        "title": "Formularios, pantallas y navegación en el starter móvil"
+      },
+      "renderers-themes-fonts-images": {
+        "title": "Renderizadores, temas, fuentes e imágenes en el starter móvil"
+      },
       "device-development-networking": { "title": "Desarrollo en dispositivos y red" },
       "local-storage-submissions": { "title": "Almacenamiento local y envíos" },
       "build-distribution": { "title": "Compilar y distribuir el starter de React Native y Expo" },
@@ -85,11 +92,11 @@
     "choose": { "title": "Elegir un conector" },
     "direct-integration": { "title": "Integración directa" },
     "postgresql": {
-      "setup": { "title": "Configuración de PostgreSQL" },
+      "setup": { "title": "Instalación y configuración de PostgreSQL" },
       "storage": { "title": "Modelo de almacenamiento y operaciones de PostgreSQL" }
     },
     "sqlite": {
-      "setup": { "title": "Configuración de SQLite" },
+      "setup": { "title": "Instalación y configuración de SQLite" },
       "storage": { "title": "Modelo de almacenamiento y operaciones de SQLite" }
     },
     "security": { "title": "Seguridad y responsabilidad sobre los datos" },
@@ -100,9 +107,9 @@
     "react": {
       "install-render": { "title": "Instalar y renderizar" },
       "form-renderer": { "title": "FormRenderer" },
-      "values-snapshots-submission": { "title": "Valores, instantáneas y envío" },
-      "built-in-renderers": { "title": "Renderizadores incluidos" },
-      "custom-renderers": { "title": "Renderizadores personalizados" },
+      "values-snapshots-submission": { "title": "Valores, snapshots y envío" },
+      "built-in-renderers": { "title": "Renderizadores de campo integrados" },
+      "custom-renderers": { "title": "Renderizadores de campo personalizados" },
       "modes-placement-navigation": { "title": "Modos, ubicación y navegación" },
       "themes-styling": { "title": "Temas y estilos" },
       "workers-performance": { "title": "Workers y rendimiento" },
@@ -113,8 +120,8 @@
       "install-render": { "title": "Instalar y renderizar" },
       "form-renderer": { "title": "FormRenderer" },
       "values-snapshots-submission": { "title": "Valores, snapshots y envío" },
-      "built-in-renderers": { "title": "Renderizadores integrados" },
-      "custom-renderers": { "title": "Renderizadores personalizados" },
+      "built-in-renderers": { "title": "Renderizadores de campo integrados" },
+      "custom-renderers": { "title": "Renderizadores de campo personalizados" },
       "modes-navigation": { "title": "Modos y navegación" },
       "themes-assets": { "title": "Temas, fuentes e imágenes" },
       "mobile-integration": { "title": "Integración móvil" },
@@ -128,6 +135,20 @@
     },
     "concepts": {
       "title": "Conceptos"
+    },
+    "engine": {
+      "evaluation-cycle": {
+        "title": "Ciclo de evaluación"
+      },
+      "calculations-dependencies": {
+        "title": "Cálculos y dependencias"
+      },
+      "parent-child-scopes": {
+        "title": "Ámbitos padre e hijo"
+      },
+      "events-operations": {
+        "title": "Eventos y operaciones"
+      }
     },
     "schema": {
       "form": {
@@ -166,7 +187,7 @@
         "title": "Contenedores"
       },
       "meta-fields": {
-        "title": "Metacampos"
+        "title": "Campos meta"
       }
     },
     "builtins": {
@@ -265,7 +286,7 @@
       "title": "Metadatos de IA"
     },
     "security": {
-      "title": "Seguridad y aislamiento"
+      "title": "Seguridad de los esquemas ejecutables"
     },
     "output-records": {
       "title": "Salida y registros"
@@ -274,6 +295,53 @@
   "guides": {
     "coming-soon": {
       "title": "Próximamente"
+    }
+  },
+  "diagrams": {
+    "evaluationCycle": {
+      "ariaLabel": "Un cambio de valor ejecuta una pasada eval completa en un orden fijo: cálculos, obligatoriedad, visibilidad, solo lectura, errores de valor. Después, el renderer despacha un evento change. Su manejador devuelve operaciones que aplica el host, y un SETVALUE vuelve a ejecutar la pasada sin despachar otro evento change.",
+      "caption": "Una edición ejecuta una única pasada ordenada. Los manejadores de eventos nunca modifican el formulario directamente: devuelven operaciones y el host las aplica.",
+      "userEdits": "Edición",
+      "onePass": "una pasada completa, siempre en el mismo orden",
+      "calculations": "Cálculos",
+      "required": "Obligatorio",
+      "visible": "Visible",
+      "readOnly": "Solo lectura",
+      "valueErrorsLine1": "Errores",
+      "valueErrorsLine2": "de valor",
+      "state": "estado",
+      "renderer": "Renderer",
+      "rerenders": "vuelve a pintar los campos",
+      "handlerRuns": "se ejecuta el manejador",
+      "returns": "devuelve",
+      "operations": "Operaciones",
+      "toHost": "al host",
+      "hostApplies": "El host aplica",
+      "loopTitle": "SETVALUE → eval de nuevo",
+      "loopNote": "sin segundo evento change"
+    },
+    "calculationOrder": {
+      "ariaLabel": "Los campos calculados se ejecutan después de los campos a los que hacen referencia: subtotal usa qty y price y se ejecuta primero, tax usa subtotal y se ejecuta segundo, total usa subtotal y tax y se ejecuta tercero. Los campos a y b se referencian entre sí, así que ambos se establecen en null y se informa de un error; el campo c hace referencia a a y se ejecuta con una entrada null.",
+      "caption": "El orden en el esquema no importa: cada campo calculado se ejecuta después de los campos a los que hace referencia. Los campos de un ciclo se establecen en null y todo lo demás se sigue ejecutando.",
+      "orderTitle": "Se ejecutan por orden de dependencia",
+      "cycleTitle": "Un ciclo se omite",
+      "input": "campo de entrada",
+      "runsFirst": "se ejecuta 1.º",
+      "runsSecond": "se ejecuta 2.º",
+      "runsThird": "se ejecuta 3.º",
+      "cycleResult": "null + error",
+      "runsWithNull": "se ejecuta con null"
+    },
+    "repeatableScope": {
+      "ariaLabel": "El formulario principal tiene los campos customer y discount_pct. Una RepeatableSection llamada line_items tiene dos filas, y cada fila ejecuta su propia instancia del motor con los campos qty, price y line_total. Los valores del formulario principal se copian en cada fila, así que line_total puede usar discount_pct. Las dos filas no se ven entre sí.",
+      "caption": "Cada fila se evalúa con su propio motor y una copia de los valores del padre. Las filas nunca leen los valores de otras filas.",
+      "mainForm": "Formulario principal",
+      "row1": "Fila 1",
+      "row2": "Fila 2",
+      "ownEngine": "instancia de motor propia",
+      "sameFields": "mismos campos, valores separados",
+      "parentCopied": "valores del padre copiados en la fila",
+      "isolated": "filas aisladas entre sí"
     }
   }
 }

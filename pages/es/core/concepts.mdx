@@ -1,44 +1,46 @@
 ---
 title: Conceptos
-description: El modelo mental basado en esquemas de form0-core.
+description: El modelo mental schema-first de form0-core.
 ---
 
 <PageBadges />
 
-## El esquema como punto de partida
+## Primero el esquema
 
-Un esquema form0 es un documento JSON con un objeto `form` de nivel superior. El esquema define la
-estructura, las reglas y el comportamiento de un formulario sin código de interfaz.
+Un esquema de form0 es un documento JSON con un objeto `form` de nivel superior. El esquema define
+la estructura, las reglas y el comportamiento de un formulario sin código de interfaz.
 
 ## Campos y valores
 
-- Cada campo tiene un `data_name` (identificador legible) y una `key` (identificador interno, normalmente derivado de `data_name`).
-- Los valores del motor se almacenan por `data_name`.
-- Las condiciones hacen referencia a los campos mediante `field_id`. Puedes utilizar `key` o `data_name`; `data_name` suele ser más práctico al escribir esquemas manualmente porque resulta más fácil de recordar.
+- Cada campo tiene un `data_name` (identificador legible) y una `key` (identificador interno,
+  normalmente derivado de `data_name`).
+- El motor guarda los valores por `data_name` y las expresiones los leen como `$data_name`.
+- Las condiciones hacen referencia a los campos mediante `field_id`, que acepta tanto la `key` como
+  el `data_name`. Consulta [Condiciones y operadores](/es/core/schema/conditions-operators).
 
 ## Estado del motor
 
 El motor evalúa el esquema y produce un objeto de estado con:
 
-- `values`: valores actuales de los campos
-- `errors`: errores de validación
-- `visible`: indicadores de visibilidad por campo
-- `required`: indicadores de obligatoriedad por campo
-- `read_only`: indicadores de solo lectura por campo
+- `values`: los valores actuales de los campos
+- `errors`: los errores de validación de valor y de formato
+- `visible`: la visibilidad de cada campo
+- `required`: la obligatoriedad de cada campo
+- `read_only`: el estado de solo lectura de cada campo
 
-## Flujo de datos
+El motor indica si un campo es obligatorio, pero un campo obligatorio vacío no se añade a `errors`.
+Las reglas de envío las aplica el renderer o la aplicación host. Consulta
+[Validación de esquemas](/es/core/schema/validation).
 
-1. Carga el esquema y crea el motor
-2. Proporciona valores iniciales (opcional)
-3. Dispara los eventos de inicialización
-4. Evalúa los cálculos, las condiciones y la validación
-5. Con cada cambio de valor:
-   - Actualiza el valor
-   - Vuelve a evaluar (validación en tiempo real)
-   - Dispara los eventos de cambio definidos
-6. Lee el estado o crea un registro estructurado para enviarlo
+## Cómo funciona el motor
 
-## Eventos y expresiones
+Estas páginas explican lo que hace el motor en tiempo de ejecución:
 
-- Los campos calculados utilizan expresiones en la propiedad `calculate`, como `$age + 1`, para derivar valores de otros campos.
-- Los eventos se encuentran en `form.events.code` y pueden reaccionar a cambios del formulario en tiempo de ejecución (por ejemplo, al cargar un registro o cambiar un campo).
+- [Ciclo de evaluación](/es/core/engine/evaluation-cycle): qué ocurre cuando se crea el motor y cada
+  vez que cambia un valor.
+- [Cálculos y dependencias](/es/core/engine/calculations-dependencies): el orden en que se ejecutan
+  los campos calculados, los ciclos, las expresiones que fallan y `EVAL()`.
+- [Ámbitos padre e hijo](/es/core/engine/parent-child-scopes): cómo se evalúan las filas de las
+  secciones repetibles y qué campos puede leer cada expresión.
+- [Eventos y operaciones](/es/core/engine/events-operations): cómo se registran y ejecutan los
+  manejadores de eventos y cómo llegan sus operaciones a tu aplicación.

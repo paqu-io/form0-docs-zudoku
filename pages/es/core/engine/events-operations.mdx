@@ -1,0 +1,152 @@
+---
+title: Eventos y operaciones
+description: Cómo se registran y ejecutan los manejadores de eventos de form0, qué pueden leer y cómo llegan a la aplicación host las operaciones que devuelven.
+---
+
+<PageBadges />
+
+import { Callout } from "zudoku/ui/Callout"
+
+Los manejadores de eventos permiten que un esquema reaccione a lo que ocurre en un formulario, como
+la carga de un registro o el cambio de un campo. Un manejador nunca modifica el formulario
+directamente. Describe lo que debe ocurrir como una lista de operaciones, y la aplicación host las
+aplica. Esta página explica cómo se registran los manejadores, qué pueden leer y cómo se aplican sus
+operaciones.
+
+Para saber qué eventos despachan los renderers oficiales, consulta
+[Despacho de eventos en los bindings oficiales](/es/core/builtins/events-overview).
+
+## Registrar manejadores
+
+El código de `form.events.code` se ejecuta una vez, al crear el motor. Cada llamada a `ON` registra
+un manejador y cada llamada a `OFF` elimina uno:
+
+```js
+ON("change", "age", function onAgeChange(event) {
+  if ($age >= 18) {
+    SETVALUE("adult_note", "Adult")
+  }
+})
+
+ON("change", function onAnyChange(event) {
+  // Runs for every field
+})
+
+ON("load-record", function onLoad() {
+  ALERT("Welcome", "Review the details before editing.")
+})
+```
+
+- Los bindings oficiales identifican el campo por su `data_name`, así que los manejadores de los
+  eventos de campo que despachan los bindings también deben registrarse con el `data_name`. El core
+  compara la cadena de registro de forma exacta y no traduce entre `key` y `data_name`.
+- Omite el campo para ejecutar el manejador en todos los campos.
+- Un tipo de evento desconocido muestra un aviso y el manejador no se registra.
+- Registra todos los manejadores en el nivel superior de `form.events.code`. `ON` y `OFF` llamados
+  dentro de un manejador no tienen efecto.
+
+## Cuándo se ejecutan los manejadores
+
+Un manejador solo se ejecuta cuando se despacha su evento, ya sea desde un binding o desde tu
+aplicación con `engine.trigger(eventType, fieldDataName, metadata)`. Crear el motor o ejecutar
+`eval()` no despacha eventos.
+
+En un mismo despacho, primero se ejecutan los manejadores registrados para ese campo, en el orden en
+que se registraron. Después se ejecutan los manejadores registrados para todos los campos. Si un
+manejador lanza un error, el motor muestra `[form0] Expression evaluation failed` en la consola y
+los demás manejadores se siguen ejecutando.
+
+## Qué puede leer un manejador
+
+Un manejador lee los valores de los campos con `$data_name`, como un cálculo. Ve los valores del
+momento en que se despachó el evento. En un evento `change` de un renderer oficial, eso ocurre
+después de la pasada de evaluación que siguió a la edición, así que los campos calculados ya están
+actualizados.
+
+Los campos que puede leer un manejador dependen del evento:
+
+- **Los eventos de registro**, como `load-record` y `edit-record`, solo pueden leer campos del
+  formulario principal.
+- **Los eventos de campo**, como `change`, siguen las mismas reglas que un cálculo definido en el
+  campo que los desencadenó. Consulta [Ámbitos padre e hijo](/es/core/engine/parent-child-scopes).
+
+Cada manejador recibe también un objeto `event` con `type`, `fieldKey` (el `data_name` del campo) y
+`timestamp`, además de cualquier metadato pasado a `trigger()`. Los renderers oficiales añaden el
+nuevo `value` y la definición `field` a los eventos `change`.
+
+Los manejadores pueden usar los builtins de expresión compartidos, como `IF` y `CHOICEVALUE`, además
+de los builtins de eventos. Los builtins exclusivos de los cálculos, como `SETRESULT`, no están
+disponibles.
+
+<Callout type="info" title="SETVALUE no actualiza lo que lee el manejador">
+  `SETVALUE` solo registra una operación. Durante el resto del manejador, `$data_name` sigue
+  devolviendo el valor del momento en que se despachó el evento. El nuevo valor es visible después
+  de que el host aplique la operación.
+</Callout>
+
+## Operaciones
+
+`SETVALUE` y `ALERT` añaden cada uno una operación a la lista que devuelve `engine.trigger()`:
+
+```js
+// SETVALUE("adult_note", "Adult")
+{ type: "FIELD_OPERATION", operation: "SETVALUE", params: { fieldDataName: "adult_note", valueToSet: "Adult" } }
+
+// ALERT("Welcome", "Review the details before editing.")
+{ type: "UI_OPERATION", operation: "ALERT", params: { title: "Welcome", message: "Review the details before editing." } }
+```
+
+Las operaciones de todos los manejadores de un mismo despacho se devuelven juntas, en el orden en
+que se ejecutaron los manejadores.
+
+### Las operaciones se comprueban antes de devolverse
+
+Antes de que `trigger()` devuelva el resultado, el motor comprueba cada `SETVALUE` según el ámbito
+del manejador. Un `SETVALUE` que apunta a un campo que el manejador no puede leer, o a un campo que
+no existe en el esquema, se elimina de la lista y el motor emite un aviso. Todo `SETVALUE` que
+devuelve `trigger()` apunta a un campo que el manejador puede modificar.
+
+### Cómo aplican las operaciones los bindings oficiales
+
+De forma predeterminada, los renderers oficiales:
+
+- muestran cada `ALERT` en su propio cuadro de diálogo; y
+- escriben el valor de cada `SETVALUE` en el formulario y ejecutan una nueva pasada de evaluación.
+
+<Callout type="caution" title="Los valores de SETVALUE para campos de elección deben ser portables">
+  El binding de React convierte un valor de elección primitivo como `"it"` en la forma de valor en
+  tiempo de ejecución del campo, pero React Native todavía no hace esa conversión. Mientras los
+  bindings no compartan un único contrato de normalización, usa las formas canónicas en tiempo de
+  ejecución cuando `SETVALUE` apunte a un campo de elección. Consulta la [referencia de
+  `SETVALUE`](/es/core/builtins/events/setvalue) para ver ejemplos.
+</Callout>
+
+El `FormRenderer` de React Native permite que una aplicación gestione las operaciones que no son
+alertas pasando `engineOptions.onOperations`. Sigue mostrando las operaciones `ALERT` en su propio
+cuadro de diálogo y pasa las demás operaciones a tu callback. El `FormRenderer` de React gestiona
+actualmente las operaciones de forma interna y no expone un callback personalizado.
+
+```js
+function onOperations(operations, meta, applyDefault) {
+  // meta is { eventType, fieldKey, metadata }
+  console.log(`${meta.eventType} returned ${operations.length} operations`)
+  applyDefault(operations, meta)
+}
+```
+
+Llama a `applyDefault` con las operaciones que quieras que React Native gestione como de costumbre.
+
+### Aplicar operaciones sin un renderer
+
+Si usas form0-core directamente, aplica tú la lista devuelta. Para `SETVALUE`, escribe el valor y
+ejecuta `eval()`, como se describe en [Ciclo de evaluación](/es/core/engine/evaluation-cycle). Los
+campos de elección necesitan su forma de valor en tiempo de ejecución, no un simple valor de opción.
+
+## Sin cadenas de eventos de cambio
+
+Aplicar un `SETVALUE` ejecuta una nueva pasada de evaluación, pero no despacha `change` para el campo
+que asignó. Un manejador `change` de `age` que asigna `adult_note` no ejecuta los manejadores
+`change` de `adult_note`.
+
+Si asignar un campo también debe activar la lógica de otro, pon ambas en el mismo manejador o usa un
+`CalculatedField` cuando el valor pueda derivarse de otros campos.

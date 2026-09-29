@@ -7,27 +7,65 @@ description: Construits disponibles dans les événements de formulaire.
 
 import { Badge } from "zudoku/ui/Badge"
 
-Les événements vivent dans `form.events.code` et sont évalués en runtime Utilisation `ON` pour enregistrer les gestionnaires
-et `SETVALUE` / `ALERT` pour interagir avec le formulaire.
+Les événements sont définis dans `form.events.code` et évalués à l'exécution. Utilisez `ON` pour
+enregistrer des gestionnaires et `SETVALUE`/`ALERT` pour interagir avec le formulaire.
+
+Lors de la création du moteur, `events.code` s'exécute une fois afin d'enregistrer les gestionnaires.
+Cela ne déclenche aucun événement. Un événement s'exécute uniquement lorsque l'hôte appelle
+`engine.trigger(...)` ou lorsqu'un binding le déclenche en réponse à une interaction utilisateur ou
+à une transition du cycle de vie de l'application.
 
 ## Exemple rapide
 
 ```js
 ON("change", "age", function (event) {
   if ($age >= 18) {
+    // can_vote is a TextField in this example
     SETVALUE("can_vote", "yes")
   }
 })
 ```
 
-## Évènement intégré
+## Déclenchement des événements dans les bindings officiels
 
-### <Badge variant="secondary">Events</Badge>
+`form0-react` et `form0-react-native` déclenchent volontairement un petit ensemble portable
+d'événements depuis leurs composants `FormRenderer` :
+
+| Événement     | Moment du déclenchement                                        |
+| ------------- | -------------------------------------------------------------- |
+| `load-record` | Lorsque le moteur de l'enregistrement principal est prêt       |
+| `edit-record` | Lorsque l'enregistrement principal passe en mode édition       |
+| `change`      | Après la modification d'un champ de l'enregistrement principal |
+
+Les éditeurs de lignes répétables ne déclenchent pas automatiquement ces événements. En
+particulier, l'ouverture d'une ligne ne relance pas les gestionnaires `load-record` ou `edit-record`
+de l'enregistrement principal, et la modification d'un champ de la ligne ne déclenche pas `change`.
+Pour l'instant, l'application gère les événements du cycle de vie des éléments répétables.
+
+Le registre du noyau accepte également `new-record`, `save-record`, `validate-record`, `blur`,
+`focus`, `click` et les événements `*-repeatable`. Ils dépendent du cycle de vie et des choix
+d'interface propres à l'application ; les moteurs de rendu officiels ne les déclenchent donc
+actuellement pas automatiquement. Une application qui intègre directement `form0-core` peut les
+déclencher avec `engine.trigger(eventType, fieldKey, metadata)` au moment approprié de son propre flux.
+
+Le déclenchement automatique d'autres événements peut être étudié au cas par cas, mais il ne découle
+pas de leur seule présence dans le noyau. Un schéma ne doit dépendre que des événements que son
+application hôte ou son binding déclare prendre en charge.
+
+L'enregistrement d'un gestionnaire avec `ON` ne rend pas l'événement automatique.
+
+## Builtins d'événement
+
+### <Badge variant="secondary">Événements</Badge>
 
 - [`ON`](/fr/core/builtins/events/on)
 - [`OFF`](/fr/core/builtins/events/off)
 - [`ALERT`](/fr/core/builtins/events/alert)
 - [`SETVALUE`](/fr/core/builtins/events/setvalue)
 
-Les gestionnaires d'événements peuvent également utiliser les fonctions intégrées de calcul listées dans
-[Calculs et expressions](/fr/core/builtins/calculations-expressions-overview).
+Pour l'enregistrement, l'ordre d'exécution, la portée des gestionnaires et le traitement des
+opérations, voir [Événements et opérations](/fr/core/engine/events-operations).
+
+Les gestionnaires d'événements peuvent aussi utiliser les builtins d'expression partagés listés dans
+[Calculs et expressions](/fr/core/builtins/calculations-expressions-overview). Les builtins réservés
+aux calculs, comme `SETRESULT`, ne sont pas disponibles dans les gestionnaires d'événements.

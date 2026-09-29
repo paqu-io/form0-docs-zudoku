@@ -2348,6 +2348,114 @@
       }
     ]
   },
+  "/core/engine/calculations-dependencies": {
+    "pathname": "/core/engine/calculations-dependencies",
+    "translationKey": "/core/engine/calculations-dependencies",
+    "locale": "en",
+    "title": "Calculations and dependencies",
+    "description": "How the form0 engine orders calculated fields, handles cycles and failing expressions, and resolves EVAL().",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/calculations-dependencies"
+      }
+    ]
+  },
+  "/core/engine/evaluation-cycle": {
+    "pathname": "/core/engine/evaluation-cycle",
+    "translationKey": "/core/engine/evaluation-cycle",
+    "locale": "en",
+    "title": "Evaluation cycle",
+    "description": "What the form0 engine does when it is created and every time a value changes.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/evaluation-cycle"
+      }
+    ]
+  },
+  "/core/engine/events-operations": {
+    "pathname": "/core/engine/events-operations",
+    "translationKey": "/core/engine/events-operations",
+    "locale": "en",
+    "title": "Events and operations",
+    "description": "How form0 event handlers are registered and run, what they can read, and how the operations they return reach the host application.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/events-operations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/events-operations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/events-operations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/events-operations"
+      }
+    ]
+  },
+  "/core/engine/parent-child-scopes": {
+    "pathname": "/core/engine/parent-child-scopes",
+    "translationKey": "/core/engine/parent-child-scopes",
+    "locale": "en",
+    "title": "Parent and child scopes",
+    "description": "How the form0 engine evaluates repeatable-section rows and which fields each calculation, condition, and event handler can read.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/parent-child-scopes"
+      }
+    ]
+  },
   "/core/fields/catalog": {
     "pathname": "/core/fields/catalog",
     "translationKey": "/core/fields/catalog",
@@ -2730,8 +2838,8 @@
     "pathname": "/core/security",
     "translationKey": "/core/security",
     "locale": "en",
-    "title": "Security and sandboxing",
-    "description": "Expression security modes in form0-core.",
+    "title": "Executable schema security",
+    "description": "Trust boundaries and expression validation controls in form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -2784,7 +2892,7 @@
     "pathname": "/es/bindings/react/api-reference",
     "translationKey": "/bindings/react/api-reference",
     "locale": "es",
-    "title": "React Referencia API",
+    "title": "Referencia de la API de React",
     "description": "Componentes públicos, ganchos, registros y utilidades exportados por form0-react.",
     "indexable": true,
     "status": "published",
@@ -2811,7 +2919,7 @@
     "pathname": "/es/bindings/react/built-in-renderers",
     "translationKey": "/bindings/react/built-in-renderers",
     "locale": "es",
-    "title": "Renderizadores de campos incluidos",
+    "title": "Renderizadores de campo integrados",
     "description": "Tipos de campo que form0-react renderiza sin personalizaciones.",
     "indexable": true,
     "status": "published",
@@ -2838,7 +2946,7 @@
     "pathname": "/es/bindings/react/custom-renderers",
     "translationKey": "/bindings/react/custom-renderers",
     "locale": "es",
-    "title": "Campo personalizado renderers",
+    "title": "Renderizadores de campo personalizados",
     "description": "Reemplace la presentación de campo form0-react globalmente o dentro de un subárbol React.",
     "indexable": true,
     "status": "published",
@@ -2946,7 +3054,7 @@
     "pathname": "/es/bindings/react/themes-styling",
     "translationKey": "/bindings/react/themes-styling",
     "locale": "es",
-    "title": "Temas y estilismo",
+    "title": "Temas y estilos",
     "description": "Utilice temas form0-react incorporados o proporcione una clase de tema Vanilla Extract.",
     "indexable": true,
     "status": "published",
@@ -2973,7 +3081,7 @@
     "pathname": "/es/bindings/react/troubleshooting",
     "translationKey": "/bindings/react/troubleshooting",
     "locale": "es",
-    "title": "Solución de problemas React",
+    "title": "Solución de problemas de React",
     "description": "Diagnosticar problemas comunes de instalación, renderizado, estilo y worker.",
     "indexable": true,
     "status": "published",
@@ -3000,7 +3108,7 @@
     "pathname": "/es/bindings/react/values-snapshots-submission",
     "translationKey": "/bindings/react/values-snapshots-submission",
     "locale": "es",
-    "title": "Valores, snapshots, y submission",
+    "title": "Valores, snapshots y envío",
     "description": "Semilla, observar, restaurar y enviar el estado form0 React.",
     "indexable": true,
     "status": "published",
@@ -3027,7 +3135,7 @@
     "pathname": "/es/bindings/react/workers-performance",
     "translationKey": "/bindings/react/workers-performance",
     "locale": "es",
-    "title": "Trabajadores y rendimiento",
+    "title": "Workers y rendimiento",
     "description": "Elija la ejecución del motor form0-react y los modos de suscripción de estado React.",
     "indexable": true,
     "status": "published",
@@ -3054,7 +3162,7 @@
     "pathname": "/es/bindings/react-native/api-reference",
     "translationKey": "/bindings/react-native/api-reference",
     "locale": "es",
-    "title": "React Native Referencia API",
+    "title": "Referencia de la API de React Native",
     "description": "Componentes públicos, registros, temas, contextos, tipografía y activos exportados por form0-react-native.",
     "indexable": true,
     "status": "published",
@@ -3108,7 +3216,7 @@
     "pathname": "/es/bindings/react-native/custom-renderers",
     "translationKey": "/bindings/react-native/custom-renderers",
     "locale": "es",
-    "title": "Campo personalizado renderers",
+    "title": "Renderizadores de campo personalizados",
     "description": "Reemplazar la presentación de campo form0 React Native globalmente o dentro de un subárbol de componentes.",
     "indexable": true,
     "status": "published",
@@ -3270,7 +3378,7 @@
     "pathname": "/es/bindings/react-native/troubleshooting",
     "translationKey": "/bindings/react-native/troubleshooting",
     "locale": "es",
-    "title": "Solución de problemas React Native",
+    "title": "Solución de problemas de React Native",
     "description": "Diagnosticar problemas comunes de instalación, renderización, fuente, activo y persistencia de form0-react-native.",
     "indexable": true,
     "status": "published",
@@ -3297,7 +3405,7 @@
     "pathname": "/es/bindings/react-native/values-snapshots-submission",
     "translationKey": "/bindings/react-native/values-snapshots-submission",
     "locale": "es",
-    "title": "Valores, snapshots, y submission",
+    "title": "Valores, snapshots y envío",
     "description": "Semilla, persistir, restaurar, guardar y enviar el estado form0 React Native.",
     "indexable": true,
     "status": "published",
@@ -3513,7 +3621,7 @@
     "pathname": "/es/cli/command-reference",
     "translationKey": "/cli/command-reference",
     "locale": "es",
-    "title": "Referencia de comando",
+    "title": "Referencia de comandos",
     "description": "Índice orientado al usuario de comandos y grupos de comandos form0-cli.",
     "indexable": true,
     "status": "published",
@@ -3675,7 +3783,7 @@
     "pathname": "/es/cli/local-development/live-preview",
     "translationKey": "/cli/local-development/live-preview",
     "locale": "es",
-    "title": "Servidor de previsualización",
+    "title": "Servidor de vista previa en vivo",
     "description": "Sirve un esquema localmente con previsualización en el navegador.",
     "indexable": true,
     "status": "published",
@@ -3810,7 +3918,7 @@
     "pathname": "/es/cli/schemas/import-export-csv",
     "translationKey": "/cli/schemas/import-export-csv",
     "locale": "es",
-    "title": "Importación y exportación CSV",
+    "title": "Importar y exportar CSV",
     "description": "Mueva las definiciones de schema entre JSON y la representación CSV de CLI.",
     "indexable": true,
     "status": "published",
@@ -3918,7 +4026,7 @@
     "pathname": "/es/cli/schemas/watch-test",
     "translationKey": "/cli/schemas/watch-test",
     "locale": "es",
-    "title": "Ver y probar",
+    "title": "Observar cambios y probar",
     "description": "Revalide schemas a medida que cambian y ejecutan el script de prueba form0 de un proyecto.",
     "indexable": true,
     "status": "published",
@@ -4080,7 +4188,7 @@
     "pathname": "/es/connectors/postgresql/setup",
     "translationKey": "/connectors/postgresql/setup",
     "locale": "es",
-    "title": "Configuración de PostgreSQL",
+    "title": "Instalación y configuración de PostgreSQL",
     "description": "Instala y configura el conector oficial para PostgreSQL.",
     "indexable": true,
     "status": "published",
@@ -4161,7 +4269,7 @@
     "pathname": "/es/connectors/sqlite/setup",
     "translationKey": "/connectors/sqlite/setup",
     "locale": "es",
-    "title": "Configuración de SQLite",
+    "title": "Instalación y configuración de SQLite",
     "description": "Instala y configura el conector oficial SQLite para Node.js.",
     "indexable": true,
     "status": "published",
@@ -5080,7 +5188,7 @@
     "translationKey": "/core/concepts",
     "locale": "es",
     "title": "Conceptos",
-    "description": "El modelo mental basado en esquemas de form0-core.",
+    "description": "El modelo mental schema-first de form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5102,11 +5210,119 @@
       }
     ]
   },
+  "/es/core/engine/calculations-dependencies": {
+    "pathname": "/es/core/engine/calculations-dependencies",
+    "translationKey": "/core/engine/calculations-dependencies",
+    "locale": "es",
+    "title": "Cálculos y dependencias",
+    "description": "Cómo ordena el motor de form0 los campos calculados, cómo gestiona los ciclos y las expresiones que fallan y cómo resuelve EVAL().",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/calculations-dependencies"
+      }
+    ]
+  },
+  "/es/core/engine/evaluation-cycle": {
+    "pathname": "/es/core/engine/evaluation-cycle",
+    "translationKey": "/core/engine/evaluation-cycle",
+    "locale": "es",
+    "title": "Ciclo de evaluación",
+    "description": "Qué hace el motor de form0 al crearse y cada vez que cambia un valor.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/evaluation-cycle"
+      }
+    ]
+  },
+  "/es/core/engine/events-operations": {
+    "pathname": "/es/core/engine/events-operations",
+    "translationKey": "/core/engine/events-operations",
+    "locale": "es",
+    "title": "Eventos y operaciones",
+    "description": "Cómo se registran y ejecutan los manejadores de eventos de form0, qué pueden leer y cómo llegan a la aplicación host las operaciones que devuelven.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/events-operations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/events-operations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/events-operations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/events-operations"
+      }
+    ]
+  },
+  "/es/core/engine/parent-child-scopes": {
+    "pathname": "/es/core/engine/parent-child-scopes",
+    "translationKey": "/core/engine/parent-child-scopes",
+    "locale": "es",
+    "title": "Ámbitos padre e hijo",
+    "description": "Cómo evalúa el motor de form0 las filas de las secciones repetibles y qué campos puede leer cada cálculo, condición y manejador de eventos.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/parent-child-scopes"
+      }
+    ]
+  },
   "/es/core/fields/catalog": {
     "pathname": "/es/core/fields/catalog",
     "translationKey": "/core/fields/catalog",
     "locale": "es",
-    "title": "Catálogo de campo",
+    "title": "Catálogo de campos",
     "description": "Todos los campos y sus categorías.",
     "indexable": true,
     "status": "published",
@@ -5241,7 +5457,7 @@
     "pathname": "/es/core/fields/media-fields",
     "translationKey": "/core/fields/media-fields",
     "locale": "es",
-    "title": "Campos de medios",
+    "title": "Campos multimedia",
     "description": "Firma, foto y captura de video.",
     "indexable": true,
     "status": "published",
@@ -5268,7 +5484,7 @@
     "pathname": "/es/core/fields/meta-fields",
     "translationKey": "/core/fields/meta-fields",
     "locale": "es",
-    "title": "Meta campos",
+    "title": "Campos meta",
     "description": "FormLinkField, StatusField y TitleField.",
     "indexable": true,
     "status": "published",
@@ -5376,7 +5592,7 @@
     "pathname": "/es/core/schema/elements",
     "translationKey": "/core/schema/elements",
     "locale": "es",
-    "title": "Elementos y anidación",
+    "title": "Elementos y anidamiento",
     "description": "Cómo se organizan los campos y las secciones en un schema.",
     "indexable": true,
     "status": "published",
@@ -5403,7 +5619,7 @@
     "pathname": "/es/core/schema/form-attributes",
     "translationKey": "/core/schema/form-attributes",
     "locale": "es",
-    "title": "Atributos de formulario",
+    "title": "Atributos del formulario",
     "description": "Referencia completa para todos los atributos de objeto de formulario.",
     "indexable": true,
     "status": "published",
@@ -5484,8 +5700,8 @@
     "pathname": "/es/core/security",
     "translationKey": "/core/security",
     "locale": "es",
-    "title": "Seguridad y aislamiento",
-    "description": "Modos de seguridad para expresiones en form0-core.",
+    "title": "Seguridad de los esquemas ejecutables",
+    "description": "Límites de confianza y controles de validación de expresiones en form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5504,6 +5720,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/security"
+      }
+    ]
+  },
+  "/es/getting-started/how-form0-compares": {
+    "pathname": "/es/getting-started/how-form0-compares",
+    "translationKey": "/getting-started/how-form0-compares",
+    "locale": "es",
+    "title": "form0 frente a otras soluciones",
+    "description": "Cómo se compara form0 con SurveyJS, Form.io, ODK y XLSForm, JSON Forms y react-jsonschema-form en la lógica de formularios basada en esquemas.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/how-form0-compares"
       }
     ]
   },
@@ -5683,7 +5926,7 @@
     "pathname": "/es/starter-apps/react-native-expo/forms-screens-navigation",
     "translationKey": "/starter-apps/react-native-expo/forms-screens-navigation",
     "locale": "es",
-    "title": "Formularios, pantallas y navegación en el móvil starter",
+    "title": "Formularios, pantallas y navegación en el starter móvil",
     "description": "Registre schemas y adapte el flujo de pantalla starter a un sistema de navegación de aplicaciones.",
     "indexable": true,
     "status": "published",
@@ -5710,7 +5953,7 @@
     "pathname": "/es/starter-apps/react-native-expo/local-storage-submissions",
     "translationKey": "/starter-apps/react-native-expo/local-storage-submissions",
     "locale": "es",
-    "title": "Almacenamiento local y submissions",
+    "title": "Almacenamiento local y envíos",
     "description": "Comprenda el almacén de registros starter SQLite y el límite para submission y sincronización remotas.",
     "indexable": true,
     "status": "published",
@@ -5764,7 +6007,7 @@
     "pathname": "/es/starter-apps/react-native-expo/renderers-themes-fonts-images",
     "translationKey": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
     "locale": "es",
-    "title": "Renderers, temas, fuentes e imágenes en el móvil starter",
+    "title": "Renderizadores, temas, fuentes e imágenes en el starter móvil",
     "description": "Personalice la presentación del formulario nativo y administre las fuentes y las imágenes de soporte agrupadas.",
     "indexable": true,
     "status": "published",
@@ -5818,7 +6061,7 @@
     "pathname": "/es/starter-apps/react-vite/build-deployment",
     "translationKey": "/starter-apps/react-vite/build-deployment",
     "locale": "es",
-    "title": "Construir e implementar el React y Vite starter",
+    "title": "Compilar y desplegar el starter de React y Vite",
     "description": "Crear, previsualizar y alojar una compilación de producción de la web mantenida starter.",
     "indexable": true,
     "status": "published",
@@ -5845,7 +6088,7 @@
     "pathname": "/es/starter-apps/react-vite/create-run",
     "translationKey": "/starter-apps/react-vite/create-run",
     "locale": "es",
-    "title": "Crear y ejecutar el React y Vite starter",
+    "title": "Crear y ejecutar el starter de React y Vite",
     "description": "Cree la web mantenida starter con form0-cli e inicie su servidor de desarrollo Vite.",
     "indexable": true,
     "status": "published",
@@ -5926,7 +6169,7 @@
     "pathname": "/es/starter-apps/react-vite/renderers-themes-styling",
     "translationKey": "/starter-apps/react-vite/renderers-themes-styling",
     "locale": "es",
-    "title": "Renderistas, temas y estilo",
+    "title": "Renderizadores, temas y estilos",
     "description": "Personalizar el React y Vite starter a través de registro renderer, temas y aplicación CSS.",
     "indexable": true,
     "status": "published",
@@ -5980,7 +6223,7 @@
     "pathname": "/es/starter-apps/react-vite/troubleshooting",
     "translationKey": "/starter-apps/react-vite/troubleshooting",
     "locale": "es",
-    "title": "React y Vite Solución de problemas starter",
+    "title": "Solución de problemas del starter de React y Vite",
     "description": "Resolver problemas comunes de instalación, enrutamiento, schema, renderer, worker y conectores.",
     "indexable": true,
     "status": "published",
@@ -6034,7 +6277,7 @@
     "pathname": "/fr/bindings/react/api-reference",
     "translationKey": "/bindings/react/api-reference",
     "locale": "fr",
-    "title": "Référence React API",
+    "title": "Référence de l'API React",
     "description": "Composants publics, crochets, registres et utilitaires exportés par form0-react.",
     "indexable": true,
     "status": "published",
@@ -6061,7 +6304,7 @@
     "pathname": "/fr/bindings/react/built-in-renderers",
     "translationKey": "/bindings/react/built-in-renderers",
     "locale": "fr",
-    "title": "Rendus de champs intégrés",
+    "title": "Renderers de champ intégrés",
     "description": "Types de champs affichés par form0-react sans remplacement applicatif.",
     "indexable": true,
     "status": "published",
@@ -6088,7 +6331,7 @@
     "pathname": "/fr/bindings/react/custom-renderers",
     "translationKey": "/bindings/react/custom-renderers",
     "locale": "fr",
-    "title": "Champ personnalisé renderers",
+    "title": "Renderers de champ personnalisés",
     "description": "Remplacez la présentation des champs form0-react globalement ou dans une sous-arborescence React.",
     "indexable": true,
     "status": "published",
@@ -6196,7 +6439,7 @@
     "pathname": "/fr/bindings/react/themes-styling",
     "translationKey": "/bindings/react/themes-styling",
     "locale": "fr",
-    "title": "Thèmes et style",
+    "title": "Thèmes et styles",
     "description": "Utilisez des thèmes form0-react intégrés ou fournissez une classe de thème Vanilla Extract.",
     "indexable": true,
     "status": "published",
@@ -6250,7 +6493,7 @@
     "pathname": "/fr/bindings/react/values-snapshots-submission",
     "translationKey": "/bindings/react/values-snapshots-submission",
     "locale": "fr",
-    "title": "Valeurs, snapshots et submission",
+    "title": "Valeurs, snapshots et soumission",
     "description": "Ensemencer, observer, restaurer et soumettre l'état form0 React.",
     "indexable": true,
     "status": "published",
@@ -6277,7 +6520,7 @@
     "pathname": "/fr/bindings/react/workers-performance",
     "translationKey": "/bindings/react/workers-performance",
     "locale": "fr",
-    "title": "Les travailleurs et la performance",
+    "title": "Workers et performances",
     "description": "Choisissez les modes d'exécution du moteur form0-react et d'abonnement à l'état React.",
     "indexable": true,
     "status": "published",
@@ -6304,7 +6547,7 @@
     "pathname": "/fr/bindings/react-native/api-reference",
     "translationKey": "/bindings/react-native/api-reference",
     "locale": "fr",
-    "title": "Référence React Native API",
+    "title": "Référence de l'API React Native",
     "description": "Composantes publiques, registres, thèmes, contextes, typographie et actifs exportés par form0-react-native.",
     "indexable": true,
     "status": "published",
@@ -6331,7 +6574,7 @@
     "pathname": "/fr/bindings/react-native/built-in-renderers",
     "translationKey": "/bindings/react-native/built-in-renderers",
     "locale": "fr",
-    "title": "Rendus de champs intégrés",
+    "title": "Renderers de champ intégrés",
     "description": "Types de champs affichés par form0-react-native sans remplacement applicatif.",
     "indexable": true,
     "status": "published",
@@ -6358,7 +6601,7 @@
     "pathname": "/fr/bindings/react-native/custom-renderers",
     "translationKey": "/bindings/react-native/custom-renderers",
     "locale": "fr",
-    "title": "Champ personnalisé renderers",
+    "title": "Renderers de champ personnalisés",
     "description": "Remplacez la présentation des champs form0 React Native globalement ou dans une sous-arborescence de composants.",
     "indexable": true,
     "status": "published",
@@ -6412,7 +6655,7 @@
     "pathname": "/fr/bindings/react-native/install-render",
     "translationKey": "/bindings/react-native/install-render",
     "locale": "fr",
-    "title": "Installation et rendu avec React Native",
+    "title": "Installer et afficher avec React Native",
     "description": "Installez form0-react-native et rendez un schema dans une application React Native ou Expo.",
     "indexable": true,
     "status": "published",
@@ -6547,7 +6790,7 @@
     "pathname": "/fr/bindings/react-native/values-snapshots-submission",
     "translationKey": "/bindings/react-native/values-snapshots-submission",
     "locale": "fr",
-    "title": "Valeurs, snapshots et submission",
+    "title": "Valeurs, snapshots et soumission",
     "description": "Ensemencer, persister, restaurer, enregistrer et soumettre l'état form0 React Native.",
     "indexable": true,
     "status": "published",
@@ -6763,7 +7006,7 @@
     "pathname": "/fr/cli/command-reference",
     "translationKey": "/cli/command-reference",
     "locale": "fr",
-    "title": "Référence de commande",
+    "title": "Référence des commandes",
     "description": "Index utilisateur des commandes et groupes de commandes form0-cli.",
     "indexable": true,
     "status": "published",
@@ -6925,7 +7168,7 @@
     "pathname": "/fr/cli/local-development/live-preview",
     "translationKey": "/cli/local-development/live-preview",
     "locale": "fr",
-    "title": "Serveur de prévisualisation",
+    "title": "Serveur d'aperçu en direct",
     "description": "Servez un schéma localement avec un aperçu dans le navigateur.",
     "indexable": true,
     "status": "published",
@@ -7168,7 +7411,7 @@
     "pathname": "/fr/cli/schemas/watch-test",
     "translationKey": "/cli/schemas/watch-test",
     "locale": "fr",
-    "title": "Regarder et tester",
+    "title": "Surveiller et tester",
     "description": "Revalider schemas à mesure qu'ils changent et exécuter le script de test form0 d'un projet.",
     "indexable": true,
     "status": "published",
@@ -8330,7 +8573,7 @@
     "translationKey": "/core/concepts",
     "locale": "fr",
     "title": "Concepts",
-    "description": "Le schema -premier modèle mental derrière form0-core.",
+    "description": "Le modèle mental schema-first de form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8352,11 +8595,119 @@
       }
     ]
   },
+  "/fr/core/engine/calculations-dependencies": {
+    "pathname": "/fr/core/engine/calculations-dependencies",
+    "translationKey": "/core/engine/calculations-dependencies",
+    "locale": "fr",
+    "title": "Calculs et dépendances",
+    "description": "Comment le moteur form0 ordonne les champs calculés, gère les cycles et les expressions en échec, et résout EVAL().",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/calculations-dependencies"
+      }
+    ]
+  },
+  "/fr/core/engine/evaluation-cycle": {
+    "pathname": "/fr/core/engine/evaluation-cycle",
+    "translationKey": "/core/engine/evaluation-cycle",
+    "locale": "fr",
+    "title": "Cycle d'évaluation",
+    "description": "Ce que fait le moteur form0 à sa création et à chaque changement de valeur.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/evaluation-cycle"
+      }
+    ]
+  },
+  "/fr/core/engine/events-operations": {
+    "pathname": "/fr/core/engine/events-operations",
+    "translationKey": "/core/engine/events-operations",
+    "locale": "fr",
+    "title": "Événements et opérations",
+    "description": "Comment les gestionnaires d'événements form0 sont enregistrés et exécutés, ce qu'ils peuvent lire et comment les opérations qu'ils renvoient parviennent à l'application host.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/events-operations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/events-operations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/events-operations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/events-operations"
+      }
+    ]
+  },
+  "/fr/core/engine/parent-child-scopes": {
+    "pathname": "/fr/core/engine/parent-child-scopes",
+    "translationKey": "/core/engine/parent-child-scopes",
+    "locale": "fr",
+    "title": "Portées parent et enfant",
+    "description": "Comment le moteur form0 évalue les lignes des sections répétables et quels champs chaque calcul, condition et gestionnaire d'événements peut lire.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/parent-child-scopes"
+      }
+    ]
+  },
   "/fr/core/fields/catalog": {
     "pathname": "/fr/core/fields/catalog",
     "translationKey": "/core/fields/catalog",
     "locale": "fr",
-    "title": "Catalogue de terrain",
+    "title": "Catalogue des champs",
     "description": "Tous les types de champs et leurs catégories.",
     "indexable": true,
     "status": "published",
@@ -8464,7 +8815,7 @@
     "pathname": "/fr/core/fields/input-fields",
     "translationKey": "/core/fields/input-fields",
     "locale": "fr",
-    "title": "Champs d'entrée",
+    "title": "Champs de saisie",
     "description": "Types de champs texte, numérique, choix et date/heure.",
     "indexable": true,
     "status": "published",
@@ -8491,7 +8842,7 @@
     "pathname": "/fr/core/fields/media-fields",
     "translationKey": "/core/fields/media-fields",
     "locale": "fr",
-    "title": "Champs médias",
+    "title": "Champs média",
     "description": "Signature, photo et capture vidéo.",
     "indexable": true,
     "status": "published",
@@ -8518,7 +8869,7 @@
     "pathname": "/fr/core/fields/meta-fields",
     "translationKey": "/core/fields/meta-fields",
     "locale": "fr",
-    "title": "Métachamps",
+    "title": "Champs méta",
     "description": "FormLinkField, StatusField et TitleField.",
     "indexable": true,
     "status": "published",
@@ -8545,7 +8896,7 @@
     "pathname": "/fr/core/output-records",
     "translationKey": "/core/output-records",
     "locale": "fr",
-    "title": "Produits et dossiers",
+    "title": "Sortie et enregistrements",
     "description": "État du moteur et sortie d'enregistrement structurée.",
     "indexable": true,
     "status": "published",
@@ -8626,7 +8977,7 @@
     "pathname": "/fr/core/schema/elements",
     "translationKey": "/core/schema/elements",
     "locale": "fr",
-    "title": "Éléments et nidification",
+    "title": "Éléments et imbrication",
     "description": "Comment les champs et les sections sont organisés dans un schema.",
     "indexable": true,
     "status": "published",
@@ -8734,8 +9085,8 @@
     "pathname": "/fr/core/security",
     "translationKey": "/core/security",
     "locale": "fr",
-    "title": "Sécurité et sandboxing",
-    "description": "Modes de sécurité d'expression dans form0-core.",
+    "title": "Sécurité des schémas exécutables",
+    "description": "Limites de confiance et contrôles de validation des expressions dans form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8754,6 +9105,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/security"
+      }
+    ]
+  },
+  "/fr/getting-started/how-form0-compares": {
+    "pathname": "/fr/getting-started/how-form0-compares",
+    "translationKey": "/getting-started/how-form0-compares",
+    "locale": "fr",
+    "title": "form0 face aux autres solutions",
+    "description": "Comparaison de form0 avec SurveyJS, Form.io, ODK et XLSForm, JSON Forms et react-jsonschema-form pour la logique de formulaires pilotée par un schéma.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/how-form0-compares"
       }
     ]
   },
@@ -8933,7 +9311,7 @@
     "pathname": "/fr/starter-apps/react-native-expo/forms-screens-navigation",
     "translationKey": "/starter-apps/react-native-expo/forms-screens-navigation",
     "locale": "fr",
-    "title": "Formulaires, écrans et navigation dans le mobile starter",
+    "title": "Formulaires, écrans et navigation dans le starter mobile",
     "description": "Enregistrez schemas et adaptez le flux d'écran starter à un système de navigation d'application.",
     "indexable": true,
     "status": "published",
@@ -8960,7 +9338,7 @@
     "pathname": "/fr/starter-apps/react-native-expo/local-storage-submissions",
     "translationKey": "/starter-apps/react-native-expo/local-storage-submissions",
     "locale": "fr",
-    "title": "Stockage local et submissions",
+    "title": "Stockage local et soumissions",
     "description": "Comprenez le magasin d'enregistrements starter SQLite et les limites du submission distant et de la synchronisation.",
     "indexable": true,
     "status": "published",
@@ -9014,7 +9392,7 @@
     "pathname": "/fr/starter-apps/react-native-expo/renderers-themes-fonts-images",
     "translationKey": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
     "locale": "fr",
-    "title": "Rendus, thèmes, polices et images dans le mobile starter",
+    "title": "Renderers, thèmes, polices et images dans le starter mobile",
     "description": "Personnalisez la présentation des formulaires natifs et gérez les polices et les images prises en charge.",
     "indexable": true,
     "status": "published",
@@ -9068,7 +9446,7 @@
     "pathname": "/fr/starter-apps/react-vite/build-deployment",
     "translationKey": "/starter-apps/react-vite/build-deployment",
     "locale": "fr",
-    "title": "Construire et déployer les React et Vite starter",
+    "title": "Compiler et déployer le starter React et Vite",
     "description": "Créer, prévisualiser et héberger une version de production du web maintenu starter.",
     "indexable": true,
     "status": "published",
@@ -9095,7 +9473,7 @@
     "pathname": "/fr/starter-apps/react-vite/create-run",
     "translationKey": "/starter-apps/react-vite/create-run",
     "locale": "fr",
-    "title": "Créer et exécuter les React et Vite starter",
+    "title": "Créer et exécuter le starter React et Vite",
     "description": "Créez le web maintenu starter avec form0-cli et démarrez son serveur de développement Vite.",
     "indexable": true,
     "status": "published",
@@ -9122,7 +9500,7 @@
     "pathname": "/fr/starter-apps/react-vite/forms-routes-presentations",
     "translationKey": "/starter-apps/react-vite/forms-routes-presentations",
     "locale": "fr",
-    "title": "Formulaires, itinéraires et présentations",
+    "title": "Formulaires, routes et présentations",
     "description": "Inscrivez-vous au formulaire schemas et exposez des expériences standard, simplifiées, modales et projecteurs.",
     "indexable": true,
     "status": "published",
@@ -9176,7 +9554,7 @@
     "pathname": "/fr/starter-apps/react-vite/renderers-themes-styling",
     "translationKey": "/starter-apps/react-vite/renderers-themes-styling",
     "locale": "fr",
-    "title": "Rendus, thèmes et style",
+    "title": "Renderers, thèmes et styles",
     "description": "Personnalisez les React et Vite starter via l'enregistrement renderer, les thèmes et l'application CSS.",
     "indexable": true,
     "status": "published",
@@ -9230,7 +9608,7 @@
     "pathname": "/fr/starter-apps/react-vite/troubleshooting",
     "translationKey": "/starter-apps/react-vite/troubleshooting",
     "locale": "fr",
-    "title": "Dépannage React et Vite starter",
+    "title": "Dépannage du starter React et Vite",
     "description": "Résolvez les problèmes courants d'installation, de routage, de schema, renderer, worker et de connecteur.",
     "indexable": true,
     "status": "published",
@@ -9250,6 +9628,33 @@
       {
         "locale": "it",
         "pathname": "/it/starter-apps/react-vite/troubleshooting"
+      }
+    ]
+  },
+  "/getting-started/how-form0-compares": {
+    "pathname": "/getting-started/how-form0-compares",
+    "translationKey": "/getting-started/how-form0-compares",
+    "locale": "en",
+    "title": "How form0 compares",
+    "description": "How form0 compares with SurveyJS, Form.io, ODK and XLSForm, JSON Forms, and react-jsonschema-form for schema-driven form logic.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/how-form0-compares"
       }
     ]
   },
@@ -9348,7 +9753,7 @@
     "pathname": "/it/bindings/react/api-reference",
     "translationKey": "/bindings/react/api-reference",
     "locale": "it",
-    "title": "Riferimento React API",
+    "title": "Riferimento API di React",
     "description": "Componenti pubblici, ganci, registri e utilità esportati da form0-react.",
     "indexable": true,
     "status": "published",
@@ -9375,7 +9780,7 @@
     "pathname": "/it/bindings/react/built-in-renderers",
     "translationKey": "/bindings/react/built-in-renderers",
     "locale": "it",
-    "title": "Renderer dei campi inclusi",
+    "title": "Renderer di campo integrati",
     "description": "Tipi di campo renderizzati da form0-react senza override dell’applicazione.",
     "indexable": true,
     "status": "published",
@@ -9402,7 +9807,7 @@
     "pathname": "/it/bindings/react/custom-renderers",
     "translationKey": "/bindings/react/custom-renderers",
     "locale": "it",
-    "title": "Campo personalizzato renderers",
+    "title": "Renderer di campo personalizzati",
     "description": "Sostituire la presentazione del campo form0-react a livello globale o all'interno di un sottoalbero React.",
     "indexable": true,
     "status": "published",
@@ -9510,7 +9915,7 @@
     "pathname": "/it/bindings/react/themes-styling",
     "translationKey": "/bindings/react/themes-styling",
     "locale": "it",
-    "title": "Temi e styling",
+    "title": "Temi e stili",
     "description": "Utilizzare i temi integrati form0-react o fornire una classe di tema Estratto di vaniglia.",
     "indexable": true,
     "status": "published",
@@ -9564,7 +9969,7 @@
     "pathname": "/it/bindings/react/values-snapshots-submission",
     "translationKey": "/bindings/react/values-snapshots-submission",
     "locale": "it",
-    "title": "Valori, snapshots e submission",
+    "title": "Valori, snapshot e invio",
     "description": "Seme, osservare, ripristinare e inviare lo stato form0 React.",
     "indexable": true,
     "status": "published",
@@ -9591,7 +9996,7 @@
     "pathname": "/it/bindings/react/workers-performance",
     "translationKey": "/bindings/react/workers-performance",
     "locale": "it",
-    "title": "Lavoratori e prestazioni",
+    "title": "Worker e prestazioni",
     "description": "Scegli le modalità di esecuzione del motore form0-react e di abbonamento allo stato React.",
     "indexable": true,
     "status": "published",
@@ -9618,7 +10023,7 @@
     "pathname": "/it/bindings/react-native/api-reference",
     "translationKey": "/bindings/react-native/api-reference",
     "locale": "it",
-    "title": "Riferimento React Native API",
+    "title": "Riferimento API di React Native",
     "description": "Componenti pubblici, registri, temi, contesti, tipografia e risorse esportate da form0-react-native.",
     "indexable": true,
     "status": "published",
@@ -9672,7 +10077,7 @@
     "pathname": "/it/bindings/react-native/custom-renderers",
     "translationKey": "/bindings/react-native/custom-renderers",
     "locale": "it",
-    "title": "Campo personalizzato renderers",
+    "title": "Renderer di campo personalizzati",
     "description": "Sostituire la presentazione del campo form0 React Native a livello globale o all'interno di un sottoalbero di componenti.",
     "indexable": true,
     "status": "published",
@@ -9726,7 +10131,7 @@
     "pathname": "/it/bindings/react-native/install-render",
     "translationKey": "/bindings/react-native/install-render",
     "locale": "it",
-    "title": "Installare e visualizzare con React Native",
+    "title": "Installazione e rendering con React Native",
     "description": "Installare form0-react-native e rendere un schema in un'applicazione React Native o Expo.",
     "indexable": true,
     "status": "published",
@@ -9861,7 +10266,7 @@
     "pathname": "/it/bindings/react-native/values-snapshots-submission",
     "translationKey": "/bindings/react-native/values-snapshots-submission",
     "locale": "it",
-    "title": "Valori, snapshots e submission",
+    "title": "Valori, snapshot e invio",
     "description": "Seme, persistere, ripristinare, salvare e inviare lo stato form0 React Native.",
     "indexable": true,
     "status": "published",
@@ -10077,7 +10482,7 @@
     "pathname": "/it/cli/command-reference",
     "translationKey": "/cli/command-reference",
     "locale": "it",
-    "title": "Riferimento al comando",
+    "title": "Riferimento dei comandi",
     "description": "Indice rivolto all'utente dei comandi e dei gruppi di comando form0-cli.",
     "indexable": true,
     "status": "published",
@@ -10482,7 +10887,7 @@
     "pathname": "/it/cli/schemas/watch-test",
     "translationKey": "/cli/schemas/watch-test",
     "locale": "it",
-    "title": "Guarda e prova",
+    "title": "Monitorare e testare",
     "description": "Riconvalidare schemas mentre cambiano ed eseguono lo script di test form0 di un progetto.",
     "indexable": true,
     "status": "published",
@@ -10806,7 +11211,7 @@
     "pathname": "/it/core/ai-metadata",
     "translationKey": "/core/ai-metadata",
     "locale": "it",
-    "title": "metadati AI",
+    "title": "Metadati IA",
     "description": "Guida AI opzionale per moduli e campi.",
     "indexable": true,
     "status": "published",
@@ -11644,7 +12049,7 @@
     "translationKey": "/core/concepts",
     "locale": "it",
     "title": "Concetti",
-    "description": "Il schema -primo modello mentale dietro form0-core.",
+    "description": "Il modello mentale schema-first alla base di form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -11663,6 +12068,114 @@
       {
         "locale": "it",
         "pathname": "/it/core/concepts"
+      }
+    ]
+  },
+  "/it/core/engine/calculations-dependencies": {
+    "pathname": "/it/core/engine/calculations-dependencies",
+    "translationKey": "/core/engine/calculations-dependencies",
+    "locale": "it",
+    "title": "Calcoli e dipendenze",
+    "description": "Come il motore di form0 ordina i campi calcolati, gestisce i cicli e le espressioni che falliscono e risolve EVAL().",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/calculations-dependencies"
+      }
+    ]
+  },
+  "/it/core/engine/evaluation-cycle": {
+    "pathname": "/it/core/engine/evaluation-cycle",
+    "translationKey": "/core/engine/evaluation-cycle",
+    "locale": "it",
+    "title": "Ciclo di valutazione",
+    "description": "Cosa fa il motore di form0 quando viene creato e ogni volta che un valore cambia.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/evaluation-cycle"
+      }
+    ]
+  },
+  "/it/core/engine/events-operations": {
+    "pathname": "/it/core/engine/events-operations",
+    "translationKey": "/core/engine/events-operations",
+    "locale": "it",
+    "title": "Eventi e operazioni",
+    "description": "Come vengono registrati ed eseguiti i gestori di eventi di form0, cosa possono leggere e come le operazioni che restituiscono arrivano all'applicazione host.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/events-operations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/events-operations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/events-operations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/events-operations"
+      }
+    ]
+  },
+  "/it/core/engine/parent-child-scopes": {
+    "pathname": "/it/core/engine/parent-child-scopes",
+    "translationKey": "/core/engine/parent-child-scopes",
+    "locale": "it",
+    "title": "Ambiti padre e figlio",
+    "description": "Come il motore di form0 valuta le righe delle sezioni ripetibili e quali campi può leggere ogni calcolo, condizione e gestore di eventi.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/parent-child-scopes"
       }
     ]
   },
@@ -11778,7 +12291,7 @@
     "pathname": "/it/core/fields/input-fields",
     "translationKey": "/core/fields/input-fields",
     "locale": "it",
-    "title": "Campi di ingresso",
+    "title": "Campi di input",
     "description": "Tipo di campo Testo, numerico, a scelta e data/ora.",
     "indexable": true,
     "status": "published",
@@ -11859,7 +12372,7 @@
     "pathname": "/it/core/output-records",
     "translationKey": "/core/output-records",
     "locale": "it",
-    "title": "Uscita e record",
+    "title": "Output e record",
     "description": "Stato motore e uscita record strutturata.",
     "indexable": true,
     "status": "published",
@@ -11940,7 +12453,7 @@
     "pathname": "/it/core/schema/elements",
     "translationKey": "/core/schema/elements",
     "locale": "it",
-    "title": "Elementi e nesting",
+    "title": "Elementi e annidamento",
     "description": "Come i campi e le sezioni sono organizzati in un schema.",
     "indexable": true,
     "status": "published",
@@ -11967,7 +12480,7 @@
     "pathname": "/it/core/schema/form-attributes",
     "translationKey": "/core/schema/form-attributes",
     "locale": "it",
-    "title": "Attributi modulo",
+    "title": "Attributi del modulo",
     "description": "Riferimento completo per tutti gli attributi oggetto modulo.",
     "indexable": true,
     "status": "published",
@@ -12048,8 +12561,8 @@
     "pathname": "/it/core/security",
     "translationKey": "/core/security",
     "locale": "it",
-    "title": "Sicurezza e sandboxing",
-    "description": "Modalità di sicurezza di espressione in form0-core.",
+    "title": "Sicurezza degli schemi eseguibili",
+    "description": "Confini di fiducia e controlli di validazione delle espressioni in form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12068,6 +12581,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/security"
+      }
+    ]
+  },
+  "/it/getting-started/how-form0-compares": {
+    "pathname": "/it/getting-started/how-form0-compares",
+    "translationKey": "/getting-started/how-form0-compares",
+    "locale": "it",
+    "title": "form0 a confronto",
+    "description": "Confronto tra form0 e SurveyJS, Form.io, ODK e XLSForm, JSON Forms e react-jsonschema-form per la logica dei moduli basata su schema.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/how-form0-compares"
       }
     ]
   },
@@ -12139,7 +12679,7 @@
     "pathname": "/it/starter-apps/overview",
     "translationKey": "/starter-apps/overview",
     "locale": "it",
-    "title": "Panoramica delle app di avviamento",
+    "title": "Panoramica delle app starter",
     "description": "Scegliere form0 starter e creare un'applicazione tramite form0-cli.",
     "indexable": true,
     "status": "published",
@@ -12166,7 +12706,7 @@
     "pathname": "/it/starter-apps/react-native-expo/build-distribution",
     "translationKey": "/starter-apps/react-native-expo/build-distribution",
     "locale": "it",
-    "title": "Compila e distribuisci lo starter React Native ed Expo",
+    "title": "Compilare e distribuire lo starter React Native ed Expo",
     "description": "Prepara configurazione e asset per build native di sviluppo e produzione.",
     "indexable": true,
     "status": "published",
@@ -12193,7 +12733,7 @@
     "pathname": "/it/starter-apps/react-native-expo/create-run",
     "translationKey": "/starter-apps/react-native-expo/create-run",
     "locale": "it",
-    "title": "Crea e avvia lo starter React Native ed Expo",
+    "title": "Creare e avviare lo starter React Native ed Expo",
     "description": "Crea lo starter mobile mantenuto con form0-cli e aprilo su un dispositivo o emulatore.",
     "indexable": true,
     "status": "published",
@@ -12247,7 +12787,7 @@
     "pathname": "/it/starter-apps/react-native-expo/forms-screens-navigation",
     "translationKey": "/starter-apps/react-native-expo/forms-screens-navigation",
     "locale": "it",
-    "title": "Forme, schermate e navigazione nel cellulare starter",
+    "title": "Moduli, schermate e navigazione nello starter mobile",
     "description": "Registra schemas e adatta il flusso dello schermo starter a un sistema di navigazione dell'applicazione.",
     "indexable": true,
     "status": "published",
@@ -12274,7 +12814,7 @@
     "pathname": "/it/starter-apps/react-native-expo/local-storage-submissions",
     "translationKey": "/starter-apps/react-native-expo/local-storage-submissions",
     "locale": "it",
-    "title": "Archiviazione locale e submissions",
+    "title": "Archiviazione locale e invii",
     "description": "Comprendere il record store starter SQLite e il limite per submission remoto e la sincronizzazione.",
     "indexable": true,
     "status": "published",
@@ -12328,7 +12868,7 @@
     "pathname": "/it/starter-apps/react-native-expo/renderers-themes-fonts-images",
     "translationKey": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
     "locale": "it",
-    "title": "Renderer, temi, caratteri e immagini nel cellulare starter",
+    "title": "Renderer, temi, font e immagini nello starter mobile",
     "description": "Personalizza la presentazione dei moduli nativi e gestisci i font e le immagini di supporto in bundle.",
     "indexable": true,
     "status": "published",
@@ -12382,7 +12922,7 @@
     "pathname": "/it/starter-apps/react-vite/build-deployment",
     "translationKey": "/starter-apps/react-vite/build-deployment",
     "locale": "it",
-    "title": "Creare e distribuire React e Vite starter",
+    "title": "Compilare e distribuire lo starter React e Vite",
     "description": "Creare, visualizzare in anteprima e ospitare una build di produzione del web mantenuto starter.",
     "indexable": true,
     "status": "published",
@@ -12409,7 +12949,7 @@
     "pathname": "/it/starter-apps/react-vite/create-run",
     "translationKey": "/starter-apps/react-vite/create-run",
     "locale": "it",
-    "title": "Creare ed eseguire React e Vite starter",
+    "title": "Creare ed eseguire lo starter React e Vite",
     "description": "Crea il web mantenuto starter con form0-cli e avvia il suo server di sviluppo Vite.",
     "indexable": true,
     "status": "published",
@@ -12436,7 +12976,7 @@
     "pathname": "/it/starter-apps/react-vite/forms-routes-presentations",
     "translationKey": "/starter-apps/react-vite/forms-routes-presentations",
     "locale": "it",
-    "title": "Forme, percorsi e presentazioni",
+    "title": "Moduli, route e presentazioni",
     "description": "Registrati al modulo schemas ed esporti esperienze standard, semplificate, modali e con i riflettori.",
     "indexable": true,
     "status": "published",
@@ -12490,7 +13030,7 @@
     "pathname": "/it/starter-apps/react-vite/renderers-themes-styling",
     "translationKey": "/starter-apps/react-vite/renderers-themes-styling",
     "locale": "it",
-    "title": "Renderizzatori, temi e styling",
+    "title": "Renderer, temi e stili",
     "description": "Personalizzare la React e Vite starter attraverso la registrazione renderer, i temi e l'applicazione CSS.",
     "indexable": true,
     "status": "published",
@@ -12517,7 +13057,7 @@
     "pathname": "/it/starter-apps/react-vite/submissions-connectors",
     "translationKey": "/starter-apps/react-vite/submissions-connectors",
     "locale": "it",
-    "title": "Contributi e connettori",
+    "title": "Invii e connettori",
     "description": "Comprendere i record strutturati, l'assistente locale submission di starter e le responsabilità dei dati di produzione.",
     "indexable": true,
     "status": "published",
@@ -12544,7 +13084,7 @@
     "pathname": "/it/starter-apps/react-vite/troubleshooting",
     "translationKey": "/starter-apps/react-vite/troubleshooting",
     "locale": "it",
-    "title": "Risoluzione dei problemi di React e Vite",
+    "title": "Risoluzione dei problemi dello starter React e Vite",
     "description": "Risolvere i problemi comuni di installazione, routing, schema, renderer, worker e connettore.",
     "indexable": true,
     "status": "published",

@@ -52,6 +52,14 @@ Gli operatori sono convalidati rispetto al tipo di campo di riferimento. Ad esem
 - I campi numerici/data supportano gli operatori di confronto
 - I campi di scelta supportano `equal_to` e `contains` (a scelta multipla)
 
+Le condizioni dei campi di scelta confrontano i valori della risposta, non l'oggetto contenitore del renderer:
+
+- `SingleChoiceField` e `BooleanField` confrontano il `value` della scelta selezionata.
+- `MultiChoiceField` usa un array di valori selezionati. `contains` verifica un singolo valore, mentre
+  `equal_to` verifica l'intera selezione senza dipendere dall'ordine.
+- Una risposta personalizzata “other” non vuota partecipa tramite il proprio `value` o la propria
+  etichetta, così gli operatori di vuoto riflettono ciò che l'utente ha inserito.
+
 Se un operatore non è valido per il campo di riferimento, la convalida fallirà.
 
 ## Riferimenti di campo

@@ -17,6 +17,9 @@
     },
     "schema-edit": {
       "title": "Modifier votre premier schéma"
+    },
+    "how-form0-compares": {
+      "title": "form0 face aux autres solutions"
     }
   },
   "cli": {
@@ -41,7 +44,7 @@
       "import-export-csv": { "title": "Importer et exporter en CSV" }
     },
     "local-development": {
-      "live-preview": { "title": "Serveur de prévisualisation" },
+      "live-preview": { "title": "Serveur d'aperçu en direct" },
       "app-development-servers": { "title": "Serveurs de développement d’applications" }
     },
     "project-configuration": { "title": "Configuration du projet" },
@@ -57,23 +60,27 @@
   "starter-apps": {
     "overview": { "title": "Aperçu des applications de démarrage" },
     "react-vite": {
-      "create-run": { "title": "Créer et exécuter l’application React et Vite" },
+      "create-run": { "title": "Créer et exécuter le starter React et Vite" },
       "project-structure-configuration": {
         "title": "Structure et configuration du projet React et Vite"
       },
       "forms-routes-presentations": { "title": "Formulaires, routes et présentations" },
-      "renderers-themes-styling": { "title": "Rendus, thèmes et styles" },
+      "renderers-themes-styling": { "title": "Renderers, thèmes et styles" },
       "submissions-connectors": { "title": "Soumissions et connecteurs" },
-      "build-deployment": { "title": "Builder et déployer l’application React et Vite" },
-      "troubleshooting": { "title": "Résolution des problèmes React et Vite" }
+      "build-deployment": { "title": "Compiler et déployer le starter React et Vite" },
+      "troubleshooting": { "title": "Dépannage du starter React et Vite" }
     },
     "react-native-expo": {
       "create-run": { "title": "Créer et exécuter le starter React Native et Expo" },
       "project-structure-configuration": {
         "title": "Structure et configuration du projet React Native et Expo"
       },
-      "forms-screens-navigation": { "title": "Formulaires, écrans et navigation" },
-      "renderers-themes-fonts-images": { "title": "Renderers, thèmes, polices et images" },
+      "forms-screens-navigation": {
+        "title": "Formulaires, écrans et navigation dans le starter mobile"
+      },
+      "renderers-themes-fonts-images": {
+        "title": "Renderers, thèmes, polices et images dans le starter mobile"
+      },
       "device-development-networking": { "title": "Développement sur appareil et réseau" },
       "local-storage-submissions": { "title": "Stockage local et soumissions" },
       "build-distribution": { "title": "Compiler et distribuer le starter React Native et Expo" },
@@ -100,25 +107,25 @@
     "react": {
       "install-render": { "title": "Installer et afficher" },
       "form-renderer": { "title": "FormRenderer" },
-      "values-snapshots-submission": { "title": "Valeurs, instantanés et soumission" },
-      "built-in-renderers": { "title": "Rendus intégrés" },
-      "custom-renderers": { "title": "Rendus personnalisés" },
+      "values-snapshots-submission": { "title": "Valeurs, snapshots et soumission" },
+      "built-in-renderers": { "title": "Renderers de champ intégrés" },
+      "custom-renderers": { "title": "Renderers de champ personnalisés" },
       "modes-placement-navigation": { "title": "Modes, emplacement et navigation" },
       "themes-styling": { "title": "Thèmes et styles" },
       "workers-performance": { "title": "Workers et performances" },
-      "api-reference": { "title": "Référence de l’API React" },
+      "api-reference": { "title": "Référence de l'API React" },
       "troubleshooting": { "title": "Résolution des problèmes React" }
     },
     "react-native": {
-      "install-render": { "title": "Installer et afficher" },
+      "install-render": { "title": "Installer et afficher avec React Native" },
       "form-renderer": { "title": "FormRenderer" },
-      "values-snapshots-submission": { "title": "Valeurs, instantanés et envoi" },
-      "built-in-renderers": { "title": "Rendus intégrés" },
-      "custom-renderers": { "title": "Rendus personnalisés" },
+      "values-snapshots-submission": { "title": "Valeurs, snapshots et soumission" },
+      "built-in-renderers": { "title": "Renderers de champ intégrés" },
+      "custom-renderers": { "title": "Renderers de champ personnalisés" },
       "modes-navigation": { "title": "Modes et navigation" },
       "themes-assets": { "title": "Thèmes, polices et images" },
       "mobile-integration": { "title": "Intégration mobile" },
-      "api-reference": { "title": "Référence de l’API React Native" },
+      "api-reference": { "title": "Référence de l'API React Native" },
       "troubleshooting": { "title": "Résolution des problèmes React Native" }
     }
   },
@@ -128,6 +135,20 @@
     },
     "concepts": {
       "title": "Concepts"
+    },
+    "engine": {
+      "evaluation-cycle": {
+        "title": "Cycle d'évaluation"
+      },
+      "calculations-dependencies": {
+        "title": "Calculs et dépendances"
+      },
+      "parent-child-scopes": {
+        "title": "Portées parent et enfant"
+      },
+      "events-operations": {
+        "title": "Événements et opérations"
+      }
     },
     "schema": {
       "form": {
@@ -160,13 +181,13 @@
         "title": "Champs calculés"
       },
       "media-fields": {
-        "title": "Champs multimédias"
+        "title": "Champs média"
       },
       "containers": {
         "title": "Conteneurs"
       },
       "meta-fields": {
-        "title": "Métachamps"
+        "title": "Champs méta"
       }
     },
     "builtins": {
@@ -265,7 +286,7 @@
       "title": "Métadonnées d’IA"
     },
     "security": {
-      "title": "Sécurité et isolation"
+      "title": "Sécurité des schémas exécutables"
     },
     "output-records": {
       "title": "Sortie et enregistrements"
@@ -274,6 +295,53 @@
   "guides": {
     "coming-soon": {
       "title": "Bientôt disponible"
+    }
+  },
+  "diagrams": {
+    "evaluationCycle": {
+      "ariaLabel": "Une modification de valeur exécute une passe eval complète dans un ordre fixe : calculs, caractère obligatoire, visibilité, lecture seule, erreurs de valeur. Le renderer déclenche ensuite un événement change. Son gestionnaire renvoie des opérations que le host applique, et un SETVALUE relance la passe sans déclencher d'autre événement change.",
+      "caption": "Une modification exécute une seule passe ordonnée. Les gestionnaires d'événements ne modifient jamais directement le formulaire : ils renvoient des opérations, que le host applique.",
+      "userEdits": "Saisie",
+      "onePass": "une passe complète, toujours dans le même ordre",
+      "calculations": "Calculs",
+      "required": "Obligatoire",
+      "visible": "Visible",
+      "readOnly": "Lecture seule",
+      "valueErrorsLine1": "Erreurs",
+      "valueErrorsLine2": "de valeur",
+      "state": "état",
+      "renderer": "Renderer",
+      "rerenders": "réaffiche les champs",
+      "handlerRuns": "le gestionnaire s'exécute",
+      "returns": "renvoie",
+      "operations": "Opérations",
+      "toHost": "au host",
+      "hostApplies": "Le host applique",
+      "loopTitle": "SETVALUE → nouvel eval",
+      "loopNote": "pas de second événement change"
+    },
+    "calculationOrder": {
+      "ariaLabel": "Les champs calculés s'exécutent après les champs qu'ils référencent : subtotal utilise qty et price et s'exécute en premier, tax utilise subtotal et s'exécute en deuxième, total utilise subtotal et tax et s'exécute en troisième. Les champs a et b se référencent mutuellement : ils sont donc mis à null et une erreur est signalée ; le champ c référence a et s'exécute avec une entrée null.",
+      "caption": "L'ordre dans le schéma n'a pas d'importance : chaque champ calculé s'exécute après les champs qu'il référence. Les champs d'un cycle sont mis à null, et tout le reste s'exécute quand même.",
+      "orderTitle": "Exécution par ordre de dépendance",
+      "cycleTitle": "Un cycle est ignoré",
+      "input": "champ de saisie",
+      "runsFirst": "exécuté en 1er",
+      "runsSecond": "exécuté en 2e",
+      "runsThird": "exécuté en 3e",
+      "cycleResult": "mis à null + erreur",
+      "runsWithNull": "exécuté avec null"
+    },
+    "repeatableScope": {
+      "ariaLabel": "Le formulaire principal contient les champs customer et discount_pct. Une RepeatableSection appelée line_items contient deux lignes, et chaque ligne exécute sa propre instance du moteur avec les champs qty, price et line_total. Les valeurs du formulaire principal sont copiées dans chaque ligne : line_total peut donc utiliser discount_pct. Les deux lignes ne se voient pas.",
+      "caption": "Chaque ligne est évaluée par son propre moteur avec une copie des valeurs du parent. Les lignes ne lisent jamais les valeurs des autres lignes.",
+      "mainForm": "Formulaire principal",
+      "row1": "Ligne 1",
+      "row2": "Ligne 2",
+      "ownEngine": "instance de moteur propre",
+      "sameFields": "mêmes champs, valeurs distinctes",
+      "parentCopied": "valeurs du parent copiées dans la ligne",
+      "isolated": "lignes isolées"
     }
   }
 }

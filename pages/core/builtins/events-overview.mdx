@@ -10,15 +10,47 @@ import { Badge } from "zudoku/ui/Badge"
 Events live in `form.events.code` and are evaluated at runtime. Use `ON` to register handlers
 and `SETVALUE`/`ALERT` to interact with the form.
 
+Creating an engine runs `events.code` once to register handlers. It does not dispatch an event.
+An event runs only when the host calls `engine.trigger(...)` or a binding dispatches it for a user
+interaction or application lifecycle transition.
+
 ## Quick example
 
 ```js
 ON("change", "age", function (event) {
   if ($age >= 18) {
+    // can_vote is a TextField in this example
     SETVALUE("can_vote", "yes")
   }
 })
 ```
+
+## Event dispatch in official bindings
+
+`form0-react` and `form0-react-native` intentionally dispatch a small, portable set of events from
+their `FormRenderer` components:
+
+| Event         | When it is dispatched                           |
+| ------------- | ----------------------------------------------- |
+| `load-record` | After the main record engine is ready           |
+| `edit-record` | When the main record enters edit mode           |
+| `change`      | After a user changes a field in the main record |
+
+Repeatable-row editors do not dispatch these events automatically. In particular, opening a row
+does not re-run the main record's `load-record` or `edit-record` handlers, and changing a row field
+does not dispatch `change`. Repeatable lifecycle events remain application-owned for now.
+
+The core registry also accepts `new-record`, `save-record`, `validate-record`, `blur`, `focus`,
+`click`, and the `*-repeatable` events. These depend on application-specific lifecycle and UI
+decisions, so the official renderers currently do not dispatch them automatically. An application
+integrating `form0-core` directly can dispatch them with
+`engine.trigger(eventType, fieldKey, metadata)` at the appropriate point in its own workflow.
+
+Additional automatic dispatch may be considered individually, but it is not implied by an event
+being available in core. Schemas should rely only on events that their host application or binding
+documents as supported.
+
+Registering one of these handlers with `ON` does not make the event automatic.
 
 ## Event builtins
 
@@ -29,5 +61,9 @@ ON("change", "age", function (event) {
 - [`ALERT`](/core/builtins/events/alert)
 - [`SETVALUE`](/core/builtins/events/setvalue)
 
-Event handlers can also use the calculation builtins listed in
-[Calculations & expressions](/core/builtins/calculations-expressions-overview).
+For registration, execution order, handler scope, and operation handling, see
+[Events and operations](/core/engine/events-operations).
+
+Event handlers can also use the shared expression builtins listed in
+[Calculations & expressions](/core/builtins/calculations-expressions-overview). Calculation-only
+builtins such as `SETRESULT` are not available in event handlers.

@@ -1,44 +1,46 @@
 ---
 title: Concetti
-description: Il schema -primo modello mentale dietro form0-core.
+description: Il modello mentale schema-first alla base di form0-core.
 ---
 
 <PageBadges />
 
-## Schema-primo
+## Lo schema prima di tutto
 
-A form0 schema è un JSON documento con un livello superiore `form` oggetto. Il schema definisce il
-struttura, regole e comportamento di un modulo senza alcun codice UI.
+Uno schema form0 è un documento JSON con un oggetto `form` di primo livello. Lo schema definisce la
+struttura, le regole e il comportamento di un modulo senza alcun codice di interfaccia.
 
 ## Campi e valori
 
-- Ogni campo ha un `data_name` (identificatore leggibile dall'uomo) e un `key` (identificatore interno, tipicamente derivato da `data_name`).
-- I valori del motore sono memorizzati da `data_name`.
-- Campi di riferimento delle condizioni per `field_id` . Potete usare sia `key` oppure `data_name` ; utilizzando `data_name` è spesso più pratico quando si scrive schemas manualmente poiché è più memorabile.
+- Ogni campo ha un `data_name` (identificatore leggibile) e una `key` (identificatore interno, di
+  solito derivato da `data_name`).
+- Il motore memorizza i valori per `data_name` e le espressioni li leggono come `$data_name`.
+- Le condizioni fanno riferimento ai campi tramite `field_id`, che accetta sia la `key` sia il
+  `data_name`. Vedi [Condizioni e operatori](/it/core/schema/conditions-operators).
 
-## Stato motore
+## Stato del motore
 
-Il motore valuta la schema e produce un oggetto di stato con:
+Il motore valuta lo schema e produce un oggetto di stato con:
 
-- `values`: valori di campo correnti
-- `errors`: errori di convalida
-- `visible`: bandiere di visibilità per campo
-- `required`: bandiere obbligatorie per campo
-- `read_only`: flag di sola lettura per campo
+- `values`: i valori correnti dei campi
+- `errors`: gli errori di validazione del valore e del formato
+- `visible`: la visibilità di ogni campo
+- `required`: l'obbligatorietà di ogni campo
+- `read_only`: la sola lettura di ogni campo
 
-## Flusso di dati
+Il motore indica se un campo è obbligatorio, ma un campo obbligatorio vuoto non viene aggiunto a
+`errors`. Le regole di invio sono applicate dal renderer o dall'applicazione host. Vedi
+[Convalida dello schema](/it/core/schema/validation).
 
-1. Caricare la schema e creare il motore
-2. Indicare i valori iniziali (opzionale)
-3. Accendere eventuali eventi di inizializzazione
-4. Valutazione: calcoli, condizioni e convalida
-5. Per ogni cambio di valore:
-   - Aggiorna il valore
-   - rivalutazione (live validation)
-   - Eventi di cambiamento di fuoco se definiti
-6. Leggi lo stato o crea un record strutturato per submission
+## Come funziona il motore
 
-## Eventi ed espressioni
+Queste pagine spiegano cosa fa il motore durante l'esecuzione:
 
-- I campi calcolati utilizzano espressioni, all'interno della proprietà `calculate`, come `$age + 1` per ricavare valori da altri campi.
-- Gli eventi vivono in `form.events.code` e possono reagire ai cambiamenti di forma in runtime (ad esempio, quando un record viene caricato o un campo cambia).
+- [Ciclo di valutazione](/it/core/engine/evaluation-cycle): cosa succede quando il motore viene
+  creato e ogni volta che un valore cambia.
+- [Calcoli e dipendenze](/it/core/engine/calculations-dependencies): l'ordine in cui vengono
+  eseguiti i campi calcolati, i cicli, le espressioni che falliscono ed `EVAL()`.
+- [Ambiti padre e figlio](/it/core/engine/parent-child-scopes): come vengono valutate le righe delle
+  sezioni ripetibili e quali campi può leggere ogni espressione.
+- [Eventi e operazioni](/it/core/engine/events-operations): come vengono registrati ed eseguiti i
+  gestori di eventi e come le loro operazioni arrivano alla tua applicazione.

@@ -52,6 +52,14 @@ Les opérateurs sont validés par rapport au type de champ référencé. Par exe
 - Les champs numériques/date supportent les opérateurs de comparaison
 - Les champs de choix prennent en charge `equal_to` et `contains` (multi-choix)
 
+Les conditions de choix comparent les valeurs de réponse, et non l'objet conteneur du moteur de rendu :
+
+- `SingleChoiceField` et `BooleanField` comparent le `value` du choix sélectionné.
+- `MultiChoiceField` utilise un tableau de valeurs sélectionnées. `contains` vérifie une valeur,
+  tandis que `equal_to` vérifie la sélection complète sans dépendre de l'ordre.
+- Une réponse personnalisée « other » non vide participe avec son `value` ou son libellé, afin que
+  les opérateurs de vacuité reflètent la saisie de l'utilisateur.
+
 Si un opérateur n'est pas valide pour le champ référencé, la validation échoue.
 
 ## Références des champs

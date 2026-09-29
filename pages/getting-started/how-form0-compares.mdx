@@ -1,0 +1,158 @@
+---
+title: How form0 compares
+description: How form0 compares with SurveyJS, Form.io, ODK and XLSForm, JSON Forms, and react-jsonschema-form for schema-driven form logic.
+---
+
+<PageBadges />
+
+import { Callout } from "zudoku/ui/Callout"
+
+form0 is an open-source engine for schema-driven forms. It evaluates calculations, conditions,
+validation, and events while leaving presentation, storage, and backend architecture under your
+control. The projects below solve related problems at different layers, from embeddable form
+libraries to complete data-collection platforms.
+
+<Callout type="info" title="Last verified: September 29, 2026">
+  Other projects change over time. Each statement about another project is based on its own
+  documentation, listed under Sources at the end of this page. If something is out of date, use
+  "Edit this page" to suggest a correction.
+</Callout>
+
+<Callout type="note" title="How to read the comparison">
+  "Built in" means that the capability is part of the project's schema or runtime, without adding
+  application code. ODK is a data-collection platform rather than an embeddable JavaScript library,
+  so some comparisons describe a different architectural layer.
+</Callout>
+
+## At a glance
+
+### Architecture and delivery
+
+| Project                          | Runtime and UI model                                           | Documented targets                          | Backend and storage                                                     |
+| -------------------------------- | -------------------------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------------------- |
+| **form0**                        | Framework-independent `form0-core`; UI bindings are separate   | React and React Native                      | Supplied by your application                                            |
+| **SurveyJS**                     | Framework-independent `survey-core` with separate UI packages  | React, Angular, Vue 3, and plain JavaScript | Supplied by your application                                            |
+| **Form.io**                      | Core and plain-JavaScript renderer, with framework wrappers    | Plain JavaScript, React, and Angular        | Can use application-owned storage or Form.io APIs and platform services |
+| **ODK (XLSForm)**                | XLSForm definitions run as part of the ODK collection platform | ODK Collect for Android and ODK Web Forms   | ODK Central or another compatible server                                |
+| **JSON Forms**                   | Framework-independent core with renderer sets                  | React, Angular, and Vue                     | Supplied by your application                                            |
+| **react-jsonschema-form (RJSF)** | React form renderer driven by JSON Schema                      | React                                       | Supplied by your application                                            |
+
+### Form logic
+
+| Project           | Calculations and conditions                                                           | Repeating data                                                                    | Reaction model                                                |
+| ----------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| **form0**         | JavaScript expressions for calculations, visibility, required, and read-only state    | Row-scoped logic; cross-row aggregation is not currently built in                 | `ON` handlers return operations for the host to apply         |
+| **SurveyJS**      | SurveyJS expressions and calculated values                                            | Dynamic panels and matrices, including aggregate functions such as `sumInArray()` | Expressions and triggers can update the survey model          |
+| **Form.io**       | JavaScript or JSON Logic calculations, conditions, and component logic                | Data Grid and Edit Grid; custom calculation code can inspect row data             | Logic triggers run actions on components or values            |
+| **ODK (XLSForm)** | XPath-based calculations, relevance, constraints, and required expressions            | Repeats with XPath functions such as `sum()`                                      | Referenced values can trigger recalculation                   |
+| **JSON Forms**    | JSON Schema validation and UI-schema rules; calculations require application code     | JSON Schema arrays; advanced aggregate logic requires application code            | UI rules react declaratively; `onChange` reports data changes |
+| **RJSF**          | JSON Schema conditionals and dynamic UI schema; calculations require application code | JSON Schema arrays; advanced aggregate logic requires application code            | Application-level `onChange` callbacks                        |
+
+### Licensing and visual authoring
+
+| Project           | Open-source runtime                                                         | Visual authoring                                                                           |
+| ----------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **form0**         | The engine, official bindings, CLI, and storage connectors are MIT-licensed | No drag-and-drop builder in form0; schemas can be authored directly or with CLI assistance |
+| **SurveyJS**      | Form Library is MIT-licensed                                                | Survey Creator requires a commercial license                                               |
+| **Form.io**       | `formio.js` and its included builder are MIT-licensed                       | Builder included in `formio.js`; additional platform products have separate licensing      |
+| **ODK (XLSForm)** | ODK Collect is Apache-2.0 licensed                                          | Spreadsheet authoring with XLSForm and compatible tools                                    |
+| **JSON Forms**    | MIT-licensed                                                                | No official visual builder                                                                 |
+| **RJSF**          | Apache-2.0 licensed                                                         | No official visual builder                                                                 |
+
+## Where form0 is different
+
+### The same logic engine for web and native mobile
+
+The React and React Native bindings both evaluate form logic through `form0-core`. A form definition
+does not need a second calculation or condition system when an application moves between web and
+native mobile, and React Native renders native controls rather than a web view. Presentation and
+binding-specific lifecycle behavior can still differ between the two environments.
+
+Among the projects above, ODK also provides a native Android runtime, but as part of the ODK
+collection platform rather than as a React Native library for your application.
+
+### Form behavior is separate from your application stack
+
+form0 handles what a form is and how it behaves. Your application retains control of its design
+system, navigation, authentication, API, storage, submission workflow, and hosting. This makes the
+engine suitable for custom products that need sophisticated form behavior without adopting a
+hosted form platform.
+
+### Events describe changes instead of mutating implicitly
+
+A form0 event handler returns operations such as `SETVALUE` or `ALERT`; it does not mutate form
+state directly. A headless host can decide how to apply those operations, while the official
+bindings apply the operations they support. The engine rejects any `SETVALUE` outside the handler's
+scope, and applying an operation does not dispatch another `change` event, preventing event-handler
+loops. See [Events and operations](/core/engine/events-operations).
+
+SurveyJS triggers and Form.io logic actions, by comparison, update their form models directly.
+
+### Plain field references, resolved by scope
+
+In form0, an expression reads any field it is allowed to see with `$data_name`, whether the field
+is in the main form or in the same repeating row. The engine resolves the reference from where the
+expression is defined. SurveyJS uses prefixes such as `{panel.question}` and
+`{parentPanel.question}` inside dynamic panels, Form.io distinguishes `data` from `row`, and XLSForm
+uses XPath paths. See [Parent and child scopes](/core/engine/parent-child-scopes).
+
+### Calculations ordered by dependency, with cycle diagnostics
+
+form0 works out which calculated fields depend on which when the engine is created and evaluates
+them in dependency order. If calculated fields depend on each other in a loop, the engine sets them
+to `null`, reports a diagnostic that names the cycle, and continues evaluating independent fields.
+See [Calculations and dependencies](/core/engine/calculations-dependencies).
+
+### JavaScript expressions with validation controls
+
+form0 expressions use JavaScript syntax, so developers do not need to learn a separate expression
+language. `SAFE` and `CUSTOM` provide validation and configuration controls, but they are not
+security sandboxes. Schemas containing expressions or event scripts must come from trusted authors;
+applications must [isolate execution](/core/security) when schemas cannot be trusted. Form.io also
+supports JavaScript and a protected evaluator, while SurveyJS and XLSForm use their own expression
+languages.
+
+### Open runtime and developer tooling
+
+The engine, React and React Native bindings, CLI with AI-assisted authoring, and storage connectors
+are MIT-licensed. You can build, preview, and run forms without depending on a commercial runtime.
+
+## When another project may fit better
+
+- **You need schema-defined aggregation across repeating rows today.** SurveyJS and ODK provide
+  documented aggregate functions. Form.io can implement aggregation with custom calculation code.
+  form0 does not currently provide a built-in cross-row aggregate.
+- **You want visual authoring included with the library.** Form.io includes an open-source visual
+  builder, while SurveyJS offers the commercial Survey Creator. form0 currently uses JSON schemas
+  and CLI-assisted authoring. [reform](https://reformapp.io) is a separate hosted data-collection
+  platform built on form0 and includes visual form authoring.
+- **You need an established offline collection platform.** ODK and tools built on XLSForm have
+  mature Android collection and spreadsheet-based authoring. form0 provides the engine and native
+  binding; your application remains responsible for offline storage, synchronization, and backend
+  operations.
+- **Your application already uses JSON Schema as its form model.** JSON Forms and RJSF generate
+  forms directly from JSON Schema and may require less translation into a separate form schema.
+
+## Sources
+
+- SurveyJS: [Architecture](https://surveyjs.io/documentation/surveyjs-architecture),
+  [Form Library overview](https://surveyjs.io/form-library/documentation/overview),
+  [licensing](https://surveyjs.io/licensing), and
+  [conditional logic](https://surveyjs.io/form-library/documentation/design-survey/conditional-logic)
+- Form.io: [`formio.js`](https://github.com/formio/formio.js),
+  [React integration](https://github.com/formio/react),
+  [Angular integration](https://github.com/formio/angular),
+  [JavaScript evaluator](https://help.form.io/dev/javascript-evaluator), and
+  [logic and conditions](https://help.form.io/form-building/logic-and-conditions)
+- ODK and XLSForm: [XLSForm](https://xlsform.org/en/),
+  [ODK form logic](https://docs.getodk.org/form-logic/),
+  [ODK Web Forms](https://docs.getodk.org/web-forms-intro/), and
+  [ODK Collect](https://github.com/getodk/collect)
+- JSON Forms: [Overview](https://jsonforms.io/),
+  [renderer sets](https://jsonforms.io/docs/renderer-sets/),
+  [UI-schema rules](https://jsonforms.io/docs/uischema/rules/), and
+  [repository](https://github.com/eclipsesource/jsonforms)
+- RJSF: [Documentation](https://rjsf-team.github.io/react-jsonschema-form/docs/),
+  [array fields](https://rjsf-team.github.io/react-jsonschema-form/docs/json-schema/arrays/),
+  [dynamic UI schema](https://rjsf-team.github.io/react-jsonschema-form/docs/api-reference/dynamic-ui-schema-examples/),
+  and [`Form` callbacks](https://rjsf-team.github.io/react-jsonschema-form/docs/api-reference/form-props/)
