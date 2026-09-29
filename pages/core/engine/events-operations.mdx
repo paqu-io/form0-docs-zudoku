@@ -1,0 +1,146 @@
+---
+title: Events and operations
+description: How form0 event handlers are registered and run, what they can read, and how the operations they return reach the host application.
+---
+
+<PageBadges />
+
+import { Callout } from "zudoku/ui/Callout"
+
+Event handlers let a schema react to what happens in a form, such as a record loading or a field
+changing. A handler never changes the form directly. It describes what should happen as a list of
+operations, and the host application applies them. This page explains how handlers are registered,
+what they can read, and how their operations are applied.
+
+For which events the official renderers dispatch, see
+[Event dispatch in official bindings](/core/builtins/events-overview).
+
+## Registering handlers
+
+The code in `form.events.code` runs once, when the engine is created. Each `ON` call in it
+registers a handler, and each `OFF` call removes one:
+
+```js
+ON("change", "age", function onAgeChange(event) {
+  if ($age >= 18) {
+    SETVALUE("adult_note", "Adult")
+  }
+})
+
+ON("change", function onAnyChange(event) {
+  // Runs for every field
+})
+
+ON("load-record", function onLoad() {
+  ALERT("Welcome", "Review the details before editing.")
+})
+```
+
+- Official bindings identify the field by its `data_name`, so handlers for binding-dispatched field
+  events must also register with `data_name`. Core matches the registration string exactly and does
+  not translate between `key` and `data_name`.
+- Leave out the field to run the handler for every field.
+- An unknown event type prints a warning, and the handler is not registered.
+- Register every handler at the top level of `form.events.code`. `ON` and `OFF` called inside a
+  handler have no effect.
+
+## When handlers run
+
+A handler runs only when its event is dispatched, either by a binding or by your application with
+`engine.trigger(eventType, fieldDataName, metadata)`. Creating the engine or running `eval()` does
+not dispatch events.
+
+For one dispatch, the handlers registered for that field run first, in the order they were
+registered. Handlers registered for every field run after them. If a handler throws, the engine
+prints `[form0] Expression evaluation failed` to the console and the remaining handlers still run.
+
+## What a handler can read
+
+A handler reads field values with `$data_name`, like a calculation. It sees the values at the moment
+the event was dispatched. For a `change` event from an official renderer, that is after the
+evaluation pass that followed the edit, so calculated fields are already up to date.
+
+Which fields a handler can read depends on the event:
+
+- **Record events**, such as `load-record` and `edit-record`, can read only main-form fields.
+- **Field events**, such as `change`, follow the same rules as a calculation defined on the field that
+  triggered them. See [Parent and child scopes](/core/engine/parent-child-scopes).
+
+Each handler also receives an `event` object with `type`, `fieldKey` (the field's `data_name`), and
+`timestamp`, plus any metadata passed to `trigger()`. The official renderers add the new `value`
+and the `field` definition to `change` events.
+
+Handlers can use the shared expression builtins, such as `IF` and `CHOICEVALUE`, in addition to the
+event builtins. Calculation-only builtins such as `SETRESULT` are not available.
+
+<Callout type="info" title="SETVALUE does not update what the handler reads">
+  `SETVALUE` only records an operation. For the rest of the handler, `$data_name` still returns the
+  value from when the event was dispatched. The new value is visible after the host applies the
+  operation.
+</Callout>
+
+## Operations
+
+`SETVALUE` and `ALERT` each add one operation to the list that `engine.trigger()` returns:
+
+```js
+// SETVALUE("adult_note", "Adult")
+{ type: "FIELD_OPERATION", operation: "SETVALUE", params: { fieldDataName: "adult_note", valueToSet: "Adult" } }
+
+// ALERT("Welcome", "Review the details before editing.")
+{ type: "UI_OPERATION", operation: "ALERT", params: { title: "Welcome", message: "Review the details before editing." } }
+```
+
+The operations from all handlers of one dispatch are returned together, in the order the handlers
+ran.
+
+### Operations are checked before they are returned
+
+Before `trigger()` returns, the engine checks every `SETVALUE` against the handler's scope. A
+`SETVALUE` that targets a field the handler cannot read, or a field that is not in the schema, is
+removed from the list, and the engine reports a warning. Every `SETVALUE` that `trigger()` returns
+targets a field the handler is allowed to change.
+
+### How the official bindings apply operations
+
+By default, the official renderers:
+
+- show each `ALERT` in their own alert dialog; and
+- write each `SETVALUE` value into the form and run a new evaluation pass.
+
+<Callout type="caution" title="Choice-field SETVALUE values must be portable">
+  The React binding converts a primitive choice value such as `"it"` into the field's live value
+  shape, but React Native does not currently perform the same conversion. Until the bindings share
+  one normalization contract, use canonical live shapes when `SETVALUE` targets a choice field. See
+  the [`SETVALUE` reference](/core/builtins/events/setvalue) for examples.
+</Callout>
+
+The React Native `FormRenderer` lets an application handle non-alert operations by passing
+`engineOptions.onOperations`. It continues to show `ALERT` operations in its own dialog and passes
+the other operations to your callback. The React `FormRenderer` currently handles operations
+internally and does not expose a custom operation callback.
+
+```js
+function onOperations(operations, meta, applyDefault) {
+  // meta is { eventType, fieldKey, metadata }
+  console.log(`${meta.eventType} returned ${operations.length} operations`)
+  applyDefault(operations, meta)
+}
+```
+
+Call `applyDefault` with any operations you want React Native to handle as usual.
+
+### Applying operations without a renderer
+
+If you use form0-core directly, apply the returned list yourself. For `SETVALUE`, write the value
+and run `eval()`, as described in [Evaluation cycle](/core/engine/evaluation-cycle). Choice fields
+need their runtime value shape, not a plain choice value.
+
+## No chains of change events
+
+Applying a `SETVALUE` runs a new evaluation pass, but it does not dispatch `change` for the field
+it set. A `change` handler for `age` that sets `adult_note` does not run the `change` handlers for
+`adult_note`.
+
+If setting one field should also trigger the logic of another, put both in the same handler, or use
+a `CalculatedField` when the value can be derived from other fields.

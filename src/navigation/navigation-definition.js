@@ -162,6 +162,7 @@ const documentationItems = [
         doc("core/engine/evaluation-cycle", "Evaluation cycle"),
         doc("core/engine/calculations-dependencies", "Calculations and dependencies"),
         doc("core/engine/parent-child-scopes", "Parent and child scopes"),
+        doc("core/engine/events-operations", "Events and operations"),
       ]),
       category("Schema", [
         doc("core/schema/form", "Form object"),

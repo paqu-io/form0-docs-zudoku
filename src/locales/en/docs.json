@@ -138,6 +138,9 @@
       },
       "parent-child-scopes": {
         "title": "Parent and child scopes"
+      },
+      "events-operations": {
+        "title": "Events and operations"
       }
     },
     "schema": {

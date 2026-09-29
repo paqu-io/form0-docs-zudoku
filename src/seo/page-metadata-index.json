@@ -2378,6 +2378,21 @@
       }
     ]
   },
+  "/core/engine/events-operations": {
+    "pathname": "/core/engine/events-operations",
+    "translationKey": "/core/engine/events-operations",
+    "locale": "en",
+    "title": "Events and operations",
+    "description": "How form0 event handlers are registered and run, what they can read, and how the operations they return reach the host application.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/events-operations"
+      }
+    ]
+  },
   "/core/engine/parent-child-scopes": {
     "pathname": "/core/engine/parent-child-scopes",
     "translationKey": "/core/engine/parent-child-scopes",
