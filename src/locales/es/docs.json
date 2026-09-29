@@ -17,6 +17,9 @@
     },
     "schema-edit": {
       "title": "Editar tu primer esquema"
+    },
+    "how-form0-compares": {
+      "title": "form0 frente a otras soluciones"
     }
   },
   "cli": {

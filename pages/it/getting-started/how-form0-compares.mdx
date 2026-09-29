@@ -1,0 +1,164 @@
+---
+title: form0 a confronto
+description: Confronto tra form0 e SurveyJS, Form.io, ODK e XLSForm, JSON Forms e react-jsonschema-form per la logica dei moduli basata su schema.
+---
+
+<PageBadges />
+
+import { Callout } from "zudoku/ui/Callout"
+
+form0 è un motore open source per moduli basati su schema. Valuta calcoli, condizioni, validazione
+ed eventi, lasciando sotto il tuo controllo la presentazione, l'archiviazione e l'architettura del
+backend. I progetti seguenti risolvono problemi affini a livelli diversi, dalle librerie di moduli
+da integrare nella propria applicazione fino alle piattaforme complete di raccolta dati.
+
+<Callout type="info" title="Ultima verifica: 29 settembre 2026">
+  Gli altri progetti cambiano nel tempo. Ogni affermazione su un altro progetto si basa sulla sua
+  documentazione, elencata in Fonti in fondo alla pagina. Se qualcosa non è più aggiornato, usa
+  "Edit this page" per proporre una correzione.
+</Callout>
+
+<Callout type="note" title="Come leggere il confronto">
+  "Integrato" significa che la funzionalità fa parte dello schema o del runtime del progetto, senza
+  aggiungere codice applicativo. ODK è una piattaforma di raccolta dati e non una libreria
+  JavaScript da integrare, quindi alcuni confronti riguardano un livello diverso dell'architettura.
+</Callout>
+
+## In sintesi
+
+### Architettura e distribuzione
+
+| Progetto                         | Modello di runtime e interfaccia                                                              | Piattaforme documentate                 | Backend e archiviazione                                                                |
+| -------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------- |
+| **form0**                        | `form0-core`, indipendente dal framework; i binding per l'interfaccia sono pacchetti separati | React e React Native                    | Forniti dalla tua applicazione                                                         |
+| **SurveyJS**                     | `survey-core`, indipendente dal framework, con pacchetti di interfaccia separati              | React, Angular, Vue 3 e JavaScript puro | Forniti dalla tua applicazione                                                         |
+| **Form.io**                      | Core e renderer in JavaScript puro, con wrapper per i framework                               | JavaScript puro, React e Angular        | Archiviazione gestita dall'applicazione oppure API e servizi della piattaforma Form.io |
+| **ODK (XLSForm)**                | Le definizioni XLSForm vengono eseguite all'interno della piattaforma di raccolta ODK         | ODK Collect per Android e ODK Web Forms | ODK Central o un altro server compatibile                                              |
+| **JSON Forms**                   | Core indipendente dal framework con set di renderer                                           | React, Angular e Vue                    | Forniti dalla tua applicazione                                                         |
+| **react-jsonschema-form (RJSF)** | Renderer di moduli React guidato da JSON Schema                                               | React                                   | Forniti dalla tua applicazione                                                         |
+
+### Logica dei moduli
+
+| Progetto          | Calcoli e condizioni                                                                      | Dati ripetuti                                                                             | Modello di reazione                                                                                  |
+| ----------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **form0**         | Espressioni JavaScript per calcoli, visibilità, obbligatorietà e sola lettura             | Logica limitata alla riga; l'aggregazione tra righe per ora non è integrata               | I gestori `ON` restituiscono operazioni che l'host applica                                           |
+| **SurveyJS**      | Espressioni e valori calcolati di SurveyJS                                                | Pannelli dinamici e matrici, con funzioni di aggregazione come `sumInArray()`             | Espressioni e trigger possono aggiornare il modello del questionario                                 |
+| **Form.io**       | Calcoli, condizioni e logica dei componenti in JavaScript o JSON Logic                    | Data Grid ed Edit Grid; il codice di calcolo personalizzato può leggere i dati della riga | I trigger della logica eseguono azioni su componenti o valori                                        |
+| **ODK (XLSForm)** | Calcoli, pertinenza, vincoli e obbligatorietà espressi in XPath                           | Ripetizioni con funzioni XPath come `sum()`                                               | I valori referenziati possono provocare un nuovo calcolo                                             |
+| **JSON Forms**    | Validazione JSON Schema e regole della UI schema; i calcoli richiedono codice applicativo | Array JSON Schema; l'aggregazione avanzata richiede codice applicativo                    | Le regole dell'interfaccia reagiscono in modo dichiarativo; `onChange` notifica le modifiche ai dati |
+| **RJSF**          | Condizioni JSON Schema e UI schema dinamica; i calcoli richiedono codice applicativo      | Array JSON Schema; l'aggregazione avanzata richiede codice applicativo                    | Callback `onChange` gestite dall'applicazione                                                        |
+
+### Licenze e creazione visuale
+
+| Progetto          | Runtime open source                                                                      | Creazione visuale                                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| **form0**         | Il motore, i binding ufficiali, la CLI e i connettori di archiviazione hanno licenza MIT | form0 non include un editor visuale drag-and-drop; gli schemi si scrivono direttamente o con l'aiuto della CLI |
+| **SurveyJS**      | Form Library ha licenza MIT                                                              | Survey Creator richiede una licenza commerciale                                                                |
+| **Form.io**       | `formio.js` e l'editor che include hanno licenza MIT                                     | Editor incluso in `formio.js`; gli altri prodotti della piattaforma hanno licenze proprie                      |
+| **ODK (XLSForm)** | ODK Collect ha licenza Apache-2.0                                                        | Creazione tramite fogli di calcolo con XLSForm e strumenti compatibili                                         |
+| **JSON Forms**    | Licenza MIT                                                                              | Nessun editor visuale ufficiale                                                                                |
+| **RJSF**          | Licenza Apache-2.0                                                                       | Nessun editor visuale ufficiale                                                                                |
+
+## In cosa si distingue form0
+
+### Lo stesso motore logico per web e mobile nativo
+
+I binding React e React Native valutano entrambi la logica del modulo tramite `form0-core`. Una
+definizione di modulo non richiede un secondo sistema di calcoli o condizioni quando un'applicazione
+passa dal web al mobile nativo, e React Native mostra controlli nativi anziché una web view. La
+presentazione e il ciclo di vita specifico di ciascun binding possono comunque differire tra i due
+ambienti.
+
+Tra i progetti elencati, anche ODK offre un runtime nativo per Android, ma come parte della sua
+piattaforma di raccolta e non come libreria React Native per la tua applicazione.
+
+### Il comportamento del modulo è separato dal tuo stack
+
+form0 si occupa di che cosa è un modulo e di come si comporta. La tua applicazione mantiene il
+controllo del proprio design system, della navigazione, dell'autenticazione, delle API,
+dell'archiviazione, del flusso di invio e dell'hosting. Per questo il motore è adatto a prodotti su
+misura che richiedono un comportamento dei moduli sofisticato senza adottare una piattaforma di
+moduli in hosting.
+
+### Gli eventi descrivono le modifiche invece di applicarle implicitamente
+
+Un gestore di eventi di form0 restituisce operazioni come `SETVALUE` o `ALERT` e non modifica
+direttamente lo stato del modulo. Un host headless può decidere come applicare queste operazioni,
+mentre i binding ufficiali applicano quelle che supportano. Il motore rifiuta qualsiasi `SETVALUE`
+al di fuori dell'ambito del gestore, e l'applicazione di un'operazione non genera un altro evento
+`change`, evitando così cicli tra gestori. Vedi [Eventi e operazioni](/it/core/engine/events-operations).
+
+Al contrario, i trigger di SurveyJS e le azioni della logica di Form.io aggiornano direttamente i
+rispettivi modelli del modulo.
+
+### Riferimenti ai campi semplici, risolti in base all'ambito
+
+In form0, un'espressione legge qualsiasi campo a cui ha accesso con `$data_name`, sia che il campo
+si trovi nel modulo principale sia nella stessa riga ripetibile. Il motore risolve il riferimento in
+base al punto in cui l'espressione è definita. SurveyJS usa prefissi come `{panel.question}` e
+`{parentPanel.question}` all'interno dei pannelli dinamici, Form.io distingue tra `data` e `row`, e
+XLSForm usa percorsi XPath. Vedi [Ambiti padre e figlio](/it/core/engine/parent-child-scopes).
+
+### Calcoli ordinati per dipendenza, con diagnostica dei cicli
+
+Quando il motore viene creato, form0 determina da quali campi dipende ogni campo calcolato e li
+valuta in quell'ordine. Se alcuni campi calcolati dipendono l'uno dall'altro in un ciclo, il motore
+li imposta a `null`, segnala una diagnostica che indica il ciclo e continua a valutare i campi
+indipendenti. Vedi [Calcoli e dipendenze](/it/core/engine/calculations-dependencies).
+
+### Espressioni JavaScript con controlli di validazione
+
+Le espressioni di form0 usano la sintassi JavaScript, quindi non serve imparare un linguaggio di
+espressioni diverso. `SAFE` e `CUSTOM` offrono controlli di validazione e configurazione, ma non sono
+sandbox di sicurezza. Gli schemi che contengono espressioni o script di eventi devono provenire da
+autori fidati, e le applicazioni devono [isolare l'esecuzione](/it/core/security) quando gli schemi
+non sono affidabili. Anche Form.io supporta JavaScript e un valutatore protetto, mentre SurveyJS e
+XLSForm usano i propri linguaggi di espressioni.
+
+### Runtime aperto e strumenti per sviluppatori
+
+Il motore, i binding React e React Native, la CLI con creazione assistita dall'IA e i connettori di
+archiviazione hanno licenza MIT. Puoi creare, visualizzare in anteprima ed eseguire moduli senza
+dipendere da un runtime commerciale.
+
+## Quando un altro progetto può essere più adatto
+
+- **Ti serve già oggi un'aggregazione tra righe ripetute definita nello schema.** SurveyJS e ODK
+  offrono funzioni di aggregazione documentate. Form.io può implementare l'aggregazione con codice di
+  calcolo personalizzato. form0 per ora non offre un'aggregazione tra righe integrata.
+- **Vuoi uno strumento di creazione visuale incluso nella libreria.** Form.io include un editor
+  visuale open source, mentre SurveyJS offre Survey Creator con licenza commerciale. form0 per ora
+  usa schemi JSON e la creazione assistita dalla CLI. [reform](https://reformapp.io) è una
+  piattaforma di raccolta dati in hosting, separata e basata su form0, che include la creazione
+  visuale dei moduli.
+- **Ti serve una piattaforma consolidata per la raccolta offline.** ODK e gli strumenti basati su
+  XLSForm offrono una raccolta matura su Android e la creazione tramite fogli di calcolo. form0
+  fornisce il motore e il binding nativo; l'archiviazione offline, la sincronizzazione e le
+  operazioni del backend restano a carico della tua applicazione.
+- **La tua applicazione usa già JSON Schema come modello dei moduli.** JSON Forms e RJSF generano
+  moduli direttamente da JSON Schema e possono richiedere meno conversioni verso uno schema di modulo
+  separato.
+
+## Fonti
+
+- SurveyJS: [architettura](https://surveyjs.io/documentation/surveyjs-architecture),
+  [panoramica di Form Library](https://surveyjs.io/form-library/documentation/overview),
+  [licenze](https://surveyjs.io/licensing) e
+  [logica condizionale](https://surveyjs.io/form-library/documentation/design-survey/conditional-logic)
+- Form.io: [`formio.js`](https://github.com/formio/formio.js),
+  [integrazione con React](https://github.com/formio/react),
+  [integrazione con Angular](https://github.com/formio/angular),
+  [valutatore JavaScript](https://help.form.io/dev/javascript-evaluator) e
+  [logica e condizioni](https://help.form.io/form-building/logic-and-conditions)
+- ODK e XLSForm: [XLSForm](https://xlsform.org/en/),
+  [logica dei moduli ODK](https://docs.getodk.org/form-logic/),
+  [ODK Web Forms](https://docs.getodk.org/web-forms-intro/) e
+  [ODK Collect](https://github.com/getodk/collect)
+- JSON Forms: [panoramica](https://jsonforms.io/),
+  [set di renderer](https://jsonforms.io/docs/renderer-sets/),
+  [regole della UI schema](https://jsonforms.io/docs/uischema/rules/) e
+  [repository](https://github.com/eclipsesource/jsonforms)
+- RJSF: [documentazione](https://rjsf-team.github.io/react-jsonschema-form/docs/),
+  [campi di tipo array](https://rjsf-team.github.io/react-jsonschema-form/docs/json-schema/arrays/),
+  [UI schema dinamica](https://rjsf-team.github.io/react-jsonschema-form/docs/api-reference/dynamic-ui-schema-examples/)
+  e [callback di `Form`](https://rjsf-team.github.io/react-jsonschema-form/docs/api-reference/form-props/)

@@ -5723,6 +5723,33 @@
       }
     ]
   },
+  "/es/getting-started/how-form0-compares": {
+    "pathname": "/es/getting-started/how-form0-compares",
+    "translationKey": "/getting-started/how-form0-compares",
+    "locale": "es",
+    "title": "form0 frente a otras soluciones",
+    "description": "Cómo se compara form0 con SurveyJS, Form.io, ODK y XLSForm, JSON Forms y react-jsonschema-form en la lógica de formularios basada en esquemas.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/how-form0-compares"
+      }
+    ]
+  },
   "/es/getting-started/quickstart": {
     "pathname": "/es/getting-started/quickstart",
     "translationKey": "/getting-started/quickstart",
@@ -9081,6 +9108,33 @@
       }
     ]
   },
+  "/fr/getting-started/how-form0-compares": {
+    "pathname": "/fr/getting-started/how-form0-compares",
+    "translationKey": "/getting-started/how-form0-compares",
+    "locale": "fr",
+    "title": "form0 face aux autres solutions",
+    "description": "Comparaison de form0 avec SurveyJS, Form.io, ODK et XLSForm, JSON Forms et react-jsonschema-form pour la logique de formulaires pilotée par un schéma.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/how-form0-compares"
+      }
+    ]
+  },
   "/fr/getting-started/quickstart": {
     "pathname": "/fr/getting-started/quickstart",
     "translationKey": "/getting-started/quickstart",
@@ -9589,6 +9643,18 @@
       {
         "locale": "en",
         "pathname": "/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/how-form0-compares"
       }
     ]
   },
@@ -12515,6 +12581,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/security"
+      }
+    ]
+  },
+  "/it/getting-started/how-form0-compares": {
+    "pathname": "/it/getting-started/how-form0-compares",
+    "translationKey": "/getting-started/how-form0-compares",
+    "locale": "it",
+    "title": "form0 a confronto",
+    "description": "Confronto tra form0 e SurveyJS, Form.io, ODK e XLSForm, JSON Forms e react-jsonschema-form per la logica dei moduli basata su schema.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/how-form0-compares"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/how-form0-compares"
       }
     ]
   },
