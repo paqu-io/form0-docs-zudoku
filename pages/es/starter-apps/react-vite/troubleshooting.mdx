@@ -1,48 +1,54 @@
 ---
 title: Solución de problemas del starter de React y Vite
-description: Resolver problemas comunes de instalación, enrutamiento, schema, renderer, worker y conectores.
+description: Resuelve problemas habituales de instalación, rutas, esquemas, renderers, workers y conectores.
 ---
 
 <PageBadges />
 
-## Una ruta de formulario dice que el formulario no se encontró
+## Una ruta indica que no se encuentra el formulario
 
-Confirme que el identificador URL coincide exactamente con una entrada en `src/forms/registry.js`.
-que su importación dinámica apunta a un archivo schema existente.
+Comprueba que el identificador de la URL coincide exactamente con una entrada de
+`src/forms/registry.js`. Comprueba también que su importación dinámica apunta a un archivo de
+esquema existente.
 
-## Un schema no se carga
+## Un esquema no se carga
 
-Abra la consola del navegador para el error de importación, a continuación, ejecute la validación schema a través de form0-cli.
-Los errores de sintaxis y las rutas de importación relativas incorrectas son las causas más comunes.
+Abre la consola del navegador para ver el error de importación y, después, valida el esquema con
+form0-cli. Los errores de sintaxis JSON y las rutas de importación relativas incorrectas son las
+causas más habituales.
 
 ```bash
 form0
 ```
 
-Cargue el schema y ejecute `validate`. Consulte [Validar y previsualizar](/es/cli/schemas/validate-preview).
+Carga el esquema y ejecuta `validate`. Consulta [Validar y previsualizar](/es/cli/schemas/validate-preview).
 
-## No se utiliza un renderer personalizado
+## No se usa un renderer personalizado
 
-Compruebe los tres nombres: el tipo de campo schema, su asignación en `form0.config.js` y el resolutor
-identificador en `src/field-renderers/resolver.js`. El solucionador registra una advertencia para identificadores desconocidos.
+Comprueba los tres nombres: el tipo de campo del esquema, su asociación en `form0.config.js` y el
+identificador del resolver en `src/field-renderers/resolver.js`. El resolver registra un aviso para
+los identificadores desconocidos.
 
-## Las presentaciones no pueden llegar al servidor CLI
+## Los envíos no llegan al servidor de la CLI
 
-Ejecute `form0 serve --app` desde el directorio del proyecto. Si el servidor CLI utiliza una dirección diferente, establezca
-`FORM0_DEV_API_URL` antes de iniciar Vite o en el archivo `.env` local correspondiente. Confirme que
-`devServer.apiBaseUrl` todavía coincide con la ruta proxy Vite.
+Ejecuta `form0 serve --app` desde el directorio del proyecto. Si el servidor de la CLI usa otra
+dirección, establece `FORM0_DEV_API_URL` antes de iniciar Vite o en el archivo `.env` local
+correspondiente. Comprueba que `devServer.apiBaseUrl` sigue coincidiendo con la ruta del proxy de
+Vite.
 
-## La evaluación de los trabajadores falla
+## Falla la evaluación en el worker
 
-Ajusta temporalmente `engine.mode` a `main-thread` para aislar la carga de worker del comportamiento de schema.
-verifique la consola del navegador, las rutas de los activos y el tipo de contenido de implementación. Ver
-[Trabajadores y rendimiento](/es/bindings/react/workers-performance).
+Establece temporalmente `engine.mode` en `main-thread` para distinguir los problemas de carga del
+worker de los del comportamiento del esquema. Después, revisa la consola del navegador, las rutas de
+los recursos y el tipo de contenido del despliegue. Consulta
+[Workers y rendimiento](/es/bindings/react/workers-performance).
 
-## Los enlaces directos devuelven 404 después de la implementación
+## Los enlaces directos devuelven 404 tras el despliegue
 
-Configure el host estático para que vuelva a `index.html` para las rutas de aplicación desconocidas.
-problema de configuración, no un problema de definición de ruta React.
+Configura el alojamiento estático para que use `index.html` como alternativa en las rutas
+desconocidas de la aplicación. Es un problema de configuración del alojamiento, no de la definición
+de rutas de React.
 
-Para fallas de renderización a nivel de paquete, continúe con
-[React solución de problemas](/es/bindings/react/troubleshooting). Para los fallos de la base de datos, utilizar
-[Conector solución de problemas](/es/connectors/troubleshooting).
+Para los fallos de renderizado del paquete, continúa con
+[Solución de problemas de React](/es/bindings/react/troubleshooting). Para los fallos de la base de
+datos, consulta [Solución de problemas de conectores](/es/connectors/troubleshooting).

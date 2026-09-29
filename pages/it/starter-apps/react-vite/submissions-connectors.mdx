@@ -1,40 +1,43 @@
 ---
 title: Invii e connettori
-description: Comprendere i record strutturati, l'assistente locale submission di starter e le responsabilità dei dati di produzione.
+description: Comprendi i record strutturati, l'helper di invio locale dello starter e le responsabilità sui dati in produzione.
 ---
 
 <PageBadges />
 
-`Form0Form` fornisce un gestore submission predefinito quando il chiamante non fornisce `onSubmit`.
-handler crea o accetta un record form0 strutturato e lo registra per lo sviluppo.
+`Form0Form` fornisce un gestore di invio predefinito quando il chiamante non passa `onSubmit`. Il
+gestore crea o riceve un record strutturato form0 e lo scrive nella console come supporto allo
+sviluppo.
 
 Quando `devServer.submitToConnector` è `true`, chiama anche due endpoint locali:
 
-1. `POST /api/create-record` quando renderer non ha già prodotto un record strutturato completo.
-2. `POST /api/submit-record` per inviare tale record ai connettori gestiti da form0-cli.
+1. `POST /api/create-record` quando il renderer non ha ancora prodotto un record strutturato completo.
+2. `POST /api/submit-record` per inviare quel record ai connettori gestiti da form0-cli.
 
-Il proxy Vite inoltra `/api` al server di sviluppo CLI. Avviare entrambi i processi con:
+Il proxy di Vite inoltra `/api` al server di sviluppo della CLI. Avvia entrambi i processi con:
 
 ```bash
 form0 serve --app
 ```
 
-Utilizzare [CLI gestione connettore](/it/cli/connector-management) per installare, configurare, testare e ispezionare un
-Utilizzare [Scegliere un connettore](/it/connectors/choose) per confrontare PostgreSQL e SQLite.
+Usa la [gestione dei connettori della CLI](/it/cli/connector-management) per installare,
+configurare, verificare e controllare un connettore. Consulta
+[Scegliere un connettore](/it/connectors/choose) per confrontare PostgreSQL e SQLite.
 
-## Applicazione del rifornimento comportamento submission
+## Fornisci il comportamento di invio dell'applicazione
 
-Passa da `onSubmit` a `Form0Form` per sostituire il gestore predefinito.
-`useDefaultSubmitHandler={false}` se il modulo deve essere visualizzato senza il percorso submission.
+Passa `onSubmit` a `Form0Form` per sostituire il gestore predefinito. Imposta
+`useDefaultSubmitHandler={false}` se il modulo deve essere visualizzato senza nessuno dei due
+percorsi di invio.
 
-Per il contratto completo di record di callback e metadati, vedere
-[Valori, snapshots e submission](/it/bindings/react/values-snapshots-submission).
+Per il contratto completo del record e dei metadati ricevuti dalla callback, consulta
+[Valori, snapshot e invio](/it/bindings/react/values-snapshots-submission).
 
-> [Attenzione]
-> Gli endpoint CLI e il proxy Vite sono aiutanti di sviluppo locale, non una produzione submission API.
-> Un'applicazione distribuita ha bisogno di un limite di server attendibile con autenticazione, autorizzazione,
-> convalida, limitazione della velocità e controlli di archiviazione appropriati.
-> codice del browser.
+> [!WARNING]
+> Gli endpoint della CLI e il proxy di Vite sono strumenti per lo sviluppo locale, non un'API di
+> invio per la produzione. Un'applicazione pubblicata ha bisogno di un confine server attendibile con
+> autenticazione, autorizzazione, validazione, limitazione delle richieste e controlli di
+> archiviazione adeguati. Non includere mai credenziali del database nel codice del browser.
 
-Utilizzare solo schemas da autori attendibili. Espressioni di schema eseguire all'interno del documentato
-[form0-core trust border](/it/core/security).
+Usa solo schemi di autori attendibili. Le espressioni dello schema vengono eseguite entro il
+[confine di fiducia di form0-core](/it/core/security) documentato.

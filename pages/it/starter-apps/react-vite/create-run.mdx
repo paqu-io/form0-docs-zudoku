@@ -1,27 +1,27 @@
 ---
 title: Creare ed eseguire lo starter React e Vite
-description: Crea il web mantenuto starter con form0-cli e avvia il suo server di sviluppo Vite.
+description: Crea lo starter web mantenuto con form0-cli e avvia il suo server di sviluppo Vite.
 ---
 
 <PageBadges />
 
 ## Requisiti
 
-- Node.js 22 o più recente
-- Un gestore di pacchetti supportato; la sorgente starter commette un lockfile npm
+- Node.js 22 o versione successiva
+- Un gestore di pacchetti supportato; lo starter sorgente include un lockfile npm
 - Un browser moderno
 
-## Creare l'applicazione
+## Crea l'applicazione
 
-Installare CLI, quindi inizializzare un progetto web:
+Installa la CLI, poi inizializza un progetto web:
 
 ```bash
 npm install --global form0-cli
 form0 init my-form-app
 ```
 
-Scegliere ** Web app ** e ** React + Vite ** quando richiesto.
-dipendenze se il flusso selezionato non lo ha già fatto, e avviare l'applicazione:
+Scegli **App web** e **React + Vite** quando richiesto. Entra nella directory generata, installa le
+dipendenze se il flusso scelto non l'ha già fatto e avvia l'applicazione:
 
 ```bash
 cd my-form-app
@@ -29,19 +29,20 @@ npm install
 npm run dev
 ```
 
-Aprire la URL stampata da Vite, normalmente `http://localhost:5173`. La home page elenca i contenuti inclusi
-moduli di esempio e la loro pagina e sovrapporre presentazioni.
+Apri l'URL mostrato da Vite, di solito `http://localhost:5173`. La home page elenca i moduli di
+esempio inclusi e le loro presentazioni in pagina e in overlay.
 
-## Eseguire con form0-cli
+## Esegui con form0-cli
 
-Dalla directory del progetto, `form0 serve --app` avvia il server dell'applicazione configurato a fianco
-il server di sviluppo CLI. Usa questa modalità quando vuoi che il gestore starter predefinito di submission
-raggiungere i connettori configurati localmente.
+Dalla directory del progetto, `form0 serve --app` avvia il server dell'applicazione configurato
+insieme al server di sviluppo della CLI. Usa questa modalità quando vuoi che il gestore di invio
+predefinito dello starter raggiunga i connettori configurati in locale.
 
 ```bash
 form0 serve --app
 ```
 
-Vedere [Server di sviluppo app](/it/cli/local-development/app-development-servers) e
-[Sottomissioni e connettori](/it/starter-apps/react-vite/submissions-connectors) per il confine
-tra l'applicazione del browser, il server CLI e il connettore del database.
+Consulta
+[Server di sviluppo delle applicazioni](/it/cli/local-development/app-development-servers) e
+[Invii e connettori](/it/starter-apps/react-vite/submissions-connectors) per capire dove finisce
+l'applicazione browser e dove iniziano il server della CLI e il connettore del database.

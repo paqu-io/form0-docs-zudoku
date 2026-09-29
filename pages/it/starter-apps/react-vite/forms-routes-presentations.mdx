@@ -1,12 +1,13 @@
 ---
 title: Moduli, route e presentazioni
-description: Registrati al modulo schemas ed esporti esperienze standard, semplificate, modali e con i riflettori.
+description: Registra gli schemi dei moduli ed esponi le esperienze standard, semplificata, modale e spotlight.
 ---
 
 <PageBadges />
 
-Schema file live sotto `src/forms`. Il Registro di sistema in `src/forms/registry.js` dà ogni modulo un
-percorso dell'applicazione, visualizzazione dei metadati, importazione dinamica di schema e valori iniziali opzionali.
+I file di schema si trovano in `src/forms`. Il registro in `src/forms/registry.js` assegna a ogni
+modulo una route dell'applicazione, metadati di visualizzazione, un import dinamico dello schema e
+valori iniziali facoltativi.
 
 ```js
 const forms = [
@@ -19,34 +20,35 @@ const forms = [
 ]
 ```
 
-Creare il file schema corrispondente, quindi aggiungere la voce del Registro di sistema.
-Pezzi di costruzione separati.
+Crea il file di schema corrispondente, poi aggiungi la voce al registro. Gli import dinamici
+mantengono i file di schema in chunk di build separati.
 
-## Rotte
+## Route
 
 Lo starter fornisce:
 
-- `/` per l'elenco dei moduli e gli esempi di sovrapposizione;
+- `/` per l'elenco dei moduli e gli esempi di overlay;
 - `/:formId` per la presentazione standard predefinita; e
-- `/:formId/:variant` per le presentazioni delle pagine `standard` o `simplified`.
+- `/:formId/:variant` per le presentazioni in pagina `standard` o `simplified`.
 
-`FormPage` convalida l'identificatore del modulo e la presentazione prima di caricare schema. `Home` possiede il
-esempi modali e di riflettore.
+`FormPage` valida l'identificatore del modulo e la presentazione prima di caricare lo schema. `Home`
+gestisce gli esempi modale e spotlight.
 
 ## Presentazioni
 
 Le quattro chiavi di presentazione incluse sono:
 
-| Chiave       | Posizionamento             |
-| ------------ | -------------------------- |
-| `standard`   | Pagina del modulo completo |
-| `simplified` | Pagina passo-passo         |
-| `modal`      | Sovrapposizione di dialogo |
-| `spotlight`  | Sovrapposizione cassetto   |
+| Chiave       | Posizionamento                 |
+| ------------ | ------------------------------ |
+| `standard`   | Pagina con modulo completo     |
+| `simplified` | Pagina passo passo             |
+| `modal`      | Overlay in finestra di dialogo |
+| `spotlight`  | Overlay in pannello laterale   |
 
-Layout predefinito per ogni presentazione live in `form0.config.js`. Il wrapper dell'applicazione passa il
-risolto tema, posizionamento, modalità di interazione e dimensionamento a `FormRenderer`.
+I valori di layout predefiniti di ogni presentazione si trovano in `form0.config.js`. Il componente
+wrapper dell'applicazione passa a `FormRenderer` il tema, il posizionamento, la modalità di
+interazione e il dimensionamento risolti.
 
-Usa [Modifica il tuo primo authoring schema](/it/getting-started/schema-edit) per schema e
-[Modalità, posizionamento e navigazione](/it/bindings/react/modes-placement-navigation) per il sottostante
-comportamento React binding.
+Consulta [Modifica il tuo primo schema](/it/getting-started/schema-edit) per la scrittura degli
+schemi e [Modalità, posizionamento e navigazione](/it/bindings/react/modes-placement-navigation) per
+il comportamento del binding React sottostante.

@@ -1,14 +1,14 @@
 ---
 title: Archiviazione locale e invii
-description: Comprendere il record store starter SQLite e il limite per submission remoto e la sincronizzazione.
+description: Comprendi l'archivio SQLite dei record dello starter e i limiti dell'invio remoto e della sincronizzazione.
 ---
 
 <PageBadges />
 
-## Incluso negozio SQLite
+## Archivio SQLite incluso
 
-Lo starter salva i record inviati strutturati con `expo-sqlite`. Configurare o disabilitare
-il blocco `storage` in `form0.config.js`:
+Lo starter salva i record strutturati inviati con `expo-sqlite`. Configuralo o disattivalo tramite
+il blocco `storage` di `form0.config.js`:
 
 ```js
 storage: {
@@ -19,21 +19,23 @@ storage: {
 }
 ```
 
-Il database vive nella sandbox dell'applicazione specifica della piattaforma. Ogni submission è inserito con
-record metadati e il record strutturato completo come JSON. I controlli di debug inclusi possono elencare
-o cancellare i record quando `debug` è abilitato.
+Il database si trova nella sandbox dell'applicazione specifica di ogni piattaforma. Ogni invio viene
+inserito con i metadati del record e il record strutturato completo in formato JSON. I controlli di
+debug inclusi permettono di elencare o cancellare i record quando `debug` è attivo.
 
-## La persistenza non è sincronizzazione
+## Persistenza non significa sincronizzazione
 
-Questo negozio fornisce solo la persistenza sul dispositivo. Non carica record, riprova le richieste, risolvi
-conflitti, crittografare le esportazioni o definire la politica di conservazione e cancellazione. Le applicazioni devono progettare quelle
-comportamenti per i loro dati e il modello di minaccia. Trattare i backup del database e i file esportati come sensibili
-dati utente.
+Questo archivio offre solo la persistenza sul dispositivo. Non carica i record, non ritenta le
+richieste, non risolve i conflitti, non cifra le esportazioni e non definisce criteri di
+conservazione ed eliminazione. Le applicazioni devono progettare questi comportamenti in base ai
+propri dati e al proprio modello di minaccia. Tratta i backup del database e i file esportati come
+dati utente sensibili.
 
-I pacchetti Node.js `form0-connector-pg` e `form0-connector-sqlite` non vengono eseguiti in React Native.
-Inviare submissions remoto tramite un'applicazione autenticata API; non incorporare credenziali di database
-in un'applicazione mobile.
+I pacchetti Node.js `form0-connector-pg` e `form0-connector-sqlite` non funzionano in React Native.
+Invia i dati remoti tramite un'API autenticata dell'applicazione; non includere credenziali del
+database in un'applicazione mobile.
 
-Per il contratto renderer submission e snapshot, vedere
-[Valori, snapshots, e submission](/it/bindings/react-native/values-snapshots-submission). Per generale
-frontiere mobili, vedere [Integrazione mobile](/it/bindings/react-native/mobile-integration).
+Per il contratto di invio e di snapshot del renderer, consulta
+[Valori, snapshot e invio](/it/bindings/react-native/values-snapshots-submission). Per i limiti
+generali in ambito mobile, consulta
+[Integrazione mobile](/it/bindings/react-native/mobile-integration).

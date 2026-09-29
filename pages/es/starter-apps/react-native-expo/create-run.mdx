@@ -1,24 +1,25 @@
 ---
 title: Crear y ejecutar el starter de React Native y Expo
-description: Crea el starter móvil mantenido con form0-cli y ábrelo en un dispositivo o emulador.
+description: Crea el starter móvil mantenido con form0-cli y ábrelo en un dispositivo o un emulador.
 ---
 
 <PageBadges />
 
-El starter de React Native y Expo es la vía más rápida para una aplicación móvil form0. Incluye
-esquemas de ejemplo, renderizadores nativos, fuentes, imágenes auxiliares y persistencia SQLite local.
+El starter de React Native y Expo es la forma más rápida de tener una aplicación móvil con form0.
+Incluye esquemas de ejemplo, renderers nativos, fuentes, imágenes de apoyo y persistencia local con
+SQLite.
 
-## Crear la aplicación
+## Crea la aplicación
 
-Instala [form0-cli](/es/cli/install-update) e inicializa el proyecto:
+Instala [form0-cli](/es/cli/install-update) y, a continuación, inicializa un proyecto:
 
 ```bash
 npm install --global form0-cli
 form0 init my-mobile-form
 ```
 
-Elige **Aplicación móvil** y **React Native + Expo**. Entra en el directorio generado e instala las
-dependencias si el gestor de paquetes seleccionado todavía no lo ha hecho.
+Elige **Aplicación móvil** y **React Native + Expo**. Entra en el directorio generado e instala sus
+dependencias si el gestor de paquetes elegido no lo ha hecho ya.
 
 ```bash
 cd my-mobile-form
@@ -26,14 +27,14 @@ npm install
 npm start
 ```
 
-El botón **Use this template** de GitHub es una alternativa para copiar el repositorio. La CLI sigue
-siendo la ruta recomendada.
+El botón **Use this template** de GitHub es una alternativa cuando quieres expresamente una copia
+del repositorio. La CLI sigue siendo la vía de creación recomendada.
 
-## Elegir un destino de desarrollo
+## Elige un destino de desarrollo
 
-Usa un development build para trabajo orientado a producción y siempre que la aplicación incluya
-código nativo personalizado. Expo Go sigue siendo útil para aprender y evaluar cuando exista un
-build compatible con el SDK para la plataforma de destino. También puedes abrir un emulador
+Usa una development build de Expo para el trabajo orientado a producción y siempre que la aplicación
+incluya código nativo personalizado. Expo Go sigue siendo útil para aprender y evaluar cuando hay
+una versión compatible del SDK para la plataforma de destino. También puedes usar un emulador de
 Android, el simulador de iOS o el destino web:
 
 ```bash
@@ -42,10 +43,9 @@ npm run ios
 npm run web
 ```
 
-El starter requiere Node.js 22.13 o posterior. Los builds nativos son compatibles con Android 7 o
-posterior e iOS 16.4 o posterior; los builds locales de iOS requieren Xcode 26.4 o posterior. La
-configuración de emuladores y dispositivos nativos sigue la
+La plantilla requiere Node.js 22.13 o posterior. Las compilaciones nativas admiten Android 7 o
+posterior e iOS 16.4 o posterior; las compilaciones locales de iOS requieren Xcode 26.4 o posterior.
+La configuración de emuladores y dispositivos nativos sigue la
 [guía del entorno de desarrollo de Expo](https://docs.expo.dev/get-started/set-up-your-environment/).
 
-Continúa con
-[Estructura y configuración](./project-structure-configuration).
+Continúa con [Estructura y configuración del proyecto](./project-structure-configuration).

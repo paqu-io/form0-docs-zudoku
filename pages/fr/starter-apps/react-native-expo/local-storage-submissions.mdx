@@ -1,14 +1,14 @@
 ---
 title: Stockage local et soumissions
-description: Comprenez le magasin d'enregistrements starter SQLite et les limites du submission distant et de la synchronisation.
+description: Comprenez le stockage SQLite des enregistrements du starter et les limites de la soumission distante et de la synchronisation.
 ---
 
 <PageBadges />
 
-## Inclus SQLite magasin
+## Stockage SQLite inclus
 
-Le starter enregistre les enregistrements soumis structurés avec `expo-sqlite`.
-le bloc `storage` dans `form0.config.js`:
+Le starter enregistre les enregistrements structurés soumis avec `expo-sqlite`. Configurez-le ou
+désactivez-le via le bloc `storage` de `form0.config.js` :
 
 ```js
 storage: {
@@ -19,21 +19,24 @@ storage: {
 }
 ```
 
-La base de données se trouve dans le bac à sable de l'application spécifique à la plate-forme.
-enregistrer les métadonnées et l'enregistrement structuré complet sous JSON. Les contrôles de débogage inclus peuvent lister
-ou effacer les enregistrements lorsque `debug` est activé.
+La base de données se trouve dans le sandbox de l’application propre à chaque plateforme. Chaque
+soumission est insérée avec les métadonnées de l’enregistrement et l’enregistrement structuré complet
+au format JSON. Les contrôles de débogage inclus permettent de lister ou d’effacer les
+enregistrements lorsque `debug` est activé.
 
-## La persistance n'est pas la synchronisation
+## La persistance n’est pas la synchronisation
 
-Ce magasin fournit uniquement la persistance sur le périphérique. Il ne télécharge pas les enregistrements, ne réessaye pas les demandes, ne résout pas
-conflits, chiffrent les exportations ou définissent des politiques de rétention et de suppression.
-Traiter les sauvegardes de bases de données et les fichiers exportés comme des fichiers sensibles
-données utilisateur.
+Ce stockage assure uniquement la persistance sur l’appareil. Il n’envoie pas les enregistrements, ne
+relance pas les requêtes, ne résout pas les conflits, ne chiffre pas les exports et ne définit pas de
+politique de conservation ni de suppression. Les applications doivent concevoir ces comportements en
+fonction de leurs données et de leur modèle de menace. Traitez les sauvegardes de la base de données
+et les fichiers exportés comme des données utilisateur sensibles.
 
-Les paquets Node.js `form0-connector-pg` et `form0-connector-sqlite` ne s'exécutent pas dans React Native.
-Envoyer à distance submissions via une application authentifiée API; n'intégrez pas les informations d'identification de la base de données
-dans une application mobile.
+Les paquets Node.js `form0-connector-pg` et `form0-connector-sqlite` ne s’exécutent pas dans React
+Native. Envoyez les soumissions distantes via une API authentifiée de l’application ; n’intégrez pas
+d’identifiants de base de données dans une application mobile.
 
-Pour les contrats renderer et snapshot, voir
-[Valeurs, snapshots, et submission](/fr/bindings/react-native/values-snapshots-submission).
-frontières mobiles, voir [Intégration mobile](/fr/bindings/react-native/mobile-integration).
+Pour le contrat de soumission et de snapshot du renderer, consultez
+[Valeurs, snapshots et soumission](/fr/bindings/react-native/values-snapshots-submission). Pour les
+limites générales côté mobile, consultez
+[Intégration mobile](/fr/bindings/react-native/mobile-integration).

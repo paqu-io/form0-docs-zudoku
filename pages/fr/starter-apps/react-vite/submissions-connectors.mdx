@@ -1,40 +1,44 @@
 ---
 title: Soumissions et connecteurs
-description: Comprendre les enregistrements structurés, le starter local submission aide, et les responsabilités de données de production.
+description: Comprenez les enregistrements structurés, l’assistant de soumission local du starter et les responsabilités liées aux données en production.
 ---
 
 <PageBadges />
 
-`Form0Form` fournit un gestionnaire submission par défaut lorsque l'appelant ne fournit pas `onSubmit`.
-handler crée ou accepte un enregistrement form0 structuré et l'enregistre pour le développement.
+`Form0Form` fournit un gestionnaire de soumission par défaut lorsque l’appelant ne transmet pas
+`onSubmit`. Le gestionnaire crée ou reçoit un enregistrement structuré form0 et l’affiche dans la
+console pour faciliter le développement.
 
-Lorsque `devServer.submitToConnector` est `true`, il appelle également deux points de terminaison locaux:
+Lorsque `devServer.submitToConnector` vaut `true`, il appelle aussi deux endpoints locaux :
 
-1. `POST /api/create-record` lorsque le renderer n'a pas encore produit un enregistrement structuré complet.
+1. `POST /api/create-record` lorsque le renderer n’a pas encore produit d’enregistrement structuré complet.
 2. `POST /api/submit-record` pour envoyer cet enregistrement aux connecteurs gérés par form0-cli.
 
-Le proxy Vite transmet `/api` au serveur de développement CLI. Démarrez les deux processus avec:
+Le proxy Vite redirige `/api` vers le serveur de développement de la CLI. Démarrez les deux
+processus avec :
 
 ```bash
 form0 serve --app
 ```
 
-Utilisez [CLI gestion des connecteurs](/fr/cli/connector-management) pour installer, configurer, tester et inspecter un
-Utilisez [Choisir un connecteur](/fr/connectors/choose) pour comparer PostgreSQL et SQLite.
+Utilisez la [gestion des connecteurs de la CLI](/fr/cli/connector-management) pour installer,
+configurer, tester et inspecter un connecteur. Consultez [Choisir un connecteur](/fr/connectors/choose)
+pour comparer PostgreSQL et SQLite.
 
-## Comportement de l'application d'approvisionnement submission
+## Fournir le comportement de soumission de l’application
 
-Passez `onSubmit` à `Form0Form` pour remplacer le gestionnaire par défaut.
-`useDefaultSubmitHandler={false}` si le formulaire doit être rendu sans chemin submission.
+Transmettez `onSubmit` à `Form0Form` pour remplacer le gestionnaire par défaut. Définissez
+`useDefaultSubmitHandler={false}` si le formulaire doit s’afficher sans aucune des deux voies de
+soumission.
 
-Pour le contrat complet d'enregistrement de rappel et de métadonnées, voir
-[Valeurs, snapshots et submission](/fr/bindings/react/values-snapshots-submission).
+Pour le contrat complet de l’enregistrement et des métadonnées reçus par le callback, consultez
+[Valeurs, snapshots et soumission](/fr/bindings/react/values-snapshots-submission).
 
-> [! AVERTISSEMENT]
-> Les points de terminaison CLI et le proxy Vite sont des aides au développement local, pas un submission de production.
-> Une application déployée a besoin d'une limite de serveur de confiance avec authentification, autorisation,
-> des contrôles de validation, de limitation de débit et de stockage appropriés.
-> code du navigateur.
+> [!WARNING]
+> Les endpoints de la CLI et le proxy Vite sont des aides au développement local, et non une API de
+> soumission de production. Une application déployée a besoin d’une frontière serveur de confiance
+> avec authentification, autorisation, validation, limitation du débit et contrôles de stockage
+> appropriés. Ne livrez jamais d’identifiants de base de données dans le code du navigateur.
 
-N'utilisez schemas qu'à partir d'auteurs approuvés.
-[form0-core frontière de confiance](/fr/core/security).
+N’utilisez que des schémas provenant d’auteurs de confiance. Les expressions du schéma s’exécutent
+dans la [limite de confiance de form0-core](/fr/core/security) documentée.

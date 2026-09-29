@@ -1,12 +1,12 @@
 ---
 title: Struttura e configurazione del progetto React e Vite
-description: Comprendere il layout web starter e configurare il suo motore, la presentazione, schemas e il server di sviluppo.
+description: Comprendi la struttura dello starter web e configura motore, presentazione, schemi e server di sviluppo.
 ---
 
 <PageBadges />
 
-Il starter è un'applicazione normale Vite. I suoi predefiniti form0-specific vivono in `form0.config.js`,
-mentre il codice dell'applicazione rimane sotto `src`.
+Lo starter è una normale applicazione Vite. I valori predefiniti specifici di form0 si trovano in
+`form0.config.js`, mentre il codice dell'applicazione resta in `src`.
 
 ```text
 .
@@ -23,29 +23,32 @@ mentre il codice dell'applicazione rimane sotto `src`.
 
 ## Aree di configurazione
 
-Modificare `form0.config.js` per controllare:
+Modifica `form0.config.js` per controllare:
 
-- `layout`: larghezza predefinita, posizionamento delle etichette e layout di presentazione;
-- `engine`: valutazione del filo principale o worker e strategia del negozio React;
-- `theme`: luce, buio, sistema, o una classe di tema di applicazione;
-- `interaction`: comportamento iniziale di modifica / sola lettura e comportamento di sovrapposizione submission;
-- `schemas.directory`: la directory schema utilizzata dagli strumenti;
-- `devServer`: il comando dell'app, lo switch submission del connettore e API base URL;
-- `fieldRenderers`: tipi di campo sostituiti dall'applicazione renderers; e
-- `output.useKeys`: se i record strutturati preferiscono chiavi schema o nomi di dati.
+- `layout`: la larghezza predefinita, la posizione delle etichette e il layout di ogni presentazione;
+- `engine`: la valutazione sul thread principale o in un worker e la strategia dello store React;
+- `theme`: chiaro, scuro, di sistema o una classe di tema dell'applicazione;
+- `interaction`: il comportamento iniziale in modifica o in sola lettura e l'invio negli overlay;
+- `schemas.directory`: la directory degli schemi usata dagli strumenti;
+- `devServer`: il comando dell'applicazione, l'opzione di invio ai connettori e l'URL di base dell'API;
+- `fieldRenderers`: i tipi di campo sostituiti da renderer dell'applicazione; e
+- `output.useKeys`: se i record strutturati preferiscono le chiavi dello schema o i nomi dei dati.
 
-I puntelli dei componenti possono ignorare le impostazioni predefinite pertinenti per un modulo specifico.
-default nella configurazione e mantenere il comportamento della forma in schema.
+Le proprietà dei componenti possono sovrascrivere i valori predefiniti pertinenti per un singolo
+modulo. Mantieni nella configurazione i valori predefiniti riutilizzabili dell'applicazione e nello
+schema il comportamento del modulo.
 
-> [!CAUZIONE]
-> Mantenere il motore impostato su `snapshot` in questo starter. La configurazione inclusa documenti a
-> limitazione nota di convalida-messaggio con la modalità `selector`.
+> [!CAUTION]
+> In questo starter lascia lo store del motore impostato su `snapshot`. La configurazione inclusa
+> documenta una limitazione nota dei messaggi di validazione con la modalità `selector`.
 
 ## Proxy di sviluppo
 
-Il server Vite proxy `/api` a `http://localhost:3030` per impostazione predefinita.
-`FORM0_DEV_API_URL` nell'ambiente di processo o in un file locale Vite `.env` per utilizzare un altro server CLI
-indirizzo. Il valore viene consumato dalla configurazione di Vite e non è esposto al codice del browser.
+Per impostazione predefinita, il server Vite inoltra `/api` a `http://localhost:3030`. Imposta
+`FORM0_DEV_API_URL` nell'ambiente del processo o in un file `.env` locale di Vite per usare un altro
+indirizzo del server della CLI. Il valore viene letto dalla configurazione di Vite e non è esposto al
+codice del browser.
 
-Non inserire le credenziali nelle variabili lato client. Le credenziali del database appartengono alla CLI o
-ambiente del connettore lato server descritto nella documentazione del connettore](/it/connectors/overview).
+Non inserire credenziali in variabili lato client. Le credenziali del database appartengono
+all'ambiente della CLI o del connettore lato server, descritto nella
+[documentazione dei connettori](/it/connectors/overview).

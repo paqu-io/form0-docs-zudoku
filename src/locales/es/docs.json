@@ -28,7 +28,7 @@
     "initialize-project": { "title": "Inicializar un proyecto" },
     "interactive-shell": { "title": "Shell interactiva" },
     "ai-authoring": {
-      "overview": { "title": "Descripción general" },
+      "overview": { "title": "Visión general" },
       "getting-started": { "title": "Primeros pasos" },
       "providers-models": { "title": "Proveedores y modelos" },
       "authoring-workflow": { "title": "Flujo de creación" },
@@ -58,14 +58,14 @@
     "security": { "title": "Seguridad" }
   },
   "starter-apps": {
-    "overview": { "title": "Visión general de aplicaciones iniciales" },
+    "overview": { "title": "Visión general de las aplicaciones starter" },
     "react-vite": {
       "create-run": { "title": "Crear y ejecutar el starter de React y Vite" },
       "project-structure-configuration": {
         "title": "Estructura y configuración del proyecto React y Vite"
       },
       "forms-routes-presentations": { "title": "Formularios, rutas y presentaciones" },
-      "renderers-themes-styling": { "title": "Renderizadores, temas y estilos" },
+      "renderers-themes-styling": { "title": "Renderers, temas y estilos" },
       "submissions-connectors": { "title": "Envíos y conectores" },
       "build-deployment": { "title": "Compilar y desplegar el starter de React y Vite" },
       "troubleshooting": { "title": "Solución de problemas del starter de React y Vite" }
@@ -76,15 +76,15 @@
         "title": "Estructura y configuración del proyecto React Native y Expo"
       },
       "forms-screens-navigation": {
-        "title": "Formularios, pantallas y navegación en el starter móvil"
+        "title": "Formularios, pantallas y navegación"
       },
       "renderers-themes-fonts-images": {
-        "title": "Renderizadores, temas, fuentes e imágenes en el starter móvil"
+        "title": "Renderers, temas, fuentes e imágenes"
       },
       "device-development-networking": { "title": "Desarrollo en dispositivos y red" },
       "local-storage-submissions": { "title": "Almacenamiento local y envíos" },
       "build-distribution": { "title": "Compilar y distribuir el starter de React Native y Expo" },
-      "troubleshooting": { "title": "Solución de problemas del starter React Native y Expo" }
+      "troubleshooting": { "title": "Solución de problemas del starter de React Native y Expo" }
     }
   },
   "connectors": {

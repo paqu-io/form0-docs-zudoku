@@ -5818,8 +5818,8 @@
     "pathname": "/es/starter-apps/overview",
     "translationKey": "/starter-apps/overview",
     "locale": "es",
-    "title": "Visión general de las aplicaciones de inicio",
-    "description": "Elija una form0 mantenida starter y cree una aplicación a través de form0-cli.",
+    "title": "Visión general de las aplicaciones starter",
+    "description": "Elige un starter mantenido de form0 y crea una aplicación con form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5846,7 +5846,7 @@
     "translationKey": "/starter-apps/react-native-expo/build-distribution",
     "locale": "es",
     "title": "Compilar y distribuir el starter de React Native y Expo",
-    "description": "Prepara configuración y recursos para builds nativas de desarrollo y producción.",
+    "description": "Prepara la configuración y los recursos del starter para las compilaciones nativas de desarrollo y de producción.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5873,7 +5873,7 @@
     "translationKey": "/starter-apps/react-native-expo/create-run",
     "locale": "es",
     "title": "Crear y ejecutar el starter de React Native y Expo",
-    "description": "Crea el starter móvil mantenido con form0-cli y ábrelo en un dispositivo o emulador.",
+    "description": "Crea el starter móvil mantenido con form0-cli y ábrelo en un dispositivo o un emulador.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5900,7 +5900,7 @@
     "translationKey": "/starter-apps/react-native-expo/device-development-networking",
     "locale": "es",
     "title": "Desarrollo en dispositivos y red",
-    "description": "Conecta dispositivos Expo al starter mediante LAN o una URL pública de desarrollo.",
+    "description": "Conecta dispositivos con Expo al starter móvil a través de la LAN o de una URL pública de desarrollo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5927,7 +5927,7 @@
     "translationKey": "/starter-apps/react-native-expo/forms-screens-navigation",
     "locale": "es",
     "title": "Formularios, pantallas y navegación en el starter móvil",
-    "description": "Registre schemas y adapte el flujo de pantalla starter a un sistema de navegación de aplicaciones.",
+    "description": "Registra esquemas y adapta el flujo de pantallas del starter al sistema de navegación de tu aplicación.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5954,7 +5954,7 @@
     "translationKey": "/starter-apps/react-native-expo/local-storage-submissions",
     "locale": "es",
     "title": "Almacenamiento local y envíos",
-    "description": "Comprenda el almacén de registros starter SQLite y el límite para submission y sincronización remotas.",
+    "description": "Conoce el almacén de registros SQLite del starter y los límites del envío remoto y la sincronización.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5980,8 +5980,8 @@
     "pathname": "/es/starter-apps/react-native-expo/project-structure-configuration",
     "translationKey": "/starter-apps/react-native-expo/project-structure-configuration",
     "locale": "es",
-    "title": "Estructura y configuración de proyectos React Native y Expo",
-    "description": "Comprenda los archivos móviles starter y configure su comportamiento form0 y Expo.",
+    "title": "Estructura y configuración del proyecto React Native y Expo",
+    "description": "Conoce los archivos del starter móvil y configura su comportamiento de form0 y de Expo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6007,8 +6007,8 @@
     "pathname": "/es/starter-apps/react-native-expo/renderers-themes-fonts-images",
     "translationKey": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
     "locale": "es",
-    "title": "Renderizadores, temas, fuentes e imágenes en el starter móvil",
-    "description": "Personalice la presentación del formulario nativo y administre las fuentes y las imágenes de soporte agrupadas.",
+    "title": "Renderers, temas, fuentes e imágenes en el starter móvil",
+    "description": "Personaliza la presentación nativa de los formularios y gestiona las fuentes y las imágenes de apoyo empaquetadas.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6034,8 +6034,8 @@
     "pathname": "/es/starter-apps/react-native-expo/troubleshooting",
     "translationKey": "/starter-apps/react-native-expo/troubleshooting",
     "locale": "es",
-    "title": "Solución de problemas del starter React Native y Expo",
-    "description": "Diagnostica dependencias, red, imágenes, fuentes y SQLite.",
+    "title": "Solución de problemas del starter de React Native y Expo",
+    "description": "Diagnostica problemas de dependencias, red de los dispositivos, registro de imágenes, fuentes y SQLite.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6062,7 +6062,7 @@
     "translationKey": "/starter-apps/react-vite/build-deployment",
     "locale": "es",
     "title": "Compilar y desplegar el starter de React y Vite",
-    "description": "Crear, previsualizar y alojar una compilación de producción de la web mantenida starter.",
+    "description": "Crea, previsualiza y aloja una compilación de producción del starter web mantenido.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6089,7 +6089,7 @@
     "translationKey": "/starter-apps/react-vite/create-run",
     "locale": "es",
     "title": "Crear y ejecutar el starter de React y Vite",
-    "description": "Cree la web mantenida starter con form0-cli e inicie su servidor de desarrollo Vite.",
+    "description": "Crea el starter web mantenido con form0-cli e inicia su servidor de desarrollo de Vite.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6116,7 +6116,7 @@
     "translationKey": "/starter-apps/react-vite/forms-routes-presentations",
     "locale": "es",
     "title": "Formularios, rutas y presentaciones",
-    "description": "Regístrese desde schemas y exponga experiencias estándar, simplificadas, modales y de foco.",
+    "description": "Registra los esquemas de los formularios y ofrece las experiencias estándar, simplificada, modal y spotlight.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6142,8 +6142,8 @@
     "pathname": "/es/starter-apps/react-vite/project-structure-configuration",
     "translationKey": "/starter-apps/react-vite/project-structure-configuration",
     "locale": "es",
-    "title": "Estructura y configuración de proyectos React y Vite",
-    "description": "Comprender el diseño web de starter y configurar su motor, presentación, schemas y servidor de desarrollo.",
+    "title": "Estructura y configuración del proyecto React y Vite",
+    "description": "Conoce la estructura del starter web y configura su motor, su presentación, sus esquemas y su servidor de desarrollo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6169,8 +6169,8 @@
     "pathname": "/es/starter-apps/react-vite/renderers-themes-styling",
     "translationKey": "/starter-apps/react-vite/renderers-themes-styling",
     "locale": "es",
-    "title": "Renderizadores, temas y estilos",
-    "description": "Personalizar el React y Vite starter a través de registro renderer, temas y aplicación CSS.",
+    "title": "Renderers, temas y estilos",
+    "description": "Personaliza el starter de React y Vite mediante el registro de renderers, los temas y el CSS de la aplicación.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6197,7 +6197,7 @@
     "translationKey": "/starter-apps/react-vite/submissions-connectors",
     "locale": "es",
     "title": "Envíos y conectores",
-    "description": "Comprenda los registros estructurados, el ayudante local submission de starter y las responsabilidades de los datos de producción.",
+    "description": "Conoce los registros estructurados, el helper de envío local del starter y las responsabilidades sobre los datos en producción.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6224,7 +6224,7 @@
     "translationKey": "/starter-apps/react-vite/troubleshooting",
     "locale": "es",
     "title": "Solución de problemas del starter de React y Vite",
-    "description": "Resolver problemas comunes de instalación, enrutamiento, schema, renderer, worker y conectores.",
+    "description": "Resuelve problemas habituales de instalación, rutas, esquemas, renderers, workers y conectores.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6250,7 +6250,7 @@
     "pathname": "/fr/bindings/overview",
     "translationKey": "/bindings/overview",
     "locale": "fr",
-    "title": "Aperçu des bindings d’interface",
+    "title": "Vue d’ensemble des bindings d’interface",
     "description": "Affichez des schémas form0 dans des frameworks applicatifs tandis que form0-core gère le comportement du formulaire.",
     "indexable": true,
     "status": "published",
@@ -7195,7 +7195,7 @@
     "pathname": "/fr/cli/overview",
     "translationKey": "/cli/overview",
     "locale": "fr",
-    "title": "Aperçu de la CLI",
+    "title": "Vue d’ensemble de la CLI",
     "description": "Ce que fait form0-cli et comment choisir entre son mode interactif et ses commandes autonomes.",
     "indexable": true,
     "status": "published",
@@ -9203,8 +9203,8 @@
     "pathname": "/fr/starter-apps/overview",
     "translationKey": "/starter-apps/overview",
     "locale": "fr",
-    "title": "Aperçu des applications de démarrage",
-    "description": "Choisissez un form0 starter maintenu et créez une application via form0-cli.",
+    "title": "Vue d’ensemble des applications starter",
+    "description": "Choisissez un starter form0 maintenu et créez une application avec form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9231,7 +9231,7 @@
     "translationKey": "/starter-apps/react-native-expo/build-distribution",
     "locale": "fr",
     "title": "Compiler et distribuer le starter React Native et Expo",
-    "description": "Préparez configuration et ressources pour les builds natifs de développement et production.",
+    "description": "Préparez la configuration et les ressources du starter pour les builds natifs de développement et de production.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9285,7 +9285,7 @@
     "translationKey": "/starter-apps/react-native-expo/device-development-networking",
     "locale": "fr",
     "title": "Développement sur appareil et réseau",
-    "description": "Connectez les appareils Expo au starter par LAN ou URL publique de développement.",
+    "description": "Connectez des appareils Expo au starter mobile via le réseau local ou une URL publique de développement.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9312,7 +9312,7 @@
     "translationKey": "/starter-apps/react-native-expo/forms-screens-navigation",
     "locale": "fr",
     "title": "Formulaires, écrans et navigation dans le starter mobile",
-    "description": "Enregistrez schemas et adaptez le flux d'écran starter à un système de navigation d'application.",
+    "description": "Enregistrez des schémas et adaptez l’enchaînement des écrans du starter au système de navigation de votre application.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9339,7 +9339,7 @@
     "translationKey": "/starter-apps/react-native-expo/local-storage-submissions",
     "locale": "fr",
     "title": "Stockage local et soumissions",
-    "description": "Comprenez le magasin d'enregistrements starter SQLite et les limites du submission distant et de la synchronisation.",
+    "description": "Comprenez le stockage SQLite des enregistrements du starter et les limites de la soumission distante et de la synchronisation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9366,7 +9366,7 @@
     "translationKey": "/starter-apps/react-native-expo/project-structure-configuration",
     "locale": "fr",
     "title": "Structure et configuration du projet React Native et Expo",
-    "description": "Comprendre les fichiers starter mobiles et configurer son comportement form0 et Expo.",
+    "description": "Comprenez les fichiers du starter mobile et configurez son comportement form0 et Expo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9393,7 +9393,7 @@
     "translationKey": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
     "locale": "fr",
     "title": "Renderers, thèmes, polices et images dans le starter mobile",
-    "description": "Personnalisez la présentation des formulaires natifs et gérez les polices et les images prises en charge.",
+    "description": "Personnalisez la présentation native des formulaires et gérez les polices et les images d’appui intégrées.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9419,8 +9419,8 @@
     "pathname": "/fr/starter-apps/react-native-expo/troubleshooting",
     "translationKey": "/starter-apps/react-native-expo/troubleshooting",
     "locale": "fr",
-    "title": "Résolution des problèmes du starter React Native et Expo",
-    "description": "Diagnostiquez dépendances, réseau, images, polices et SQLite.",
+    "title": "Dépannage du starter React Native et Expo",
+    "description": "Diagnostiquez les problèmes de dépendances, de réseau des appareils, de registre d’images, de polices et de SQLite.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9447,7 +9447,7 @@
     "translationKey": "/starter-apps/react-vite/build-deployment",
     "locale": "fr",
     "title": "Compiler et déployer le starter React et Vite",
-    "description": "Créer, prévisualiser et héberger une version de production du web maintenu starter.",
+    "description": "Créez, prévisualisez et hébergez un build de production du starter web maintenu.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9474,7 +9474,7 @@
     "translationKey": "/starter-apps/react-vite/create-run",
     "locale": "fr",
     "title": "Créer et exécuter le starter React et Vite",
-    "description": "Créez le web maintenu starter avec form0-cli et démarrez son serveur de développement Vite.",
+    "description": "Créez le starter web maintenu avec form0-cli et démarrez son serveur de développement Vite.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9501,7 +9501,7 @@
     "translationKey": "/starter-apps/react-vite/forms-routes-presentations",
     "locale": "fr",
     "title": "Formulaires, routes et présentations",
-    "description": "Inscrivez-vous au formulaire schemas et exposez des expériences standard, simplifiées, modales et projecteurs.",
+    "description": "Enregistrez les schémas de formulaires et proposez les expériences standard, simplifiée, modale et spotlight.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9528,7 +9528,7 @@
     "translationKey": "/starter-apps/react-vite/project-structure-configuration",
     "locale": "fr",
     "title": "Structure et configuration du projet React et Vite",
-    "description": "Comprendre la mise en page Web starter et configurer son moteur, sa présentation, schemas et son serveur de développement.",
+    "description": "Comprenez l’organisation du starter web et configurez son moteur, sa présentation, ses schémas et son serveur de développement.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9555,7 +9555,7 @@
     "translationKey": "/starter-apps/react-vite/renderers-themes-styling",
     "locale": "fr",
     "title": "Renderers, thèmes et styles",
-    "description": "Personnalisez les React et Vite starter via l'enregistrement renderer, les thèmes et l'application CSS.",
+    "description": "Personnalisez le starter React et Vite grâce à l’enregistrement de renderers, aux thèmes et au CSS de l’application.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9582,7 +9582,7 @@
     "translationKey": "/starter-apps/react-vite/submissions-connectors",
     "locale": "fr",
     "title": "Soumissions et connecteurs",
-    "description": "Comprendre les enregistrements structurés, le starter local submission aide, et les responsabilités de données de production.",
+    "description": "Comprenez les enregistrements structurés, l’assistant de soumission local du starter et les responsabilités liées aux données en production.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9609,7 +9609,7 @@
     "translationKey": "/starter-apps/react-vite/troubleshooting",
     "locale": "fr",
     "title": "Dépannage du starter React et Vite",
-    "description": "Résolvez les problèmes courants d'installation, de routage, de schema, renderer, worker et de connecteur.",
+    "description": "Résolvez les problèmes courants d’installation, de routage, de schéma, de renderer, de worker et de connecteur.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12680,7 +12680,7 @@
     "translationKey": "/starter-apps/overview",
     "locale": "it",
     "title": "Panoramica delle app starter",
-    "description": "Scegliere form0 starter e creare un'applicazione tramite form0-cli.",
+    "description": "Scegli uno starter form0 mantenuto e crea un'applicazione con form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12707,7 +12707,7 @@
     "translationKey": "/starter-apps/react-native-expo/build-distribution",
     "locale": "it",
     "title": "Compilare e distribuire lo starter React Native ed Expo",
-    "description": "Prepara configurazione e asset per build native di sviluppo e produzione.",
+    "description": "Prepara la configurazione e gli asset dello starter per le build native di sviluppo e di produzione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12733,8 +12733,8 @@
     "pathname": "/it/starter-apps/react-native-expo/create-run",
     "translationKey": "/starter-apps/react-native-expo/create-run",
     "locale": "it",
-    "title": "Creare e avviare lo starter React Native ed Expo",
-    "description": "Crea lo starter mobile mantenuto con form0-cli e aprilo su un dispositivo o emulatore.",
+    "title": "Creare ed eseguire lo starter React Native ed Expo",
+    "description": "Crea lo starter mobile mantenuto con form0-cli e aprilo su un dispositivo o un emulatore.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12761,7 +12761,7 @@
     "translationKey": "/starter-apps/react-native-expo/device-development-networking",
     "locale": "it",
     "title": "Sviluppo su dispositivo e rete",
-    "description": "Collega dispositivi Expo allo starter tramite LAN o URL pubblico di sviluppo.",
+    "description": "Collega i dispositivi Expo allo starter mobile tramite la LAN o un URL pubblico di sviluppo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12788,7 +12788,7 @@
     "translationKey": "/starter-apps/react-native-expo/forms-screens-navigation",
     "locale": "it",
     "title": "Moduli, schermate e navigazione nello starter mobile",
-    "description": "Registra schemas e adatta il flusso dello schermo starter a un sistema di navigazione dell'applicazione.",
+    "description": "Registra gli schemi e adatta il flusso di schermate dello starter al sistema di navigazione della tua applicazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12815,7 +12815,7 @@
     "translationKey": "/starter-apps/react-native-expo/local-storage-submissions",
     "locale": "it",
     "title": "Archiviazione locale e invii",
-    "description": "Comprendere il record store starter SQLite e il limite per submission remoto e la sincronizzazione.",
+    "description": "Comprendi l'archivio SQLite dei record dello starter e i limiti dell'invio remoto e della sincronizzazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12841,8 +12841,8 @@
     "pathname": "/it/starter-apps/react-native-expo/project-structure-configuration",
     "translationKey": "/starter-apps/react-native-expo/project-structure-configuration",
     "locale": "it",
-    "title": "Struttura e configurazione del progetto React Native e Expo",
-    "description": "Comprendere i file mobili starter e configurare il suo comportamento form0 e Expo.",
+    "title": "Struttura e configurazione del progetto React Native ed Expo",
+    "description": "Comprendi i file dello starter mobile e configura il suo comportamento form0 ed Expo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12869,7 +12869,7 @@
     "translationKey": "/starter-apps/react-native-expo/renderers-themes-fonts-images",
     "locale": "it",
     "title": "Renderer, temi, font e immagini nello starter mobile",
-    "description": "Personalizza la presentazione dei moduli nativi e gestisci i font e le immagini di supporto in bundle.",
+    "description": "Personalizza la presentazione nativa dei moduli e gestisci i font e le immagini di supporto incluse nel bundle.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12896,7 +12896,7 @@
     "translationKey": "/starter-apps/react-native-expo/troubleshooting",
     "locale": "it",
     "title": "Risoluzione dei problemi dello starter React Native ed Expo",
-    "description": "Diagnostica dipendenze, rete, immagini, font e SQLite.",
+    "description": "Diagnostica problemi di dipendenze, rete dei dispositivi, registro delle immagini, font e SQLite.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12923,7 +12923,7 @@
     "translationKey": "/starter-apps/react-vite/build-deployment",
     "locale": "it",
     "title": "Compilare e distribuire lo starter React e Vite",
-    "description": "Creare, visualizzare in anteprima e ospitare una build di produzione del web mantenuto starter.",
+    "description": "Crea, visualizza in anteprima e pubblica una build di produzione dello starter web mantenuto.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12950,7 +12950,7 @@
     "translationKey": "/starter-apps/react-vite/create-run",
     "locale": "it",
     "title": "Creare ed eseguire lo starter React e Vite",
-    "description": "Crea il web mantenuto starter con form0-cli e avvia il suo server di sviluppo Vite.",
+    "description": "Crea lo starter web mantenuto con form0-cli e avvia il suo server di sviluppo Vite.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12977,7 +12977,7 @@
     "translationKey": "/starter-apps/react-vite/forms-routes-presentations",
     "locale": "it",
     "title": "Moduli, route e presentazioni",
-    "description": "Registrati al modulo schemas ed esporti esperienze standard, semplificate, modali e con i riflettori.",
+    "description": "Registra gli schemi dei moduli ed esponi le esperienze standard, semplificata, modale e spotlight.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -13004,7 +13004,7 @@
     "translationKey": "/starter-apps/react-vite/project-structure-configuration",
     "locale": "it",
     "title": "Struttura e configurazione del progetto React e Vite",
-    "description": "Comprendere il layout web starter e configurare il suo motore, la presentazione, schemas e il server di sviluppo.",
+    "description": "Comprendi la struttura dello starter web e configura motore, presentazione, schemi e server di sviluppo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -13031,7 +13031,7 @@
     "translationKey": "/starter-apps/react-vite/renderers-themes-styling",
     "locale": "it",
     "title": "Renderer, temi e stili",
-    "description": "Personalizzare la React e Vite starter attraverso la registrazione renderer, i temi e l'applicazione CSS.",
+    "description": "Personalizza lo starter React e Vite tramite la registrazione dei renderer, i temi e il CSS dell'applicazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -13058,7 +13058,7 @@
     "translationKey": "/starter-apps/react-vite/submissions-connectors",
     "locale": "it",
     "title": "Invii e connettori",
-    "description": "Comprendere i record strutturati, l'assistente locale submission di starter e le responsabilità dei dati di produzione.",
+    "description": "Comprendi i record strutturati, l'helper di invio locale dello starter e le responsabilità sui dati in produzione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -13085,7 +13085,7 @@
     "translationKey": "/starter-apps/react-vite/troubleshooting",
     "locale": "it",
     "title": "Risoluzione dei problemi dello starter React e Vite",
-    "description": "Risolvere i problemi comuni di installazione, routing, schema, renderer, worker e connettore.",
+    "description": "Risolvi i problemi più comuni di installazione, routing, schemi, renderer, worker e connettori.",
     "indexable": true,
     "status": "published",
     "alternates": [

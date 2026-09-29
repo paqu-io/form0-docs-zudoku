@@ -71,15 +71,15 @@
       "troubleshooting": { "title": "Risoluzione dei problemi dello starter React e Vite" }
     },
     "react-native-expo": {
-      "create-run": { "title": "Creare e avviare lo starter React Native ed Expo" },
+      "create-run": { "title": "Creare ed eseguire lo starter React Native ed Expo" },
       "project-structure-configuration": {
         "title": "Struttura e configurazione del progetto React Native ed Expo"
       },
       "forms-screens-navigation": {
-        "title": "Moduli, schermate e navigazione nello starter mobile"
+        "title": "Moduli, schermate e navigazione"
       },
       "renderers-themes-fonts-images": {
-        "title": "Renderer, temi, font e immagini nello starter mobile"
+        "title": "Renderer, temi, font e immagini"
       },
       "device-development-networking": { "title": "Sviluppo su dispositivo e rete" },
       "local-storage-submissions": { "title": "Archiviazione locale e invii" },

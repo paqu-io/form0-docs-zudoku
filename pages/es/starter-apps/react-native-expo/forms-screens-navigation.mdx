@@ -1,34 +1,37 @@
 ---
 title: Formularios, pantallas y navegación en el starter móvil
-description: Registre schemas y adapte el flujo de pantalla starter a un sistema de navegación de aplicaciones.
+description: Registra esquemas y adapta el flujo de pantallas del starter al sistema de navegación de tu aplicación.
 ---
 
 <PageBadges />
 
-## Formularios de registro
+## Registra los formularios
 
-Esquemas en vivo bajo `src/forms`. Agregue cada formulario a `src/forms/registry.js` con un ID estable, pantalla
-metadatos, y una función `loadSchema`. Las importaciones estáticas son útiles para la primera pantalla; dinámico
-Las importaciones pueden diferir la carga de otros formularios.
+Los esquemas están en `src/forms`. Añade cada formulario a `src/forms/registry.js` con un ID estable,
+metadatos de visualización y una función `loadSchema`. Las importaciones estáticas son útiles para
+la primera pantalla; las dinámicas permiten aplazar la carga de los demás formularios.
 
-`useFormSchema` resuelve la entrada del registro seleccionada y expone su carga, schema, y error
-Valide schemas con [form0-cli](/es/cli/schemas/validate-preview) antes de enviarlos.
+`useFormSchema` resuelve la entrada del registro seleccionada y expone su estado de carga, su esquema
+y su estado de error. Valida los esquemas con [form0-cli](/es/cli/schemas/validate-preview) antes de
+publicarlos.
 
-## Entender el flujo de la pantalla
+## Entiende el flujo de pantallas
 
-El starter utiliza deliberadamente un pequeño flujo basado en estado:
+El starter usa a propósito un flujo pequeño basado en estado:
 
 ```text
 App → Home → FormPage → Form0Form
 ```
 
-`Home` enumera los formularios registrados. `FormPage` carga el schema y posee submission y depurador de almacenamiento
-`Form0Form` mapea la configuración de la aplicación en el React Native `FormRenderer`.
+`Home` enumera los formularios registrados. `FormPage` carga el esquema y se encarga de las acciones
+de envío y de depuración del almacenamiento. `Form0Form` traduce la configuración de la aplicación
+en propiedades del `FormRenderer` de React Native.
 
-Este es un punto de partida comprensible, no un enrutamiento framework. Reemplazar el estado `activeFormId`
-con el router o la biblioteca de navegación utilizada por su aplicación cuando necesita enlaces profundos, pestañas,
-pilas autenticadas, o estado de navegación restaurado.
+Es un punto de partida fácil de entender, no un framework de enrutamiento. Sustituye el estado
+`activeFormId` por el router o la biblioteca de navegación que use tu aplicación cuando necesites
+enlaces profundos, pestañas, pilas autenticadas o restaurar el estado de navegación.
 
-El renderer posee pantallas de desplazamiento, evitación de teclado y profundización dentro de su pantalla asignada
-área. Evite envolverlo en otra vista de desplazamiento vertical. Ver
-[Modos y navegación](/es/bindings/react-native/modes-navigation) para el contrato renderer.
+El renderer se encarga del desplazamiento, la adaptación al teclado y las pantallas drilldown dentro
+del área de pantalla que tiene asignada. No lo envuelvas en otra vista de desplazamiento vertical.
+Consulta [Modos y navegación](/es/bindings/react-native/modes-navigation) para el contrato del
+renderer.

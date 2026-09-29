@@ -1,36 +1,40 @@
 ---
-title: Renderizadores, temas, fuentes e imágenes en el starter móvil
-description: Personalice la presentación del formulario nativo y administre las fuentes y las imágenes de soporte agrupadas.
+title: Renderers, temas, fuentes e imágenes en el starter móvil
+description: Personaliza la presentación nativa de los formularios y gestiona las fuentes y las imágenes de apoyo empaquetadas.
 ---
 
 <PageBadges />
 
 ## Tema y fuentes
 
-La raíz de la aplicación carga `form0Fonts` con `expo-font` antes de renderizar y envuelve su interfaz de usuario en
-`ThemeProvider` . Configure el modo de color base y el tema opcional se anula en `form0.config.js` .
-Las pantallas circundantes de starter usan los mismos tokens de tema que el formulario.
+La raíz de la aplicación carga `form0Fonts` con `expo-font` antes de renderizar y envuelve su
+interfaz en `ThemeProvider`. Configura el modo de color base y las sustituciones de tema opcionales
+en `form0.config.js`. Las pantallas del starter que rodean al formulario usan los mismos tokens de
+tema que el formulario.
 
-## El renderizador anula
+## Sustitución de renderers
 
-Asignar tipos de campo schema a identificadores renderer en `form0.config.js`, luego asignar esos identificadores a
-componentes en `src/field-renderers/resolver.js`. Mantener los componentes fuera del archivo de configuración
-preserva un límite de configuración fácil de serializar y fácil de usar.
+Asocia los tipos de campo del esquema con identificadores de renderer en `form0.config.js` y, después,
+asocia esos identificadores con componentes en `src/field-renderers/resolver.js`. Mantener los
+componentes fuera del archivo de configuración conserva una configuración serializable y fácil de
+procesar con herramientas.
 
-Para los accesorios y el comportamiento de registro de renderer, utilice la
-[custom renderer documentación](/es/bindings/react-native/custom-renderers).
+Para las propiedades de los renderers y el funcionamiento del registro, consulta la
+[documentación de los renderers personalizados](/es/bindings/react-native/custom-renderers).
 
 ## Imágenes de apoyo
 
-React Native requiere referencias de imágenes agrupadas para poder ser descubiertas estáticamente.
-`assets/supporting-images`, luego regenerar la tabla de búsqueda:
+React Native exige que las referencias a imágenes empaquetadas se puedan detectar de forma
+estática. Añade los archivos en `assets/supporting-images` y, después, vuelve a generar la tabla de
+búsqueda:
 
 ```bash
 npm run generate-images
 ```
 
-Comprometer tanto el activo como `src/supporting-images/index.js`. Los scripts de inicio regeneran el archivo,
-y CI verifica que el registro comprometido esté actualizado. Las rutas de imagen HTTP y HTTPS remotas no
-necesita entradas de registro.
+Haz commit tanto del recurso como de `src/supporting-images/index.js`. Los scripts de inicio vuelven
+a generar el archivo, y la CI verifica que el registro incluido en el repositorio está actualizado.
+Las rutas de imagen HTTP y HTTPS remotas no necesitan entradas en el registro.
 
-Consulte [Temas, fuentes e imágenes](/es/bindings/react-native/themes-assets) para las API de nivel binding.
+Consulta [Temas, fuentes e imágenes](/es/bindings/react-native/themes-assets) para las API del
+binding.
