@@ -54,6 +54,7 @@ const documentationItems = [
     [
       doc("getting-started/quickstart", "Quickstart"),
       doc("getting-started/schema-edit", "Edit your first schema"),
+      doc("getting-started/how-form0-compares", "How form0 compares"),
     ],
     { icon: "nav-sparkles" },
   ),

@@ -39,6 +39,7 @@ const normalizePath = (pathname) => stripLocalePrefix(pathname || "").replace(/^
 export function badgesForPath(pathname) {
   const path = normalizePath(pathname)
 
+  if (path === "getting-started/how-form0-compares") return []
   if (path.startsWith("getting-started/")) return ["CLI"]
 
   if (path.startsWith("cli/")) {

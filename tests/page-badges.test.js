@@ -29,4 +29,6 @@ test("badges describe each documentation surface", () => {
 test("temporary and unknown routes have no badges", () => {
   assert.deepEqual(badgesForPath("/guides/coming-soon"), [])
   assert.deepEqual(badgesForPath("/api"), [])
+  assert.deepEqual(badgesForPath("/getting-started/how-form0-compares"), [])
+  assert.deepEqual(badgesForPath("/it/getting-started/how-form0-compares"), [])
 })

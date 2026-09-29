@@ -17,6 +17,9 @@
     },
     "schema-edit": {
       "title": "Edit your first schema"
+    },
+    "how-form0-compares": {
+      "title": "How form0 compares"
     }
   },
   "cli": {

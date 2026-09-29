@@ -2838,8 +2838,8 @@
     "pathname": "/core/security",
     "translationKey": "/core/security",
     "locale": "en",
-    "title": "Security and sandboxing",
-    "description": "Expression security modes in form0-core.",
+    "title": "Executable schema security",
+    "description": "Trust boundaries and expression validation controls in form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5700,8 +5700,8 @@
     "pathname": "/es/core/security",
     "translationKey": "/core/security",
     "locale": "es",
-    "title": "Seguridad y aislamiento",
-    "description": "Modos de seguridad para expresiones en form0-core.",
+    "title": "Seguridad de los esquemas ejecutables",
+    "description": "Límites de confianza y controles de validación de expresiones en form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9058,8 +9058,8 @@
     "pathname": "/fr/core/security",
     "translationKey": "/core/security",
     "locale": "fr",
-    "title": "Sécurité et sandboxing",
-    "description": "Modes de sécurité d'expression dans form0-core.",
+    "title": "Sécurité des schémas exécutables",
+    "description": "Limites de confiance et contrôles de validation des expressions dans form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9574,6 +9574,21 @@
       {
         "locale": "it",
         "pathname": "/it/starter-apps/react-vite/troubleshooting"
+      }
+    ]
+  },
+  "/getting-started/how-form0-compares": {
+    "pathname": "/getting-started/how-form0-compares",
+    "translationKey": "/getting-started/how-form0-compares",
+    "locale": "en",
+    "title": "How form0 compares",
+    "description": "How form0 compares with SurveyJS, Form.io, ODK and XLSForm, JSON Forms, and react-jsonschema-form for schema-driven form logic.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/how-form0-compares"
       }
     ]
   },
@@ -12480,8 +12495,8 @@
     "pathname": "/it/core/security",
     "translationKey": "/core/security",
     "locale": "it",
-    "title": "Sicurezza e sandboxing",
-    "description": "Modalità di sicurezza di espressione in form0-core.",
+    "title": "Sicurezza degli schemi eseguibili",
+    "description": "Confini di fiducia e controlli di validazione delle espressioni in form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
