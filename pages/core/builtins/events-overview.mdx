@@ -19,6 +19,7 @@ interaction or application lifecycle transition.
 ```js
 ON("change", "age", function (event) {
   if ($age >= 18) {
+    // can_vote is a TextField in this example
     SETVALUE("can_vote", "yes")
   }
 })
@@ -60,5 +61,9 @@ Registering one of these handlers with `ON` does not make the event automatic.
 - [`ALERT`](/core/builtins/events/alert)
 - [`SETVALUE`](/core/builtins/events/setvalue)
 
-Event handlers can also use the calculation builtins listed in
-[Calculations & expressions](/core/builtins/calculations-expressions-overview).
+For registration, execution order, handler scope, and operation handling, see
+[Events and operations](/core/engine/events-operations).
+
+Event handlers can also use the shared expression builtins listed in
+[Calculations & expressions](/core/builtins/calculations-expressions-overview). Calculation-only
+builtins such as `SETRESULT` are not available in event handlers.
