@@ -1,33 +1,34 @@
 ---
 title: Modalità e navigazione
-description: Configura modifiche, intestazioni, sezioni, voci ripetibili e navigazione di convalida.
+description: Configura modifica, intestazioni, sezioni, voci ripetibili e navigazione della validazione.
 ---
 
 <PageBadges />
 
 ## Modalità di interazione e azioni
 
-Imposta `mode="edit"` o `mode="readonly"`. Una forma di sola lettura espone l'azione di modifica incorporata;
-`showPrimaryActionsInViewMode` ne controlla la visibilità.
+Imposta `mode="edit"` o `mode="readonly"`. Un modulo in sola lettura mostra l'azione di modifica
+integrata; `showPrimaryActionsInViewMode` ne controlla la visibilità.
 
-L'intestazione incorporata mostra inviare o salvare in base a `primaryActionMode` . Imposta `showHeader={false}`
-quando l'applicazione fornisce la propria intestazione dello schermo e le azioni. `onRequestClose` consente di annullare
-comportamento e protegge le forme sporche con una conferma di scarto.
+L'intestazione integrata mostra l'azione di invio o di salvataggio in base a `primaryActionMode`.
+Imposta `showHeader={false}` quando l'applicazione fornisce una propria intestazione di schermata e
+le proprie azioni. `onRequestClose` abilita l'annullamento e protegge i moduli con modifiche non
+salvate con una conferma di abbandono.
 
 ## Sezioni e validazione
 
-`FormRenderer` possiede:
+`FormRenderer` gestisce:
 
-- navigazione in linea e sezione drilldown;
-- elenco delle sezioni ripetibili e schermate dell'editor;
-- una scheda di navigazione per sezioni e problemi di convalida;
-- spostamento al primo campo non valido dopo un errore di submission;
-- keyboard-aware che scorre in campi focalizzati o non validi.
+- la navigazione tra le sezioni, inline o drilldown;
+- le schermate di elenco e di modifica delle sezioni ripetibili;
+- un pannello di navigazione per le sezioni e i problemi di validazione;
+- lo spostamento al primo campo non valido dopo un invio non riuscito;
+- lo scorrimento, consapevole della tastiera, fino ai campi con il focus o non validi.
 
-`forceShowNavigationPanel` rende disponibile il punto di ingresso di navigazione anche quando il modulo corrente
-struttura normalmente non lo richiederebbe. `keyboardScrollOffset` regola la destinazione verticale
-per intestazioni di applicazioni o altre sovrapposizioni.
+`forceShowNavigationPanel` rende disponibile il punto di accesso alla navigazione anche quando la
+struttura attuale del modulo non lo richiederebbe. `keyboardScrollOffset` regola la destinazione
+verticale per tenere conto delle intestazioni o di altri overlay dell'applicazione.
 
-`labelPosition` accetta `top` o `side`; utilizzare `labelWidthPercent` per dimensionare la colonna dell'etichetta sul lato
-Mantieni il comportamento di navigazione condizionale nello schema invece di duplicarlo nel componente
-Stato.
+`labelPosition` accetta `top` o `side`; usa `labelWidthPercent` per dimensionare la colonna delle
+etichette nel layout laterale. Mantieni nello schema il comportamento condizionale della navigazione
+invece di duplicarlo nello stato del componente.

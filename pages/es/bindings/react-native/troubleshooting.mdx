@@ -1,41 +1,44 @@
 ---
 title: Solución de problemas de React Native
-description: Diagnosticar problemas comunes de instalación, renderización, fuente, activo y persistencia de form0-react-native.
+description: Diagnostica problemas habituales de form0-react-native con la instalación, el renderizado, las fuentes, los recursos y la persistencia.
 ---
 
 <PageBadges />
 
-## Metro no puede resolver una dependencia entre pares
+## Metro no puede resolver una dependencia peer
 
-Instale las versiones compatibles `lucide-react-native` y `react-native-svg`. En Expo, use
-`npx expo install react-native-svg react-native-safe-area-context expo-font` para que el nativo instalado
-los paquetes coinciden con el SDK activo, luego reinicie Metro.
+Instala versiones compatibles de `lucide-react-native` y `react-native-svg`. En Expo, usa
+`npx expo install react-native-svg react-native-safe-area-context expo-font` para que los paquetes
+nativos instalados coincidan con el SDK activo y, después, reinicia Metro.
 
-## El texto utiliza una fuente de reserva
+## El texto usa una fuente alternativa
 
-Cargar `form0Fonts` con `expo-font` antes de renderizar el formulario. Si la aplicación suministra un personalizado
-mantenga sus tokens de familia de fuentes alineados con los nombres cargados en el registro de fuentes nativo.
+Carga `form0Fonts` con `expo-font` antes de renderizar el formulario. Si la aplicación proporciona
+un tema personalizado, mantén sus tokens de familia tipográfica alineados con los nombres cargados
+en el registro nativo de fuentes.
 
 ## Falta una imagen de apoyo local
 
-Los activos locales no se pueden resolver de forma arbitraria. runtime cadenas. Proporcione `imageResolver` con un
-ruta estática al mapa de origen, regenerar el mapa si el starter lo posee, y reiniciar Metro después de agregar
-nuevos activos.
+Los recursos locales no se pueden resolver a partir de cadenas arbitrarias en tiempo de ejecución.
+Proporciona a `imageResolver` un mapa estático de rutas a fuentes, vuelve a generar el mapa si lo
+gestiona el starter y reinicia Metro después de añadir recursos nuevos.
 
-## Un campo dice que no es compatible o provisional
+## Un campo indica que no es compatible o que es provisional
 
-Compruebe [Campo incorporado renderers](/es/bindings/react-native/built-in-renderers). `PhotoField`,
-`VideoField`, y `FormLinkField` necesitan anulaciones de aplicaciones para el comportamiento de producción.
-override se pasa al mismo `FormRenderer` o proveedor de registro que procesa el formulario.
+Consulta [Renderers de campo integrados](/es/bindings/react-native/built-in-renderers).
+`PhotoField`, `VideoField` y `FormLinkField` necesitan renderers propios de la aplicación para
+funcionar en producción. Asegúrate de pasar la sustitución al mismo `FormRenderer` o proveedor de
+registro que renderiza el formulario.
 
-## La sumisión no se ejecuta
+## El envío no se ejecuta
 
-`onSubmit` está activado por validación. Confirme que el formulario está en modo de edición, proporcione un controlador de envío y use
-la hoja de navegación de validación para inspeccionar errores. Para la validación-tolerante drafts, proporcione `onSave`
-y establecer `primaryActionMode="save"`.
+`onSubmit` solo se ejecuta si el formulario supera la validación. Comprueba que el formulario esté
+en modo de edición, proporciona un manejador de envío y usa el panel de navegación de validación
+para revisar los errores. Para guardar borradores aunque no superen la validación, proporciona
+`onSave` y establece `primaryActionMode="save"`.
 
-## Los borradores desaparecen después de reiniciarse
+## Los borradores desaparecen tras reiniciar
 
-Las instantáneas son emitidas pero nunca almacenadas por el binding. Persistirlas a través de `onSnapshotChange` o
-`onSave`, y restaurar el objeto completo con `initialSnapshot`. No lo reemplace con solo el
-valores de campo raw cuando importan entradas o marcas de tiempo repetibles.
+El binding emite snapshots, pero nunca los almacena. Guárdalos mediante `onSnapshotChange` u
+`onSave` y restaura el objeto completo con `initialSnapshot`. No lo sustituyas solo por los valores
+sin procesar de los campos cuando importen las entradas repetibles o las marcas de tiempo.

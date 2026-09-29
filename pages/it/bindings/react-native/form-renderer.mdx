@@ -1,12 +1,12 @@
 ---
 title: FormRenderer
-description: Configurare il componente primario form0 React Native.
+description: Configura il componente principale di form0 per React Native.
 ---
 
 <PageBadges />
 
-`FormRenderer` convalida e prepara una schema, crea il motore del modulo, renderizza i campi nativi e
-Sezioni e produce record strutturati o ripristinabili snapshots.
+`FormRenderer` valida e prepara uno schema, crea il motore del modulo, esegue il rendering di campi e
+sezioni nativi e produce record strutturati o snapshot ripristinabili.
 
 ```jsx
 <FormRenderer
@@ -21,28 +21,30 @@ Sezioni e produce record strutturati o ripristinabili snapshots.
 
 ## Proprietà essenziali
 
-| Proprietà          | Oggetto                                                           |
-| ------------------ | ----------------------------------------------------------------- |
-| `schema`           | Un form0 schema contenente `form.elements`.                       |
-| `initialValues`    | Valori di campo iniziali non ripetibili.                          |
-| `initialSnapshot`  | Ripristinare valori grezzi, stato ripetibile e timestamp insieme. |
-| `overrideValues`   | Applicare valori autorevoli rispetto ai valori iniziali.          |
-| `onSubmit`         | Ricevere un record strutturato con convalida e metadati.          |
-| `onSave`           | Ricevere una snapshot senza richiedere la validità del modulo.    |
-| `onSnapshotChange` | Osservare seed e user-change snapshots.                           |
-| `mode`             | Avviare la modalità `edit` o `readonly`.                          |
+| Proprietà          | Scopo                                                                              |
+| ------------------ | ---------------------------------------------------------------------------------- |
+| `schema`           | Uno schema form0 che contiene `form.elements`.                                     |
+| `initialValues`    | Valori iniziali dei campi non ripetibili.                                          |
+| `initialSnapshot`  | Ripristina insieme valori grezzi, stato delle sezioni ripetibili e timestamp.      |
+| `overrideValues`   | Applica valori prioritari sopra quelli iniziali.                                   |
+| `onSubmit`         | Riceve il record strutturato e i relativi metadati, solo se la validazione riesce. |
+| `onSave`           | Riceve uno snapshot senza richiedere che il modulo sia valido.                     |
+| `onSnapshotChange` | Osserva gli snapshot iniziali e quelli delle modifiche dell'utente.                |
+| `mode`             | Avvia in modalità `edit` o `readonly`.                                             |
 
-## Integrazione host
+## Integrazione con l'applicazione host
 
-- `onRequestClose` consente l'azione di annullamento della radice e riceve `{ reason: "cancel" }` dopo qualsiasi
-  necessaria conferma dello scarto.
-- `headerAccessory` rende il contenuto dell'applicazione immediatamente sotto l'intestazione incorporata.
-- `showHeader` nasconde l'intestazione incorporata quando l'host possiede la navigazione e le azioni circostanti.
-- `primaryActionMode`, `primaryActionLabel` e `showPrimaryActionsInViewMode` personalizzano il
-  azione primaria incorporata.
-- `onSchemaReady` riceve la schema preparata dopo che sono state garantite chiavi stabili.
-- `engineOptions` fornisce helper di base, configurazione di sicurezza, avvisi, gestione delle operazioni e
-  aggiornare l'osservazione.
+- `onRequestClose` abilita l'azione di annullamento principale e riceve `{ reason: "cancel" }` dopo
+  l'eventuale conferma di abbandono.
+- `headerAccessory` esegue il rendering di contenuti dell'applicazione subito sotto l'intestazione
+  integrata.
+- `showHeader` nasconde l'intestazione integrata quando l'applicazione host gestisce la navigazione e
+  le azioni circostanti.
+- `primaryActionMode`, `primaryActionLabel` e `showPrimaryActionsInViewMode` personalizzano l'azione
+  principale integrata.
+- `onSchemaReady` riceve lo schema preparato dopo che sono state garantite chiavi stabili.
+- `engineOptions` fornisce gli helper del nucleo, la configurazione di sicurezza, gli avvisi, la
+  gestione delle operazioni e l'osservazione degli aggiornamenti.
 
-Continua con [Valori, snapshots e submission](/it/bindings/react-native/values-snapshots-submission)
-o [Modi e navigazione](/it/bindings/react-native/modes-navigation).
+Prosegui con [Valori, snapshot e invio](/it/bindings/react-native/values-snapshots-submission)
+oppure [Modalità e navigazione](/it/bindings/react-native/modes-navigation).

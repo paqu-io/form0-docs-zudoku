@@ -91,7 +91,7 @@ Italian keeps "record" (il record, i record), as is usual in Italian technical w
 
 ### Terms kept in English
 
-renderer, binding, host, starter, snapshot, worker, builtin.
+renderer, binding, host, starter, snapshot, worker, builtin, drilldown.
 
 - Use them as masculine nouns in all three languages.
 - In Spanish and French, add `-s` for the plural (los renderers, les bindings). In Italian, the

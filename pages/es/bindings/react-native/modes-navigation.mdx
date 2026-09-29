@@ -1,33 +1,34 @@
 ---
 title: Modos y navegación
-description: Configurar edición, encabezados, secciones, entradas repetibles y navegación de validación.
+description: Configura la edición, los encabezados, las secciones, las entradas repetibles y la navegación de validación.
 ---
 
 <PageBadges />
 
 ## Modo de interacción y acciones
 
-Establecer `mode="edit"` o `mode="readonly"`. Un formulario de solo lectura expone la acción de edición incorporada;
-`showPrimaryActionsInViewMode` controla su visibilidad.
+Establece `mode="edit"` o `mode="readonly"`. Un formulario de solo lectura muestra la acción de
+edición integrada; `showPrimaryActionsInViewMode` controla su visibilidad.
 
-El encabezado incorporado muestra enviar o guardar de acuerdo con `primaryActionMode` . Establecer `showHeader={false}`
-cuando la aplicación proporciona su propio encabezado de pantalla y acciones. `onRequestClose` permite cancelar
-comportamiento y protege las formas sucias con una confirmación de descarte.
+El encabezado integrado muestra la acción de enviar o de guardar según `primaryActionMode`.
+Establece `showHeader={false}` cuando la aplicación proporcione su propio encabezado de pantalla y
+sus propias acciones. `onRequestClose` activa la acción de cancelar y protege los formularios con
+cambios sin guardar mediante una confirmación de descarte.
 
 ## Secciones y validación
 
-`FormRenderer` posee:
+`FormRenderer` se encarga de:
 
-- navegación de la sección en línea y de perforación;
-- Lista de secciones repetibles y pantallas de editor;
-- una hoja de navegación para las secciones y los problemas de validación;
-- movimiento al primer campo no válido después de un error submission;
-- Desplazamiento consciente del teclado a campos enfocados o no válidos.
+- la navegación entre secciones, en línea o drilldown;
+- las pantallas de lista y de edición de las secciones repetibles;
+- un panel de navegación para las secciones y los problemas de validación;
+- el desplazamiento al primer campo no válido después de un envío fallido;
+- el desplazamiento adaptado al teclado hasta los campos con el foco o no válidos.
 
-`forceShowNavigationPanel` hace que el punto de entrada de navegación esté disponible incluso cuando la forma actual
-estructura normalmente no lo requeriría. `keyboardScrollOffset` ajusta el destino vertical
-para encabezados de aplicaciones u otras superposiciones.
+`forceShowNavigationPanel` hace que el acceso a la navegación esté disponible aunque la estructura
+actual del formulario no lo requiera normalmente. `keyboardScrollOffset` ajusta el destino vertical
+del desplazamiento para tener en cuenta los encabezados u otras capas superpuestas de la aplicación.
 
-`labelPosition` acepta `top` o `side`; use `labelWidthPercent` para dimensionar la columna de etiquetas al lado
-Mantener el comportamiento de navegación condicional en el schema en lugar de duplicarlo en el componente
-Estado.
+`labelPosition` acepta `top` o `side`; usa `labelWidthPercent` para dimensionar la columna de
+etiquetas en el diseño lateral. Mantén en el esquema el comportamiento condicional de la navegación
+en lugar de duplicarlo en el estado del componente.

@@ -1,16 +1,16 @@
 ---
 title: Renderers de champ personnalisés
-description: Remplacez la présentation des champs form0 React Native globalement ou dans une sous-arborescence de composants.
+description: Remplacez la présentation des champs form0 dans React Native de façon globale ou dans un sous-arbre de composants.
 ---
 
 <PageBadges />
 
-renderers personnalisé change la présentation native sans déplacer les calculs, la visibilité,
-exigences, ou validation de `form0-core`.
+Les renderers personnalisés modifient la présentation native sans sortir de `form0-core` les
+calculs, la visibilité, le caractère obligatoire ni la validation.
 
-## Per-form remplace
+## Surcharges par formulaire
 
-Passez une carte renderer directement à `FormRenderer` pour une forme isolée:
+Transmettez une table de renderers directement à `FormRenderer` pour un formulaire isolé :
 
 ```jsx
 import { FormRenderer } from "form0-react-native"
@@ -19,7 +19,7 @@ import { PhotoField } from "./photo-field.jsx"
 ;<FormRenderer schema={schema} renderers={{ PhotoField }} />
 ```
 
-Un renderer reçoit le champ et son état d'interaction évalué:
+Un renderer reçoit le champ et son état d’interaction évalué :
 
 ```jsx
 function PhotoField({ field, value, onChange, readOnly, required, error, inputProps }) {
@@ -27,15 +27,16 @@ function PhotoField({ field, value, onChange, readOnly, required, error, inputPr
 }
 ```
 
-Préservez les propriétés applicables de `inputProps`, et appelez `onChange` avec la forme de valeur attendue
-par les limites schema et submission.
+Conservez les propriétés applicables de `inputProps` et appelez `onChange` avec la forme de valeur
+attendue par le schéma et la soumission.
 
-## Fournisseurs, registres et remplacements globaux
+## Fournisseurs, registres et surcharges globales
 
-Utilisez `FieldRegistryProvider` pour une substitution de sous-arbre ou
-`createFieldRegistry({ includeDefaults, renderers })` pour une instance de Registre explicite.
-`registerFieldComponent`, `unregisterFieldComponent`, et `resetFieldComponents`
-helpers muter le registre par défaut partagé et sont mieux réservés pour le code ou les tests bootstrap.
+Utilisez `FieldRegistryProvider` pour une surcharge limitée à un sous-arbre ou
+`createFieldRegistry({ includeDefaults, renderers })` pour une instance de registre explicite. Les
+fonctions de module `registerFieldComponent`, `unregisterFieldComponent` et `resetFieldComponents`
+modifient le registre par défaut partagé ; réservez-les au code d’amorçage ou aux tests.
 
-Seuls les types de champs déclarés par `form0-core` peuvent être enregistrés.
-défini dans Core; un renderer natif seul ne peut pas prolonger le contrat schema.
+Seuls les types de champs déclarés par `form0-core` peuvent être enregistrés. Un nouveau type de
+champ doit d’abord être défini dans le noyau ; un renderer natif ne suffit pas à étendre le contrat
+du schéma.

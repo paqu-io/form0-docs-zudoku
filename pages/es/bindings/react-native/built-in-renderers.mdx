@@ -1,25 +1,30 @@
 ---
-title: Renderizadores de campo integrados
-description: Tipos de campo renderizados por form0-react-native sin personalizaciones.
+title: Renderers de campo integrados
+description: Tipos de campo que form0-react-native renderiza sin que la aplicación los sustituya.
 ---
 
 <PageBadges />
 
-`form0-react-native` proporciona componentes nativos para la mayoría de tipos públicos definidos
-por `form0-core`. El [catálogo de campos](/es/core/fields/catalog) sigue definiendo el contrato.
+`form0-react-native` ofrece renderers nativos predeterminados para la mayoría de los tipos de campo
+públicos que define `form0-core`. El comportamiento del esquema y los atributos admitidos siguen
+definidos en el [Catálogo de campos](/es/core/fields/catalog).
 
-| Grupo                    | Tipos renderizados                                      |
-| ------------------------ | ------------------------------------------------------- |
-| Texto y números          | `TextField`, `NumericField`, `CalculatedField`          |
-| Opciones                 | `SingleChoiceField`, `MultiChoiceField`, `BooleanField` |
-| Fecha y hora             | `DateField`, `TimeField`                                |
-| Presentación y metadatos | `LabelField`, `TitleField`, `StatusField`               |
-| Firma                    | `SignatureField`                                        |
+| Grupo                                  | Tipos renderizados                                      |
+| -------------------------------------- | ------------------------------------------------------- |
+| Texto y números                        | `TextField`, `NumericField`, `CalculatedField`          |
+| Opciones                               | `SingleChoiceField`, `MultiChoiceField`, `BooleanField` |
+| Fecha y hora                           | `DateField`, `TimeField`                                |
+| Visualización y metadatos del registro | `LabelField`, `TitleField`, `StatusField`               |
+| Firma                                  | `SignatureField`                                        |
 
-`Section` y `RepeatableSection` son nodos estructurales gestionados por `FormRenderer`.
+`Section` y `RepeatableSection` son nodos estructurales. `FormRenderer` los gestiona mediante la
+navegación en línea o drilldown, no mediante el registro de campos.
 
-`PhotoField`, `VideoField` y `FormLinkField` usan actualmente componentes provisionales. Proporciona
-renderizadores de aplicación antes de usarlos en producción. La captura, permisos, almacenamiento,
-subida y retención de medios son responsabilidad de la aplicación.
+`PhotoField`, `VideoField` y `FormLinkField` usan por ahora renderers predeterminados provisionales.
+Proporciona renderers propios de la aplicación antes de usar esos campos en producción. La captura
+de multimedia, los permisos, el almacenamiento local, la subida y la conservación de los archivos
+siguen siendo responsabilidad de la aplicación.
 
-Usa `KNOWN_FIELD_TYPES` y `getMissingFieldComponentTypes()` para inspeccionar la cobertura.
+Usa `KNOWN_FIELD_TYPES` para consultar el conjunto de tipos registrables y
+`getMissingFieldComponentTypes()` durante el desarrollo para detectar renderers predeterminados o
+personalizados que falten.

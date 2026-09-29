@@ -1,32 +1,32 @@
 ---
 title: Instalar y renderizar con React Native
-description: Instale form0-react-native y reproduzca un schema en una aplicación React Native o Expo.
+description: Instala form0-react-native y renderiza un esquema en una aplicación React Native o Expo.
 ---
 
 <PageBadges />
 
-Para una nueva aplicación móvil, utilice el comando [CLI quickstart](/es/getting-started/quickstart).
-React Native y Expo starter incluye el binding, carga de fuentes, ejemplo schemas, soporte
-imágenes y persistencia local SQLite.
+Para una aplicación móvil nueva, usa el [inicio rápido de la CLI](/es/getting-started/quickstart).
+El starter mantenido de React Native y Expo incluye el binding, la carga de fuentes, esquemas de
+ejemplo, imágenes de apoyo y persistencia local con SQLite.
 
-Para agregar form0 a una aplicación existente:
+Para añadir form0 a una aplicación existente:
 
 ```bash
 npm install form0-react-native form0-core lucide-react-native
 ```
 
-Instale dependencias de pares nativas con versiones compatibles con su aplicación. En Expo:
+Instala las dependencias peer nativas en versiones compatibles con tu aplicación. En Expo:
 
 ```bash
 npx expo install react-native-svg react-native-safe-area-context expo-font
 ```
 
-El paquete requiere Node.js 22 o más reciente para instalación y herramientas, React 18 o 19, y React
-Nativo 0.72 o más reciente. `react-native-safe-area-context` es opcional, pero permite el encabezado incorporado
-Cuando esté instalado, envuelva la raíz de la aplicación en su
-`SafeAreaProvider`.
+El paquete requiere Node.js 22 o posterior para la instalación y las herramientas, React 18 o 19 y
+React Native 0.72 o posterior. `react-native-safe-area-context` es opcional, pero permite que el
+encabezado integrado respete el área segura del dispositivo. Si lo instalas, envuelve la raíz de la
+aplicación en su `SafeAreaProvider`.
 
-## Renderizar un schema
+## Renderiza un esquema
 
 ```jsx
 import { FormRenderer } from "form0-react-native"
@@ -45,9 +45,9 @@ export function ContactForm() {
 }
 ```
 
-`schema` debe contener un objeto de formulario `form0-core` válido. Comenzar con
-[Edite su primer schema](/es/getting-started/schema-edit) o revise el
-[Formulario objeto](/es/core/schema/form).
+`schema` debe contener un objeto de formulario válido de `form0-core`. Empieza por
+[Editar tu primer esquema](/es/getting-started/schema-edit) o consulta el
+[Objeto formulario](/es/core/schema/form).
 
-Cargue las fuentes empaquetadas antes de mostrar el formulario para la tipografía deseada. Ver
-[Temas, fuentes e imágenes](/es/bindings/react-native/themes-assets).
+Carga las fuentes incluidas en el paquete antes de mostrar el formulario para obtener la tipografía
+prevista. Consulta [Temas, fuentes e imágenes](/es/bindings/react-native/themes-assets).

@@ -1,41 +1,44 @@
 ---
 title: Risoluzione dei problemi di React Native
-description: Diagnosticare i problemi comuni di installazione, rendering, font, risorse e persistenza di form0-react-native.
+description: Diagnostica i problemi più comuni di form0-react-native con installazione, rendering, font, risorse e persistenza.
 ---
 
 <PageBadges />
 
-## Metro non può risolvere una dipendenza peer
+## Metro non riesce a risolvere una dipendenza peer
 
-Installare le versioni compatibili `lucide-react-native` e `react-native-svg`. In Expo, utilizzare
-`npx expo install react-native-svg react-native-safe-area-context expo-font` quindi il nativo installato
-I pacchetti corrispondono a SDK attivo, quindi riavviare Metro.
+Installa versioni compatibili di `lucide-react-native` e `react-native-svg`. Con Expo, usa
+`npx expo install react-native-svg react-native-safe-area-context expo-font` in modo che i pacchetti
+nativi installati corrispondano all'SDK attivo, poi riavvia Metro.
 
-## Il testo utilizza un carattere di fallback
+## Il testo usa un font di ripiego
 
-Caricare `form0Fonts` con `expo-font` prima di eseguire il rendering del modulo.
-tema, mantenere i suoi token font-famiglia allineati con i nomi caricati nel registro dei font nativi.
+Carica `form0Fonts` con `expo-font` prima di eseguire il rendering del modulo. Se l'applicazione
+fornisce un tema personalizzato, mantieni i token della famiglia di font allineati ai nomi caricati
+nel registro nativo dei font.
 
 ## Manca un'immagine di supporto locale
 
-Le risorse locali non possono essere risolte da arbitrari runtime stringhe. Fornire `imageResolver` con a
-mappa statica path-to-source, rigenerare la mappa se starter la possiede e riavviare Metro dopo l'aggiunta
-nuovi asset.
+Le risorse locali non possono essere risolte a partire da stringhe arbitrarie a runtime. Fornisci a
+`imageResolver` una mappa statica dai percorsi alle sorgenti, rigenera la mappa se è gestita dallo
+starter e riavvia Metro dopo aver aggiunto nuove risorse.
 
-## Un campo dice che non è supportato o provvisorio
+## Un campo risulta non supportato o provvisorio
 
-Controllare [Campo integrato renderers](/it/bindings/react-native/built-in-renderers). `PhotoField`,
-`VideoField`, e `FormLinkField` hanno bisogno di override delle applicazioni per il comportamento di produzione.
-l'override viene passato allo stesso provider del Registro di sistema o `FormRenderer` che esegue il rendering del modulo.
+Consulta [Renderer di campo integrati](/it/bindings/react-native/built-in-renderers). `PhotoField`,
+`VideoField` e `FormLinkField` richiedono override dell'applicazione per il comportamento in
+produzione. Assicurati che l'override sia passato allo stesso `FormRenderer` o provider di registro
+che esegue il rendering del modulo.
 
-## La presentazione non viene eseguita
+## L'invio non viene eseguito
 
-`onSubmit` è convalidato. Confermare che il modulo è in modalità di modifica, fornire un gestore di invio e utilizzare
-il foglio di navigazione di convalida per ispezionare gli errori. Per drafts tollerante di convalida, fornire `onSave`
-e impostare `primaryActionMode="save"`.
+`onSubmit` viene chiamato solo se la validazione riesce. Verifica che il modulo sia in modalità di
+modifica, fornisci un gestore di invio e usa il pannello di navigazione della validazione per
+esaminare gli errori. Per bozze salvabili anche in presenza di errori di validazione, fornisci
+`onSave` e imposta `primaryActionMode="save"`.
 
 ## Le bozze scompaiono dopo il riavvio
 
-Le istantanee vengono emesse ma mai memorizzate da binding. Persistere attraverso `onSnapshotChange` o
-`onSave`, e ripristinare l'oggetto completo con `initialSnapshot`. Non sostituirlo con solo il
-I valori dei campi grezzi quando le voci o i timestamp ripetibili contano.
+Il binding emette gli snapshot, ma non li memorizza mai. Rendili persistenti tramite
+`onSnapshotChange` o `onSave` e ripristina l'oggetto completo con `initialSnapshot`. Non sostituirlo
+con i soli valori grezzi dei campi quando contano le voci ripetibili o i timestamp.

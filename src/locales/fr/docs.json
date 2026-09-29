@@ -117,7 +117,7 @@
       "troubleshooting": { "title": "Dépannage React" }
     },
     "react-native": {
-      "install-render": { "title": "Installer et afficher avec React Native" },
+      "install-render": { "title": "Installer et afficher" },
       "form-renderer": { "title": "FormRenderer" },
       "values-snapshots-submission": { "title": "Valeurs, snapshots et soumission" },
       "built-in-renderers": { "title": "Renderers de champ intégrés" },
@@ -126,7 +126,7 @@
       "themes-assets": { "title": "Thèmes, polices et images" },
       "mobile-integration": { "title": "Intégration mobile" },
       "api-reference": { "title": "Référence de l'API React Native" },
-      "troubleshooting": { "title": "Résolution des problèmes React Native" }
+      "troubleshooting": { "title": "Dépannage React Native" }
     }
   },
   "core": {

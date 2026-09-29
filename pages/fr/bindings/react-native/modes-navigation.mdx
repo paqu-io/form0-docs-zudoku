@@ -1,33 +1,34 @@
 ---
 title: Modes et navigation
-description: Configurez l'édition, les en-têtes, les sections, les entrées reproductibles et la navigation de validation.
+description: Configurez l’édition, les en-têtes, les sections, les entrées répétables et la navigation de validation.
 ---
 
 <PageBadges />
 
-## Mode d'interaction et actions
+## Mode d’interaction et actions
 
-Définir `mode="edit"` ou `mode="readonly"`. Un formulaire en lecture seule expose l'action d'édition intégrée;
-`showPrimaryActionsInViewMode` contrôle sa visibilité.
+Définissez `mode="edit"` ou `mode="readonly"`. Un formulaire en lecture seule affiche l’action de
+modification intégrée ; `showPrimaryActionsInViewMode` contrôle sa visibilité.
 
-L'en-tête intégré affiche soumettre ou enregistrer selon `primaryActionMode`. Définir `showHeader={false}`
-lorsque l'application fournit son propre en-tête d'écran et ses propres actions. `onRequestClose` permet d'annuler
-comportement et protège les formes sales avec une confirmation de rejet.
+L’en-tête intégré affiche l’action de soumission ou d’enregistrement selon `primaryActionMode`.
+Définissez `showHeader={false}` lorsque l’application fournit son propre en-tête d’écran et ses
+propres actions. `onRequestClose` active l’annulation et protège les formulaires modifiés par une
+confirmation d’abandon.
 
 ## Sections et validation
 
-`FormRenderer` possède:
+`FormRenderer` gère :
 
-- navigation en ligne et section drilldown;
-- liste des sections reproductibles et écrans de l'éditeur;
-- une fiche de navigation pour les sections et les questions de validation;
-- déplacement vers le premier champ invalide après une défaillance de submission;
-- le défilement sensible au clavier vers des champs ciblés ou non valides.
+- la navigation entre sections, en ligne ou drilldown ;
+- les écrans de liste et d’édition des sections répétables ;
+- un panneau de navigation pour les sections et les problèmes de validation ;
+- le déplacement vers le premier champ non valide après une soumission échouée ;
+- le défilement adapté au clavier vers les champs ayant le focus ou non valides.
 
-`forceShowNavigationPanel` rend le point d'entrée de navigation disponible même lorsque le formulaire actuel
-n'en aurait normalement pas besoin. `keyboardScrollOffset` ajuste la destination verticale
-pour les en-têtes d'application ou autres superpositions.
+`forceShowNavigationPanel` rend le point d’accès à la navigation disponible même lorsque la
+structure actuelle du formulaire ne l’exigerait pas normalement. `keyboardScrollOffset` ajuste la
+destination verticale pour tenir compte des en-têtes ou autres superpositions de l’application.
 
-`labelPosition` accepte `top` ou `side`; utilisez `labelWidthPercent` pour dimensionner la colonne d'étiquette dans le côté
-Conservez le comportement de navigation conditionnelle dans le schema au lieu de le dupliquer dans le composant
-État.
+`labelPosition` accepte `top` ou `side` ; utilisez `labelWidthPercent` pour dimensionner la colonne
+des libellés dans la disposition latérale. Gardez le comportement conditionnel de la navigation dans
+le schéma au lieu de le dupliquer dans l’état du composant.
