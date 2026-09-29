@@ -1,10 +1,14 @@
 ---
 title: Configuración del proyecto
-description: Configuración local del proyecto y preferencias de usuario utilizadas por form0-cli.
+description: Entiende la configuración local del proyecto y del usuario que usa form0-cli.
 ---
 
 <PageBadges />
 
-Los ajustes del proyecto viven en `form0.config.js`. Los valores específicos de la máquina y las
-credenciales de conectores deben guardarse en `.env.local`. No publiques secretos ni bases de datos
-locales que contengan envíos reales.
+La configuración del proyecto vive en `form0.config.js`. Según el tipo de proyecto, puede describir
+la ubicación de los esquemas, los servidores de desarrollo de la aplicación, los temas, el
+almacenamiento y los conectores.
+
+Los valores propios de cada máquina y las credenciales de los conectores van en `.env.local`. La CLI
+gestiona por separado las preferencias del usuario, como el tema y el idioma de la CLI. No subas al
+repositorio secretos ni archivos de bases de datos locales que contengan envíos reales.

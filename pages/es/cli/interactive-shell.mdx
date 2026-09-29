@@ -1,35 +1,36 @@
 ---
-title: Shell interactivo
-description: Trabaja con un esquema cargado en una sesión persistente de form0-cli.
+title: Shell interactiva
+description: Trabaja con un esquema de formulario cargado en una sesión persistente de form0-cli.
 ---
 
 <PageBadges />
 
-Ejecuta `form0` sin argumentos para iniciar el shell interactivo. Una sesión puede mantener un
-esquema cargado mientras lo validas, previsualizas, ejecutas, observas, editas o sirves.
+Ejecuta `form0` sin argumentos para iniciar la shell interactiva. Una sesión puede mantener un
+esquema cargado mientras lo validas, lo previsualizas, lo ejecutas, lo observas, lo editas o lo sirves.
 
-Usa `help` para listar los comandos disponibles en el modo actual, `status` para inspeccionar la
-sesión y `exit` para salir. Comandos como `load`, `schema edit` y `serve` actualizan el prompt para
-mostrar el estado activo.
+Usa `help` para ver los comandos disponibles en el modo actual, `status` para consultar el estado de
+la sesión y `exit` para salir de la CLI. Comandos como `load`, `schema edit` y `serve` actualizan el
+prompt para mostrar el estado activo de la sesión.
 
-## Sintaxis según el modo
+## Sintaxis de comandos por modo
 
-| Prompt              | Comportamiento de la entrada                                                                                    |
-| ------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `form0>`            | Introduce comandos de shell sin prefijo.                                                                        |
-| `form0(server)>`    | Usa los comandos seguros mostrados por `help`, como `validate`, `preview`, `serve status`, `serve stop` o `ai`. |
-| `form0(schema)>`    | Introduce comandos del editor de esquemas sin prefijo.                                                          |
-| `form0(ai)>`        | El texto sin prefijo va al modelo; las acciones de la CLI siempre empiezan por `/`.                             |
-| `form0(server,ai)>` | Usa comandos AI con barra, como `/preview`, `/validate`, `/serve status` y `/serve stop`.                       |
+| Prompt              | Comportamiento de la entrada                                                                                                            |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `form0>`            | Introduce los comandos de la shell sin prefijo.                                                                                         |
+| `form0(server)>`    | Introduce los comandos compatibles con el servidor que muestra `help`, como `validate`, `preview`, `serve status`, `serve stop` o `ai`. |
+| `form0(schema)>`    | Introduce los comandos del editor de esquemas sin prefijo.                                                                              |
+| `form0(ai)>`        | El texto sin prefijo se envía al modelo; las acciones de la CLI siempre empiezan por `/`.                                               |
+| `form0(server,ai)>` | Usa los comandos con barra del modo IA, como `/preview`, `/validate`, `/serve status` y `/serve stop`.                                  |
 
-Así, las solicitudes en lenguaje natural no son ambiguas en el modo AI y los demás modos conservan
-la sintaxis breve.
+Así, las peticiones en lenguaje natural no son ambiguas en el modo IA, y el resto de la shell conserva
+su sintaxis concisa.
 
-La instalación de conectores es un comando de terminal, no una acción del shell interactivo:
+La instalación de conectores es un comando de terminal, no una acción de la shell interactiva:
 
 ```bash
 form0 connector install <name-or-path>
 form0 connector --help
 ```
 
-Dentro del shell, usa `connector help` para cargar, configurar, probar y consultar conectores.
+Dentro de la shell, usa `connector help` para cargar, configurar, probar y consultar el estado de los
+conectores.
