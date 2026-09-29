@@ -57,26 +57,30 @@
   "starter-apps": {
     "overview": { "title": "Panoramica delle app starter" },
     "react-vite": {
-      "create-run": { "title": "Crea e avvia l’app React e Vite" },
+      "create-run": { "title": "Creare ed eseguire lo starter React e Vite" },
       "project-structure-configuration": {
         "title": "Struttura e configurazione del progetto React e Vite"
       },
       "forms-routes-presentations": { "title": "Moduli, route e presentazioni" },
       "renderers-themes-styling": { "title": "Renderer, temi e stili" },
       "submissions-connectors": { "title": "Invii e connettori" },
-      "build-deployment": { "title": "Build e distribuzione dell’app React e Vite" },
-      "troubleshooting": { "title": "Risoluzione dei problemi React e Vite" }
+      "build-deployment": { "title": "Compilare e distribuire lo starter React e Vite" },
+      "troubleshooting": { "title": "Risoluzione dei problemi dello starter React e Vite" }
     },
     "react-native-expo": {
-      "create-run": { "title": "Crea e avvia lo starter React Native ed Expo" },
+      "create-run": { "title": "Creare e avviare lo starter React Native ed Expo" },
       "project-structure-configuration": {
         "title": "Struttura e configurazione del progetto React Native ed Expo"
       },
-      "forms-screens-navigation": { "title": "Moduli, schermate e navigazione" },
-      "renderers-themes-fonts-images": { "title": "Renderer, temi, font e immagini" },
+      "forms-screens-navigation": {
+        "title": "Moduli, schermate e navigazione nello starter mobile"
+      },
+      "renderers-themes-fonts-images": {
+        "title": "Renderer, temi, font e immagini nello starter mobile"
+      },
       "device-development-networking": { "title": "Sviluppo su dispositivo e rete" },
       "local-storage-submissions": { "title": "Archiviazione locale e invii" },
-      "build-distribution": { "title": "Compila e distribuisci lo starter React Native ed Expo" },
+      "build-distribution": { "title": "Compilare e distribuire lo starter React Native ed Expo" },
       "troubleshooting": { "title": "Risoluzione dei problemi dello starter React Native ed Expo" }
     }
   },
@@ -101,24 +105,24 @@
       "install-render": { "title": "Installazione e rendering" },
       "form-renderer": { "title": "FormRenderer" },
       "values-snapshots-submission": { "title": "Valori, snapshot e invio" },
-      "built-in-renderers": { "title": "Renderer inclusi" },
-      "custom-renderers": { "title": "Renderer personalizzati" },
+      "built-in-renderers": { "title": "Renderer di campo integrati" },
+      "custom-renderers": { "title": "Renderer di campo personalizzati" },
       "modes-placement-navigation": { "title": "Modalità, posizionamento e navigazione" },
       "themes-styling": { "title": "Temi e stili" },
       "workers-performance": { "title": "Worker e prestazioni" },
-      "api-reference": { "title": "Riferimento API React" },
+      "api-reference": { "title": "Riferimento API di React" },
       "troubleshooting": { "title": "Risoluzione dei problemi React" }
     },
     "react-native": {
-      "install-render": { "title": "Installazione e rendering" },
+      "install-render": { "title": "Installazione e rendering con React Native" },
       "form-renderer": { "title": "FormRenderer" },
       "values-snapshots-submission": { "title": "Valori, snapshot e invio" },
       "built-in-renderers": { "title": "Renderer integrati" },
-      "custom-renderers": { "title": "Renderer personalizzati" },
+      "custom-renderers": { "title": "Renderer di campo personalizzati" },
       "modes-navigation": { "title": "Modalità e navigazione" },
       "themes-assets": { "title": "Temi, font e immagini" },
       "mobile-integration": { "title": "Integrazione mobile" },
-      "api-reference": { "title": "Riferimento API React Native" },
+      "api-reference": { "title": "Riferimento API di React Native" },
       "troubleshooting": { "title": "Risoluzione dei problemi React Native" }
     }
   },
@@ -148,7 +152,7 @@
         "title": "Oggetto form"
       },
       "form-attributes": {
-        "title": "Attributi del form"
+        "title": "Attributi del modulo"
       },
       "elements": {
         "title": "Elementi e annidamento"

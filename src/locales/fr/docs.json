@@ -41,7 +41,7 @@
       "import-export-csv": { "title": "Importer et exporter en CSV" }
     },
     "local-development": {
-      "live-preview": { "title": "Serveur de prévisualisation" },
+      "live-preview": { "title": "Serveur d'aperçu en direct" },
       "app-development-servers": { "title": "Serveurs de développement d’applications" }
     },
     "project-configuration": { "title": "Configuration du projet" },
@@ -57,23 +57,27 @@
   "starter-apps": {
     "overview": { "title": "Aperçu des applications de démarrage" },
     "react-vite": {
-      "create-run": { "title": "Créer et exécuter l’application React et Vite" },
+      "create-run": { "title": "Créer et exécuter le starter React et Vite" },
       "project-structure-configuration": {
         "title": "Structure et configuration du projet React et Vite"
       },
       "forms-routes-presentations": { "title": "Formulaires, routes et présentations" },
-      "renderers-themes-styling": { "title": "Rendus, thèmes et styles" },
+      "renderers-themes-styling": { "title": "Renderers, thèmes et styles" },
       "submissions-connectors": { "title": "Soumissions et connecteurs" },
-      "build-deployment": { "title": "Builder et déployer l’application React et Vite" },
-      "troubleshooting": { "title": "Résolution des problèmes React et Vite" }
+      "build-deployment": { "title": "Compiler et déployer le starter React et Vite" },
+      "troubleshooting": { "title": "Dépannage du starter React et Vite" }
     },
     "react-native-expo": {
       "create-run": { "title": "Créer et exécuter le starter React Native et Expo" },
       "project-structure-configuration": {
         "title": "Structure et configuration du projet React Native et Expo"
       },
-      "forms-screens-navigation": { "title": "Formulaires, écrans et navigation" },
-      "renderers-themes-fonts-images": { "title": "Renderers, thèmes, polices et images" },
+      "forms-screens-navigation": {
+        "title": "Formulaires, écrans et navigation dans le starter mobile"
+      },
+      "renderers-themes-fonts-images": {
+        "title": "Renderers, thèmes, polices et images dans le starter mobile"
+      },
       "device-development-networking": { "title": "Développement sur appareil et réseau" },
       "local-storage-submissions": { "title": "Stockage local et soumissions" },
       "build-distribution": { "title": "Compiler et distribuer le starter React Native et Expo" },
@@ -100,25 +104,25 @@
     "react": {
       "install-render": { "title": "Installer et afficher" },
       "form-renderer": { "title": "FormRenderer" },
-      "values-snapshots-submission": { "title": "Valeurs, instantanés et soumission" },
-      "built-in-renderers": { "title": "Rendus intégrés" },
-      "custom-renderers": { "title": "Rendus personnalisés" },
+      "values-snapshots-submission": { "title": "Valeurs, snapshots et soumission" },
+      "built-in-renderers": { "title": "Renderers de champ intégrés" },
+      "custom-renderers": { "title": "Renderers de champ personnalisés" },
       "modes-placement-navigation": { "title": "Modes, emplacement et navigation" },
       "themes-styling": { "title": "Thèmes et styles" },
       "workers-performance": { "title": "Workers et performances" },
-      "api-reference": { "title": "Référence de l’API React" },
+      "api-reference": { "title": "Référence de l'API React" },
       "troubleshooting": { "title": "Résolution des problèmes React" }
     },
     "react-native": {
-      "install-render": { "title": "Installer et afficher" },
+      "install-render": { "title": "Installer et afficher avec React Native" },
       "form-renderer": { "title": "FormRenderer" },
-      "values-snapshots-submission": { "title": "Valeurs, instantanés et envoi" },
-      "built-in-renderers": { "title": "Rendus intégrés" },
-      "custom-renderers": { "title": "Rendus personnalisés" },
+      "values-snapshots-submission": { "title": "Valeurs, snapshots et soumission" },
+      "built-in-renderers": { "title": "Renderers de champ intégrés" },
+      "custom-renderers": { "title": "Renderers de champ personnalisés" },
       "modes-navigation": { "title": "Modes et navigation" },
       "themes-assets": { "title": "Thèmes, polices et images" },
       "mobile-integration": { "title": "Intégration mobile" },
-      "api-reference": { "title": "Référence de l’API React Native" },
+      "api-reference": { "title": "Référence de l'API React Native" },
       "troubleshooting": { "title": "Résolution des problèmes React Native" }
     }
   },
@@ -174,13 +178,13 @@
         "title": "Champs calculés"
       },
       "media-fields": {
-        "title": "Champs multimédias"
+        "title": "Champs média"
       },
       "containers": {
         "title": "Conteneurs"
       },
       "meta-fields": {
-        "title": "Métachamps"
+        "title": "Champs méta"
       }
     },
     "builtins": {
