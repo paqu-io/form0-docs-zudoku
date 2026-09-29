@@ -5,8 +5,8 @@
 
 import { ArrowMarkers, diagramStyle as s } from "./diagram-style.jsx"
 
-const STEP_WIDTH = 86
-const STEP_GAP = 10
+const STEP_WIDTH = 90
+const STEP_GAP = 8
 const FIRST_STEP_X = 188
 const PASS_STEPS = [
   ["calculations"],
@@ -26,7 +26,7 @@ export function EvaluationCycleDiagram({ label, ariaLabel }) {
 
   return (
     <svg
-      viewBox="0 0 882 262"
+      viewBox="0 0 906 262"
       role="img"
       aria-label={ariaLabel}
       style={{ width: "100%", minWidth: 640, height: "auto" }}
@@ -47,7 +47,7 @@ export function EvaluationCycleDiagram({ label, ariaLabel }) {
         setValue
       </text>
 
-      <rect x="176" y="18" width="494" height="104" rx="8" style={s.frame} />
+      <rect x="176" y="18" width="506" height="104" rx="8" style={s.frame} />
       <text x="190" y="38" style={s.title}>
         eval()
       </text>
@@ -89,35 +89,35 @@ export function EvaluationCycleDiagram({ label, ariaLabel }) {
         )
       })}
 
-      <line x1="670" y1="70" x2="708" y2="70" markerEnd={arrow} style={s.wire} />
-      <text x="689" y="61" textAnchor="middle" style={s.label}>
+      <line x1="682" y1="70" x2="732" y2="70" markerEnd={arrow} style={s.wire} />
+      <text x="707" y="61" textAnchor="middle" style={s.label}>
         {label("state")}
       </text>
 
-      <rect x="712" y="42" width="160" height="56" rx="6" style={s.box} />
-      <text x="792" y="66" textAnchor="middle" style={s.text}>
+      <rect x="736" y="42" width="160" height="56" rx="6" style={s.box} />
+      <text x="816" y="66" textAnchor="middle" style={s.text}>
         {label("renderer")}
       </text>
-      <text x="792" y="84" textAnchor="middle" style={s.sub}>
+      <text x="816" y="84" textAnchor="middle" style={s.sub}>
         {label("rerenders")}
       </text>
 
-      <line x1="792" y1="98" x2="792" y2="186" markerEnd={arrow} style={s.wire} />
-      <text x="784" y="148" textAnchor="end" style={monoLabel}>
+      <line x1="816" y1="98" x2="816" y2="186" markerEnd={arrow} style={s.wire} />
+      <text x="808" y="148" textAnchor="end" style={monoLabel}>
         trigger('change')
       </text>
 
       {/* Bottom lane, right to left: handler → operations → host → back into eval() */}
-      <rect x="712" y="190" width="160" height="56" rx="6" style={s.box} />
-      <text x="792" y="214" textAnchor="middle" style={s.code}>
+      <rect x="736" y="190" width="160" height="56" rx="6" style={s.box} />
+      <text x="816" y="214" textAnchor="middle" style={s.code}>
         ON('change')
       </text>
-      <text x="792" y="232" textAnchor="middle" style={s.sub}>
+      <text x="816" y="232" textAnchor="middle" style={s.sub}>
         {label("handlerRuns")}
       </text>
 
-      <line x1="712" y1="218" x2="646" y2="218" markerEnd={arrow} style={s.wire} />
-      <text x="679" y="209" textAnchor="middle" style={s.label}>
+      <line x1="736" y1="218" x2="646" y2="218" markerEnd={arrow} style={s.wire} />
+      <text x="691" y="209" textAnchor="middle" style={s.label}>
         {label("returns")}
       </text>
 
