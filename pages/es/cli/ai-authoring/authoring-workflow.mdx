@@ -1,17 +1,18 @@
 ---
 title: Flujo de creación con IA
-description: Comprende las mutaciones, validación completa, revisión, aprobación, reversión y conflictos.
+description: Entiende las mutaciones semánticas, la validación del esquema completo, la revisión de borradores, la aprobación, el deshacer y los conflictos.
 ---
 
 <PageBadges />
 
 ## Contexto completo, acciones limitadas
 
-Cada solicitud incluye el esquema actual completo y un catálogo de creación versionado del
-form0-core instalado. El catálogo describe campos, atributos, operadores, builtins, eventos,
-referencias, cálculos y metadatos AI existentes.
+Cada petición incluye el esquema actual completo y un catálogo de creación versionado del form0-core
+instalado. El catálogo describe los campos, los atributos, los operadores, los builtins, los
+eventos, las referencias, los cálculos y los metadatos de IA existentes.
 
-El agente no puede sustituir el documento raíz ni escribir archivos. Puede proponer estas operaciones:
+El agente no puede sustituir el documento raíz ni escribir archivos. Puede proponer estas
+operaciones semánticas:
 
 - `updateForm`
 - `addField`, `updateField`, `moveField` y `removeField`
@@ -19,26 +20,27 @@ El agente no puede sustituir el documento raíz ni escribir archivos. Puede prop
 - `setCalculation`
 - `setFormEventCode`
 
-Los campos se identifican por claves estables. Los cambios de nombre seguros actualizan referencias;
-las eliminaciones inseguras y los destinos no resueltos se rechazan.
+Los campos se identifican por claves estables. Los renombrados seguros actualizan las referencias
+reconocidas; las eliminaciones inseguras y los destinos sin resolver se rechazan.
 
 ## Validación antes de la vista previa
 
-form0-core aplica el lote propuesto a una copia en memoria. El esquema original no se modifica.
+form0-core aplica el lote propuesto a una copia en memoria, sin modificar el esquema original.
 Después valida el resultado completo, incluidos:
 
-- reglas del esquema y los atributos
-- condiciones y referencias a campos
-- expresiones calculadas, dependencias y ciclos
-- ámbito de secciones repetibles
-- tipos de eventos, referencias y sintaxis JavaScript
+- las reglas del esquema y de los atributos
+- las condiciones y las referencias a campos
+- las expresiones calculadas, las dependencias y los ciclos
+- el ámbito de las secciones repetibles
+- los tipos, las referencias y la sintaxis JavaScript de los eventos del formulario
 
-Los lotes no válidos devuelven diagnósticos al agente y nunca sustituyen el borrador. El core
-instalado prevalece si la documentación remota discrepa. Consulta
+Los lotes no válidos devuelven diagnósticos al agente y nunca sustituyen al borrador actual. Las
+capacidades del core instalado prevalecen si la documentación remota no coincide. Consulta
 [cálculos y expresiones](/es/core/builtins/calculations-expressions-overview) y
-[eventos de formulario](/es/core/builtins/events-overview) para conocer las funciones del esquema.
+[eventos del formulario](/es/core/builtins/events-overview) para conocer las funciones del esquema
+en las que se basa.
 
-## Revisar y modificar
+## Revisa y ajusta
 
 Tras una propuesta válida, inspecciona el formulario de trabajo y el diff acumulado:
 
@@ -47,20 +49,21 @@ form0(ai)> /preview
 form0(ai)> /diff
 ```
 
-`/diff` compara el esquema al entrar en el modo AI con el esquema de trabajo, incluidos los cambios
-aplicados y pendientes. `/diff --pending` compara el último esquema aplicado solo con la propuesta
-pendiente. Usa `/json` para ver el esquema de trabajo sin procesar. Pide una modificación en lenguaje
-natural para producir otro lote coherente. Solo se revisa una propuesta pendiente cada vez.
+`/diff` compara el esquema del momento en que entraste en el modo IA con el esquema de trabajo
+actual, incluidos los cambios aplicados y los pendientes. `/diff --pending` compara el último
+esquema aplicado solo con la propuesta pendiente. Usa `/json` cuando necesites el esquema de trabajo
+en JSON sin formato. Pide un ajuste en lenguaje natural para generar un nuevo lote coherente. Solo
+se revisa una propuesta pendiente a la vez.
 
-El modelo explica brevemente una propuesta terminada. Si envía mutaciones válidas sin texto de
-respuesta, la CLI muestra un breve resumen determinista antes de los comandos de revisión. Las
-solicitudes para inspeccionar, explicar o diagnosticar sin implementar deben devolver una explicación
-y ninguna propuesta.
+El modelo explica brevemente cada propuesta completada. Si envía mutaciones válidas sin texto de
+respuesta, la CLI muestra un breve resumen determinista de las mutaciones antes de los comandos de
+revisión. Las peticiones para inspeccionar, explicar o diagnosticar sin implementar deben devolver
+una explicación y ninguna propuesta.
 
-Si el servidor está activo, el borrador válido se envía de inmediato con la indicación **AI draft**.
-Sigue siendo una vista previa en memoria.
+Si el servidor de vista previa está en ejecución, el borrador válido se envía al instante con la
+etiqueta **AI draft**. Sigue siendo una vista previa en memoria.
 
-## Aplicar o descartar
+## Aplica o descarta
 
 Aplicar es la única operación que escribe la propuesta:
 
@@ -68,30 +71,33 @@ Aplicar es la única operación que escribe la propuesta:
 form0(ai)> /apply [schema-path]
 ```
 
-Antes de escribir, la CLI recalcula la revisión en disco. Si coincide, escribe de forma atómica y
-actualiza el motor y el navegador. Para un formulario nuevo, solicita una ruta y confirma antes de
-sobrescribir un archivo existente.
+Antes de escribir, la CLI vuelve a calcular la revisión en disco. Si coincide, el esquema se escribe
+de forma atómica y, después, el motor y la vista previa del navegador reciben el esquema guardado.
+Para un formulario nuevo, la aplicación pide una ruta y solicita confirmación antes de sobrescribir
+un archivo existente.
 
-Descartar abandona la propuesta y restaura la versión confirmada en el navegador:
+Descartar abandona la propuesta pendiente y restaura la vista previa del esquema guardado en el
+navegador:
 
 ```ansi
 form0(ai)> /discard
 ```
 
-Salir del modo AI tiene el mismo comportamiento de restauración. Si queda una propuesta sin aplicar,
+Salir del modo IA restaura la vista previa de la misma forma. Si queda una propuesta sin aplicar,
 `/exit` pide confirmación antes de descartarla.
 
-## Cambiar de formulario
+## Cambia de formulario
 
-Usa `/load [file|form]` para cargar otro formulario sin salir del modo AI. El destino se valida antes
-del cambio, se restaura su conversación específica, el historial del diff acumulado vuelve a empezar
-desde el esquema cargado y se actualiza el servidor activo. Si hay una propuesta sin aplicar, la CLI
-pide confirmación antes de descartarla.
+Usa `/load [file|form]` para cargar otro formulario sin salir del modo IA. El destino se valida
+antes del cambio, se restaura su conversación propia del esquema, el historial del diff acumulado
+vuelve a empezar desde el esquema cargado y se actualiza el servidor de vista previa si está en
+ejecución. Si el formulario actual tiene una propuesta sin aplicar, la CLI pide confirmación antes
+de descartarla.
 
-## Revertir
+## Deshacer
 
-La reversión no reescribe el archivo silenciosamente. Prepara como propuesta el último esquema
-guardado durante la sesión AI actual:
+Deshacer no reescribe el archivo en silencio. Prepara como nueva propuesta el último esquema
+guardado durante la sesión de IA actual:
 
 ```ansi
 form0(ai)> /undo
@@ -99,11 +105,12 @@ form0(ai)> /diff
 form0(ai)> /apply
 ```
 
-Inspecciona y aplica explícitamente esa propuesta. La reversión pertenece a la sesión, no es un
+Inspecciona y aplica esa propuesta de forma explícita. Deshacer se limita a la sesión; no es un
 historial persistente del esquema.
 
 ## Cambios externos y borradores obsoletos
 
-Si el watcher detecta un cambio en disco después de crear la propuesta, el borrador queda obsoleto.
-La aplicación se bloquea en vez de fusionar cambios incompatibles. Recarga el esquema confirmado,
-pide al agente que adapte la solicitud a la nueva revisión y vuelve a comprobarla.
+Si un observador detecta que el esquema cambió en disco después de crear la propuesta, el borrador
+queda obsoleto. La aplicación se bloquea en lugar de fusionar cambios que podrían ser incompatibles.
+Vuelve a cargar el esquema guardado, pide al agente que ajuste la petición a la nueva revisión y
+revísala de nuevo.

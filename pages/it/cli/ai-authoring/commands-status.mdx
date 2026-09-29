@@ -1,44 +1,44 @@
 ---
 title: Comandi e stato della creazione con IA
-description: Riferimento per comandi, stato, prompt occupati, coda dei follow-up e annullamento.
+description: Riferimento dei comandi della modalità IA, dell'output di stato, dei prompt durante l'elaborazione, delle richieste in coda e dell'annullamento.
 ---
 
 <PageBadges />
 
 ## Riferimento dei comandi
 
-La modalità AI accetta richieste in linguaggio naturale e comandi con barra. Tutto l'input senza
-prefisso viene inviato al modello; ogni comando deterministico inizia con `/`. Ad esempio, usa
+La modalità IA accetta richieste in linguaggio naturale e comandi con barra. L'input senza prefisso
+viene sempre inviato al modello; tutti i comandi deterministici iniziano con `/`. Ad esempio, usa
 `/preview`, non `preview`.
 
-| Comando                        | Scopo                                                                     |
-| ------------------------------ | ------------------------------------------------------------------------- |
-| `/help`                        | Mostra il riepilogo allineato dei comandi AI.                             |
-| `/status`                      | Mostra schema, bozza, modello, autenticazione, politica, attività e coda. |
-| `/providers`                   | Elenca provider Pi, metodi di autenticazione e numero di modelli.         |
-| `/models <provider>`           | Elenca gli identificatori dei modelli di un provider.                     |
-| `/login <provider> <method>`   | Autentica tramite il flusso `api_key` o `oauth` definito da Pi.           |
-| `/model [provider/model]`      | Apre il selettore o sceglie esplicitamente provider e modello.            |
-| `/privacy`                     | Spiega la politica cloud e di consenso effettiva dello schema.            |
-| `/load [file\|form]`           | Carica un altro modulo e passa alla sua conversazione specifica.          |
-| `/preview`                     | Mostra l'albero leggibile del modulo di lavoro.                           |
-| `/json`                        | Stampa lo schema di lavoro come JSON grezzo.                              |
-| `/validate`                    | Convalida lo schema di lavoro, inclusa una proposta non applicata.        |
-| `/serve [options]`             | Avvia l'anteprima; `--app` avvia anche l'app configurata.                 |
-| `/serve status`, `/serve stop` | Controlla o arresta i server senza uscire dalla modalità AI.              |
-| `/diff`                        | Mostra le modifiche cumulative dall'ingresso in modalità AI.              |
-| `/diff --pending`              | Mostra solo le modifiche dall'ultima applicazione.                        |
-| `/apply [schema-path]`         | Ricontrolla e salva atomicamente la proposta in sospeso.                  |
-| `/discard`                     | Abbandona la bozza e ripristina l'anteprima confermata.                   |
-| `/undo`                        | Prepara l'ultimo schema salvato nella sessione per l'approvazione.        |
-| `/new`                         | Avvia una conversazione mantenendo il modello selezionato.                |
-| `/clear`                       | Elimina la cronologia del modulo e mantiene il modello.                   |
-| `/cancel`                      | Annulla la richiesta attiva e svuota la coda dei follow-up.               |
-| `/exit`                        | Torna alla shell; chiede conferma se una proposta non è applicata.        |
+| Comando                        | Scopo                                                                                    |
+| ------------------------------ | ---------------------------------------------------------------------------------------- |
+| `/help`                        | Mostra il riepilogo allineato dei comandi IA.                                            |
+| `/status`                      | Mostra schema, bozza, modello, autenticazione, policy, attività e coda.                  |
+| `/providers`                   | Elenca i provider Pi, i metodi di autenticazione e il numero di modelli.                 |
+| `/models <provider>`           | Elenca gli identificatori dei modelli di un provider.                                    |
+| `/login <provider> <method>`   | Esegue l'autenticazione con il flusso `api_key` o `oauth` definito da Pi.                |
+| `/model [provider/model]`      | Apre il selettore dei modelli o seleziona un provider e un modello espliciti.            |
+| `/privacy`                     | Spiega la policy effettiva dello schema su cloud e consenso.                             |
+| `/load [file\|form]`           | Carica un altro modulo e passa alla sua conversazione specifica dello schema.            |
+| `/preview`                     | Stampa l'albero leggibile del modulo per lo schema di lavoro.                            |
+| `/json`                        | Stampa lo schema di lavoro in JSON grezzo.                                               |
+| `/validate`                    | Valida lo schema di lavoro, inclusa una proposta non applicata.                          |
+| `/serve [options]`             | Avvia il server di anteprima; `--app` avvia anche l'app configurata.                     |
+| `/serve status`, `/serve stop` | Controlla o arresta i server di anteprima senza uscire dalla modalità IA.                |
+| `/diff`                        | Mostra le modifiche cumulative dall'ingresso in modalità IA.                             |
+| `/diff --pending`              | Mostra solo le modifiche tra l'ultima applicazione e la proposta in sospeso.             |
+| `/apply [schema-path]`         | Ricontrolla e salva in modo atomico la proposta in sospeso.                              |
+| `/discard`                     | Abbandona la bozza e ripristina nel browser l'anteprima dello schema salvato.            |
+| `/undo`                        | Prepara l'ultimo schema salvato in questa sessione per l'approvazione esplicita.         |
+| `/new`                         | Avvia una nuova conversazione mantenendo il modello selezionato.                         |
+| `/clear`                       | Elimina la cronologia salvata per questo modulo e ricomincia con il modello selezionato. |
+| `/cancel`                      | Interrompe la richiesta attiva e svuota la coda delle richieste.                         |
+| `/exit`                        | Torna alla shell; chiede prima conferma se c'è una proposta non applicata.               |
 
 ## Stato
 
-Lo stato è locale: non contatta il provider né recupera saldi di crediti:
+Lo stato è locale: non contatta alcun provider e non recupera i saldi dei crediti:
 
 ```ansi
 form0(ai)> /status
@@ -56,29 +56,33 @@ AI authoring status
     openai-codex  oauth (stored, subscription) [selected]
 ```
 
-L'autenticazione identifica origine e tipo, ma non stampa mai una credenziale. Un provider può
-essere autenticato senza essere selezionato e l'autenticazione non implica crediti disponibili.
+L'output di autenticazione indica l'origine e il tipo, ma non stampa mai una credenziale. Un
+provider può essere autenticato senza essere selezionato, e l'autenticazione non implica la
+disponibilità di crediti.
 
 ## Prompt pronto e occupato
 
-Una richiesta cambia lo stato del prompt e mostra il modello attivo:
+Una richiesta cambia lo stato del prompt e stampa il modello attivo:
 
 ```ansi
 [AI] Thinking with openai-codex/gpt-5.6-luna…
 form0(ai,busy)>
 ```
 
-Con il server attivo, il prompt è `form0(server,ai,busy)>`. Al termine torna a
-`form0(ai)>` o `form0(server,ai)>`.
+Con il server di anteprima in esecuzione, il prompt è `form0(server,ai,busy)>`. Al termine
+dell'elaborazione, torna a `form0(ai)>` o `form0(server,ai)>`.
 
-Premere Invio su una riga vuota non esegue operazioni e ridisegna il prompt. Il testo inserito mentre
-è occupato viene accodato in ordine FIFO e viene confermato con la sua posizione.
+Premere Invio su una riga vuota non ha effetto se non ristampare il prompt corrente. L'input in
+linguaggio naturale inserito durante l'elaborazione viene messo in coda in ordine FIFO, e la CLI ne
+conferma la posizione nella coda.
 
-## Comandi disponibili mentre è occupato
+## Comandi disponibili durante l'elaborazione
 
-Durante una richiesta restano disponibili `/help`, `/status`, `/privacy`, `/cancel`, `/serve status`
-e `/serve stop`. Gli altri comandi con barra vengono rifiutati fino al termine, evitando modifiche a
-modello, conversazione o bozza sotto una richiesta attiva.
+Mentre una richiesta al provider è attiva, restano disponibili `/help`, `/status`, `/privacy`,
+`/cancel`, `/serve status` e `/serve stop`. Gli altri comandi con barra vengono rifiutati fino al
+termine dell'elaborazione, così modello, conversazione o bozza non cambiano durante la richiesta in
+corso.
 
-L'annullamento chiede a Pi di interrompere la richiesta e svuota tutti i follow-up. Se riesce, torna
-al prompt pronto senza mostrare l'annullamento del provider come un secondo errore.
+L'annullamento chiede a Pi di interrompere la richiesta corrente e svuota tutte le richieste in
+coda. Un annullamento riuscito torna al prompt pronto senza mostrare l'interruzione del provider
+come un secondo errore.

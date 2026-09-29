@@ -1,11 +1,14 @@
 ---
 title: Charger et modifier des schémas
-description: Chargez un schéma et modifiez-le avec l’éditeur configuré.
+description: Chargez un schéma dans le shell interactif et modifiez-le avec l’éditeur configuré.
 ---
 
 <PageBadges />
 
-Utilisez `load` pour choisir un schéma ou `load <file>` pour l’indiquer directement. Une fois le
-schéma chargé, `schema edit` l’ouvre avec l’éditeur défini par `EDITOR` ou `VISUAL`.
+Utilisez `load` pour choisir un schéma de façon interactive, ou `load <file>` pour l’indiquer
+directement. Une fois un schéma chargé, `schema edit` l’ouvre dans l’éditeur configuré via `EDITOR`
+ou `VISUAL`.
 
-Consultez la [documentation du schéma](/fr/core/schema/form) pour sa syntaxe.
+La CLI valide les modifications enregistrées avant de les adopter. Consultez la
+[documentation des schémas du noyau](/fr/core/schema/form) pour la syntaxe des champs et des
+formulaires.

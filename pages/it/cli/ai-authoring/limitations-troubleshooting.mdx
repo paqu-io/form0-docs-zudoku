@@ -1,31 +1,32 @@
 ---
 title: Limiti e risoluzione dei problemi della creazione con IA
-description: Comprendi i limiti e risolvi errori di autenticazione, modello, contesto, provider, bozza e documentazione.
+description: Comprendi i limiti dell'anteprima e risolvi i problemi di autenticazione, modello, contesto, provider, bozze e documentazione.
 ---
 
 <PageBadges />
 
 ## Limiti attuali dell'anteprima
 
-La creazione con IA è volutamente limitata alla creazione e modifica interattiva di schemi form0.
-Questa anteprima non include:
+La creazione con IA è intenzionalmente limitata alla creazione e modifica interattiva di schemi
+form0. Questa anteprima non include:
 
-- generazione automatica o headless e applicazione automatica
-- completamento, estrazione, inferenza o analisi degli invii
-- accesso arbitrario a file, shell, web, MCP, estensioni o skill di terze parti
-- generazione da immagini, PDF o altri contenuti multimediali
-- generazione generale di helper fuori da calcoli e codice degli eventi
-- embedding, database vettoriali o servizio di recupero ospitato
-- troncamento, compattazione o suddivisione automatica dei moduli grandi
-- gateway di provider, fatturazione, telemetria o crediti ospitati da form0
-- interfacce AI in binding, playground, landing page o reform
+- generazione non presidiata o headless e applicazione automatica
+- compilazione, estrazione o inferenza di record, né analisi degli invii
+- accesso arbitrario a file system, shell, web, MCP, estensioni o skill di terze parti
+- generazione di moduli da immagini, PDF o altri contenuti multimodali
+- generazione di helper personalizzati generici al di fuori dei calcoli e del codice degli eventi del modulo
+- embedding, database vettoriali o un servizio di retrieval ospitato
+- troncamento, compattazione o suddivisione automatica dei moduli troppo grandi
+- un gateway dei provider ospitato da form0, fatturazione, telemetria o report sui crediti
+- interfacce IA nei binding, nei playground e nelle landing page di form0, o in reform
 
-Comandi, provider, prompt e mutazioni non hanno ancora garanzie di compatibilità stabile.
+Comandi, provider disponibili, prompt e comportamento delle mutazioni non hanno ancora garanzie di
+compatibilità stabili.
 
 ## Nessun modello selezionato
 
-Autenticazione e selezione sono separate. Controlla i provider, autenticati se necessario e seleziona
-un identificatore esatto:
+Autenticazione e selezione del modello sono passaggi distinti. Controlla i provider, autenticati se
+necessario e seleziona un identificatore di modello esatto:
 
 ```ansi
 form0(ai)> /providers
@@ -38,47 +39,54 @@ Usa `/status` o `/model` senza argomenti per verificare la selezione corrente.
 
 ## Un modello salvato cambia dopo il riavvio
 
-Il modello viene ripristinato dalla conversazione Pi dello schema. Se non esiste più o la credenziale
-non è disponibile, la CLI mostra l'avviso di fallback di Pi. Autentica nuovamente il provider
-originale o seleziona un altro modello. Lo schema non cambia.
+Il modello selezionato viene ripristinato dalla conversazione Pi associata a ogni schema. Se non
+esiste più o la sua credenziale non è disponibile, la CLI mostra l'avviso di ripiego di Pi.
+Autenticati di nuovo con il provider originale o seleziona un altro modello. Lo schema non viene
+modificato.
 
 ## L'autenticazione riesce ma le richieste falliscono
 
-L'autenticazione non garantisce crediti, abbonamento attivo, accesso al modello o endpoint
-raggiungibile. La CLI mostra errori e limiti del provider. Risolvi il problema e riprova; `/status` non
-contatta il provider e non recupera i saldi.
+Un'autenticazione riuscita non dimostra che l'account abbia crediti residui, un abbonamento attivo,
+accesso al modello o un endpoint raggiungibile. La CLI mostra gli errori del provider e i messaggi
+sui limiti di utilizzo. Risolvi il problema dell'account o del provider, poi riprova; `/status` non
+contatta il provider e non riporta saldi.
 
-In un ambiente headless, scegli il codice dispositivo se il provider OAuth lo offre. Un flusso
-browser torna automaticamente al prompt AI dopo l'autenticazione.
+Per OAuth in un ambiente headless, scegli un metodo con codice dispositivo se il provider lo offre.
+Un flusso nel browser torna automaticamente al prompt IA dopo un'autenticazione riuscita.
 
 ## Il modulo completo non entra nel contesto
 
-La CLI stima se schema completo, catalogo installato, richiesta e riserva di risposta entrano nel
-contesto del modello. In caso contrario rifiuta prima di inviare dati. L'anteprima non tronca né divide
-il modulo. Scegli un contesto più grande o riduci lo schema fuori dalla modalità AI.
+La CLI stima se lo schema completo, il catalogo di creazione installato, la richiesta e il margine
+per la risposta rientrano nella finestra di contesto del modello selezionato. In caso contrario, la
+richiesta viene rifiutata prima di inviare qualsiasi dato. L'anteprima non tronca né suddivide il
+modulo. Scegli un modello con una finestra di contesto più ampia o riduci lo schema al di fuori
+della modalità IA.
 
 ## L'applicazione segnala una revisione obsoleta
 
-Lo schema è cambiato su disco dopo la proposta. L'applicazione viene bloccata. Scarta la bozza,
-ricarica lo schema, ripeti o modifica la richiesta e controlla il nuovo diff. La CLI non unisce
-automaticamente modifiche esterne a una proposta AI.
+Lo schema è cambiato su disco dopo la creazione della proposta. L'applicazione viene bloccata di
+proposito. Scarta la bozza, ricarica lo schema corrente, ripeti o correggi la richiesta e ispeziona
+il nuovo diff. La CLI non unisce automaticamente le modifiche esterne a una proposta IA.
 
 ## La documentazione remota non è disponibile
 
-La documentazione form0 remota è supplementare. Timeout, reindirizzamenti, risposte non supportate,
-lavoro offline o host non disponibile non ampliano l'accesso web né indeboliscono la convalida.
-L'agente continua con il catalogo del core installato.
+La documentazione remota di form0 è supplementare. Timeout, reindirizzamenti, risposte non
+supportate, funzionamento offline o l'indisponibilità del server della documentazione non concedono
+un accesso più ampio al web e non indeboliscono la validazione. L'agente prosegue con il catalogo
+del core installato.
 
 ## Una richiesta sembra bloccata
 
-Usa `/status` per vedere attività e coda. Usa `/cancel` per interrompere la richiesta e svuotare i
-messaggi. Se l'annullamento fallisce, la CLI mostra l'errore e mantiene disponibile la sessione.
+Usa `/status` per controllare l'attività e la coda delle richieste. Usa `/cancel` per interrompere
+la richiesta corrente al provider e svuotare i messaggi in coda. Se l'annullamento stesso non
+riesce, la CLI segnala l'errore e mantiene la sessione disponibile.
 
-## Una proposta resta non valida
+## Una proposta continua a non essere valida
 
-Leggi la diagnostica e specifica meglio l'intento: identifica i campi per etichetta o chiave, indica i
-tipi, chiarisci l'ambito ripetibile e descrivi calcolo o evento. La convalida installata resta
-autorevole; non aggirarla chiedendo un file grezzo.
+Leggi la diagnostica restituita e rendi più esplicita la tua intenzione: identifica i campi per
+etichetta o chiave, indica i tipi previsti, chiarisci l'ambito delle sezioni ripetibili e descrivi
+il comportamento dei calcoli o degli eventi. La validazione dello schema installato resta il
+riferimento; non aggirare la diagnostica chiedendo il file grezzo.
 
-Consulta [Comandi e stato](/it/cli/ai-authoring/commands-status) e
-[Flusso di creazione](/it/cli/ai-authoring/authoring-workflow) per i comandi di ripristino.
+Vedi [Comandi e stato](/it/cli/ai-authoring/commands-status) e
+[Flusso di creazione](/it/cli/ai-authoring/authoring-workflow) per i relativi comandi di ripristino.

@@ -1,31 +1,32 @@
 ---
 title: Limitaciones y solución de problemas de creación con IA
-description: Comprende los límites y resuelve fallos de autenticación, modelo, contexto, proveedor, borrador y documentación.
+description: Conoce los límites de la vista previa y resuelve fallos de autenticación, modelo, contexto, proveedor, borradores y documentación.
 ---
 
 <PageBadges />
 
 ## Límites actuales de la vista previa
 
-La creación con IA se limita deliberadamente a crear y editar esquemas form0 de forma interactiva.
+La creación con IA se limita intencionadamente a crear y editar esquemas form0 de forma interactiva.
 Esta vista previa no incluye:
 
-- generación desatendida o headless y aplicación automática
-- finalización, extracción, inferencia o análisis de envíos
-- acceso arbitrario a archivos, shell, web, MCP, extensiones o skills de terceros
-- generación de formularios desde imágenes, PDF u otros medios
-- generación general de helpers fuera de cálculos y código de eventos
-- embeddings, bases vectoriales o un servicio de recuperación alojado
-- truncamiento, compactación o división automática de formularios grandes
-- gateway de proveedores, facturación, telemetría o saldos alojados por form0
-- interfaces AI en bindings, playgrounds, landing pages o reform
+- generación desatendida o sin interfaz, ni aplicación automática
+- rellenado, extracción o inferencia de registros, ni análisis de envíos
+- acceso arbitrario al sistema de archivos, a la shell, a la web, a MCP, a extensiones o a skills de terceros
+- generación de formularios a partir de imágenes, PDF u otros contenidos multimodales
+- generación de helpers personalizados de uso general fuera de los cálculos y del código de eventos del formulario
+- embeddings, bases de datos vectoriales ni un servicio de recuperación alojado
+- truncado, compactación ni división automáticos de formularios demasiado grandes
+- una pasarela de proveedores alojada por form0, facturación, telemetría ni informes de créditos
+- interfaces de IA en los bindings, playgrounds o páginas de inicio de form0, ni en reform
 
-Los comandos, proveedores, prompts y mutaciones aún no tienen garantías estables de compatibilidad.
+Los comandos, los proveedores disponibles, los prompts y el comportamiento de las mutaciones aún no
+tienen garantías de compatibilidad estables.
 
-## No hay un modelo seleccionado
+## No hay ningún modelo seleccionado
 
-La autenticación y la selección son pasos distintos. Consulta proveedores, autentícate si hace falta
-y selecciona un identificador exacto:
+La autenticación y la selección del modelo son pasos distintos. Consulta los proveedores,
+autentícate si es necesario y selecciona un identificador de modelo exacto:
 
 ```ansi
 form0(ai)> /providers
@@ -36,49 +37,56 @@ form0(ai)> /model <provider>/<model>
 
 Usa `/status` o `/model` sin argumentos para comprobar la selección actual.
 
-## Un modelo guardado cambia al reiniciar
+## El modelo guardado cambia tras reiniciar
 
-El modelo se restaura desde la conversación Pi del esquema. Si deja de existir o su credencial no
-está disponible, la CLI muestra el aviso de sustitución de Pi. Vuelve a autenticar el proveedor
-original o selecciona otro modelo. El esquema no cambia.
+El modelo seleccionado se restaura desde la conversación de Pi asociada a cada esquema. Si ya no
+existe o su credencial no está disponible, la CLI muestra la advertencia de alternativa de Pi.
+Vuelve a autenticarte con el proveedor original o selecciona otro modelo. El esquema no cambia.
 
-## La autenticación funciona pero las solicitudes fallan
+## La autenticación funciona pero las peticiones fallan
 
-Autenticarse no demuestra que queden créditos, exista una suscripción activa, haya acceso al modelo o
-el endpoint responda. La CLI muestra los errores y límites del proveedor. Resuelve el problema y
-reintenta; `/status` no contacta al proveedor ni consulta saldos.
+Una autenticación correcta no demuestra que la cuenta tenga créditos, una suscripción activa, acceso
+al modelo o un endpoint accesible. La CLI muestra los fallos del proveedor y los mensajes de límite
+de uso. Resuelve el problema de la cuenta o del proveedor y vuelve a intentarlo; `/status` no
+contacta con el proveedor ni informa de saldos.
 
-En un entorno headless, elige un método de código de dispositivo si el proveedor OAuth lo ofrece. Un
-flujo de navegador vuelve automáticamente al prompt AI tras autenticarse.
+Para OAuth en un entorno sin interfaz gráfica, elige un método con código de dispositivo si el
+proveedor lo ofrece. Un flujo en el navegador vuelve automáticamente al prompt de IA tras una
+autenticación correcta.
 
 ## El formulario completo no cabe
 
-La CLI estima si el esquema completo, el catálogo instalado, la solicitud y la reserva de respuesta
-caben en el contexto del modelo. Si no, rechaza antes de enviar datos. La vista previa no trunca ni
-divide el formulario. Elige un modelo con más contexto o reduce el esquema fuera del modo AI.
+La CLI estima si el esquema completo, el catálogo de creación instalado, la petición y el margen
+para la respuesta caben en la ventana de contexto del modelo seleccionado. Si no caben, la petición
+se rechaza antes de enviar ningún dato. La vista previa no trunca ni divide el formulario. Elige un
+modelo con una ventana de contexto mayor o reduce el esquema fuera del modo IA.
 
 ## La aplicación indica una revisión obsoleta
 
-El esquema cambió en disco después de crear la propuesta. La aplicación se bloquea. Descarta el
-borrador, recarga el esquema, repite o modifica la solicitud y revisa el nuevo diff. La CLI no fusiona
-automáticamente ediciones externas con una propuesta AI.
+El esquema cambió en disco después de crear la propuesta. La aplicación se bloquea a propósito.
+Descarta el borrador, vuelve a cargar el esquema actual, repite o ajusta la petición e inspecciona
+el nuevo diff. La CLI no fusiona automáticamente las ediciones externas con una propuesta de IA.
 
 ## La documentación remota no está disponible
 
-La documentación form0 remota es complementaria. Timeouts, redirecciones, respuestas no compatibles,
-trabajo offline o un host no disponible no amplían el acceso web ni debilitan la validación. El agente
+La documentación remota de form0 es complementaria. Los tiempos de espera, las redirecciones, las
+respuestas no compatibles, el trabajo sin conexión o la falta de disponibilidad del servidor de
+documentación no conceden un acceso más amplio a la web ni debilitan la validación. El agente
 continúa con el catálogo del core instalado.
 
-## Una solicitud parece bloqueada
+## Una petición parece bloqueada
 
-Usa `/status` para consultar la actividad y la cola. Usa `/cancel` para detener la solicitud y vaciar
-los mensajes. Si la propia cancelación falla, la CLI muestra el error y mantiene la sesión disponible.
+Usa `/status` para consultar la actividad y la cola de peticiones pendientes. Usa `/cancel` para
+interrumpir la petición actual al proveedor y vaciar los mensajes en cola. Si la propia cancelación
+falla, la CLI informa del error y mantiene la sesión disponible.
 
-## Una propuesta es inválida repetidamente
+## Una propuesta es no válida una y otra vez
 
-Lee los diagnósticos y concreta la intención: identifica campos por etiqueta o clave, indica tipos,
-aclara el ámbito repetible y describe el cálculo o evento. La validación instalada sigue siendo la
-autoridad; no intentes evitarla solicitando un archivo sin procesar.
+Lee los diagnósticos devueltos y explica tu intención con más precisión: identifica los campos por
+etiqueta o clave, indica los tipos esperados, aclara el ámbito de las secciones repetibles y
+describe el comportamiento de los cálculos o eventos. La validación del esquema instalado sigue
+siendo la referencia; no intentes saltarte los diagnósticos pidiendo el archivo en bruto.
 
 Consulta [Comandos y estado](/es/cli/ai-authoring/commands-status) y
-[Flujo de creación](/es/cli/ai-authoring/authoring-workflow) para los comandos de recuperación.
+[Flujo de creación](/es/cli/ai-authoring/authoring-workflow) para los comandos de recuperación
+correspondientes.

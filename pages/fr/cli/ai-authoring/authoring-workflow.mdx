@@ -1,17 +1,18 @@
 ---
 title: Flux de création avec IA
-description: Comprenez les mutations, la validation complète, la vérification, l'approbation et les conflits.
+description: Comprenez les mutations sémantiques, la validation du schéma complet, la relecture des brouillons, l’approbation, l’annulation et les conflits.
 ---
 
 <PageBadges />
 
-## Contexte complet, actions limitées
+## Contexte complet, actions encadrées
 
-Chaque requête inclut le schéma courant complet et un catalogue de création versionné provenant du
-form0-core installé. Le catalogue décrit champs, attributs, opérateurs, builtins, événements,
-références, calculs et métadonnées AI existantes.
+Chaque requête inclut le schéma courant complet et un catalogue de création versionné du form0-core
+installé. Le catalogue décrit les champs, les attributs, les opérateurs, les builtins, les
+événements, les références, les calculs et les métadonnées d’IA existantes.
 
-L'agent ne peut ni remplacer le document racine ni écrire de fichiers. Il peut proposer ces opérations :
+L’agent ne peut ni remplacer le document racine ni écrire de fichiers. Il peut proposer les
+opérations sémantiques suivantes :
 
 - `updateForm`
 - `addField`, `updateField`, `moveField` et `removeField`
@@ -19,26 +20,27 @@ L'agent ne peut ni remplacer le document racine ni écrire de fichiers. Il peut 
 - `setCalculation`
 - `setFormEventCode`
 
-Les champs sont ciblés par des clés stables. Les renommages sûrs mettent à jour les références ; les
-suppressions dangereuses et les cibles introuvables sont refusées.
+Les champs sont ciblés par des clés stables. Les renommages sûrs mettent à jour les références
+reconnues ; les suppressions dangereuses et les cibles non résolues sont refusées.
 
-## Validation avant l'aperçu
+## Validation avant l’aperçu
 
-form0-core applique le lot proposé à une copie en mémoire. Le schéma d'origine n'est pas modifié. Il
+form0-core applique le lot proposé à une copie en mémoire, sans modifier le schéma d’origine. Il
 valide ensuite le résultat complet, notamment :
 
-- règles du schéma et des attributs
-- conditions et références aux champs
-- expressions calculées, dépendances et cycles
-- portée des sections répétables
-- types d'événements, références et syntaxe JavaScript
+- les règles du schéma et des attributs
+- les conditions et les références de champs
+- les expressions calculées, les dépendances et les cycles
+- la portée des sections répétables
+- les types, les références et la syntaxe JavaScript des événements du formulaire
 
-Les lots invalides renvoient des diagnostics à l'agent et ne remplacent jamais le brouillon. Le core
-installé prévaut si la documentation distante diffère. Consultez
+Les lots invalides renvoient des diagnostics à l’agent et ne remplacent jamais le brouillon courant.
+Les capacités du core installé font foi si la documentation distante diffère. Voir
 [calculs et expressions](/fr/core/builtins/calculations-expressions-overview) et
-[événements de formulaire](/fr/core/builtins/events-overview) pour les fonctions du schéma.
+[événements du formulaire](/fr/core/builtins/events-overview) pour les fonctionnalités de schéma
+sous-jacentes.
 
-## Vérifier et réviser
+## Relire et réviser
 
 Après une proposition valide, inspectez le formulaire de travail et le diff cumulé :
 
@@ -47,51 +49,55 @@ form0(ai)> /preview
 form0(ai)> /diff
 ```
 
-`/diff` compare le schéma à l'entrée en mode AI avec le schéma de travail, changements appliqués et
-en attente inclus. `/diff --pending` compare le dernier schéma appliqué avec la seule proposition en
-attente. Utilisez `/json` pour afficher le schéma de travail brut. Demandez une révision en langage
-naturel pour produire un autre lot cohérent. Une seule proposition est examinée à la fois.
+`/diff` compare le schéma au moment de l’entrée dans le mode IA avec le schéma de travail courant, y
+compris les modifications appliquées et en attente. `/diff --pending` compare le dernier schéma
+appliqué avec la seule proposition en attente. Utilisez `/json` lorsque vous avez besoin du schéma
+de travail en JSON brut. Demandez une révision en langage naturel pour produire un nouveau lot
+cohérent. Une seule proposition en attente est relue à la fois.
 
-Le modèle explique brièvement une proposition terminée. S'il envoie des mutations valides sans texte
-de réponse, la CLI affiche un court résumé déterministe avant les commandes de vérification. Une
-demande d'inspection, d'explication ou de diagnostic sans mise en œuvre doit produire une explication
-et aucune proposition.
+Le modèle explique brièvement chaque proposition terminée. S’il soumet des mutations valides sans
+texte de réponse, la CLI affiche un court résumé déterministe des mutations avant les commandes de
+relecture. Les demandes d’inspection, d’explication ou de diagnostic sans implémentation doivent
+renvoyer une explication et aucune proposition.
 
-Si le serveur d'aperçu fonctionne, le brouillon valide est immédiatement envoyé avec l'indication
-**AI draft**. Il reste un aperçu en mémoire.
+Si le serveur d’aperçu est en cours d’exécution, le brouillon valide est diffusé immédiatement avec
+l’étiquette **AI draft**. Il s’agit toujours d’un aperçu en mémoire.
 
-## Appliquer ou écarter
+## Appliquer ou abandonner
 
-L'application est la seule opération qui écrit la proposition :
+L’application est la seule opération qui écrit la proposition :
 
 ```ansi
 form0(ai)> /apply [schema-path]
 ```
 
-Avant l'écriture, la CLI recalcule la révision sur disque. Si elle correspond, elle écrit
-atomiquement puis actualise le moteur et le navigateur. Pour un nouveau formulaire, elle demande un
-chemin et confirme avant d'écraser un fichier existant.
+Avant d’écrire, la CLI recalcule la révision sur disque. Si elle correspond, le schéma est écrit de
+manière atomique, puis le moteur et l’aperçu dans le navigateur reçoivent le schéma enregistré. Pour
+un nouveau formulaire, l’application demande un chemin et une confirmation avant d’écraser un
+fichier existant.
 
-Écarter abandonne la proposition et restaure la version validée dans le navigateur :
+L’abandon supprime la proposition en attente et rétablit l’aperçu du schéma enregistré dans le
+navigateur :
 
 ```ansi
 form0(ai)> /discard
 ```
 
-Quitter le mode AI produit la même restauration de l'aperçu. Si une proposition reste non appliquée,
-`/exit` demande confirmation avant de l'écarter.
+Quitter le mode IA rétablit l’aperçu de la même façon. Si une proposition n’est pas encore
+appliquée, `/exit` demande une confirmation avant de l’abandonner.
 
 ## Changer de formulaire
 
-Utilisez `/load [file|form]` pour charger un autre formulaire sans quitter le mode AI. La cible est
-validée avant le changement, sa conversation propre est restaurée, l'historique du diff cumulé
-redémarre depuis le schéma chargé et le serveur actif est actualisé. Si une proposition n'est pas
-appliquée, la CLI demande confirmation avant de l'écarter.
+Utilisez `/load [file|form]` pour charger un autre formulaire sans quitter le mode IA. La cible est
+validée avant le changement, la conversation propre à son schéma est restaurée, l’historique du diff
+cumulé repart du schéma chargé et le serveur d’aperçu en cours d’exécution est mis à jour. Si le
+formulaire courant a une proposition non appliquée, la CLI demande une confirmation avant de
+l’abandonner.
 
 ## Annuler
 
-L'annulation ne réécrit pas silencieusement le fichier. Elle prépare comme proposition le dernier
-schéma enregistré pendant la session AI actuelle :
+L’annulation ne réécrit pas le fichier en silence. Elle prépare, sous forme de nouvelle proposition,
+le dernier schéma enregistré pendant la session d’IA courante :
 
 ```ansi
 form0(ai)> /undo
@@ -99,11 +105,12 @@ form0(ai)> /diff
 form0(ai)> /apply
 ```
 
-Inspectez puis appliquez explicitement cette proposition. L'annulation appartient à la session et
-ne constitue pas un historique persistant du schéma.
+Inspectez puis appliquez explicitement cette proposition. L’annulation est limitée à la session ; ce
+n’est pas un historique persistant du schéma.
 
-## Modifications externes et brouillons périmés
+## Modifications externes et brouillons obsolètes
 
-Si le watcher détecte un changement sur disque après la création de la proposition, le brouillon
-devient périmé. L'application est bloquée plutôt que de fusionner des changements incompatibles.
-Rechargez le schéma validé, demandez une révision adaptée et vérifiez-la à nouveau.
+Si un observateur détecte que le schéma a changé sur disque après la création de la proposition, le
+brouillon devient obsolète. L’application est bloquée plutôt que de fusionner des modifications
+potentiellement incompatibles. Rechargez le schéma enregistré, demandez à l’agent de réviser la
+requête sur la nouvelle révision, puis relisez-la.

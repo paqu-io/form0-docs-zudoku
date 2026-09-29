@@ -1,30 +1,32 @@
 ---
 title: Confidentialité et sécurité de la création avec IA
-description: Comprenez l'envoi du schéma, la politique cloud, le consentement, le stockage et la documentation restreinte.
+description: Comprenez la transmission du schéma complet, la politique cloud, le consentement, le stockage local et l’accès restreint à la documentation.
 ---
 
 <PageBadges />
 
-## Contenu envoyé au modèle
+## Ce qui entre dans le contexte du modèle
 
-Chaque requête contient le schéma courant complet et le catalogue de création form0 installé. Ce
-contexte permet de préserver la structure, résoudre les références et valider calculs, conditions,
-sections répétables et événements.
+Chaque requête contient le schéma complet du formulaire courant et le catalogue de création form0
+installé. Ce contexte complet est nécessaire pour que l’agent préserve la structure, résolve les
+références et valide les modifications à travers les calculs, les conditions, les sections
+répétables et les événements.
 
 Le modèle ne reçoit pas :
 
-- valeurs d'enregistrements ou soumissions
-- fichiers locaux arbitraires du projet
-- contenu des images d'accompagnement
-- identifiants de fournisseurs
-- accès au shell, au système de fichiers, à MCP, aux extensions ou skills tiers
+- les valeurs des enregistrements ni les soumissions
+- des fichiers arbitraires du projet local
+- le contenu des images d’accompagnement
+- les identifiants des fournisseurs
+- d’accès au shell, au système de fichiers, à MCP, aux extensions ou à des skills tiers
 
-Les attributs du schéma, notamment chemins et métadonnées AI déjà présents, appartiennent au schéma
-complet et sont donc inclus.
+Les attributs du schéma, y compris les chemins et les métadonnées d’IA déjà présents dans le
+formulaire, font partie du schéma complet et sont donc inclus.
 
-## Politique cloud issue des métadonnées
+## Politique cloud définie par les métadonnées du schéma
 
-Les [Métadonnées AI](/fr/core/ai-metadata) existantes ont une sémantique appliquée dans la CLI :
+Les [métadonnées d’IA](/fr/core/ai-metadata) existantes ont une sémantique appliquée par la création
+dans la CLI :
 
 ```json
 {
@@ -38,44 +40,55 @@ Les [Métadonnées AI](/fr/core/ai-metadata) existantes ont une sémantique appl
 ```
 
 Si `form.ai.allowCloud: false` ou un `field.ai.allowCloud: false` est présent, tous les fournisseurs
-cloud sont bloqués pour ce formulaire. Les modèles locaux restent disponibles. Aucune dérogation.
+cloud sont bloqués pour ce formulaire. Les modèles locaux restent disponibles. La CLI ne permet pas
+de passer outre.
 
-Si le formulaire ou un champ définit `requiresConsent: true`, la CLI demande un accord avant la
-première requête cloud et après tout changement de fournisseur cloud. Sinon, entrer dans le mode AI
-et sélectionner ou authentifier un fournisseur cloud vaut consentement après l'avis d'envoi.
+Si le formulaire ou un champ définit `requiresConsent: true`, la CLI demande l’accord de
+l’utilisateur avant la première requête cloud de la session d’IA, puis de nouveau après un
+changement de fournisseur cloud. Sinon, entrer dans le mode IA et sélectionner ou authentifier un
+fournisseur cloud vaut consentement, une fois que la CLI a expliqué que le schéma complet est
+transmis.
 
-Utilisez `/privacy` pour consulter la politique effective et les entrées responsables.
+Utilisez `/privacy` pour consulter la politique effective et les entrées du formulaire ou des champs
+qui la déterminent.
 
 ## Identifiants et conversations
 
-L'état AI réside sous `~/.form0-cli/ai/`, hors du projet. Les dossiers sont réservés à l'utilisateur
-actuel et les fichiers d'identifiants et de conversations ont des droits exclusifs. Les identifiants
-d'environnement restent pris en charge et ne sont pas copiés dans les schémas.
+L’état de l’IA est stocké sous `~/.form0-cli/ai/`, en dehors du projet. Les répertoires ne sont
+accessibles qu’à l’utilisateur courant ; les fichiers d’identifiants et de conversations ont des
+permissions limitées à cet utilisateur. Les identifiants fournis par l’environnement restent pris en
+charge et ne sont pas copiés dans les schémas.
 
-L'historique est associé au chemin canonique du schéma et peut contenir le schéma complet. Utilisez
-`/clear` pour effacer l'historique du formulaire courant. Un formulaire non enregistré emploie une
-identité temporaire réattribuée après sa première application réussie.
+L’historique de conversation est associé au chemin canonique du schéma et peut contenir le schéma
+complet. Utilisez `/clear` pour supprimer l’historique enregistré du formulaire courant. Un
+formulaire non enregistré utilise une identité temporaire, réaffectée après sa première application
+réussie.
 
 :::warning
 
-Le JavaScript généré pour les calculs et événements est validé structurellement, mais reste du code
-produit. Vérifiez le diff et le comportement avant application, surtout pour un formulaire sensible.
+Le JavaScript généré pour les calculs et les événements du formulaire est validé sur le plan
+structurel, mais il reste du code écrit par un auteur. Relisez le diff et le comportement attendu
+avant de l’appliquer, en particulier pour les formulaires sensibles.
 
 :::
 
 ## Accès restreint à la documentation
 
-L'agent ne peut demander de documentation complémentaire qu'à `https://docs.form0.dev`. La lecture
-commence par `llms.txt` et ne suit que les pages Markdown HTTPS pertinentes de même origine. URLs et
-redirections externes, contenus non pris en charge, réponses trop grandes et délais sont refusés ;
-les réponses réussies sont mises en cache pour la session.
+L’agent ne peut demander de documentation complémentaire qu’à `https://docs.form0.dev`. La
+récupération commence par `llms.txt` et ne suit que des pages Markdown pertinentes, en HTTPS et de
+même origine. Les URL et redirections vers d’autres origines, les contenus non pris en charge, les
+réponses trop volumineuses et les délais dépassés sont refusés ; les réponses valides sont mises en
+cache pour la session.
 
-Le texte récupéré est une référence non fiable. Il ne peut changer instructions, permissions ou
-politique cloud. S'il contredit le catalogue form0-core installé, le catalogue prévaut. La création
-continue sans documentation distante hors ligne.
+Le texte récupéré est un contenu de référence non fiable. Il ne peut modifier ni les instructions
+système, ni les permissions des outils, ni la politique cloud. Si la documentation distante
+contredit le catalogue du form0-core installé, c’est le catalogue installé qui l’emporte. Hors
+ligne, la création se poursuit sans documentation distante.
 
 ## Responsabilité du fournisseur
 
-Les requêtes cloud vont directement au fournisseur sélectionné avec l'identifiant ou l'abonnement de
-l'utilisateur. form0 ne sert pas de proxy, ne mesure pas l'usage, n'indique pas les crédits et ne
-contrôle pas la conservation. Consultez les conditions et contrôles actuels avant d'envoyer un schéma.
+Les requêtes cloud sont envoyées directement au fournisseur sélectionné, avec l’identifiant ou
+l’abonnement de l’utilisateur. form0 ne sert pas de proxy pour les requêtes, ne mesure pas l’usage,
+ne communique pas de solde de crédits et ne contrôle pas la conservation des données par le
+fournisseur. Consultez les conditions et les contrôles de données actuels du fournisseur sélectionné
+avant d’envoyer un schéma.

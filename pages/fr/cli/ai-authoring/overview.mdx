@@ -1,22 +1,23 @@
 ---
 title: Création avec IA
-description: Générez et modifiez des schémas form0 avec des lots de mutations validés et approuvés.
+description: Générez et modifiez des schémas form0 au moyen de lots de mutations d’IA relus et validés.
 ---
 
 <PageBadges />
 
 :::warning
 
-La création avec IA est en aperçu. Les commandes, fournisseurs, prompts et le protocole de mutation
-peuvent changer avant une version stable. Vérifiez les calculs et le JavaScript des événements.
+La création avec IA est en préversion. Les commandes, les fournisseurs disponibles, les prompts et
+le protocole de mutation peuvent changer avant une version stable. Relisez les calculs et le
+JavaScript d’événements générés.
 
 :::
 
-La création avec IA ajoute à form0-cli un mode conversationnel pour modifier les schémas. Elle
-travaille avec des schémas form0 ordinaires : le fichier final ne contient ni conversation, ni
-configuration de fournisseur, ni mutation.
+La création avec IA ajoute à form0-cli un mode conversationnel de création de schémas. Elle
+travaille sur des schémas form0 ordinaires : le fichier final ne contient ni historique de
+conversation, ni configuration de fournisseur, ni données de mutation.
 
-Lancez-le directement avec un schéma ou entrez dans le mode AI depuis le shell interactif :
+Lancez-la directement avec un schéma, ou entrez dans le mode IA depuis le shell interactif :
 
 ```bash
 form0 ai [schema]
@@ -28,27 +29,30 @@ form0(server)> ai
 form0(server,ai)> Add a calculated total from quantity and unit price
 ```
 
-Le mode AI ne lance pas le serveur d'aperçu. S'il est déjà actif, les brouillons validés sont envoyés
-au navigateur avec l'indication **AI draft**, sans écriture sur disque.
+Le mode IA ne lance pas le serveur d’aperçu. Si un serveur est déjà en cours d’exécution, les
+brouillons validés sont diffusés au navigateur avec l’étiquette de source **AI draft**, sans être
+écrits sur le disque.
 
 ## Fonctionnement de la création
 
-1. Le modèle sélectionné reçoit le formulaire complet et le catalogue du core installé.
-2. L'agent propose un lot cohérent de mutations sémantiques au lieu de remplacer le fichier.
+1. Le modèle sélectionné reçoit le formulaire courant complet et le catalogue de création du form0-core installé.
+2. L’agent propose un lot cohérent de mutations sémantiques au lieu de remplacer le fichier du schéma.
 3. form0-core applique le lot à une copie et valide le résultat complet.
-4. Un brouillon valide peut être inspecté, révisé, écarté ou appliqué explicitement.
-5. L'application revérifie la révision sur disque et écrit le schéma atomiquement.
+4. Un brouillon valide peut être inspecté, révisé, abandonné ou appliqué explicitement.
+5. L’application revérifie la révision sur disque et écrit le schéma de manière atomique.
 
-Une proposition invalide ne devient jamais un brouillon. Quitter ou écarter restaure le schéma
-validé dans le navigateur. Le résultat reste un schéma form0 ordinaire sans métadonnées AI ajoutées.
+Une proposition invalide ne devient jamais un brouillon. Quitter ou abandonner rétablit le schéma
+enregistré dans le navigateur. Le résultat reste un schéma form0 ordinaire, sans métadonnées d’IA
+ajoutées automatiquement.
 
 ## Explorer cette section
 
-- [Prise en main](/fr/cli/ai-authoring/getting-started) couvre la configuration et la première session.
-- [Fournisseurs et modèles](/fr/cli/ai-authoring/providers-models) explique l'authentification Pi et la persistance du modèle.
-- [Flux de création](/fr/cli/ai-authoring/authoring-workflow) couvre les brouillons, la validation, l'approbation et les conflits.
-- [Commandes et état](/fr/cli/ai-authoring/commands-status) documente les commandes et l'état occupé.
+- [Prise en main](/fr/cli/ai-authoring/getting-started) couvre la configuration et une première session de création.
+- [Fournisseurs et modèles](/fr/cli/ai-authoring/providers-models) explique l’authentification Pi et la persistance du modèle.
+- [Flux de création](/fr/cli/ai-authoring/authoring-workflow) couvre les brouillons, la validation, l’approbation et les conflits.
+- [Commandes et état](/fr/cli/ai-authoring/commands-status) documente toutes les commandes du mode IA et leur comportement pendant un traitement.
 - [Confidentialité et sécurité](/fr/cli/ai-authoring/privacy-security) définit les limites des données et la politique cloud.
-- [Limites et résolution des problèmes](/fr/cli/ai-authoring/limitations-troubleshooting) décrit les contraintes et erreurs courantes.
+- [Limites et résolution des problèmes](/fr/cli/ai-authoring/limitations-troubleshooting) décrit les contraintes de la préversion et les échecs courants.
 
-Pour guider l'agent et contrôler le cloud dans le schéma, consultez [Métadonnées AI](/fr/core/ai-metadata).
+Pour guider les agents et contrôler l’usage du cloud au niveau du schéma, voir
+[Métadonnées d’IA](/fr/core/ai-metadata).

@@ -1,21 +1,23 @@
 ---
 title: Creación con IA
-description: Genera y edita esquemas form0 mediante lotes de mutaciones revisados y validados.
+description: Genera y edita esquemas form0 mediante lotes de mutaciones con IA, revisados y validados.
 ---
 
 <PageBadges />
 
 :::warning
 
-La creación con IA está en vista previa. Los comandos, proveedores, prompts y el protocolo de
-mutaciones pueden cambiar antes de una versión estable. Revisa los cálculos y el JavaScript de eventos.
+La creación con IA está en vista previa. Los comandos, los proveedores disponibles, los prompts y el
+protocolo de mutaciones pueden cambiar antes de una versión estable. Revisa los cálculos y el
+JavaScript de eventos generados.
 
 :::
 
-La creación con IA añade a form0-cli un modo conversacional para editar esquemas. Trabaja con
-esquemas form0 normales: el archivo final no contiene conversaciones, proveedores ni mutaciones.
+La creación con IA añade a form0-cli un modo conversacional para crear esquemas. Trabaja con
+esquemas form0 normales: el archivo final no contiene el historial de la conversación, la
+configuración del proveedor ni datos de mutaciones.
 
-Inícialo directamente con un esquema o entra en el modo AI desde la shell interactiva:
+Empieza directamente con un esquema o entra en el modo IA desde la shell interactiva:
 
 ```bash
 form0 ai [schema]
@@ -27,27 +29,29 @@ form0(server)> ai
 form0(server,ai)> Add a calculated total from quantity and unit price
 ```
 
-El modo AI no inicia el servidor de vista previa. Si ya está activo, los borradores validados se
-envían al navegador con la indicación **AI draft** sin escribirse en disco.
+El modo IA no inicia el servidor de vista previa. Si ya hay un servidor en ejecución, los borradores
+validados se envían al navegador con la etiqueta de origen **AI draft**, sin escribirse en disco.
 
 ## Cómo funciona la creación
 
-1. El modelo seleccionado recibe el formulario completo y el catálogo del core instalado.
-2. El agente propone un lote coherente de mutaciones semánticas en vez de sustituir el archivo.
+1. El modelo seleccionado recibe el formulario actual completo y el catálogo de creación de form0-core instalado.
+2. El agente propone un lote coherente de mutaciones semánticas en lugar de sustituir el archivo del esquema.
 3. form0-core aplica el lote a una copia y valida el resultado completo.
-4. Un borrador válido se puede inspeccionar, revisar, descartar o aplicar explícitamente.
-5. La aplicación comprueba de nuevo la revisión en disco y escribe el esquema de forma atómica.
+4. Un borrador válido se puede inspeccionar, revisar, descartar o aplicar de forma explícita.
+5. Al aplicarlo, la CLI vuelve a comprobar la revisión en disco y escribe el esquema de forma atómica.
 
-Las propuestas no válidas nunca se convierten en borradores. Salir o descartar restaura en el
-navegador el esquema confirmado. El resultado es un esquema form0 normal sin metadatos AI automáticos.
+Las propuestas no válidas nunca se convierten en borradores. Al salir o descartar, el navegador
+vuelve a mostrar el esquema guardado. El resultado sigue siendo un esquema form0 normal, sin
+metadatos de IA añadidos automáticamente.
 
-## Explorar esta sección
+## Explora esta sección
 
-- [Primeros pasos](/es/cli/ai-authoring/getting-started) explica la configuración y la primera sesión.
+- [Primeros pasos](/es/cli/ai-authoring/getting-started) explica la configuración y una primera sesión de creación.
 - [Proveedores y modelos](/es/cli/ai-authoring/providers-models) explica la autenticación de Pi y la persistencia del modelo.
-- [Flujo de creación](/es/cli/ai-authoring/authoring-workflow) cubre borradores, validación, aprobación y conflictos.
-- [Comandos y estado](/es/cli/ai-authoring/commands-status) documenta los comandos y el estado ocupado.
-- [Privacidad y seguridad](/es/cli/ai-authoring/privacy-security) define los límites de datos y la política cloud.
-- [Limitaciones y solución de problemas](/es/cli/ai-authoring/limitations-troubleshooting) describe las restricciones y fallos habituales.
+- [Flujo de creación](/es/cli/ai-authoring/authoring-workflow) trata los borradores, la validación, la aprobación y los conflictos.
+- [Comandos y estado](/es/cli/ai-authoring/commands-status) documenta todos los comandos del modo IA y su comportamiento mientras está ocupado.
+- [Privacidad y seguridad](/es/cli/ai-authoring/privacy-security) define los límites de los datos y la política de nube.
+- [Limitaciones y solución de problemas](/es/cli/ai-authoring/limitations-troubleshooting) describe las restricciones de la vista previa y los fallos habituales.
 
-Para orientar al agente y controlar la nube desde el esquema, consulta [Metadatos de AI](/es/core/ai-metadata).
+Para indicaciones a los agentes y controles de nube a nivel de esquema, consulta
+[Metadatos de IA](/es/core/ai-metadata).

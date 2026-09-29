@@ -1,43 +1,44 @@
 ---
 title: Comandos y estado de creación con IA
-description: Referencia de comandos, estado, prompts ocupados, cola de seguimientos y cancelación.
+description: Referencia de los comandos del modo IA, la salida de estado, los prompts de ocupado, las peticiones en cola y la cancelación.
 ---
 
 <PageBadges />
 
 ## Referencia de comandos
 
-El modo AI acepta solicitudes en lenguaje natural y comandos con barra. Todo texto sin prefijo se
-envía al modelo; cada comando determinista empieza por `/`. Por ejemplo, usa `/preview`, no `preview`.
+El modo IA acepta peticiones en lenguaje natural y comandos con barra. El texto sin prefijo siempre
+se envía al modelo; todos los comandos deterministas empiezan por `/`. Por ejemplo, usa `/preview`,
+no `preview`.
 
-| Comando                        | Propósito                                                                     |
-| ------------------------------ | ----------------------------------------------------------------------------- |
-| `/help`                        | Muestra el resumen alineado de comandos AI.                                   |
-| `/status`                      | Muestra esquema, borrador, modelo, autenticación, política, actividad y cola. |
-| `/providers`                   | Lista proveedores Pi, métodos de autenticación y cantidades de modelos.       |
-| `/models <provider>`           | Lista los identificadores de modelos de un proveedor.                         |
-| `/login <provider> <method>`   | Autentica mediante el flujo `api_key` u `oauth` definido por Pi.              |
-| `/model [provider/model]`      | Abre el selector o elige un proveedor y modelo explícitos.                    |
-| `/privacy`                     | Explica la política efectiva de nube y consentimiento del esquema.            |
-| `/load [file\|form]`           | Carga otro formulario y cambia a su conversación específica.                  |
-| `/preview`                     | Muestra el árbol de formulario legible del esquema de trabajo.                |
-| `/json`                        | Imprime el esquema de trabajo como JSON sin procesar.                         |
-| `/validate`                    | Valida el esquema de trabajo, incluida una propuesta sin aplicar.             |
-| `/serve [options]`             | Inicia la vista previa; `--app` inicia también la app configurada.            |
-| `/serve status`, `/serve stop` | Consulta o detiene los servidores sin salir del modo AI.                      |
-| `/diff`                        | Muestra los cambios acumulados desde que se entró en el modo AI.              |
-| `/diff --pending`              | Muestra solo los cambios desde la última aplicación.                          |
-| `/apply [schema-path]`         | Comprueba y guarda atómicamente la propuesta pendiente.                       |
-| `/discard`                     | Abandona el borrador y restaura la vista previa confirmada.                   |
-| `/undo`                        | Prepara el último esquema guardado en esta sesión para aprobarlo.             |
-| `/new`                         | Inicia una conversación conservando el modelo seleccionado.                   |
-| `/clear`                       | Borra el historial de este formulario y conserva el modelo.                   |
-| `/cancel`                      | Cancela la solicitud activa y vacía la cola de seguimientos.                  |
-| `/exit`                        | Vuelve a la shell; pide confirmación si hay una propuesta sin aplicar.        |
+| Comando                        | Finalidad                                                                                          |
+| ------------------------------ | -------------------------------------------------------------------------------------------------- |
+| `/help`                        | Muestra el resumen alineado de los comandos de IA.                                                 |
+| `/status`                      | Muestra el esquema, el borrador, el modelo, la autenticación, la política, la actividad y la cola. |
+| `/providers`                   | Lista los proveedores de Pi, sus métodos de autenticación y el número de modelos.                  |
+| `/models <provider>`           | Lista los identificadores de modelo de un proveedor.                                               |
+| `/login <provider> <method>`   | Autentica con el flujo `api_key` u `oauth` definido por Pi.                                        |
+| `/model [provider/model]`      | Abre el selector de modelos o selecciona un proveedor y un modelo concretos.                       |
+| `/privacy`                     | Explica la política efectiva de nube y consentimiento del esquema.                                 |
+| `/load [file\|form]`           | Carga otro formulario y cambia a su conversación propia del esquema.                               |
+| `/preview`                     | Muestra el árbol legible del formulario del esquema de trabajo.                                    |
+| `/json`                        | Muestra el esquema de trabajo en JSON sin formato.                                                 |
+| `/validate`                    | Valida el esquema de trabajo, incluida una propuesta sin aplicar.                                  |
+| `/serve [options]`             | Inicia el servidor de vista previa; `--app` inicia también la aplicación configurada.              |
+| `/serve status`, `/serve stop` | Consulta o detiene los servidores de vista previa sin salir del modo IA.                           |
+| `/diff`                        | Muestra los cambios acumulados desde que entraste en el modo IA.                                   |
+| `/diff --pending`              | Muestra solo los cambios entre la última aplicación y la propuesta pendiente.                      |
+| `/apply [schema-path]`         | Vuelve a comprobar y guarda de forma atómica la propuesta pendiente.                               |
+| `/discard`                     | Abandona el borrador y restaura la vista previa del esquema guardado en el navegador.              |
+| `/undo`                        | Prepara el último esquema guardado en esta sesión para aprobarlo explícitamente.                   |
+| `/new`                         | Inicia una conversación nueva y conserva el modelo seleccionado.                                   |
+| `/clear`                       | Elimina el historial guardado de este formulario y empieza de nuevo con el modelo seleccionado.    |
+| `/cancel`                      | Interrumpe la petición activa y vacía la cola de peticiones pendientes.                            |
+| `/exit`                        | Vuelve a la shell; pide confirmación si hay una propuesta sin aplicar.                             |
 
 ## Estado
 
-El estado es local: no contacta al proveedor ni consulta saldos de créditos:
+El estado es local: no contacta con ningún proveedor ni consulta saldos de créditos:
 
 ```ansi
 form0(ai)> /status
@@ -55,29 +56,33 @@ AI authoring status
     openai-codex  oauth (stored, subscription) [selected]
 ```
 
-La autenticación identifica la fuente y el tipo, pero nunca imprime una credencial. Un proveedor
-puede estar autenticado sin estar seleccionado y la autenticación no implica créditos disponibles.
+La salida de autenticación indica el origen y el tipo, pero nunca muestra una credencial. Un
+proveedor puede estar autenticado sin estar seleccionado, y estar autenticado no implica tener
+créditos disponibles.
 
-## Prompts disponible y ocupado
+## Prompts de listo y ocupado
 
-Una solicitud cambia el estado del prompt y muestra el modelo activo:
+Una petición cambia el estado del prompt y muestra el modelo activo:
 
 ```ansi
 [AI] Thinking with openai-codex/gpt-5.6-luna…
 form0(ai,busy)>
 ```
 
-Con el servidor activo, el prompt es `form0(server,ai,busy)>`. Al terminar vuelve a
-`form0(ai)>` o `form0(server,ai)>`.
+Con el servidor de vista previa en ejecución, el prompt es `form0(server,ai,busy)>`. Al terminar el
+procesamiento, vuelve a `form0(ai)>` o `form0(server,ai)>`.
 
-Pulsar Enter en una línea vacía no hace nada y redibuja el prompt. El texto escrito mientras está
-ocupado se pone en cola FIFO y se confirma indicando su posición.
+Pulsar Intro en una línea vacía no hace nada salvo volver a mostrar el prompt actual. El texto en
+lenguaje natural que se introduce mientras la CLI está ocupada se pone en cola en orden FIFO, y la
+CLI confirma su posición en la cola.
 
 ## Comandos disponibles mientras está ocupado
 
-Durante una solicitud siguen disponibles `/help`, `/status`, `/privacy`, `/cancel`, `/serve status`
-y `/serve stop`. Los demás comandos con barra se rechazan hasta que termine, para evitar cambios de
-modelo, conversación o borrador bajo una solicitud activa.
+Mientras hay una petición activa al proveedor, siguen disponibles `/help`, `/status`, `/privacy`,
+`/cancel`, `/serve status` y `/serve stop`. Los demás comandos con barra se rechazan hasta que
+termina el procesamiento, para que el modelo, la conversación o el borrador no cambien mientras la
+petición está en curso.
 
-La cancelación pide a Pi detener la solicitud y vacía todos los seguimientos. Si tiene éxito, vuelve
-al prompt disponible sin mostrar la cancelación del proveedor como un segundo error.
+La cancelación pide a Pi que interrumpa la petición actual y vacía la cola de peticiones pendientes.
+Una cancelación correcta vuelve al prompt de listo sin mostrar la interrupción del proveedor como un
+segundo error.

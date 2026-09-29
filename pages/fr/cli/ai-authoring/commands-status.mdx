@@ -1,44 +1,45 @@
 ---
 title: Commandes et état de la création avec IA
-description: Référence des commandes, de l'état, des invites occupées, de la file et de l'annulation.
+description: Référence des commandes du mode IA, de la sortie d’état, des invites pendant un traitement, des requêtes en file d’attente et de l’annulation.
 ---
 
 <PageBadges />
 
 ## Référence des commandes
 
-Le mode AI accepte des demandes en langage naturel et des commandes préfixées. Toute saisie sans
-préfixe est envoyée au modèle ; chaque commande déterministe commence par `/`. Utilisez par exemple
-`/preview`, et non `preview`.
+Le mode IA accepte des requêtes en langage naturel et des commandes à barre oblique. Une saisie sans
+préfixe est toujours envoyée au modèle ; toutes les commandes déterministes commencent par `/`. Par
+exemple, utilisez `/preview`, et non `preview`.
 
-| Commande                       | Rôle                                                                              |
-| ------------------------------ | --------------------------------------------------------------------------------- |
-| `/help`                        | Affiche le résumé aligné des commandes AI.                                        |
-| `/status`                      | Affiche schéma, brouillon, modèle, authentification, politique, activité et file. |
-| `/providers`                   | Liste fournisseurs Pi, méthodes d'authentification et nombres de modèles.         |
-| `/models <provider>`           | Liste les identifiants de modèles d'un fournisseur.                               |
-| `/login <provider> <method>`   | Authentifie via le flux `api_key` ou `oauth` défini par Pi.                       |
-| `/model [provider/model]`      | Ouvre le sélecteur ou choisit explicitement un fournisseur et un modèle.          |
-| `/privacy`                     | Explique la politique cloud et de consentement effective du schéma.               |
-| `/load [file\|form]`           | Charge un autre formulaire et bascule vers sa conversation propre.                |
-| `/preview`                     | Affiche l'arbre lisible du formulaire de travail.                                 |
-| `/json`                        | Affiche le schéma de travail en JSON brut.                                        |
-| `/validate`                    | Valide le schéma de travail, y compris une proposition non appliquée.             |
-| `/serve [options]`             | Lance l'aperçu ; `--app` lance aussi l'application configurée.                    |
-| `/serve status`, `/serve stop` | Inspecte ou arrête les serveurs sans quitter le mode AI.                          |
-| `/diff`                        | Affiche les changements cumulés depuis l'entrée en mode AI.                       |
-| `/diff --pending`              | Affiche uniquement les changements depuis la dernière application.                |
-| `/apply [schema-path]`         | Revérifie et enregistre atomiquement la proposition.                              |
-| `/discard`                     | Abandonne le brouillon et restaure l'aperçu validé.                               |
-| `/undo`                        | Prépare le dernier schéma enregistré dans cette session pour approbation.         |
-| `/new`                         | Démarre une conversation en conservant le modèle sélectionné.                     |
-| `/clear`                       | Efface l'historique du formulaire et conserve le modèle.                          |
-| `/cancel`                      | Annule la requête active et vide la file des suivis.                              |
-| `/exit`                        | Revient au shell ; demande confirmation si une proposition n'est pas appliquée.   |
+| Commande                       | Rôle                                                                                                           |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `/help`                        | Affiche le résumé aligné des commandes d’IA.                                                                   |
+| `/status`                      | Affiche le schéma, le brouillon, le modèle, l’authentification, la politique, l’activité et la file d’attente. |
+| `/providers`                   | Liste les fournisseurs Pi, leurs méthodes d’authentification et leur nombre de modèles.                        |
+| `/models <provider>`           | Liste les identifiants de modèle d’un fournisseur.                                                             |
+| `/login <provider> <method>`   | S’authentifie avec le flux `api_key` ou `oauth` défini par Pi.                                                 |
+| `/model [provider/model]`      | Ouvre le sélecteur de modèle, ou sélectionne un fournisseur et un modèle explicites.                           |
+| `/privacy`                     | Explique la politique effective du schéma en matière de cloud et de consentement.                              |
+| `/load [file\|form]`           | Charge un autre formulaire et bascule vers la conversation propre à son schéma.                                |
+| `/preview`                     | Affiche l’arborescence lisible du formulaire pour le schéma de travail.                                        |
+| `/json`                        | Affiche le schéma de travail en JSON brut.                                                                     |
+| `/validate`                    | Valide le schéma de travail, y compris une proposition non appliquée.                                          |
+| `/serve [options]`             | Lance le serveur d’aperçu ; `--app` lance aussi l’application configurée.                                      |
+| `/serve status`, `/serve stop` | Inspecte ou arrête les serveurs d’aperçu sans quitter le mode IA.                                              |
+| `/diff`                        | Affiche les modifications cumulées depuis l’entrée dans le mode IA.                                            |
+| `/diff --pending`              | Affiche uniquement les modifications entre la dernière application et la proposition en attente.               |
+| `/apply [schema-path]`         | Revérifie et enregistre de manière atomique la proposition en attente.                                         |
+| `/discard`                     | Abandonne le brouillon et rétablit l’aperçu du schéma enregistré dans le navigateur.                           |
+| `/undo`                        | Prépare le dernier schéma enregistré pendant cette session pour une approbation explicite.                     |
+| `/new`                         | Démarre une nouvelle conversation en conservant le modèle sélectionné.                                         |
+| `/clear`                       | Supprime l’historique enregistré de ce formulaire et recommence avec le modèle sélectionné.                    |
+| `/cancel`                      | Interrompt la requête active et vide la file des requêtes en attente.                                          |
+| `/exit`                        | Revient au shell ; demande d’abord une confirmation si une proposition n’est pas appliquée.                    |
 
 ## État
 
-L'état est local : il ne contacte pas le fournisseur et ne consulte pas les crédits :
+L’état est calculé localement : il ne contacte aucun fournisseur et ne récupère aucun solde de
+crédits :
 
 ```ansi
 form0(ai)> /status
@@ -56,29 +57,33 @@ AI authoring status
     openai-codex  oauth (stored, subscription) [selected]
 ```
 
-L'authentification indique la source et le type, sans jamais afficher d'identifiant. Un fournisseur
-peut être authentifié sans être sélectionné et l'authentification ne garantit pas des crédits.
+La sortie d’authentification indique la source et le type, mais n’affiche jamais d’identifiant. Un
+fournisseur peut être authentifié sans être sélectionné, et l’authentification ne garantit pas que
+des crédits sont disponibles.
 
 ## Invites prête et occupée
 
-Une requête change l'état de l'invite et affiche le modèle actif :
+Une requête change l’état de l’invite et affiche le modèle actif :
 
 ```ansi
 [AI] Thinking with openai-codex/gpt-5.6-luna…
 form0(ai,busy)>
 ```
 
-Avec le serveur actif, l'invite est `form0(server,ai,busy)>`. À la fin, elle redevient
-`form0(ai)>` ou `form0(server,ai)>`.
+Lorsque le serveur d’aperçu est en cours d’exécution, l’invite est `form0(server,ai,busy)>`. À la
+fin du traitement, elle revient à `form0(ai)>` ou `form0(server,ai)>`.
 
-Appuyer sur Entrée sur une ligne vide ne fait rien et réaffiche l'invite. Le texte saisi pendant le
-traitement rejoint une file FIFO et sa position est confirmée.
+Appuyer sur Entrée sur une ligne vide ne fait rien d’autre que réafficher l’invite courante. Une
+saisie en langage naturel pendant un traitement est mise en file d’attente dans l’ordre FIFO, et la
+CLI confirme sa position dans la file.
 
-## Commandes disponibles pendant le traitement
+## Commandes disponibles pendant un traitement
 
-Pendant une requête, `/help`, `/status`, `/privacy`, `/cancel`, `/serve status` et `/serve stop`
-restent disponibles. Les autres commandes sont refusées jusqu'à la fin, afin d'éviter de modifier
-modèle, conversation ou brouillon sous une requête active.
+Tant qu’une requête au fournisseur est active, `/help`, `/status`, `/privacy`, `/cancel`,
+`/serve status` et `/serve stop` restent disponibles. Les autres commandes à barre oblique sont
+refusées jusqu’à la fin du traitement, ce qui empêche le modèle, la conversation ou le brouillon de
+changer pendant la requête en cours.
 
-L'annulation demande à Pi d'arrêter la requête et vide tous les suivis. Si elle réussit, l'invite
-prête revient sans afficher l'abandon du fournisseur comme une seconde erreur.
+L’annulation demande à Pi d’interrompre la requête courante et vide toutes les requêtes en attente.
+Une annulation réussie revient à l’invite prête sans présenter l’interruption du fournisseur comme
+une seconde erreur.
