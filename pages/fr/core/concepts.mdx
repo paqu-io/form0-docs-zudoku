@@ -1,49 +1,48 @@
 ---
 title: Concepts
-description: Le schema -premier modèle mental derrière form0-core.
+description: Le modèle mental schema-first de form0-core.
 ---
 
 <PageBadges />
 
-## Schéma-premier
+## Le schéma d'abord
 
-Un form0 schema est un document JSON avec un objet `form` de haut niveau.
-structure, règles et comportement d'un formulaire sans code d'interface utilisateur.
+Un schéma form0 est un document JSON avec un objet `form` de premier niveau. Le schéma définit la
+structure, les règles et le comportement d'un formulaire sans aucun code d'interface.
 
 ## Champs et valeurs
 
-- Chaque champ a un `data_name` (identifiant lisible par l'homme) et un `key` (identifiant interne, typiquement dérivé de `data_name`).
-- Les valeurs du moteur sont stockées par `data_name`.
-- Conditions champs de référence par `field_id`. Vous pouvez utiliser soit `key` ou `data_name`; en utilisant `data_name` est souvent plus pratique lors de l'écriture manuelle schemas car il est plus mémorable.
+- Chaque champ possède un `data_name` (identifiant lisible) et une `key` (identifiant interne,
+  généralement dérivé de `data_name`).
+- Le moteur stocke les valeurs par `data_name`, et les expressions les lisent sous la forme
+  `$data_name`.
+- Les conditions référencent les champs avec `field_id`, qui accepte la `key` ou le `data_name`.
+  Voir [Conditions et opérateurs](/fr/core/schema/conditions-operators).
 
 ## État du moteur
 
-Le moteur évalue le schema et produit un objet d'état avec:
+Le moteur évalue le schéma et produit un objet d'état contenant :
 
-- `values`: valeurs du champ courant
-- `errors`: erreurs de validation des valeurs et des formats
-- `visible`: indicateurs de visibilité par champ
-- `required`: flags des exigences par champ
-- `read_only`: drapeaux en lecture seule par champ
+- `values` : les valeurs actuelles des champs
+- `errors` : les erreurs de validation de valeur et de format
+- `visible` : la visibilité de chaque champ
+- `required` : le caractère obligatoire de chaque champ
+- `read_only` : la lecture seule de chaque champ
 
-Les maps `required` et `errors` ont des rôles différents. Le moteur indique si un champ est
-obligatoire, mais il n'ajoute pas automatiquement à `errors` un champ obligatoire vide. Le renderer
-ou l'application hôte applique les règles d'envoi.
+Le moteur indique si un champ est obligatoire, mais un champ obligatoire vide n'est pas ajouté à
+`errors`. Les règles de soumission sont appliquées par le renderer ou l'application host. Voir
+[Validation du schéma](/fr/core/schema/validation).
 
-## Flux de données
+## Fonctionnement du moteur
 
-1. Chargez le schema et créez le moteur
-2. Fournir les valeurs initiales (facultatif)
-3. Enregistrez les gestionnaires définis dans `form.events.code`
-4. Évaluez les calculs, les conditions et la validation
-5. À chaque changement de valeur :
-   - Mettez à jour la valeur
-   - Réévaluez le formulaire (validation en direct)
-   - Laissez l'hôte ou le binding déclencher `change` s'il prend en charge cet événement
-6. Lisez l'état ou construisez un enregistrement structuré pour l'envoyer
+Ces pages expliquent ce que fait le moteur à l'exécution :
 
-## Événements et expressions
-
-- Les champs calculés utilisent des expressions, à l'intérieur de la propriété `calculate`, comme `$age + 1` pour dériver des valeurs d'autres champs.
-- Les événements sont définis dans `form.events.code`. Le noyau enregistre leurs gestionnaires,
-  tandis que l'application hôte ou le binding décide quand déclencher chaque événement.
+- [Cycle d'évaluation](/fr/core/engine/evaluation-cycle) : ce qui se passe à la création du moteur
+  et à chaque changement de valeur.
+- [Calculs et dépendances](/fr/core/engine/calculations-dependencies) : l'ordre d'exécution des
+  champs calculés, les cycles, les expressions en échec et `EVAL()`.
+- [Portées parent et enfant](/fr/core/engine/parent-child-scopes) : comment les lignes des sections
+  répétables sont évaluées et quels champs chaque expression peut lire.
+- [Événements et opérations](/fr/core/engine/events-operations) : comment les gestionnaires
+  d'événements sont enregistrés et exécutés, et comment leurs opérations parviennent à votre
+  application.

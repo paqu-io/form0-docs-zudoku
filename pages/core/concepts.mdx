@@ -12,9 +12,11 @@ structure, rules, and behavior of a form without any UI code.
 
 ## Fields and values
 
-- Each field has a `data_name` (human-readable identifier) and a `key` (internal identifier, typically derived from `data_name`).
-- Engine values are stored by `data_name`.
-- Conditions reference fields by `field_id`. You can use either `key` or `data_name`; using `data_name` is often more practical when writing schemas manually since it's more memorable.
+- Each field has a `data_name` (human-readable identifier) and a `key` (internal identifier,
+  typically derived from `data_name`).
+- Engine values are stored by `data_name`, and expressions read them as `$data_name`.
+- Conditions reference fields by `field_id`, which accepts either `key` or `data_name`. See
+  [Conditions and operators](/core/schema/conditions-operators).
 
 ## Engine state
 
@@ -26,24 +28,19 @@ The engine evaluates the schema and produces a state object with:
 - `required`: requirement flags per field
 - `read_only`: read-only flags per field
 
-The `required` and `errors` maps have different roles. The engine reports whether a field is
-required, but an empty required field is not automatically added to `errors`. Submission rules are
-applied by the renderer or host application.
+The engine reports whether a field is required, but an empty required field is not added to
+`errors`. The renderer or host application applies submission rules. See
+[Schema validation](/core/schema/validation).
 
-## Data flow
+## How the engine works
 
-1. Load the schema and create the engine
-2. Provide initial values (optional)
-3. Register the handlers in `form.events.code`
-4. Evaluate calculations, conditions, and validation
-5. On each value change:
-   - Update the value
-   - Re-evaluate (live validation)
-   - Let the host or binding dispatch `change` if it supports that event
-6. Read state or build a structured record for submission
+These pages explain what the engine does at runtime:
 
-## Events and expressions
-
-- Calculated fields use expressions, inside `calculate` property, like `$age + 1` to derive values from other fields.
-- Events live in `form.events.code`. Core registers their handlers, while the host application or
-  binding decides when to dispatch each event.
+- [Evaluation cycle](/core/engine/evaluation-cycle): what happens when the engine is created and
+  every time a value changes.
+- [Calculations and dependencies](/core/engine/calculations-dependencies): the order calculated
+  fields run in, cycles, failing expressions, and `EVAL()`.
+- [Parent and child scopes](/core/engine/parent-child-scopes): how repeatable-section rows are
+  evaluated and which fields each expression can read.
+- [Events and operations](/core/engine/events-operations): how event handlers are registered and run,
+  and how their operations reach your application.
