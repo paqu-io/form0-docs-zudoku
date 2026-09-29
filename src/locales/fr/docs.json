@@ -114,7 +114,7 @@
       "themes-styling": { "title": "Thèmes et styles" },
       "workers-performance": { "title": "Workers et performances" },
       "api-reference": { "title": "Référence de l'API React" },
-      "troubleshooting": { "title": "Résolution des problèmes React" }
+      "troubleshooting": { "title": "Dépannage React" }
     },
     "react-native": {
       "install-render": { "title": "Installer et afficher avec React Native" },

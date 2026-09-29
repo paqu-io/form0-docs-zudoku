@@ -1,21 +1,22 @@
 ---
 title: Referencia de la API de React
-description: Componentes públicos, ganchos, registros y utilidades exportados por form0-react.
+description: Componentes, hooks, registros y utilidades públicos que exporta form0-react.
 ---
 
 <PageBadges />
 
-Todas las exportaciones de JavaScript compatibles están disponibles desde `form0-react` a menos que se muestre otra ruta.
+Todas las exportaciones JavaScript admitidas están disponibles en `form0-react`, salvo que se
+indique otra ruta.
 
-## Representación
+## Renderizado
 
-- `FormRenderer` — renderizar y administrar un formulario dirigido por schema.
-- `ThemeProvider`, `ThemeContext`, `useThemeClass` — proporcionar o leer la clase de tema activo.
+- `FormRenderer`: renderiza y gestiona un formulario basado en un esquema.
+- `ThemeProvider`, `ThemeContext`, `useThemeClass`: proporcionan o leen la clase del tema activo.
 
-Ver [FormRenderer](/es/bindings/react/form-renderer) y
+Consulta [FormRenderer](/es/bindings/react/form-renderer) y
 [Temas y estilos](/es/bindings/react/themes-styling).
 
-## Registro de campo
+## Registro de campos
 
 - `FieldRegistryProvider`, `FieldRegistryContext`, `useFieldRegistry`
 - `createFieldRegistry`, `defaultFieldRegistry`
@@ -23,23 +24,21 @@ Ver [FormRenderer](/es/bindings/react/form-renderer) y
 - `getFieldComponent`, `listRegisteredFieldTypes`, `getMissingFieldComponentTypes`
 - `KNOWN_FIELD_TYPES`
 
-Ver [Campo personalizado renderers](/es/bindings/react/custom-renderers).
+Consulta [Renderers de campo personalizados](/es/bindings/react/custom-renderers).
 
 ## Utilidades de esquema
 
-- `cloneDeep(value)` y `cloneSchema(schema)` crean copias separadas.
-- `ensureSchemaKeys(elements)` añade claves estables donde sea necesario e informa si ha cambiado el
-  entrada.
-- `prepareSchema(schema)` clona un schema y asegura claves de elementos en la copia.
+- `cloneDeep(value)` y `cloneSchema(schema)` crean copias independientes.
+- `ensureSchemaKeys(elements)` añade claves estables donde hacen falta e indica si ha modificado la entrada.
+- `prepareSchema(schema)` clona un esquema y garantiza las claves de los elementos en la copia.
 
 ## Integración especializada
 
-- `useBuildingPlanController(options)` coordina la interfaz de usuario de la sección del plano de construcción de renderer con
-  datos repetibles. Es especializado en lugar de un gancho general de estado de forma.
+- `useBuildingPlanController(options)` coordina la interfaz de las secciones de plano de construcción del renderer con los datos repetibles. Es un hook especializado, no un hook general de estado del formulario.
 
-El `useFormEngine` interno, cliente worker, componentes renderer predeterminados individuales, y
-`FieldRenderer` no son exportaciones de paquetes. La importación de archivos internos no es compatible con el paquete
-export map.
+`useFormEngine` (interno), el cliente del worker, los componentes individuales de los renderers
+predeterminados y `FieldRenderer` no se exportan desde el paquete. El mapa de exportaciones del
+paquete no admite importar archivos internos.
 
-Los tokens de tema se exportan por separado desde `form0-react/theme.css.js`.
-disponible como `form0-react/index.css`.
+Los tokens del tema se exportan por separado desde `form0-react/theme.css.js`. La hoja de estilos
+compilada está disponible como `form0-react/index.css`.

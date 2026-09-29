@@ -1,18 +1,19 @@
 ---
 title: Panoramica dei binding UI
-description: Renderizza schemi form0 nei framework lasciando a form0-core la logica del modulo.
+description: Esegui il rendering degli schemi form0 nei framework applicativi, lasciando a form0-core il comportamento del modulo.
 ---
 
 <PageBadges />
 
 import { Callout } from "zudoku/ui/Callout"
 
-I binding collegano il motore indipendente dal framework `form0-core` all’interfaccia di
-un’applicazione. Il motore resta responsabile di calcoli, condizioni, validazione, eventi e record
-strutturati; il binding trasforma tale stato in componenti e interazioni della piattaforma.
+I binding collegano il motore `form0-core`, indipendente dal framework, all'interfaccia
+dell'applicazione. Il motore resta responsabile di calcoli, condizioni, validazione, eventi e record
+strutturati; il binding trasforma questo stato in componenti della piattaforma e interazioni
+dell'utente.
 
-Per una nuova applicazione, parti dalla [CLI form0](/it/cli/overview) e scegli uno starter. Usa
-direttamente un binding quando integri form0 in un’applicazione esistente.
+Per una nuova applicazione, parti dalla [CLI di form0](/it/cli/overview) e scegli uno starter. Usa
+direttamente un binding quando integri form0 in un'applicazione esistente.
 
 ## Binding ufficiali
 
@@ -21,11 +22,12 @@ direttamente un binding quando integri form0 in un’applicazione esistente.
 | [`form0-react`](https://www.npmjs.com/package/form0-react)               | Applicazioni web React            | [Installazione e rendering](/it/bindings/react/install-render)        | [GitHub](https://github.com/paqu-io/form0-react)        |
 | [`form0-react-native`](https://www.npmjs.com/package/form0-react-native) | Applicazioni React Native ed Expo | [Installazione e rendering](/it/bindings/react-native/install-render) | [GitHub](https://github.com/paqu-io/form0-react-native) |
 
-I binding non cambiano la semantica dello schema. Consulta la
-[documentazione Core](/it/core/overview) per schemi, campi, espressioni, validazione, sicurezza e
-record di output.
+I binding non cambiano la semantica degli schemi. Consulta la
+[documentazione del nucleo](/it/core/overview) per schemi, campi, espressioni, validazione,
+sicurezza e record di output.
 
-<Callout type="caution" title="Solo schemi attendibili">
-  Le espressioni e gli script degli eventi eseguono JavaScript. Renderizza solo schemi di autori
-  attendibili. Consulta [Sicurezza degli schemi eseguibili](/it/core/security).
+<Callout type="caution" title="Solo schemi affidabili">
+  Le espressioni degli schemi e gli script degli eventi eseguono JavaScript. Esegui il rendering
+  solo di schemi provenienti da autori affidabili. Vedi [Sicurezza degli schemi
+  eseguibili](/it/core/security).
 </Callout>

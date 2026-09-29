@@ -1,31 +1,32 @@
 ---
 title: Temas y estilos
-description: Utilice temas form0-react incorporados o proporcione una clase de tema Vanilla Extract.
+description: Usa los temas integrados de form0-react o proporciona una clase de tema de Vanilla Extract.
 ---
 
 <PageBadges />
 
-Importe la hoja de estilos del paquete una vez en el punto de entrada de la aplicación:
+Importa la hoja de estilos del paquete una sola vez en el punto de entrada de la aplicación:
 
 ```js
 import "form0-react/index.css"
 ```
 
-## Temas incorporados
+## Temas integrados
 
-`theme` acepta `standard`, `modal`, `simplified`, o `spotlight`. `colorMode` acepta `light`,
-`dark` o `system`.
+`theme` acepta `standard`, `modal`, `simplified` o `spotlight`. `colorMode` acepta `light`, `dark` o
+`system`.
 
 ```jsx
 <FormRenderer schema={schema} theme="standard" colorMode="system" />
 ```
 
-El nombre del tema y el modo de color seleccionan la clase Vanilla Extract incorporada correspondiente.
-no cambia automáticamente la propiedad `theme`, por lo que una aplicación puede elegir su propio emparejamiento.
+El nombre del tema y el modo de color seleccionan la clase de Vanilla Extract integrada
+correspondiente. La ubicación no cambia automáticamente la propiedad `theme`, así que cada
+aplicación puede elegir su propia combinación.
 
 ## Temas personalizados
 
-La exportación `form0-react/theme.css.js` expone el contrato del tema `vars`:
+La exportación `form0-react/theme.css.js` expone el contrato de tema `vars`:
 
 ```js
 import { createTheme } from "@vanilla-extract/css"
@@ -36,11 +37,12 @@ export const appTheme = createTheme(vars, {
 })
 ```
 
-Pasar la clase generada a `theme`:
+Pasa la clase generada a `theme`:
 
 ```jsx
 <FormRenderer schema={schema} theme={appTheme} colorMode="light" />
 ```
 
-Utilice `className` para el estilo de nivel de forma y elementos de envoltura ordinarios para la aplicación circundante
-El marcado de campo personalizado pertenece a un [custom renderer](/es/bindings/react/custom-renderers).
+Usa `className` para los estilos a nivel de formulario y elementos contenedores normales para el
+diseño de la aplicación que rodea al formulario. El marcado personalizado de un campo corresponde a
+un [renderer personalizado](/es/bindings/react/custom-renderers).

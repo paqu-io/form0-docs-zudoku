@@ -2866,7 +2866,7 @@
     "translationKey": "/bindings/overview",
     "locale": "es",
     "title": "Visión general de los bindings de interfaz",
-    "description": "Renderiza esquemas form0 en frameworks de aplicación mientras form0-core controla el comportamiento.",
+    "description": "Renderiza esquemas form0 en frameworks de aplicación mientras form0-core gestiona el comportamiento del formulario.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -2893,7 +2893,7 @@
     "translationKey": "/bindings/react/api-reference",
     "locale": "es",
     "title": "Referencia de la API de React",
-    "description": "Componentes públicos, ganchos, registros y utilidades exportados por form0-react.",
+    "description": "Componentes, hooks, registros y utilidades públicos que exporta form0-react.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -2919,8 +2919,8 @@
     "pathname": "/es/bindings/react/built-in-renderers",
     "translationKey": "/bindings/react/built-in-renderers",
     "locale": "es",
-    "title": "Renderizadores de campo integrados",
-    "description": "Tipos de campo que form0-react renderiza sin personalizaciones.",
+    "title": "Renderers de campo integrados",
+    "description": "Tipos de campo que form0-react renderiza sin que la aplicación los sustituya.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -2946,8 +2946,8 @@
     "pathname": "/es/bindings/react/custom-renderers",
     "translationKey": "/bindings/react/custom-renderers",
     "locale": "es",
-    "title": "Renderizadores de campo personalizados",
-    "description": "Reemplace la presentación de campo form0-react globalmente o dentro de un subárbol React.",
+    "title": "Renderers de campo personalizados",
+    "description": "Sustituye la presentación de los campos de form0-react de forma global o dentro de un subárbol de React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -2974,7 +2974,7 @@
     "translationKey": "/bindings/react/form-renderer",
     "locale": "es",
     "title": "FormRenderer",
-    "description": "Configurar el primario form0 React componente.",
+    "description": "Configura el componente principal de form0 para React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3028,7 +3028,7 @@
     "translationKey": "/bindings/react/modes-placement-navigation",
     "locale": "es",
     "title": "Modos, ubicación y navegación",
-    "description": "Configura edición, overlays, etiquetas, secciones y flujos simplificados.",
+    "description": "Configura la edición, los overlays, las etiquetas, las secciones y los flujos simplificados de los formularios en React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3055,7 +3055,7 @@
     "translationKey": "/bindings/react/themes-styling",
     "locale": "es",
     "title": "Temas y estilos",
-    "description": "Utilice temas form0-react incorporados o proporcione una clase de tema Vanilla Extract.",
+    "description": "Usa los temas integrados de form0-react o proporciona una clase de tema de Vanilla Extract.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3082,7 +3082,7 @@
     "translationKey": "/bindings/react/troubleshooting",
     "locale": "es",
     "title": "Solución de problemas de React",
-    "description": "Diagnosticar problemas comunes de instalación, renderizado, estilo y worker.",
+    "description": "Diagnostica problemas habituales de instalación, renderizado, estilos y workers en form0-react.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3109,7 +3109,7 @@
     "translationKey": "/bindings/react/values-snapshots-submission",
     "locale": "es",
     "title": "Valores, snapshots y envío",
-    "description": "Semilla, observar, restaurar y enviar el estado form0 React.",
+    "description": "Inicializa, observa, restaura y envía el estado de form0 en React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3136,7 +3136,7 @@
     "translationKey": "/bindings/react/workers-performance",
     "locale": "es",
     "title": "Workers y rendimiento",
-    "description": "Elija la ejecución del motor form0-react y los modos de suscripción de estado React.",
+    "description": "Elige el modo de ejecución del motor de form0-react y el modo de suscripción al estado de React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6251,7 +6251,7 @@
     "translationKey": "/bindings/overview",
     "locale": "fr",
     "title": "Aperçu des bindings d’interface",
-    "description": "Affichez des schémas form0 dans un framework tout en laissant form0-core gérer le comportement.",
+    "description": "Affichez des schémas form0 dans des frameworks applicatifs tandis que form0-core gère le comportement du formulaire.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6278,7 +6278,7 @@
     "translationKey": "/bindings/react/api-reference",
     "locale": "fr",
     "title": "Référence de l'API React",
-    "description": "Composants publics, crochets, registres et utilitaires exportés par form0-react.",
+    "description": "Composants, hooks, registres et utilitaires publics exportés par form0-react.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6305,7 +6305,7 @@
     "translationKey": "/bindings/react/built-in-renderers",
     "locale": "fr",
     "title": "Renderers de champ intégrés",
-    "description": "Types de champs affichés par form0-react sans remplacement applicatif.",
+    "description": "Types de champs affichés par form0-react sans surcharge de l’application.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6332,7 +6332,7 @@
     "translationKey": "/bindings/react/custom-renderers",
     "locale": "fr",
     "title": "Renderers de champ personnalisés",
-    "description": "Remplacez la présentation des champs form0-react globalement ou dans une sous-arborescence React.",
+    "description": "Remplacez l’affichage des champs form0-react globalement ou dans un sous-arbre React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6359,7 +6359,7 @@
     "translationKey": "/bindings/react/form-renderer",
     "locale": "fr",
     "title": "FormRenderer",
-    "description": "Configurez le composant principal form0 React.",
+    "description": "Configurez le composant React principal de form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6413,7 +6413,7 @@
     "translationKey": "/bindings/react/modes-placement-navigation",
     "locale": "fr",
     "title": "Modes, emplacement et navigation",
-    "description": "Configurez l’édition, les overlays, les libellés, les sections et les parcours simplifiés.",
+    "description": "Configurez l’édition, les overlays, les libellés, les sections et les parcours simplifiés des formulaires React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6440,7 +6440,7 @@
     "translationKey": "/bindings/react/themes-styling",
     "locale": "fr",
     "title": "Thèmes et styles",
-    "description": "Utilisez des thèmes form0-react intégrés ou fournissez une classe de thème Vanilla Extract.",
+    "description": "Utilisez les thèmes intégrés de form0-react ou fournissez une classe de thème Vanilla Extract.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6467,7 +6467,7 @@
     "translationKey": "/bindings/react/troubleshooting",
     "locale": "fr",
     "title": "Dépannage React",
-    "description": "Diagnostiquez les problèmes courants d'installation, de rendu, de style et de worker.",
+    "description": "Diagnostiquez les problèmes courants d’installation, d’affichage, de styles et de workers avec form0-react.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6494,7 +6494,7 @@
     "translationKey": "/bindings/react/values-snapshots-submission",
     "locale": "fr",
     "title": "Valeurs, snapshots et soumission",
-    "description": "Ensemencer, observer, restaurer et soumettre l'état form0 React.",
+    "description": "Initialisez, observez, restaurez et soumettez l’état form0 dans React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6521,7 +6521,7 @@
     "translationKey": "/bindings/react/workers-performance",
     "locale": "fr",
     "title": "Workers et performances",
-    "description": "Choisissez les modes d'exécution du moteur form0-react et d'abonnement à l'état React.",
+    "description": "Choisissez le mode d’exécution du moteur de form0-react et le mode d’abonnement à l’état React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9727,7 +9727,7 @@
     "translationKey": "/bindings/overview",
     "locale": "it",
     "title": "Panoramica dei binding UI",
-    "description": "Renderizza schemi form0 nei framework lasciando a form0-core la logica del modulo.",
+    "description": "Esegui il rendering degli schemi form0 nei framework applicativi, lasciando a form0-core il comportamento del modulo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9754,7 +9754,7 @@
     "translationKey": "/bindings/react/api-reference",
     "locale": "it",
     "title": "Riferimento API di React",
-    "description": "Componenti pubblici, ganci, registri e utilità esportati da form0-react.",
+    "description": "Componenti, hook, registri e utility pubblici esportati da form0-react.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9781,7 +9781,7 @@
     "translationKey": "/bindings/react/built-in-renderers",
     "locale": "it",
     "title": "Renderer di campo integrati",
-    "description": "Tipi di campo renderizzati da form0-react senza override dell’applicazione.",
+    "description": "Tipi di campo visualizzati da form0-react senza override da parte dell'applicazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9808,7 +9808,7 @@
     "translationKey": "/bindings/react/custom-renderers",
     "locale": "it",
     "title": "Renderer di campo personalizzati",
-    "description": "Sostituire la presentazione del campo form0-react a livello globale o all'interno di un sottoalbero React.",
+    "description": "Sostituisci la presentazione dei campi di form0-react a livello globale o in un sottoalbero React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9835,7 +9835,7 @@
     "translationKey": "/bindings/react/form-renderer",
     "locale": "it",
     "title": "FormRenderer",
-    "description": "Configurare il componente primario form0 React.",
+    "description": "Configura il componente React principale di form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9862,7 +9862,7 @@
     "translationKey": "/bindings/react/install-render",
     "locale": "it",
     "title": "Installazione e rendering con React",
-    "description": "Installa form0-react e renderizza uno schema in un’applicazione React esistente.",
+    "description": "Installa form0-react ed esegui il rendering di uno schema in un'applicazione React esistente.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9889,7 +9889,7 @@
     "translationKey": "/bindings/react/modes-placement-navigation",
     "locale": "it",
     "title": "Modalità, posizionamento e navigazione",
-    "description": "Configura modifica, overlay, etichette, sezioni e flussi semplificati.",
+    "description": "Configura modifica, overlay, etichette, sezioni e flussi semplificati dei moduli React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9916,7 +9916,7 @@
     "translationKey": "/bindings/react/themes-styling",
     "locale": "it",
     "title": "Temi e stili",
-    "description": "Utilizzare i temi integrati form0-react o fornire una classe di tema Estratto di vaniglia.",
+    "description": "Usa i temi integrati di form0-react o fornisci una classe di tema Vanilla Extract.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9943,7 +9943,7 @@
     "translationKey": "/bindings/react/troubleshooting",
     "locale": "it",
     "title": "Risoluzione dei problemi di React",
-    "description": "Diagnosi comune form0-react installazione, rendering, styling e worker Questioni.",
+    "description": "Diagnostica i problemi comuni di installazione, rendering, stili e worker di form0-react.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9970,7 +9970,7 @@
     "translationKey": "/bindings/react/values-snapshots-submission",
     "locale": "it",
     "title": "Valori, snapshot e invio",
-    "description": "Seme, osservare, ripristinare e inviare lo stato form0 React.",
+    "description": "Inizializza, osserva, ripristina e invia lo stato di form0 in React.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9997,7 +9997,7 @@
     "translationKey": "/bindings/react/workers-performance",
     "locale": "it",
     "title": "Worker e prestazioni",
-    "description": "Scegli le modalità di esecuzione del motore form0-react e di abbonamento allo stato React.",
+    "description": "Scegli la modalità di esecuzione del motore di form0-react e la modalità di sottoscrizione allo stato React.",
     "indexable": true,
     "status": "published",
     "alternates": [

@@ -1,12 +1,12 @@
 ---
 title: FormRenderer
-description: Configurare il componente primario form0 React.
+description: Configura il componente React principale di form0.
 ---
 
 <PageBadges />
 
-`FormRenderer` convalida e prepara uno schema, crea il motore del modulo, renderizza i campi e
-Sezioni e produce record strutturati su submission.
+`FormRenderer` valida e prepara uno schema, crea il motore del modulo, esegue il rendering di campi
+e sezioni e produce record strutturati all'invio.
 
 ```jsx
 <FormRenderer
@@ -22,30 +22,28 @@ Sezioni e produce record strutturati su submission.
 
 ## Proprietà essenziali
 
-| Proprietà          | Oggetto                                                           |
-| ------------------ | ----------------------------------------------------------------- |
-| `schema`           | Un form0 schema contenente `form.elements`.                       |
-| `initialValues`    | Valori di campo iniziali non ripetibili.                          |
-| `initialSnapshot`  | Ripristinare valori grezzi, stato ripetibile e timestamp insieme. |
-| `overrideValues`   | Applicare valori autorevoli rispetto ai valori iniziali.          |
-| `onSubmit`         | Ricevi il record strutturato e i metadati submission.             |
-| `onSnapshotChange` | Osservare seed e user-change snapshots.                           |
-| `mode`             | Avviare la modalità `edit` o `readonly`.                          |
+| Proprietà          | Scopo                                                                         |
+| ------------------ | ----------------------------------------------------------------------------- |
+| `schema`           | Uno schema form0 che contiene `form.elements`.                                |
+| `initialValues`    | Valori iniziali dei campi non ripetibili.                                     |
+| `initialSnapshot`  | Ripristina insieme valori grezzi, stato delle sezioni ripetibili e timestamp. |
+| `overrideValues`   | Applica valori prioritari sopra quelli iniziali.                              |
+| `onSubmit`         | Riceve il record strutturato e i metadati dell'invio.                         |
+| `onSnapshotChange` | Osserva gli snapshot iniziali e quelli delle modifiche dell'utente.           |
+| `mode`             | Avvia in modalità `edit` o `readonly`.                                        |
 
-## UI e Stato di proprietà dei consumatori
+## Interfaccia e stato gestiti dall'applicazione
 
-- `headerAccessory` rende un nodo React, o una funzione che riceve `{ mode }`, tra il sommario
-  e forma il corpo.
-- `recordMetadataFields` visualizza metadati dei record in sola lettura. Un descrittore con `displayValue` non
-  immette i valori del motore, snapshots, o i valori inviati.
-- `externalDirty` include modifiche di proprietà dell'applicazione nella conferma dello scarto di sovrapposizione.
-- `submitBlockedReason` disattiva e protegge submission mentre un requisito esterno è irrisolto.
-- `onSchemaReady` riceve la schema preparata dopo che sono state garantite chiavi stabili.
+- `headerAccessory` esegue il rendering di un nodo React, o di una funzione che riceve `{ mode }`, tra il riepilogo e il corpo del modulo.
+- `recordMetadataFields` mostra metadati del record in sola lettura. Un descrittore con `displayValue` non entra mai nei valori del motore, negli snapshot o nei valori inviati.
+- `externalDirty` include le modifiche gestite dall'applicazione nella conferma di abbandono dell'overlay.
+- `submitBlockedReason` disabilita e blocca l'invio finché un requisito esterno non è soddisfatto.
+- `onSchemaReady` riceve lo schema preparato dopo che sono state garantite chiavi stabili.
 
-## Proprietà dell'elemento modulo
+## Proprietà dell'elemento form
 
-Ulteriori proprietà del modulo standard come `id`, `aria-*` e gestori di eventi vengono inoltrati a
-il reso `<form>`. Non utilizzare questo percorso per la configurazione del motore.
+Le altre proprietà standard di un modulo, come `id`, `aria-*` e i gestori di eventi, vengono
+inoltrate al `<form>` renderizzato. Non usare questo meccanismo per configurare il motore.
 
-Continua con [Valori, snapshots, e submission](/it/bindings/react/values-snapshots-submission) o
+Prosegui con [Valori, snapshot e invio](/it/bindings/react/values-snapshots-submission) oppure
 [Modalità, posizionamento e navigazione](/it/bindings/react/modes-placement-navigation).

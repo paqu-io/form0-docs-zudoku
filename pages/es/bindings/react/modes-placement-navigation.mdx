@@ -1,29 +1,39 @@
 ---
 title: Modos, ubicación y navegación
-description: Configura edición, overlays, etiquetas, secciones y flujos simplificados.
+description: Configura la edición, los overlays, las etiquetas, las secciones y los flujos simplificados de los formularios en React.
 ---
 
 <PageBadges />
 
 ## Modo de interacción
 
-Usa `mode="edit"` o `mode="readonly"`. Los formularios de solo lectura pueden ofrecer edición con
-`allowReadOnlyEditToggle`; `readOnlyEditToggleDisabledReason` explica por qué no está disponible.
-`showPrimaryActionsInViewMode` controla si las acciones principales deshabilitadas siguen visibles.
+Usa `mode="edit"` o `mode="readonly"`. Los formularios de solo lectura pueden ofrecer un botón para
+pasar a edición con `allowReadOnlyEditToggle`; usa `readOnlyEditToggleDisabledReason` cuando la
+aplicación host tenga que explicar por qué no se puede editar.
+
+`showPrimaryActionsInViewMode` controla si las acciones principales deshabilitadas siguen visibles
+en el modo de visualización.
 
 ## Ubicación
 
-`formPlacement` acepta `form-page`, `form-modal` y `form-spotlight`. En overlays, proporciona
-`onRequestClose`. `autoCloseOverlayOnSubmit` cierra el overlay tras un envío síncrono correcto o
-cuando se resuelve la promesa devuelta. La confirmación de descarte incluye `externalDirty`.
+`formPlacement` acepta:
+
+- `form-page` para el contenido normal de una página;
+- `form-modal` para mostrarlo en un modal;
+- `form-spotlight` para mostrarlo en un panel lateral o en modo spotlight.
+
+En los overlays, proporciona `onRequestClose`. `autoCloseOverlayOnSubmit` cierra el overlay tras un
+envío síncrono correcto o cuando se resuelve la promesa de envío devuelta. La confirmación de
+descarte tiene en cuenta los cambios del renderer y `externalDirty`.
 
 ## Diseño y navegación
 
 - `labelPosition` acepta `top` o `side`.
 - `labelWidthPercent` controla la columna de etiquetas en el diseño lateral.
-- `formWidth` acepta un ancho CSS.
-- `forceShowNavigationPanel` mantiene visible la navegación por secciones.
-- `simplifiedMode` presenta un campo cada vez; `onSimplifiedNavigation` observa el avance.
+- `formWidth` acepta un valor de ancho CSS.
+- `forceShowNavigationPanel` mantiene visible la navegación por secciones cuando normalmente se contraería.
+- `simplifiedMode` muestra un campo cada vez; `onSimplifiedNavigation` observa el avance.
 
-`FormRenderer` gestiona secciones, entradas repetibles, validación, foco y teclado. Mantén el
-comportamiento condicional en el esquema, no duplicado en estado React.
+`FormRenderer` gestiona las secciones, las entradas repetibles, la navegación por los errores de
+validación, el foco y las acciones de teclado. Mantén el comportamiento condicional en el esquema en
+lugar de duplicarlo en el estado de React.
