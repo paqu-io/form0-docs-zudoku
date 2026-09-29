@@ -1,6 +1,6 @@
 ---
 title: Modelo de almacenamiento y operaciones de PostgreSQL
-description: Comprende las tablas, cargas JSONB, índices y límites operativos del conector PostgreSQL.
+description: Conoce las tablas, el contenido JSONB, los índices y los límites operativos del conector de PostgreSQL.
 ---
 
 <PageBadges />
@@ -8,19 +8,22 @@ description: Comprende las tablas, cargas JSONB, índices y límites operativos 
 La inicialización crea dos tablas si todavía no existen:
 
 - `form0_submissions` guarda los registros principales.
-- `form0_submissions_children` guarda los registros de secciones repetibles anidadas.
+- `form0_submissions_children` guarda los registros de las secciones repetibles anidadas.
 
-Los nombres son configurables. Cada tabla proyecta metadatos comunes en columnas tipadas y guarda
-el registro completo en `form_values` como JSONB. La tabla secundaria conserva los identificadores
-del registro principal y del padre inmediato para reconstruir las relaciones anidadas.
+Los nombres son configurables. Cada tabla proyecta los metadatos comunes del registro en columnas
+con tipo y guarda el contenido completo del registro en `form_values` como JSONB. La tabla de
+registros hijos conserva tanto el identificador del registro principal como el del padre inmediato,
+para poder reconstruir las relaciones anidadas.
 
-El conector crea índices para estado, formulario, marcas de tiempo, borrador, versión, changeset y
-creador, además de un índice GIN para `form_values` y triggers para las marcas de actualización.
+El conector crea índices para los campos comunes de estado, formulario, marca de tiempo, borrador,
+versión, conjunto de cambios y creador. También crea un índice GIN para `form_values` y triggers que
+mantienen las marcas de tiempo de actualización de la base de datos.
 
-`onFormSubmit()` inserta primero el registro principal y después los anidados de forma recursiva.
-Es un límite de escritura, no una API pública de consultas ni un servicio de sincronización. Las
-aplicaciones deben consultar las tablas con su propia capa de acceso y decidir cómo tratar los
-identificadores duplicados.
+`onFormSubmit()` inserta el registro principal y después inserta de forma recursiva los registros
+anidados. Es un punto de escritura, no una API pública de consulta ni un servicio de
+sincronización. Las aplicaciones deben consultar las tablas mediante su propia capa de acceso a
+datos y decidir cómo se gestionan los identificadores de registro duplicados.
 
-El propietario de la base de datos sigue siendo responsable de migraciones, copias de seguridad,
-pruebas de restauración, retención, monitorización, capacidad, acceso y requisitos normativos.
+Los propietarios de la base de datos siguen siendo responsables de las migraciones del esquema, las
+copias de seguridad, las pruebas de restauración, la conservación de datos, la supervisión, la
+capacidad, el control de acceso y los requisitos normativos.

@@ -5,23 +5,24 @@ description: Compara los conectores oficiales para PostgreSQL y SQLite.
 
 <PageBadges />
 
-Ambos conectores oficiales aceptan el mismo registro estructurado de form0 y conservan las
-relaciones entre secciones repetibles anidadas. Elige según dónde se ejecute la aplicación y cómo
-deban operarse sus datos.
+Los dos conectores oficiales aceptan la misma forma de registro estructurado de form0 y conservan
+las relaciones de las secciones repetibles anidadas. Elige en función de dónde se ejecuta la
+aplicación y de cómo deben gestionarse sus datos.
 
-| Aspecto        | PostgreSQL                                                        | SQLite                                                       |
-| -------------- | ----------------------------------------------------------------- | ------------------------------------------------------------ |
-| Almacenamiento | Base de datos en red                                              | Archivo de base de datos local                               |
-| Mejor opción   | Aplicaciones servidor y despliegues compartidos                   | Herramientas locales y despliegues Node.js sencillos         |
-| Concurrencia   | Pool de conexiones y concurrencia gestionada por la base de datos | Restricciones de bloqueo de archivos de SQLite               |
-| Operaciones    | Roles, TLS, copias de seguridad y administración del servidor     | Permisos de archivo, copias, copias de seguridad y retención |
-| Carga útil     | JSONB y columnas proyectadas                                      | Texto JSON y columnas proyectadas                            |
-| Plataforma     | Node.js con acceso a PostgreSQL                                   | Node.js con una compilación nativa compatible                |
+| Aspecto        | PostgreSQL                                                                     | SQLite                                                                   |
+| -------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| Almacenamiento | Base de datos en red                                                           | Archivo de base de datos local                                           |
+| Uso ideal      | Aplicaciones de servidor y despliegues compartidos                             | Herramientas locales y despliegues sencillos de Node.js                  |
+| Concurrencia   | Pool de conexiones y concurrencia gestionada por la base de datos              | Restricciones del bloqueo de archivos de SQLite                          |
+| Operaciones    | Roles de base de datos, TLS, copias de seguridad y administración del servidor | Permisos de archivo, copias, copias de seguridad y conservación de datos |
+| Contenido      | JSONB más columnas proyectadas                                                 | Texto JSON más columnas proyectadas                                      |
+| Plataforma     | Node.js con acceso a PostgreSQL                                                | Node.js con una compilación nativa compatible                            |
 
-Usa PostgreSQL cuando varios procesos o despliegues compartan envíos, o cuando sean importantes
-las consultas y controles operativos de la base de datos. Usa SQLite cuando los datos deban
-permanecer en un archivo local y la aplicación pueda trabajar con su modelo de concurrencia.
+Usa PostgreSQL cuando varios procesos o despliegues compartan los envíos, o cuando importen las
+consultas y los controles operativos a nivel de base de datos. Usa SQLite cuando los datos deban
+permanecer en un archivo local y la aplicación pueda funcionar dentro del modelo de concurrencia de
+SQLite.
 
-El conector SQLite para Node.js no es compatible con React Native ni Expo. Las aplicaciones
-móviles deben usar almacenamiento nativo como `expo-sqlite` y definir su propio límite de
-sincronización.
+El conector SQLite para Node.js no es compatible con React Native ni con Expo. Las aplicaciones
+móviles deben usar un almacenamiento nativo de la plataforma, como `expo-sqlite`, y definir su
+propia capa de sincronización.

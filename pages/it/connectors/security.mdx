@@ -1,23 +1,28 @@
 ---
 title: Sicurezza e responsabilità dei dati
-description: Proteggi credenziali, submission salvate e processo host.
+description: Proteggi le credenziali dei connettori, gli invii archiviati e il processo host.
 ---
 
 <PageBadges />
 
-I connettori vengono eseguiti nel processo Node.js host e ricevono le submission complete. Installa
-solo pacchetti affidabili e verifica gli aggiornamenti prima del deploy.
+I pacchetti connettore vengono eseguiti nel processo Node.js host e ricevono gli invii completi dei
+moduli. Installa solo pacchetti connettore affidabili e verifica gli aggiornamenti prima del
+deployment.
 
-Conserva le credenziali in file di ambiente ignorati o in un secret manager. Per PostgreSQL, usa
-TLS nelle connessioni remote e un ruolo dedicato con privilegi minimi. Per SQLite, limita l’accesso
-al file e ai backup e tienili fuori dalle directory pubbliche.
+Conserva le credenziali del database in file d'ambiente locali esclusi dal controllo di versione o
+in un gestore di segreti. Per PostgreSQL, usa TLS per le connessioni remote e concedi a un ruolo
+dedicato solo i privilegi di schema e di tabella di cui ha bisogno. Per SQLite, limita l'accesso al
+file del database e ai suoi backup e tienilo fuori dalle directory servite pubblicamente.
 
-I connettori non forniscono autenticazione utente, autorizzazione applicativa, gestione delle chiavi,
-policy di backup o conservazione o controlli normativi. L’applicazione e il proprietario dello
-storage devono definirli e applicarli.
+I connettori non forniscono autenticazione degli utenti, autorizzazione applicativa, gestione delle
+chiavi di cifratura, criteri di backup, piani di conservazione dei dati o controlli normativi.
+L'applicazione e il proprietario dell'archiviazione devono definire e applicare questi controlli
+per i dati raccolti.
 
-Le espressioni dello schema seguono il [modello di fiducia di Core](/it/core/security). Un connettore
-non isola gli schemi e non rende sicuro contenuto eseguibile non affidabile.
+Le espressioni dello schema vengono eseguite secondo il
+[modello di fiducia del nucleo](/it/core/security). Un connettore di archiviazione non isola gli
+schemi e non rende sicuro il contenuto eseguibile di uno schema non attendibile.
 
-Segnala le vulnerabilità privatamente secondo la policy di sicurezza del repository interessato.
-Non pubblicare sospette vulnerabilità in una issue pubblica.
+Segnala le vulnerabilità dei connettori in modo riservato, tramite la policy di sicurezza del
+repository GitHub del connettore interessato. Non divulgare sospette vulnerabilità in una issue
+pubblica.

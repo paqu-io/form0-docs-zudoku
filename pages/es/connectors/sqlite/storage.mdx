@@ -1,24 +1,28 @@
 ---
 title: Modelo de almacenamiento y operaciones de SQLite
-description: Comprende las tablas locales, JSON, bloqueos y límites operativos del conector SQLite.
+description: Conoce las tablas locales, el contenido JSON, los bloqueos y los límites operativos del conector de SQLite.
 ---
 
 <PageBadges />
 
-La inicialización activa las claves foráneas y crea las tablas principal y secundaria configuradas.
-Los metadatos comunes se proyectan en columnas SQLite y el registro completo se codifica como texto
-JSON en `form_values`.
+La inicialización activa la comprobación de claves foráneas y crea las tablas principal y de
+registros hijos, cuyos nombres son configurables. Los metadatos comunes se proyectan en columnas de
+SQLite, mientras que el registro estructurado completo se codifica como texto JSON en
+`form_values`.
 
-Los registros de secciones repetibles conservan los identificadores del registro principal y del
-padre inmediato. Los índices cubren estado, formulario, marcas de tiempo, borrador, versión,
-changeset y relaciones.
+Los registros de las secciones repetibles anidadas conservan el identificador del registro principal
+y el del padre inmediato. Los índices cubren las columnas comunes de estado, formulario, marca de
+tiempo, borrador, versión, conjunto de cambios y relaciones.
 
-`onFormSubmit()` escribe el registro principal y después los anidados recursivamente. Si SQLite
-devuelve un error reintentable de bloqueo o E/S, el conector se reconecta y reintenta una vez. Los
-fallos persistentes se devuelven al llamador.
+`onFormSubmit()` escribe el registro principal y después escribe de forma recursiva los registros
+anidados. Cuando SQLite notifica un error de bloqueo de archivo o de E/S que admite reintento, el
+conector se vuelve a conectar y reintenta el envío una vez. Los fallos persistentes se devuelven al
+código que hizo la llamada.
 
-El conector es un límite de escritura y no proporciona una API pública de consultas o
-sincronización. Las aplicaciones deben usar una capa de acceso separada y coordinarla con el escritor.
+El conector es un punto de escritura y no ofrece una API pública de consulta ni de sincronización.
+Las aplicaciones que lean la base de datos deben usar una capa de acceso a datos independiente y
+coordinar el acceso con el proceso que escribe.
 
-La aplicación es responsable de permisos, concurrencia, copias de seguridad, restauraciones,
-retención, exportaciones seguras y eliminación de datos sensibles.
+La aplicación host se encarga de los permisos de archivo, la planificación de la concurrencia, las
+copias de seguridad, las pruebas de restauración, la conservación de datos, las exportaciones
+seguras y la eliminación de los registros sensibles.

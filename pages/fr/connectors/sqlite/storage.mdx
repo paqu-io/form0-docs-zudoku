@@ -1,24 +1,27 @@
 ---
 title: Modèle de stockage et exploitation de SQLite
-description: Comprenez les tables locales, données JSON, verrous et limites opérationnelles du connecteur SQLite.
+description: Comprenez les tables locales, le contenu JSON, le verrouillage et les limites d’exploitation du connecteur SQLite.
 ---
 
 <PageBadges />
 
-L’initialisation active les clés étrangères et crée les tables principale et enfant configurées.
-Les métadonnées courantes sont projetées dans des colonnes SQLite et l’enregistrement complet est
-encodé en texte JSON dans `form_values`.
+L’initialisation active le contrôle des clés étrangères et crée une table principale et une table
+enfant, dont les noms sont configurables. Les métadonnées communes sont projetées dans des colonnes
+SQLite, tandis que l’enregistrement structuré complet est encodé en texte JSON dans `form_values`.
 
-Les enregistrements de sections répétables conservent les identifiants de l’enregistrement principal
-et du parent immédiat. Les index couvrent l’état, le formulaire, les horodatages, le brouillon, la
-version, le changeset et les relations.
+Les enregistrements des sections répétables imbriquées conservent l’identifiant de l’enregistrement
+principal et celui du parent immédiat. Les index couvrent les colonnes communes de statut, de
+formulaire, d’horodatage, de brouillon, de version, de changeset et de relation.
 
-`onFormSubmit()` écrit l’enregistrement principal puis les enregistrements imbriqués. Si SQLite
-signale un verrou ou une erreur d’E/S réessayable, le connecteur se reconnecte et réessaie une fois.
-Les échecs persistants sont renvoyés à l’appelant.
+`onFormSubmit()` écrit l’enregistrement principal, puis écrit récursivement les enregistrements
+imbriqués. Lorsque SQLite signale une erreur de verrouillage de fichier ou d’E/S qui peut être
+retentée, le connecteur se reconnecte et retente la soumission une fois. Les échecs persistants sont
+renvoyés à l’appelant.
 
-Le connecteur est une frontière d’écriture et ne fournit aucune API publique de requête ou de
-synchronisation. Utilisez une couche d’accès distincte et coordonnez-la avec le processus d’écriture.
+Le connecteur est un point d’écriture et ne fournit pas d’API publique de requête ni de
+synchronisation. Les applications qui lisent la base de données doivent utiliser une couche d’accès
+aux données distincte et coordonner l’accès avec le processus qui écrit.
 
-L’application hôte gère les droits, la concurrence, les sauvegardes, tests de restauration, la
-rétention, les exports sécurisés et la suppression des données sensibles.
+L’application host est responsable des permissions de fichier, de la planification de la
+concurrence, des sauvegardes, des tests de restauration, de la conservation des données, des
+exports sécurisés et de la suppression des enregistrements sensibles.

@@ -100,7 +100,7 @@
       "storage": { "title": "Modèle de stockage et exploitation de SQLite" }
     },
     "security": { "title": "Sécurité et responsabilité des données" },
-    "troubleshooting": { "title": "Résolution des problèmes de connecteurs" }
+    "troubleshooting": { "title": "Dépannage des connecteurs" }
   },
   "bindings": {
     "overview": { "title": "Aperçu des bindings" },

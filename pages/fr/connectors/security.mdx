@@ -1,23 +1,29 @@
 ---
 title: Sécurité et responsabilité des données
-description: Protégez les identifiants, soumissions stockées et le processus hôte.
+description: Protégez les identifiants des connecteurs, les soumissions stockées et le processus host.
 ---
 
 <PageBadges />
 
-Les connecteurs s’exécutent dans le processus Node.js hôte et reçoivent les soumissions complètes.
-N’installez que des connecteurs de confiance et examinez les mises à jour avant le déploiement.
+Les paquets de connecteurs s’exécutent dans le processus Node.js host et reçoivent les soumissions
+complètes des formulaires. N’installez que des paquets de connecteurs de confiance et examinez les
+mises à jour avant de les déployer.
 
-Conservez les identifiants dans des fichiers d’environnement ignorés ou un gestionnaire de secrets.
-Pour PostgreSQL, utilisez TLS à distance et un rôle dédié avec le minimum de privilèges. Pour SQLite,
-limitez l’accès au fichier et à ses sauvegardes et gardez-les hors des répertoires publics.
+Conservez les identifiants de la base de données dans des fichiers d’environnement locaux exclus du
+contrôle de version ou dans un gestionnaire de secrets. Pour PostgreSQL, utilisez TLS pour les
+connexions distantes et accordez à un rôle dédié uniquement les privilèges de schéma et de table
+dont il a besoin. Pour SQLite, restreignez l’accès au fichier de la base de données et à ses
+sauvegardes, et gardez-le hors des répertoires servis publiquement.
 
-Les connecteurs ne fournissent ni authentification utilisateur, ni autorisation applicative, ni
-gestion des clés, ni politique de sauvegarde ou de rétention, ni contrôle réglementaire.
-L’application et le propriétaire du stockage doivent les définir et les appliquer.
+Les connecteurs ne fournissent ni authentification des utilisateurs, ni autorisation applicative,
+ni gestion des clés de chiffrement, ni politique de sauvegarde, ni calendrier de conservation, ni
+contrôles réglementaires. L’application et le propriétaire du stockage doivent définir et appliquer
+ces contrôles pour les données collectées.
 
-Les expressions de schéma suivent le [modèle de confiance de Core](/fr/core/security). Un connecteur
-n’isole pas les schémas et ne sécurise pas du contenu exécutable non fiable.
+Les expressions du schéma s’exécutent selon le [modèle de confiance du noyau](/fr/core/security).
+Un connecteur de stockage n’isole pas les schémas et ne rend pas sûr le contenu exécutable d’un
+schéma non fiable.
 
-Signalez les vulnérabilités en privé selon la politique de sécurité du dépôt concerné. Ne publiez
-pas une vulnérabilité présumée dans une issue publique.
+Signalez les vulnérabilités des connecteurs de manière confidentielle, via la politique de sécurité
+du dépôt GitHub du connecteur concerné. Ne divulguez pas de vulnérabilité présumée dans une issue
+publique.

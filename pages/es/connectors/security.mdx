@@ -1,23 +1,29 @@
 ---
 title: Seguridad y responsabilidad sobre los datos
-description: Protege credenciales, envíos almacenados y el proceso anfitrión.
+description: Protege las credenciales de los conectores, los envíos almacenados y el proceso host.
 ---
 
 <PageBadges />
 
-Los conectores se ejecutan dentro del proceso Node.js anfitrión y reciben los envíos completos.
-Instala solo paquetes de confianza y revisa las actualizaciones antes del despliegue.
+Los paquetes de conectores se ejecutan dentro del proceso Node.js host y reciben los envíos
+completos de los formularios. Instala solo paquetes de conectores de confianza y revisa las
+actualizaciones antes de desplegarlas.
 
-Guarda las credenciales en archivos de entorno ignorados o en un gestor de secretos. Para
-PostgreSQL, usa TLS en conexiones remotas y un rol dedicado con privilegios mínimos. Para SQLite,
-restringe el archivo y sus copias y mantenlos fuera de directorios públicos.
+Guarda las credenciales de la base de datos en archivos de entorno locales excluidos del control de
+versiones o en un gestor de secretos. En PostgreSQL, usa TLS para las conexiones remotas y concede a
+un rol dedicado solo los privilegios de esquema y de tabla que necesita. En SQLite, restringe el
+acceso al archivo de la base de datos y a sus copias de seguridad, y mantenlo fuera de los
+directorios que se sirven públicamente.
 
-Los conectores no proporcionan autenticación de usuarios, autorización de aplicación, gestión de
-claves, políticas de copia o retención ni controles normativos. La aplicación y el propietario del
-almacenamiento deben definirlos y aplicarlos.
+Los conectores no proporcionan autenticación de usuarios, autorización de la aplicación, gestión de
+claves de cifrado, políticas de copias de seguridad, calendarios de conservación de datos ni
+controles normativos. La aplicación y el propietario del almacenamiento deben definir y aplicar
+esos controles para los datos que se recopilan.
 
-Las expresiones de esquema se ejecutan conforme al [modelo de confianza de Core](/es/core/security).
-Un conector no aísla los esquemas ni hace seguro contenido ejecutable que no sea de confianza.
+Las expresiones del esquema se ejecutan según el
+[modelo de confianza del núcleo](/es/core/security). Un conector de almacenamiento no aísla los
+esquemas ni hace seguro el contenido ejecutable de un esquema que no sea de confianza.
 
-Informa de vulnerabilidades en privado mediante la política de seguridad del repositorio afectado.
-No publiques vulnerabilidades sospechadas en una incidencia pública.
+Informa de las vulnerabilidades de los conectores de forma privada, mediante la política de
+seguridad del repositorio de GitHub del conector afectado. No divulgues posibles vulnerabilidades en
+una incidencia pública.

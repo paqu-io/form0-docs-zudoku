@@ -1,23 +1,26 @@
 ---
 title: Modello di archiviazione e operatività di SQLite
-description: Comprendi tabelle locali, payload JSON, locking e confine operativo del connettore SQLite.
+description: Comprendi tabelle locali, contenuto JSON, locking e limiti operativi del connettore SQLite.
 ---
 
 <PageBadges />
 
-L’inizializzazione abilita le chiavi esterne e crea le tabelle principale e figlia configurate. I
-metadati comuni vengono proiettati in colonne SQLite e il record completo viene codificato come
-testo JSON in `form_values`.
+L'inizializzazione attiva il controllo delle chiavi esterne e crea una tabella principale e una
+tabella figlia, con nomi configurabili. I metadati comuni vengono proiettati in colonne SQLite,
+mentre il record strutturato completo viene codificato come testo JSON in `form_values`.
 
-I record delle sezioni ripetibili conservano gli identificatori del record principale e del
-genitore immediato. Gli indici coprono stato, form, timestamp, bozza, versione, changeset e relazioni.
+I record delle sezioni ripetibili annidate conservano l'identificatore del record principale e
+quello del genitore diretto. Gli indici coprono le colonne comuni di stato, modulo, timestamp,
+bozza, versione, changeset e relazione.
 
-`onFormSubmit()` scrive il record principale e poi quelli annidati ricorsivamente. Se SQLite segnala
-un errore di locking o I/O ritentabile, il connettore si riconnette e riprova una volta. Gli errori
-persistenti vengono restituiti al chiamante.
+`onFormSubmit()` scrive il record principale e poi scrive ricorsivamente i record annidati. Quando
+SQLite segnala un errore di lock del file o di I/O che si può ritentare, il connettore si riconnette
+e ritenta l'invio una volta. Gli errori persistenti vengono restituiti al chiamante.
 
-Il connettore è un confine di scrittura e non fornisce un’API pubblica di query o sincronizzazione.
-Le applicazioni devono usare un livello di accesso separato e coordinarlo con il writer.
+Il connettore è un punto di scrittura e non fornisce un'API pubblica di query o di
+sincronizzazione. Le applicazioni che leggono il database devono usare un livello di accesso ai
+dati separato e coordinare l'accesso con il processo che scrive.
 
-L’applicazione host gestisce permessi, concorrenza, backup, test di ripristino, conservazione,
-esportazioni sicure ed eliminazione dei dati sensibili.
+L'applicazione host è responsabile dei permessi dei file, della pianificazione della concorrenza,
+dei backup, dei test di ripristino, della conservazione dei dati, delle esportazioni sicure e
+dell'eliminazione dei record sensibili.

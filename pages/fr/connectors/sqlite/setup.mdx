@@ -5,7 +5,7 @@ description: Installez et configurez le connecteur SQLite officiel pour Node.js.
 
 <PageBadges />
 
-Installez et configurez le connecteur avec la CLI interactive :
+Installez et configurez le connecteur depuis la CLI interactive :
 
 ```text
 form0> connector install form0-connector-sqlite
@@ -13,20 +13,22 @@ form0> connector configure form0-connector-sqlite
 form0> connector test form0-connector-sqlite
 ```
 
-Pour un usage direct, exécutez `npm install form0-connector-sqlite`.
+Pour une utilisation directe, installez-le avec `npm install form0-connector-sqlite`.
 
-| Variable d’environnement                  | Rôle                                | Valeur par défaut            |
-| ----------------------------------------- | ----------------------------------- | ---------------------------- |
-| `FORM0_CONNECTOR_SQLITE_PATH`             | Chemin relatif ou absolu            | `./form0.db`                 |
-| `FORM0_CONNECTOR_SQLITE_TABLE_NAME`       | Table principale                    | `form0_submissions`          |
-| `FORM0_CONNECTOR_SQLITE_CHILD_TABLE_NAME` | Table des enregistrements imbriqués | `form0_submissions_children` |
-| `FORM0_CONNECTOR_SQLITE_DEBUG`            | Journalisation détaillée            | `false`                      |
+| Variable d’environnement                  | Rôle                                           | Valeur par défaut            |
+| ----------------------------------------- | ---------------------------------------------- | ---------------------------- |
+| `FORM0_CONNECTOR_SQLITE_PATH`             | Chemin relatif ou absolu de la base de données | `./form0.db`                 |
+| `FORM0_CONNECTOR_SQLITE_TABLE_NAME`       | Table principale                               | `form0_submissions`          |
+| `FORM0_CONNECTOR_SQLITE_CHILD_TABLE_NAME` | Table des enregistrements imbriqués            | `form0_submissions_children` |
+| `FORM0_CONNECTOR_SQLITE_DEBUG`            | Journalisation détaillée du connecteur         | `false`                      |
 
-Les chemins relatifs sont résolus depuis le répertoire de travail du processus. Le connecteur crée
-le répertoire parent et le fichier si nécessaire ; le processus doit donc pouvoir y écrire.
+Les chemins relatifs de base de données sont résolus à partir du répertoire de travail du processus.
+Le connecteur crée le répertoire parent et le fichier de base de données si nécessaire : le
+processus doit donc disposer des droits d’écriture appropriés.
 
-Le paquet requiert Node.js 22 ou ultérieur et une plateforme compatible avec sa dépendance native
-`better-sqlite3`. Il n’est pas destiné à React Native ou Expo ; utilisez un stockage mobile natif
-comme `expo-sqlite` dans ces environnements.
+Le paquet nécessite Node.js 22 ou une version ultérieure et une plateforme prise en charge par sa
+dépendance native `better-sqlite3`. Il n’est pas prévu pour React Native ni pour Expo ; dans ces
+environnements, utilisez un stockage mobile natif de la plateforme, comme `expo-sqlite`.
 
-Ne placez pas la base de soumissions dans un répertoire web public et ne la versionnez pas.
+Ne placez pas une base de données de soumissions dans un répertoire web public et ne l’ajoutez pas
+au contrôle de version.

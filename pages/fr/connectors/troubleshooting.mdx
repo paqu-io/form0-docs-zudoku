@@ -1,27 +1,32 @@
 ---
-title: Résolution des problèmes de connecteurs
-description: Diagnostiquez les problèmes d’installation, configuration, connexion et stockage.
+title: Dépannage des connecteurs
+description: Diagnostiquez les échecs d’installation, de configuration, de connexion et de stockage.
 ---
 
 <PageBadges />
 
-Commencez par les vérifications de la CLI :
+Commencez par les vérifications de connecteurs de la CLI :
 
 ```text
 form0> connector test <package-name>
 form0> connector status
 ```
 
-Vérifiez que les commandes sont lancées depuis le projet contenant `form0.config.js`, que le paquet
-est installé et que les valeurs requises sont présentes dans `.env.local` ou l’environnement hôte.
+Vérifiez que les commandes sont lancées depuis le projet qui contient `form0.config.js`, que le
+paquet du connecteur est installé et que les valeurs requises sont présentes dans `.env.local` ou
+dans l’environnement de l’application host.
 
-Pour PostgreSQL, vérifiez le réseau, les identifiants, TLS, l’existence du schéma et les droits sur
-les tables, index et triggers. Corrigez l’épuisement du pool et les erreurs de certificat au niveau
-de la base ou du déploiement, sans désactiver les contrôles de sécurité sans examen.
+En cas d’échec avec PostgreSQL, vérifiez l’accessibilité réseau, les identifiants, les paramètres
+TLS, l’existence du schéma et les permissions du rôle sur les tables, les index et les triggers.
+L’épuisement du pool de connexions et les échecs de vérification des certificats doivent être
+résolus au niveau de la base de données ou du déploiement, et non en désactivant les contrôles de
+sécurité sans examen préalable.
 
-Pour SQLite, vérifiez que la dépendance native prend en charge la plateforme et que le processus
-peut créer et écrire le répertoire. Fermez les outils externes si le fichier est verrouillé et évitez
-un nombre d’écrivains simultanés supérieur au modèle prévu par SQLite.
+En cas d’échec avec SQLite, vérifiez que la dépendance native prend en charge la plateforme
+d’exécution et que le processus peut créer le répertoire configuré et y écrire. Fermez les
+visualiseurs de base de données externes lorsque le fichier est verrouillé, et évitez les écritures
+concurrentes qui dépassent le modèle de fonctionnement prévu de SQLite.
 
-Utilisez `healthCheck()` en intégration directe. Activez temporairement les journaux de débogage si
-nécessaire, sans enregistrer les identifiants ni les soumissions sensibles complètes.
+Utilisez `healthCheck()` dans les intégrations directes. Activez temporairement les journaux de
+débogage du connecteur si vous avez besoin de plus de contexte, mais ne journalisez ni les
+identifiants ni des soumissions sensibles complètes.

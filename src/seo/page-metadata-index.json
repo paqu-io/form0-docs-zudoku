@@ -4135,7 +4135,7 @@
     "translationKey": "/connectors/direct-integration",
     "locale": "es",
     "title": "Integración directa",
-    "description": "Controla directamente el ciclo de vida de un conector form0 en Node.js.",
+    "description": "Controla directamente el ciclo de vida de un conector de form0 en una aplicación Node.js.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -4162,7 +4162,7 @@
     "translationKey": "/connectors/overview",
     "locale": "es",
     "title": "Visión general de conectores",
-    "description": "Guarda registros estructurados de form0 mediante paquetes de conectores de confianza.",
+    "description": "Guarda los registros estructurados de form0 mediante paquetes de conectores de confianza.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -4216,7 +4216,7 @@
     "translationKey": "/connectors/postgresql/storage",
     "locale": "es",
     "title": "Modelo de almacenamiento y operaciones de PostgreSQL",
-    "description": "Comprende las tablas, cargas JSONB, índices y límites operativos del conector PostgreSQL.",
+    "description": "Conoce las tablas, el contenido JSONB, los índices y los límites operativos del conector de PostgreSQL.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -4243,7 +4243,7 @@
     "translationKey": "/connectors/security",
     "locale": "es",
     "title": "Seguridad y responsabilidad sobre los datos",
-    "description": "Protege credenciales, envíos almacenados y el proceso anfitrión.",
+    "description": "Protege las credenciales de los conectores, los envíos almacenados y el proceso host.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -4270,7 +4270,7 @@
     "translationKey": "/connectors/sqlite/setup",
     "locale": "es",
     "title": "Instalación y configuración de SQLite",
-    "description": "Instala y configura el conector oficial SQLite para Node.js.",
+    "description": "Instala y configura el conector oficial de SQLite para Node.js.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -4297,7 +4297,7 @@
     "translationKey": "/connectors/sqlite/storage",
     "locale": "es",
     "title": "Modelo de almacenamiento y operaciones de SQLite",
-    "description": "Comprende las tablas locales, JSON, bloqueos y límites operativos del conector SQLite.",
+    "description": "Conoce las tablas locales, el contenido JSON, los bloqueos y los límites operativos del conector de SQLite.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7520,7 +7520,7 @@
     "translationKey": "/connectors/direct-integration",
     "locale": "fr",
     "title": "Intégration directe",
-    "description": "Gérez directement le cycle de vie d’un connecteur form0 dans Node.js.",
+    "description": "Gérez directement le cycle de vie d’un connecteur form0 dans une application Node.js.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7547,7 +7547,7 @@
     "translationKey": "/connectors/overview",
     "locale": "fr",
     "title": "Vue d’ensemble des connecteurs",
-    "description": "Conservez les enregistrements structurés form0 avec des connecteurs de confiance.",
+    "description": "Conservez les enregistrements structurés form0 grâce à des paquets de connecteurs de confiance.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7601,7 +7601,7 @@
     "translationKey": "/connectors/postgresql/storage",
     "locale": "fr",
     "title": "Modèle de stockage et exploitation de PostgreSQL",
-    "description": "Comprenez les tables, données JSONB, index et limites opérationnelles du connecteur PostgreSQL.",
+    "description": "Comprenez les tables, le contenu JSONB, les index et les limites d’exploitation du connecteur PostgreSQL.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7628,7 +7628,7 @@
     "translationKey": "/connectors/security",
     "locale": "fr",
     "title": "Sécurité et responsabilité des données",
-    "description": "Protégez les identifiants, soumissions stockées et le processus hôte.",
+    "description": "Protégez les identifiants des connecteurs, les soumissions stockées et le processus host.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7682,7 +7682,7 @@
     "translationKey": "/connectors/sqlite/storage",
     "locale": "fr",
     "title": "Modèle de stockage et exploitation de SQLite",
-    "description": "Comprenez les tables locales, données JSON, verrous et limites opérationnelles du connecteur SQLite.",
+    "description": "Comprenez les tables locales, le contenu JSON, le verrouillage et les limites d’exploitation du connecteur SQLite.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7708,8 +7708,8 @@
     "pathname": "/fr/connectors/troubleshooting",
     "translationKey": "/connectors/troubleshooting",
     "locale": "fr",
-    "title": "Résolution des problèmes de connecteurs",
-    "description": "Diagnostiquez les problèmes d’installation, configuration, connexion et stockage.",
+    "title": "Dépannage des connecteurs",
+    "description": "Diagnostiquez les échecs d’installation, de configuration, de connexion et de stockage.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10996,7 +10996,7 @@
     "translationKey": "/connectors/direct-integration",
     "locale": "it",
     "title": "Integrazione diretta",
-    "description": "Gestisci direttamente il ciclo di vita di un connettore form0 in Node.js.",
+    "description": "Gestisci direttamente il ciclo di vita di un connettore form0 in un'applicazione Node.js.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -11023,7 +11023,7 @@
     "translationKey": "/connectors/overview",
     "locale": "it",
     "title": "Panoramica dei connettori",
-    "description": "Salva i record strutturati form0 tramite pacchetti connettore affidabili.",
+    "description": "Salva i record strutturati di form0 tramite pacchetti connettore affidabili.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -11077,7 +11077,7 @@
     "translationKey": "/connectors/postgresql/storage",
     "locale": "it",
     "title": "Modello di archiviazione e operatività di PostgreSQL",
-    "description": "Comprendi tabelle, payload JSONB, indici e confine operativo del connettore PostgreSQL.",
+    "description": "Comprendi tabelle, contenuto JSONB, indici e limiti operativi del connettore PostgreSQL.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -11104,7 +11104,7 @@
     "translationKey": "/connectors/security",
     "locale": "it",
     "title": "Sicurezza e responsabilità dei dati",
-    "description": "Proteggi credenziali, submission salvate e processo host.",
+    "description": "Proteggi le credenziali dei connettori, gli invii archiviati e il processo host.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -11158,7 +11158,7 @@
     "translationKey": "/connectors/sqlite/storage",
     "locale": "it",
     "title": "Modello di archiviazione e operatività di SQLite",
-    "description": "Comprendi tabelle locali, payload JSON, locking e confine operativo del connettore SQLite.",
+    "description": "Comprendi tabelle locali, contenuto JSON, locking e limiti operativi del connettore SQLite.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -11185,7 +11185,7 @@
     "translationKey": "/connectors/troubleshooting",
     "locale": "it",
     "title": "Risoluzione dei problemi dei connettori",
-    "description": "Diagnostica errori di installazione, configurazione, connessione e storage.",
+    "description": "Diagnostica errori di installazione, configurazione, connessione e archiviazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
