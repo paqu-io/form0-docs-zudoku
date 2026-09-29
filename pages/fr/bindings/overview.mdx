@@ -1,18 +1,20 @@
 ---
 title: Aperçu des bindings d’interface
-description: Affichez des schémas form0 dans un framework tout en laissant form0-core gérer le comportement.
+description: Affichez des schémas form0 dans des frameworks applicatifs tandis que form0-core gère le comportement du formulaire.
 ---
 
 <PageBadges />
 
 import { Callout } from "zudoku/ui/Callout"
 
-Les bindings relient le moteur indépendant du framework `form0-core` à l’interface d’une
-application. Le moteur reste responsable des calculs, conditions, validations, événements et
-enregistrements structurés ; le binding transforme cet état en composants et interactions.
+Les bindings relient le moteur `form0-core`, indépendant de tout framework, à l’interface de
+l’application. Le moteur reste responsable des calculs, des conditions, de la validation, des
+événements et des enregistrements structurés ; le binding transforme cet état en composants de la
+plateforme et en interactions utilisateur.
 
 Pour une nouvelle application, commencez par la [CLI form0](/fr/cli/overview) et choisissez un
-projet de démarrage. Utilisez directement un binding pour intégrer form0 à une application existante.
+starter d’application. Utilisez directement un binding pour intégrer form0 à une application
+existante.
 
 ## Bindings officiels
 
@@ -21,11 +23,12 @@ projet de démarrage. Utilisez directement un binding pour intégrer form0 à un
 | [`form0-react`](https://www.npmjs.com/package/form0-react)               | Applications web React            | [Installer et afficher](/fr/bindings/react/install-render)        | [GitHub](https://github.com/paqu-io/form0-react)        |
 | [`form0-react-native`](https://www.npmjs.com/package/form0-react-native) | Applications React Native et Expo | [Installer et afficher](/fr/bindings/react-native/install-render) | [GitHub](https://github.com/paqu-io/form0-react-native) |
 
-Les bindings ne modifient pas la sémantique du schéma. Consultez la
-[documentation du noyau](/fr/core/overview) pour les schémas, champs, expressions, validations,
-la sécurité et les enregistrements de sortie.
+Les bindings ne modifient pas la sémantique des schémas. Consultez la
+[documentation du noyau](/fr/core/overview) pour les schémas, les champs, les expressions, la
+validation, la sécurité et les enregistrements de sortie.
 
 <Callout type="caution" title="Schémas de confiance uniquement">
-  Les expressions et scripts d’événements exécutent du JavaScript. N’affichez que des schémas
-  provenant d’auteurs de confiance. Consultez [Sécurité des schémas exécutables](/fr/core/security).
+  Les expressions des schémas et les scripts d’événements exécutent du JavaScript. N’affichez que
+  des schémas provenant d’auteurs de confiance. Voir [Sécurité des schémas
+  exécutables](/fr/core/security).
 </Callout>

@@ -1,27 +1,28 @@
 ---
 title: Renderer di campo integrati
-description: Tipi di campo renderizzati da form0-react senza override dell’applicazione.
+description: Tipi di campo visualizzati da form0-react senza override da parte dell'applicazione.
 ---
 
 <PageBadges />
 
-`form0-react` include una UI accessibile per i tipi pubblici definiti da `form0-core`. Il
-comportamento e gli attributi accettati restano definiti dal
-[catalogo campi](/it/core/fields/catalog).
+`form0-react` include un'interfaccia predefinita e accessibile per i tipi di campo pubblici definiti
+da `form0-core`. Il comportamento dello schema e gli attributi accettati restano definiti dal
+[Catalogo dei campi](/it/core/fields/catalog).
 
-| Gruppo                     | Tipi renderizzati                                          |
-| -------------------------- | ---------------------------------------------------------- |
-| Testo e numeri             | `TextField`, `NumericField`, `CalculatedField`             |
-| Scelte                     | `SingleChoiceField`, `MultiChoiceField`, `BooleanField`    |
-| Data e ora                 | `DateField`, `TimeField`                                   |
-| Visualizzazione e metadati | `LabelField`, `TitleField`, `StatusField`, `FormLinkField` |
-| Media                      | `PhotoField`, `VideoField`, `SignatureField`               |
+| Gruppo                                | Tipi visualizzati                                          |
+| ------------------------------------- | ---------------------------------------------------------- |
+| Testo e numeri                        | `TextField`, `NumericField`, `CalculatedField`             |
+| Scelte                                | `SingleChoiceField`, `MultiChoiceField`, `BooleanField`    |
+| Data e ora                            | `DateField`, `TimeField`                                   |
+| Visualizzazione e metadati del record | `LabelField`, `TitleField`, `StatusField`, `FormLinkField` |
+| Media                                 | `PhotoField`, `VideoField`, `SignatureField`               |
 
-`Section`, `RepeatableSection` e `BuildingPlanSection` sono nodi strutturali gestiti da
-`FormRenderer`, non dal registro dei campi.
+`Section`, `RepeatableSection` e `BuildingPlanSection` sono nodi strutturali. `FormRenderer`
+gestisce il loro layout e i record annidati invece di risolverli tramite il registro dei campi.
 
-Usa `KNOWN_FIELD_TYPES` per conoscere i tipi registrabili. In sviluppo,
-`getMissingFieldComponentTypes()` aiuta a rilevare renderer mancanti.
+Usa `KNOWN_FIELD_TYPES` per consultare l'insieme dei tipi di campo registrabili. In fase di
+sviluppo, `getMissingFieldComponentTypes()` aiuta a individuare un renderer predefinito o
+personalizzato mancante.
 
-I renderer media gestiscono interazione e anteprima nel browser; persistenza e caricamento restano
-responsabilità dell’applicazione.
+I renderer multimediali integrati gestiscono l'interazione e lo stato dell'anteprima nel browser; la
+persistenza e il caricamento dei file multimediali restano a carico dell'applicazione.

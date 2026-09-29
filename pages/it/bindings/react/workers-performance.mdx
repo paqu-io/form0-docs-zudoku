@@ -1,35 +1,37 @@
 ---
 title: Worker e prestazioni
-description: Scegli le modalità di esecuzione del motore form0-react e di abbonamento allo stato React.
+description: Scegli la modalità di esecuzione del motore di form0-react e la modalità di sottoscrizione allo stato React.
 ---
 
 <PageBadges />
 
 ## Esecuzione del motore
 
-Lo `engineMode="main-thread"` predefinito valuta il motore del modulo sul thread dell'interfaccia utente.
-`engineMode="worker"` per spostare la valutazione del motore nel modulo confezionato worker quando Web Workers
-sono disponibili:
+Il valore predefinito, `engineMode="main-thread"`, valuta il motore del modulo sul thread
+dell'interfaccia. Usa `engineMode="worker"` per spostare la valutazione del motore nel module worker
+incluso nel pacchetto quando i Web Worker sono disponibili:
 
 ```jsx
 <FormRenderer schema={schema} engineMode="worker" />
 ```
 
-Vite supporta il modello statico modulo- worker utilizzato dal pacchetto ed emette la worker durante un
-La versione mantenuta di Vite starter esclude `form0-react` dall'ottimizzazione delle dipendenze
-così questo worker rimane disponibile.
+Vite supporta il pattern di module worker statico usato dal pacchetto e genera il worker durante la
+build di produzione. Lo starter Vite mantenuto esclude `form0-react` dall'ottimizzazione delle
+dipendenze, così questo worker resta disponibile.
 
-Il pubblico `FormRenderer` API non accetta una fabbrica personalizzata worker URL o worker. Applicazioni
-Utilizzando un altro bundler dovrebbe confermare che supporta
-`new Worker(new URL("./worker.js", import.meta.url), { type: "module" })`; altrimenti utilizzare il valore predefinito
-modalità filo principale.
+L'API pubblica di `FormRenderer` non accetta un URL di worker personalizzato né una factory di
+worker. Le applicazioni che usano un altro bundler devono verificare che supporti
+`new Worker(new URL("./worker.js", import.meta.url), { type: "module" })`; in caso contrario, usa la
+modalità predefinita sul thread principale.
 
-Se il browser non supporta Worker, binding torna all'esecuzione del thread principale.
+Se il browser non supporta i Worker, il binding torna all'esecuzione sul thread principale.
 
-## Modalità negozio React
+## Modalità di archiviazione React
 
-`engineStoreMode="snapshot"` clona il motore snapshot nello stato React ed è quello predefinito.
-`engineStoreMode="selector"` utilizza gli abbonamenti di campo per ridurre i rerender di grandi dimensioni.
+`engineStoreMode="snapshot"` clona lo snapshot del motore nello stato React ed è il valore
+predefinito. `engineStoreMode="selector"` usa sottoscrizioni per campo per ridurre i rerender
+estesi.
 
-Trattare la modalità selettore come un'ottimizzazione: verificare errori di campo, riassunti di navigazione, ripetibile
-sezioni e comportamento submission nell'applicazione di destinazione prima di adottarla.
+Considera la modalità selector come un'ottimizzazione: prima di adottarla, verifica
+nell'applicazione di destinazione gli errori dei campi, i riepiloghi di navigazione, le sezioni
+ripetibili e il comportamento dell'invio.

@@ -1,42 +1,45 @@
 ---
 title: Risoluzione dei problemi di React
-description: Diagnosi comune form0-react installazione, rendering, styling e worker Questioni.
+description: Diagnostica i problemi comuni di installazione, rendering, stili e worker di form0-react.
 ---
 
 <PageBadges />
 
-## La forma è non stilizzata
+## Il modulo non ha stili
 
-Importare `form0-react/index.css` una volta nel punto di ingresso dell'applicazione.
-Le importazioni di CSS dalle dipendenze.
+Importa `form0-react/index.css` una sola volta nel punto di ingresso dell'applicazione. Verifica che
+il bundler consenta l'importazione di CSS dalle dipendenze.
 
-## Un campo dice che non è supportato
+## Un campo risulta non supportato
 
-Confermare che il tipo è elencato nel [Catalogo dei campi Core](/it/core/fields/catalog). Se il tipo è
-noto ma sostituito intenzionalmente, verificare che il componente sia registrato nello stesso
-`FieldRegistryProvider` sottoalbero come `FormRenderer`.
+Verifica che il tipo sia elencato nel [Catalogo dei campi del nucleo](/it/core/fields/catalog). Se
+il tipo è noto ma sostituito di proposito, verifica che il componente sia registrato nello stesso
+sottoalbero `FieldRegistryProvider` di `FormRenderer`.
 
-## schema non riesce durante il rendering
+## Lo schema non riesce durante il rendering
 
-`FormRenderer` convalida `schema.form` e richiede `form.elements`.
-[`form0 validate`](/it/cli/schemas/validate-preview) prima di caricare schema nell'applicazione.
+`FormRenderer` valida `schema.form` e richiede `form.elements`. Usa
+[`form0 validate`](/it/cli/schemas/validate-preview) prima di caricare lo schema nell'applicazione.
 
-## La modalità Worker non può caricare lo worker
+## La modalità worker non riesce a caricare il worker
 
-Il primo ritorno a `engineMode="main-thread"` . Per Vite , mantenere il worker costruttore staticamente
-analizzare ed escludere `form0-react` dall'ottimizzazione delle dipendenze come mostrato nel web mantenuto
-starter. Altri bundler devono supportare il modulo ESM workers basato su `new URL(..., import.meta.url)`.
+Per prima cosa torna a `engineMode="main-thread"`. Con Vite, mantieni il costruttore del worker
+analizzabile staticamente ed escludi `form0-react` dall'ottimizzazione delle dipendenze, come fa lo
+starter web mantenuto. Gli altri bundler devono supportare i module worker ESM basati su
+`new URL(..., import.meta.url)`.
 
-Le opzioni personalizzate `workerUrl` e `createWorker` non fanno parte del pubblico `FormRenderer` API.
+Le opzioni personalizzate `workerUrl` e `createWorker` non fanno parte dell'API pubblica di
+`FormRenderer`.
 
-## Gli aggiornamenti non vengono visualizzati durante lo sviluppo dei pacchetti locali
+## Gli aggiornamenti non compaiono durante lo sviluppo locale del pacchetto
 
-Ricostruire `form0-react`, riavviare il server di sviluppo consumer e cancellare solo il bundler
-Se necessario, la cache di dipendenza. Vite può conservare una copia ottimizzata di un collegamento o di un precedente
-pacchetto installato.
+Ricompila `form0-react`, riavvia il server di sviluppo dell'applicazione che lo usa e, se
+necessario, svuota solo la cache delle dipendenze di quel bundler. Vite può conservare una copia
+ottimizzata di un pacchetto collegato o installato in precedenza.
 
-## La presentazione non viene eseguita
+## L'invio non viene eseguito
 
-Verificare che `onSubmit` sia una funzione, che il modulo sia in modalità di modifica, che `submitBlockedReason` sia vuoto e
-il sommario di convalida non ha errori. Per le sovrapposizioni che restituiscono una promessa, gestire il rifiuto in modo che
-l'applicazione può presentare il guasto mentre la sovrapposizione rimane aperta.
+Verifica che `onSubmit` sia una funzione, che il modulo sia in modalità di modifica, che
+`submitBlockedReason` sia vuoto e che il riepilogo della validazione non contenga errori. Per gli
+overlay che restituiscono una promise, gestisci il rifiuto in modo che l'applicazione possa mostrare
+l'errore mentre l'overlay resta aperto.

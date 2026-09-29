@@ -1,16 +1,16 @@
 ---
 title: Valori, snapshot e invio
-description: Seme, osservare, ripristinare e inviare lo stato form0 React.
+description: Inizializza, osserva, ripristina e invia lo stato di form0 in React.
 ---
 
 <PageBadges />
 
-## Valori iniziali e override
+## Valori iniziali e valori prioritari
 
-Utilizzare `initialValues` per il record in fase di modifica. `overrideValues` ha la precedenza e sono utili
-per i valori host autorevoli come uno stato fornito da un'applicazione.
+Usa `initialValues` per il record in modifica. `overrideValues` ha la precedenza ed è utile per i
+valori che devono prevalere lato host, come uno stato fornito dall'applicazione.
 
-Per il restauro completo, preferire `initialSnapshot`:
+Per un ripristino completo, preferisci `initialSnapshot`:
 
 ```jsx
 <FormRenderer
@@ -27,15 +27,15 @@ Per il restauro completo, preferire `initialSnapshot`:
 />
 ```
 
-Un primo snapshot sostituisce `initialValues` per i valori dei campi grezzi.
-voci ripetibili e timestamp client/server come uno stato coerente.
+Uno snapshot iniziale sostituisce `initialValues` per i valori grezzi dei campi. Ripristina anche le
+voci ripetibili annidate e i timestamp di client e server come un unico stato coerente.
 
-## Osservare drafts
+## Osservare le bozze
 
-`onSnapshotChange(snapshot, change)` viene chiamato per primo con `{ kind: "seed", dirty: false }`. Più tardi
-modifiche utente utilizzare `{ kind: "change", dirty: boolean }`.
+`onSnapshotChange(snapshot, change)` viene chiamato prima con `{ kind: "seed", dirty: false }`. Le
+modifiche successive dell'utente usano `{ kind: "change", dirty: boolean }`.
 
-Il snapshot contiene:
+Lo snapshot contiene:
 
 ```js
 {
@@ -50,12 +50,13 @@ Il snapshot contiene:
 }
 ```
 
-## Invia record
+## Inviare i record
 
 `onSubmit(record, meta)` riceve il record strutturato descritto in
-[Output e record](/it/core/output-records). `meta` contiene `rawValues`, `repeatable`, `timestamps`,
+[Output e record](/it/core/output-records). `meta` contiene `rawValues`, `repeatable`, `timestamps`
 e `validationSummary`.
 
-Se `onSubmit` restituisce una promessa, una sovrapposizione configurata con `autoCloseOverlayOnSubmit` chiude solo
-dopo che la promessa si risolve. Un rifiuto lo lascia aperto. Utilizzare `submitBlockedReason` per l'applicazione
-requisiti al di fuori di schema e `externalDirty` per lo stato dell'applicazione al di fuori di renderer.
+Se `onSubmit` restituisce una promise, un overlay configurato con `autoCloseOverlayOnSubmit` si
+chiude solo dopo la risoluzione della promise. In caso di rifiuto resta aperto. Usa
+`submitBlockedReason` per i requisiti dell'applicazione esterni allo schema e `externalDirty` per lo
+stato dell'applicazione esterno al renderer.

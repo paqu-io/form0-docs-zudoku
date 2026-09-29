@@ -1,17 +1,17 @@
 ---
-title: Renderizadores de campo personalizados
-description: Reemplace la presentación de campo form0-react globalmente o dentro de un subárbol React.
+title: Renderers de campo personalizados
+description: Sustituye la presentación de los campos de form0-react de forma global o dentro de un subárbol de React.
 ---
 
 <PageBadges />
 
-renderers personalizado cambiar la presentación sin mover cálculos, visibilidad, requisitos o
-validación de `form0-core`.
+Los renderers personalizados cambian la presentación sin sacar de `form0-core` los cálculos, la
+visibilidad, la obligatoriedad ni la validación.
 
-## Anulaciones scoped
+## Sustituciones acotadas
 
-Prefiera `FieldRegistryProvider` cuando una aplicación, ruta, prueba o historia del libro de cuentos necesita un
-renderer conjunto aislado:
+Usa preferentemente `FieldRegistryProvider` cuando una aplicación, una ruta, una prueba o una
+historia de Storybook necesite un conjunto de renderers aislado:
 
 ```jsx
 import { FieldRegistryProvider, FormRenderer } from "form0-react"
@@ -26,7 +26,7 @@ export function AppForm({ schema }) {
 }
 ```
 
-Un renderer recibe el contrato de campo utilizado por los valores predeterminados:
+Un renderer recibe el mismo contrato de campo que usan los predeterminados:
 
 ```jsx
 function DateField({ field, value, onChange, readOnly, inputProps, className }) {
@@ -43,14 +43,15 @@ function DateField({ field, value, onChange, readOnly, inputProps, className }) 
 }
 ```
 
-Conservar las propiedades de accesibilidad suministradas en `inputProps`.
+Conserva las propiedades de accesibilidad que se proporcionan en `inputProps`.
 
-## Casos de registro y anulaciones globales
+## Instancias de registro y sustituciones globales
 
-Utilice `createFieldRegistry({ includeDefaults, renderers })` para una instancia de registro explícita. El
-nivel de módulo `registerFieldComponent`, `unregisterFieldComponent`, y `resetFieldComponents`
-Los helpers mutan el registro predeterminado compartido y es mejor reservarlos para aplicaciones bootstrap o
-Pruebas.
+Usa `createFieldRegistry({ includeDefaults, renderers })` para crear una instancia de registro
+explícita. Las funciones de módulo `registerFieldComponent`, `unregisterFieldComponent` y
+`resetFieldComponents` modifican el registro predeterminado compartido, así que conviene reservarlas
+para el arranque de la aplicación o las pruebas.
 
-Solo se pueden registrar los tipos de campo declarados por `form0-core`. Un nuevo tipo de campo schema debe ser primero
-definido en Core; un React renderer solo no puede extender el contrato schema.
+Solo se pueden registrar los tipos de campo que declara `form0-core`. Un tipo de campo nuevo en el
+esquema debe definirse primero en el núcleo; un renderer de React por sí solo no puede ampliar el
+contrato del esquema.

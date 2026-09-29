@@ -1,27 +1,29 @@
 ---
 title: Renderers de champ intégrés
-description: Types de champs affichés par form0-react sans remplacement applicatif.
+description: Types de champs affichés par form0-react sans surcharge de l’application.
 ---
 
 <PageBadges />
 
-`form0-react` fournit une interface accessible pour les types publics définis par `form0-core`.
-Le comportement et les attributs restent définis dans le
-[catalogue des champs](/fr/core/fields/catalog).
+`form0-react` inclut une interface par défaut accessible pour les types de champs publics définis
+par `form0-core`. Le comportement du schéma et les attributs acceptés restent définis par le
+[Catalogue des champs](/fr/core/fields/catalog).
 
-| Groupe                   | Types affichés                                             |
-| ------------------------ | ---------------------------------------------------------- |
-| Texte et nombres         | `TextField`, `NumericField`, `CalculatedField`             |
-| Choix                    | `SingleChoiceField`, `MultiChoiceField`, `BooleanField`    |
-| Date et heure            | `DateField`, `TimeField`                                   |
-| Affichage et métadonnées | `LabelField`, `TitleField`, `StatusField`, `FormLinkField` |
-| Médias                   | `PhotoField`, `VideoField`, `SignatureField`               |
+| Groupe                                    | Types affichés                                             |
+| ----------------------------------------- | ---------------------------------------------------------- |
+| Texte et nombres                          | `TextField`, `NumericField`, `CalculatedField`             |
+| Choix                                     | `SingleChoiceField`, `MultiChoiceField`, `BooleanField`    |
+| Date et heure                             | `DateField`, `TimeField`                                   |
+| Affichage et métadonnées d’enregistrement | `LabelField`, `TitleField`, `StatusField`, `FormLinkField` |
+| Médias                                    | `PhotoField`, `VideoField`, `SignatureField`               |
 
-`Section`, `RepeatableSection` et `BuildingPlanSection` sont des nœuds structurels gérés par
-`FormRenderer`, et non par le registre de champs.
+`Section`, `RepeatableSection` et `BuildingPlanSection` sont des nœuds structurels. `FormRenderer`
+gère leur mise en page et leurs enregistrements imbriqués au lieu de les résoudre via le registre
+des champs.
 
-Utilisez `KNOWN_FIELD_TYPES` pour connaître les types enregistrables. En développement,
-`getMissingFieldComponentTypes()` aide à détecter un rendu absent.
+Utilisez `KNOWN_FIELD_TYPES` pour consulter l’ensemble des types de champs enregistrables. En
+développement, `getMissingFieldComponentTypes()` aide à détecter un renderer par défaut ou
+personnalisé manquant.
 
-Les rendus média gèrent l’interaction et l’aperçu dans le navigateur ; la persistance et le
-téléversement restent à la charge de l’application.
+Les renderers de médias intégrés gèrent l’interaction et l’état d’aperçu côté navigateur ; la
+persistance et l’envoi des médias restent à la charge de l’application.

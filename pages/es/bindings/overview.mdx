@@ -1,31 +1,33 @@
 ---
 title: Visión general de los bindings de interfaz
-description: Renderiza esquemas form0 en frameworks de aplicación mientras form0-core controla el comportamiento.
+description: Renderiza esquemas form0 en frameworks de aplicación mientras form0-core gestiona el comportamiento del formulario.
 ---
 
 <PageBadges />
 
 import { Callout } from "zudoku/ui/Callout"
 
-Los bindings conectan el motor independiente del framework `form0-core` con la interfaz de una
-aplicación. El motor sigue controlando cálculos, condiciones, validación, eventos y registros
-estructurados; el binding convierte ese estado en componentes e interacciones de la plataforma.
+Los bindings conectan el motor `form0-core`, independiente del framework, con la interfaz de la
+aplicación. El motor sigue siendo responsable de los cálculos, las condiciones, la validación, los
+eventos y los registros estructurados; el binding convierte ese estado en componentes de la
+plataforma e interacciones del usuario.
 
-Para aplicaciones nuevas, empieza con la [CLI de form0](/es/cli/overview) y elige un proyecto
-inicial. Usa un binding directamente al integrar form0 en una aplicación existente.
+Para aplicaciones nuevas, empieza con la [CLI de form0](/es/cli/overview) y elige un starter de
+aplicación. Usa un binding directamente cuando integres form0 en una aplicación existente.
 
 ## Bindings oficiales
 
-| Paquete                                                                  | Plataforma                       | Documentación                                                     | Código fuente                                           |
-| ------------------------------------------------------------------------ | -------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------- |
-| [`form0-react`](https://www.npmjs.com/package/form0-react)               | Aplicaciones web React           | [Instalar y renderizar](/es/bindings/react/install-render)        | [GitHub](https://github.com/paqu-io/form0-react)        |
-| [`form0-react-native`](https://www.npmjs.com/package/form0-react-native) | Aplicaciones React Native y Expo | [Instalar y renderizar](/es/bindings/react-native/install-render) | [GitHub](https://github.com/paqu-io/form0-react-native) |
+| Paquete                                                                  | Plataforma                           | Documentación                                                     | Código fuente                                           |
+| ------------------------------------------------------------------------ | ------------------------------------ | ----------------------------------------------------------------- | ------------------------------------------------------- |
+| [`form0-react`](https://www.npmjs.com/package/form0-react)               | Aplicaciones web con React           | [Instalar y renderizar](/es/bindings/react/install-render)        | [GitHub](https://github.com/paqu-io/form0-react)        |
+| [`form0-react-native`](https://www.npmjs.com/package/form0-react-native) | Aplicaciones con React Native y Expo | [Instalar y renderizar](/es/bindings/react-native/install-render) | [GitHub](https://github.com/paqu-io/form0-react-native) |
 
-Los bindings no cambian la semántica del esquema. Consulta la
-[documentación de Core](/es/core/overview) para esquemas, campos, expresiones, validación, seguridad
-y registros de salida.
+Los bindings no cambian la semántica de los esquemas. Consulta la
+[documentación del núcleo](/es/core/overview) para esquemas, campos, expresiones, validación,
+seguridad y registros de salida.
 
 <Callout type="caution" title="Solo esquemas de confianza">
-  Las expresiones y los scripts de eventos ejecutan JavaScript. Renderiza únicamente esquemas de
-  autores de confianza. Consulta [Seguridad de los esquemas ejecutables](/es/core/security).
+  Las expresiones de los esquemas y los scripts de eventos ejecutan JavaScript. Renderiza solo
+  esquemas de autores de confianza. Consulta [Seguridad de los esquemas
+  ejecutables](/es/core/security).
 </Callout>

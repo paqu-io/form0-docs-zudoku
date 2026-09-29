@@ -1,11 +1,11 @@
 ---
 title: Thèmes et styles
-description: Utilisez des thèmes form0-react intégrés ou fournissez une classe de thème Vanilla Extract.
+description: Utilisez les thèmes intégrés de form0-react ou fournissez une classe de thème Vanilla Extract.
 ---
 
 <PageBadges />
 
-Importer la feuille de style du paquet une fois dans le point d'entrée de l'application:
+Importez la feuille de styles du paquet une seule fois dans le point d’entrée de l’application :
 
 ```js
 import "form0-react/index.css"
@@ -20,12 +20,13 @@ import "form0-react/index.css"
 <FormRenderer schema={schema} theme="standard" colorMode="system" />
 ```
 
-Le nom du thème et le mode couleur sélectionnent la classe Vanilla Extract intégrée correspondante.
-ne modifie pas automatiquement la propriété `theme`, donc une application peut choisir son propre appariement.
+Le nom du thème et le mode de couleur sélectionnent la classe Vanilla Extract intégrée
+correspondante. L’emplacement ne modifie pas automatiquement la propriété `theme` : chaque
+application peut choisir sa propre combinaison.
 
 ## Thèmes personnalisés
 
-L'exportation `form0-react/theme.css.js` expose le contrat de thème `vars`:
+L’export `form0-react/theme.css.js` expose le contrat de thème `vars` :
 
 ```js
 import { createTheme } from "@vanilla-extract/css"
@@ -36,11 +37,12 @@ export const appTheme = createTheme(vars, {
 })
 ```
 
-Passez la classe générée à `theme`:
+Passez la classe générée à `theme` :
 
 ```jsx
 <FormRenderer schema={schema} theme={appTheme} colorMode="light" />
 ```
 
-Utilisez `className` pour le style au niveau de la forme et les éléments d'emballage ordinaires pour l'application environnante
-Le balisage de champ personnalisé appartient à un [custom renderer](/fr/bindings/react/custom-renderers).
+Utilisez `className` pour les styles au niveau du formulaire et des éléments conteneurs ordinaires
+pour la mise en page de l’application autour du formulaire. Le balisage personnalisé d’un champ
+relève d’un [renderer personnalisé](/fr/bindings/react/custom-renderers).
