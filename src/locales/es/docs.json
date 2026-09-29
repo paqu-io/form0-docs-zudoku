@@ -129,6 +129,20 @@
     "concepts": {
       "title": "Conceptos"
     },
+    "engine": {
+      "evaluation-cycle": {
+        "title": "Ciclo de evaluación"
+      },
+      "calculations-dependencies": {
+        "title": "Cálculos y dependencias"
+      },
+      "parent-child-scopes": {
+        "title": "Ámbitos padre e hijo"
+      },
+      "events-operations": {
+        "title": "Eventos y operaciones"
+      }
+    },
     "schema": {
       "form": {
         "title": "Objeto de formulario"
@@ -274,6 +288,53 @@
   "guides": {
     "coming-soon": {
       "title": "Próximamente"
+    }
+  },
+  "diagrams": {
+    "evaluationCycle": {
+      "ariaLabel": "Un cambio de valor ejecuta una pasada eval completa en un orden fijo: cálculos, obligatoriedad, visibilidad, solo lectura, errores de valor. Después, el renderer despacha un evento change. Su manejador devuelve operaciones que aplica el host, y un SETVALUE vuelve a ejecutar la pasada sin despachar otro evento change.",
+      "caption": "Una edición ejecuta una única pasada ordenada. Los manejadores de eventos nunca modifican el formulario directamente: devuelven operaciones y el host las aplica.",
+      "userEdits": "Edición",
+      "onePass": "una pasada completa, siempre en el mismo orden",
+      "calculations": "Cálculos",
+      "required": "Obligatorio",
+      "visible": "Visible",
+      "readOnly": "Solo lectura",
+      "valueErrorsLine1": "Errores",
+      "valueErrorsLine2": "de valor",
+      "state": "estado",
+      "renderer": "Renderer",
+      "rerenders": "vuelve a pintar los campos",
+      "handlerRuns": "se ejecuta el manejador",
+      "returns": "devuelve",
+      "operations": "Operaciones",
+      "toHost": "al host",
+      "hostApplies": "El host aplica",
+      "loopTitle": "SETVALUE → eval de nuevo",
+      "loopNote": "sin segundo evento change"
+    },
+    "calculationOrder": {
+      "ariaLabel": "Los campos calculados se ejecutan después de los campos a los que hacen referencia: subtotal usa qty y price y se ejecuta primero, tax usa subtotal y se ejecuta segundo, total usa subtotal y tax y se ejecuta tercero. Los campos a y b se referencian entre sí, así que ambos se establecen en null y se informa de un error; el campo c hace referencia a a y se ejecuta con una entrada null.",
+      "caption": "El orden en el esquema no importa: cada campo calculado se ejecuta después de los campos a los que hace referencia. Los campos de un ciclo se establecen en null y todo lo demás se sigue ejecutando.",
+      "orderTitle": "Se ejecutan por orden de dependencia",
+      "cycleTitle": "Un ciclo se omite",
+      "input": "campo de entrada",
+      "runsFirst": "se ejecuta 1.º",
+      "runsSecond": "se ejecuta 2.º",
+      "runsThird": "se ejecuta 3.º",
+      "cycleResult": "null + error",
+      "runsWithNull": "se ejecuta con null"
+    },
+    "repeatableScope": {
+      "ariaLabel": "El formulario principal tiene los campos customer y discount_pct. Una RepeatableSection llamada line_items tiene dos filas, y cada fila ejecuta su propia instancia del motor con los campos qty, price y line_total. Los valores del formulario principal se copian en cada fila, así que line_total puede usar discount_pct. Las dos filas no se ven entre sí.",
+      "caption": "Cada fila se evalúa con su propio motor y una copia de los valores del padre. Las filas nunca leen los valores de otras filas.",
+      "mainForm": "Formulario principal",
+      "row1": "Fila 1",
+      "row2": "Fila 2",
+      "ownEngine": "instancia de motor propia",
+      "sameFields": "mismos campos, valores separados",
+      "parentCopied": "valores del padre copiados en la fila",
+      "isolated": "filas aisladas entre sí"
     }
   }
 }

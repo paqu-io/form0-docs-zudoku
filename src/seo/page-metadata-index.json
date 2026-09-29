@@ -2360,6 +2360,18 @@
       {
         "locale": "en",
         "pathname": "/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/calculations-dependencies"
       }
     ]
   },
@@ -2375,6 +2387,18 @@
       {
         "locale": "en",
         "pathname": "/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/evaluation-cycle"
       }
     ]
   },
@@ -2390,6 +2414,18 @@
       {
         "locale": "en",
         "pathname": "/core/engine/events-operations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/events-operations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/events-operations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/events-operations"
       }
     ]
   },
@@ -2405,6 +2441,18 @@
       {
         "locale": "en",
         "pathname": "/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/parent-child-scopes"
       }
     ]
   },
@@ -5140,7 +5188,7 @@
     "translationKey": "/core/concepts",
     "locale": "es",
     "title": "Conceptos",
-    "description": "El modelo mental basado en esquemas de form0-core.",
+    "description": "El modelo mental schema-first de form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5159,6 +5207,114 @@
       {
         "locale": "it",
         "pathname": "/it/core/concepts"
+      }
+    ]
+  },
+  "/es/core/engine/calculations-dependencies": {
+    "pathname": "/es/core/engine/calculations-dependencies",
+    "translationKey": "/core/engine/calculations-dependencies",
+    "locale": "es",
+    "title": "Cálculos y dependencias",
+    "description": "Cómo ordena el motor de form0 los campos calculados, cómo gestiona los ciclos y las expresiones que fallan y cómo resuelve EVAL().",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/calculations-dependencies"
+      }
+    ]
+  },
+  "/es/core/engine/evaluation-cycle": {
+    "pathname": "/es/core/engine/evaluation-cycle",
+    "translationKey": "/core/engine/evaluation-cycle",
+    "locale": "es",
+    "title": "Ciclo de evaluación",
+    "description": "Qué hace el motor de form0 al crearse y cada vez que cambia un valor.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/evaluation-cycle"
+      }
+    ]
+  },
+  "/es/core/engine/events-operations": {
+    "pathname": "/es/core/engine/events-operations",
+    "translationKey": "/core/engine/events-operations",
+    "locale": "es",
+    "title": "Eventos y operaciones",
+    "description": "Cómo se registran y ejecutan los manejadores de eventos de form0, qué pueden leer y cómo llegan a la aplicación host las operaciones que devuelven.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/events-operations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/events-operations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/events-operations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/events-operations"
+      }
+    ]
+  },
+  "/es/core/engine/parent-child-scopes": {
+    "pathname": "/es/core/engine/parent-child-scopes",
+    "translationKey": "/core/engine/parent-child-scopes",
+    "locale": "es",
+    "title": "Ámbitos padre e hijo",
+    "description": "Cómo evalúa el motor de form0 las filas de las secciones repetibles y qué campos puede leer cada cálculo, condición y manejador de eventos.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/parent-child-scopes"
       }
     ]
   },
@@ -8390,7 +8546,7 @@
     "translationKey": "/core/concepts",
     "locale": "fr",
     "title": "Concepts",
-    "description": "Le schema -premier modèle mental derrière form0-core.",
+    "description": "Le modèle mental schema-first de form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8409,6 +8565,114 @@
       {
         "locale": "it",
         "pathname": "/it/core/concepts"
+      }
+    ]
+  },
+  "/fr/core/engine/calculations-dependencies": {
+    "pathname": "/fr/core/engine/calculations-dependencies",
+    "translationKey": "/core/engine/calculations-dependencies",
+    "locale": "fr",
+    "title": "Calculs et dépendances",
+    "description": "Comment le moteur form0 ordonne les champs calculés, gère les cycles et les expressions en échec, et résout EVAL().",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/calculations-dependencies"
+      }
+    ]
+  },
+  "/fr/core/engine/evaluation-cycle": {
+    "pathname": "/fr/core/engine/evaluation-cycle",
+    "translationKey": "/core/engine/evaluation-cycle",
+    "locale": "fr",
+    "title": "Cycle d'évaluation",
+    "description": "Ce que fait le moteur form0 à sa création et à chaque changement de valeur.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/evaluation-cycle"
+      }
+    ]
+  },
+  "/fr/core/engine/events-operations": {
+    "pathname": "/fr/core/engine/events-operations",
+    "translationKey": "/core/engine/events-operations",
+    "locale": "fr",
+    "title": "Événements et opérations",
+    "description": "Comment les gestionnaires d'événements form0 sont enregistrés et exécutés, ce qu'ils peuvent lire et comment les opérations qu'ils renvoient parviennent à l'application host.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/events-operations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/events-operations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/events-operations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/events-operations"
+      }
+    ]
+  },
+  "/fr/core/engine/parent-child-scopes": {
+    "pathname": "/fr/core/engine/parent-child-scopes",
+    "translationKey": "/core/engine/parent-child-scopes",
+    "locale": "fr",
+    "title": "Portées parent et enfant",
+    "description": "Comment le moteur form0 évalue les lignes des sections répétables et quels champs chaque calcul, condition et gestionnaire d'événements peut lire.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/parent-child-scopes"
       }
     ]
   },
@@ -11704,7 +11968,7 @@
     "translationKey": "/core/concepts",
     "locale": "it",
     "title": "Concetti",
-    "description": "Il schema -primo modello mentale dietro form0-core.",
+    "description": "Il modello mentale schema-first alla base di form0-core.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -11723,6 +11987,114 @@
       {
         "locale": "it",
         "pathname": "/it/core/concepts"
+      }
+    ]
+  },
+  "/it/core/engine/calculations-dependencies": {
+    "pathname": "/it/core/engine/calculations-dependencies",
+    "translationKey": "/core/engine/calculations-dependencies",
+    "locale": "it",
+    "title": "Calcoli e dipendenze",
+    "description": "Come il motore di form0 ordina i campi calcolati, gestisce i cicli e le espressioni che falliscono e risolve EVAL().",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/calculations-dependencies"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/calculations-dependencies"
+      }
+    ]
+  },
+  "/it/core/engine/evaluation-cycle": {
+    "pathname": "/it/core/engine/evaluation-cycle",
+    "translationKey": "/core/engine/evaluation-cycle",
+    "locale": "it",
+    "title": "Ciclo di valutazione",
+    "description": "Cosa fa il motore di form0 quando viene creato e ogni volta che un valore cambia.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/evaluation-cycle"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/evaluation-cycle"
+      }
+    ]
+  },
+  "/it/core/engine/events-operations": {
+    "pathname": "/it/core/engine/events-operations",
+    "translationKey": "/core/engine/events-operations",
+    "locale": "it",
+    "title": "Eventi e operazioni",
+    "description": "Come vengono registrati ed eseguiti i gestori di eventi di form0, cosa possono leggere e come le operazioni che restituiscono arrivano all'applicazione host.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/events-operations"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/events-operations"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/events-operations"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/events-operations"
+      }
+    ]
+  },
+  "/it/core/engine/parent-child-scopes": {
+    "pathname": "/it/core/engine/parent-child-scopes",
+    "translationKey": "/core/engine/parent-child-scopes",
+    "locale": "it",
+    "title": "Ambiti padre e figlio",
+    "description": "Come il motore di form0 valuta le righe delle sezioni ripetibili e quali campi può leggere ogni calcolo, condizione e gestore di eventi.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/parent-child-scopes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/parent-child-scopes"
       }
     ]
   },

@@ -20,6 +20,7 @@ vita dell'applicazione.
 ```js
 ON("change", "age", function (event) {
   if ($age >= 18) {
+    // can_vote is a TextField in this example
     SETVALUE("can_vote", "yes")
   }
 })
@@ -62,5 +63,9 @@ Registrare uno di questi gestori con `ON` non rende automatico l'evento.
 - [`ALERT`](/it/core/builtins/events/alert)
 - [`SETVALUE`](/it/core/builtins/events/setvalue)
 
-I gestori di eventi possono usare anche i builtin di calcolo elencati in
-[Calcoli ed espressioni](/it/core/builtins/calculations-expressions-overview).
+Per la registrazione, l'ordine di esecuzione, l'ambito dei gestori e la gestione delle operazioni,
+vedi [Eventi e operazioni](/it/core/engine/events-operations).
+
+I gestori di eventi possono usare anche i builtin di espressione condivisi elencati in
+[Calcoli ed espressioni](/it/core/builtins/calculations-expressions-overview). I builtin riservati ai
+calcoli, come `SETRESULT`, non sono disponibili nei gestori di eventi.

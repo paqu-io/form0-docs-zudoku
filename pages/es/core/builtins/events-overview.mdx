@@ -19,6 +19,7 @@ binding lo dispara por una interacción del usuario o una transición del ciclo 
 ```js
 ON("change", "age", function (event) {
   if ($age >= 18) {
+    // can_vote is a TextField in this example
     SETVALUE("can_vote", "yes")
   }
 })
@@ -61,5 +62,9 @@ Registrar uno de estos controladores con `ON` no convierte el evento en automát
 - [`ALERT`](/es/core/builtins/events/alert)
 - [`SETVALUE`](/es/core/builtins/events/setvalue)
 
-Los controladores de eventos también pueden usar los builtins de cálculo incluidos en
-[Calculaciones y expresiones](/es/core/builtins/calculations-expressions-overview).
+Para el registro, el orden de ejecución, el ámbito de los manejadores y la gestión de operaciones,
+consulta [Eventos y operaciones](/es/core/engine/events-operations).
+
+Los manejadores de eventos también pueden usar los builtins de expresión compartidos que se indican en
+[Cálculos y expresiones](/es/core/builtins/calculations-expressions-overview). Los builtins
+exclusivos de los cálculos, como `SETRESULT`, no están disponibles en los manejadores de eventos.

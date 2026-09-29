@@ -20,6 +20,7 @@ Cela ne déclenche aucun événement. Un événement s'exécute uniquement lorsq
 ```js
 ON("change", "age", function (event) {
   if ($age >= 18) {
+    // can_vote is a TextField in this example
     SETVALUE("can_vote", "yes")
   }
 })
@@ -62,5 +63,9 @@ L'enregistrement d'un gestionnaire avec `ON` ne rend pas l'événement automatiq
 - [`ALERT`](/fr/core/builtins/events/alert)
 - [`SETVALUE`](/fr/core/builtins/events/setvalue)
 
-Les gestionnaires d'événements peuvent également utiliser les fonctions intégrées de calcul listées dans
-[Calculs et expressions](/fr/core/builtins/calculations-expressions-overview).
+Pour l'enregistrement, l'ordre d'exécution, la portée des gestionnaires et le traitement des
+opérations, voir [Événements et opérations](/fr/core/engine/events-operations).
+
+Les gestionnaires d'événements peuvent aussi utiliser les builtins d'expression partagés listés dans
+[Calculs et expressions](/fr/core/builtins/calculations-expressions-overview). Les builtins réservés
+aux calculs, comme `SETRESULT`, ne sont pas disponibles dans les gestionnaires d'événements.
