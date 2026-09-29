@@ -1,10 +1,12 @@
 ---
 title: Exécuter avec des valeurs
-description: Évaluez un schéma avec des valeurs initiales JSON ou YAML.
+description: Évaluez un schéma avec des valeurs initiales issues de JSON, de YAML ou d’une valeur JSON en ligne.
 ---
 
 <PageBadges />
 
-Utilisez `form0 run <schema> --values <input>`. L’entrée peut être une valeur JSON en ligne ou un
-fichier JSON, YAML ou YML. La commande affiche l’état évalué du moteur et signale les champs
-d’entrée inconnus.
+Utilisez `form0 run <schema> --values <input>` pour évaluer un formulaire. L’entrée peut être une
+valeur JSON en ligne ou le chemin d’un fichier JSON, YAML ou YML.
+
+La commande affiche l’état évalué du moteur : valeurs, erreurs de validation, visibilité, caractère
+obligatoire et lecture seule. Les champs d’entrée inconnus sont ignorés avec un avertissement.

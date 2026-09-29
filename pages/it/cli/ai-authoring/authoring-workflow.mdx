@@ -1,17 +1,18 @@
 ---
 title: Flusso di creazione con IA
-description: Comprendi mutazioni, convalida completa, revisione, approvazione, annullamento e conflitti.
+description: Comprendi le mutazioni semantiche, la validazione dell'intero schema, la revisione delle bozze, l'approvazione, l'annullamento e i conflitti.
 ---
 
 <PageBadges />
 
-## Contesto completo, azioni limitate
+## Contesto completo, azioni vincolate
 
-Ogni richiesta include lo schema corrente completo e un catalogo di creazione versionato dal
-form0-core installato. Il catalogo descrive campi, attributi, operatori, builtins, eventi,
-riferimenti, calcoli e metadati AI esistenti.
+Ogni richiesta include lo schema corrente completo e un catalogo di creazione con versione del
+form0-core installato. Il catalogo descrive campi, attributi, operatori, builtin, eventi,
+riferimenti, calcoli e metadati IA esistenti.
 
-L'agente non può sostituire il documento radice o scrivere file. Può proporre queste operazioni:
+L'agente non può sostituire il documento radice né scrivere file. Può proporre queste operazioni
+semantiche:
 
 - `updateForm`
 - `addField`, `updateField`, `moveField` e `removeField`
@@ -19,26 +20,27 @@ L'agente non può sostituire il documento radice o scrivere file. Può proporre 
 - `setCalculation`
 - `setFormEventCode`
 
-I campi sono identificati da chiavi stabili. Le rinominazioni sicure aggiornano i riferimenti; le
-rimozioni non sicure e le destinazioni irrisolte vengono rifiutate.
+I campi sono identificati da chiavi stabili. Le ridenominazioni sicure aggiornano i riferimenti
+riconosciuti; le rimozioni non sicure e le destinazioni non risolte vengono rifiutate.
 
-## Convalida prima dell'anteprima
+## Validazione prima dell'anteprima
 
-form0-core applica il batch proposto a una copia in memoria. Lo schema originale non viene modificato.
-Quindi convalida l'intero risultato, inclusi:
+form0-core applica il batch proposto a una copia in memoria, senza modificare lo schema originale.
+Poi valida l'intero risultato, compresi:
 
-- regole dello schema e degli attributi
-- condizioni e riferimenti ai campi
-- espressioni calcolate, dipendenze e cicli
-- ambito delle sezioni ripetibili
-- tipi di evento, riferimenti e sintassi JavaScript
+- le regole dello schema e degli attributi
+- le condizioni e i riferimenti ai campi
+- le espressioni calcolate, le dipendenze e i cicli
+- l'ambito delle sezioni ripetibili
+- i tipi, i riferimenti e la sintassi JavaScript degli eventi del modulo
 
-I batch non validi restituiscono diagnostica all'agente e non sostituiscono mai la bozza. Il core
-installato prevale se la documentazione remota è in disaccordo. Consulta
-[calcoli ed espressioni](/it/core/builtins/calculations-expressions-overview) ed
-[eventi del modulo](/it/core/builtins/events-overview) per le funzionalità dello schema.
+I batch non validi restituiscono diagnostica all'agente e non sostituiscono mai la bozza corrente.
+Le capacità del core installato prevalgono se la documentazione remota è in disaccordo. Vedi
+[calcoli ed espressioni](/it/core/builtins/calculations-expressions-overview) e
+[eventi del modulo](/it/core/builtins/events-overview) per le funzionalità dello schema su cui si
+basa.
 
-## Esaminare e modificare
+## Rivedere e correggere
 
 Dopo una proposta valida, ispeziona il modulo di lavoro e il diff cumulativo:
 
@@ -47,51 +49,53 @@ form0(ai)> /preview
 form0(ai)> /diff
 ```
 
-`/diff` confronta lo schema all'ingresso in modalità AI con lo schema di lavoro, incluse le modifiche
-applicate e in sospeso. `/diff --pending` confronta l'ultimo schema applicato con la sola proposta in
-sospeso. Usa `/json` per vedere lo schema di lavoro grezzo. Chiedi una revisione in linguaggio
-naturale per produrre un altro batch coerente. Si esamina una sola proposta in sospeso alla volta.
+`/diff` confronta lo schema al momento dell'ingresso in modalità IA con lo schema di lavoro
+corrente, incluse le modifiche applicate e quelle in sospeso. `/diff --pending` confronta l'ultimo
+schema applicato con la sola proposta in sospeso. Usa `/json` quando ti serve lo schema di lavoro in
+JSON grezzo. Chiedi una correzione in linguaggio naturale per produrre un nuovo batch coerente. Si
+revisiona una sola proposta in sospeso alla volta.
 
-Il modello spiega brevemente una proposta completata. Se invia mutazioni valide senza testo di
-risposta, la CLI mostra un breve riepilogo deterministico prima dei comandi di revisione. Le richieste
-di ispezione, spiegazione o diagnosi senza implementazione devono restituire una spiegazione e nessuna
-proposta.
+Il modello spiega brevemente ogni proposta completata. Se invia mutazioni valide senza testo di
+risposta, la CLI stampa un breve riepilogo deterministico delle mutazioni prima dei comandi di
+revisione. Le richieste di ispezione, spiegazione o diagnosi senza implementazione devono restituire
+una spiegazione e nessuna proposta.
 
-Se il server di anteprima è attivo, la bozza valida viene inviata subito con l'indicazione
-**AI draft**. Rimane comunque un'anteprima in memoria.
+Se il server di anteprima è in esecuzione, la bozza valida viene inviata subito con l'etichetta **AI
+draft**. Si tratta comunque di un'anteprima in memoria.
 
 ## Applicare o scartare
 
-L'applicazione è l'unica operazione che scrive la proposta:
+Applicare è l'unica operazione che scrive la proposta:
 
 ```ansi
 form0(ai)> /apply [schema-path]
 ```
 
-Prima di scrivere, la CLI ricalcola la revisione su disco. Se coincide, scrive atomicamente e
-aggiorna motore e browser. Per un nuovo modulo, richiede un percorso e conferma prima di
-sovrascrivere un file esistente.
+Prima di scrivere, la CLI ricalcola la revisione su disco. Se corrisponde, lo schema viene scritto
+in modo atomico, poi il motore e l'anteprima nel browser ricevono lo schema salvato. Per un nuovo
+modulo, l'applicazione chiede un percorso e una conferma prima di sovrascrivere un file esistente.
 
-Scartare abbandona la proposta e ripristina nel browser la versione confermata:
+Scartare abbandona la proposta in sospeso e ripristina nel browser l'anteprima dello schema salvato:
 
 ```ansi
 form0(ai)> /discard
 ```
 
-Uscire dalla modalità AI ripristina l'anteprima allo stesso modo. Se una proposta non è stata
+Uscire dalla modalità IA ripristina l'anteprima allo stesso modo. Se una proposta non è ancora stata
 applicata, `/exit` chiede conferma prima di scartarla.
 
 ## Cambiare modulo
 
-Usa `/load [file|form]` per caricare un altro modulo senza uscire dalla modalità AI. La destinazione
-viene convalidata prima del passaggio, viene ripristinata la sua conversazione specifica, la cronologia
-del diff cumulativo riparte dallo schema caricato e il server attivo viene aggiornato. Se una proposta
-non è applicata, la CLI chiede conferma prima di scartarla.
+Usa `/load [file|form]` per caricare un altro modulo senza uscire dalla modalità IA. La destinazione
+viene validata prima del cambio, la sua conversazione specifica dello schema viene ripristinata, la
+cronologia del diff cumulativo riparte dallo schema caricato e il server di anteprima in esecuzione
+viene aggiornato. Se il modulo corrente ha una proposta non applicata, la CLI chiede conferma prima
+di scartarla.
 
 ## Annullare
 
-L'annullamento non riscrive il file silenziosamente. Prepara come proposta l'ultimo schema salvato
-durante la sessione AI corrente:
+L'annullamento non riscrive il file in modo silenzioso. Prepara come nuova proposta l'ultimo schema
+salvato durante la sessione IA corrente:
 
 ```ansi
 form0(ai)> /undo
@@ -99,11 +103,12 @@ form0(ai)> /diff
 form0(ai)> /apply
 ```
 
-Ispeziona e applica esplicitamente la proposta. L'annullamento riguarda la sessione e non è una
-cronologia persistente dello schema.
+Ispeziona e applica esplicitamente quella proposta. L'annullamento è limitato alla sessione; non è
+una cronologia persistente dello schema.
 
 ## Modifiche esterne e bozze obsolete
 
-Se il watcher rileva una modifica su disco dopo la creazione della proposta, la bozza diventa
-obsoleta. L'applicazione viene bloccata invece di unire modifiche incompatibili. Ricarica lo schema
-confermato, chiedi all'agente di adattare la richiesta alla nuova revisione e controlla di nuovo.
+Se un watcher rileva che lo schema è cambiato su disco dopo la creazione della proposta, la bozza
+diventa obsoleta. L'applicazione viene bloccata invece di unire modifiche potenzialmente
+incompatibili. Ricarica lo schema salvato, chiedi all'agente di adattare la richiesta alla nuova
+revisione e revisionala di nuovo.

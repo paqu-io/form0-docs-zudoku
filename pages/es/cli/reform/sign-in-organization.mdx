@@ -1,10 +1,12 @@
 ---
 title: Iniciar sesión y seleccionar una organización
-description: Autentica form0-cli con reform y selecciona la organización activa.
+description: Autentica form0-cli con reform y elige la organización que usan los comandos de sincronización.
 ---
 
 <PageBadges />
 
-Usa `form0 reform login`, `form0 reform whoami` y `form0 reform orgs list` para autenticarte e
-inspeccionar el acceso. Selecciona la organización con `form0 reform scope use`. La integración con
-reform es opcional.
+Usa `form0 reform login` para autenticarte, `form0 reform whoami` para consultar la identidad actual
+y `form0 reform orgs list` para ver las organizaciones disponibles.
+
+Selecciona la organización activa con `form0 reform scope use`. La integración con reform es
+opcional y no es necesaria para los proyectos locales de form0.

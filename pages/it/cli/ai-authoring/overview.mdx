@@ -1,21 +1,23 @@
 ---
 title: Creazione con IA
-description: Genera e modifica schemi form0 con batch di mutazioni convalidati e approvati.
+description: Genera e modifica schemi form0 tramite batch di mutazioni IA revisionati e validati.
 ---
 
 <PageBadges />
 
 :::warning
 
-La creazione con IA è in anteprima. Comandi, provider, prompt e protocollo di mutazione possono
-cambiare prima di una versione stabile. Controlla calcoli e JavaScript degli eventi.
+La creazione con IA è in anteprima. Comandi, provider disponibili, prompt e protocollo di mutazione
+possono cambiare prima di una versione stabile. Controlla i calcoli e il JavaScript degli eventi
+generati.
 
 :::
 
-La creazione con IA aggiunge a form0-cli una modalità conversazionale per modificare gli schemi.
-Lavora con normali schemi form0: il file finale non contiene conversazioni, provider o mutazioni.
+La creazione con IA aggiunge a form0-cli una modalità conversazionale per creare schemi. Funziona
+con normali schemi form0: il file finale non contiene la cronologia della conversazione, la
+configurazione del provider né dati di mutazione.
 
-Avviala direttamente con uno schema oppure entra in modalità AI dalla shell interattiva:
+Avviala direttamente con uno schema, oppure entra in modalità IA dalla shell interattiva:
 
 ```bash
 form0 ai [schema]
@@ -27,27 +29,29 @@ form0(server)> ai
 form0(server,ai)> Add a calculated total from quantity and unit price
 ```
 
-La modalità AI non avvia il server di anteprima. Se è già attivo, le bozze convalidate vengono
-inviate al browser con l'indicazione **AI draft** senza essere scritte su disco.
+La modalità IA non avvia il server di anteprima. Se un server è già in esecuzione, le bozze validate
+vengono inviate al browser con l'etichetta di origine **AI draft**, senza essere scritte su disco.
 
 ## Come funziona la creazione
 
-1. Il modello selezionato riceve il modulo completo e il catalogo del core installato.
-2. L'agente propone un batch coerente di mutazioni semantiche invece di sostituire il file.
-3. form0-core applica il batch a una copia e convalida l'intero risultato.
+1. Il modello selezionato riceve il modulo corrente completo e il catalogo di creazione del form0-core installato.
+2. L'agente propone un batch coerente di mutazioni semantiche invece di sostituire il file dello schema.
+3. form0-core applica il batch a una copia e valida l'intero risultato.
 4. Una bozza valida può essere ispezionata, rivista, scartata o applicata esplicitamente.
-5. L'applicazione ricontrolla la revisione su disco e scrive lo schema atomicamente.
+5. L'applicazione ricontrolla la revisione su disco e scrive lo schema in modo atomico.
 
-Le proposte non valide non diventano mai bozze. Uscire o scartare ripristina nel browser lo schema
-confermato. Il risultato resta un normale schema form0 senza metadati AI aggiunti automaticamente.
+Le proposte non valide non diventano mai bozze. Uscendo o scartando, il browser torna a mostrare lo
+schema salvato. Il risultato resta un normale schema form0, senza metadati IA aggiunti
+automaticamente.
 
 ## Esplora questa sezione
 
-- [Per iniziare](/it/cli/ai-authoring/getting-started) descrive configurazione e prima sessione.
-- [Provider e modelli](/it/cli/ai-authoring/providers-models) spiega autenticazione Pi e persistenza del modello.
-- [Flusso di creazione](/it/cli/ai-authoring/authoring-workflow) tratta bozze, convalida, approvazione e conflitti.
-- [Comandi e stato](/it/cli/ai-authoring/commands-status) documenta i comandi e lo stato occupato.
-- [Privacy e sicurezza](/it/cli/ai-authoring/privacy-security) definisce limiti dei dati e politica cloud.
-- [Limiti e risoluzione dei problemi](/it/cli/ai-authoring/limitations-troubleshooting) descrive vincoli ed errori comuni.
+- [Per iniziare](/it/cli/ai-authoring/getting-started) descrive la configurazione e una prima sessione di creazione.
+- [Provider e modelli](/it/cli/ai-authoring/providers-models) spiega l'autenticazione Pi e la persistenza del modello.
+- [Flusso di creazione](/it/cli/ai-authoring/authoring-workflow) tratta bozze, validazione, approvazione e conflitti.
+- [Comandi e stato](/it/cli/ai-authoring/commands-status) documenta tutti i comandi della modalità IA e il comportamento durante l'elaborazione.
+- [Privacy e sicurezza](/it/cli/ai-authoring/privacy-security) definisce i confini dei dati e la policy cloud.
+- [Limiti e risoluzione dei problemi](/it/cli/ai-authoring/limitations-troubleshooting) descrive i vincoli dell'anteprima e gli errori più comuni.
 
-Per guidare l'agente e controllare il cloud nello schema, consulta [Metadati AI](/it/core/ai-metadata).
+Per indicazioni agli agenti e controlli cloud a livello di schema, vedi
+[Metadati IA](/it/core/ai-metadata).

@@ -1,9 +1,12 @@
 ---
 title: Servidores de desarrollo de aplicaciones
-description: Inicia una aplicación web o Expo configurada junto con la previsualización de form0.
+description: Inicia una aplicación web o de Expo configurada junto al servidor de vista previa de form0.
 ---
 
 <PageBadges />
 
-Usa `form0 serve --app` cuando `form0.config.js` defina un servidor de desarrollo de la aplicación.
-En proyectos Expo, `--public-url` permite anunciar una URL de desarrollo pública o mediante túnel.
+Usa `form0 serve --app` cuando el `form0.config.js` del proyecto defina un servidor de desarrollo de
+la aplicación. Las plantillas web y móvil mantenidas ya incluyen una configuración adecuada.
+
+Los proyectos de Expo pueden usar `--public-url` cuando un dispositivo tenga que acceder al servidor
+de desarrollo a través de un túnel o de una URL de desarrollo pública y estable.

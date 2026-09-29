@@ -1,19 +1,20 @@
 ---
 title: Prise en main de la création avec IA
-description: Configurez un fournisseur, choisissez un modèle et réalisez une première modification AI vérifiée.
+description: Configurez un fournisseur, sélectionnez un modèle et réalisez une première modification form0 par IA, relue avant application.
 ---
 
 <PageBadges />
 
 ## Avant de commencer
 
-Installez form0-cli avec Node.js 22.19.0 ou une version ultérieure. Il faut un identifiant de
-fournisseur pris en charge ou un modèle Ollama local accessible. Le schéma est facultatif : sans lui,
-la création avec IA part du formulaire vide canonique.
+Installez form0-cli sur Node.js 22.19.0 ou une version ultérieure. Il vous faut soit un identifiant
+pour un fournisseur pris en charge, soit un modèle Ollama local accessible. Le schéma est facultatif
+: sans schéma, la création avec IA part du formulaire vide canonique.
 
-Consultez [Installation et mise à jour](/fr/cli/install-update) pour les prérequis de la CLI.
+Consultez [Installer et mettre à jour](/fr/cli/install-update) pour l’installation de la CLI et les
+prérequis d’exécution.
 
-## Entrer dans le mode AI
+## Entrer dans le mode IA
 
 Ouvrez directement un schéma connu :
 
@@ -21,7 +22,7 @@ Ouvrez directement un schéma connu :
 form0 ai form.schema.json
 ```
 
-Ou combinez la création avec IA avec le serveur d'aperçu interactif :
+Ou combinez la création avec IA et le serveur d’aperçu interactif :
 
 ```ansi
 form0> load form.schema.json
@@ -30,11 +31,11 @@ form0(server)> ai
 form0(server,ai)>
 ```
 
-Le démarrage du mode AI ne lance pas automatiquement un serveur. Un serveur existant reste actif et
-affiche immédiatement les brouillons validés.
+Le lancement du mode IA ne démarre pas automatiquement de serveur. Un serveur déjà en cours
+d’exécution reste actif et affiche immédiatement les brouillons validés.
 
-Vous pouvez aussi lancer les deux depuis le mode AI, même si le formulaire n'a pas encore été
-enregistré :
+Vous pouvez aussi lancer les deux depuis le mode IA, y compris lorsque le formulaire n’a pas encore
+été enregistré :
 
 ```ansi
 form0> ai
@@ -43,12 +44,13 @@ form0(server,ai)>
 ```
 
 Le serveur reçoit le schéma de travail courant, y compris une proposition validée non appliquée. En
-mode AI, toute saisie sans préfixe est une demande au modèle ; utilisez des commandes préfixées comme
-`/serve`, `/validate` et `/preview` pour les actions de la CLI.
+mode IA, une saisie sans préfixe est toujours une requête au modèle ; utilisez les commandes à barre
+oblique comme `/serve`, `/validate` et `/preview` pour les actions de la CLI.
 
-## S'authentifier et choisir un modèle
+## S’authentifier et sélectionner un modèle
 
-Listez le catalogue, authentifiez-vous, consultez les identifiants et choisissez un modèle :
+Listez le catalogue des fournisseurs, authentifiez-vous, consultez les identifiants de modèle et
+sélectionnez-en un :
 
 ```ansi
 form0(ai)> /providers
@@ -58,21 +60,21 @@ form0(ai)> /model openai-codex/gpt-5.6-luna
 form0(ai)> /status
 ```
 
-Les identifiants de fournisseur et d'authentification viennent directement de Pi. Pour une clé API,
-la CLI demande le secret sans l'ajouter au projet ni au schéma. Consultez
+Les identifiants de fournisseur et d’authentification proviennent directement de Pi. Pour une
+authentification par clé d’API, la CLI demande le secret sans l’ajouter au projet ni au schéma. Voir
 [Fournisseurs et modèles](/fr/cli/ai-authoring/providers-models) pour la base prise en charge et le
 stockage.
 
-## Effectuer et vérifier une première modification
+## Réaliser et relire une première modification
 
-Décrivez le comportement souhaité, et non des modifications JSON brutes :
+Décrivez le comportement attendu du formulaire, et non des modifications brutes du JSON :
 
 ```ansi
 form0(ai)> Add quantity and unit price fields, then a calculated total rounded to two decimals.
 ```
 
-L'agent peut poser des questions ou renvoyer des diagnostics pendant la construction d'un lot valide.
-Lorsque la proposition est prête :
+L’agent peut poser des questions ou renvoyer des diagnostics pendant qu’il construit un lot de
+mutations valide. Une fois la proposition prête :
 
 ```ansi
 form0(ai)> /preview
@@ -80,16 +82,18 @@ form0(ai)> /diff
 form0(ai)> /apply
 ```
 
-Rien n'est écrit avant la confirmation. Le guide du flux explique la
-[vérification, les révisions, l'annulation et les conflits](/fr/cli/ai-authoring/authoring-workflow).
+Rien n’est écrit tant que l’application n’est pas confirmée. Consultez le guide du flux pour
+comprendre
+[la relecture des brouillons, les révisions, l’annulation et les conflits](/fr/cli/ai-authoring/authoring-workflow).
 
 ## Commencer sans schéma
 
-Exécutez la commande sans chemin pour partir d'un formulaire vide :
+Exécutez la commande sans chemin pour partir d’un formulaire vide :
 
 ```bash
 form0 ai
 ```
 
-La première application demande un chemin et utilise la confirmation normale si le fichier existe.
-Après l'enregistrement, l'identité temporaire de conversation rejoint le chemin canonique du schéma.
+La première application demande un chemin pour le schéma et utilise la confirmation d’écrasement
+habituelle si le fichier existe déjà. Après l’enregistrement, l’identité temporaire de la
+conversation est réaffectée au chemin canonique du schéma.

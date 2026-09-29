@@ -3433,7 +3433,7 @@
     "translationKey": "/cli/ai-authoring/authoring-workflow",
     "locale": "es",
     "title": "Flujo de creación con IA",
-    "description": "Comprende las mutaciones, validación completa, revisión, aprobación, reversión y conflictos.",
+    "description": "Entiende las mutaciones semánticas, la validación del esquema completo, la revisión de borradores, la aprobación, el deshacer y los conflictos.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3460,7 +3460,7 @@
     "translationKey": "/cli/ai-authoring/commands-status",
     "locale": "es",
     "title": "Comandos y estado de creación con IA",
-    "description": "Referencia de comandos, estado, prompts ocupados, cola de seguimientos y cancelación.",
+    "description": "Referencia de los comandos del modo IA, la salida de estado, los prompts de ocupado, las peticiones en cola y la cancelación.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3487,7 +3487,7 @@
     "translationKey": "/cli/ai-authoring/getting-started",
     "locale": "es",
     "title": "Primeros pasos con la creación con IA",
-    "description": "Configura un proveedor, selecciona un modelo y completa una primera edición AI revisada.",
+    "description": "Configura un proveedor, selecciona un modelo y completa una primera edición con IA revisada en form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3514,7 +3514,7 @@
     "translationKey": "/cli/ai-authoring/limitations-troubleshooting",
     "locale": "es",
     "title": "Limitaciones y solución de problemas de creación con IA",
-    "description": "Comprende los límites y resuelve fallos de autenticación, modelo, contexto, proveedor, borrador y documentación.",
+    "description": "Conoce los límites de la vista previa y resuelve fallos de autenticación, modelo, contexto, proveedor, borradores y documentación.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3541,7 +3541,7 @@
     "translationKey": "/cli/ai-authoring/overview",
     "locale": "es",
     "title": "Creación con IA",
-    "description": "Genera y edita esquemas form0 mediante lotes de mutaciones revisados y validados.",
+    "description": "Genera y edita esquemas form0 mediante lotes de mutaciones con IA, revisados y validados.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3568,7 +3568,7 @@
     "translationKey": "/cli/ai-authoring/privacy-security",
     "locale": "es",
     "title": "Privacidad y seguridad en la creación con IA",
-    "description": "Comprende la transmisión del esquema, política cloud, consentimiento, almacenamiento y documentación restringida.",
+    "description": "Entiende el envío del esquema completo, la política de nube, el consentimiento, el almacenamiento local y el acceso restringido a la documentación.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3595,7 +3595,7 @@
     "translationKey": "/cli/ai-authoring/providers-models",
     "locale": "es",
     "title": "Proveedores y modelos de IA",
-    "description": "Autentícate con proveedores Pi, selecciona un modelo y conoce la persistencia por esquema.",
+    "description": "Autentícate con proveedores de Pi, selecciona un modelo y entiende la persistencia por esquema.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3757,7 +3757,7 @@
     "translationKey": "/cli/local-development/app-development-servers",
     "locale": "es",
     "title": "Servidores de desarrollo de aplicaciones",
-    "description": "Inicia una aplicación web o Expo configurada junto con la previsualización de form0.",
+    "description": "Inicia una aplicación web o de Expo configurada junto al servidor de vista previa de form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3784,7 +3784,7 @@
     "translationKey": "/cli/local-development/live-preview",
     "locale": "es",
     "title": "Servidor de vista previa en vivo",
-    "description": "Sirve un esquema localmente con previsualización en el navegador.",
+    "description": "Sirve un esquema de formulario en local con vista previa en el navegador y actualizaciones automáticas.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3865,7 +3865,7 @@
     "translationKey": "/cli/reform/sign-in-organization",
     "locale": "es",
     "title": "Iniciar sesión y seleccionar una organización",
-    "description": "Autentica form0-cli con reform y selecciona la organización activa.",
+    "description": "Autentica form0-cli con reform y elige la organización que usan los comandos de sincronización.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3892,7 +3892,7 @@
     "translationKey": "/cli/reform/sync-forms",
     "locale": "es",
     "title": "Sincronizar formularios",
-    "description": "Descarga formularios accesibles de reform al proyecto actual.",
+    "description": "Descarga en el proyecto form0 actual los formularios de reform a los que tienes acceso.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3919,7 +3919,7 @@
     "translationKey": "/cli/schemas/import-export-csv",
     "locale": "es",
     "title": "Importar y exportar CSV",
-    "description": "Mueva las definiciones de schema entre JSON y la representación CSV de CLI.",
+    "description": "Convierte definiciones de esquemas de formulario entre JSON y la representación CSV de la CLI.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3946,7 +3946,7 @@
     "translationKey": "/cli/schemas/load-edit",
     "locale": "es",
     "title": "Cargar y editar esquemas",
-    "description": "Carga un esquema y edítalo con el editor configurado.",
+    "description": "Carga un esquema en la shell interactiva y edítalo con el editor que tengas configurado.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3973,7 +3973,7 @@
     "translationKey": "/cli/schemas/run-values",
     "locale": "es",
     "title": "Ejecutar con valores",
-    "description": "Evalúa un esquema con valores iniciales en JSON o YAML.",
+    "description": "Evalúa un esquema con valores iniciales desde JSON, YAML o un valor JSON en línea.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -4000,7 +4000,7 @@
     "translationKey": "/cli/schemas/validate-preview",
     "locale": "es",
     "title": "Validar y previsualizar",
-    "description": "Comprueba un esquema e inspecciona su estructura desde la línea de comandos.",
+    "description": "Comprueba la validez de un esquema e inspecciona su estructura de campos desde la línea de comandos.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -4027,7 +4027,7 @@
     "translationKey": "/cli/schemas/watch-test",
     "locale": "es",
     "title": "Observar cambios y probar",
-    "description": "Revalide schemas a medida que cambian y ejecutan el script de prueba form0 de un proyecto.",
+    "description": "Vuelve a validar los esquemas cuando cambian y ejecuta el script de pruebas form0 del proyecto.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6818,7 +6818,7 @@
     "translationKey": "/cli/ai-authoring/authoring-workflow",
     "locale": "fr",
     "title": "Flux de création avec IA",
-    "description": "Comprenez les mutations, la validation complète, la vérification, l'approbation et les conflits.",
+    "description": "Comprenez les mutations sémantiques, la validation du schéma complet, la relecture des brouillons, l’approbation, l’annulation et les conflits.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6845,7 +6845,7 @@
     "translationKey": "/cli/ai-authoring/commands-status",
     "locale": "fr",
     "title": "Commandes et état de la création avec IA",
-    "description": "Référence des commandes, de l'état, des invites occupées, de la file et de l'annulation.",
+    "description": "Référence des commandes du mode IA, de la sortie d’état, des invites pendant un traitement, des requêtes en file d’attente et de l’annulation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6872,7 +6872,7 @@
     "translationKey": "/cli/ai-authoring/getting-started",
     "locale": "fr",
     "title": "Prise en main de la création avec IA",
-    "description": "Configurez un fournisseur, choisissez un modèle et réalisez une première modification AI vérifiée.",
+    "description": "Configurez un fournisseur, sélectionnez un modèle et réalisez une première modification form0 par IA, relue avant application.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6899,7 +6899,7 @@
     "translationKey": "/cli/ai-authoring/limitations-troubleshooting",
     "locale": "fr",
     "title": "Limites et résolution des problèmes de création avec IA",
-    "description": "Comprenez les limites et corrigez les erreurs d'authentification, modèle, contexte, fournisseur, brouillon et documentation.",
+    "description": "Comprenez les limites de la préversion et résolvez les échecs liés à l’authentification, au modèle, au contexte, au fournisseur, aux brouillons et à la documentation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6926,7 +6926,7 @@
     "translationKey": "/cli/ai-authoring/overview",
     "locale": "fr",
     "title": "Création avec IA",
-    "description": "Générez et modifiez des schémas form0 avec des lots de mutations validés et approuvés.",
+    "description": "Générez et modifiez des schémas form0 au moyen de lots de mutations d’IA relus et validés.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6953,7 +6953,7 @@
     "translationKey": "/cli/ai-authoring/privacy-security",
     "locale": "fr",
     "title": "Confidentialité et sécurité de la création avec IA",
-    "description": "Comprenez l'envoi du schéma, la politique cloud, le consentement, le stockage et la documentation restreinte.",
+    "description": "Comprenez la transmission du schéma complet, la politique cloud, le consentement, le stockage local et l’accès restreint à la documentation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6980,7 +6980,7 @@
     "translationKey": "/cli/ai-authoring/providers-models",
     "locale": "fr",
     "title": "Fournisseurs et modèles d'IA",
-    "description": "Authentifiez-vous auprès des fournisseurs Pi, choisissez un modèle et comprenez sa persistance.",
+    "description": "Authentifiez-vous auprès des fournisseurs Pi, sélectionnez un modèle et comprenez la persistance par schéma.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7142,7 +7142,7 @@
     "translationKey": "/cli/local-development/app-development-servers",
     "locale": "fr",
     "title": "Serveurs de développement d’applications",
-    "description": "Lancez une application web ou Expo configurée avec l’aperçu form0.",
+    "description": "Lancez une application web ou Expo configurée en parallèle du serveur d’aperçu form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7169,7 +7169,7 @@
     "translationKey": "/cli/local-development/live-preview",
     "locale": "fr",
     "title": "Serveur d'aperçu en direct",
-    "description": "Servez un schéma localement avec un aperçu dans le navigateur.",
+    "description": "Servez un schéma de formulaire en local avec un aperçu dans le navigateur et des mises à jour automatiques.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7250,7 +7250,7 @@
     "translationKey": "/cli/reform/sign-in-organization",
     "locale": "fr",
     "title": "Se connecter et choisir une organisation",
-    "description": "Authentifiez form0-cli auprès de reform et sélectionnez l’organisation active.",
+    "description": "Authentifiez form0-cli auprès de reform et choisissez l’organisation utilisée par les commandes de synchronisation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7277,7 +7277,7 @@
     "translationKey": "/cli/reform/sync-forms",
     "locale": "fr",
     "title": "Synchroniser des formulaires",
-    "description": "Récupérez les formulaires reform accessibles dans le projet actuel.",
+    "description": "Récupérez dans le projet form0 courant les formulaires reform auxquels vous avez accès.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7303,8 +7303,8 @@
     "pathname": "/fr/cli/schemas/import-export-csv",
     "translationKey": "/cli/schemas/import-export-csv",
     "locale": "fr",
-    "title": "Importer et exporter des fichiers CSV",
-    "description": "Déplacer les définitions schema entre JSON et la représentation CSV du CLI.",
+    "title": "Importer et exporter en CSV",
+    "description": "Convertissez les définitions de schémas de formulaire entre JSON et la représentation CSV de la CLI.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7331,7 +7331,7 @@
     "translationKey": "/cli/schemas/load-edit",
     "locale": "fr",
     "title": "Charger et modifier des schémas",
-    "description": "Chargez un schéma et modifiez-le avec l’éditeur configuré.",
+    "description": "Chargez un schéma dans le shell interactif et modifiez-le avec l’éditeur configuré.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7358,7 +7358,7 @@
     "translationKey": "/cli/schemas/run-values",
     "locale": "fr",
     "title": "Exécuter avec des valeurs",
-    "description": "Évaluez un schéma avec des valeurs initiales JSON ou YAML.",
+    "description": "Évaluez un schéma avec des valeurs initiales issues de JSON, de YAML ou d’une valeur JSON en ligne.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7385,7 +7385,7 @@
     "translationKey": "/cli/schemas/validate-preview",
     "locale": "fr",
     "title": "Valider et prévisualiser",
-    "description": "Vérifiez un schéma et inspectez sa structure depuis la ligne de commande.",
+    "description": "Vérifiez la validité d’un schéma et inspectez sa structure de champs en ligne de commande.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7412,7 +7412,7 @@
     "translationKey": "/cli/schemas/watch-test",
     "locale": "fr",
     "title": "Surveiller et tester",
-    "description": "Revalider schemas à mesure qu'ils changent et exécuter le script de test form0 d'un projet.",
+    "description": "Revalidez les schémas à chaque modification et exécutez le script de test form0 du projet.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10294,7 +10294,7 @@
     "translationKey": "/cli/ai-authoring/authoring-workflow",
     "locale": "it",
     "title": "Flusso di creazione con IA",
-    "description": "Comprendi mutazioni, convalida completa, revisione, approvazione, annullamento e conflitti.",
+    "description": "Comprendi le mutazioni semantiche, la validazione dell'intero schema, la revisione delle bozze, l'approvazione, l'annullamento e i conflitti.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10321,7 +10321,7 @@
     "translationKey": "/cli/ai-authoring/commands-status",
     "locale": "it",
     "title": "Comandi e stato della creazione con IA",
-    "description": "Riferimento per comandi, stato, prompt occupati, coda dei follow-up e annullamento.",
+    "description": "Riferimento dei comandi della modalità IA, dell'output di stato, dei prompt durante l'elaborazione, delle richieste in coda e dell'annullamento.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10348,7 +10348,7 @@
     "translationKey": "/cli/ai-authoring/getting-started",
     "locale": "it",
     "title": "Per iniziare con la creazione con IA",
-    "description": "Configura un provider, seleziona un modello e completa una prima modifica AI verificata.",
+    "description": "Configura un provider, seleziona un modello e completa una prima modifica form0 con IA, revisionata prima di applicarla.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10375,7 +10375,7 @@
     "translationKey": "/cli/ai-authoring/limitations-troubleshooting",
     "locale": "it",
     "title": "Limiti e risoluzione dei problemi della creazione con IA",
-    "description": "Comprendi i limiti e risolvi errori di autenticazione, modello, contesto, provider, bozza e documentazione.",
+    "description": "Comprendi i limiti dell'anteprima e risolvi i problemi di autenticazione, modello, contesto, provider, bozze e documentazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10402,7 +10402,7 @@
     "translationKey": "/cli/ai-authoring/overview",
     "locale": "it",
     "title": "Creazione con IA",
-    "description": "Genera e modifica schemi form0 con batch di mutazioni convalidati e approvati.",
+    "description": "Genera e modifica schemi form0 tramite batch di mutazioni IA revisionati e validati.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10429,7 +10429,7 @@
     "translationKey": "/cli/ai-authoring/privacy-security",
     "locale": "it",
     "title": "Privacy e sicurezza nella creazione con IA",
-    "description": "Comprendi invio dello schema, politica cloud, consenso, archiviazione e documentazione limitata.",
+    "description": "Comprendi l'invio dell'intero schema, la policy cloud, il consenso, l'archiviazione locale e l'accesso limitato alla documentazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10455,7 +10455,7 @@
     "pathname": "/it/cli/ai-authoring/providers-models",
     "translationKey": "/cli/ai-authoring/providers-models",
     "locale": "it",
-    "title": "Provider e modelli AI",
+    "title": "Provider e modelli di IA",
     "description": "Autenticati con i provider Pi, seleziona un modello e comprendi la persistenza per schema.",
     "indexable": true,
     "status": "published",
@@ -10618,7 +10618,7 @@
     "translationKey": "/cli/local-development/app-development-servers",
     "locale": "it",
     "title": "Server di sviluppo delle applicazioni",
-    "description": "Avvia un’applicazione web o Expo configurata insieme all’anteprima form0.",
+    "description": "Avvia un'applicazione web o Expo configurata insieme al server di anteprima di form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10645,7 +10645,7 @@
     "translationKey": "/cli/local-development/live-preview",
     "locale": "it",
     "title": "Server di anteprima",
-    "description": "Servi uno schema localmente con anteprima nel browser.",
+    "description": "Servi uno schema di modulo in locale con anteprima nel browser e aggiornamenti automatici.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10726,7 +10726,7 @@
     "translationKey": "/cli/reform/sign-in-organization",
     "locale": "it",
     "title": "Accedere e selezionare un’organizzazione",
-    "description": "Autentica form0-cli con reform e seleziona l’organizzazione attiva.",
+    "description": "Autentica form0-cli con reform e scegli l'organizzazione usata dai comandi di sincronizzazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10753,7 +10753,7 @@
     "translationKey": "/cli/reform/sync-forms",
     "locale": "it",
     "title": "Sincronizzare i moduli",
-    "description": "Scarica nel progetto corrente i moduli reform accessibili.",
+    "description": "Scarica nel progetto form0 corrente i moduli reform a cui hai accesso.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10779,8 +10779,8 @@
     "pathname": "/it/cli/schemas/import-export-csv",
     "translationKey": "/cli/schemas/import-export-csv",
     "locale": "it",
-    "title": "Importazione ed esportazione CSV",
-    "description": "Sposta le definizioni schema tra JSON e la rappresentazione CSV di CLI.",
+    "title": "Importare ed esportare CSV",
+    "description": "Converti le definizioni degli schemi dei moduli tra JSON e la rappresentazione CSV della CLI.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10807,7 +10807,7 @@
     "translationKey": "/cli/schemas/load-edit",
     "locale": "it",
     "title": "Caricare e modificare gli schemi",
-    "description": "Carica uno schema e modificalo con l’editor configurato.",
+    "description": "Carica uno schema nella shell interattiva e modificalo con l'editor configurato.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10834,7 +10834,7 @@
     "translationKey": "/cli/schemas/run-values",
     "locale": "it",
     "title": "Eseguire con valori",
-    "description": "Valuta uno schema con valori iniziali JSON o YAML.",
+    "description": "Valuta uno schema con valori iniziali da JSON, YAML o da un valore JSON inline.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10861,7 +10861,7 @@
     "translationKey": "/cli/schemas/validate-preview",
     "locale": "it",
     "title": "Validare e visualizzare l’anteprima",
-    "description": "Controlla uno schema e ispeziona la sua struttura dalla riga di comando.",
+    "description": "Verifica la validità di uno schema e ispeziona la sua struttura dei campi dalla riga di comando.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10888,7 +10888,7 @@
     "translationKey": "/cli/schemas/watch-test",
     "locale": "it",
     "title": "Monitorare e testare",
-    "description": "Riconvalidare schemas mentre cambiano ed eseguono lo script di test form0 di un progetto.",
+    "description": "Rivalida gli schemi quando cambiano ed esegui lo script di test form0 del progetto.",
     "indexable": true,
     "status": "published",
     "alternates": [
