@@ -1,22 +1,42 @@
 ---
-title: Sicurezza e sandboxing
-description: Modalità di sicurezza di espressione in form0-core.
+title: Sicurezza degli schemi eseguibili
+description: Confini di fiducia e controlli di validazione delle espressioni in form0-core.
 ---
 
 <PageBadges />
 
-Le espressioni vengono valutate da form0-core in una modalità di sicurezza configurabile.
+Gli schemi form0 possono contenere espressioni JavaScript e script di eventi imperativi. Si tratta
+di codice eseguibile, quindi gli schemi che li contengono devono provenire da autori attendibili.
+
+## Modello di fiducia
+
+Le modalità `SAFE` e `CUSTOM` forniscono controlli di validazione e configurazione. Non sono ambienti
+isolati e non devono essere utilizzate come confine di sicurezza per eseguire schemi ostili in un
+browser, server, CLI o ambiente mobile con privilegi.
+
+Le applicazioni devono autenticare gli autori degli schemi, autorizzare le modifiche e isolare
+l’esecuzione quando gli schemi non sono attendibili.
 
 ## Modalità
 
-- `TRUSTED`: Accesso completo a JavaScript (predefinito).
-- `SAFE`: Globali limitati e modelli bloccati.
-- `CUSTOM`: Regole definite dall'utente.
+- `TRUSTED`: esegue JavaScript senza le regole di validazione aggiuntive di `SAFE`. È la modalità
+  predefinita.
+- `SAFE`: rifiuta i pattern testuali configurati e fornisce un insieme configurato di globali al
+  contesto dell’espressione.
+- `CUSTOM`: utilizza una configurazione di validazione e contesto definita dall’applicazione.
 
-## Modalità provvisoria predefinita
+Tutte e tre le modalità utilizzano l’ambiente JavaScript dell’applicazione host. Nessuna fornisce
+isolamento del processo, dell’origine del browser, del file system o della rete.
 
-Modalità provvisoria blocchi modelli come `eval`, `Function`, `window`, `document`, `process`, `require`, e
-altri globali non sicuri. Inoltre limita il tempo di esecuzione e la profondità dello stack di chiamata.
+## Valori predefiniti della modalità SAFE
+
+La modalità `SAFE` rifiuta le espressioni che contengono pattern configurati come `eval`, `Function`,
+`window`, `document`, `process`, `require` e altri nomi sensibili. Costruisce inoltre il contesto
+dell’espressione con un elenco configurato di globali consentiti.
+
+Si tratta di controlli difensivi per flussi di lavoro attendibili, non di garanzie che JavaScript
+ostile non possa aggirarli. In particolare, la corrispondenza dei pattern non è un meccanismo di
+isolamento.
 
 ## Utilizzo di una configurazione di sicurezza
 
@@ -29,4 +49,18 @@ const engine = createFormEngine({
 })
 ```
 
-La configurazione di sicurezza viene utilizzata per i campi calcolati e il codice evento.
+La configurazione di sicurezza viene applicata ai campi calcolati e al codice degli eventi.
+
+## Schemi non attendibili
+
+Se utenti che non sono autori attendibili possono controllare le espressioni o gli script degli
+eventi, esegui tali schemi all’interno di un confine di isolamento adeguato ai privilegi e al modello
+di minaccia dell’applicazione. Non affidarti esclusivamente alle modalità `SAFE` o `CUSTOM`.
+
+## Segnalare una vulnerabilità
+
+Segnala privatamente le presunte violazioni dei confini tramite la
+[politica di sicurezza di form0-core](https://github.com/paqu-io/form0-core/security/policy). Le
+[analisi di sicurezza](https://github.com/paqu-io/form0-core/tree/main/analyses) pubbliche del
+repository descrivono il modello di minaccia, le limitazioni note e il lavoro di isolamento previsto
+per i maintainer.

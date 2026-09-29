@@ -73,7 +73,7 @@
     "builtinsOverview": "Aperçu des fonctions",
     "overview": "Aperçu",
     "aiMetadata": "Métadonnées IA",
-    "securityAndSandboxing": "Sécurité et isolation",
+    "executableSchemaSecurity": "Sécurité des schémas exécutables",
     "outputAndRecords": "Sortie et enregistrements"
   },
   "language": {

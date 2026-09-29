@@ -1,22 +1,43 @@
 ---
-title: Sécurité et sandboxing
-description: Modes de sécurité d'expression dans form0-core.
+title: Sécurité des schémas exécutables
+description: Limites de confiance et contrôles de validation des expressions dans form0-core.
 ---
 
 <PageBadges />
 
-Les expressions sont évaluées par form0-core dans un mode de sécurité configurable.
+Les schémas form0 peuvent contenir des expressions JavaScript et des scripts d’événements
+impératifs. Il s’agit de code exécutable : les schémas qui en contiennent doivent donc provenir
+d’auteurs de confiance.
+
+## Modèle de confiance
+
+Les modes `SAFE` et `CUSTOM` fournissent des contrôles de validation et de configuration. Ce ne sont
+pas des environnements isolés et ils ne doivent pas servir de limite de sécurité pour exécuter des
+schémas hostiles dans un navigateur, un serveur, une CLI ou un environnement mobile privilégié.
+
+Les applications doivent authentifier les auteurs des schémas, autoriser les modifications et
+isoler l’exécution lorsque les schémas ne sont pas fiables.
 
 ## Modes
 
-- `TRUSTED`: Accès JavaScript complet (par défaut).
-- `SAFE`: Globales restreintes et motifs bloqués.
-- `CUSTOM`: Règles définies par l'utilisateur.
+- `TRUSTED` : exécute JavaScript sans les règles de validation supplémentaires de `SAFE`. Il s’agit
+  du mode par défaut.
+- `SAFE` : rejette les motifs textuels configurés et fournit un ensemble configuré de globales au
+  contexte de l’expression.
+- `CUSTOM` : utilise une configuration de validation et de contexte définie par l’application.
 
-## Mode sans échec par défaut
+Les trois modes utilisent l’environnement JavaScript de l’application hôte. Aucun ne fournit
+d’isolation du processus, de l’origine du navigateur, du système de fichiers ou du réseau.
 
-Le mode sans échec bloque des modèles comme `eval`, `Function`, `window`, `document`, `process`, `require`, et
-Il limite également le temps d'exécution et la profondeur de la pile d'appels.
+## Valeurs par défaut du mode SAFE
+
+Le mode `SAFE` rejette les expressions contenant des motifs configurés comme `eval`, `Function`,
+`window`, `document`, `process`, `require` et d’autres noms sensibles. Il construit également le
+contexte de l’expression avec une liste configurée de globales autorisées.
+
+Il s’agit de contrôles défensifs destinés aux flux de travail fiables, et non d’une garantie que du
+JavaScript hostile ne peut pas les contourner. La recherche de motifs, notamment, n’est pas un
+mécanisme d’isolation.
 
 ## Utiliser une configuration de sécurité
 
@@ -29,4 +50,18 @@ const engine = createFormEngine({
 })
 ```
 
-La configuration de sécurité est utilisée pour les champs calculés et le code d'événement.
+La configuration de sécurité s’applique aux champs calculés et au code des événements.
+
+## Schémas non fiables
+
+Si des utilisateurs qui ne sont pas des auteurs de confiance peuvent contrôler les expressions ou
+les scripts d’événements, exécutez ces schémas dans une limite d’isolation adaptée aux privilèges et
+au modèle de menace de votre application. Ne vous fiez pas uniquement aux modes `SAFE` ou `CUSTOM`.
+
+## Signaler une vulnérabilité
+
+Signalez toute violation présumée d’une limite en privé via la
+[politique de sécurité de form0-core](https://github.com/paqu-io/form0-core/security/policy). Les
+[analyses de sécurité](https://github.com/paqu-io/form0-core/tree/main/analyses) publiques du dépôt
+présentent le modèle de menace, les limites connues et les travaux d’isolation prévus pour les
+mainteneurs.

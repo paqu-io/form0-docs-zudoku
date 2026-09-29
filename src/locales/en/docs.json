@@ -279,7 +279,7 @@
       "title": "AI metadata"
     },
     "security": {
-      "title": "Security and sandboxing"
+      "title": "Executable schema security"
     },
     "output-records": {
       "title": "Output and records"

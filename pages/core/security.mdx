@@ -1,22 +1,41 @@
 ---
-title: Security and sandboxing
-description: Expression security modes in form0-core.
+title: Executable schema security
+description: Trust boundaries and expression validation controls in form0-core.
 ---
 
 <PageBadges />
 
-Expressions are evaluated by form0-core in a configurable security mode.
+form0 schemas can contain JavaScript expressions and imperative event scripts. These are executable
+code, so schemas that contain them must come from authors you trust.
+
+## Trust model
+
+`SAFE` and `CUSTOM` modes provide validation and configuration controls. They are not security
+sandboxes and must not be used as the boundary for running adversarial schemas in a privileged
+browser, server, CLI, or mobile context.
+
+Applications are responsible for authenticating schema authors, authorizing schema changes, and
+isolating execution when schemas cannot be trusted.
 
 ## Modes
 
-- `TRUSTED`: Full JavaScript access (default).
-- `SAFE`: Restricted globals and blocked patterns.
-- `CUSTOM`: User-defined rules.
+- `TRUSTED`: Executes JavaScript without the additional `SAFE` validation rules. This is the
+  default.
+- `SAFE`: Rejects configured text patterns and supplies a configured set of globals to the
+  expression context.
+- `CUSTOM`: Uses application-defined validation and context configuration.
+
+All three modes use the JavaScript runtime of the host application. None of them provides process,
+browser-origin, filesystem, or network isolation.
 
 ## Safe mode defaults
 
-Safe mode blocks patterns like `eval`, `Function`, `window`, `document`, `process`, `require`, and
-other unsafe globals. It also limits execution time and call stack depth.
+Safe mode rejects expressions containing configured patterns such as `eval`, `Function`, `window`,
+`document`, `process`, `require`, and other sensitive names. It also constructs the expression
+context with a configured list of allowed globals.
+
+These are defensive checks for trusted workflows, not guarantees that hostile JavaScript cannot
+bypass them. In particular, pattern matching is not an isolation mechanism.
 
 ## Using a security config
 
@@ -29,4 +48,17 @@ const engine = createFormEngine({
 })
 ```
 
-Security config is used for calculated fields and event code.
+Security configuration is applied to calculated fields and event code.
+
+## Untrusted schemas
+
+If users who are not trusted schema authors can control expressions or event scripts, execute those
+schemas inside an isolation boundary appropriate to your application's privileges and threat model.
+Do not rely on `SAFE` or `CUSTOM` mode alone.
+
+## Reporting a vulnerability
+
+Report suspected boundary violations privately through the
+[form0-core security policy](https://github.com/paqu-io/form0-core/security/policy). The repository's
+public [security analyses](https://github.com/paqu-io/form0-core/tree/main/analyses) contain the
+maintainer threat model, known limitations, and planned isolation work.

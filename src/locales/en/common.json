@@ -73,7 +73,7 @@
     "builtinsOverview": "Builtins overview",
     "overview": "Overview",
     "aiMetadata": "AI metadata",
-    "securityAndSandboxing": "Security and sandboxing",
+    "executableSchemaSecurity": "Executable schema security",
     "outputAndRecords": "Output and records"
   },
   "language": {

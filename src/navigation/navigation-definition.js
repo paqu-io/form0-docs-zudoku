@@ -191,7 +191,7 @@ const documentationItems = [
       doc("core/ai-metadata", "AI metadata", {
         badge: { label: "Preview", color: "yellow" },
       }),
-      doc("core/security", "Security and sandboxing"),
+      doc("core/security", "Executable schema security"),
       doc("core/output-records", "Output and records"),
     ],
     { icon: "nav-cpu" },
