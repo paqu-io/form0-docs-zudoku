@@ -1,6 +1,6 @@
 ---
 title: Eventos
-description: Funciones integradas disponibles en eventos del formulario.
+description: Builtins disponibles en los eventos del formulario.
 ---
 
 <PageBadges />
@@ -8,9 +8,9 @@ description: Funciones integradas disponibles en eventos del formulario.
 import { Badge } from "zudoku/ui/Badge"
 
 Los eventos se definen en `form.events.code` y se evalúan durante la ejecución. Usa `ON` para
-registrar controladores y `SETVALUE`/`ALERT` para interactuar con el formulario.
+registrar manejadores y `SETVALUE`/`ALERT` para interactuar con el formulario.
 
-Al crear el motor, `events.code` se ejecuta una vez para registrar los controladores. Esto no dispara
+Al crear el motor, `events.code` se ejecuta una vez para registrar los manejadores. Esto no dispara
 ningún evento. Un evento solo se ejecuta cuando el host llama a `engine.trigger(...)` o cuando un
 binding lo dispara por una interacción del usuario o una transición del ciclo de vida de la aplicación.
 
@@ -37,13 +37,13 @@ eventos desde sus componentes `FormRenderer`:
 | `change`      | Después de que el usuario cambie un campo del registro principal |
 
 Los editores de filas repetibles no disparan estos eventos automáticamente. En particular, abrir
-una fila no vuelve a ejecutar los controladores `load-record` o `edit-record` del registro principal,
+una fila no vuelve a ejecutar los manejadores `load-record` o `edit-record` del registro principal,
 y cambiar un campo de la fila no dispara `change`. Por ahora, la aplicación controla los eventos del
 ciclo de vida de los repetibles.
 
 El registro del núcleo también acepta `new-record`, `save-record`, `validate-record`, `blur`,
 `focus`, `click` y los eventos `*-repeatable`. Estos dependen del ciclo de vida y de decisiones de
-interfaz propias de cada aplicación, por lo que los renderizadores oficiales actualmente no los
+interfaz propias de cada aplicación, por lo que los renderers oficiales actualmente no los
 disparan automáticamente. Una aplicación que integre `form0-core` directamente puede dispararlos
 mediante `engine.trigger(eventType, fieldKey, metadata)` en el punto adecuado de su flujo.
 
@@ -51,7 +51,7 @@ La activación automática de eventos adicionales puede estudiarse individualmen
 implícita por el hecho de que un evento exista en el núcleo. Los esquemas solo deben depender de los
 eventos que su aplicación host o binding documenten como compatibles.
 
-Registrar uno de estos controladores con `ON` no convierte el evento en automático.
+Registrar uno de estos manejadores con `ON` no convierte el evento en automático.
 
 ## Builtins de eventos
 

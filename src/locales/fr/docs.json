@@ -192,7 +192,7 @@
     },
     "builtins": {
       "index": {
-        "title": "Vue d’ensemble des fonctions intégrées"
+        "title": "Vue d’ensemble des builtins"
       },
       "calculations-expressions": {
         "title": "Calculs et expressions",
