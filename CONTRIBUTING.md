@@ -66,6 +66,39 @@ Keep localized pages structurally aligned with English:
 The parity validator enforces the mechanical parts of this contract. Reviewers still need to
 assess whether a translation is accurate, natural, and complete.
 
+## Translation glossary
+
+Use these terms in every localized page, including titles, descriptions, and navigation labels.
+When a recurring term is not listed, follow the reviewed pages and propose adding it here.
+
+These rules apply to prose. Inline code such as `schema` or `load-record` stays unchanged.
+
+### Translated terms
+
+| English    | Spanish    | French         | Italian |
+| ---------- | ---------- | -------------- | ------- |
+| schema     | esquema    | schéma         | schema  |
+| form       | formulario | formulaire     | modulo  |
+| field      | campo      | champ          | campo   |
+| record     | registro   | enregistrement | record  |
+| submission | envío      | soumission     | invio   |
+
+Italian keeps "record" (il record, i record), as is usual in Italian technical writing.
+
+### Terms kept in English
+
+renderer, binding, host, starter, snapshot, worker, builtin.
+
+- Use them as masculine nouns in all three languages.
+- In Spanish and French, add `-s` for the plural (los renderers, les bindings). In Italian, the
+  plural does not change (i renderer, i binding).
+- Used as modifiers, they follow the noun: la aplicación host, l’application host, l’applicazione
+  host; aplicaciones starter, applications starter, app starter.
+- Do not replace them with a native equivalent: write renderers, not renderizadores or rendus;
+  builtins, not funciones integradas.
+- Translate the adjective "built-in" when it describes another noun: built-in renderers becomes
+  renderers integrados, renderers intégrés, and renderer integrati.
+
 ## Diagrams
 
 Diagrams are hand-written SVG React components, so they are prerendered into the HTML, follow the
