@@ -1,66 +1,66 @@
 ---
-title: Objet du formulaire
-description: Attributs schema de haut niveau et métadonnées de formulaire.
+title: Objet formulaire
+description: Attributs de premier niveau du schéma et métadonnées du formulaire.
 ---
 
 <PageBadges />
 
 import { Callout } from "zudoku/ui/Callout"
 
-Chaque schema commence par un objet `form`. Il définit les métadonnées, les champs spéciaux et les événements.
+Tout schéma commence par un objet `form`, qui définit les métadonnées, les champs spéciaux et les événements.
 
 ## Attributs
 
-<Callout type="info" title="Attributs au niveau de l’application">
-  Les attributs marqués ✓ dans la colonne **Niveau application** sont des métadonnées de niveau
-  application qui ne sont pas traitées directement par le moteur. Ils peuvent être utilisés lors de
-  l'intégration avec le produit SaaS [reform](https://reformapp.io) ou lors de la création de
-  fonctionnalités similaires dans votre propre application.
+<Callout type="info" title="Attributs propres à l'application">
+  Les attributs marqués d'un ✓ dans la colonne **Application** sont des métadonnées propres à
+  l'application, que le moteur ne traite pas directement. Vous pouvez les utiliser pour une
+  intégration avec le produit SaaS [reform](https://reformapp.io) ou pour créer des fonctionnalités
+  similaires dans votre propre application.
 </Callout>
 
-| Attribut                |  Type   | Requis | Niveau application | Notes                                                                                                                                  |
-| ----------------------- | :-----: | :----: | :----------------: | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`                  | string  |   ✓    |                    | Nom de forme favorable à l'homme.                                                                                                      |
-| `description`           | string  |        |                    | Description du formulaire.                                                                                                             |
-| `id`                    | string  |   ✓    |                    | Identifiant de formulaire unique.                                                                                                      |
-| `record_count`          | numéro  |        |         ✓          | Comptoir opérationnel appartenant à la plate-forme. Nombre d'enregistrements dans le formulaire.                                       |
-| `record_last_change_at` | string  |        |         ✓          | Compteur opérationnel appartenant à la plate-forme. Dernière date/heure de changement d'enregistrement (ISO 8601).                     |
-| `form_created_at`       | string  |        |         ✓          | Date/heure de création du formulaire (ISO 8601).                                                                                       |
-| `form_updated_at`       | string  |        |         ✓          | Date/heure de la dernière mise à jour du formulaire (ISO 8601).                                                                        |
-| `form_created_by`       | string  |        |         ✓          | L'utilisateur qui a créé le formulaire.                                                                                                |
-| `form_updated_by`       | string  |        |         ✓          | Utilisateur qui a mis à jour le formulaire.                                                                                            |
-| `status`                | string  |        |         ✓          | Statut du formulaire, généralement `active` ou `inactive`.                                                                             |
-| `version`               | string  |        |         ✓          | Version schema appartenant à la plateforme en option. form0-core ne l'incrémente pas.                                                  |
-| `main_org_id`           | string  |        |         ✓          | Identifiant de l'organisation principale.                                                                                              |
-| `main_org_metadata`     |  objet  |        |         ✓          | Principaux champs de métadonnées de l'organisation.                                                                                    |
-| `sub_org_id`            | string  |        |         ✓          | ID de la sous-organisation.                                                                                                            |
-| `sub_org_metadata`      |  objet  |        |         ✓          | Champs de métadonnées des sous-organisations.                                                                                          |
-| `project_id`            | string  |        |         ✓          | ID du projet.                                                                                                                          |
-| `project_metadata`      |  objet  |        |         ✓          | Champs de métadonnées du projet.                                                                                                       |
-| `ai`                    |  objet  |        |                    | Métadonnées AI pour le guidage au niveau du formulaire (voir [Métadonnées AI](/fr/core/ai-metadata)).                                  |
-| `status_field`          |  objet  |   ✓    |                    | Définition des champs de statut spécial (voir [Champs méta](/fr/core/fields/meta-fields#statusfield)).                                 |
-| `title_field`           |  objet  |   ✓    |                    | Définition de champ de titre spécial (voir [Champs méta](/fr/core/fields/meta-fields#titlefield)).                                     |
-| `bounding_box`          | tableau |        |         ✓          | `[min_lat, min_lng, max_lat, max_lng]` contenant tous les enregistrements.                                                             |
-| `location_enabled`      | booléen |        |         ✓          | Permet la capture d'emplacement.                                                                                                       |
-| `location_required`     | booléen |        |         ✓          | Nécessite des données de localisation lorsqu'elles sont activées.                                                                      |
-| `image`                 | string  |        |         ✓          | URL pour l'icône de formulaire (original).                                                                                             |
-| `image_thumbnail`       | string  |        |         ✓          | URL pour icône miniature (160x160 px).                                                                                                 |
-| `image_small`           | string  |        |         ✓          | URL pour petite icône (320x320 px).                                                                                                    |
-| `image_large`           | string  |        |         ✓          | URL pour grande icône (640x640 px).                                                                                                    |
-| `events`                |  objet  |        |                    | Bloc de code d'événement (`events.code`).                                                                                              |
-| `form_links`            |  objet  |        |                    | Liens vers/depuis d'autres formulaires (utilisés avec `FormLinkField`, voir [Champs méta](/fr/core/fields/meta-fields#formlinkfield)). |
-| `elements`              | tableau |   ✓    |                    | Champs de formulaire et conteneurs (voir [Éléments](/fr/core/schema/elements)).                                                        |
+| Attribut                |  Type   | Obligatoire | Application | Remarques                                                                                                                                 |
+| ----------------------- | :-----: | :---------: | :---------: | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`                  | string  |      ✓      |             | Nom lisible du formulaire.                                                                                                                |
+| `description`           | string  |             |             | Description du formulaire.                                                                                                                |
+| `id`                    | string  |      ✓      |             | Identifiant unique du formulaire.                                                                                                         |
+| `record_count`          | number  |             |      ✓      | Compteur opérationnel géré par la plateforme. Nombre d'enregistrements du formulaire.                                                     |
+| `record_last_change_at` | string  |             |      ✓      | Compteur opérationnel géré par la plateforme. Date et heure de la dernière modification d'un enregistrement (ISO 8601).                   |
+| `form_created_at`       | string  |             |      ✓      | Date et heure de création du formulaire (ISO 8601).                                                                                       |
+| `form_updated_at`       | string  |             |      ✓      | Date et heure de la dernière mise à jour du formulaire (ISO 8601).                                                                        |
+| `form_created_by`       | string  |             |      ✓      | Utilisateur qui a créé le formulaire.                                                                                                     |
+| `form_updated_by`       | string  |             |      ✓      | Dernier utilisateur à avoir mis à jour le formulaire.                                                                                     |
+| `status`                | string  |             |      ✓      | Statut du formulaire, généralement `active` ou `inactive`.                                                                                |
+| `version`               | string  |             |      ✓      | Version facultative du schéma gérée par la plateforme. form0-core ne l'incrémente pas.                                                    |
+| `main_org_id`           | string  |             |      ✓      | ID de l'organisation principale.                                                                                                          |
+| `main_org_metadata`     | object  |             |      ✓      | Champs de métadonnées de l'organisation principale.                                                                                       |
+| `sub_org_id`            | string  |             |      ✓      | ID de la sous-organisation.                                                                                                               |
+| `sub_org_metadata`      | object  |             |      ✓      | Champs de métadonnées de la sous-organisation.                                                                                            |
+| `project_id`            | string  |             |      ✓      | ID du projet.                                                                                                                             |
+| `project_metadata`      | object  |             |      ✓      | Champs de métadonnées du projet.                                                                                                          |
+| `ai`                    | object  |             |             | Métadonnées d'IA pour guider au niveau du formulaire (voir [Métadonnées d'IA](/fr/core/ai-metadata)).                                     |
+| `status_field`          | object  |      ✓      |             | Définition du champ spécial de statut (voir [Champs méta](/fr/core/fields/meta-fields#statusfield)).                                      |
+| `title_field`           | object  |      ✓      |             | Définition du champ spécial de titre (voir [Champs méta](/fr/core/fields/meta-fields#titlefield)).                                        |
+| `bounding_box`          |  array  |             |      ✓      | `[min_lat, min_lng, max_lat, max_lng]` englobant tous les enregistrements.                                                                |
+| `location_enabled`      | boolean |             |      ✓      | Active la capture de la position.                                                                                                         |
+| `location_required`     | boolean |             |      ✓      | Exige des données de localisation lorsque l'option est activée.                                                                           |
+| `image`                 | string  |             |      ✓      | URL de l'icône du formulaire (originale).                                                                                                 |
+| `image_thumbnail`       | string  |             |      ✓      | URL de l'icône miniature (160x160 px).                                                                                                    |
+| `image_small`           | string  |             |      ✓      | URL de la petite icône (320x320 px).                                                                                                      |
+| `image_large`           | string  |             |      ✓      | URL de la grande icône (640x640 px).                                                                                                      |
+| `events`                | object  |             |             | Bloc de code des événements (`events.code`).                                                                                              |
+| `form_links`            | object  |             |             | Liens vers et depuis d'autres formulaires (utilisés avec `FormLinkField`, voir [Champs méta](/fr/core/fields/meta-fields#formlinkfield)). |
+| `elements`              |  array  |      ✓      |             | Champs et conteneurs du formulaire (voir [Éléments](/fr/core/schema/elements)).                                                           |
 
-Pour des informations détaillées sur chaque attribut, y compris les valeurs par défaut et les choix, voir [Attributs du formulaire](/fr/core/schema/form-attributes).
+Pour le détail de chaque attribut, y compris les valeurs par défaut et les choix possibles, voir [Attributs du formulaire](/fr/core/schema/form-attributes).
 
-## Domaines spéciaux
+## Champs spéciaux
 
-`status_field` et `title_field` sont définis au niveau supérieur, pas dans `elements`. Ils sont
-Voir [Champs méta](/fr/core/fields/meta-fields) pour plus de détails.
+`status_field` et `title_field` sont définis au premier niveau, et non dans `elements`. Ils sont
+validés comme les types de champs standard, mais leur comportement est fixe. Voir [Champs méta](/fr/core/fields/meta-fields) pour plus de détails.
 
 ## Événements
 
-`events.code` contient des expressions natives et JavaScript qui enregistrent les gestionnaires d'événements en utilisant des natifs tels que
+`events.code` contient des builtins et des expressions JavaScript qui enregistrent des gestionnaires d'événements avec des builtins comme
 `ON`, `OFF`, `ALERT`, `SETVALUE`, etc. Voir [Événements](/fr/core/builtins/events-overview) pour plus de détails.
 
 ## Exemple

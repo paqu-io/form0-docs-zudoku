@@ -7,46 +7,46 @@ description: Atributos compartidos por la mayoría de los tipos de campos.
 
 import { Callout } from "zudoku/ui/Callout"
 
-La mayoría de los tipos de campo comparten un conjunto de atributos principales.
-Aquí.
+La mayoría de los tipos de campo comparten un conjunto de atributos básicos. Las páginas de cada campo
+describen todo lo que no aparece aquí.
 
 ## Identidad
 
 - `type`: Nombre del tipo de campo (por ejemplo, `TextField`).
-- `key`: Identificador único estable. Prefiera claves para condiciones y referencias.
-- `data_name`: Identificador de valor utilizado en el estado del motor.
-- `label`: Etiqueta mostrada a los usuarios.
+- `key`: identificador único y estable. Usa preferentemente claves en condiciones y referencias.
+- `data_name`: identificador del valor en el estado del motor.
+- `label`: etiqueta que se muestra a los usuarios.
 
 ## Descripción y visualización
 
-- `description`: Texto de ayuda opcional.
+- `description`: texto de ayuda opcional.
 - `description_mode`: `default` o `subtext`.
-- `display`: Estilo visual, varía según el tipo de campo.
+- `display`: estilo visual; varía según el tipo de campo.
 
-## Visibilidad, requerida y de solo lectura
+## Visibilidad, obligatoriedad y solo lectura
 
-- `visible`: Visibilidad de base (booleana).
-- `visible_conditions`: Objeto de condición; anula `visible` cuando está presente.
-- `required`: Requisito básico (booleano).
-- `required_conditions`: Objeto de condición; anula `required` cuando está presente.
-- `read_only`: Bandera de solo lectura base (booleano).
-- `read_only_conditions`: Objeto de condición; anula `read_only` cuando está presente.
+- `visible`: visibilidad base (booleano).
+- `visible_conditions`: objeto de condición; si está presente, prevalece sobre `visible`.
+- `required`: obligatoriedad base (booleano).
+- `required_conditions`: objeto de condición; si está presente, prevalece sobre `required`.
+- `read_only`: indicador base de solo lectura (booleano).
+- `read_only_conditions`: objeto de condición; si está presente, prevalece sobre `read_only`.
 
-## Valor por defecto
+## Valor predeterminado
 
-- `default_value`: Valor inicial para el campo (se aplican reglas específicas de tipo).
+- `default_value`: valor inicial del campo (se aplican reglas específicas de cada tipo).
 
 ## Imágenes de apoyo
 
-- `supporting_image`: Habilita una imagen de apoyo.
-- `supporting_image_path`: Ruta de imagen relativa o absoluta.
+- `supporting_image`: habilita una imagen de apoyo.
+- `supporting_image_path`: ruta relativa o absoluta de la imagen.
 - `supporting_image_display`: `default` o `dialog`.
 
-## Metadatos AI
+## Metadatos de IA
 
-- `ai`: Metadatos AI opcionales para orientación a nivel de campo.
+- `ai`: metadatos de IA opcionales con indicaciones a nivel de campo.
 
 <Callout type="info" title="Field-specific rules">
-  Algunos campos bloquean valores (por ejemplo, `CalculatedField.read_only` siempre es true).
-  Compruebe siempre la página de tipo de campo para conocer las restricciones específicas.
+  Algunos campos fijan ciertos valores (por ejemplo, `CalculatedField.read_only` siempre es true).
+  Consulta siempre la página del tipo de campo para conocer sus restricciones específicas.
 </Callout>

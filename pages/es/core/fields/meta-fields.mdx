@@ -39,11 +39,11 @@ Atributos adicionales:
 
 - `allow_creating_records`, `allow_existing_records`, `allow_updating_records`
 - `allow_multiple_records`
-- `form_id`: Identificador de formulario de destino
-- `record_conditions`: Filtros para registros vinculados
-- `record_defaults`: Asignaciones de campo predeterminadas al crear nuevos registros
+- `form_id`: identificador del formulario de destino
+- `record_conditions`: filtros para los registros vinculados
+- `record_defaults`: correspondencias de campos predeterminadas al crear registros nuevos
 
-Las entradas de `record_defaults` usan asignaciones como:
+Las entradas de `record_defaults` usan correspondencias como estas:
 
 ```json
 {
@@ -52,7 +52,7 @@ Las entradas de `record_defaults` usan asignaciones como:
 }
 ```
 
-## EstadoCampo
+## StatusField
 
 ```json
 {
@@ -76,7 +76,7 @@ Las entradas de `record_defaults` usan asignaciones como:
 
 StatusField se define en `form.status_field` (no dentro de `elements`).
 
-## TítuloCampo
+## TitleField
 
 ```json
 {
@@ -94,18 +94,17 @@ StatusField se define en `form.status_field` (no dentro de `elements`).
 }
 ```
 
-TitleField utiliza los valores de las teclas de campo ordenadas (preferidas) o `data_name`.
-Se unió con `", "` ; los campos de elección utilizan sus schema etiquetas y el resultado es `null` cuando no
-parte se resuelve.
+TitleField usa claves de campo ordenadas (preferible) o valores `data_name`. Los valores visibles que no están vacíos se
+unen con `", "`; los campos de selección usan sus etiquetas actuales del esquema, y el resultado es `null` cuando no se
+resuelve ninguna parte.
 
-En la raíz, TitleField se define en `form.title_field` y puede hacer referencia a los campos raíz dentro de
-secciones ordinarias, pero nunca descendientes repetibles. La misma forma completa se puede asignar a
-`RepeatableSection.title_field`, donde las referencias se incluyen en el ámbito de ese conjunto de datos de registro hijo.
-[Sección repetible](/es/core/fields/containers#repeatablesection) para persistencia y recuperación de la interfaz de usuario
-comportamiento.
+En la raíz, TitleField se define en `form.title_field` y puede hacer referencia a campos raíz dentro de
+secciones normales, pero nunca a descendientes repetibles. La misma estructura completa se puede asignar a
+`RepeatableSection.title_field`, donde las referencias se limitan a los datos de ese registro hijo. Consulta
+[RepeatableSection](/es/core/fields/containers#repeatablesection) para ver cómo se guarda y qué muestra la interfaz
+como alternativa.
 
 <Callout type="info" title="Detalles de reform">
-  Los campos FormLink, Status y Title tienen un comportamiento más profundo en reform. Los detalles
-  adicionales se enlazarán en una revisión posterior en
-  [docs.reformapp.io](https://docs.reformapp.io).
+  Los campos FormLink, Status y Title tienen un comportamiento más amplio en reform. Más adelante
+  añadiremos enlaces a más detalles en [docs.reformapp.io](https://docs.reformapp.io).
 </Callout>

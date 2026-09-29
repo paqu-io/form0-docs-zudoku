@@ -152,7 +152,7 @@
     },
     "schema": {
       "form": {
-        "title": "Objeto de formulario"
+        "title": "Objeto formulario"
       },
       "form-attributes": {
         "title": "Atributos del formulario"

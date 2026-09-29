@@ -1,15 +1,15 @@
 ---
 title: Champs de saisie
-description: Types de champs texte, numérique, choix et date/heure.
+description: Types de champs texte, numériques, à choix et de date ou d'heure.
 ---
 
 <PageBadges />
 
 import { Callout } from "zudoku/ui/Callout"
 
-Cette page répertorie les types de champs de saisie et leurs attributs supplémentaires au-delà des attributs communs.
+Cette page présente les types de champs de saisie et les attributs qu'ils ajoutent aux attributs communs.
 
-## TexteField
+## TextField
 
 ```json
 {
@@ -35,10 +35,10 @@ Cette page répertorie les types de champs de saisie et leurs attributs supplém
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
-- `pattern`: pattern Regex pour valider l'entrée.
-- `pattern_description`: Explication facultative du motif.
+- `pattern` : expression régulière pour valider la saisie.
+- `pattern_description` : explication facultative du motif.
 
 ## NumericField
 
@@ -67,10 +67,10 @@ Attributs supplémentaires:
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
-- `min`: Valeur minimale autorisée.
-- `max`: Valeur maximale autorisée.
+- `min` : valeur minimale autorisée.
+- `max` : valeur maximale autorisée.
 - `format`: `integer` ou `float`.
 
 ## SingleChoiceField
@@ -104,12 +104,12 @@ Attributs supplémentaires:
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
-- `choices`: Tableau d'objets `{ label, value }`.
-- `allow_other`: Active une option de texte libre.
-- `is_searchable`: Permet la recherche dans les grandes listes.
-- `is_searchable_mode`: Actuellement `default` ou `null`.
+- `choices` : tableau d'objets `{ label, value }`.
+- `allow_other` : active une option de texte libre.
+- `is_searchable` : active la recherche dans les longues listes.
+- `is_searchable_mode` : pour l'instant, `default` ou `null`.
 
 ## MultiChoiceField
 
@@ -142,10 +142,10 @@ Attributs supplémentaires:
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
-- `choices`: Tableau d'objets `{ label, value }`.
-- `allow_other`: Active les éléments en texte libre.
+- `choices` : tableau d'objets `{ label, value }`.
+- `allow_other` : active les éléments en texte libre.
 - `display`: `default` ou `checkbox`.
 
 ## BooleanField
@@ -177,10 +177,10 @@ Attributs supplémentaires:
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
-- `choices`: Habituellement deux options (oui/non).
-- `third_option_enabled`: Active une troisième option neutre.
+- `choices` : généralement deux options (oui/non).
+- `third_option_enabled` : active une troisième option neutre.
 
 ## DateField
 
@@ -203,7 +203,7 @@ Attributs supplémentaires:
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
 - `default_value`: `now` (ou `null`).
 
@@ -228,11 +228,11 @@ Attributs supplémentaires:
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
 - `default_value`: `now` (ou `null`).
 
 <Callout type="info" title="Choice values">
-  Les valeurs de choix doivent correspondre à `^[a-z0-9_]+$`. Si un choix ne fournit pas un `value`,
-  form0-core va en générer un à partir du label.
+  Les valeurs de choix doivent respecter `^[a-z0-9_]+$`. Si un choix ne définit pas de `value`,
+  form0-core en génère une à partir du libellé.
 </Callout>

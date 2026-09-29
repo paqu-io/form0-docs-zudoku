@@ -1,28 +1,28 @@
 ---
 title: Éléments et imbrication
-description: Comment les champs et les sections sont organisés dans un schema.
+description: Comment les champs et les sections sont organisés dans un schéma.
 ---
 
 <PageBadges />
 
-`form.elements` est un tableau ordonné de champs et de conteneurs. Les conteneurs peuvent
-via leur propre tableau `elements`.
+`form.elements` est un tableau ordonné de champs et de conteneurs. Les conteneurs peuvent imbriquer
+d'autres champs grâce à leur propre tableau `elements`.
 
 ## Clés et noms de données
 
-- `data_name`: identifiant lisible par l'homme utilisé comme clé de valeur dans l'état moteur (unique, minuscules a-z, 0-9, soulignement seulement, maximum 42 caractères)
-- `key`: identifiant interne, typiquement dérivé de `data_name` (unique, hexadécimal, 8 caractères)
+- `data_name` : identifiant lisible utilisé comme clé de la valeur dans l'état du moteur (unique ; uniquement minuscules a-z, 0-9 et tiret bas ; 42 caractères maximum)
+- `key` : identifiant interne, généralement dérivé de `data_name` (unique, hexadécimal, 8 caractères)
 
-Lorsque vous référencez des champs dans des conditions ou `title_field.elements`, vous pouvez utiliser `key` ou `data_name`. L'utilisation de `data_name` est souvent plus pratique lors de l'écriture manuelle de schemas car il est plus mémorable.
+Pour faire référence à des champs dans des conditions ou dans `title_field.elements`, vous pouvez utiliser `key` ou `data_name`. Lorsque vous écrivez un schéma à la main, `data_name` est souvent plus pratique, car plus facile à retenir.
 
 ## Conteneurs
 
-Les types de champs suivants peuvent contenir des éléments imbriqués:
+Les types de champs suivants peuvent contenir des éléments imbriqués :
 
 - `Section` – regroupe visuellement les champs
 - `RepeatableSection` – permet plusieurs instances de ses enfants
 
-`BuildingPlanSection` prend également en charge les éléments imbriqués, mais a un comportement spécialisé pour la génération de formulaires dynamiques.](/core/fields/containers#buildingplansection) pour plus de détails.
+`BuildingPlanSection` accepte aussi des éléments imbriqués, mais a un comportement spécifique pour générer des formulaires dynamiques. Voir [BuildingPlanSection](/fr/core/fields/containers#buildingplansection) pour plus de détails.
 
 ## Exemple
 

@@ -7,7 +7,7 @@ description: FormLinkField, StatusField e TitleField.
 
 import { Callout } from "zudoku/ui/Callout"
 
-## ModuloLinkCampo
+## FormLinkField
 
 ```json
 {
@@ -39,11 +39,11 @@ Attributi aggiuntivi:
 
 - `allow_creating_records`, `allow_existing_records`, `allow_updating_records`
 - `allow_multiple_records`
-- `form_id`: Identificatore del modulo di destinazione
-- `record_conditions`: Filtri per record collegati
-- `record_defaults`: Mappe di campo predefinite durante la creazione di nuovi record
+- `form_id`: identificatore del modulo di destinazione
+- `record_conditions`: filtri per i record collegati
+- `record_defaults`: mappature predefinite dei campi quando si creano nuovi record
 
-Le voci di `record_defaults` utilizzano mapping come:
+Le voci di `record_defaults` usano mappature come questa:
 
 ```json
 {
@@ -52,7 +52,7 @@ Le voci di `record_defaults` utilizzano mapping come:
 }
 ```
 
-## Campo di stato
+## StatusField
 
 ```json
 {
@@ -76,7 +76,7 @@ Le voci di `record_defaults` utilizzano mapping come:
 
 StatusField è definito in `form.status_field` (non all'interno di `elements`).
 
-## TitoloCampo
+## TitleField
 
 ```json
 {
@@ -94,18 +94,17 @@ StatusField è definito in `form.status_field` (non all'interno di `elements`).
 }
 ```
 
-TitleField utilizza i valori dei tasti di campo ordinati (preferiti) o `data_name`.
-unito con `", "`; i campi di scelta usano le loro etichette attuali schema e il risultato è `null` quando non
-parte si risolve.
+TitleField usa le chiavi dei campi ordinate (preferibile) o i valori `data_name`. I valori visualizzati non vuoti
+vengono uniti con `", "`; i campi di scelta usano le etichette correnti dello schema, e il risultato è `null` quando
+nessuna parte viene risolta.
 
-Alla radice, TitleField è definito in `form.title_field` e può fare riferimento ai campi radice all'interno
-sezioni ordinarie, ma mai discendenti ripetibili. La stessa forma completa può essere assegnata a
-`RepeatableSection.title_field`, dove i riferimenti sono assegnati a quel set di dati di record figlio.
-[RipetibileSezione](/it/core/fields/containers#repeatablesection) per persistenza e UI fallback
-comportamento.
+Alla radice, TitleField è definito in `form.title_field` e può fare riferimento a campi radice all'interno di
+sezioni ordinarie, ma mai a discendenti ripetibili. La stessa struttura completa può essere assegnata a
+`RepeatableSection.title_field`, dove i riferimenti sono limitati ai dati di quel record figlio. Vedi
+[RepeatableSection](/it/core/fields/containers#repeatablesection) per il salvataggio e l'etichetta di ripiego
+mostrata nell'interfaccia.
 
 <Callout type="info" title="Dettagli di reform">
-  I campi FormLink, Status e Title hanno un comportamento più approfondito in reform. Ulteriori
-  dettagli saranno collegati in una revisione successiva su
-  [docs.reformapp.io](https://docs.reformapp.io).
+  I campi FormLink, Status e Title hanno un comportamento più ampio in reform. Ulteriori dettagli
+  saranno collegati in una revisione successiva su [docs.reformapp.io](https://docs.reformapp.io).
 </Callout>

@@ -17,8 +17,8 @@ quando vengono eseguiti i gestori di eventi.
 
 `createFormEngine({ schema, initialValues })` prepara il modulo una sola volta:
 
-1. Convalida lo schema e genera un errore se non è valido. Vedi
-   [Convalida dello schema](/it/core/schema/validation).
+1. Valida lo schema e genera un errore se non è valido. Vedi
+   [Validazione dello schema](/it/core/schema/validation).
 2. Imposta i valori: prima gli `initialValues` che passi, poi il `default_value` di ogni altro campo.
 3. Determina da quali campi dipende ogni campo calcolato. Questo avviene una sola volta, non a ogni
    valutazione.

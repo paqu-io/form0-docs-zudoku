@@ -1,13 +1,13 @@
 ---
 title: Campi calcolati
-description: Campo calcolato e campo etichetta.
+description: CalculatedField e LabelField.
 ---
 
 <PageBadges />
 
 import { Callout } from "zudoku/ui/Callout"
 
-## CalcolatoCampo
+## CalculatedField
 
 ```json
 {
@@ -31,7 +31,7 @@ import { Callout } from "zudoku/ui/Callout"
 
 Attributi aggiuntivi:
 
-- `calculate`: stringa di espressione valutata dal motore.
+- `calculate`: stringa con l'espressione valutata dal motore.
 - `display.style`: `text`, `numeric`, `date` o `currency`.
 
 Note:
@@ -39,7 +39,7 @@ Note:
 - `required` è sempre `false`.
 - `read_only` è sempre `true`.
 
-## EtichettaCampo
+## LabelField
 
 ```json
 {
@@ -61,9 +61,9 @@ Note:
 }
 ```
 
-LabelField è un campo non modificabile utile per il testo in linea e il raggruppamento dell'interfaccia utente.
+LabelField è un campo non modificabile, utile per testo in linea e per raggruppare elementi nell'interfaccia.
 
 <Callout type="info" title="Expressions">
-  Utilizzare builtin (ad esempio, `IF`, `ROUND`, `CHOICEVALUE`) all'interno di `calculate`. Vedere
-  le pagine Builtin per l'elenco completo.
+  Usa i builtin (ad esempio, `IF`, `ROUND`, `CHOICEVALUE`) all'interno di `calculate`. Consulta le
+  pagine Builtin per l'elenco completo.
 </Callout>

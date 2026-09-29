@@ -1,11 +1,11 @@
 ---
 title: Campos multimedia
-description: Firma, foto y captura de video.
+description: Captura de firmas, fotos y vídeos.
 ---
 
 <PageBadges />
 
-## FirmaCampo
+## SignatureField
 
 ```json
 {
@@ -29,7 +29,7 @@ description: Firma, foto y captura de video.
 
 Atributos adicionales:
 
-- `agreement_text`: texto de consentimiento opcional que se muestra cerca de la firma.
+- `agreement_text`: texto de consentimiento opcional que se muestra junto a la firma.
 
 ## PhotoField
 
@@ -56,10 +56,10 @@ Atributos adicionales:
 
 Atributos adicionales:
 
-- `min_length`: Número mínimo de fotos requeridas.
-- `max_length`: Número máximo de fotos permitidas.
+- `min_length`: número mínimo de fotos obligatorias.
+- `max_length`: número máximo de fotos permitidas.
 
-## VideoCampo
+## VideoField
 
 ```json
 {
@@ -84,5 +84,5 @@ Atributos adicionales:
 
 Atributos adicionales:
 
-- `min_length`: Número mínimo de videos requeridos.
-- `max_length`: Número máximo de vídeos permitidos.
+- `min_length`: número mínimo de vídeos obligatorios.
+- `max_length`: número máximo de vídeos permitidos.

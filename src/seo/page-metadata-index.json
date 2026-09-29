@@ -4351,7 +4351,7 @@
     "translationKey": "/core/ai-metadata",
     "locale": "es",
     "title": "Metadatos de IA",
-    "description": "Indicaciones opcionales para IA en formularios y campos.",
+    "description": "Indicaciones opcionales de IA para formularios y campos.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5323,7 +5323,7 @@
     "translationKey": "/core/fields/catalog",
     "locale": "es",
     "title": "Catálogo de campos",
-    "description": "Todos los campos y sus categorías.",
+    "description": "Todos los tipos de campo y sus categorías.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5377,7 +5377,7 @@
     "translationKey": "/core/fields/computed-fields",
     "locale": "es",
     "title": "Campos calculados",
-    "description": "Campo calculado y campo de etiquetas.",
+    "description": "CalculatedField y LabelField.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5431,7 +5431,7 @@
     "translationKey": "/core/fields/input-fields",
     "locale": "es",
     "title": "Campos de entrada",
-    "description": "Tipos de campos de texto, numéricos, de elección y de fecha y hora.",
+    "description": "Tipos de campo de texto, numéricos, de selección y de fecha y hora.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5458,7 +5458,7 @@
     "translationKey": "/core/fields/media-fields",
     "locale": "es",
     "title": "Campos multimedia",
-    "description": "Firma, foto y captura de video.",
+    "description": "Captura de firmas, fotos y vídeos.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5566,7 +5566,7 @@
     "translationKey": "/core/schema/conditions-operators",
     "locale": "es",
     "title": "Condiciones y operadores",
-    "description": "Visibilidad condicional, requisitos y reglas de solo lectura.",
+    "description": "Reglas condicionales de visibilidad, obligatoriedad y solo lectura.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5593,7 +5593,7 @@
     "translationKey": "/core/schema/elements",
     "locale": "es",
     "title": "Elementos y anidamiento",
-    "description": "Cómo se organizan los campos y las secciones en un schema.",
+    "description": "Cómo se organizan los campos y las secciones en un esquema.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5620,7 +5620,7 @@
     "translationKey": "/core/schema/form-attributes",
     "locale": "es",
     "title": "Atributos del formulario",
-    "description": "Referencia completa para todos los atributos de objeto de formulario.",
+    "description": "Referencia completa de todos los atributos del objeto formulario.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5646,8 +5646,8 @@
     "pathname": "/es/core/schema/form",
     "translationKey": "/core/schema/form",
     "locale": "es",
-    "title": "Objeto de formulario",
-    "description": "Atributos schema de nivel superior y metadatos de formulario.",
+    "title": "Objeto formulario",
+    "description": "Atributos de nivel superior del esquema y metadatos del formulario.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5674,7 +5674,7 @@
     "translationKey": "/core/schema/validation",
     "locale": "es",
     "title": "Validación de esquemas",
-    "description": "Cómo valida form0-core schemas y las condiciones.",
+    "description": "Cómo valida form0-core los esquemas y las condiciones.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7735,8 +7735,8 @@
     "pathname": "/fr/core/ai-metadata",
     "translationKey": "/core/ai-metadata",
     "locale": "fr",
-    "title": "Métadonnées IA",
-    "description": "Guide d'IA facultatif pour les formulaires et les champs.",
+    "title": "Métadonnées d’IA",
+    "description": "Indications facultatives pour l'IA au niveau des formulaires et des champs.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8762,7 +8762,7 @@
     "translationKey": "/core/fields/computed-fields",
     "locale": "fr",
     "title": "Champs calculés",
-    "description": "CalculatedField et LabelField",
+    "description": "CalculatedField et LabelField.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8789,7 +8789,7 @@
     "translationKey": "/core/fields/containers",
     "locale": "fr",
     "title": "Conteneurs",
-    "description": "Sections, sections reproductibles et plans de construction.",
+    "description": "Sections, sections répétables et plans de construction.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8816,7 +8816,7 @@
     "translationKey": "/core/fields/input-fields",
     "locale": "fr",
     "title": "Champs de saisie",
-    "description": "Types de champs texte, numérique, choix et date/heure.",
+    "description": "Types de champs texte, numériques, à choix et de date ou d'heure.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8843,7 +8843,7 @@
     "translationKey": "/core/fields/media-fields",
     "locale": "fr",
     "title": "Champs média",
-    "description": "Signature, photo et capture vidéo.",
+    "description": "Capture de signatures, de photos et de vidéos.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8897,7 +8897,7 @@
     "translationKey": "/core/output-records",
     "locale": "fr",
     "title": "Sortie et enregistrements",
-    "description": "État du moteur et sortie d'enregistrement structurée.",
+    "description": "L'état du moteur et la production d'enregistrements structurés.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8923,8 +8923,8 @@
     "pathname": "/fr/core/overview",
     "translationKey": "/core/overview",
     "locale": "fr",
-    "title": "Aperçu général",
-    "description": "Qu'est-ce que form0-core est responsable et comment il s'intègre dans l'écosystème form0.",
+    "title": "Vue d’ensemble",
+    "description": "Le rôle de form0-core et sa place dans l'écosystème form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8951,7 +8951,7 @@
     "translationKey": "/core/schema/conditions-operators",
     "locale": "fr",
     "title": "Conditions et opérateurs",
-    "description": "Visibilité conditionnelle, exigences et règles en lecture seule.",
+    "description": "Règles conditionnelles de visibilité, de caractère obligatoire et de lecture seule.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8978,7 +8978,7 @@
     "translationKey": "/core/schema/elements",
     "locale": "fr",
     "title": "Éléments et imbrication",
-    "description": "Comment les champs et les sections sont organisés dans un schema.",
+    "description": "Comment les champs et les sections sont organisés dans un schéma.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9005,7 +9005,7 @@
     "translationKey": "/core/schema/form-attributes",
     "locale": "fr",
     "title": "Attributs du formulaire",
-    "description": "Référence complète pour tous les attributs d'objet de formulaire.",
+    "description": "Référence complète de tous les attributs de l'objet formulaire.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9031,8 +9031,8 @@
     "pathname": "/fr/core/schema/form",
     "translationKey": "/core/schema/form",
     "locale": "fr",
-    "title": "Objet du formulaire",
-    "description": "Attributs schema de haut niveau et métadonnées de formulaire.",
+    "title": "Objet formulaire",
+    "description": "Attributs de premier niveau du schéma et métadonnées du formulaire.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9059,7 +9059,7 @@
     "translationKey": "/core/schema/validation",
     "locale": "fr",
     "title": "Validation du schéma",
-    "description": "Comment form0-core valide schemas et conditions.",
+    "description": "Comment form0-core valide les schémas et les conditions.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -11212,7 +11212,7 @@
     "translationKey": "/core/ai-metadata",
     "locale": "it",
     "title": "Metadati IA",
-    "description": "Guida AI opzionale per moduli e campi.",
+    "description": "Indicazioni facoltative per l'IA a livello di modulo e di campo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12238,7 +12238,7 @@
     "translationKey": "/core/fields/computed-fields",
     "locale": "it",
     "title": "Campi calcolati",
-    "description": "Campo calcolato e campo etichetta.",
+    "description": "CalculatedField e LabelField.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12292,7 +12292,7 @@
     "translationKey": "/core/fields/input-fields",
     "locale": "it",
     "title": "Campi di input",
-    "description": "Tipo di campo Testo, numerico, a scelta e data/ora.",
+    "description": "Tipi di campo di testo, numerici, a scelta e di data e ora.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12319,7 +12319,7 @@
     "translationKey": "/core/fields/media-fields",
     "locale": "it",
     "title": "Campi multimediali",
-    "description": "Firma, foto e acquisizione video.",
+    "description": "Acquisizione di firme, foto e video.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12373,7 +12373,7 @@
     "translationKey": "/core/output-records",
     "locale": "it",
     "title": "Output e record",
-    "description": "Stato motore e uscita record strutturata.",
+    "description": "Lo stato del motore e l'output dei record strutturati.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12400,7 +12400,7 @@
     "translationKey": "/core/overview",
     "locale": "it",
     "title": "Panoramica",
-    "description": "Che cosa form0-core è responsabile e come si inserisce nell'ecosistema form0.",
+    "description": "Di cosa si occupa form0-core e qual è il suo ruolo nell'ecosistema form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12427,7 +12427,7 @@
     "translationKey": "/core/schema/conditions-operators",
     "locale": "it",
     "title": "Condizioni e operatori",
-    "description": "Visibilità condizionata, requisiti e regole di sola lettura.",
+    "description": "Regole condizionali di visibilità, obbligatorietà e sola lettura.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12454,7 +12454,7 @@
     "translationKey": "/core/schema/elements",
     "locale": "it",
     "title": "Elementi e annidamento",
-    "description": "Come i campi e le sezioni sono organizzati in un schema.",
+    "description": "Come sono organizzati i campi e le sezioni in uno schema.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12481,7 +12481,7 @@
     "translationKey": "/core/schema/form-attributes",
     "locale": "it",
     "title": "Attributi del modulo",
-    "description": "Riferimento completo per tutti gli attributi oggetto modulo.",
+    "description": "Riferimento completo di tutti gli attributi dell'oggetto modulo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12508,7 +12508,7 @@
     "translationKey": "/core/schema/form",
     "locale": "it",
     "title": "Oggetto modulo",
-    "description": "Attributi schema di primo livello e metadati della forma.",
+    "description": "Attributi di primo livello dello schema e metadati del modulo.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12534,8 +12534,8 @@
     "pathname": "/it/core/schema/validation",
     "translationKey": "/core/schema/validation",
     "locale": "it",
-    "title": "Convalida dello schema",
-    "description": "Come form0-core convalida schemas e le condizioni.",
+    "title": "Validazione dello schema",
+    "description": "Come form0-core valida gli schemi e le condizioni.",
     "indexable": true,
     "status": "published",
     "alternates": [

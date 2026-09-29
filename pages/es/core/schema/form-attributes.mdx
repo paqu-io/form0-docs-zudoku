@@ -1,44 +1,44 @@
 ---
 title: Atributos del formulario
-description: Referencia completa para todos los atributos de objeto de formulario.
+description: Referencia completa de todos los atributos del objeto formulario.
 ---
 
 <PageBadges />
 
 import { Callout } from "zudoku/ui/Callout"
 
-Esta página documenta todos los atributos disponibles en el objeto `form`, incluidos los metadatos a nivel de aplicación.
+Esta página documenta todos los atributos disponibles en el objeto `form`, incluidos los metadatos de nivel de aplicación.
 
-<Callout type="note" title="Atributos a nivel de aplicación">
-  Los atributos marcados como ** nivel de aplicación ** son metadatos no procesados directamente por
-  el motor. Se pueden usar al integrar el producto SaaS [reform](https://reformapp.io) o al crear
-  una funcionalidad similar en tu propia aplicación.
+<Callout type="note" title="Atributos de nivel de aplicación">
+  Los atributos marcados como **Nivel de aplicación** son metadatos que el motor no procesa
+  directamente. Puedes usarlos al integrar el producto SaaS [reform](https://reformapp.io) o al
+  crear funcionalidades similares en tu propia aplicación.
 </Callout>
 
 ---
 
-## nombre
+## name
 
-Nombre de formulario amigable para las personas que se muestra en la interfaz de usuario.
+Nombre legible del formulario que se muestra en la interfaz.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | ✓        |
+| Obligatorio         | ✓        |
 | Predeterminado      | -        |
 | Opciones            | -        |
 | Nivel de aplicación | -        |
 
 ---
 
-## descripción
+## description
 
 Descripción del formulario.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | -        |
 | Opciones            | -        |
 | Nivel de aplicación | -        |
@@ -47,12 +47,12 @@ Descripción del formulario.
 
 ## id
 
-Se recomienda el formato UUID.
+Identificador único del formulario. Se recomienda el formato UUID.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | ✓        |
+| Obligatorio         | ✓        |
 | Predeterminado      | -        |
 | Opciones            | -        |
 | Nivel de aplicación | -        |
@@ -61,40 +61,40 @@ Se recomienda el formato UUID.
 
 ## record_count
 
-Contador operativo propiedad de la plataforma. Número de registros en el formulario.
+Contador operativo gestionado por la plataforma. Número de registros del formulario.
 
-| Propiedad           | Valor        |
-| ------------------- | ------------ |
-| Tipo                | `number`     |
-| Requerido           | -            |
-| Predeterminado      | Host-defined |
-| Opciones            | -            |
-| Nivel de aplicación | ✓            |
+| Propiedad           | Valor                |
+| ------------------- | -------------------- |
+| Tipo                | `number`             |
+| Obligatorio         | -                    |
+| Predeterminado      | Definido por el host |
+| Opciones            | -                    |
+| Nivel de aplicación | ✓                    |
 
 ---
 
 ## record_last_change_at
 
-Contador operativo propiedad de la plataforma. Fecha/hora del último cambio de registro en formato ISO 8601.
+Contador operativo gestionado por la plataforma. Fecha y hora del último cambio en un registro, en formato ISO 8601.
 
-| Propiedad           | Valor        |
-| ------------------- | ------------ |
-| Tipo                | `string`     |
-| Requerido           | -            |
-| Predeterminado      | Host-defined |
-| Opciones            | -            |
-| Nivel de aplicación | ✓            |
+| Propiedad           | Valor                |
+| ------------------- | -------------------- |
+| Tipo                | `string`             |
+| Obligatorio         | -                    |
+| Predeterminado      | Definido por el host |
+| Opciones            | -                    |
+| Nivel de aplicación | ✓                    |
 
 ---
 
 ## form_created_at
 
-Fecha/hora de creación del formulario en formato ISO 8601.
+Fecha y hora de creación del formulario, en formato ISO 8601.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -103,12 +103,12 @@ Fecha/hora de creación del formulario en formato ISO 8601.
 
 ## form_updated_at
 
-Forma fecha/hora de la última actualización en formato ISO 8601.
+Fecha y hora de la última actualización del formulario, en formato ISO 8601.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -122,7 +122,7 @@ Usuario que creó el formulario.
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -136,35 +136,35 @@ Usuario que actualizó el formulario por última vez.
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
 
 ---
 
-## estado
+## status
 
-Indicador de estado del formulario.
+Indicador del estado del formulario.
 
 | Propiedad           | Valor                |
 | ------------------- | -------------------- |
 | Tipo                | `string`             |
-| Requerido           | -                    |
+| Obligatorio         | -                    |
 | Predeterminado      | -                    |
 | Opciones            | `active`, `inactive` |
 | Nivel de aplicación | ✓                    |
 
 ---
 
-## versión
+## version
 
-Versión opcional de schema propiedad de la plataforma. form0-core no la incrementa.
+Versión opcional del esquema gestionada por la plataforma. form0-core no la incrementa.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | -        |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -173,12 +173,12 @@ Versión opcional de schema propiedad de la plataforma. form0-core no la increme
 
 ## main_org_id
 
-Identificador de organización principal.
+Identificador de la organización principal.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | -        |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -187,12 +187,12 @@ Identificador de organización principal.
 
 ## main_org_metadata
 
-Campos de metadatos asociados con la organización principal.
+Campos de metadatos asociados a la organización principal.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `object` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -201,12 +201,12 @@ Campos de metadatos asociados con la organización principal.
 
 ## sub_org_id
 
-Identificador de suborganización.
+Identificador de la suborganización.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -215,12 +215,12 @@ Identificador de suborganización.
 
 ## sub_org_metadata
 
-Campos de metadatos asociados con la suborganización.
+Campos de metadatos asociados a la suborganización.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `object` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -234,7 +234,7 @@ Identificador del proyecto.
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -243,26 +243,26 @@ Identificador del proyecto.
 
 ## project_metadata
 
-Campos de metadatos asociados con el proyecto.
+Campos de metadatos asociados al proyecto.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `object` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
 
 ---
 
-## ia
+## ai
 
-Consulta [Metadatos de AI](/es/core/ai-metadata) para obtener más información.
+Metadatos de IA con indicaciones a nivel de formulario. Consulta [Metadatos de IA](/es/core/ai-metadata) para más detalles.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `object` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | -        |
@@ -271,12 +271,12 @@ Consulta [Metadatos de AI](/es/core/ai-metadata) para obtener más información.
 
 ## status_field
 
-Para obtener más información, consulte [Campos de metadatos](/es/core/fields/meta-fields#statusfield).
+Definición del campo especial de estado. Consulta [Campos meta](/es/core/fields/meta-fields#statusfield) para más detalles.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `object` |
-| Requerido           | ✓        |
+| Obligatorio         | ✓        |
 | Predeterminado      | -        |
 | Opciones            | -        |
 | Nivel de aplicación | -        |
@@ -285,12 +285,12 @@ Para obtener más información, consulte [Campos de metadatos](/es/core/fields/m
 
 ## title_field
 
-Consulte [Campos de metadatos](/es/core/fields/meta-fields#titlefield) para obtener más información.
+Definición del campo especial de título. Consulta [Campos meta](/es/core/fields/meta-fields#titlefield) para más detalles.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `object` |
-| Requerido           | ✓        |
+| Obligatorio         | ✓        |
 | Predeterminado      | -        |
 | Opciones            | -        |
 | Nivel de aplicación | -        |
@@ -299,12 +299,12 @@ Consulte [Campos de metadatos](/es/core/fields/meta-fields#titlefield) para obte
 
 ## bounding_box
 
-Cuadro de borde que contiene todos los registros de formulario. Formato: `[min_lat, min_lng, max_lat, max_lng]`.
+Rectángulo que contiene todos los registros del formulario. Formato: `[min_lat, min_lng, max_lat, max_lng]`.
 
 | Propiedad           | Valor          |
 | ------------------- | -------------- |
 | Tipo                | `array`        |
-| Requerido           | -              |
+| Obligatorio         | -              |
 | Predeterminado      | `[0, 0, 0, 0]` |
 | Opciones            | -              |
 | Nivel de aplicación | ✓              |
@@ -313,12 +313,12 @@ Cuadro de borde que contiene todos los registros de formulario. Formato: `[min_l
 
 ## location_enabled
 
-Permite la captura de ubicación para los registros.
+Habilita la captura de la ubicación en los registros.
 
 | Propiedad           | Valor           |
 | ------------------- | --------------- |
 | Tipo                | `boolean`       |
-| Requerido           | -               |
+| Obligatorio         | -               |
 | Predeterminado      | -               |
 | Opciones            | `true`, `false` |
 | Nivel de aplicación | ✓               |
@@ -327,26 +327,26 @@ Permite la captura de ubicación para los registros.
 
 ## location_required
 
-Requiere datos de ubicación cuando `location_enabled` es `true`.
+Exige datos de ubicación cuando `location_enabled` es `true`.
 
 | Propiedad           | Valor           |
 | ------------------- | --------------- |
 | Tipo                | `boolean`       |
-| Requerido           | -               |
+| Obligatorio         | -               |
 | Predeterminado      | -               |
 | Opciones            | `true`, `false` |
 | Nivel de aplicación | ✓               |
 
 ---
 
-## imagen
+## image
 
-URL para el icono de formulario (tamaño original).
+URL del icono del formulario (tamaño original).
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -355,12 +355,12 @@ URL para el icono de formulario (tamaño original).
 
 ## image_thumbnail
 
-URL para el icono de formulario en miniatura (160x160 px).
+URL del icono del formulario en miniatura (160x160 px).
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -369,12 +369,12 @@ URL para el icono de formulario en miniatura (160x160 px).
 
 ## image_small
 
-URL para el icono de formulario de tamaño pequeño (320x320 px).
+URL del icono del formulario en tamaño pequeño (320x320 px).
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
@@ -383,26 +383,26 @@ URL para el icono de formulario de tamaño pequeño (320x320 px).
 
 ## image_large
 
-URL para el icono de formulario de gran tamaño (640x640 px).
+URL del icono del formulario en tamaño grande (640x640 px).
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `string` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | ✓        |
 
 ---
 
-## eventos
+## events
 
-Bloque de código de evento que contiene expresiones incorporadas y JavaScript para los controladores de eventos. El código se coloca en `events.code`.
+Bloque de código de eventos con builtins y expresiones JavaScript para los manejadores de eventos. El código se coloca en `events.code`.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `object` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | -        |
@@ -411,26 +411,26 @@ Bloque de código de evento que contiene expresiones incorporadas y JavaScript p
 
 ## form_links
 
-Enlaces a/desde otros formularios (utilizados con `FormLinkField`). Consulte [Campos de metadatos](/es/core/fields/meta-fields#formlinkfield) para obtener más detalles.
+Enlaces hacia y desde otros formularios (se usan con `FormLinkField`). Consulta [Campos meta](/es/core/fields/meta-fields#formlinkfield) para más detalles.
 
 | Propiedad           | Valor    |
 | ------------------- | -------- |
 | Tipo                | `object` |
-| Requerido           | -        |
+| Obligatorio         | -        |
 | Predeterminado      | `null`   |
 | Opciones            | -        |
 | Nivel de aplicación | -        |
 
 ---
 
-## elementos
+## elements
 
-Campos de formulario y contenedores. Consulte [Elementos y anidación](/es/core/schema/elements).
+Campos y contenedores del formulario. Consulta [Elementos y anidamiento](/es/core/schema/elements).
 
 | Propiedad           | Valor   |
 | ------------------- | ------- |
 | Tipo                | `array` |
-| Requerido           | ✓       |
+| Obligatorio         | ✓       |
 | Predeterminado      | `[]`    |
 | Opciones            | -       |
 | Nivel de aplicación | -       |

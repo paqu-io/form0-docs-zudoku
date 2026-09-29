@@ -1,6 +1,6 @@
 ---
 title: Conteneurs
-description: Sections, sections reproductibles et plans de construction.
+description: Sections, sections répétables et plans de construction.
 ---
 
 <PageBadges />
@@ -24,12 +24,12 @@ import { Callout } from "zudoku/ui/Callout"
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
-- `display`: `inline` ou `drilldown`.
-- `elements`: Champs imbriqués.
+- `display` : `inline` ou `drilldown`.
+- `elements` : champs imbriqués.
 
-## Section répétable
+## RepeatableSection
 
 ```json
 {
@@ -74,22 +74,22 @@ Attributs supplémentaires:
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
-- `location_enabled`: Active les données de localisation des éléments.
-- `location_required`: Nécessite des données de localisation pour les éléments.
-- `title_field` : Optionnel `TitleField` utilisé pour dériver le titre de chaque enregistrement enfant. Utiliser `null` lorsque non
-  Le titre d'entrée est configuré.
+- `location_enabled` : active les données de localisation des éléments.
+- `location_required` : exige des données de localisation pour les éléments.
+- `title_field` : `TitleField` facultatif servant à déterminer le titre de chaque enregistrement enfant. Utilisez `null` si aucun
+  titre d'entrée n'est configuré.
 
-Les sections répétables créent un tableau d'enregistrements enfants dans la sortie. Un titre d'entrée configuré est
-Stocké comme `@title` Si toutes les parties du titre sont vierges, `@title` est `null` ; renderers
-peut afficher une étiquette de position telle que `Items 1`, mais ce repli n'est pas persistant.
+Les sections répétables produisent un tableau d'enregistrements enfants dans la sortie. Le titre d'entrée configuré est
+stocké dans `@title` sur chaque enregistrement enfant. Si toutes les parties du titre sont vides, `@title` vaut `null` ; les renderers
+peuvent afficher un libellé de position comme `Items 1`, mais cette valeur de repli n'est pas enregistrée.
 
-Les références de titre sont étendues à l'ensemble de données de l'enregistrement enfant reproductible. Ils peuvent pointer vers des champs
-à l'intérieur des conteneurs emboîtés ordinaires `Section`, mais pas aux champs en dehors du répétable ou à l'intérieur d'un
-emboîté `RepeatableSection` Les types admissibles sont : `TextField` , `NumericField` , `DateField` , `TimeField` ,
-`SingleChoiceField`, `MultiChoiceField`, `BooleanField`, et `CalculatedField`.
-de préférence, tandis que les références `data_name` sont acceptées pour le schemas auteur.
+Les références du titre sont limitées aux données des enregistrements enfants de la section répétable. Elles peuvent pointer vers des champs
+situés dans des conteneurs `Section` imbriqués ordinaires, mais pas vers des champs extérieurs à la section répétable ni situés dans une
+`RepeatableSection` imbriquée. Les types acceptés sont `TextField`, `NumericField`, `DateField`, `TimeField`,
+`SingleChoiceField`, `MultiChoiceField`, `BooleanField` et `CalculatedField`. Les clés de champ ordonnées sont
+recommandées, mais les références par `data_name` sont acceptées dans les schémas écrits à la main.
 
 ## BuildingPlanSection
 
@@ -111,12 +111,12 @@ de préférence, tandis que les références `data_name` sont acceptées pour le
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
-- `building_plan`: Structure décrivant la topologie du plan.
-- `node_overrides`: surcharges pour les nœuds générés.
+- `building_plan` : structure décrivant la topologie du plan.
+- `node_overrides` : surcharges appliquées aux nœuds générés.
 
 <Callout type="info" title="Building plan expansion">
-  BuildingPlanSection se développe en Sections répétables imbriquées à runtime. Nous allons
-  développer ce documentation avec des exemples complets bientôt.
+  BuildingPlanSection se développe en RepeatableSection imbriquées à l'exécution. Nous compléterons
+  bientôt cette documentation avec des exemples complets.
 </Callout>

@@ -1,12 +1,12 @@
 ---
 title: Condiciones y operadores
-description: Visibilidad condicional, requisitos y reglas de solo lectura.
+description: Reglas condicionales de visibilidad, obligatoriedad y solo lectura.
 ---
 
 <PageBadges />
 
 Las condiciones se utilizan en `visible_conditions`, `required_conditions` y `read_only_conditions`.
-Hacen referencia a otros campos y los evalúan como verdaderos o falsos.
+Hacen referencia a otros campos y se evalúan como verdaderas o falsas.
 
 ## Forma de la condición
 
@@ -18,7 +18,7 @@ Hacen referencia a otros campos y los evalúan como verdaderos o falsos.
 }
 ```
 
-Puede combinar condiciones con `and` o `or`:
+Puedes combinar condiciones con `and` u `or`:
 
 ```json
 {
@@ -35,24 +35,24 @@ Puede combinar condiciones con `and` o `or`:
 | ----------------------- | ------------------------------- |
 | `equal_to`              | Es igual al valor proporcionado |
 | `not_equal_to`          | No es igual al valor            |
-| `greater_than`          | Más grande que el valor         |
-| `less_than`             | Menos que el valor              |
-| `greater_or_equal_than` | mayor o igual que               |
-| `less_or_equal_than`    | menor o igual que               |
-| `contains`              | Array contiene el valor         |
+| `greater_than`          | Mayor que el valor              |
+| `less_than`             | Menor que el valor              |
+| `greater_or_equal_than` | Mayor o igual que               |
+| `less_or_equal_than`    | Menor o igual que               |
+| `contains`              | El array contiene el valor      |
 | `starts_with`           | La cadena comienza con el valor |
-| `is_empty`              | El valor está vacío o nulo      |
+| `is_empty`              | El valor está vacío o es nulo   |
 | `is_not_empty`          | El valor no está vacío          |
 
-### Soporte de operador por tipo de campo
+### Operadores admitidos por tipo de campo
 
 Los operadores se validan contra el tipo de campo referenciado. Por ejemplo:
 
 - Los campos de texto admiten `contains` y `starts_with`
 - Los campos numéricos/de fecha admiten operadores de comparación
-- Los campos de opción admiten `equal_to` y `contains` (opción múltiple)
+- Los campos de selección admiten `equal_to` y `contains` (selección múltiple)
 
-Las condiciones de opción comparan los valores de respuesta, no el objeto contenedor del renderer:
+Las condiciones de selección comparan los valores de respuesta, no el objeto contenedor del renderer:
 
 - `SingleChoiceField` y `BooleanField` comparan el `value` de la opción seleccionada.
 - `MultiChoiceField` usa un array de valores seleccionados. `contains` comprueba un valor, mientras
@@ -60,9 +60,9 @@ Las condiciones de opción comparan los valores de respuesta, no el objeto conte
 - Una respuesta personalizada “other” no vacía participa mediante su `value` o etiqueta, por lo que
   los operadores de vacío reflejan lo que introdujo el usuario.
 
-Si un operador no es válido para el campo de referencia, la validación fallará.
+Si un operador no es válido para el campo referenciado, la validación falla.
 
 ## Referencias de campo
 
-`field_id` debe apuntar al campo `key`. `data_name` es aceptado como una reserva, pero `key` es
-Se recomienda porque nunca cambia cuando cambian las etiquetas.
+`field_id` debe apuntar a la `key` del campo. También se acepta `data_name` como alternativa, pero se
+recomienda `key` porque no cambia nunca cuando cambian las etiquetas.

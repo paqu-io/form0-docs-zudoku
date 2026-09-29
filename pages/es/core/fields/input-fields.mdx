@@ -1,13 +1,13 @@
 ---
 title: Campos de entrada
-description: Tipos de campos de texto, numéricos, de elección y de fecha y hora.
+description: Tipos de campo de texto, numéricos, de selección y de fecha y hora.
 ---
 
 <PageBadges />
 
 import { Callout } from "zudoku/ui/Callout"
 
-Esta página enumera los tipos de campos de entrada y sus atributos adicionales más allá de los comunes.
+Esta página enumera los tipos de campo de entrada y los atributos que añaden a los comunes.
 
 ## TextField
 
@@ -37,10 +37,10 @@ Esta página enumera los tipos de campos de entrada y sus atributos adicionales 
 
 Atributos adicionales:
 
-- `pattern`: Patrón Regex para validar la entrada.
-- `pattern_description`: Explicación opcional del patrón.
+- `pattern`: expresión regular para validar la entrada.
+- `pattern_description`: explicación opcional del patrón.
 
-## Campo numérico
+## NumericField
 
 ```json
 {
@@ -69,11 +69,11 @@ Atributos adicionales:
 
 Atributos adicionales:
 
-- `min`: Valor mínimo permitido.
-- `max`: Valor máximo permitido.
+- `min`: valor mínimo permitido.
+- `max`: valor máximo permitido.
 - `format`: `integer` o `float`.
 
-## ElecciónSingleField
+## SingleChoiceField
 
 ```json
 {
@@ -106,12 +106,12 @@ Atributos adicionales:
 
 Atributos adicionales:
 
-- `choices`: Matriz de objetos `{ label, value }`.
-- `allow_other`: Activa una opción de texto libre.
-- `is_searchable`: Permite la búsqueda en listas grandes.
-- `is_searchable_mode`: Actualmente `default` o `null`.
+- `choices`: array de objetos `{ label, value }`.
+- `allow_other`: habilita una opción de texto libre.
+- `is_searchable`: habilita la búsqueda en listas largas.
+- `is_searchable_mode`: por ahora, `default` o `null`.
 
-## MultielecciónCampo
+## MultiChoiceField
 
 ```json
 {
@@ -144,11 +144,11 @@ Atributos adicionales:
 
 Atributos adicionales:
 
-- `choices`: Matriz de objetos `{ label, value }`.
-- `allow_other`: Habilita elementos de texto libre.
+- `choices`: array de objetos `{ label, value }`.
+- `allow_other`: habilita elementos de texto libre.
 - `display`: `default` o `checkbox`.
 
-## Campo booleano
+## BooleanField
 
 ```json
 {
@@ -179,10 +179,10 @@ Atributos adicionales:
 
 Atributos adicionales:
 
-- `choices`: Por lo general, dos opciones (sí / no).
-- `third_option_enabled`: Activa una tercera opción neutral.
+- `choices`: normalmente dos opciones (sí/no).
+- `third_option_enabled`: habilita una tercera opción neutra.
 
-## FechaCampo
+## DateField
 
 ```json
 {
@@ -233,6 +233,6 @@ Atributos adicionales:
 - `default_value`: `now` (o `null`).
 
 <Callout type="info" title="Choice values">
-  Los valores de elección deben coincidir con `^[a-z0-9_]+$`. Si una opción no proporciona un
-  `value`, form0-core generará uno de la etiqueta.
+  Los valores de las opciones deben cumplir `^[a-z0-9_]+$`. Si una opción no define un `value`,
+  form0-core genera uno a partir de la etiqueta.
 </Callout>

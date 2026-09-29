@@ -1,33 +1,33 @@
 ---
-title: Convalida dello schema
-description: Come form0-core convalida schemas e le condizioni.
+title: Validazione dello schema
+description: Come form0-core valida gli schemi e le condizioni.
 ---
 
 <PageBadges />
 
-form0-core convalida schemas prima di eseguire il motore. La convalida si concentra sulla struttura e
-attributo correttezza, non UI preoccupazioni.
+form0-core valida gli schemi prima di eseguire il motore. La validazione riguarda la struttura e la
+correttezza degli attributi, non gli aspetti dell'interfaccia.
 
-## Cosa è convalidato
+## Cosa viene validato
 
-- Attributi richiesti per tipo di campo
+- Attributi obbligatori per ogni tipo di campo
 - Valori consentiti per gli attributi (ad esempio, opzioni `display`)
 - `key` e `data_name` unici
-- Formato `data_name` (bassa a-z, 0-9, sottolineatura, lunghezza massima 42)
-- I valori predefiniti corrispondono alle regole del tipo di campo
-- Gli operatori delle condizioni sono validi per il tipo di campo di riferimento
-- Forma dei metadati AI e chiavi consentite
+- Formato di `data_name` (minuscole a-z, 0-9, underscore, lunghezza massima 42)
+- Conformità dei valori predefiniti alle regole del tipo di campo
+- Validità degli operatori delle condizioni per il tipo di campo referenziato
+- Struttura e chiavi consentite dei metadati IA
 
-## Convalida runtime
+## Validazione in fase di esecuzione
 
-In runtime, i campi convalidano anche i loro valori quando il motore valuta:
+In fase di esecuzione, i campi validano anche i propri valori quando il motore valuta il modulo:
 
-- Controlli numerici min/max
-- Corrispondenza modello per i campi di testo
-- I valori di scelta devono corrispondere a scelte definite
+- Controlli numerici di minimo e massimo
+- Corrispondenza con un pattern per i campi di testo
+- I valori di scelta devono corrispondere alle scelte definite
 
-La convalida dei valori in runtime viene eseguita per tutti i campi, inclusi quelli attualmente
-nascosti. Il risultato è disponibile nella mappa `errors` dello stato del motore.
+La validazione dei valori in fase di esecuzione viene applicata a tutti i campi, inclusi quelli
+attualmente nascosti. Il risultato è disponibile nella mappa `errors` dello stato del motore.
 
 ### Campi obbligatori e invio
 
@@ -40,9 +40,9 @@ Se utilizzi form0-core senza un renderer, applica la stessa politica nell'applic
 parte dei casi, un campo vuoto dovrebbe bloccare l'invio solo quando è visibile e obbligatorio.
 Includi nel controllo anche gli errori di valore e formato prodotti dal motore.
 
-## Errori tipici
+## Errori comuni
 
-- Mancano gli attributi richiesti
-- Duplica `key` o `data_name`
+- Attributi obbligatori mancanti
+- `key` o `data_name` duplicati
 - Operatori non validi (ad esempio, `contains` su un campo numerico)
 - Valori predefiniti che non corrispondono al tipo di campo

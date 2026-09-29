@@ -1,6 +1,6 @@
 ---
 title: Champs calculés
-description: CalculatedField et LabelField
+description: CalculatedField et LabelField.
 ---
 
 <PageBadges />
@@ -29,12 +29,12 @@ import { Callout } from "zudoku/ui/Callout"
 }
 ```
 
-Attributs supplémentaires:
+Attributs supplémentaires :
 
-- `calculate`: Chaîne d'expression évaluée par le moteur.
-- `display.style`: `text`, `numeric`, `date` ou `currency`.
+- `calculate` : expression, sous forme de chaîne, évaluée par le moteur.
+- `display.style` : `text`, `numeric`, `date` ou `currency`.
 
-Remarques:
+Remarques :
 
 - `required` est toujours `false`.
 - `read_only` est toujours `true`.
@@ -61,9 +61,9 @@ Remarques:
 }
 ```
 
-LabelField est un champ non modifiable qui est utile pour le texte en ligne et le regroupement d'interface utilisateur.
+LabelField est un champ non modifiable, utile pour du texte en ligne et pour regrouper des éléments dans l'interface.
 
 <Callout type="info" title="Expressions">
-  Utilisez les fonctions internes (par exemple, `IF`, `ROUND`, `CHOICEVALUE`) dans `calculate`. Voir
-  les pages de la liste complète.
+  Utilisez les builtins (par exemple, `IF`, `ROUND`, `CHOICEVALUE`) dans `calculate`. Voir les pages
+  Builtins pour la liste complète.
 </Callout>

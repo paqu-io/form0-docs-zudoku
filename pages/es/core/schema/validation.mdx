@@ -1,32 +1,32 @@
 ---
 title: Validación de esquemas
-description: Cómo valida form0-core schemas y las condiciones.
+description: Cómo valida form0-core los esquemas y las condiciones.
 ---
 
 <PageBadges />
 
-form0-core valida schemas antes de ejecutar el motor. La validación se centra en la estructura y
-Corrección de atributos, no preocupaciones de UI.
+form0-core valida los esquemas antes de ejecutar el motor. La validación se centra en la estructura y
+en la corrección de los atributos, no en aspectos de la interfaz.
 
-## Lo que está validado
+## Qué se valida
 
-- Atributos requeridos por tipo de campo
-- Valores permitidos para atributos (por ejemplo, opciones `display`)
+- Atributos obligatorios de cada tipo de campo
+- Valores permitidos de los atributos (por ejemplo, las opciones de `display`)
 - `key` y `data_name` únicos
-- Formato `data_name` (a-z minúscula, 0-9, subrayado, longitud máxima 42)
-- Reglas de tipo de campo de coincidencia de valores predeterminados
-- Los operadores de condición son válidos para el tipo de campo referenciado
-- Forma de metadatos AI y claves permitidas
+- Formato de `data_name` (minúsculas a-z, 0-9, guion bajo, longitud máxima de 42)
+- Que los valores predeterminados cumplan las reglas del tipo de campo
+- Que los operadores de las condiciones sean válidos para el tipo de campo referenciado
+- Estructura y claves permitidas de los metadatos de IA
 
 ## Validación en tiempo de ejecución
 
-En runtime, los campos también validan sus valores cuando el motor evalúa:
+Durante la ejecución, los campos también validan sus valores cuando el motor evalúa el formulario:
 
-- Comprobaciones mínimas/máximas numéricas
-- Coincidencias de patrón para campos de texto
-- Los valores de elección deben coincidir con las opciones definidas
+- Comprobaciones numéricas de mínimo y máximo
+- Coincidencia de patrones en los campos de texto
+- Los valores de opción deben coincidir con las opciones definidas
 
-La validación de valores en runtime se ejecuta para todos los campos, incluidos los que están
+La validación de valores en tiempo de ejecución se aplica a todos los campos, incluidos los que están
 ocultos en ese momento. El resultado está disponible en el mapa `errors` del estado del motor.
 
 ### Campos obligatorios y envío
@@ -42,7 +42,7 @@ también en esa comprobación los errores de valor y formato generados por el mo
 
 ## Errores típicos
 
-- Faltan los atributos requeridos
-- Duplicar `key` o `data_name`
+- Atributos obligatorios ausentes
+- `key` o `data_name` duplicados
 - Operadores no válidos (por ejemplo, `contains` en un campo numérico)
 - Valores predeterminados que no coinciden con el tipo de campo

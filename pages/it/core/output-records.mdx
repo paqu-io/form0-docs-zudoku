@@ -1,30 +1,30 @@
 ---
 title: Output e record
-description: Stato motore e uscita record strutturata.
+description: Lo stato del motore e l'output dei record strutturati.
 ---
 
 <PageBadges />
 
-form0-core espone due uscite primarie:
+form0-core espone due output principali:
 
-- Stato motore (`values`, `errors`, `visible`, `required`, `read_only`)
-- Record strutturati per la persistenza (`createStructuredRecord`)
+- Lo stato del motore (`values`, `errors`, `visible`, `required`, `read_only`)
+- I record strutturati per la persistenza (`createStructuredRecord`)
 
-## Stato motore
+## Stato del motore
 
-Dopo `engine.eval()`, chiamare `engine.getState()` per accedere allo stato più recente.
+Dopo `engine.eval()`, chiama `engine.getState()` per leggere lo stato più recente.
 
-## Uscita record strutturata
+## Output dei record strutturati
 
-`createStructuredRecord` trasforma lo stato del motore in un formato submission -friendly:
+`createStructuredRecord` trasforma lo stato del motore in un formato adatto all'invio:
 
-- `form_values` utilizza le chiavi di campo per impostazione predefinita
-- Le sezioni ripetibili diventano matrici di record figlio
-- Le sezioni sono omesse (solo contenitori)
+- `form_values` usa per impostazione predefinita le chiavi dei campi
+- Le sezioni ripetibili diventano array di record figli
+- Le sezioni vengono omesse (sono solo contenitori)
 
-### Modalità chiave campo
+### Modalità delle chiavi dei campi
 
-È possibile passare ai tasti `data_name` utilizzando `fieldKeyMode`:
+Puoi usare invece le chiavi `data_name` tramite `fieldKeyMode`:
 
 ```js
 const record = createStructuredRecord(state, fields, {
@@ -34,5 +34,5 @@ const record = createStructuredRecord(state, fields, {
 
 ## Sezioni ripetibili
 
-Sezioni ripetibili creano record nidificati. Utilizzare `originalElements` per mantenere la nidificazione corretta
-Struttura quando si costruiscono i record.
+Le sezioni ripetibili creano record annidati. Usa `originalElements` per mantenere la corretta
+struttura di annidamento quando crei i record.

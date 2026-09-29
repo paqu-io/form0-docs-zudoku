@@ -1,14 +1,14 @@
 ---
 title: Conditions et opérateurs
-description: Visibilité conditionnelle, exigences et règles en lecture seule.
+description: Règles conditionnelles de visibilité, de caractère obligatoire et de lecture seule.
 ---
 
 <PageBadges />
 
 Les conditions sont utilisées dans `visible_conditions`, `required_conditions` et `read_only_conditions`.
-Ils font référence à d'autres domaines et évaluent à vrai ou faux.
+Elles font référence à d'autres champs et s'évaluent à vrai ou faux.
 
-## Forme
+## Structure d'une condition
 
 ```json
 {
@@ -18,7 +18,7 @@ Ils font référence à d'autres domaines et évaluent à vrai ou faux.
 }
 ```
 
-Vous pouvez combiner les conditions avec `and` ou `or`:
+Vous pouvez combiner des conditions avec `and` ou `or` :
 
 ```json
 {
@@ -33,10 +33,10 @@ Vous pouvez combiner les conditions avec `and` ou `or`:
 
 | Opérateur               | Signification                    |
 | ----------------------- | -------------------------------- |
-| `equal_to`              | Égale à la valeur fournie        |
-| `not_equal_to`          | Pas égal à la valeur             |
-| `greater_than`          | Plus grand que la valeur         |
-| `less_than`             | Moins que la valeur              |
+| `equal_to`              | Égal à la valeur fournie         |
+| `not_equal_to`          | Différent de la valeur           |
+| `greater_than`          | Supérieur à la valeur            |
+| `less_than`             | Inférieur à la valeur            |
 | `greater_or_equal_than` | Supérieur ou égal à              |
 | `less_or_equal_than`    | inférieur ou égal à              |
 | `contains`              | Le tableau contient la valeur    |
@@ -44,25 +44,25 @@ Vous pouvez combiner les conditions avec `and` ou `or`:
 | `is_empty`              | La valeur est vide ou null       |
 | `is_not_empty`          | La valeur n'est pas vide         |
 
-### Support opérateur par type de terrain
+### Opérateurs pris en charge par type de champ
 
-Les opérateurs sont validés par rapport au type de champ référencé. Par exemple:
+Les opérateurs sont validés en fonction du type de champ référencé. Par exemple :
 
 - Les champs de texte prennent en charge `contains` et `starts_with`
-- Les champs numériques/date supportent les opérateurs de comparaison
-- Les champs de choix prennent en charge `equal_to` et `contains` (multi-choix)
+- Les champs numériques et de date prennent en charge les opérateurs de comparaison
+- Les champs de choix prennent en charge `equal_to` et `contains` (choix multiple)
 
-Les conditions de choix comparent les valeurs de réponse, et non l'objet conteneur du moteur de rendu :
+Les conditions de choix comparent les valeurs des réponses, et non l'objet conteneur du renderer :
 
 - `SingleChoiceField` et `BooleanField` comparent le `value` du choix sélectionné.
 - `MultiChoiceField` utilise un tableau de valeurs sélectionnées. `contains` vérifie une valeur,
   tandis que `equal_to` vérifie la sélection complète sans dépendre de l'ordre.
-- Une réponse personnalisée « other » non vide participe avec son `value` ou son libellé, afin que
-  les opérateurs de vacuité reflètent la saisie de l'utilisateur.
+- Une réponse personnalisée « other » non vide intervient via son `value` ou son libellé, afin que
+  les opérateurs de vide reflètent ce que l'utilisateur a saisi.
 
 Si un opérateur n'est pas valide pour le champ référencé, la validation échoue.
 
-## Références des champs
+## Références aux champs
 
-`field_id` devrait pointer vers le champ `key`. `data_name` est accepté comme une solution de secours, mais `key` est
-recommandé car il ne change jamais lorsque les étiquettes changent.
+`field_id` doit pointer vers la `key` du champ. `data_name` est accepté en solution de repli, mais `key` est
+recommandé, car il ne change jamais quand les libellés changent.
