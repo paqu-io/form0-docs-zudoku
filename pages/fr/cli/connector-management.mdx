@@ -1,9 +1,14 @@
 ---
 title: Gestion des connecteurs
-description: Installez, configurez, testez, inspectez et supprimez les connecteurs form0.
+description: Installez, configurez, testez, inspectez et supprimez les paquets de connecteurs form0.
 ---
 
 <PageBadges />
 
-Utilisez `form0 connector <action> [name]` pour gérer les connecteurs. Ils s’exécutent comme modules
-Node.js : n’installez que des paquets fiables et conservez les identifiants dans `.env.local`.
+Utilisez `form0 connector <action> [name]` pour gérer les connecteurs. Les actions disponibles
+permettent d’installer, de configurer, de tester et de recharger des connecteurs, d’en vérifier
+l’état, d’en supprimer la configuration, de les désinstaller et de les lister.
+
+Les paquets de connecteurs s’exécutent dans le processus Node.js local. N’installez que des paquets
+de confiance, gardez les identifiants dans `.env.local` et consultez la documentation de chaque
+connecteur pour connaître la façon dont il stocke les données.

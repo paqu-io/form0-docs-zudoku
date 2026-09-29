@@ -3622,7 +3622,7 @@
     "translationKey": "/cli/command-reference",
     "locale": "es",
     "title": "Referencia de comandos",
-    "description": "Índice orientado al usuario de comandos y grupos de comandos form0-cli.",
+    "description": "Índice de los comandos y grupos de comandos de form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3649,7 +3649,7 @@
     "translationKey": "/cli/connector-management",
     "locale": "es",
     "title": "Gestión de conectores",
-    "description": "Instala, configura, prueba, inspecciona y elimina conectores de form0.",
+    "description": "Instala, configura, prueba, inspecciona y elimina paquetes de conectores de form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3676,7 +3676,7 @@
     "translationKey": "/cli/initialize-project",
     "locale": "es",
     "title": "Inicializar un proyecto",
-    "description": "Crea un proyecto estándar, web o móvil de form0 con la CLI.",
+    "description": "Crea un proyecto form0 estándar, web o móvil con la CLI.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3703,7 +3703,7 @@
     "translationKey": "/cli/install-update",
     "locale": "es",
     "title": "Instalar y actualizar",
-    "description": "Instale form0-cli globalmente o ejecútelo temporalmente con npx.",
+    "description": "Instala form0-cli de forma global o ejecútalo de forma temporal con npx.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3729,8 +3729,8 @@
     "pathname": "/es/cli/interactive-shell",
     "translationKey": "/cli/interactive-shell",
     "locale": "es",
-    "title": "Shell interactivo",
-    "description": "Trabaja con un esquema cargado en una sesión persistente de form0-cli.",
+    "title": "Shell interactiva",
+    "description": "Trabaja con un esquema de formulario cargado en una sesión persistente de form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3811,7 +3811,7 @@
     "translationKey": "/cli/overview",
     "locale": "es",
     "title": "Visión general de la CLI",
-    "description": "Qué hace form0-cli y cuándo usar el shell interactivo o los comandos independientes.",
+    "description": "Qué hace form0-cli y cómo elegir entre su flujo interactivo y los comandos independientes.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3838,7 +3838,7 @@
     "translationKey": "/cli/project-configuration",
     "locale": "es",
     "title": "Configuración del proyecto",
-    "description": "Configuración local del proyecto y preferencias de usuario utilizadas por form0-cli.",
+    "description": "Entiende la configuración local del proyecto y del usuario que usa form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -4054,7 +4054,7 @@
     "translationKey": "/cli/security",
     "locale": "es",
     "title": "Seguridad",
-    "description": "Límites de confianza y prácticas de desarrollo local seguras para form0-cli.",
+    "description": "Límites de confianza y buenas prácticas de desarrollo local con form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -4081,7 +4081,7 @@
     "translationKey": "/cli/troubleshooting",
     "locale": "es",
     "title": "Solución de problemas",
-    "description": "Resuelve problemas habituales de instalación, proyecto, previsualización y conectores.",
+    "description": "Resuelve problemas habituales de instalación, proyectos, vistas previas y conectores de form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7007,7 +7007,7 @@
     "translationKey": "/cli/command-reference",
     "locale": "fr",
     "title": "Référence des commandes",
-    "description": "Index utilisateur des commandes et groupes de commandes form0-cli.",
+    "description": "Index des commandes et groupes de commandes de form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7034,7 +7034,7 @@
     "translationKey": "/cli/connector-management",
     "locale": "fr",
     "title": "Gestion des connecteurs",
-    "description": "Installez, configurez, testez, inspectez et supprimez les connecteurs form0.",
+    "description": "Installez, configurez, testez, inspectez et supprimez les paquets de connecteurs form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7115,7 +7115,7 @@
     "translationKey": "/cli/interactive-shell",
     "locale": "fr",
     "title": "Shell interactif",
-    "description": "Travaillez avec un schéma chargé dans une session form0-cli persistante.",
+    "description": "Travaillez avec un schéma de formulaire chargé dans une session form0-cli persistante.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7196,7 +7196,7 @@
     "translationKey": "/cli/overview",
     "locale": "fr",
     "title": "Aperçu de la CLI",
-    "description": "Rôle de form0-cli et choix entre le shell interactif et les commandes autonomes.",
+    "description": "Ce que fait form0-cli et comment choisir entre son mode interactif et ses commandes autonomes.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7223,7 +7223,7 @@
     "translationKey": "/cli/project-configuration",
     "locale": "fr",
     "title": "Configuration du projet",
-    "description": "Configuration locale du projet et préférences utilisateur utilisées par form0-cli.",
+    "description": "Comprenez la configuration propre au projet et à l’utilisateur utilisée par form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7439,7 +7439,7 @@
     "translationKey": "/cli/security",
     "locale": "fr",
     "title": "Sécurité",
-    "description": "Faites confiance aux limites et aux pratiques de développement local sûres pour form0-cli.",
+    "description": "Limites de confiance et bonnes pratiques de développement local pour form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -7466,7 +7466,7 @@
     "translationKey": "/cli/troubleshooting",
     "locale": "fr",
     "title": "Dépannage",
-    "description": "Résolvez les problèmes courants d’installation, de projet, d’aperçu et de connecteur.",
+    "description": "Résolvez les problèmes courants de form0-cli liés à l’installation, aux projets, à l’aperçu et aux connecteurs.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10483,7 +10483,7 @@
     "translationKey": "/cli/command-reference",
     "locale": "it",
     "title": "Riferimento dei comandi",
-    "description": "Indice rivolto all'utente dei comandi e dei gruppi di comando form0-cli.",
+    "description": "Indice dei comandi e dei gruppi di comandi di form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10510,7 +10510,7 @@
     "translationKey": "/cli/connector-management",
     "locale": "it",
     "title": "Gestione dei connettori",
-    "description": "Installa, configura, testa, ispeziona e rimuovi i connettori form0.",
+    "description": "Installa, configura, testa, ispeziona e rimuovi i pacchetti dei connettori form0.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10564,7 +10564,7 @@
     "translationKey": "/cli/install-update",
     "locale": "it",
     "title": "Installare e aggiornare",
-    "description": "Installa form0-cli a livello globale o eseguilo temporaneamente con npx.",
+    "description": "Installa form0-cli globalmente oppure eseguilo temporaneamente con npx.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10591,7 +10591,7 @@
     "translationKey": "/cli/interactive-shell",
     "locale": "it",
     "title": "Shell interattiva",
-    "description": "Lavora con uno schema caricato in una sessione form0-cli persistente.",
+    "description": "Lavora con uno schema di modulo caricato in una sessione persistente di form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10672,7 +10672,7 @@
     "translationKey": "/cli/overview",
     "locale": "it",
     "title": "Panoramica della CLI",
-    "description": "Cosa fa form0-cli e quando usare la shell interattiva o i comandi autonomi.",
+    "description": "Cosa fa form0-cli e come scegliere tra la modalità interattiva e i comandi autonomi.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10699,7 +10699,7 @@
     "translationKey": "/cli/project-configuration",
     "locale": "it",
     "title": "Configurazione del progetto",
-    "description": "Configurazione locale del progetto e preferenze utente usate da form0-cli.",
+    "description": "Comprendi la configurazione locale del progetto e dell'utente usata da form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10915,7 +10915,7 @@
     "translationKey": "/cli/security",
     "locale": "it",
     "title": "Sicurezza",
-    "description": "Fidati dei confini e delle pratiche di sviluppo locale sicure per form0-cli.",
+    "description": "Confini di fiducia e buone pratiche di sviluppo locale per form0-cli.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10942,7 +10942,7 @@
     "translationKey": "/cli/troubleshooting",
     "locale": "it",
     "title": "Risoluzione dei problemi",
-    "description": "Risolvi i problemi comuni di installazione, progetto, anteprima e connettori.",
+    "description": "Risolvi i problemi comuni di form0-cli relativi a installazione, progetti, anteprima e connettori.",
     "indexable": true,
     "status": "published",
     "alternates": [

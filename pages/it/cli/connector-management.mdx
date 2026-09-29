@@ -1,9 +1,14 @@
 ---
 title: Gestione dei connettori
-description: Installa, configura, testa, ispeziona e rimuovi i connettori form0.
+description: Installa, configura, testa, ispeziona e rimuovi i pacchetti dei connettori form0.
 ---
 
 <PageBadges />
 
-Usa `form0 connector <action> [name]` per gestire i connettori. Vengono eseguiti come moduli Node.js:
-installa solo pacchetti affidabili e conserva le credenziali in `.env.local`.
+Usa `form0 connector <action> [name]` per gestire i connettori. Le azioni disponibili permettono di
+installare, configurare, testare e ricaricare i connettori, verificarne lo stato, rimuoverne la
+configurazione, disinstallarli ed elencarli.
+
+I pacchetti dei connettori vengono eseguiti nel processo Node.js locale. Installa solo pacchetti
+affidabili, conserva le credenziali in `.env.local` e consulta la documentazione di ciascun
+connettore per sapere come archivia i dati.
