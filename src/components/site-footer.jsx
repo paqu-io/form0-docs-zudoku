@@ -9,9 +9,10 @@ const PAQU_IO_URL = "https://paqu.io"
 const legalLinkClass = "text-xs text-muted-foreground/70 transition-colors hover:text-primary"
 const dotClass = "text-xs text-muted-foreground/40"
 
-function privacyHref(locale) {
-  if (locale === DEFAULT_LOCALE) return `${FORM0_ORIGIN}/privacy`
-  return `${FORM0_ORIGIN}/${locale}/privacy`
+// form0.dev and paqu.io share the locale-prefix scheme (`/es/privacy`).
+function localizedHref(origin, path, locale) {
+  if (locale === DEFAULT_LOCALE) return `${origin}${path}`
+  return `${origin}/${locale}${path}`
 }
 
 export function SiteFooter() {
@@ -26,12 +27,24 @@ export function SiteFooter() {
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
             <a
-              href={privacyHref(locale)}
+              href={localizedHref(FORM0_ORIGIN, "/privacy", locale)}
               className={legalLinkClass}
               data-umami-event="nav-privacy"
               data-umami-event-location="footer"
             >
               {t("common.footer.privacy", {}, { locale })}
+            </a>
+            <span aria-hidden="true" className={dotClass}>
+              ·
+            </span>
+            {/* One provider identity for paqu.io and the form0 sites, published on paqu.io. */}
+            <a
+              href={localizedHref(PAQU_IO_URL, "/legal-notice", locale)}
+              className={legalLinkClass}
+              data-umami-event="nav-legal-notice"
+              data-umami-event-location="footer"
+            >
+              {t("common.footer.legalNotice", {}, { locale })}
             </a>
             <span aria-hidden="true" className={dotClass}>
               ·
