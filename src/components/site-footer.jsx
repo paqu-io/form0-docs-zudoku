@@ -40,6 +40,8 @@ export function SiteFooter() {
             {/* One provider identity for paqu.io and the form0 sites, published on paqu.io. */}
             <a
               href={localizedHref(PAQU_IO_URL, "/legal-notice", locale)}
+              target="_blank"
+              rel="noopener noreferrer"
               className={legalLinkClass}
               data-umami-event="nav-legal-notice"
               data-umami-event-location="footer"
