@@ -67,11 +67,12 @@ ON("change", "age", function onAgeChange(event) {
 Dans un gestionnaire, lisez les valeurs du formulaire avec `$data_name`. Pour une logique partagée
 par plusieurs gestionnaires, passez une fonction dans l'option `helpers` du moteur.
 
-Les gestionnaires doivent être synchrones. `trigger()` renvoie son résultat de façon synchrone et
-n'inclut que les opérations créées avant le retour du gestionnaire ou son premier `await`. Si un
-gestionnaire renvoie une Promise ou un thenable, le moteur le signale par le système d'avertissement
-configuré. Les opérations ultérieures sont ignorées et signalées, et les rejets sont interceptés et
-signalés sans modifier la valeur renvoyée par `trigger()`.
+Les gestionnaires doivent être synchrones. Si un gestionnaire est `async` ou renvoie une promesse,
+le moteur émet un avertissement, et `trigger()` ne renvoie que les opérations créées par le
+gestionnaire avant son premier `await`. Les opérations créées ensuite sont abandonnées avec un
+avertissement, et une erreur levée après un `await` est signalée au lieu d'échapper au moteur. Ces
+avertissements s'affichent dans la console en développement et parviennent aux gestionnaires de
+`WarningSystem` que vous avez enregistrés.
 
 Comme le moteur conserve lui-même le code source, les gestionnaires s'exécutent aussi sur Hermes, le
 moteur JavaScript de React Native, qui n'expose pas le code source des fonctions. Cela fonctionne

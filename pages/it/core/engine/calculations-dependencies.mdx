@@ -180,18 +180,6 @@ const engine = createFormEngine({
 Se `onDiagnostics` genera un errore o restituisce una promise rifiutata, la valutazione viene
 comunque completata.
 
-### Migrare dall'array di segnalazione precedente
-
-L'opzione cumulativa `runtimeDiagnostics` è deprecata, ma rimane supportata per compatibilità.
-Per le nuove integrazioni, ometti questa opzione e usa `engine.getDiagnostics()` per l'ultima
-valutazione, oppure `onDiagnostics(snapshot)` per ogni valutazione completata, incluso il ripristino
-(`[]`).
-
-Non è una sostituzione diretta dell'array precedente: gli snapshot usano il contratto di diagnostica
-strutturata descritto di seguito e sostituiscono i risultati precedenti invece di accumularli.
-Se ti serve uno storico, salva gli snapshot nel codice dell'applicazione. Non è prevista alcuna
-versione per la rimozione.
-
 ### Contenuto di una diagnostica
 
 | Proprietà    | Descrizione                                                                                           |
@@ -252,6 +240,18 @@ const engine = createFormEngine({ schema, diagnostics: { console: false } })
 
 Se passi un tuo `WarningSystem`, i suoi gestori continuano a ricevere gli avvisi di dipendenza e di
 ambito.
+
+### Migrare da `runtimeDiagnostics`
+
+L'opzione `runtimeDiagnostics`, un array a cui il motore aggiunge elementi, è deprecata ma ancora
+supportata. Al suo posto, chiama `engine.getDiagnostics()` dopo `eval()`, oppure passa
+`onDiagnostics` per ricevere una notifica dopo ogni valutazione, anche con un elenco vuoto quando i
+problemi sono stati risolti.
+
+La nuova API non è una sostituzione diretta. La diagnostica ha la forma descritta in [Contenuto di
+una diagnostica](#contenuto-di-una-diagnostica) e ogni valutazione sostituisce l'elenco precedente
+invece di aggiungervi elementi. Se ti serve uno storico, conserva gli elenchi precedenti nella tua
+applicazione. Non è ancora stata fissata una data di rimozione.
 
 ## Campi calcolati nelle sezioni ripetibili
 

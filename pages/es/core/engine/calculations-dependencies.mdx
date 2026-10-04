@@ -180,17 +180,6 @@ const engine = createFormEngine({
 
 Si `onDiagnostics` lanza un error o devuelve una promesa rechazada, la evaluación se completa igualmente.
 
-### Migrar desde el array de informes heredado
-
-La opción acumulativa `runtimeDiagnostics` está obsoleta, pero sigue disponible por compatibilidad.
-Para nuevas integraciones, omite esa opción y usa `engine.getDiagnostics()` para la última evaluación,
-o `onDiagnostics(snapshot)` para cada evaluación completada, incluida la recuperación (`[]`).
-
-No es un reemplazo directo del array heredado: las instantáneas utilizan el contrato de diagnósticos
-estructurados descrito a continuación y reemplazan los resultados anteriores en vez de acumularlos.
-Si necesitas un historial, almacena las instantáneas en el código de la aplicación. No hay ninguna
-versión de eliminación prevista.
-
 ### Contenido de un diagnóstico
 
 | Propiedad    | Descripción                                                                             |
@@ -250,6 +239,18 @@ const engine = createFormEngine({ schema, diagnostics: { console: false } })
 
 Si pasas tu propio `WarningSystem`, sus manejadores siguen recibiendo los avisos de dependencias y
 de ámbito.
+
+### Migrar desde `runtimeDiagnostics`
+
+La opción `runtimeDiagnostics`, un array al que el motor va añadiendo elementos, está obsoleta, pero
+se sigue admitiendo. En su lugar, llama a `engine.getDiagnostics()` después de `eval()`, o pasa
+`onDiagnostics` para que se te notifique después de cada evaluación, también con una lista vacía
+cuando los problemas se hayan corregido.
+
+La nueva API no es un reemplazo directo. Los diagnósticos tienen la forma descrita en [Contenido de
+un diagnóstico](#contenido-de-un-diagnóstico), y cada evaluación sustituye la lista anterior en
+lugar de añadirle elementos. Si necesitas un historial, guarda las listas anteriores en tu
+aplicación. Todavía no se ha fijado cuándo se eliminará.
 
 ## Campos calculados en secciones repetibles
 

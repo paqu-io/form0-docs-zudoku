@@ -65,11 +65,11 @@ ON("change", "age", function onAgeChange(event) {
 Inside a handler, read form values with `$data_name`. For logic shared by several handlers, pass a
 function in the engine's `helpers` option.
 
-Handlers must be synchronous. `trigger()` returns synchronously and includes only operations created
-before a handler returns or reaches its first `await`. If a handler returns a Promise or thenable,
-the engine reports it through the configured warning system. Operations attempted later are
-discarded and reported, and rejected handlers are caught and reported without changing the return
-value of `trigger()`.
+Handlers must be synchronous. If a handler is `async` or returns a promise, the engine warns about
+it, and `trigger()` returns only the operations the handler created before its first `await`.
+Operations created after that are discarded with a warning, and an error thrown after an `await` is
+reported instead of escaping the engine. These warnings print to the console in development and
+reach any `WarningSystem` handlers.
 
 Because the engine keeps the source code itself, handlers also run on Hermes, the JavaScript engine
 of React Native, which does not expose the source of a function. This works for function

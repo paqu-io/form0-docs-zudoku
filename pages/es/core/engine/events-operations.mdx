@@ -66,11 +66,11 @@ ON("change", "age", function onAgeChange(event) {
 Dentro de un manejador, lee los valores del formulario con `$data_name`. Para la lógica que
 comparten varios manejadores, pasa una función en la opción `helpers` del motor.
 
-Los manejadores deben ser síncronos. `trigger()` devuelve el resultado de forma síncrona e incluye
-solo las operaciones creadas antes de que el manejador termine o alcance su primer `await`. Si un
-manejador devuelve una Promise o un thenable, el motor lo notifica mediante el sistema de avisos
-configurado. Las operaciones posteriores se descartan y notifican, y los rechazos se capturan y
-notifican sin cambiar el valor devuelto por `trigger()`.
+Los manejadores deben ser síncronos. Si un manejador es `async` o devuelve una promesa, el motor
+emite un aviso y `trigger()` devuelve solo las operaciones que el manejador creó antes de su primer
+`await`. Las operaciones creadas después se descartan con un aviso, y un error lanzado después de un
+`await` se notifica en lugar de escapar del motor. Estos avisos se muestran en la consola en
+desarrollo y llegan a los manejadores de `WarningSystem` que hayas registrado.
 
 Como el motor conserva el código fuente por su cuenta, los manejadores también se ejecutan en
 Hermes, el motor de JavaScript de React Native, que no expone el código fuente de las funciones.

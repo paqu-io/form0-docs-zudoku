@@ -174,16 +174,6 @@ const engine = createFormEngine({
 
 If `onDiagnostics` throws or returns a rejected promise, the evaluation still completes.
 
-### Migrating from the legacy reporting array
-
-The append-only `runtimeDiagnostics` option is deprecated but remains supported for compatibility.
-For new integrations, omit that option and use `engine.getDiagnostics()` for the latest evaluation,
-or `onDiagnostics(snapshot)` for every completed evaluation, including recovery (`[]`).
-
-This is not a drop-in replacement for the legacy array: snapshots use the structured diagnostic
-contract below and replace prior results rather than accumulating them. If you need a history,
-store snapshots in application code. No removal version is scheduled.
-
 ### What a diagnostic contains
 
 | Property     | Description                                                                           |
@@ -242,6 +232,17 @@ const engine = createFormEngine({ schema, diagnostics: { console: false } })
 ```
 
 If you pass your own `WarningSystem`, its handlers still receive dependency and scope warnings.
+
+### Migrating from `runtimeDiagnostics`
+
+The `runtimeDiagnostics` option, an array the engine appends to, is deprecated but still supported.
+Instead, call `engine.getDiagnostics()` after `eval()`, or pass `onDiagnostics` to be notified after
+every evaluation, including with an empty list once problems are fixed.
+
+The new API is not a drop-in replacement. Diagnostics have the shape described in [What a diagnostic
+contains](#what-a-diagnostic-contains), and each evaluation replaces the previous list instead of
+adding to it. If you need a history, keep earlier lists in your application. No removal date has
+been set yet.
 
 ## Calculated fields in repeatable sections
 

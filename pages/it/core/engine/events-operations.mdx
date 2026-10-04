@@ -66,11 +66,11 @@ ON("change", "age", function onAgeChange(event) {
 All'interno di un gestore, leggi i valori del modulo con `$data_name`. Per la logica condivisa da
 più gestori, passa una funzione nell'opzione `helpers` del motore.
 
-I gestori devono essere sincroni. `trigger()` restituisce il risultato in modo sincrono e include
-solo le operazioni create prima che il gestore termini o raggiunga il primo `await`. Se un gestore
-restituisce una Promise o un thenable, il motore lo segnala tramite il sistema di avvisi configurato.
-Le operazioni successive vengono scartate e segnalate, mentre i rifiuti vengono intercettati e
-segnalati senza modificare il valore restituito da `trigger()`.
+I gestori devono essere sincroni. Se un gestore è `async` o restituisce una promise, il motore
+emette un avviso e `trigger()` restituisce solo le operazioni create dal gestore fino al primo
+`await`. Le operazioni create in seguito vengono scartate con un avviso. Un errore generato dopo un
+`await` viene segnalato invece di sfuggire al motore. Questi avvisi vengono stampati nella console
+in sviluppo e arrivano agli eventuali gestori di `WarningSystem`.
 
 Poiché è il motore stesso a conservare il codice sorgente, i gestori funzionano anche su Hermes, il
 motore JavaScript di React Native, che non espone il codice sorgente delle funzioni. Vale per le

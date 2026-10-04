@@ -183,18 +183,6 @@ const engine = createFormEngine({
 Si `onDiagnostics` lève une erreur ou renvoie une promesse rejetée, l'évaluation se termine quand
 même.
 
-### Migrer depuis le tableau de rapports historique
-
-L'option cumulative `runtimeDiagnostics` est obsolète, mais reste prise en charge pour compatibilité.
-Pour les nouvelles intégrations, omettez cette option et utilisez `engine.getDiagnostics()` pour la
-dernière évaluation, ou `onDiagnostics(snapshot)` pour chaque évaluation terminée, y compris le
-rétablissement (`[]`).
-
-Ce n'est pas un remplacement direct du tableau historique : les instantanés utilisent le contrat de
-diagnostics structurés décrit ci-dessous et remplacent les résultats précédents au lieu de les
-accumuler. Si vous avez besoin d'un historique, stockez les instantanés dans le code de l'application.
-Aucune version de suppression n'est prévue.
-
 ### Contenu d'un diagnostic
 
 | Propriété    | Description                                                                                    |
@@ -255,6 +243,18 @@ const engine = createFormEngine({ schema, diagnostics: { console: false } })
 
 Si vous passez votre propre `WarningSystem`, ses gestionnaires reçoivent toujours les avertissements
 de dépendance et de portée.
+
+### Migrer depuis `runtimeDiagnostics`
+
+L'option `runtimeDiagnostics`, un tableau que le moteur complète au fur et à mesure, est obsolète
+mais reste prise en charge. À la place, appelez `engine.getDiagnostics()` après `eval()`, ou passez
+`onDiagnostics` pour être notifié après chaque évaluation, y compris avec une liste vide une fois
+les problèmes corrigés.
+
+La nouvelle API n'est pas un remplacement direct. Les diagnostics ont la forme décrite dans [Contenu
+d'un diagnostic](#contenu-dun-diagnostic), et chaque évaluation remplace la liste précédente au lieu
+de la compléter. Si vous avez besoin d'un historique, conservez les listes précédentes dans votre
+application. Aucune date de suppression n'est encore prévue.
 
 ## Champs calculés dans les sections répétables
 
