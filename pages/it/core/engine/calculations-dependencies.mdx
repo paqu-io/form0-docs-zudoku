@@ -180,6 +180,18 @@ const engine = createFormEngine({
 Se `onDiagnostics` genera un errore o restituisce una promise rifiutata, la valutazione viene
 comunque completata.
 
+### Migrare dall'array di segnalazione precedente
+
+L'opzione cumulativa `runtimeDiagnostics` è deprecata, ma rimane supportata per compatibilità.
+Per le nuove integrazioni, ometti questa opzione e usa `engine.getDiagnostics()` per l'ultima
+valutazione, oppure `onDiagnostics(snapshot)` per ogni valutazione completata, incluso il ripristino
+(`[]`).
+
+Non è una sostituzione diretta dell'array precedente: gli snapshot usano il contratto di diagnostica
+strutturata descritto di seguito e sostituiscono i risultati precedenti invece di accumularli.
+Se ti serve uno storico, salva gli snapshot nel codice dell'applicazione. Non è prevista alcuna
+versione per la rimozione.
+
 ### Contenuto di una diagnostica
 
 | Proprietà    | Descrizione                                                                                           |

@@ -180,6 +180,17 @@ const engine = createFormEngine({
 
 Si `onDiagnostics` lanza un error o devuelve una promesa rechazada, la evaluación se completa igualmente.
 
+### Migrar desde el array de informes heredado
+
+La opción acumulativa `runtimeDiagnostics` está obsoleta, pero sigue disponible por compatibilidad.
+Para nuevas integraciones, omite esa opción y usa `engine.getDiagnostics()` para la última evaluación,
+o `onDiagnostics(snapshot)` para cada evaluación completada, incluida la recuperación (`[]`).
+
+No es un reemplazo directo del array heredado: las instantáneas utilizan el contrato de diagnósticos
+estructurados descrito a continuación y reemplazan los resultados anteriores en vez de acumularlos.
+Si necesitas un historial, almacena las instantáneas en el código de la aplicación. No hay ninguna
+versión de eliminación prevista.
+
 ### Contenido de un diagnóstico
 
 | Propiedad    | Descripción                                                                             |

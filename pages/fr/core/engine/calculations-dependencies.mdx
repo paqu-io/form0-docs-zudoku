@@ -183,6 +183,18 @@ const engine = createFormEngine({
 Si `onDiagnostics` lève une erreur ou renvoie une promesse rejetée, l'évaluation se termine quand
 même.
 
+### Migrer depuis le tableau de rapports historique
+
+L'option cumulative `runtimeDiagnostics` est obsolète, mais reste prise en charge pour compatibilité.
+Pour les nouvelles intégrations, omettez cette option et utilisez `engine.getDiagnostics()` pour la
+dernière évaluation, ou `onDiagnostics(snapshot)` pour chaque évaluation terminée, y compris le
+rétablissement (`[]`).
+
+Ce n'est pas un remplacement direct du tableau historique : les instantanés utilisent le contrat de
+diagnostics structurés décrit ci-dessous et remplacent les résultats précédents au lieu de les
+accumuler. Si vous avez besoin d'un historique, stockez les instantanés dans le code de l'application.
+Aucune version de suppression n'est prévue.
+
 ### Contenu d'un diagnostic
 
 | Propriété    | Description                                                                                    |
