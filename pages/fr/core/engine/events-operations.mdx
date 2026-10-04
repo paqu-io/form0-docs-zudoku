@@ -46,6 +46,43 @@ ON("load-record", function onLoad() {
 - Enregistrez chaque gestionnaire au niveau supérieur de `form.events.code`. `ON` et `OFF` appelés à
   l'intérieur d'un gestionnaire n'ont aucun effet.
 
+## Comment s'exécute le code des gestionnaires
+
+Le moteur conserve le code source de chaque gestionnaire défini dans `form.events.code` et exécute
+ce code à chaque déclenchement de l'événement. Un gestionnaire ne peut donc pas utiliser les
+variables du code qui l'entoure : les constantes, variables et fonctions déclarées au niveau
+supérieur de `form.events.code` ne sont pas disponibles dans le gestionnaire.
+
+```js
+const ADULT_AGE = 18
+
+ON("change", "age", function onAgeChange(event) {
+  // Fails with "ADULT_AGE is not defined"
+  if ($age >= ADULT_AGE) {
+    SETVALUE("adult_note", "Adult")
+  }
+})
+```
+
+Dans un gestionnaire, lisez les valeurs du formulaire avec `$data_name`. Pour une logique partagée
+par plusieurs gestionnaires, passez une fonction dans l'option `helpers` du moteur.
+
+Les gestionnaires doivent être synchrones. Dans un gestionnaire `async`, les opérations appelées
+après un `await` ne sont pas renvoyées avec cet événement. Elles peuvent se retrouver dans un
+déclenchement ultérieur, y compris celui d'un autre moteur, et le moteur n'intercepte pas les
+erreurs levées après un `await`.
+
+Comme le moteur conserve lui-même le code source, les gestionnaires s'exécutent aussi sur Hermes, le
+moteur JavaScript de React Native, qui n'expose pas le code source des fonctions. Cela fonctionne
+pour les déclarations de fonction, les expressions de fonction et les fonctions fléchées écrites
+dans `form.events.code`, y compris celles affectées à une variable puis passées à `ON`.
+
+Pour tout autre callback, le moteur lit le code source avec `toString()`. Cela concerne les
+callbacks qui proviennent de `helpers` ou sont créés à l'exécution, les méthodes d'objet, les
+getters et setters, et les membres de classe. Ce mécanisme fonctionne dans Node.js et dans les
+navigateurs, mais pas sur Hermes. Dans ce cas, le moteur affiche
+`Event callback source is unavailable` et exécute les autres gestionnaires.
+
 ## Quand les gestionnaires s'exécutent
 
 Un gestionnaire ne s'exécute que lorsque son événement est déclenché, soit par un binding, soit par

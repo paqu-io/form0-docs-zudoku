@@ -59,6 +59,10 @@ flowchart LR
 After the pass, `engine.getState()` returns the result. The same values always produce the same
 state, no matter in which order the user entered them.
 
+`eval()` also collects calculation diagnostics, such as cycles or expressions that throw. Read them
+with `engine.getDiagnostics()`. They do not change `errors`, conditions, or events. See
+[Seeing errors and warnings](/core/engine/calculations-dependencies#seeing-errors-and-warnings).
+
 ### What the order means for your schema
 
 - **Conditions see calculated values.** Calculations run first, so a `visible_conditions` or

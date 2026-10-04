@@ -44,6 +44,41 @@ ON("load-record", function onLoad() {
 - Register every handler at the top level of `form.events.code`. `ON` and `OFF` called inside a
   handler have no effect.
 
+## How handler code runs
+
+The engine keeps the source code of every handler defined in `form.events.code` and runs that code
+each time the event is dispatched. A handler therefore cannot use variables from the code around it:
+constants, variables, and functions declared at the top level of `form.events.code` are not
+available inside the handler.
+
+```js
+const ADULT_AGE = 18
+
+ON("change", "age", function onAgeChange(event) {
+  // Fails with "ADULT_AGE is not defined"
+  if ($age >= ADULT_AGE) {
+    SETVALUE("adult_note", "Adult")
+  }
+})
+```
+
+Inside a handler, read form values with `$data_name`. For logic shared by several handlers, pass a
+function in the engine's `helpers` option.
+
+Handlers must be synchronous. In an `async` handler, operations called after an `await` are not
+returned with that event. They can leak into a later event dispatch, including a dispatch on another
+engine, and errors thrown after an `await` are not caught by the engine.
+
+Because the engine keeps the source code itself, handlers also run on Hermes, the JavaScript engine
+of React Native, which does not expose the source of a function. This works for function
+declarations, function expressions, and arrow functions written in `form.events.code`, including
+those assigned to a variable and passed to `ON` later.
+
+For any other callback, the engine reads the source with `toString()`. This includes callbacks that
+come from `helpers` or are created at runtime, object methods, getters and setters, and class
+members. That works in Node.js and browsers, but not on Hermes. There, the engine prints
+`Event callback source is unavailable` and runs the remaining handlers.
+
 ## When handlers run
 
 A handler runs only when its event is dispatched, either by a binding or by your application with
