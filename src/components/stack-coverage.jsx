@@ -78,7 +78,7 @@ export function StackRow({ project, license, highlight = false, children }) {
       (result, cell) => {
         const span = cell.props.span || 1
         const layers = LAYERS.slice(result.columns, result.columns + span)
-        const layerLabel = layers.map((layer) => label(`layers.${layer}`)).join(" + ")
+        const layerLabel = layers.map((layer) => label(`layers.${layer}`)).join(", ")
         return {
           cells: [...result.cells, cloneElement(cell, { layerLabel })],
           columns: result.columns + span,
