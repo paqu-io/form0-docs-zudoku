@@ -78,14 +78,23 @@ function linkPaths(source) {
   return links(source).map((target) => target.split("#", 1)[0])
 }
 
+// Repeat until stable, so removing one tag cannot leave another one behind.
+function stripTags(text) {
+  let previous
+  do {
+    previous = text
+    text = text.replace(/<[^>]+>/g, "")
+  } while (text !== previous)
+  return text
+}
+
 function headingText(line) {
-  return line
+  const withoutLinks = line
     .replace(/^(?:#{1,6})\s+/, "")
     .replace(/\s+#+\s*$/, "")
     .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
-    .replace(/<[^>]+>/g, "")
-    .replace(/[`*_~]/g, "")
+  return stripTags(withoutLinks).replace(/[`*_~]/g, "")
 }
 
 function headingAnchors(source) {
