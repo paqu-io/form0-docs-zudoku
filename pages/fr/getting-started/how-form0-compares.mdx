@@ -28,16 +28,69 @@ complètes de collecte de données.
 
 ## En bref
 
-### Architecture et distribution
+### Ce que fournit chaque projet
 
-| Projet                           | Modèle d'exécution et d'interface                                                               | Cibles documentées                        | Backend et stockage                                                          |
-| -------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------- | ---------------------------------------------------------------------------- |
-| **form0**                        | `form0-core`, indépendant de tout framework ; les bindings d'interface sont des paquets séparés | React et React Native                     | Fournis par votre application                                                |
-| **SurveyJS**                     | `survey-core`, indépendant de tout framework, avec des paquets d'interface séparés              | React, Angular, Vue 3 et JavaScript natif | Fournis par votre application                                                |
-| **Form.io**                      | Noyau et renderer en JavaScript natif, avec des adaptateurs pour les frameworks                 | JavaScript natif, React et Angular        | Stockage géré par l'application, ou API et services de la plateforme Form.io |
-| **ODK (XLSForm)**                | Les définitions XLSForm s'exécutent au sein de la plateforme de collecte ODK                    | ODK Collect pour Android et ODK Web Forms | ODK Central ou un autre serveur compatible                                   |
-| **JSON Forms**                   | Noyau indépendant de tout framework, avec des jeux de renderers                                 | React, Angular et Vue                     | Fournis par votre application                                                |
-| **react-jsonschema-form (RJSF)** | Renderer de formulaires React piloté par JSON Schema                                            | React                                     | Fournis par votre application                                                |
+<StackCoverage>
+  <StackRow project="form0" license="MIT" highlight>
+    <StackCell kind="open-source" note="Création assistée par IA">
+      JSON + CLI
+    </StackCell>
+    <StackCell kind="form0">form0-core</StackCell>
+    <StackCell kind="form0">React · React Native</StackCell>
+    <StackCell kind="application" addon="Connecteurs PostgreSQL et SQLite disponibles">
+      Votre backend et stockage
+    </StackCell>
+    <StackCell kind="application" addon="Modèles starter disponibles">
+      Votre application
+    </StackCell>
+  </StackRow>
+  <StackRow project="SurveyJS" license="Form Library : MIT">
+    <StackCell kind="commercial">Survey Creator</StackCell>
+    <StackCell kind="open-source">survey-core</StackCell>
+    <StackCell kind="open-source">React, Angular, Vue 3, JavaScript</StackCell>
+    <StackCell kind="application">Votre backend et stockage</StackCell>
+    <StackCell kind="application">Votre application</StackCell>
+  </StackRow>
+  <StackRow project="Form.io" license="formio.js : MIT">
+    <StackCell kind="open-source">Éditeur intégré à formio.js</StackCell>
+    <StackCell kind="open-source">Cœur de formio.js</StackCell>
+    <StackCell kind="open-source">JavaScript, React, Angular</StackCell>
+    <StackCell kind="open-source" note="OSL-3.0, auto-hébergé">
+      Serveur d’API Form.io
+    </StackCell>
+    <StackCell kind="commercial">Plateforme Form.io hébergée</StackCell>
+  </StackRow>
+  <StackRow project="ODK" license="Collect : Apache-2.0">
+    <StackCell kind="open-source">Feuilles de calcul XLSForm</StackCell>
+    <StackCell kind="open-source">Logique des formulaires basée sur XPath</StackCell>
+    <StackCell kind="open-source">ODK Collect, ODK Web Forms</StackCell>
+    <StackCell kind="open-source" note="ou un serveur compatible">
+      ODK Central
+    </StackCell>
+    <StackCell kind="open-source">Plateforme ODK</StackCell>
+  </StackRow>
+  <StackRow project="JSON Forms" license="MIT">
+    <StackCell kind="application" note="JSON Schema et UI schema">
+      Votre flux de création
+    </StackCell>
+    <StackCell kind="open-source" note="Règles ; les calculs nécessitent votre code">
+      Cœur de JSON Forms
+    </StackCell>
+    <StackCell kind="open-source">React, Angular, Vue</StackCell>
+    <StackCell kind="application">Votre backend et stockage</StackCell>
+    <StackCell kind="application">Votre application</StackCell>
+  </StackRow>
+  <StackRow project="RJSF" license="Apache-2.0">
+    <StackCell kind="application" note="JSON Schema">
+      Votre flux de création
+    </StackCell>
+    <StackCell kind="open-source" span={2}>
+      Renderer React + JSON Schema
+    </StackCell>
+    <StackCell kind="application">Votre backend et stockage</StackCell>
+    <StackCell kind="application">Votre application</StackCell>
+  </StackRow>
+</StackCoverage>
 
 ### Logique des formulaires
 
@@ -152,14 +205,16 @@ formulaires sans dépendre d'un environnement d'exécution commercial.
   [licences](https://surveyjs.io/licensing) et
   [logique conditionnelle](https://surveyjs.io/form-library/documentation/design-survey/conditional-logic)
 - Form.io : [`formio.js`](https://github.com/formio/formio.js),
+  [serveur d’API](https://github.com/formio/formio),
   [intégration React](https://github.com/formio/react),
   [intégration Angular](https://github.com/formio/angular),
   [évaluateur JavaScript](https://help.form.io/dev/javascript-evaluator) et
   [logique et conditions](https://help.form.io/form-building/logic-and-conditions)
 - ODK et XLSForm : [XLSForm](https://xlsform.org/en/),
   [logique des formulaires ODK](https://docs.getodk.org/form-logic/),
-  [ODK Web Forms](https://docs.getodk.org/web-forms-intro/) et
-  [ODK Collect](https://github.com/getodk/collect)
+  [ODK Web Forms](https://docs.getodk.org/web-forms-intro/),
+  [ODK Collect](https://github.com/getodk/collect) et
+  [ODK Central](https://github.com/getodk/central)
 - JSON Forms : [présentation](https://jsonforms.io/),
   [jeux de renderers](https://jsonforms.io/docs/renderer-sets/),
   [règles de UI schema](https://jsonforms.io/docs/uischema/rules/) et

@@ -26,16 +26,69 @@ libraries to complete data-collection platforms.
 
 ## At a glance
 
-### Architecture and delivery
+### What each project provides
 
-| Project                          | Runtime and UI model                                           | Documented targets                          | Backend and storage                                                     |
-| -------------------------------- | -------------------------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------------------- |
-| **form0**                        | Framework-independent `form0-core`; UI bindings are separate   | React and React Native                      | Supplied by your application                                            |
-| **SurveyJS**                     | Framework-independent `survey-core` with separate UI packages  | React, Angular, Vue 3, and plain JavaScript | Supplied by your application                                            |
-| **Form.io**                      | Core and plain-JavaScript renderer, with framework wrappers    | Plain JavaScript, React, and Angular        | Can use application-owned storage or Form.io APIs and platform services |
-| **ODK (XLSForm)**                | XLSForm definitions run as part of the ODK collection platform | ODK Collect for Android and ODK Web Forms   | ODK Central or another compatible server                                |
-| **JSON Forms**                   | Framework-independent core with renderer sets                  | React, Angular, and Vue                     | Supplied by your application                                            |
-| **react-jsonschema-form (RJSF)** | React form renderer driven by JSON Schema                      | React                                       | Supplied by your application                                            |
+<StackCoverage>
+  <StackRow project="form0" license="MIT" highlight>
+    <StackCell kind="open-source" note="AI-assisted authoring">
+      JSON + CLI
+    </StackCell>
+    <StackCell kind="form0">form0-core</StackCell>
+    <StackCell kind="form0">React · React Native</StackCell>
+    <StackCell kind="application" addon="PostgreSQL and SQLite connectors available">
+      Your backend and storage
+    </StackCell>
+    <StackCell kind="application" addon="Starter templates available">
+      Your application
+    </StackCell>
+  </StackRow>
+  <StackRow project="SurveyJS" license="Form Library: MIT">
+    <StackCell kind="commercial">Survey Creator</StackCell>
+    <StackCell kind="open-source">survey-core</StackCell>
+    <StackCell kind="open-source">React, Angular, Vue 3, JavaScript</StackCell>
+    <StackCell kind="application">Your backend and storage</StackCell>
+    <StackCell kind="application">Your application</StackCell>
+  </StackRow>
+  <StackRow project="Form.io" license="formio.js: MIT">
+    <StackCell kind="open-source">Builder in formio.js</StackCell>
+    <StackCell kind="open-source">formio.js core</StackCell>
+    <StackCell kind="open-source">JavaScript, React, Angular</StackCell>
+    <StackCell kind="open-source" note="OSL-3.0, self-hosted">
+      Form.io API server
+    </StackCell>
+    <StackCell kind="commercial">Hosted Form.io platform</StackCell>
+  </StackRow>
+  <StackRow project="ODK" license="Collect: Apache-2.0">
+    <StackCell kind="open-source">XLSForm spreadsheets</StackCell>
+    <StackCell kind="open-source">XPath-based form logic</StackCell>
+    <StackCell kind="open-source">ODK Collect, ODK Web Forms</StackCell>
+    <StackCell kind="open-source" note="or a compatible server">
+      ODK Central
+    </StackCell>
+    <StackCell kind="open-source">ODK platform</StackCell>
+  </StackRow>
+  <StackRow project="JSON Forms" license="MIT">
+    <StackCell kind="application" note="JSON Schema and UI schema">
+      Your authoring
+    </StackCell>
+    <StackCell kind="open-source" note="Rules; calculations need your code">
+      JSON Forms core
+    </StackCell>
+    <StackCell kind="open-source">React, Angular, Vue</StackCell>
+    <StackCell kind="application">Your backend and storage</StackCell>
+    <StackCell kind="application">Your application</StackCell>
+  </StackRow>
+  <StackRow project="RJSF" license="Apache-2.0">
+    <StackCell kind="application" note="JSON Schema">
+      Your authoring
+    </StackCell>
+    <StackCell kind="open-source" span={2}>
+      React renderer + JSON Schema
+    </StackCell>
+    <StackCell kind="application">Your backend and storage</StackCell>
+    <StackCell kind="application">Your application</StackCell>
+  </StackRow>
+</StackCoverage>
 
 ### Form logic
 
@@ -140,14 +193,16 @@ are MIT-licensed. You can build, preview, and run forms without depending on a c
   [licensing](https://surveyjs.io/licensing), and
   [conditional logic](https://surveyjs.io/form-library/documentation/design-survey/conditional-logic)
 - Form.io: [`formio.js`](https://github.com/formio/formio.js),
+  [API server](https://github.com/formio/formio),
   [React integration](https://github.com/formio/react),
   [Angular integration](https://github.com/formio/angular),
   [JavaScript evaluator](https://help.form.io/dev/javascript-evaluator), and
   [logic and conditions](https://help.form.io/form-building/logic-and-conditions)
 - ODK and XLSForm: [XLSForm](https://xlsform.org/en/),
   [ODK form logic](https://docs.getodk.org/form-logic/),
-  [ODK Web Forms](https://docs.getodk.org/web-forms-intro/), and
-  [ODK Collect](https://github.com/getodk/collect)
+  [ODK Web Forms](https://docs.getodk.org/web-forms-intro/),
+  [ODK Collect](https://github.com/getodk/collect), and
+  [ODK Central](https://github.com/getodk/central)
 - JSON Forms: [Overview](https://jsonforms.io/),
   [renderer sets](https://jsonforms.io/docs/renderer-sets/),
   [UI-schema rules](https://jsonforms.io/docs/uischema/rules/), and

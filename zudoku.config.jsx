@@ -4,6 +4,7 @@ import { LanguageSlot } from "./src/components/language-slot.jsx"
 import { MobileDrawerMenu } from "./src/components/mobile-drawer-menu.jsx"
 import { PageBadges } from "./src/components/page-badges.jsx"
 import { EngineDiagram } from "./src/components/engine-diagram.jsx"
+import { StackCell, StackCoverage, StackRow } from "./src/components/stack-coverage.jsx"
 import { Context7Widget } from "./src/components/context7-widget.jsx"
 import { DesktopSectionTabs, TopNavHeightFix } from "./src/components/site-section-nav.jsx"
 import { createI18nPlugin } from "./src/plugins/i18n-plugin.jsx"
@@ -96,6 +97,9 @@ const config = {
     components: {
       PageBadges,
       EngineDiagram,
+      StackCoverage,
+      StackRow,
+      StackCell,
     },
   },
   plugins: [i18nPlugin, localizedNavigationPlugin, defaultDarkThemePlugin, docsSeoPlugin],

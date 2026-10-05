@@ -339,5 +339,24 @@
       "parentCopied": "parent values copied in",
       "isolated": "rows can't see each other"
     }
+  },
+  "stackCoverage": {
+    "tableCaption": "Which layers of a data-collection stack each project provides, and which layers your application provides",
+    "caption": "form0 provides the form logic and the React and React Native runtimes. Data services and the complete application stay with your application, with optional connectors and starter templates. ODK sits at the other end: a complete collection platform.",
+    "project": "Project",
+    "layers": {
+      "authoring": "Authoring workflow",
+      "logic": "Form logic",
+      "runtime": "UI/runtime",
+      "data": "Data services",
+      "platform": "Complete application/platform"
+    },
+    "kinds": {
+      "form0": "Official form0 runtime",
+      "openSource": "Included, open source",
+      "commercial": "Separate commercial product",
+      "application": "Your application"
+    },
+    "legendNote": "Optional package or integration"
   }
 }
