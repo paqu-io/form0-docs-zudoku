@@ -68,9 +68,51 @@ function tableShapes(source) {
   return rows.map((row) => row.split("|").length - 2)
 }
 
-function linkTargets(source) {
+function links(source) {
   return [...withoutFencedCode(source).matchAll(/\]\(([^)\s]+)(?:\s+[^)]*)?\)/g)].map(
     (match) => match[1],
+  )
+}
+
+function linkPaths(source) {
+  return links(source).map((target) => target.split("#", 1)[0])
+}
+
+// Repeat until stable, so removing one tag cannot leave another one behind.
+function stripTags(text) {
+  let previous
+  do {
+    previous = text
+    text = text.replace(/<[^>]+>/g, "")
+  } while (text !== previous)
+  return text
+}
+
+function headingText(line) {
+  const withoutLinks = line
+    .replace(/^(?:#{1,6})\s+/, "")
+    .replace(/\s+#+\s*$/, "")
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+  return stripTags(withoutLinks).replace(/[`*_~]/g, "")
+}
+
+function headingAnchors(source) {
+  const occurrences = new Map()
+
+  return new Set(
+    withoutFencedCode(source)
+      .split(/\r?\n/)
+      .filter((line) => /^(?:#{1,6})\s+/.test(line))
+      .map((line) => {
+        const base = headingText(line)
+          .toLowerCase()
+          .replace(/[^\p{L}\p{N}\p{M} _-]/gu, "")
+          .replace(/ /g, "-")
+        const occurrence = occurrences.get(base) ?? 0
+        occurrences.set(base, occurrence + 1)
+        return occurrence === 0 ? base : `${base}-${occurrence}`
+      }),
   )
 }
 
@@ -163,17 +205,60 @@ for (const englishFile of englishFiles) {
       relativePath,
       locale,
       "link targets",
-      linkTargets(englishBody),
-      linkTargets(localizedBody).map((target) => normalizeLocalizedTarget(target, locale)),
+      linkPaths(englishBody),
+      linkPaths(localizedBody).map((target) => normalizeLocalizedTarget(target, locale)),
     )
   }
 }
 
-for (const file of await collectMarkdownFiles(pagesRoot)) {
+const allMarkdownFiles = await collectMarkdownFiles(pagesRoot)
+const pageSources = new Map()
+
+for (const file of allMarkdownFiles) {
+  const source = await readFile(file, "utf8")
+  const pagePath = path
+    .relative(pagesRoot, file)
+    .replace(/\\/g, "/")
+    .replace(/\.mdx?$/, "")
+  pageSources.set(`/${pagePath}`, source)
+}
+
+for (const file of allMarkdownFiles) {
   const source = await readFile(file, "utf8")
   const relativePath = path.relative(repositoryRoot, file).replace(/\\/g, "/")
   if (/\b(?:Reform|REFORM)\b/.test(source)) {
     failures.push(`${relativePath}: use lowercase reform`)
+  }
+
+  const currentRoute = `/${path
+    .relative(pagesRoot, file)
+    .replace(/\\/g, "/")
+    .replace(/\.mdx?$/, "")}`
+  for (const target of links(source)) {
+    const hashIndex = target.indexOf("#")
+    if (hashIndex === -1 || /^[a-z][a-z+.-]*:/i.test(target)) continue
+
+    const targetPath = target.slice(0, hashIndex)
+    const encodedAnchor = target.slice(hashIndex + 1)
+    const targetRoute = targetPath
+      ? targetPath.startsWith("/")
+        ? targetPath
+        : path.posix.resolve(path.posix.dirname(currentRoute), targetPath)
+      : currentRoute
+    const targetSource = pageSources.get(targetRoute.replace(/\/$/, ""))
+    let anchor
+    try {
+      anchor = decodeURIComponent(encodedAnchor)
+    } catch {
+      failures.push(`${relativePath}: invalid encoded anchor in ${target}`)
+      continue
+    }
+
+    if (!targetSource) {
+      failures.push(`${relativePath}: cannot validate anchor because ${targetRoute} does not exist`)
+    } else if (!headingAnchors(targetSource).has(anchor)) {
+      failures.push(`${relativePath}: anchor #${anchor} does not exist in ${targetRoute}`)
+    }
   }
 }
 

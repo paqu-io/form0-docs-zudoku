@@ -63,6 +63,10 @@ flowchart LR
 Después de la pasada, `engine.getState()` devuelve el resultado. Los mismos valores producen siempre
 el mismo estado, sin importar el orden en que el usuario los introdujo.
 
+`eval()` también recoge los diagnósticos de los cálculos, como ciclos o expresiones que lanzan un
+error. Léelos con `engine.getDiagnostics()`. No modifican `errors`, las condiciones ni los eventos.
+Consulta [Ver errores y avisos](/es/core/engine/calculations-dependencies#ver-errores-y-avisos).
+
 ### Qué implica el orden para tu esquema
 
 - **Las condiciones ven los valores calculados.** Los cálculos se ejecutan primero, así que un

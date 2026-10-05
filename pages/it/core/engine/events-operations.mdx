@@ -45,6 +45,45 @@ ON("load-record", function onLoad() {
 - Registra ogni gestore al livello più alto di `form.events.code`. `ON` e `OFF` chiamati all'interno
   di un gestore non hanno effetto.
 
+## Come viene eseguito il codice dei gestori
+
+Il motore conserva il codice sorgente di ogni gestore definito in `form.events.code` ed esegue quel
+codice ogni volta che l'evento viene attivato. Per questo un gestore non può usare le variabili del
+codice che lo circonda: costanti, variabili e funzioni dichiarate al livello più alto di
+`form.events.code` non sono disponibili all'interno del gestore.
+
+```js
+const ADULT_AGE = 18
+
+ON("change", "age", function onAgeChange(event) {
+  // Fails with "ADULT_AGE is not defined"
+  if ($age >= ADULT_AGE) {
+    SETVALUE("adult_note", "Adult")
+  }
+})
+```
+
+All'interno di un gestore, leggi i valori del modulo con `$data_name`. Per la logica condivisa da
+più gestori, passa una funzione nell'opzione `helpers` del motore.
+
+I gestori devono essere sincroni. Se un gestore è `async` o restituisce una promise, il motore
+emette un avviso e `trigger()` restituisce solo le operazioni create dal gestore fino al primo
+`await`. Le operazioni create in seguito vengono scartate con un avviso. Un errore generato dopo un
+`await` viene segnalato invece di sfuggire al motore. Questi avvisi vengono stampati nella console
+in sviluppo e arrivano agli eventuali gestori di `WarningSystem`.
+
+Poiché è il motore stesso a conservare il codice sorgente, i gestori funzionano anche su Hermes, il
+motore JavaScript di React Native, che non espone il codice sorgente delle funzioni. Vale per le
+dichiarazioni di funzione, le espressioni di funzione e le arrow function scritte in
+`form.events.code`, comprese quelle assegnate a una variabile e passate a `ON` in un secondo
+momento.
+
+Per qualsiasi altro callback, il motore legge il codice sorgente con `toString()`. Rientrano in
+questo caso i callback che provengono da `helpers` o vengono creati durante l'esecuzione, i metodi
+degli oggetti, i getter e i setter e i membri delle classi. Questo funziona in Node.js e nei
+browser, ma non su Hermes, dove il motore stampa `Event callback source is unavailable` ed esegue
+gli altri gestori.
+
 ## Quando vengono eseguiti i gestori
 
 Un gestore viene eseguito solo quando il suo evento viene attivato, da un binding o dalla tua

@@ -116,30 +116,142 @@ un nome costruito durante l'esecuzione.
 
 ## Vedere errori e avvisi
 
-Il motore segnala come avvisi i cicli, i nomi costruiti durante l'esecuzione in `EVAL()`, i valori
-che non si stabilizzano e i riferimenti a campi mancanti. In sviluppo li stampa nella console.
-Node.js è considerato in sviluppo a meno che `NODE_ENV` non sia `production`. In un browser sono
-considerate in sviluppo le pagine su `localhost`, `127.0.0.1` o un URL con una porta esplicita.
+Durante l'esecuzione dei calcoli, il motore registra ogni problema che trova come **diagnostica**:
+un ciclo, un riferimento a un campo inesistente, un'espressione che genera un errore e così via. La
+diagnostica è separata da `state.errors` e non rende mai un invio non valido.
 
-Per raccogliere questi avvisi nella tua applicazione, passa il tuo `WarningSystem`:
+### Leggere la diagnostica
+
+Chiama `engine.getDiagnostics()` dopo `eval()`. Restituisce la diagnostica dell'ultima valutazione,
+oppure `[]` se non è ancora stata eseguita alcuna valutazione:
 
 ```js
-import { createFormEngine, WarningSystem } from "form0-core"
-
-const warningSystem = new WarningSystem({ enableCollection: true })
-const engine = createFormEngine({ schema, warningSystem })
+const engine = createFormEngine({ schema })
 engine.eval()
 
-for (const warning of warningSystem.getCollectedWarnings()) {
-  console.log(warning.message, warning.suggestion)
+for (const diagnostic of engine.getDiagnostics()) {
+  console.log(diagnostic.code, diagnostic.fieldName, diagnostic.message)
 }
 ```
 
-Puoi anche registrare una callback con `warningSystem.addWarningHandler(handler)`. Lo stesso avviso
-ripetuto entro un secondo viene segnalato una sola volta.
+Ogni `eval()` sostituisce l'elenco invece di aggiungervi elementi, quindi un problema scompare non
+appena se ne corregge la causa. Supponiamo che `quotient` abbia questa espressione `calculate`:
 
-Un'espressione che genera un errore non è un avviso. Il motore la stampa nella console come
-`[form0] Expression evaluation failed`, in ogni ambiente, e imposta il campo a `null`.
+```js
+if ($divisor === 0) {
+  throw new Error("Divisor cannot be zero")
+}
+SETRESULT($numerator / $divisor)
+```
+
+```js
+engine.getState().values.divisor = 0
+engine.eval()
+engine.getDiagnostics() // [{ code: "runtime_exception", fieldName: "quotient", ... }]
+
+engine.getState().values.divisor = 4
+engine.eval()
+engine.getDiagnostics() // []
+```
+
+All'interno di una stessa valutazione, ogni problema viene segnalato una sola volta, anche quando il
+motore esegue il calcolo in più passaggi. Un errore in uno dei primi passaggi viene segnalato anche
+se un passaggio successivo della stessa valutazione va a buon fine.
+
+Un calcolo che restituisce `null`, `undefined`, `NaN` o `Infinity` non è un errore. Senza il
+`throw`, `$numerator / 0` restituisce `Infinity` e non produce alcuna diagnostica.
+
+`getDiagnostics()` restituisce una copia, quindi modificare l'array non ha effetto sul motore.
+
+### Reagire a ogni valutazione
+
+Per ricevere la diagnostica senza chiamare `getDiagnostics()`, passa `onDiagnostics` quando crei il
+motore. Il motore la chiama una volta dopo ogni `eval()`, anche quando l'elenco è vuoto o invariato:
+
+```js
+const engine = createFormEngine({
+  schema,
+  onDiagnostics(diagnostics) {
+    showCalculationProblems(diagnostics) // your own function
+  },
+})
+```
+
+Se `onDiagnostics` genera un errore o restituisce una promise rifiutata, la valutazione viene
+comunque completata.
+
+### Contenuto di una diagnostica
+
+| Proprietà    | Descrizione                                                                                           |
+| ------------ | ----------------------------------------------------------------------------------------------------- |
+| `code`       | Uno dei codici della tabella seguente.                                                                |
+| `severity`   | `error` o `warning`.                                                                                  |
+| `message`    | Una descrizione leggibile del problema.                                                               |
+| `fieldName`  | Il `data_name` del campo calcolato.                                                                   |
+| `phase`      | La fase in cui si è verificato il problema: `dependency`, `scope`, `validation`, `syntax`, `runtime`. |
+| `suggestion` | Un suggerimento per risolvere il problema, oppure `null` se non ce ne sono.                           |
+| `context`    | Dettagli aggiuntivi, sempre serializzabili in JSON.                                                   |
+
+`context` contiene sempre `source`, che vale `expression` per il calcolo stesso o `EVAL` per una
+chiamata a `EVAL()` al suo interno, e `parentPath`, le chiavi delle RepeatableSection che contengono
+il campo. A seconda del codice, contiene anche `referencedFieldName`, `fieldNames` (i campi
+coinvolti) o `maxPasses`.
+
+Il motore non aggiunge a una diagnostica il codice sorgente dell'espressione, i valori dei campi o
+gli stack trace. `message` può comunque contenere il testo di un errore generato dalla tua
+espressione.
+
+### Codici di diagnostica
+
+I codici sono stabili, quindi la tua applicazione può farvi affidamento.
+
+| Codice                         | Gravità | Fase       | Significato                                                                                                       |
+| ------------------------------ | ------- | ---------- | ----------------------------------------------------------------------------------------------------------------- |
+| `dynamic_dependencies`         | warning | dependency | Il campo costruisce durante l'esecuzione un nome passato a `EVAL()`, quindi il motore esegue passaggi aggiuntivi. |
+| `cyclic_dependencies`          | error   | dependency | Il campo fa parte di un [ciclo](#cicli) ed è stato impostato a `null`.                                            |
+| `non_converging_runtime`       | warning | dependency | Alcuni valori cambiavano ancora dopo l'ultimo passaggio (`maxPasses`).                                            |
+| `missing_reference`            | warning | scope      | L'espressione fa riferimento a un campo che non è nello schema.                                                   |
+| `restricted_reference`         | warning | scope      | L'espressione fa riferimento a un campo fuori dal suo ambito.                                                     |
+| `expression_validation_failed` | error   | validation | La [modalità di sicurezza](/it/core/security) o un builtin ha rifiutato l'espressione.                            |
+| `invalid_syntax`               | error   | syntax     | L'espressione ha una sintassi non valida.                                                                         |
+| `compilation_error`            | error   | syntax     | Non è stato possibile compilare l'espressione, ad esempio a causa di una regola CSP.                              |
+| `runtime_exception`            | error   | runtime    | L'espressione ha generato un errore, incluso un `SyntaxError` generato dall'espressione stessa.                   |
+| `eval_invalid_argument`        | error   | validation | `EVAL()` ha ricevuto qualcosa di diverso da una stringa non vuota.                                                |
+| `eval_reference_unavailable`   | error   | scope      | `EVAL()` non ha trovato il campo che doveva leggere.                                                              |
+
+### Output nella console
+
+Per impostazione predefinita, il motore stampa anche i problemi nella console:
+
+- Gli avvisi di dipendenza e di ambito vengono stampati solo in sviluppo. Node.js è considerato in
+  sviluppo a meno che `NODE_ENV` non sia `production`. In un browser sono considerate in sviluppo le
+  pagine su `localhost`, `127.0.0.1` o un URL con una porta esplicita.
+- Gli errori delle espressioni e di `EVAL()` vengono stampati in ogni ambiente.
+
+Per decidere tu, imposta `diagnostics.console`:
+
+- `console: false` non stampa nulla sui calcoli, nemmeno i messaggi di debug di `EVAL()`. Usalo
+  quando mostri la diagnostica nella tua interfaccia.
+- `console: true` stampa ogni diagnostica, sia in sviluppo sia in produzione.
+
+```js
+const engine = createFormEngine({ schema, diagnostics: { console: false } })
+```
+
+Se passi un tuo `WarningSystem`, i suoi gestori continuano a ricevere gli avvisi di dipendenza e di
+ambito.
+
+### Migrare da `runtimeDiagnostics`
+
+L'opzione `runtimeDiagnostics`, un array a cui il motore aggiunge elementi, è deprecata ma ancora
+supportata. Al suo posto, chiama `engine.getDiagnostics()` dopo `eval()`, oppure passa
+`onDiagnostics` per ricevere una notifica dopo ogni valutazione, anche con un elenco vuoto quando i
+problemi sono stati risolti.
+
+La nuova API non è una sostituzione diretta. La diagnostica ha la forma descritta in [Contenuto di
+una diagnostica](#contenuto-di-una-diagnostica) e ogni valutazione sostituisce l'elenco precedente
+invece di aggiungervi elementi. Se ti serve uno storico, conserva gli elenchi precedenti nella tua
+applicazione. Non è ancora stata fissata una data di rimozione.
 
 ## Campi calcolati nelle sezioni ripetibili
 

@@ -111,30 +111,138 @@ names those fields. It also reports a warning for each field that uses a runtime
 
 ## Seeing errors and warnings
 
-The engine reports cycles, runtime-built `EVAL()` names, values that do not settle, and references
-to missing fields as warnings. In development, it prints them to the console. Node.js counts as
-development unless `NODE_ENV` is `production`. In a browser, pages on `localhost`, `127.0.0.1`, or a
-URL with an explicit port count as development.
+While it runs calculations, the engine records each problem it finds as a **diagnostic**: a cycle,
+a reference to a missing field, an expression that throws, and so on. Diagnostics are separate from
+`state.errors`. They never make a submission invalid.
 
-To collect these warnings in your application, pass your own `WarningSystem`:
+### Reading diagnostics
+
+Call `engine.getDiagnostics()` after `eval()`. It returns the diagnostics from the latest
+evaluation, or `[]` before the first one:
 
 ```js
-import { createFormEngine, WarningSystem } from "form0-core"
-
-const warningSystem = new WarningSystem({ enableCollection: true })
-const engine = createFormEngine({ schema, warningSystem })
+const engine = createFormEngine({ schema })
 engine.eval()
 
-for (const warning of warningSystem.getCollectedWarnings()) {
-  console.log(warning.message, warning.suggestion)
+for (const diagnostic of engine.getDiagnostics()) {
+  console.log(diagnostic.code, diagnostic.fieldName, diagnostic.message)
 }
 ```
 
-You can also register a callback with `warningSystem.addWarningHandler(handler)`. The same warning
-repeated within a second is reported once.
+Each `eval()` replaces the list instead of adding to it, so a problem disappears as soon as its cause
+is fixed. Suppose `quotient` has this `calculate` expression:
 
-An expression that throws is not a warning. The engine prints it to the console as
-`[form0] Expression evaluation failed`, in every environment, and sets the field to `null`.
+```js
+if ($divisor === 0) {
+  throw new Error("Divisor cannot be zero")
+}
+SETRESULT($numerator / $divisor)
+```
+
+```js
+engine.getState().values.divisor = 0
+engine.eval()
+engine.getDiagnostics() // [{ code: "runtime_exception", fieldName: "quotient", ... }]
+
+engine.getState().values.divisor = 4
+engine.eval()
+engine.getDiagnostics() // []
+```
+
+Within one evaluation, the same problem is reported only once, even when the engine runs the
+calculation in several passes. A failure in an early pass is still reported if a later pass of the
+same evaluation succeeds.
+
+A calculation that returns `null`, `undefined`, `NaN`, or `Infinity` is not an error. Without the
+`throw`, `$numerator / 0` returns `Infinity` and produces no diagnostic.
+
+`getDiagnostics()` returns a copy, so changing the array does not affect the engine.
+
+### Reacting to every evaluation
+
+To receive diagnostics without calling `getDiagnostics()`, pass `onDiagnostics` when you create the
+engine. The engine calls it once after every `eval()`, even when the list is empty or unchanged:
+
+```js
+const engine = createFormEngine({
+  schema,
+  onDiagnostics(diagnostics) {
+    showCalculationProblems(diagnostics) // your own function
+  },
+})
+```
+
+If `onDiagnostics` throws or returns a rejected promise, the evaluation still completes.
+
+### What a diagnostic contains
+
+| Property     | Description                                                                           |
+| ------------ | ------------------------------------------------------------------------------------- |
+| `code`       | One of the codes below.                                                               |
+| `severity`   | `error` or `warning`.                                                                 |
+| `message`    | A readable description of the problem.                                                |
+| `fieldName`  | The `data_name` of the calculated field.                                              |
+| `phase`      | Where the problem occurred: `dependency`, `scope`, `validation`, `syntax`, `runtime`. |
+| `suggestion` | A hint for fixing the problem, or `null` when there is none.                          |
+| `context`    | Extra details, always JSON-serializable.                                              |
+
+`context` always has `source`, which is `expression` for the calculation itself or `EVAL` for an
+`EVAL()` call inside it, and `parentPath`, the keys of the RepeatableSections that contain the
+field. Depending on the code, it also has `referencedFieldName`, `fieldNames` (the fields involved),
+or `maxPasses`.
+
+The engine does not add the expression source, field values, or stack traces to a diagnostic.
+`message` can still contain the text of an error your expression throws.
+
+### Diagnostic codes
+
+Codes are stable, so your application can rely on them.
+
+| Code                           | Severity | Phase      | Meaning                                                                        |
+| ------------------------------ | -------- | ---------- | ------------------------------------------------------------------------------ |
+| `dynamic_dependencies`         | warning  | dependency | The field builds an `EVAL()` name at runtime, so the engine runs extra passes. |
+| `cyclic_dependencies`          | error    | dependency | The field is part of a [cycle](#cycles) and was set to `null`.                 |
+| `non_converging_runtime`       | warning  | dependency | Values were still changing after the last pass (`maxPasses`).                  |
+| `missing_reference`            | warning  | scope      | The expression references a field that is not in the schema.                   |
+| `restricted_reference`         | warning  | scope      | The expression references a field outside its scope.                           |
+| `expression_validation_failed` | error    | validation | The [security mode](/core/security) or a builtin rejected the expression.      |
+| `invalid_syntax`               | error    | syntax     | The expression has invalid syntax.                                             |
+| `compilation_error`            | error    | syntax     | The expression could not be compiled, for example because of a CSP rule.       |
+| `runtime_exception`            | error    | runtime    | The expression threw an error, including a `SyntaxError` it threw itself.      |
+| `eval_invalid_argument`        | error    | validation | `EVAL()` received something other than a non-empty string.                     |
+| `eval_reference_unavailable`   | error    | scope      | `EVAL()` could not find the field it was asked to read.                        |
+
+### Console output
+
+By default, the engine also prints problems to the console:
+
+- Dependency and scope warnings print only in development. Node.js counts as development unless
+  `NODE_ENV` is `production`. In a browser, pages on `localhost`, `127.0.0.1`, or a URL with an
+  explicit port count as development.
+- Expression and `EVAL()` failures print in every environment.
+
+To choose for yourself, set `diagnostics.console`:
+
+- `console: false` prints nothing about calculations, including `EVAL()` debug messages. Use it
+  when you show diagnostics in your own interface.
+- `console: true` prints every diagnostic, in development and in production.
+
+```js
+const engine = createFormEngine({ schema, diagnostics: { console: false } })
+```
+
+If you pass your own `WarningSystem`, its handlers still receive dependency and scope warnings.
+
+### Migrating from `runtimeDiagnostics`
+
+The `runtimeDiagnostics` option, an array the engine appends to, is deprecated but still supported.
+Instead, call `engine.getDiagnostics()` after `eval()`, or pass `onDiagnostics` to be notified after
+every evaluation, including with an empty list once problems are fixed.
+
+The new API is not a drop-in replacement. Diagnostics have the shape described in [What a diagnostic
+contains](#what-a-diagnostic-contains), and each evaluation replaces the previous list instead of
+adding to it. If you need a history, keep earlier lists in your application. No removal date has
+been set yet.
 
 ## Calculated fields in repeatable sections
 
