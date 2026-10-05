@@ -343,5 +343,24 @@
       "parentCopied": "valori del padre copiati nella riga",
       "isolated": "righe isolate tra loro"
     }
+  },
+  "stackCoverage": {
+    "tableCaption": "Quali livelli di uno stack di raccolta dati fornisce ogni progetto e quali livelli fornisce la tua applicazione",
+    "caption": "form0 fornisce la logica dei moduli e i runtime React e React Native. I servizi dati e l'applicazione completa restano alla tua applicazione, con connettori e template starter opzionali. ODK si trova all'estremo opposto: una piattaforma di raccolta completa.",
+    "project": "Progetto",
+    "layers": {
+      "authoring": "Flusso di creazione",
+      "logic": "Logica dei moduli",
+      "runtime": "UI/runtime",
+      "data": "Servizi dati",
+      "platform": "Applicazione o piattaforma completa"
+    },
+    "kinds": {
+      "form0": "Runtime ufficiale di form0",
+      "openSource": "Incluso, open source",
+      "commercial": "Prodotto commerciale separato",
+      "application": "La tua applicazione"
+    },
+    "legendNote": "Pacchetto o integrazione opzionale"
   }
 }

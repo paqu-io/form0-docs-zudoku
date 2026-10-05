@@ -343,5 +343,24 @@
       "parentCopied": "valeurs du parent copiées dans la ligne",
       "isolated": "lignes isolées"
     }
+  },
+  "stackCoverage": {
+    "tableCaption": "Les couches d’une pile de collecte de données fournies par chaque projet, et celles que fournit votre application",
+    "caption": "form0 fournit la logique des formulaires et les runtimes React et React Native. Les services de données et l’application complète restent du ressort de votre application, avec des connecteurs et des modèles starter facultatifs. ODK se situe à l’autre extrémité : une plateforme de collecte complète.",
+    "project": "Projet",
+    "layers": {
+      "authoring": "Flux de création",
+      "logic": "Logique des formulaires",
+      "runtime": "UI/runtime",
+      "data": "Services de données",
+      "platform": "Application ou plateforme complète"
+    },
+    "kinds": {
+      "form0": "Runtime officiel form0",
+      "openSource": "Inclus, open source",
+      "commercial": "Produit commercial distinct",
+      "application": "Votre application"
+    },
+    "legendNote": "Package ou intégration facultatifs"
   }
 }
