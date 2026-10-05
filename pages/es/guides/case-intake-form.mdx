@@ -1,0 +1,509 @@
+---
+title: Crea un formulario de registro de casos
+description: Crea un formulario de registro de casos de soporte con campos condicionales, una prioridad calculada y una fecha de respuesta, y ejecútalo en el starter de React y Vite.
+---
+
+<PageBadges />
+
+import { Stepper } from "zudoku/ui/Stepper"
+
+En esta guía, creas un formulario de registro de casos de soporte y lo ejecutas en el starter de
+React y Vite. El formulario tiene:
+
+- campos de contacto que aparecen, y pasan a ser obligatorios, según el método de contacto preferido;
+- una prioridad calculada a partir de las respuestas;
+- una fecha de respuesta calculada a partir de la prioridad; y
+- un campo de impacto en el negocio que solo es obligatorio en los casos de prioridad alta.
+
+Todo este comportamiento vive en un único esquema JSON. El código de la aplicación solo registra el
+formulario.
+
+**Tiempo:** unos 15 minutos.
+
+## Antes de empezar
+
+- **Node.js** `22.19.0+`
+- **form0-cli**, instalado con `npm install --global form0-cli`
+
+## Crea el formulario
+
+<Stepper>
+
+1. Crea una aplicación web con el starter:
+
+   ```bash
+   form0 init case-intake-app
+   ```
+
+   Elige **Aplicación web** y después **React + Vite**. Luego entra en el directorio del proyecto:
+
+   ```bash
+   cd case-intake-app
+   ```
+
+1. Crea `src/forms/case-intake/schema.json` con este esquema:
+
+   ```json
+   {
+     "form": {
+       "name": "Case intake",
+       "description": "Log a new support case.",
+       "elements": [
+         {
+           "type": "Section",
+           "key": "requester",
+           "data_name": "requester",
+           "label": "Requester",
+           "display": "inline",
+           "description": null,
+           "description_mode": null,
+           "visible": true,
+           "visible_conditions": null,
+           "elements": [
+             {
+               "type": "TextField",
+               "key": "name",
+               "data_name": "name",
+               "label": "Full name",
+               "display": "default",
+               "description": null,
+               "description_mode": null,
+               "required": true,
+               "required_conditions": null,
+               "visible": true,
+               "visible_conditions": null,
+               "read_only": false,
+               "read_only_conditions": null,
+               "default_value": null,
+               "pattern": null,
+               "pattern_description": null,
+               "supporting_image": false,
+               "supporting_image_path": null,
+               "supporting_image_display": null
+             },
+             {
+               "type": "SingleChoiceField",
+               "key": "contact_method",
+               "data_name": "contact_method",
+               "label": "Preferred contact method",
+               "display": "default",
+               "description": null,
+               "description_mode": null,
+               "required": true,
+               "required_conditions": null,
+               "visible": true,
+               "visible_conditions": null,
+               "read_only": false,
+               "read_only_conditions": null,
+               "default_value": null,
+               "allow_other": false,
+               "supporting_image": false,
+               "supporting_image_path": null,
+               "supporting_image_display": null,
+               "is_searchable": false,
+               "is_searchable_mode": null,
+               "choices": [
+                 {
+                   "label": "Email",
+                   "value": "email"
+                 },
+                 {
+                   "label": "Phone",
+                   "value": "phone"
+                 }
+               ]
+             },
+             {
+               "type": "TextField",
+               "key": "email",
+               "data_name": "email",
+               "label": "Email",
+               "display": "default",
+               "description": null,
+               "description_mode": null,
+               "required": false,
+               "required_conditions": {
+                 "field_id": "contact_method",
+                 "operator": "equal_to",
+                 "value": "email"
+               },
+               "visible": false,
+               "visible_conditions": {
+                 "field_id": "contact_method",
+                 "operator": "equal_to",
+                 "value": "email"
+               },
+               "read_only": false,
+               "read_only_conditions": null,
+               "default_value": null,
+               "pattern": null,
+               "pattern_description": null,
+               "supporting_image": false,
+               "supporting_image_path": null,
+               "supporting_image_display": null
+             },
+             {
+               "type": "TextField",
+               "key": "phone",
+               "data_name": "phone",
+               "label": "Phone",
+               "display": "default",
+               "description": null,
+               "description_mode": null,
+               "required": false,
+               "required_conditions": {
+                 "field_id": "contact_method",
+                 "operator": "equal_to",
+                 "value": "phone"
+               },
+               "visible": false,
+               "visible_conditions": {
+                 "field_id": "contact_method",
+                 "operator": "equal_to",
+                 "value": "phone"
+               },
+               "read_only": false,
+               "read_only_conditions": null,
+               "default_value": null,
+               "pattern": null,
+               "pattern_description": null,
+               "supporting_image": false,
+               "supporting_image_path": null,
+               "supporting_image_display": null
+             }
+           ]
+         },
+         {
+           "type": "Section",
+           "key": "case",
+           "data_name": "case",
+           "label": "Case",
+           "display": "inline",
+           "description": null,
+           "description_mode": null,
+           "visible": true,
+           "visible_conditions": null,
+           "elements": [
+             {
+               "type": "DateField",
+               "key": "received_on",
+               "data_name": "received_on",
+               "label": "Received on",
+               "display": "default",
+               "description": null,
+               "description_mode": null,
+               "required": true,
+               "required_conditions": null,
+               "visible": true,
+               "visible_conditions": null,
+               "read_only": false,
+               "read_only_conditions": null,
+               "default_value": "now"
+             },
+             {
+               "type": "TextField",
+               "key": "summary",
+               "data_name": "summary",
+               "label": "Summary",
+               "display": "default",
+               "description": null,
+               "description_mode": null,
+               "required": true,
+               "required_conditions": null,
+               "visible": true,
+               "visible_conditions": null,
+               "read_only": false,
+               "read_only_conditions": null,
+               "default_value": null,
+               "pattern": null,
+               "pattern_description": null,
+               "supporting_image": false,
+               "supporting_image_path": null,
+               "supporting_image_display": null
+             },
+             {
+               "type": "SingleChoiceField",
+               "key": "impact",
+               "data_name": "impact",
+               "label": "Who is affected?",
+               "display": "default",
+               "description": null,
+               "description_mode": null,
+               "required": true,
+               "required_conditions": null,
+               "visible": true,
+               "visible_conditions": null,
+               "read_only": false,
+               "read_only_conditions": null,
+               "default_value": null,
+               "allow_other": false,
+               "supporting_image": false,
+               "supporting_image_path": null,
+               "supporting_image_display": null,
+               "is_searchable": false,
+               "is_searchable_mode": null,
+               "choices": [
+                 {
+                   "label": "Only me",
+                   "value": "person"
+                 },
+                 {
+                   "label": "My team",
+                   "value": "team"
+                 },
+                 {
+                   "label": "The whole organization",
+                   "value": "organization"
+                 }
+               ]
+             },
+             {
+               "type": "BooleanField",
+               "key": "blocked",
+               "data_name": "blocked",
+               "label": "Is work blocked?",
+               "display": "default",
+               "description": null,
+               "description_mode": null,
+               "required": true,
+               "required_conditions": null,
+               "visible": true,
+               "visible_conditions": null,
+               "read_only": false,
+               "read_only_conditions": null,
+               "default_value": null,
+               "supporting_image": false,
+               "supporting_image_path": null,
+               "supporting_image_display": null,
+               "third_option_enabled": false,
+               "choices": [
+                 {
+                   "value": "yes",
+                   "label": "Yes"
+                 },
+                 {
+                   "value": "no",
+                   "label": "No"
+                 }
+               ]
+             },
+             {
+               "type": "CalculatedField",
+               "key": "priority",
+               "data_name": "priority",
+               "label": "Priority",
+               "display": {
+                 "style": "text"
+               },
+               "description": null,
+               "description_mode": null,
+               "required": false,
+               "visible": true,
+               "visible_conditions": null,
+               "read_only": true,
+               "calculate": "IF(!CHOICEVALUE($impact), null, IF(CHOICEVALUE($blocked) === \"yes\" || CHOICEVALUE($impact) === \"organization\", \"high\", IF(CHOICEVALUE($impact) === \"team\", \"normal\", \"low\")))",
+               "supporting_image": false,
+               "supporting_image_path": null,
+               "supporting_image_display": null
+             },
+             {
+               "type": "CalculatedField",
+               "key": "respond_by",
+               "data_name": "respond_by",
+               "label": "Respond by",
+               "display": {
+                 "style": "date"
+               },
+               "description": null,
+               "description_mode": null,
+               "required": false,
+               "visible": true,
+               "visible_conditions": null,
+               "read_only": true,
+               "calculate": "DATEADD($received_on, IF($priority === \"high\", 1, IF($priority === \"normal\", 3, IF($priority === \"low\", 7, null))))",
+               "supporting_image": false,
+               "supporting_image_path": null,
+               "supporting_image_display": null
+             },
+             {
+               "type": "TextField",
+               "key": "business_impact",
+               "data_name": "business_impact",
+               "label": "Describe the business impact",
+               "display": "default",
+               "description": null,
+               "description_mode": null,
+               "required": false,
+               "required_conditions": {
+                 "field_id": "priority",
+                 "operator": "equal_to",
+                 "value": "high"
+               },
+               "visible": false,
+               "visible_conditions": {
+                 "field_id": "priority",
+                 "operator": "equal_to",
+                 "value": "high"
+               },
+               "read_only": false,
+               "read_only_conditions": null,
+               "default_value": null,
+               "pattern": null,
+               "pattern_description": null,
+               "supporting_image": false,
+               "supporting_image_path": null,
+               "supporting_image_display": null
+             }
+           ]
+         }
+       ]
+     }
+   }
+   ```
+
+   En este esquema, la `key` de cada campo coincide con su `data_name` para que las condiciones se
+   lean con facilidad. Cuando añades campos con la CLI, esta genera claves aleatorias.
+
+1. Registra el formulario en `src/forms/registry.js` añadiendo una entrada al array `forms`:
+
+   ```js
+   {
+     id: 'case-intake',
+     title: 'Case intake',
+     description: 'Log a new support case.',
+     loadSchema: () => import('./case-intake/schema.json'),
+   },
+   ```
+
+1. Inicia la aplicación y el servidor de desarrollo de form0:
+
+   ```bash
+   form0 serve --app src/forms/case-intake/schema.json
+   ```
+
+   La CLI instala las dependencias en la primera ejecución, valida el esquema, vigila sus cambios e
+   inicia el servidor de Vite.
+
+1. Abre `http://localhost:5173/case-intake` y prueba el formulario:
+
+   - Elige **Email** como método de contacto. Aparece el campo **Email** y es obligatorio. Cambia a
+     **Phone** y el campo **Phone** lo sustituye.
+   - Elige **My team** y responde **No** a **Is work blocked?**. **Priority** muestra `normal`, y
+     **Respond by** cae tres días después de **Received on**.
+   - Cambia la respuesta a **Yes**. **Priority** pasa a `high`, **Respond by** se mueve al día
+     siguiente y **Describe the business impact** aparece como campo obligatorio.
+
+1. Rellena los campos obligatorios y envía el formulario. Abre la consola de desarrollo del navegador
+   para ver el registro estructurado que muestra el starter.
+
+</Stepper>
+
+## Cómo funciona
+
+### Campos condicionales
+
+El campo **Email** está oculto por defecto. Sus condiciones lo muestran, y lo hacen obligatorio,
+cuando el método de contacto es `email`:
+
+```json
+{
+  "data_name": "email",
+  "visible": false,
+  "visible_conditions": {
+    "field_id": "contact_method",
+    "operator": "equal_to",
+    "value": "email"
+  },
+  "required_conditions": {
+    "field_id": "contact_method",
+    "operator": "equal_to",
+    "value": "email"
+  }
+}
+```
+
+Una condición sobre un campo de selección compara el `value` de la opción elegida, no su etiqueta.
+Consulta [Condiciones y operadores](/es/core/schema/conditions-operators).
+
+Ocultar un campo no borra su valor. Si alguien escribe una dirección de email y luego cambia a
+**Phone**, la dirección sigue en los valores del formulario. Decide en tu aplicación si los valores
+ocultos deben conservarse.
+
+### Prioridad calculada
+
+`priority` es un `CalculatedField`. Su expresión `calculate` lee las respuestas a **Who is
+affected?** y **Is work blocked?**:
+
+```js
+IF(
+  !CHOICEVALUE($impact),
+  null,
+  IF(
+    CHOICEVALUE($blocked) === "yes" || CHOICEVALUE($impact) === "organization",
+    "high",
+    IF(CHOICEVALUE($impact) === "team", "normal", "low"),
+  ),
+)
+```
+
+`CHOICEVALUE()` devuelve el valor elegido en un campo de selección. El primer `IF()` deja la
+prioridad vacía hasta que **Who is affected?** tiene respuesta.
+
+Las expresiones de esta página se dividen en varias líneas para que se lean mejor. En el esquema,
+cada una ocupa una sola línea: un cálculo que ocupa varias líneas no devuelve nada a menos que
+envuelvas su resultado en [`SETRESULT()`](/es/core/builtins/calculations-expressions/setresult).
+
+### Fecha de respuesta
+
+`respond_by` suma un número de días a `received_on`, según la prioridad:
+
+```js
+DATEADD(
+  $received_on,
+  IF($priority === "high", 1, IF($priority === "normal", 3, IF($priority === "low", 7, null))),
+)
+```
+
+[`DATEADD()`](/es/core/builtins/calculations-expressions/dateadd) devuelve `null` cuando el número
+de días está vacío, así que la fecha queda vacía hasta que hay una prioridad.
+`"display": { "style": "date" }` indica al renderer que muestre el resultado como fecha.
+
+### Una condición que depende de un cálculo
+
+**Describe the business impact** usa el mismo tipo de condición que **Email**, pero lee `priority`,
+que también es un valor calculado:
+
+```json
+{
+  "data_name": "business_impact",
+  "visible": false,
+  "visible_conditions": {
+    "field_id": "priority",
+    "operator": "equal_to",
+    "value": "high"
+  },
+  "required_conditions": {
+    "field_id": "priority",
+    "operator": "equal_to",
+    "value": "high"
+  }
+}
+```
+
+Funciona porque el motor ejecuta los cálculos antes de evaluar las condiciones.
+
+## Qué acaba de pasar
+
+Cada vez que cambiaste una respuesta, el renderer del starter la pasó al motor de form0. El motor
+volvió a calcular `priority` y después `respond_by`, en orden de dependencias, y luego volvió a
+evaluar qué campos son visibles y obligatorios. El renderer solo mostró el resultado. El mismo
+esquema produce el mismo comportamiento en cualquier aplicación que use form0.
+
+Para profundizar:
+
+- [Ciclo de evaluación](/es/core/engine/evaluation-cycle): qué hace una pasada de evaluación y en
+  qué orden.
+- [Cálculos y dependencias](/es/core/engine/calculations-dependencies): cómo ordena el motor los
+  cálculos que dependen unos de otros.
+- [Envíos y conectores](/es/starter-apps/react-vite/submissions-connectors): adónde va el registro
+  enviado en el starter y cómo mandarlo a una base de datos.

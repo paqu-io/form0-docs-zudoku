@@ -1,0 +1,27 @@
+---
+title: DATEADD
+description: Adds a whole number of days to a date.
+---
+
+<PageBadges />
+
+Adds a whole number of days to a date. Use a negative number to subtract days.
+
+## Example
+
+```js
+DATEADD($received_on, 3)
+```
+
+## Parameters
+
+- date: date string in `YYYY-MM-DD` format, such as a `DateField` value
+- days: whole number of days to add (can be negative)
+
+## Returns
+
+The resulting date as a `YYYY-MM-DD` string. Returns `null` when either argument is blank, so a
+calculation stays empty until the date is filled in.
+
+`DATEADD` counts calendar days, so daylight-saving changes never shift the result. A malformed date,
+such as `2026-02-30`, or a fractional number of days raises a calculation error.

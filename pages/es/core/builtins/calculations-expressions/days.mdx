@@ -1,0 +1,26 @@
+---
+title: DAYS
+description: Devuelve el número de días entre dos fechas.
+---
+
+<PageBadges />
+
+Devuelve el número de días entre dos fechas. La fecha final va primero, como en las hojas de
+cálculo.
+
+## Ejemplo
+
+```js
+DAYS($closed_on, $received_on)
+```
+
+## Parámetros
+
+- endDate: fecha en formato `YYYY-MM-DD`
+- startDate: fecha en formato `YYYY-MM-DD`
+
+## Devuelve
+
+El número de días naturales desde `startDate` hasta `endDate`. El resultado es negativo cuando
+`endDate` es anterior. Devuelve `null` cuando alguno de los argumentos está vacío. Una fecha mal
+formada produce un error de cálculo.

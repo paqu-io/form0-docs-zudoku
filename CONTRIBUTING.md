@@ -143,6 +143,16 @@ The SVG and the Mermaid fence describe the same diagram and must change together
   translated labels short and check the rendered diagram in each language.
 - Nothing checks that the SVG and the Mermaid say the same thing. Reviewers should compare them.
 
+## Guide screenshots
+
+Guides show the finished result with screenshots. Keep them few and easy to maintain:
+
+- Take one screenshot of the finished result per guide, plus at most one for a key moment.
+- Use the English schema and UI labels. All locales share the same image, as they share the same
+  English JSON examples. Translate only the alt text.
+- Save screenshots as WebP under `public/guides/<guide-slug>/`, using the light theme.
+- Retake them when the renderer UI changes noticeably.
+
 ## Writing style
 
 - Lead with the task or outcome the reader is trying to achieve.

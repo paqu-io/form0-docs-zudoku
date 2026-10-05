@@ -219,6 +219,7 @@ Les codes sont stables : votre application peut s'appuyer dessus.
 | `invalid_syntax`               | error   | syntax     | La syntaxe de l'expression est invalide.                                                            |
 | `compilation_error`            | error   | syntax     | L'expression n'a pas pu être compilée, par exemple à cause d'une règle CSP.                         |
 | `runtime_exception`            | error   | runtime    | L'expression a levé une erreur, y compris un `SyntaxError` qu'elle a levé elle-même.                |
+| `missing_result`               | warning | runtime    | Une expression sur plusieurs lignes n’a pas appelé `SETRESULT()` : le champ n’a donc pas de valeur. |
 | `eval_invalid_argument`        | error   | validation | `EVAL()` a reçu autre chose qu'une chaîne non vide.                                                 |
 | `eval_reference_unavailable`   | error   | scope      | `EVAL()` n'a pas trouvé le champ qu'il devait lire.                                                 |
 

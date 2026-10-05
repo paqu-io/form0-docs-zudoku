@@ -1,0 +1,26 @@
+---
+title: DAYS
+description: Restituisce il numero di giorni tra due date.
+---
+
+<PageBadges />
+
+Restituisce il numero di giorni tra due date. La data finale va per prima, come nei fogli di
+calcolo.
+
+## Esempio
+
+```js
+DAYS($closed_on, $received_on)
+```
+
+## Parametri
+
+- endDate: data in formato `YYYY-MM-DD`
+- startDate: data in formato `YYYY-MM-DD`
+
+## Valore restituito
+
+Il numero di giorni di calendario da `startDate` a `endDate`. Il risultato è negativo quando
+`endDate` è precedente. Restituisce `null` quando uno dei due argomenti è vuoto. Una data non valida
+genera un errore di calcolo.

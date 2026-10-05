@@ -209,6 +209,7 @@ Codes are stable, so your application can rely on them.
 | `invalid_syntax`               | error    | syntax     | The expression has invalid syntax.                                             |
 | `compilation_error`            | error    | syntax     | The expression could not be compiled, for example because of a CSP rule.       |
 | `runtime_exception`            | error    | runtime    | The expression threw an error, including a `SyntaxError` it threw itself.      |
+| `missing_result`               | warning  | runtime    | A multiline expression did not call `SETRESULT()`, so the field has no value.  |
 | `eval_invalid_argument`        | error    | validation | `EVAL()` received something other than a non-empty string.                     |
 | `eval_reference_unavailable`   | error    | scope      | `EVAL()` could not find the field it was asked to read.                        |
 

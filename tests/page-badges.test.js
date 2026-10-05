@@ -19,6 +19,10 @@ test("badges describe each documentation surface", () => {
     "Engine",
     "Math",
   ])
+  assert.deepEqual(badgesForPath("/core/builtins/calculations-expressions/dateadd"), [
+    "Engine",
+    "Date",
+  ])
   assert.deepEqual(badgesForPath("/core/builtins/events/on"), ["Engine", "Events"])
   assert.deepEqual(badgesForPath("/bindings/react/form-renderer"), ["React"])
   assert.deepEqual(badgesForPath("/bindings/react-native/form-renderer"), ["React Native"])
@@ -26,8 +30,12 @@ test("badges describe each documentation surface", () => {
   assert.deepEqual(badgesForPath("/es/connectors/sqlite/storage"), ["Connectors", "SQLite"])
 })
 
-test("temporary and unknown routes have no badges", () => {
-  assert.deepEqual(badgesForPath("/guides/coming-soon"), [])
+test("guides show the stack they use", () => {
+  assert.deepEqual(badgesForPath("/guides/case-intake-form"), ["React", "Vite"])
+  assert.deepEqual(badgesForPath("/es/guides/case-intake-form"), ["React", "Vite"])
+})
+
+test("unknown routes have no badges", () => {
   assert.deepEqual(badgesForPath("/api"), [])
   assert.deepEqual(badgesForPath("/getting-started/how-form0-compares"), [])
   assert.deepEqual(badgesForPath("/it/getting-started/how-form0-compares"), [])

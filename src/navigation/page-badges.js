@@ -13,6 +13,8 @@ const CALCULATION_CATEGORIES = new Map([
   ["cos", "Math"],
   ["sin", "Math"],
   ["round", "Math"],
+  ["dateadd", "Date"],
+  ["days", "Date"],
   ["upper", "String"],
   ["choicevalue", "Choice"],
   ["choicelabel", "Choice"],
@@ -33,6 +35,8 @@ const GENERAL_CONNECTOR_PAGES = new Set([
   "connectors/security",
   "connectors/troubleshooting",
 ])
+
+const GUIDE_BADGES = new Map([["guides/case-intake-form", ["React", "Vite"]]])
 
 const normalizePath = (pathname) => stripLocalePrefix(pathname || "").replace(/^\/+|\/+$/g, "")
 
@@ -69,6 +73,8 @@ export function badgesForPath(pathname) {
   if (path === "bindings/overview") return ["Bindings"]
   if (path.startsWith("bindings/react-native/")) return ["React Native"]
   if (path.startsWith("bindings/react/")) return ["React"]
+
+  if (GUIDE_BADGES.has(path)) return GUIDE_BADGES.get(path)
 
   if (GENERAL_CONNECTOR_PAGES.has(path)) return ["Connectors"]
   if (path.startsWith("connectors/postgresql/")) return ["Connectors", "PostgreSQL"]

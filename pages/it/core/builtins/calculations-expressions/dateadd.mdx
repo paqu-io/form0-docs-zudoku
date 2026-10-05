@@ -1,0 +1,28 @@
+---
+title: DATEADD
+description: Aggiunge un numero intero di giorni a una data.
+---
+
+<PageBadges />
+
+Aggiunge un numero intero di giorni a una data. Usa un numero negativo per sottrarre giorni.
+
+## Esempio
+
+```js
+DATEADD($received_on, 3)
+```
+
+## Parametri
+
+- date: data in formato `YYYY-MM-DD`, come il valore di un `DateField`
+- days: numero intero di giorni da aggiungere (può essere negativo)
+
+## Valore restituito
+
+La data risultante come stringa `YYYY-MM-DD`. Restituisce `null` quando uno dei due argomenti è
+vuoto, così il calcolo resta vuoto finché la data non viene compilata.
+
+`DATEADD` conta giorni di calendario, quindi i cambi dell'ora legale non spostano mai il risultato.
+Una data non valida, come `2026-02-30`, o un numero di giorni con decimali genera un errore di
+calcolo.

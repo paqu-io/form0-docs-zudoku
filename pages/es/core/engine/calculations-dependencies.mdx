@@ -215,6 +215,7 @@ Los códigos son estables, así que tu aplicación puede basarse en ellos.
 | `invalid_syntax`               | error     | syntax     | La expresión tiene una sintaxis no válida.                                                                     |
 | `compilation_error`            | error     | syntax     | No se ha podido compilar la expresión, por ejemplo por una regla de CSP.                                       |
 | `runtime_exception`            | error     | runtime    | La expresión ha lanzado un error, incluido un `SyntaxError` lanzado por ella misma.                            |
+| `missing_result`               | warning   | runtime    | Una expresión de varias líneas no llamó a `SETRESULT()`, así que el campo no tiene valor.                      |
 | `eval_invalid_argument`        | error     | validation | `EVAL()` ha recibido algo que no es una cadena no vacía.                                                       |
 | `eval_reference_unavailable`   | error     | scope      | `EVAL()` no ha encontrado el campo que debía leer.                                                             |
 

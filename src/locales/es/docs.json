@@ -232,6 +232,12 @@
         "round": {
           "title": "ROUND"
         },
+        "dateadd": {
+          "title": "DATEADD"
+        },
+        "days": {
+          "title": "DAYS"
+        },
         "upper": {
           "title": "UPPER"
         },
@@ -293,8 +299,8 @@
     }
   },
   "guides": {
-    "coming-soon": {
-      "title": "Próximamente"
+    "case-intake-form": {
+      "title": "Crea un formulario de registro de casos"
     }
   },
   "diagrams": {

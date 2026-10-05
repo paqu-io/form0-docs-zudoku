@@ -1,0 +1,25 @@
+---
+title: DAYS
+description: Returns the number of days between two dates.
+---
+
+<PageBadges />
+
+Returns the number of days between two dates. The end date comes first, as in spreadsheet
+applications.
+
+## Example
+
+```js
+DAYS($closed_on, $received_on)
+```
+
+## Parameters
+
+- endDate: date string in `YYYY-MM-DD` format
+- startDate: date string in `YYYY-MM-DD` format
+
+## Returns
+
+The number of calendar days from `startDate` to `endDate`. The result is negative when `endDate` is
+earlier. Returns `null` when either argument is blank. A malformed date raises a calculation error.
