@@ -15,7 +15,8 @@ DATEADD($received_on, 3)
 
 ## Paramètres
 
-- date : date au format `YYYY-MM-DD`, comme la valeur d’un `DateField`
+- date : date valide comprise entre `0001-01-01` et `9999-12-31`, au format `YYYY-MM-DD`, comme la
+  valeur d’un `DateField`
 - days : nombre entier de jours à ajouter (peut être négatif)
 
 ## Valeur renvoyée
@@ -24,4 +25,5 @@ La date obtenue, sous forme de chaîne `YYYY-MM-DD`. Renvoie `null` lorsqu’un 
 le calcul reste vide tant que la date n’est pas renseignée.
 
 `DATEADD` compte en jours calendaires : les changements d’heure ne décalent jamais le résultat. Une
-date mal formée, comme `2026-02-30`, ou un nombre de jours décimal provoque une erreur de calcul.
+date mal formée, comme `2026-02-30`, un nombre de jours décimal ou un résultat hors de la plage prise
+en charge provoque une erreur de calcul.

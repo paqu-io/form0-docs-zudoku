@@ -15,7 +15,8 @@ DATEADD($received_on, 3)
 
 ## Parameters
 
-- date: date string in `YYYY-MM-DD` format, such as a `DateField` value
+- date: valid date from `0001-01-01` through `9999-12-31` in `YYYY-MM-DD` format, such as a
+  `DateField` value
 - days: whole number of days to add (can be negative)
 
 ## Returns
@@ -24,4 +25,5 @@ The resulting date as a `YYYY-MM-DD` string. Returns `null` when either argument
 calculation stays empty until the date is filled in.
 
 `DATEADD` counts calendar days, so daylight-saving changes never shift the result. A malformed date,
-such as `2026-02-30`, or a fractional number of days raises a calculation error.
+such as `2026-02-30`, a fractional number of days, or a result outside the supported date range
+raises a calculation error.
