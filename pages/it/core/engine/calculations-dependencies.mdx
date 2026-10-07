@@ -205,20 +205,20 @@ espressione.
 
 I codici sono stabili, quindi la tua applicazione può farvi affidamento.
 
-| Codice                         | Gravità | Fase       | Significato                                                                                                       |
-| ------------------------------ | ------- | ---------- | ----------------------------------------------------------------------------------------------------------------- |
-| `dynamic_dependencies`         | warning | dependency | Il campo costruisce durante l'esecuzione un nome passato a `EVAL()`, quindi il motore esegue passaggi aggiuntivi. |
-| `cyclic_dependencies`          | error   | dependency | Il campo fa parte di un [ciclo](#cicli) ed è stato impostato a `null`.                                            |
-| `non_converging_runtime`       | warning | dependency | Alcuni valori cambiavano ancora dopo l'ultimo passaggio (`maxPasses`).                                            |
-| `missing_reference`            | warning | scope      | L'espressione fa riferimento a un campo che non è nello schema.                                                   |
-| `restricted_reference`         | warning | scope      | L'espressione fa riferimento a un campo fuori dal suo ambito.                                                     |
-| `expression_validation_failed` | error   | validation | La [modalità di sicurezza](/it/core/security) o un builtin ha rifiutato l'espressione.                            |
-| `invalid_syntax`               | error   | syntax     | L'espressione ha una sintassi non valida.                                                                         |
-| `compilation_error`            | error   | syntax     | Non è stato possibile compilare l'espressione, ad esempio a causa di una regola CSP.                              |
-| `runtime_exception`            | error   | runtime    | L'espressione ha generato un errore, incluso un `SyntaxError` generato dall'espressione stessa.                   |
-| `missing_result`               | warning | runtime    | Un'espressione su più righe non ha chiamato `SETRESULT()`, quindi il campo non ha un valore.                      |
-| `eval_invalid_argument`        | error   | validation | `EVAL()` ha ricevuto qualcosa di diverso da una stringa non vuota.                                                |
-| `eval_reference_unavailable`   | error   | scope      | `EVAL()` non ha trovato il campo che doveva leggere.                                                              |
+| Codice                         | Gravità | Fase       | Significato                                                                                                          |
+| ------------------------------ | ------- | ---------- | -------------------------------------------------------------------------------------------------------------------- |
+| `dynamic_dependencies`         | warning | dependency | Il campo costruisce durante l'esecuzione un nome passato a `EVAL()`, quindi il motore esegue passaggi aggiuntivi.    |
+| `cyclic_dependencies`          | error   | dependency | Il campo fa parte di un [ciclo](#cicli) ed è stato impostato a `null`.                                               |
+| `non_converging_runtime`       | warning | dependency | Alcuni valori cambiavano ancora dopo l'ultimo passaggio (`maxPasses`).                                               |
+| `missing_reference`            | warning | scope      | L'espressione fa riferimento a un campo che non è nello schema.                                                      |
+| `restricted_reference`         | warning | scope      | L'espressione fa riferimento a un campo fuori dal suo ambito.                                                        |
+| `expression_validation_failed` | error   | validation | La [modalità di sicurezza](/it/core/security) o un builtin ha rifiutato l'espressione.                               |
+| `invalid_syntax`               | error   | syntax     | L'espressione ha una sintassi non valida.                                                                            |
+| `compilation_error`            | error   | syntax     | Non è stato possibile compilare l'espressione, ad esempio a causa di una regola CSP.                                 |
+| `runtime_exception`            | error   | runtime    | L'espressione ha generato un errore, incluso un `SyntaxError` generato dall'espressione stessa.                      |
+| `missing_result`               | warning | runtime    | Un'espressione su più righe non ha chiamato `SETRESULT()` né restituito un valore, quindi il campo non ha un valore. |
+| `eval_invalid_argument`        | error   | validation | `EVAL()` ha ricevuto qualcosa di diverso da una stringa non vuota.                                                   |
+| `eval_reference_unavailable`   | error   | scope      | `EVAL()` non ha trovato il campo che doveva leggere.                                                                 |
 
 ### Output nella console
 
