@@ -25,6 +25,10 @@ registrare il modulo.
 - **Node.js** `22.19.0+`
 - **form0-cli**, installato con `npm install --global form0-cli`
 
+Lo starter React + Vite include i pacchetti form0 necessari. Se usi un'applicazione esistente,
+segui [Installazione e rendering con React](/it/bindings/react/install-render) per installare o
+aggiornare i suoi pacchetti form0 prima di copiare lo schema.
+
 ## Crea il modulo
 
 <Stepper>
@@ -450,8 +454,8 @@ IF(
 priorità vuota finché **Who is affected?** non ha una risposta.
 
 Le espressioni in questa pagina sono divise su più righe per leggibilità. Nello schema ognuna sta su
-una sola riga: un calcolo distribuito su più righe non restituisce nulla, a meno che tu non
-racchiuda il risultato in [`SETRESULT()`](/it/core/builtins/calculations-expressions/setresult).
+una sola riga. Se scrivi un calcolo su più righe, fornisci il risultato con
+[`SETRESULT()`](/it/core/builtins/calculations-expressions/setresult) o un'istruzione `return` esplicita.
 
 ### Data di risposta
 

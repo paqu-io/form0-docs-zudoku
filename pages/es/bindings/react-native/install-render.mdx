@@ -9,13 +9,14 @@ Para una aplicación móvil nueva, usa el [inicio rápido de la CLI](/es/getting
 El starter mantenido de React Native y Expo incluye el binding, la carga de fuentes, esquemas de
 ejemplo, imágenes de apoyo y persistencia local con SQLite.
 
-Para añadir form0 a una aplicación existente:
+Para añadir form0 a una aplicación existente, instala el binding y el core juntos:
 
 ```bash
 npm install form0-react-native form0-core lucide-react-native
 ```
 
-Instala las dependencias peer nativas en versiones compatibles con tu aplicación. En Expo:
+Instala las dependencias peer nativas en versiones compatibles con tu aplicación. En Expo, usa
+`npx expo install` para seleccionar versiones compatibles con el SDK de tu proyecto:
 
 ```bash
 npx expo install react-native-svg react-native-safe-area-context expo-font

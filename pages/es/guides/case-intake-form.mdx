@@ -25,6 +25,10 @@ formulario.
 - **Node.js** `22.19.0+`
 - **form0-cli**, instalado con `npm install --global form0-cli`
 
+El starter de React + Vite incluye los paquetes form0 necesarios. Si usas una aplicación existente,
+sigue [Instalar y renderizar con React](/es/bindings/react/install-render) para instalar o actualizar
+sus paquetes form0 antes de copiar el esquema.
+
 ## Crea el formulario
 
 <Stepper>
@@ -450,8 +454,8 @@ IF(
 prioridad vacía hasta que **Who is affected?** tiene respuesta.
 
 Las expresiones de esta página se dividen en varias líneas para que se lean mejor. En el esquema,
-cada una ocupa una sola línea: un cálculo que ocupa varias líneas no devuelve nada a menos que
-envuelvas su resultado en [`SETRESULT()`](/es/core/builtins/calculations-expressions/setresult).
+cada una ocupa una sola línea. Si escribes un cálculo de varias líneas, indica su resultado con
+[`SETRESULT()`](/es/core/builtins/calculations-expressions/setresult) o una sentencia `return` explícita.
 
 ### Fecha de respuesta
 

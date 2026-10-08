@@ -31,3 +31,20 @@ for application headers or other overlays.
 `labelPosition` accepts `top` or `side`; use `labelWidthPercent` to size the label column in side
 layout. Keep conditional navigation behavior in the schema instead of duplicating it in component
 state.
+
+## Record events and repeatable entries
+
+For the main form, `FormRenderer` automatically dispatches:
+
+- `load-record` when the form engine is ready;
+- `edit-record` when the form enters edit mode, including when it starts in that mode;
+- `change` after a main-form field is edited and its calculations and conditions are evaluated.
+
+Since `form0-react-native` 0.3.0, opening or editing a repeatable entry does not automatically dispatch
+these events for that row. Row calculations, conditions, and validation still run. If you are
+upgrading from 0.2.x, review handlers that relied on automatic events inside repeatable entries.
+
+Use field defaults and calculations for row values, and
+[`onSnapshotChange`](/bindings/react-native/values-snapshots-submission) to save drafts as values
+change. Do not rely on these automatic events to initialize rows or handle row edits. See
+[Events and operations](/core/engine/events-operations) for writing schema event handlers.

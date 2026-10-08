@@ -9,13 +9,14 @@ For a new mobile application, use the [CLI quickstart](/getting-started/quicksta
 React Native and Expo starter includes the binding, font loading, example schemas, supporting
 images, and local SQLite persistence.
 
-To add form0 to an existing application:
+To add form0 to an existing application, install the binding and core together:
 
 ```bash
 npm install form0-react-native form0-core lucide-react-native
 ```
 
-Install native peer dependencies with versions compatible with your application. In Expo:
+Install native peer dependencies with versions compatible with your application. In Expo, use
+`npx expo install` to select versions compatible with your project's SDK:
 
 ```bash
 npx expo install react-native-svg react-native-safe-area-context expo-font

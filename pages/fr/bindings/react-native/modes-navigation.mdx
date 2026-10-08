@@ -32,3 +32,24 @@ destination verticale pour tenir compte des en-têtes ou autres superpositions d
 `labelPosition` accepte `top` ou `side` ; utilisez `labelWidthPercent` pour dimensionner la colonne
 des libellés dans la disposition latérale. Gardez le comportement conditionnel de la navigation dans
 le schéma au lieu de le dupliquer dans l’état du composant.
+
+## Événements d’enregistrement et entrées répétables
+
+Pour le formulaire principal, `FormRenderer` déclenche automatiquement :
+
+- `load-record` lorsque le moteur du formulaire est prêt ;
+- `edit-record` lorsque le formulaire entre en mode d’édition, y compris s’il démarre dans ce mode ;
+- `change` après la modification d’un champ du formulaire principal et l’évaluation de ses calculs
+  et conditions.
+
+Depuis `form0-react-native` 0.3.0, ouvrir ou modifier une entrée répétable ne déclenche pas
+automatiquement ces événements pour cette ligne. Les calculs, les conditions et la validation de
+la ligne continuent de s’exécuter. Si vous migrez depuis la version 0.2.x, vérifiez les gestionnaires
+qui dépendaient d’événements automatiques dans les entrées répétables.
+
+Utilisez les valeurs par défaut et les calculs pour les valeurs des lignes, et
+[`onSnapshotChange`](/fr/bindings/react-native/values-snapshots-submission) pour enregistrer les
+brouillons lorsque les valeurs changent. Ne comptez pas sur ces événements automatiques pour
+initialiser les lignes ou gérer leur modification. Consultez
+[Événements et opérations](/fr/core/engine/events-operations) pour écrire des gestionnaires
+d’événements dans le schéma.

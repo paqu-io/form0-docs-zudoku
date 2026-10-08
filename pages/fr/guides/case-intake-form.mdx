@@ -26,6 +26,10 @@ d’enregistrer le formulaire.
 - **Node.js** `22.19.0+`
 - **form0-cli**, installé avec `npm install --global form0-cli`
 
+Le starter React + Vite inclut les paquets form0 nécessaires. Si vous utilisez une application
+existante, suivez [Installer et afficher avec React](/fr/bindings/react/install-render) pour installer
+ou mettre à jour ses paquets form0 avant de copier le schéma.
+
 ## Créer le formulaire
 
 <Stepper>
@@ -451,9 +455,9 @@ IF(
 priorité vide tant que **Who is affected?** n’a pas de réponse.
 
 Les expressions de cette page sont réparties sur plusieurs lignes pour rester lisibles. Dans le
-schéma, chacune tient sur une seule ligne : un calcul réparti sur plusieurs lignes ne renvoie rien,
-sauf si vous enveloppez son résultat dans
-[`SETRESULT()`](/fr/core/builtins/calculations-expressions/setresult).
+schéma, chacune tient sur une seule ligne. Si vous écrivez un calcul sur plusieurs lignes, indiquez
+son résultat avec [`SETRESULT()`](/fr/core/builtins/calculations-expressions/setresult) ou une
+instruction `return` explicite.
 
 ### Date de réponse
 

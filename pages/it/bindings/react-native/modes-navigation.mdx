@@ -32,3 +32,23 @@ verticale per tenere conto delle intestazioni o di altri overlay dell'applicazio
 `labelPosition` accetta `top` o `side`; usa `labelWidthPercent` per dimensionare la colonna delle
 etichette nel layout laterale. Mantieni nello schema il comportamento condizionale della navigazione
 invece di duplicarlo nello stato del componente.
+
+## Eventi del record e voci ripetibili
+
+Per il modulo principale, `FormRenderer` attiva automaticamente:
+
+- `load-record` quando il motore del modulo è pronto;
+- `edit-record` quando il modulo entra in modalità di modifica, anche se viene avviato in tale modalità;
+- `change` dopo la modifica di un campo del modulo principale e la valutazione dei suoi calcoli e
+  condizioni.
+
+A partire da `form0-react-native` 0.3.0, aprire o modificare una voce ripetibile non attiva automaticamente
+questi eventi per quella riga. I calcoli, le condizioni e la validazione della riga continuano a
+essere eseguiti. Se aggiorni dalla versione 0.2.x, controlla i gestori che dipendevano dagli eventi
+automatici nelle voci ripetibili.
+
+Usa valori predefiniti e calcoli per i valori delle righe, e
+[`onSnapshotChange`](/it/bindings/react-native/values-snapshots-submission) per salvare le bozze quando
+cambiano i valori. Non affidarti a questi eventi automatici per inizializzare le righe o gestirne le
+modifiche. Vedi [Eventi e operazioni](/it/core/engine/events-operations) per scrivere gestori di eventi
+nello schema.

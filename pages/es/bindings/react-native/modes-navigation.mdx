@@ -32,3 +32,22 @@ del desplazamiento para tener en cuenta los encabezados u otras capas superpuest
 `labelPosition` acepta `top` o `side`; usa `labelWidthPercent` para dimensionar la columna de
 etiquetas en el diseño lateral. Mantén en el esquema el comportamiento condicional de la navegación
 en lugar de duplicarlo en el estado del componente.
+
+## Eventos de registro y entradas repetibles
+
+Para el formulario principal, `FormRenderer` dispara automáticamente:
+
+- `load-record` cuando el motor del formulario está listo;
+- `edit-record` cuando el formulario entra en modo de edición, incluso si se inicia en ese modo;
+- `change` después de editar un campo del formulario principal y evaluar sus cálculos y condiciones.
+
+Desde `form0-react-native` 0.3.0, abrir o editar una entrada repetible no dispara automáticamente estos
+eventos para esa fila. Los cálculos, las condiciones y la validación de la fila siguen ejecutándose.
+Si actualizas desde 0.2.x, revisa los manejadores que dependían de eventos automáticos dentro de
+entradas repetibles.
+
+Usa valores predeterminados y cálculos para los valores de las filas, y
+[`onSnapshotChange`](/es/bindings/react-native/values-snapshots-submission) para guardar borradores
+cuando cambien los valores. No dependas de estos eventos automáticos para inicializar filas ni
+gestionar sus ediciones. Consulta [Eventos y operaciones](/es/core/engine/events-operations) para
+escribir manejadores de eventos en el esquema.

@@ -24,6 +24,10 @@ All of this behavior lives in one JSON schema. The application code only registe
 - **Node.js** `22.19.0+`
 - **form0-cli**, installed with `npm install --global form0-cli`
 
+The React + Vite starter includes the required form0 packages. If you are using an existing
+application, follow [Install and render with React](/bindings/react/install-render) to install or
+update its form0 packages before copying the schema.
+
 ## Build the form
 
 <Stepper>
@@ -449,8 +453,8 @@ IF(
 empty until **Who is affected?** has an answer.
 
 The expressions on this page are split across lines for readability. In the schema, each one stays
-on a single line: a calculation that spans several lines returns nothing unless you wrap its result
-in [`SETRESULT()`](/core/builtins/calculations-expressions/setresult).
+on a single line. If you write a multiline calculation, provide its result with
+[`SETRESULT()`](/core/builtins/calculations-expressions/setresult) or an explicit `return` statement.
 
 ### Response date
 
