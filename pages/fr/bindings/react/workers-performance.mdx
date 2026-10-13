@@ -36,3 +36,9 @@ rendus globaux.
 Considérez le mode selector comme une optimisation : avant de l’adopter, vérifiez dans l’application
 cible les erreurs des champs, les résumés de navigation, les sections répétables et le comportement
 de la soumission.
+
+## Options du moteur en mode worker
+
+Les callbacks applicatifs (`onDiagnostics`, `onWarning`, `onUpdate`, `onOperations`) restent sur le host ; ils ne sont pas sérialisés dans le worker. Schéma, valeurs et configuration doivent accepter le clonage structuré. Les helpers contenant des fonctions et les autres configurations non clonables sont rejetés par une erreur claire avant tout envoi : utilisez `engineMode="main-thread"` pour les helpers fonctionnels. Un échec de configuration ne change pas le mode demandé et ne supprime pas silencieusement les helpers. Le repli existant lorsque Worker est indisponible reste inchangé. Les messages de diagnostic sont acceptés une fois par portée et évaluation actives ; les générations obsolètes ne restaurent pas les anciens résultats. Voir [FormRenderer](/bindings/react/form-renderer) pour l’interface commune.
+
+Si vous remplacez le schéma ou les valeurs initiales pendant l’initialisation du worker, remontez `FormRenderer` pour initialiser le remplacement de façon prévisible. La protection existante contre les initialisations simultanées est conservée : les portées de diagnostic obsolètes se terminent immédiatement, sans programmer d’évaluation supplémentaire. Une collection active vide ne prouve pas que le remplacement a été évalué.

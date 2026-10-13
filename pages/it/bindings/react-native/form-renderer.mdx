@@ -52,3 +52,34 @@ function in `form.events.code`. Consulta
 
 Prosegui con [Valori, snapshot e invio](/it/bindings/react-native/values-snapshots-submission)
 oppure [Modalità e navigazione](/it/bindings/react-native/modes-navigation).
+
+## Opzioni del motore e diagnostica dei calcoli
+
+`engineOptions` inoltra helper, sicurezza, `onWarning`, `onUpdate`, `onOperations` e i controlli diagnostici ai motori radice e delle righe ripetibili. Helper e sicurezza sono impostazioni di costruzione del motore: rimonta `FormRenderer` per sostituirli in modo prevedibile. Callback e preferenza della console restano aggiornati negli editor aperti senza una valutazione aggiuntiva.
+
+```jsx
+const findingsByScope = new Map()
+
+;<FormRenderer
+  schema={schema}
+  engineOptions={{
+    diagnostics: { console: false },
+    onDiagnostics(snapshot, meta) {
+      if (meta.kind === "scope-ended") findingsByScope.delete(meta.scopeId)
+      else findingsByScope.set(meta.scopeId, { snapshot, meta })
+    },
+  }}
+/>
+```
+
+I rapporti della console sono abilitati per impostazione predefinita. `diagnostics.console: false` nasconde i dettagli dei calcoli e gli avvisi di recupero e fine ambito; raccolta e callback restano attivi. Fornire `onDiagnostics` non disabilita implicitamente la console. Codici, gravità, messaggi, fasi, suggerimenti e contesto di core sono conservati. Le intestazioni della console di sviluppo sono in inglese, come i messaggi esistenti del binding.
+
+`onDiagnostics(snapshot, meta)` riceve una copia difensiva dell'array dopo ogni valutazione completata e accettata, inclusa la prima, i risultati identici e `[]` dopo il recupero. La console evita ripetizioni identiche e segnala risultati nuovi o modificati, recupero e ricorrenza. Gli errori degli osservatori, incluse le promesse rifiutate, non interrompono valutazione o operazioni.
+
+I metadati contengono `scopeId`, `instancePath`, `evaluationId` e `kind`. Un ambito identifica una vita transitoria del motore; gli identificatori di valutazione aumentano al suo interno. Il percorso radice è `[]`. Ogni segmento di riga contiene `repeatableKey`, `instanceId`, `index` da zero e `identity: "id" | "position"`. Si usano i valori esistenti di `id` o `record_id`, con un'alternativa esplicitamente posizionale quando mancano. I risultati contengono lo stesso percorso in `context.instancePath`; i rapporti non creano identificatori dei record.
+
+Chiudere o eliminare un editor, sostituirne il motore o schema, o smontarlo ritira il vecchio ambito con `onDiagnostics([], { ...meta, kind: "scope-ended" })`. Indica la fine dell'osservazione, non il recupero della riga salvata. Sono rappresentati solo i motori effettivamente valutati: il callback non è un rapporto completo di validità dell'invio e non rivaluta le righe chiuse.
+
+La diagnostica dei calcoli resta fuori da `state.errors`, snapshot salvati e dati dei record. Non cambia la visualizzazione della validazione, le decisioni di invio o il salvataggio delle bozze, e non genera avvisi automatici o un pannello diagnostico.
+
+`onOperations(operations, meta, applyDefault)` riceve le operazioni diverse dagli avvisi. Delega quelle scelte con `applyDefault(selected, meta)`; senza callback resta attivo il processamento esistente. I dialoghi `ALERT` del renderer appaiono una volta. I lotti seguono il comportamento esistente di ogni piattaforma; i callback devono gestire ogni lotto ricevuto. `onWarning` conserva il canale storico degli avvisi e la sua limitazione di frequenza; non sostituisce gli snapshot diagnostici. `onUpdate(state, engine)` conserva il motore o facade specifico dell'esecuzione; usa `onDiagnostics` per un consumo portabile.

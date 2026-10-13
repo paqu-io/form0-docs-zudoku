@@ -35,3 +35,9 @@ estesi.
 Considera la modalità selector come un'ottimizzazione: prima di adottarla, verifica
 nell'applicazione di destinazione gli errori dei campi, i riepiloghi di navigazione, le sezioni
 ripetibili e il comportamento dell'invio.
+
+## Opzioni del motore in modalità worker
+
+I callback applicativi (`onDiagnostics`, `onWarning`, `onUpdate`, `onOperations`) restano sul host e non vengono serializzati nel worker. Schema, valori e configurazione devono supportare la clonazione strutturata. Helper contenenti funzioni e altre configurazioni non clonabili vengono rifiutati con un errore chiaro prima dell’invio: usa `engineMode="main-thread"` per helper con funzioni. Un errore di configurazione non cambia la modalità richiesta e non elimina gli helper silenziosamente. Resta invariata l’alternativa esistente quando Worker non è disponibile. I messaggi diagnostici vengono accettati una volta per ambito e valutazione attivi; generazioni obsolete non ripristinano risultati precedenti. Vedi [FormRenderer](/bindings/react/form-renderer) per l’interfaccia condivisa.
+
+Se sostituisci lo schema o i valori iniziali mentre il worker si sta inizializzando, rimonta `FormRenderer` per inizializzare la sostituzione in modo prevedibile. La protezione esistente contro inizializzazioni simultanee resta invariata: gli ambiti diagnostici obsoleti terminano subito, senza programmare una valutazione aggiuntiva. Una raccolta attiva vuota non dimostra che la sostituzione sia stata valutata.
