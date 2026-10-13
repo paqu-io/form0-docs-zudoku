@@ -35,3 +35,13 @@ form0 connector --help
 
 All'interno della shell, usa `connector help` per caricare, configurare, testare e verificare lo stato
 dei connettori.
+
+## Presentazione dei calcoli
+
+In form0-cli 0.6.0 e versioni successive, i comandi interattivi `run`, `validate`, `watch` e `serve`
+accettano `--no-diagnostics`. Nasconde i dettagli per quell’azione o per il monitoraggio/server
+attivo, mantenendo disponibili raccolta e risultati.
+
+La sessione resta aperta dopo gli errori di calcolo o analisi per correggere schema o valori.
+I comandi autonomi `validate` e `run` usano un codice di uscita diverso da zero per i propri
+errori; questo non cambia validazione dei campi, invio o salvataggio delle bozze in reform.

@@ -10,3 +10,13 @@ field structure without starting the browser preview.
 
 Inside the interactive shell, load a schema and use `validate` or `preview` without repeating the
 file path.
+
+## Calculation analysis
+
+In form0-cli 0.6.0 and later, `validate` reports schema structure and calculation analysis separately.
+Structural failures or analyzer findings with error severity produce exit status `1`; warnings
+alone produce status `0`. Static analysis inspects expressions without running the form with values.
+
+Use `form0 validate <schema> --no-diagnostics` to suppress calculation diagnostic details while
+retaining the validation outcome and exit status. The interactive `validate --no-diagnostics`
+command applies the same reporting control and keeps the session open after errors.

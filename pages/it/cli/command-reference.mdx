@@ -20,3 +20,9 @@ Esegui `form0 --help` per l'elenco ufficiale dei comandi della versione installa
 
 Anche eseguire `form0` senza comandi avvia la shell interattiva, il cui output di `help` riflette la
 modalità corrente della sessione.
+
+In form0-cli 0.6.0 e versioni successive, `validate`, `run`, `watch` e `serve` supportano
+`--no-diagnostics` per nascondere i dettagli senza disattivare la raccolta. `validate` autonomo
+fallisce per errori dell’analizzatore; `run` autonomo mostra lo stato e fallisce per errori
+diagnostici di esecuzione. I soli avvisi consentono di terminare correttamente e i flussi
+persistenti restano disponibili per correggere i problemi.

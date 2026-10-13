@@ -11,3 +11,14 @@ les valeurs initiales des exécutions automatiques.
 
 Utilisez `form0 test [dir]` pour exécuter le `test.js` du projet. Gardez des tests déterministes et
 centrés sur le comportement du schéma qui compte pour le projet.
+
+## Diagnostics pendant la surveillance
+
+Dans form0-cli 0.6.0 et les versions ultérieures, watch signale les problèmes de calcul nouveaux ou modifiés
+et résout les précédents après récupération. Les problèmes identiques ne sont pas répétés ;
+s’ils reviennent, ils sont signalés à nouveau. Avec `--auto-validate` et `--auto-run`, les
+diagnostics statiques et d’exécution liés au résultat multiligne sont présentés ensemble.
+
+`form0 watch [schema] --auto-run --no-diagnostics` masque les détails sans désactiver l’évaluation
+ni la collecte. Les erreurs de calcul n’arrêtent pas la surveillance. La commande interactive
+accepte la même option.

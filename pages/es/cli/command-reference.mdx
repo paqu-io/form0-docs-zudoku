@@ -20,3 +20,9 @@ definitiva, y `form0 <command> --help` para ver las opciones de cada comando.
 
 Ejecutar `form0` sin ningún comando también inicia la shell interactiva, cuya salida de `help`
 refleja el modo actual de la sesión.
+
+En form0-cli 0.6.0 y versiones posteriores, `validate`, `run`, `watch` y `serve` admiten `--no-diagnostics`
+para ocultar los detalles sin desactivar la recopilación. `validate` independiente falla ante
+errores del analizador; `run` independiente muestra el estado y falla ante errores de diagnóstico
+en ejecución. Solo las advertencias permiten terminar correctamente; las sesiones persistentes
+siguen disponibles para corregir los problemas.

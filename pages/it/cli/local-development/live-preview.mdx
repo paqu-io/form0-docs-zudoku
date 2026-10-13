@@ -11,3 +11,18 @@ questi valori.
 
 Il server di anteprima è uno strumento di sviluppo. Usa progetti e connettori affidabili, ed
 esponilo solo su una rete affidabile.
+
+## Diagnostica dei calcoli nel browser
+
+In form0-cli 0.6.0 e versioni successive, il server restituisce diagnostica strutturata insieme allo
+stato valutato. La console mostra problemi nuovi o modificati, risolti e ricorrenti; le
+valutazioni identiche non li ripetono. I riscontri delle righe annidate indicano il percorso
+ripetibile e l’ID esistente della riga, oppure un riferimento esplicito per posizione senza ID.
+
+Usa `form0 serve [schema] --no-diagnostics` per nascondere i rapporti di calcolo della CLI e
+l’output della console dell’anteprima integrata. La diagnostica viene comunque raccolta.
+Un’app avviata con `serve --app` mantiene la propria politica di presentazione.
+
+Una valutazione completata restituisce lo stato anche quando la diagnostica contiene errori.
+Validazione dei campi, operazioni degli eventi, invio e bozze mantengono il loro comportamento;
+la diagnostica non aggiunge avvisi del modulo né blocchi all’invio.

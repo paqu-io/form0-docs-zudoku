@@ -20,3 +20,8 @@ Run `form0 --help` for the installed version’s authoritative command list, and
 
 Running `form0` without a command also starts the interactive shell, whose `help` output reflects
 the current session mode.
+
+For form0-cli 0.6.0 and later, `validate`, `run`, `watch`, and `serve` support `--no-diagnostics` to
+suppress calculation diagnostic details without disabling collection. Standalone `validate` fails
+on analyzer errors; standalone `run` prints state and fails on runtime diagnostic errors. Warnings
+alone succeed, and persistent workflows remain available for correction.

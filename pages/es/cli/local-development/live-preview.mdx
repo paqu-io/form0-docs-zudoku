@@ -11,3 +11,18 @@ valores.
 
 El servidor de vista previa es una herramienta de desarrollo. Usa proyectos y conectores de
 confianza, y exponlo solo en una red de confianza.
+
+## Diagnósticos de cálculo en el navegador
+
+En form0-cli 0.6.0 y versiones posteriores, el servidor devuelve diagnósticos estructurados junto al estado
+evaluado. La consola muestra problemas nuevos o modificados, resueltos y recurrentes; las
+evaluaciones idénticas no los repiten. Los diagnósticos de filas anidadas indican la ruta repetible
+y el ID existente de la fila, o una referencia explícita por posición si no hay ID.
+
+Usa `form0 serve [schema] --no-diagnostics` para ocultar los informes de cálculo propios de la CLI
+y de la consola de vista previa integrada. Los diagnósticos siguen recopilándose. Una aplicación
+iniciada con `serve --app` mantiene su propia política de presentación.
+
+Una evaluación completada devuelve el estado aunque sus diagnósticos contengan errores. La
+validación de campos, las operaciones de eventos, el envío y el guardado de borradores mantienen
+su comportamiento; los diagnósticos no añaden alertas ni bloqueos de envío.

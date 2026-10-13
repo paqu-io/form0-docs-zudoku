@@ -10,3 +10,17 @@ JSON en línea o la ruta de un archivo JSON, YAML o YML.
 
 El comando muestra el estado evaluado del motor: valores, errores de validación, visibilidad,
 obligatoriedad y solo lectura. Los campos de entrada desconocidos se ignoran y generan advertencias.
+
+## Diagnósticos de cálculo
+
+Estos controles de presentación corresponden a form0-cli 0.6.0 y versiones posteriores. Los diagnósticos de
+cálculo en ejecución identifican el campo, el código estable, la gravedad, la fase y la corrección
+sugerida, si existe. Los detalles van a stderr; el estado evaluado permanece en stdout.
+
+El comando muestra el estado aunque falle un cálculo y termina con código `1` si la evaluación
+contiene un diagnóstico de gravedad error. Solo las advertencias producen código `0`. Un fallo
+en una pasada intermedia sigue formando parte de esa evaluación, aunque una pasada posterior tenga éxito.
+
+Añade `--no-diagnostics` para ocultar los detalles. La recopilación y el código de salida siguen
+activos. Los diagnósticos están separados de los errores de campo en `state.errors`; no modifican
+la validación de envío ni el guardado de borradores en reform. Consulta los [diagnósticos de cálculo](/es/core/engine/calculations-dependencies#ver-errores-y-avisos).
