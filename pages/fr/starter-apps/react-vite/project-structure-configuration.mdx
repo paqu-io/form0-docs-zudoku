@@ -30,7 +30,7 @@ Modifiez `form0.config.js` pour contrôler :
 - `theme` : clair, sombre, système ou une classe de thème de l’application ;
 - `interaction` : le comportement initial en édition ou en lecture seule et la soumission dans les overlays ;
 - `schemas.directory` : le répertoire des schémas utilisé par l’outillage ;
-- `devServer` : la commande de l’application, l’option de soumission aux connecteurs et l’URL de base de l’API ;
+- `devServer` : la commande et le port de l’application, l’option de soumission aux connecteurs et l’URL de base de l’API ;
 - `fieldRenderers` : les types de champs remplacés par des renderers de l’application ;
 - `output.useKeys` : si les enregistrements structurés privilégient les clés du schéma ou les noms de données.
 
@@ -48,6 +48,13 @@ Par défaut, le serveur Vite redirige `/api` vers `http://localhost:3030`. Défi
 `FORM0_DEV_API_URL` dans l’environnement du processus ou dans un fichier `.env` local de Vite pour
 utiliser une autre adresse de serveur de la CLI. Cette valeur est lue par la configuration de Vite et
 n’est pas exposée au code du navigateur.
+
+Vite écoute sur le port 5173 avec `strictPort`, conformément à `devServer.port`. Dans form0-cli
+0.7.0 et les versions ultérieures, lorsque le port est déclaré, `form0 serve --app` démarre d’abord
+l’application, démarre le serveur de la CLI dès que ce port accepte les connexions, puis affiche
+l’URL de l’application à ouvrir. Si le port 5173 est occupé, Vite s’arrête au lieu de choisir un
+autre port. Pour utiliser un autre port, modifiez-le à la fois dans `vite.config.js` et dans
+`devServer.port`.
 
 Ne placez pas d’identifiants dans des variables côté client. Les identifiants de base de données
 relèvent de l’environnement de la CLI ou du connecteur côté serveur, décrit dans la
