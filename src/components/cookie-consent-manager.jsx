@@ -13,6 +13,12 @@ import "vanilla-cookieconsent/dist/cookieconsent.css"
 const CONSENT_COOKIE_NAME = "cc_form0_marketing_consent"
 const LEGACY_CONSENT_COOKIE_NAME = "cc_cookie"
 const CONSENT_COOKIE_DOMAIN = "form0.dev"
+// form0.dev shares the consent cookie and must use the same revision, or each
+// site discards the choice saved on the other and asks again. Revision 2 added
+// the playground category. The library shows consentModal.revisionMessage only
+// to visitors whose saved choice predates the current revision, so update that
+// text with each bump.
+const CONSENT_REVISION = 2
 
 const guiOptions = {
   consentModal: {
@@ -44,6 +50,11 @@ const categories = {
         { name: /^umami/, path: "/", domain: CONSENT_COOKIE_DOMAIN },
       ],
     },
+  },
+  // The playground runs on form0.dev, not here. The category is listed so that
+  // saving choices on this site keeps the visitor's playground choice.
+  playground: {
+    enabled: false,
   },
   // marketing: { enabled: false },
 }
@@ -103,7 +114,7 @@ function syncDarkModeClass() {
 
 function buildConfig(locale) {
   return {
-    revision: 1,
+    revision: CONSENT_REVISION,
     cookie: {
       name: CONSENT_COOKIE_NAME,
       domain: CONSENT_COOKIE_DOMAIN,
