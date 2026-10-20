@@ -21,5 +21,9 @@ Connectors run inside the local Node.js process. They are not hosted storage ser
 provide authentication, authorization, backups, retention, or database administration. Those
 responsibilities remain with the application and database owner.
 
+Connectors don't run in the [online playground](https://form0.dev/#playground). It runs Node.js
+inside the browser, which can't load the SQLite connector's native module or connect to a
+PostgreSQL server. Install form0 locally to use them.
+
 Start with [Choosing a connector](/connectors/choose), or use the
 [CLI connector-management guide](/cli/connector-management).

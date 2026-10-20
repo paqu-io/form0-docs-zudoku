@@ -23,5 +23,9 @@ alojados y no proporcionan autenticación, autorización, copias de seguridad, c
 ni administración de bases de datos. Esas responsabilidades siguen correspondiendo a la aplicación
 y al propietario de la base de datos.
 
+Los conectores no funcionan en el [playground en línea](https://form0.dev/#playground). Este
+ejecuta Node.js dentro del navegador, que no puede cargar el módulo nativo del conector SQLite ni
+conectarse a un servidor PostgreSQL. Instala form0 en local para usarlos.
+
 Empieza por [Elegir un conector](/es/connectors/choose) o consulta la
 [guía de gestión de conectores de la CLI](/es/cli/connector-management).
