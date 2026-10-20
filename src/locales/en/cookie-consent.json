@@ -1,8 +1,10 @@
 {
   "consentModal": {
     "title": "We value your privacy",
-    "description": "We use essential cookies to make this site work and optional analytics cookies to improve your experience. You can change your choice anytime. The live playground on form0.dev runs on StackBlitz, which sets its own cookies; it loads only if you allow it and start it.{{revisionMessage}}",
-    "revisionMessage": " What changed since your last choice: a new Playground (StackBlitz) option.",
+    "description": "We use essential cookies to make this site work and optional analytics cookies to improve your experience. You can change your choice anytime.",
+    "playgroundNote": "The live playground on form0.dev runs on StackBlitz, which sets its own cookies; it loads only if you allow it and start it.",
+    "revisionMessage": "Since your last choice, we added a Playground (StackBlitz) option.",
+    "updateLabel": "Update",
     "acceptAllBtn": "Accept all",
     "acceptNecessaryBtn": "Reject non-essential",
     "showPreferencesBtn": "Manage preferences",

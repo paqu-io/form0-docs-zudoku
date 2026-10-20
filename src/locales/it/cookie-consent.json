@@ -1,8 +1,10 @@
 {
   "consentModal": {
     "title": "Rispettiamo la tua privacy",
-    "description": "Usiamo cookie essenziali per far funzionare il sito e, se acconsenti, cookie analitici per migliorare l'esperienza. Puoi cambiare scelta in qualsiasi momento. Il playground dal vivo di form0.dev funziona con StackBlitz, che imposta i propri cookie; si carica solo se lo consenti e lo avvii.{{revisionMessage}}",
-    "revisionMessage": " Novità dalla tua ultima scelta: una nuova opzione Playground (StackBlitz).",
+    "description": "Usiamo cookie essenziali per far funzionare il sito e, se acconsenti, cookie analitici per migliorare l'esperienza. Puoi cambiare scelta in qualsiasi momento.",
+    "playgroundNote": "Il playground dal vivo di form0.dev funziona con StackBlitz, che imposta i propri cookie; si carica solo se lo consenti e lo avvii.",
+    "revisionMessage": "Dalla tua ultima scelta, abbiamo aggiunto un'opzione Playground (StackBlitz).",
+    "updateLabel": "Novità",
     "acceptAllBtn": "Accetta tutti",
     "acceptNecessaryBtn": "Rifiuta opzionali",
     "showPreferencesBtn": "Gestisci preferenze",
