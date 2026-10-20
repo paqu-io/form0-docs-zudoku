@@ -9,6 +9,7 @@ import fr from "../locales/fr/cookie-consent.json"
 import it from "../locales/it/cookie-consent.json"
 
 import "vanilla-cookieconsent/dist/cookieconsent.css"
+import "./cookie-consent-manager.css"
 
 const CONSENT_COOKIE_NAME = "cc_form0_marketing_consent"
 const LEGACY_CONSENT_COOKIE_NAME = "cc_cookie"
@@ -61,10 +62,23 @@ const categories = {
 
 const activeCategories = Object.keys(categories)
 
+// The playground note and, for visitors whose saved choice predates the
+// current revision, what changed sit under the main text in smaller type (see
+// cookie-consent-manager.css), as on form0.dev; only the revision line carries
+// the update badge. The library inserts the description as HTML.
+function consentModalText({ playgroundNote, updateLabel, revisionMessage, ...modal }) {
+  return {
+    ...modal,
+    description: `${modal.description}<span class="cc-note">${playgroundNote}</span>{{revisionMessage}}`,
+    revisionMessage: `<span class="cc-note"><span class="cc-badge">${updateLabel}</span> ${revisionMessage}</span>`,
+  }
+}
+
 function pruneTranslations(rawTranslations) {
   return Object.fromEntries(
     Object.entries(rawTranslations).map(([locale, value]) => {
       const copy = JSON.parse(JSON.stringify(value))
+      if (copy?.consentModal) copy.consentModal = consentModalText(copy.consentModal)
       if (copy?.preferencesModal?.sections) {
         copy.preferencesModal.sections = copy.preferencesModal.sections.filter(
           (section) => !section.linkedCategory || activeCategories.includes(section.linkedCategory),
