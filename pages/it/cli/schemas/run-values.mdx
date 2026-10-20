@@ -10,3 +10,17 @@ inline o il percorso di un file JSON, YAML o YML.
 
 Il comando stampa lo stato valutato del motore: valori, errori di validazione, visibilità,
 obbligatorietà e sola lettura. I campi di input sconosciuti vengono ignorati con un avviso.
+
+## Diagnostica dei calcoli
+
+Questi controlli di presentazione riguardano form0-cli 0.6.0 e versioni successive. La diagnostica di
+esecuzione identifica campo, codice stabile, gravità, fase ed eventuale correzione suggerita.
+I dettagli vanno su stderr; lo stato valutato resta su stdout.
+
+Il comando mostra lo stato anche se un calcolo non riesce, poi termina con codice `1` se
+la valutazione contiene un errore diagnostico. I soli avvisi producono codice `0`. Un errore
+in un passaggio intermedio resta incluso, anche se un passaggio successivo riesce.
+
+Aggiungi `--no-diagnostics` per nascondere i dettagli. Raccolta e codice di uscita restano
+attivi. La diagnostica è separata dagli errori dei campi in `state.errors`; non cambia
+la validazione dell’invio né il salvataggio delle bozze in reform. Consulta la [diagnostica dei calcoli](/it/core/engine/calculations-dependencies#vedere-errori-e-avvisi).

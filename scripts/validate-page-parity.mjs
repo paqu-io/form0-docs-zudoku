@@ -135,9 +135,7 @@ const englishFiles = (await collectMarkdownFiles(pagesRoot)).filter((file) => {
 for (const englishFile of englishFiles) {
   const relativePath = path.relative(pagesRoot, englishFile).replace(/\\/g, "/")
   const englishSource = await readFile(englishFile, "utf8")
-  const temporary = relativePath === "guides/coming-soon.mdx"
-
-  if (!temporary && (englishSource.match(/<PageBadges \/>/g) || []).length !== 1) {
+  if ((englishSource.match(/<PageBadges \/>/g) || []).length !== 1) {
     failures.push(`${relativePath}: expected exactly one PageBadges component`)
   }
 
@@ -150,8 +148,6 @@ for (const englishFile of englishFiles) {
       failures.push(`${locale}/${relativePath}: missing localized page`)
       continue
     }
-
-    if (temporary) continue
 
     const localizedFrontmatter = frontmatter(localizedSource)
     if (!localizedFrontmatter.title || !localizedFrontmatter.description) {

@@ -10,3 +10,14 @@ structure de champs imbriqués sans lancer l’aperçu dans le navigateur.
 
 Dans le shell interactif, chargez un schéma et utilisez `validate` ou `preview` sans répéter le
 chemin du fichier.
+
+## Analyse des calculs
+
+Dans form0-cli 0.6.0 et les versions ultérieures, `validate` présente séparément la structure du schéma et
+l’analyse des calculs. Les échecs structurels ou les erreurs de l’analyseur donnent le code de
+sortie `1` ; les avertissements seuls donnent `0`. L’analyse statique examine les expressions
+sans exécuter le formulaire avec des valeurs.
+
+Utilisez `form0 validate <schema> --no-diagnostics` pour masquer les détails tout en conservant
+le résultat et le code de sortie. La commande interactive `validate --no-diagnostics` applique
+le même contrôle et garde la session ouverte après les erreurs.

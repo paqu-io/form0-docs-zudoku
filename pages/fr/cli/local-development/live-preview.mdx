@@ -10,3 +10,18 @@ port `3030` et écoute sur `localhost` ; `--port` et `--host` permettent de modi
 
 Le serveur d’aperçu est un outil de développement. Utilisez des projets et des connecteurs de
 confiance, et ne l’exposez que sur un réseau de confiance.
+
+## Diagnostics de calcul dans le navigateur
+
+Dans form0-cli 0.6.0 et les versions ultérieures, le serveur renvoie des diagnostics structurés avec l’état
+évalué. La console affiche les problèmes nouveaux ou modifiés, résolus et récurrents ; les
+évaluations identiques ne les répètent pas. Les diagnostics des lignes imbriquées indiquent le
+chemin répétable et l’ID existant de la ligne, ou une référence explicite par position sans ID.
+
+Utilisez `form0 serve [schema] --no-diagnostics` pour masquer les rapports de calcul de la CLI
+et la sortie console de l’aperçu intégré. Les diagnostics restent collectés. Une application
+lancée avec `serve --app` conserve sa propre politique de présentation.
+
+Une évaluation terminée renvoie l’état même si ses diagnostics contiennent des erreurs. La
+validation des champs, les opérations d’événement, la soumission et les brouillons conservent
+leur comportement ; les diagnostics n’ajoutent pas d’alertes ni de blocages de soumission.

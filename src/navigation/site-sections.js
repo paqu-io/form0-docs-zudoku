@@ -12,7 +12,7 @@ export const SITE_SECTIONS = [
   {
     id: GUIDES_SECTION,
     labelKey: "common.nav.guides",
-    path: "/guides/coming-soon",
+    path: "/guides/case-intake-form",
   },
 ]
 

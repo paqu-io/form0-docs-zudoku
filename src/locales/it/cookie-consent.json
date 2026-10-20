@@ -1,7 +1,8 @@
 {
   "consentModal": {
     "title": "Rispettiamo la tua privacy",
-    "description": "Usiamo cookie essenziali per far funzionare il sito e, se acconsenti, cookie analitici per migliorare l'esperienza. Puoi cambiare scelta in qualsiasi momento.",
+    "description": "Usiamo cookie essenziali per far funzionare il sito e, se acconsenti, cookie analitici per migliorare l'esperienza. Puoi cambiare scelta in qualsiasi momento. Il playground dal vivo di form0.dev funziona con StackBlitz, che imposta i propri cookie; si carica solo se lo consenti e lo avvii.{{revisionMessage}}",
+    "revisionMessage": " Novità dalla tua ultima scelta: una nuova opzione Playground (StackBlitz).",
     "acceptAllBtn": "Accetta tutti",
     "acceptNecessaryBtn": "Rifiuta opzionali",
     "showPreferencesBtn": "Gestisci preferenze",
@@ -28,6 +29,11 @@
         "title": "Analitica",
         "description": "Ci aiuta a capire traffico e utilizzo.",
         "linkedCategory": "analytics"
+      },
+      {
+        "title": "Playground (StackBlitz)",
+        "description": "Ti permette di avviare il playground dal vivo di form0.dev. L'avvio carica StackBlitz, un servizio statunitense che imposta i propri cookie ed esegue strumenti di analisi di Google, Segment e Mixpanel. Per eliminare i cookie già impostati da StackBlitz, usa le impostazioni del browser.",
+        "linkedCategory": "playground"
       },
       {
         "title": "Marketing",

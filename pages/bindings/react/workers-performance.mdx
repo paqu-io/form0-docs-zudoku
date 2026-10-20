@@ -33,3 +33,9 @@ If the browser has no Worker support, the binding falls back to main-thread exec
 
 Treat selector mode as an optimization: verify field errors, navigation summaries, repeatable
 sections, and submission behavior in the target application before adopting it.
+
+## Engine options in worker mode
+
+Application callbacks (`onDiagnostics`, `onWarning`, `onUpdate`, `onOperations`) stay on the host; they are not serialized into the worker. Schema, values and engine configuration must be structured-cloneable. Function-valued helpers and other non-cloneable configuration are rejected with a clear initialization error before a request is dispatched: use `engineMode="main-thread"` for function helpers. Configuration failure does not silently change the requested mode or drop helpers. The existing fallback when Worker support is unavailable remains unchanged. Diagnostic messages are accepted once per active scope/evaluation; obsolete generations cannot restore old findings. See [FormRenderer](/bindings/react/form-renderer) for the shared interface.
+
+If replacing the schema or initial seed while a worker is still initializing, remount `FormRenderer` to initialize the replacement predictably. The existing in-flight initialization guard is retained: obsolete diagnostic scopes end immediately, but reporting does not schedule an extra evaluation. An empty active diagnostic collection does not establish that the replacement has evaluated.

@@ -10,3 +10,14 @@ those operations after saved changes; `--values` supplies initial values for aut
 
 Use `form0 test [dir]` to run the project’s `test.js`. Keep tests deterministic and focused on the
 schema behavior that matters to the project.
+
+## Diagnostics while watching
+
+In form0-cli 0.6.0 and later, watch reports new or changed calculation findings and clears earlier
+findings after recovery. Repeated identical findings stay quiet; a problem that returns is reported
+again. With both `--auto-validate` and `--auto-run`, related static and runtime multiline-result
+findings are presented together.
+
+`form0 watch [schema] --auto-run --no-diagnostics` suppresses calculation diagnostic details without
+disabling evaluation or collection. Calculation errors do not stop the watcher. The interactive
+watch command supports the same option.

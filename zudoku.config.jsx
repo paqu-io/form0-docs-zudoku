@@ -60,6 +60,10 @@ const config = {
     { from: "/es/cli/ai-authoring", to: "/es/cli/ai-authoring/overview" },
     { from: "/fr/cli/ai-authoring", to: "/fr/cli/ai-authoring/overview" },
     { from: "/it/cli/ai-authoring", to: "/it/cli/ai-authoring/overview" },
+    { from: "/guides/coming-soon", to: "/guides/case-intake-form" },
+    { from: "/es/guides/coming-soon", to: "/es/guides/case-intake-form" },
+    { from: "/fr/guides/coming-soon", to: "/fr/guides/case-intake-form" },
+    { from: "/it/guides/coming-soon", to: "/it/guides/case-intake-form" },
   ],
   slots: {
     "head-navigation-start": () => <DocsWordmark />,

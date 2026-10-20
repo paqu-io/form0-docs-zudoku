@@ -10,3 +10,18 @@ Run `form0 serve [schema]` to start the local preview server. It uses port `3030
 
 The preview server is a development tool. Use trusted projects and connectors, and only expose it
 to a trusted network.
+
+## Calculation diagnostics in the browser
+
+In form0-cli 0.6.0 and later, the server returns structured diagnostics alongside evaluated state.
+The browser console shows new or changed findings, resolved findings, and problems that recur;
+identical evaluations do not repeatedly print them. Nested-row findings identify their repeatable
+path and existing row ID, or explicitly show a positional reference when no ID exists.
+
+Use `form0 serve [schema] --no-diagnostics` to suppress CLI-owned calculation reports and built-in
+preview console output. Diagnostics are still collected. An app started with `serve --app` keeps
+its own application reporting policy.
+
+A completed calculation evaluation still returns state when diagnostics contain errors. Field
+validation, event operations, submission policy, and draft saving retain their own behavior;
+diagnostics do not add form alerts or submission blockers.

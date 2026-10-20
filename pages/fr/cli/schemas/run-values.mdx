@@ -10,3 +10,17 @@ valeur JSON en ligne ou le chemin d’un fichier JSON, YAML ou YML.
 
 La commande affiche l’état évalué du moteur : valeurs, erreurs de validation, visibilité, caractère
 obligatoire et lecture seule. Les champs d’entrée inconnus sont ignorés avec un avertissement.
+
+## Diagnostics de calcul
+
+Ces contrôles de présentation concernent form0-cli 0.6.0 et les versions ultérieures. Les diagnostics
+d’exécution identifient le champ, le code stable, la gravité, la phase et une correction éventuelle.
+Les détails vont sur stderr ; l’état évalué reste sur stdout.
+
+La commande affiche l’état même si un calcul échoue, puis se termine avec le code `1` si
+l’évaluation contient un diagnostic de gravité erreur. Les avertissements seuls donnent le code
+`0`. Un échec dans une passe intermédiaire reste inclus, même si une passe ultérieure réussit.
+
+Ajoutez `--no-diagnostics` pour masquer les détails. La collecte et le code de sortie restent
+actifs. Les diagnostics sont distincts des erreurs de champ dans `state.errors` ; ils ne changent
+ni la validation de soumission ni l’enregistrement des brouillons dans reform. Consultez les [diagnostics de calcul](/fr/core/engine/calculations-dependencies#voir-les-erreurs-et-les-avertissements).

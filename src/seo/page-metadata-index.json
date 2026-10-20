@@ -1862,6 +1862,60 @@
       }
     ]
   },
+  "/core/builtins/calculations-expressions/dateadd": {
+    "pathname": "/core/builtins/calculations-expressions/dateadd",
+    "translationKey": "/core/builtins/calculations-expressions/dateadd",
+    "locale": "en",
+    "title": "DATEADD",
+    "description": "Adds a whole number of days to a date.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/calculations-expressions/dateadd"
+      }
+    ]
+  },
+  "/core/builtins/calculations-expressions/days": {
+    "pathname": "/core/builtins/calculations-expressions/days",
+    "translationKey": "/core/builtins/calculations-expressions/days",
+    "locale": "en",
+    "title": "DAYS",
+    "description": "Returns the number of days between two dates.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/calculations-expressions/days"
+      }
+    ]
+  },
   "/core/builtins/calculations-expressions/eval": {
     "pathname": "/core/builtins/calculations-expressions/eval",
     "translationKey": "/core/builtins/calculations-expressions/eval",
@@ -4724,6 +4778,60 @@
       }
     ]
   },
+  "/es/core/builtins/calculations-expressions/dateadd": {
+    "pathname": "/es/core/builtins/calculations-expressions/dateadd",
+    "translationKey": "/core/builtins/calculations-expressions/dateadd",
+    "locale": "es",
+    "title": "DATEADD",
+    "description": "Suma un número entero de días a una fecha.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/calculations-expressions/dateadd"
+      }
+    ]
+  },
+  "/es/core/builtins/calculations-expressions/days": {
+    "pathname": "/es/core/builtins/calculations-expressions/days",
+    "translationKey": "/core/builtins/calculations-expressions/days",
+    "locale": "es",
+    "title": "DAYS",
+    "description": "Devuelve el número de días entre dos fechas.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/calculations-expressions/days"
+      }
+    ]
+  },
   "/es/core/builtins/calculations-expressions/eval": {
     "pathname": "/es/core/builtins/calculations-expressions/eval",
     "translationKey": "/core/builtins/calculations-expressions/eval",
@@ -5804,15 +5912,32 @@
       }
     ]
   },
-  "/es/guides/coming-soon": {
-    "pathname": "/es/guides/coming-soon",
-    "translationKey": "/guides/coming-soon",
+  "/es/guides/case-intake-form": {
+    "pathname": "/es/guides/case-intake-form",
+    "translationKey": "/guides/case-intake-form",
     "locale": "es",
-    "title": "Próximamente",
-    "description": "Las guías prácticas de form0 llegarán aquí en breve.",
-    "indexable": false,
-    "status": "temporary",
-    "alternates": []
+    "title": "Crea un formulario de registro de casos",
+    "description": "Crea un formulario de registro de casos de soporte con campos condicionales, una prioridad calculada y una fecha de respuesta, y ejecútalo en el starter de React y Vite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/case-intake-form"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/case-intake-form"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/case-intake-form"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/case-intake-form"
+      }
+    ]
   },
   "/es/starter-apps/overview": {
     "pathname": "/es/starter-apps/overview",
@@ -8109,6 +8234,60 @@
       }
     ]
   },
+  "/fr/core/builtins/calculations-expressions/dateadd": {
+    "pathname": "/fr/core/builtins/calculations-expressions/dateadd",
+    "translationKey": "/core/builtins/calculations-expressions/dateadd",
+    "locale": "fr",
+    "title": "DATEADD",
+    "description": "Ajoute un nombre entier de jours à une date.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/calculations-expressions/dateadd"
+      }
+    ]
+  },
+  "/fr/core/builtins/calculations-expressions/days": {
+    "pathname": "/fr/core/builtins/calculations-expressions/days",
+    "translationKey": "/core/builtins/calculations-expressions/days",
+    "locale": "fr",
+    "title": "DAYS",
+    "description": "Renvoie le nombre de jours entre deux dates.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/calculations-expressions/days"
+      }
+    ]
+  },
   "/fr/core/builtins/calculations-expressions/eval": {
     "pathname": "/fr/core/builtins/calculations-expressions/eval",
     "translationKey": "/core/builtins/calculations-expressions/eval",
@@ -9189,15 +9368,32 @@
       }
     ]
   },
-  "/fr/guides/coming-soon": {
-    "pathname": "/fr/guides/coming-soon",
-    "translationKey": "/guides/coming-soon",
+  "/fr/guides/case-intake-form": {
+    "pathname": "/fr/guides/case-intake-form",
+    "translationKey": "/guides/case-intake-form",
     "locale": "fr",
-    "title": "Bientôt disponible",
-    "description": "Les guides pratiques form0 arriveront ici prochainement.",
-    "indexable": false,
-    "status": "temporary",
-    "alternates": []
+    "title": "Créer un formulaire d’ouverture de dossier",
+    "description": "Créez un formulaire d’ouverture de dossier de support avec des champs conditionnels, une priorité calculée et une date de réponse, puis exécutez-le dans le starter React et Vite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/case-intake-form"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/case-intake-form"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/case-intake-form"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/case-intake-form"
+      }
+    ]
   },
   "/fr/starter-apps/overview": {
     "pathname": "/fr/starter-apps/overview",
@@ -9712,15 +9908,32 @@
       }
     ]
   },
-  "/guides/coming-soon": {
-    "pathname": "/guides/coming-soon",
-    "translationKey": "/guides/coming-soon",
+  "/guides/case-intake-form": {
+    "pathname": "/guides/case-intake-form",
+    "translationKey": "/guides/case-intake-form",
     "locale": "en",
-    "title": "Coming soon",
-    "description": "Practical form0 guides will land here shortly.",
-    "indexable": false,
-    "status": "temporary",
-    "alternates": []
+    "title": "Build a case intake form",
+    "description": "Build a support case intake form with conditional fields, a calculated priority, and a response date, and run it in the React and Vite starter.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/case-intake-form"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/case-intake-form"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/case-intake-form"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/case-intake-form"
+      }
+    ]
   },
   "/it/bindings/overview": {
     "pathname": "/it/bindings/overview",
@@ -11585,6 +11798,60 @@
       }
     ]
   },
+  "/it/core/builtins/calculations-expressions/dateadd": {
+    "pathname": "/it/core/builtins/calculations-expressions/dateadd",
+    "translationKey": "/core/builtins/calculations-expressions/dateadd",
+    "locale": "it",
+    "title": "DATEADD",
+    "description": "Aggiunge un numero intero di giorni a una data.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/calculations-expressions/dateadd"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/calculations-expressions/dateadd"
+      }
+    ]
+  },
+  "/it/core/builtins/calculations-expressions/days": {
+    "pathname": "/it/core/builtins/calculations-expressions/days",
+    "translationKey": "/core/builtins/calculations-expressions/days",
+    "locale": "it",
+    "title": "DAYS",
+    "description": "Restituisce il numero di giorni tra due date.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/calculations-expressions/days"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/calculations-expressions/days"
+      }
+    ]
+  },
   "/it/core/builtins/calculations-expressions/eval": {
     "pathname": "/it/core/builtins/calculations-expressions/eval",
     "translationKey": "/core/builtins/calculations-expressions/eval",
@@ -12665,15 +12932,32 @@
       }
     ]
   },
-  "/it/guides/coming-soon": {
-    "pathname": "/it/guides/coming-soon",
-    "translationKey": "/guides/coming-soon",
+  "/it/guides/case-intake-form": {
+    "pathname": "/it/guides/case-intake-form",
+    "translationKey": "/guides/case-intake-form",
     "locale": "it",
-    "title": "Prossimamente",
-    "description": "Le guide pratiche di form0 arriveranno qui a breve.",
-    "indexable": false,
-    "status": "temporary",
-    "alternates": []
+    "title": "Crea un modulo di apertura pratiche",
+    "description": "Crea un modulo di apertura pratiche di supporto con campi condizionali, una priorità calcolata e una data di risposta, ed eseguilo nello starter React e Vite.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/case-intake-form"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/case-intake-form"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/case-intake-form"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/case-intake-form"
+      }
+    ]
   },
   "/it/starter-apps/overview": {
     "pathname": "/it/starter-apps/overview",

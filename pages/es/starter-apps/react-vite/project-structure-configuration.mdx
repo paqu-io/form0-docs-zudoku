@@ -30,7 +30,7 @@ Edita `form0.config.js` para controlar:
 - `theme`: claro, oscuro, del sistema o una clase de tema de la aplicación;
 - `interaction`: el comportamiento inicial de edición o solo lectura y el envío en los overlays;
 - `schemas.directory`: el directorio de esquemas que usan las herramientas;
-- `devServer`: el comando de la aplicación, el interruptor de envío a conectores y la URL base de la API;
+- `devServer`: el comando y el puerto de la aplicación, el interruptor de envío a conectores y la URL base de la API;
 - `fieldRenderers`: los tipos de campo que se sustituyen por renderers de la aplicación; y
 - `output.useKeys`: si los registros estructurados usan preferentemente las claves del esquema o los nombres de datos.
 
@@ -48,6 +48,13 @@ El servidor de Vite redirige `/api` a `http://localhost:3030` de forma predeterm
 `FORM0_DEV_API_URL` en el entorno del proceso o en un archivo `.env` local de Vite para usar otra
 dirección del servidor de la CLI. La configuración de Vite consume este valor y no lo expone al
 código del navegador.
+
+Vite escucha en el puerto 5173 con `strictPort`, de acuerdo con `devServer.port`. En form0-cli 0.7.0
+y versiones posteriores, cuando el puerto está declarado, `form0 serve --app` inicia primero la
+aplicación, inicia el servidor de la CLI cuando ese puerto acepta conexiones y después muestra la
+URL de la aplicación que debes abrir. Si el puerto 5173 está en uso, Vite se detiene en lugar de
+elegir otro puerto. Para usar otro puerto, cámbialo tanto en `vite.config.js` como en
+`devServer.port`.
 
 No pongas credenciales en variables del lado del cliente. Las credenciales de la base de datos
 pertenecen al entorno de la CLI o del conector del lado del servidor, descrito en la

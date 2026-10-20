@@ -10,3 +10,14 @@ estructura de campos anidados sin iniciar la vista previa en el navegador.
 
 En la shell interactiva, carga un esquema y usa `validate` o `preview` sin repetir la ruta del
 archivo.
+
+## Análisis de cálculos
+
+En form0-cli 0.6.0 y versiones posteriores, `validate` informa por separado sobre la estructura del esquema
+y el análisis de cálculos. Los fallos estructurales o los errores del analizador producen código
+de salida `1`; solo las advertencias producen `0`. El análisis estático inspecciona las expresiones
+sin ejecutar el formulario con valores.
+
+Usa `form0 validate <schema> --no-diagnostics` para ocultar los detalles manteniendo el resultado
+y el código de salida. El comando interactivo `validate --no-diagnostics` aplica el mismo control
+y mantiene la sesión abierta tras los errores.

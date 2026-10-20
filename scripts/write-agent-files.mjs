@@ -121,8 +121,8 @@ ${content.trim()}`)
 
   return `# form0 docs
 
-> Complete published documentation for Large Language Models. Untranslated placeholders and
-> temporary section stubs are intentionally excluded.
+> Complete published documentation for Large Language Models. Untranslated placeholders are
+> intentionally excluded.
 
 ${documents.join("\n\n")}
 `

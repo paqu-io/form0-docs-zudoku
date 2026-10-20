@@ -35,3 +35,9 @@ rerenderizados generales.
 Trata el modo selector como una optimización: antes de adoptarlo, verifica en la aplicación de
 destino los errores de los campos, los resúmenes de navegación, las secciones repetibles y el
 comportamiento del envío.
+
+## Opciones del motor en modo worker
+
+Los callbacks de aplicación (`onDiagnostics`, `onWarning`, `onUpdate`, `onOperations`) permanecen en el host; no se serializan al worker. El esquema, los valores y la configuración deben admitir clonación estructurada. Los helpers con funciones y otra configuración no clonable se rechazan con un error claro de inicialización antes de enviar una solicitud: usa `engineMode="main-thread"` para helpers con funciones. Un fallo de configuración no cambia el modo solicitado ni descarta helpers silenciosamente. Se conserva la alternativa existente cuando Worker no está disponible. Los mensajes de diagnóstico se aceptan una vez por ámbito y evaluación activos; las generaciones obsoletas no restauran hallazgos anteriores. Consulta [FormRenderer](/bindings/react/form-renderer) para la interfaz compartida.
+
+Si sustituyes el esquema o los valores iniciales mientras el worker se está inicializando, vuelve a montar `FormRenderer` para inicializar la sustitución de forma predecible. Se conserva la protección de inicialización en curso: los ámbitos de diagnóstico obsoletos terminan inmediatamente, pero los informes no programan una evaluación adicional. Una colección activa vacía no demuestra que la sustitución se haya evaluado.

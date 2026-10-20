@@ -20,6 +20,8 @@ const calculationDocs = [
   ["cos", "COS"],
   ["sin", "SIN"],
   ["round", "ROUND"],
+  ["dateadd", "DATEADD", { badge: { label: "New", color: "purple" } }],
+  ["days", "DAYS", { badge: { label: "New", color: "purple" } }],
   ["upper", "UPPER"],
   ["choicevalue", "CHOICEVALUE"],
   ["choicelabel", "CHOICELABEL"],
@@ -293,7 +295,7 @@ const documentationItems = [
   ),
 ]
 
-const guidesItems = [doc("guides/coming-soon", "Coming soon")]
+const guidesItems = [doc("guides/case-intake-form", "Build a case intake form")]
 
 export const navigationDefinition = deepFreeze([
   category("Documentation", documentationItems),

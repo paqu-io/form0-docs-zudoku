@@ -30,7 +30,7 @@ Edit `form0.config.js` to control:
 - `theme`: light, dark, system, or an application theme class;
 - `interaction`: initial edit/read-only behavior and overlay submission behavior;
 - `schemas.directory`: the schema directory used by tooling;
-- `devServer`: the app command, connector submission switch, and API base URL;
+- `devServer`: the app command and port, connector submission switch, and API base URL;
 - `fieldRenderers`: field types replaced by application renderers; and
 - `output.useKeys`: whether structured records prefer schema keys or data names.
 
@@ -46,6 +46,12 @@ defaults in the config and keep form behavior in the schema.
 The Vite server proxies `/api` to `http://localhost:3030` by default. Set
 `FORM0_DEV_API_URL` in the process environment or a local Vite `.env` file to use another CLI server
 address. The value is consumed by Vite configuration and is not exposed to browser code.
+
+Vite listens on port 5173 with `strictPort`, matching `devServer.port`. In form0-cli 0.7.0 and
+later, with a declared port, `form0 serve --app` starts the app first, starts the CLI server once
+that port accepts connections, and then prints the app URL to open. If 5173 is in use, Vite stops
+instead of choosing another port. To use a different port, change it in both `vite.config.js` and
+`devServer.port`.
 
 Do not place credentials in client-side variables. Database credentials belong to the CLI or
 server-side connector environment described in the [connector documentation](/connectors/overview).

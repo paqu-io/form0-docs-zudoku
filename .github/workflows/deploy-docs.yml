@@ -41,7 +41,7 @@ jobs:
         run: npm run security:audit:prod
 
       - name: Upload checked site artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: form0-docs-dist-${{ github.sha }}
@@ -49,9 +49,11 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+  # A push to main or a manual run from main deploys, so a changed repository
+  # variable can be rebuilt without a commit; pull requests only run checks.
   deploy:
     name: deploy-form0-docs-production
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: quality
     runs-on: ubuntu-latest
     environment: production

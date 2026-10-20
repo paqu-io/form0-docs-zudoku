@@ -10,3 +10,13 @@ struttura annidata dei campi senza avviare l'anteprima nel browser.
 
 Nella shell interattiva, carica uno schema e usa `validate` o `preview` senza ripetere il percorso
 del file.
+
+## Analisi dei calcoli
+
+In form0-cli 0.6.0 e versioni successive, `validate` presenta separatamente struttura dello schema e
+analisi dei calcoli. Errori strutturali o dell’analizzatore producono codice di uscita `1`;
+i soli avvisi producono `0`. L’analisi statica esamina le espressioni senza eseguire il modulo con valori.
+
+Usa `form0 validate <schema> --no-diagnostics` per nascondere i dettagli mantenendo risultato
+e codice di uscita. Il comando interattivo `validate --no-diagnostics` applica lo stesso
+controllo e mantiene aperta la sessione dopo gli errori.

@@ -51,7 +51,6 @@ for (const file of await collectMarkdownFiles(pagesRoot)) {
   const { locale, translationKey } = routeIdentity(pathname)
   const { title, description } = frontmatterFromSource(source)
   const placeholder = source.includes(untranslatedMarker)
-  const temporary = translationKey === "/guides/coming-soon"
 
   pages[pathname] = {
     pathname,
@@ -59,8 +58,8 @@ for (const file of await collectMarkdownFiles(pagesRoot)) {
     locale,
     title,
     description,
-    indexable: !placeholder && !temporary,
-    status: placeholder ? "untranslated" : temporary ? "temporary" : "published",
+    indexable: !placeholder,
+    status: placeholder ? "untranslated" : "published",
   }
 }
 

@@ -52,3 +52,34 @@ de fonctions ou de fonctions fléchées dans `form.events.code`. Consultez
 Poursuivez avec
 [Valeurs, snapshots et soumission](/fr/bindings/react-native/values-snapshots-submission) ou
 [Modes et navigation](/fr/bindings/react-native/modes-navigation).
+
+## Options du moteur et diagnostics de calcul
+
+`engineOptions` transmet les helpers, la sécurité, `onWarning`, `onUpdate`, `onOperations` et les contrôles de diagnostic aux moteurs racine et des lignes répétables. Helpers et sécurité sont fixés à la construction du moteur : remontez `FormRenderer` pour les remplacer de façon prévisible. Les callbacks et la préférence de console restent à jour dans les éditeurs ouverts sans évaluation supplémentaire.
+
+```jsx
+const findingsByScope = new Map()
+
+;<FormRenderer
+  schema={schema}
+  engineOptions={{
+    diagnostics: { console: false },
+    onDiagnostics(snapshot, meta) {
+      if (meta.kind === "scope-ended") findingsByScope.delete(meta.scopeId)
+      else findingsByScope.set(meta.scopeId, { snapshot, meta })
+    },
+  }}
+/>
+```
+
+Les rapports de console sont activés par défaut. `diagnostics.console: false` masque les détails de calcul et les notices de rétablissement et de fin de portée ; la collecte et les callbacks restent actifs. Fournir `onDiagnostics` ne désactive pas implicitement la console. Les codes, la gravité, les messages, les phases, les suggestions et le contexte de core sont conservés. Les titres de la console de développement restent en anglais, comme les messages existants du binding.
+
+`onDiagnostics(snapshot, meta)` reçoit une copie défensive du tableau après chaque évaluation terminée et acceptée, y compris la première, les résultats identiques et `[]` après rétablissement. La console évite les répétitions identiques et signale les résultats nouveaux ou modifiés, le rétablissement et la réapparition. Les erreurs des observateurs, y compris les promesses rejetées, n'interrompent ni l'évaluation ni les opérations.
+
+Les métadonnées contiennent `scopeId`, `instancePath`, `evaluationId` et `kind`. Une portée identifie une durée de vie transitoire du moteur ; les identifiants d'évaluation augmentent dans cette portée. Le chemin racine est `[]`. Chaque segment de ligne contient `repeatableKey`, `instanceId`, `index` à partir de zéro et `identity: "id" | "position"`. Les valeurs existantes de `id` ou `record_id` sont utilisées, avec un repli explicitement positionnel lorsqu'elles manquent. Les résultats portent le même chemin dans `context.instancePath` ; les rapports ne créent jamais d'identifiants d'enregistrement.
+
+Fermer ou supprimer un éditeur, remplacer son moteur ou schéma, ou le démonter retire la portée précédente avec `onDiagnostics([], { ...meta, kind: "scope-ended" })`. Cela indique la fin de l'observation, pas le rétablissement de la ligne enregistrée. Seuls les moteurs réellement évalués sont représentés : le callback n'est pas un rapport complet de validité de soumission et ne réévalue pas les lignes fermées.
+
+Les diagnostics de calcul restent hors de `state.errors`, des snapshots enregistrés et des données d'enregistrement. Ils ne changent ni l'affichage de la validation, ni les décisions de soumission, ni l'enregistrement des brouillons, et ne créent ni alertes automatiques ni panneau de diagnostic.
+
+`onOperations(operations, meta, applyDefault)` reçoit les opérations autres que les alertes. Déléguez celles choisies avec `applyDefault(selected, meta)` ; sans callback, le traitement existant reste actif. Les dialogues `ALERT` du renderer apparaissent une fois. Les lots suivent le traitement existant de chaque plateforme ; les callbacks doivent traiter chaque lot reçu. `onWarning` conserve le canal d'avertissement historique et sa limitation de fréquence ; il ne remplace pas les snapshots de diagnostic. `onUpdate(state, engine)` conserve le moteur ou facade propre à l'exécution ; utilisez `onDiagnostics` pour une consommation portable.

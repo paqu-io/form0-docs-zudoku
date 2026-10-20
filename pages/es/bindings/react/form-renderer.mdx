@@ -47,3 +47,34 @@ al `<form>` renderizado. No uses esta vía para configurar el motor.
 
 Continúa con [Valores, snapshots y envío](/es/bindings/react/values-snapshots-submission) o con
 [Modos, ubicación y navegación](/es/bindings/react/modes-placement-navigation).
+
+## Opciones del motor y diagnósticos de cálculo
+
+`engineOptions` transmite helpers, seguridad, `onWarning`, `onUpdate`, `onOperations` y los controles de diagnóstico a los motores raíz y de filas repetibles. Helpers y seguridad se fijan al crear el motor: vuelve a montar `FormRenderer` para sustituirlos de forma predecible. Los callbacks y la preferencia de consola se mantienen actualizados en los editores abiertos sin una evaluación adicional.
+
+```jsx
+const findingsByScope = new Map()
+
+;<FormRenderer
+  schema={schema}
+  engineOptions={{
+    diagnostics: { console: false },
+    onDiagnostics(snapshot, meta) {
+      if (meta.kind === "scope-ended") findingsByScope.delete(meta.scopeId)
+      else findingsByScope.set(meta.scopeId, { snapshot, meta })
+    },
+  }}
+/>
+```
+
+Los informes de consola están activados por defecto. `diagnostics.console: false` oculta los detalles de cálculo y los avisos de recuperación y fin de ámbito; la recopilación y los callbacks siguen activos. Proporcionar `onDiagnostics` no desactiva la consola implícitamente. Se conservan los códigos, la gravedad, los mensajes, las fases, las sugerencias y el contexto de core. Los encabezados de la consola de desarrollo usan inglés, como los mensajes existentes del binding.
+
+`onDiagnostics(snapshot, meta)` recibe una copia defensiva del array tras cada evaluación completada y aceptada, incluida la primera, los hallazgos idénticos y `[]` tras la recuperación. La consola evita repeticiones idénticas e informa de hallazgos nuevos o modificados, recuperación y recurrencia. Los errores de los observadores, incluidas las promesas rechazadas, no interrumpen la evaluación ni las operaciones.
+
+Los metadatos contienen `scopeId`, `instancePath`, `evaluationId` y `kind`. Un ámbito identifica una vida transitoria del motor; los identificadores de evaluación aumentan dentro de él. La ruta raíz es `[]`. Cada segmento de fila contiene `repeatableKey`, `instanceId`, `index` desde cero e `identity: "id" | "position"`. Se usan los valores existentes de `id` o `record_id`, con una alternativa explícitamente posicional si faltan. Los hallazgos incluyen la misma ruta en `context.instancePath`; los informes nunca crean identificadores de registro.
+
+Cerrar o eliminar un editor, sustituir su motor o esquema, o desmontarlo retira el ámbito anterior con `onDiagnostics([], { ...meta, kind: "scope-ended" })`. Significa que el ámbito deja de observarse, no que la fila guardada se haya recuperado. Solo se representan motores que realmente se evalúan: el callback no es un informe completo de validez para el envío ni vuelve a evaluar filas cerradas.
+
+Los diagnósticos de cálculo quedan fuera de `state.errors`, los snapshots guardados y los registros. No cambian cuándo se muestran los errores de validación, las decisiones de envío ni el guardado de borradores, y no generan alertas automáticas ni un panel de diagnóstico.
+
+`onOperations(operations, meta, applyDefault)` recibe las operaciones distintas de alertas. Delega las seleccionadas con `applyDefault(selected, meta)`; sin callback se conserva el procesamiento existente. Los diálogos `ALERT` del renderer aparecen una vez. Los lotes siguen el procesamiento existente de cada plataforma; los callbacks deben atender cada lote recibido. `onWarning` conserva la ruta de avisos heredada y su limitación de frecuencia; no sustituye los snapshots de diagnóstico. `onUpdate(state, engine)` conserva el motor o facade propio de la ejecución; usa `onDiagnostics` para consumir diagnósticos de forma portable.
