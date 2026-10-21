@@ -25,3 +25,37 @@ its own application reporting policy.
 A completed calculation evaluation still returns state when diagnostics contain errors. Field
 validation, event operations, submission policy, and draft saving retain their own behavior;
 diagnostics do not add form alerts or submission blockers.
+
+## Portable preview events (CLI 0.7.0+)
+
+CLI 0.7.0 aligns the built-in browser preview with core's portable event contract.
+In **Form Settings**, enable **Portable preview events** and explicitly select **New record** or
+**Existing record**. Lifecycle integration is off by default. Read-only opening runs load only;
+changing the configuration starts a fresh session with accepted values. An app launched through
+`serve --app` retains its own event options.
+
+Initialization evaluates effective values, runs `load-record`, then the applicable `new-record` or
+`edit-record`. User changes run after queued updates settle; defaults, calculations and `SETVALUE()`
+do not generate extra changes. Enabled status uses `change-status`; optional text/numeric focus and
+blur, and supported hyperlink click, are selected separately.
+
+Submit follows built-in/custom validation → `save-record` once → validation again only if values
+changed → final serialization → existing connector submission. Synchronous `INVALID(message)` adds
+a scope-level summary message without changing intrinsic `state.errors`. Calculation diagnostics
+alone do not block submission. **Prepare draft** produces a raw snapshot and possibly invalid
+summary in the console, with no connector call or persistence. There are no `saved-*` schema events.
+
+Inline rows offer **Edit**, **Save row** and **Cancel row**. They use repeatable lifecycle hooks and
+staged values: Save validates/prepares before accepting; Cancel discards staged nested edits.
+Handlers read permitted ancestor/main fields and write only their current row. Collapsing changes
+presentation only. Accepted add/edit/remove notifies the owning repeatable; later notification
+issues are reported separately from the already accepted preparation. Preview keeps its existing
+recursive closed-row evaluation; binding freshness/aggregation policy remains separate.
+
+The active developer controller is `window.form0PreviewEvents`. Its promise-based `dispatch()` and
+`prepareSave({ intent: 'submit' | 'draft' })` return findings/issues and finish accepted presentation;
+preparation itself neither submits nor closes. Row targets supply complete `instancePath` and the
+observed `scopeId` (also shown as `data-preview-scope-id`). Positional paths require that ID. Metadata
+is JSON; executable configuration and native file handles are rejected. Saved values contain no
+scope or diagnostic metadata. Cancel/Close notify before retirement; reload/forced disposal only
+retires. Reopen starts a fresh session. This does not change terminal run/validate exit behavior.
