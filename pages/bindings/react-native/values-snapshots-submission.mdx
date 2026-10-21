@@ -50,3 +50,12 @@ timestamps, and the validation summary.
 
 The binding does not persist or synchronize either payload. Store snapshots locally, upload
 records, retry failures, and resolve conflicts in the host application.
+
+## Managed event API
+
+See the managed event controller and scope contract in [FormRenderer](/bindings/react-native/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+Preparation does not persist or close. Root draft validation findings remain visible in the returned summary; normal submit and row acceptance are blocked by validation failures. Calculation diagnostics remain independent. No closed-row evaluation or aggregation is added.

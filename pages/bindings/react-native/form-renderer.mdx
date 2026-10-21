@@ -80,3 +80,60 @@ Closing/deleting an editor, replacing its engine/schema, or unmounting retires t
 Calculation diagnostics remain outside `state.errors`, saved snapshots and record payloads. They do not change validation display timing, submission decisions or draft saving, and do not create automatic alerts or a diagnostics panel.
 
 `onOperations(operations, meta, applyDefault)` receives non-alert operations. Delegate selected operations with `applyDefault(selected, meta)`; without a callback, existing default processing remains active. Renderer-owned `ALERT` dialogs appear once. Operation batches follow the existing platform processing; callbacks must handle every supplied batch. `onWarning` remains the legacy warning route, including its existing throttling, and is not a replacement for diagnostic snapshots. `onUpdate(state, engine)` retains the execution-specific engine/facade argument; use `onDiagnostics` for portable diagnostic consumption.
+
+## Managed events and custom validation
+
+This integration requires form0-react-native 0.5.0 or newer and core 0.5.1 or newer. Expanded automatic lifecycle events are opt-in:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{
+    events: { lifecycle: true, recordKind: "existing", fieldInteractions: ["focus", "blur"] },
+    onEventController: (controller) => {
+      controllerRef.current = controller
+    },
+  }}
+/>
+```
+
+`recordKind` must explicitly be `new` or `existing`; values never determine it. Configuration is
+fixed for an editor session; remount to change classification, lifecycle, helpers or security.
+Callbacks remain live. Without opt-in, automatic root load/edit/change behavior is preserved.
+Readonly opening runs load only; editable opening runs load then new/edit. Open rows use the
+repeatable equivalents and their actual classification.
+
+The generation-bound controller is delivered after initialization and retired with `null`.
+`dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` returns a promise with `status`,
+`operations`, `validationIssues` and `issues` after accepted operation work finishes.
+`prepareSave({ intent: 'submit' | 'draft', instancePath?, scopeId? })` returns a promise with
+`eligible`, `payload`, `meta`, `validationSummary` and `issues`. It never persists or closes.
+Field listeners use `data_name`; paths use schema keys and existing row IDs. Positional fallback
+requires the observed active `scopeId` from diagnostics. Closed targets and old generations are rejected.
+
+`INVALID(message)` creates a nonempty synchronous scope-level message during validate-record or
+validate-repeatable. Custom findings join the existing validation summary/navigation, replace each
+attempt and clear on editable changes or retirement. They never enter intrinsic `state.errors`,
+calculation diagnostics, values or record/media metadata. Validation and close handlers reject value/UI
+operations and promises. Row handlers can read current main/ancestor fields, but SETVALUE writes only
+in their current row; collection access is excluded.
+
+Preparation waits for updates, validates, runs save-\* once when policy allows, awaits operations,
+revalidates changed values and serializes that final snapshot. Submit and row acceptance respect
+validation; root drafts remain allowed with `hasErrors: true`. Row drafts are unsupported. Execution
+failure returns no payload. `isDraft` describes the current action; `isValid` is intrinsic validity.
+Calculation diagnostics alone never block saving. Closed-row freshness and aggregation remain separate.
+
+User edits emit contextual change after updates settle. Accepted row membership changes include
+`action` (add/edit/remove) and `affectedInstancePath`; enabled status fields emit user-only change-status.
+Defaults, SETVALUE and calculations do not emit additional change. Extra interactions default to none;
+built-in text/numeric controls support focus/blur/click (Native click means input press). Other controls
+may dispatch explicitly. Async onOperations work and selective applyDefault work are awaited; the
+fallback expires with its dispatch. Alerts remain renderer-owned and occur once.
+
+Confirmed cancel runs cancel then unload; supported successful closes run unload before disposal.
+Hosts closing directly must dispatch unload before unmounting. Rerenders, resets, Strict Mode cleanup
+and forced unmount only retire scopes. Save-_ is pre-save; no saved-_ schema events are added.
+Applications own persistence, success notifications and closing.
+
+Native File/Blob uploads preserve standard metadata and immutable data. Their custom properties are outside native serialization. The media compatibility correction is included in core 0.5.1.

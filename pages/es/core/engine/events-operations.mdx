@@ -159,10 +159,9 @@ De forma predeterminada, los renderers oficiales:
   `SETVALUE`](/es/core/builtins/events/setvalue) para ver ejemplos.
 </Callout>
 
-El `FormRenderer` de React Native permite que una aplicación gestione las operaciones que no son
-alertas pasando `engineOptions.onOperations`. Sigue mostrando las operaciones `ALERT` en su propio
-cuadro de diálogo y pasa las demás operaciones a tu callback. El `FormRenderer` de React gestiona
-actualmente las operaciones de forma interna y no expone un callback personalizado.
+Los componentes `FormRenderer` de React y React Native permiten que una aplicación gestione las
+operaciones que no son alertas mediante `engineOptions.onOperations`. Cada renderer presenta sus
+operaciones `ALERT` y pasa las demás operaciones a tu callback.
 
 ```js
 function onOperations(operations, meta, applyDefault) {
@@ -172,7 +171,7 @@ function onOperations(operations, meta, applyDefault) {
 }
 ```
 
-Llama a `applyDefault` con las operaciones que quieras que React Native gestione como de costumbre.
+Llama a `applyDefault` con las operaciones que quieras que el binding gestione como de costumbre.
 
 ### Aplicar operaciones sin un renderer
 
@@ -188,3 +187,17 @@ que asignó. Un manejador `change` de `age` que asigna `adult_note` no ejecuta l
 
 Si asignar un campo también debe activar la lógica de otro, pon ambas en el mismo manejador o usa un
 `CalculatedField` cuando el valor pueda derivarse de otros campos.
+
+## Ejecución gestionada del core
+
+El nuevo contrato del core añade `engine.triggerDetailed(eventType, fieldKey, metadata)` síncrono, que devuelve copias defensivas de `operations`, `validationIssues` e `issues` de ejecución. Un despacho gestionado fallido no devuelve operaciones aplicables. La vía de compatibilidad `engine.trigger()` conserva su array de operaciones. Ningún método evalúa, persiste ni cierra un editor.
+
+Configura `eventScope.instancePath` al crear un motor de fila sin renderer; el ámbito raíz es `[]`. Las rutas completas usan `repeatableKey`, `instanceId`, `index` e `identity`. Las claves de ruta usan las claves del esquema; los identificadores de listeners usan `data_name`. Un ID ausente se indica expresamente como posicional. El core valida la ascendencia del esquema y la pertenencia; el host debe comprobar la identidad y generación de la fila activa. Los manejadores gestionados de fila pueden leer campos actuales, de ancestros y principales proporcionados por el host; `SETVALUE()` solo escribe campos de la fila actual. No se permite acceder a ramas hermanas, descendientes o ajenas ni a colecciones repetibles. Los metadatos de la aplicación no pueden sustituir la identidad ni el ámbito del dispatcher.
+
+`INVALID(message)` está disponible durante la ejecución gestionada de `validate-record` y `validate-repeatable` y requiere una cadena no vacía. Los hallazgos pertenecen al ámbito, sin asociación a un campo, y no entran en `state.errors`, diagnósticos de cálculo, valores ni metadatos guardados. Los manejadores de validación rechazan operaciones de valores/interfaz y promesas. Los manejadores de cancelación y descarga son notificaciones de solo lectura y también rechazan hallazgos de validación y alertas.
+
+El registro añade `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` y `change-status`. Registrarlos no los automatiza. `save-record` y `save-repeatable` siguen siendo previos al guardado; no se introducen eventos de esquema `saved-*`. React 0.4.0, React Native 0.5.0 y CLI 0.7.0 adoptan el ciclo de vida ampliado, el controlador y la preparación del guardado. La integración automática del ciclo de vida sigue siendo opcional.
+
+Consulta el [contrato de eventos mantenido](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) para conocer el contrato completo y las fases de entrega. La política general de validación, la actualización de filas cerradas y la responsabilidad de persistencia siguen siendo trabajos separados.
+
+Los objetos multimedia File/Blob nativos se copian defensivamente, conservando metadatos estándar y contenido binario inmutable. Esta corrección está incluida en core 0.5.1. Se rechazan otros objetos no portables; los handlers asíncronos siguen sin admitirse.

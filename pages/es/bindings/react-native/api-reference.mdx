@@ -46,3 +46,10 @@ de envío no son exportaciones públicas.
 
 [FormRenderer](/bindings/react-native/form-renderer): `scopeId`, `instancePath`,
 `evaluationId`, `kind: "evaluation" | "scope-ended"`.
+
+## API de eventos gestionados
+
+Consulta el controlador de eventos y el contrato de ámbitos en [FormRenderer](/es/bindings/react-native/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.

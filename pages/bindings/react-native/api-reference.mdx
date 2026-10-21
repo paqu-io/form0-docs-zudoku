@@ -45,3 +45,10 @@ public exports.
 
 [FormRenderer](/bindings/react-native/form-renderer): `scopeId`, `instancePath`,
 `evaluationId`, `kind: "evaluation" | "scope-ended"`.
+
+## Managed event API
+
+See the managed event controller and scope contract in [FormRenderer](/bindings/react-native/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.

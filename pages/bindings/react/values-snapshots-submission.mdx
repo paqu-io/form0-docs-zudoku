@@ -59,3 +59,12 @@ and `validationSummary`.
 If `onSubmit` returns a promise, an overlay configured with `autoCloseOverlayOnSubmit` closes only
 after the promise resolves. A rejection leaves it open. Use `submitBlockedReason` for application
 requirements outside the schema and `externalDirty` for application state outside the renderer.
+
+## Managed event API
+
+See the managed event controller and scope contract in [FormRenderer](/bindings/react/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+Preparation does not persist or close. Root draft validation findings remain visible in the returned summary; normal submit and row acceptance are blocked by validation failures. Calculation diagnostics remain independent. No closed-row evaluation or aggregation is added.

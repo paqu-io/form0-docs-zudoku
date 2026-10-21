@@ -54,3 +54,12 @@ validación.
 
 El binding no guarda ni sincroniza ninguno de los dos contenidos. Almacena los snapshots en local,
 sube los registros, reintenta los fallos y resuelve los conflictos en la aplicación host.
+
+## API de eventos gestionados
+
+Consulta el controlador de eventos y el contrato de ámbitos en [FormRenderer](/es/bindings/react-native/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+La preparación no persiste ni cierra. Los borradores raíz conservan los hallazgos en el resumen; submit normal y la aceptación de filas se bloquean ante validación fallida. Los diagnósticos de cálculo siguen separados. No se evalúan ni agregan filas cerradas.

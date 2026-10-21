@@ -45,3 +45,10 @@ controller delle sezioni ripetibili e le utility di invio non sono esportazioni 
 
 [FormRenderer](/bindings/react-native/form-renderer): `scopeId`, `instancePath`,
 `evaluationId`, `kind: "evaluation" | "scope-ended"`.
+
+## API degli eventi gestiti
+
+Vedi il controller e il contratto degli ambiti in [FormRenderer](/it/bindings/react-native/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.

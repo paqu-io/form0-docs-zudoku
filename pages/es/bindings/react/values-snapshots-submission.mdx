@@ -62,3 +62,12 @@ Si `onSubmit` devuelve una promesa, un overlay configurado con `autoCloseOverlay
 cierra cuando se resuelve la promesa. Si se rechaza, sigue abierto. Usa `submitBlockedReason` para
 requisitos de la aplicación ajenos al esquema y `externalDirty` para el estado de la aplicación
 ajeno al renderer.
+
+## API de eventos gestionados
+
+Consulta el controlador de eventos y el contrato de ámbitos en [FormRenderer](/es/bindings/react/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+La preparación no persiste ni cierra. Los borradores raíz conservan los hallazgos en el resumen; submit normal y la aceptación de filas se bloquean ante validación fallida. Los diagnósticos de cálculo siguen separados. No se evalúan ni agregan filas cerradas.

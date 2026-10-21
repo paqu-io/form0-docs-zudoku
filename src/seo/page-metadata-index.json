@@ -2240,6 +2240,33 @@
       }
     ]
   },
+  "/core/builtins/events/invalid": {
+    "pathname": "/core/builtins/events/invalid",
+    "translationKey": "/core/builtins/events/invalid",
+    "locale": "en",
+    "title": "INVALID",
+    "description": "Synchronous custom validation messages for managed form events.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/invalid"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/events/invalid"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/events/invalid"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/events/invalid"
+      }
+    ]
+  },
   "/core/builtins/events/off": {
     "pathname": "/core/builtins/events/off",
     "translationKey": "/core/builtins/events/off",
@@ -5153,6 +5180,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/builtins/events/alert"
+      }
+    ]
+  },
+  "/es/core/builtins/events/invalid": {
+    "pathname": "/es/core/builtins/events/invalid",
+    "translationKey": "/core/builtins/events/invalid",
+    "locale": "es",
+    "title": "INVALID",
+    "description": "Mensajes de validación personalizada síncrona para eventos gestionados.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/invalid"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/events/invalid"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/events/invalid"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/events/invalid"
       }
     ]
   },
@@ -8609,6 +8663,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/builtins/events/alert"
+      }
+    ]
+  },
+  "/fr/core/builtins/events/invalid": {
+    "pathname": "/fr/core/builtins/events/invalid",
+    "translationKey": "/core/builtins/events/invalid",
+    "locale": "fr",
+    "title": "INVALID",
+    "description": "Messages synchrones de validation personnalisée pour les événements gérés.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/invalid"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/events/invalid"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/events/invalid"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/events/invalid"
       }
     ]
   },
@@ -12173,6 +12254,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/builtins/events/alert"
+      }
+    ]
+  },
+  "/it/core/builtins/events/invalid": {
+    "pathname": "/it/core/builtins/events/invalid",
+    "translationKey": "/core/builtins/events/invalid",
+    "locale": "it",
+    "title": "INVALID",
+    "description": "Messaggi sincroni di validazione personalizzata per gli eventi gestiti.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/builtins/events/invalid"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/builtins/events/invalid"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/builtins/events/invalid"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/builtins/events/invalid"
       }
     ]
   },

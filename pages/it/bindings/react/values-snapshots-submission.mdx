@@ -60,3 +60,12 @@ Se `onSubmit` restituisce una promise, un overlay configurato con `autoCloseOver
 chiude solo dopo la risoluzione della promise. In caso di rifiuto resta aperto. Usa
 `submitBlockedReason` per i requisiti dell'applicazione esterni allo schema e `externalDirty` per lo
 stato dell'applicazione esterno al renderer.
+
+## API degli eventi gestiti
+
+Vedi il controller e il contratto degli ambiti in [FormRenderer](/it/bindings/react/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+La preparazione non persiste né chiude. Le bozze radice mantengono i risultati nel riepilogo; submit normale e accettazione delle righe sono bloccati dalla validazione. I diagnostici di calcolo restano separati. Nessuna valutazione o aggregazione delle righe chiuse.

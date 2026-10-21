@@ -53,3 +53,12 @@ que les valeurs brutes, l’état des sections répétables, les horodatages et 
 Le binding ne persiste ni ne synchronise aucune de ces deux données. Stockez les snapshots
 localement, envoyez les enregistrements, relancez les échecs et résolvez les conflits dans
 l’application host.
+
+## API des événements gérés
+
+Voir le contrôleur et le contrat des périmètres dans [FormRenderer](/fr/bindings/react-native/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+La préparation ne persiste ni ne ferme. Les brouillons racine conservent les constats dans le résumé ; submit et l’acceptation des lignes sont bloqués par une validation invalide. Les diagnostics de calcul restent indépendants. Aucune évaluation ou agrégation des lignes fermées.

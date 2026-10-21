@@ -50,3 +50,10 @@ compilato è disponibile come `form0-react/index.css`.
 
 [FormRenderer](/bindings/react/form-renderer): `scopeId`, `instancePath`,
 `evaluationId`, `kind: "evaluation" | "scope-ended"`.
+
+## API degli eventi gestiti
+
+Vedi il controller e il contratto degli ambiti in [FormRenderer](/it/bindings/react/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.

@@ -26,3 +26,38 @@ iniciada con `serve --app` mantiene su propia política de presentación.
 Una evaluación completada devuelve el estado aunque sus diagnósticos contengan errores. La
 validación de campos, las operaciones de eventos, el envío y el guardado de borradores mantienen
 su comportamiento; los diagnósticos no añaden alertas ni bloqueos de envío.
+
+## Eventos portátiles de vista previa (CLI 0.7.0+)
+
+CLI 0.7.0 alinea la vista previa integrada con el contrato de eventos de core.
+En **Ajustes del formulario**, activa **Eventos portátiles de vista previa** y selecciona
+explícitamente **Registro nuevo** o **Registro existente**. El ciclo de vida está desactivado por
+defecto. Abrir en solo lectura ejecuta únicamente load; cambiar la configuración inicia una nueva
+sesión con los valores aceptados. `serve --app` conserva las opciones de la aplicación.
+
+La inicialización evalúa los valores efectivos, ejecuta `load-record` y después `new-record` o
+`edit-record`. Los cambios del usuario esperan las actualizaciones pendientes; los valores por
+defecto, los cálculos y `SETVALUE()` no generan cambios adicionales. El estado habilitado utiliza
+`change-status`; focus/blur de texto y números y clic en hipervínculos compatibles son opcionales.
+
+Enviar sigue validación integrada/personalizada → `save-record` una vez → nueva validación solo si
+cambian los valores → serialización final → envío al conector existente. `INVALID(message)` síncrono
+crea un mensaje de resumen del ámbito sin modificar `state.errors`. Los diagnósticos de cálculo no
+bloquean por sí solos. **Preparar borrador** devuelve en consola una instantánea y un resumen que
+puede tener errores, sin persistencia ni envío al conector. No hay eventos de esquema `saved-*`.
+
+Las filas en línea ofrecen **Editar**, **Guardar fila** y **Cancelar fila**. Utilizan eventos de
+repeatable y valores provisionales: guardar valida/prepara antes de aceptar; cancelar descarta
+las ediciones anidadas provisionales. Se permite leer campos principales y antecesores autorizados;
+las escrituras son locales a la fila. Contraer solo cambia la presentación. Añadir/editar/eliminar
+aceptado notifica al repeatable propietario; los errores posteriores de notificación se presentan
+separados de la preparación aceptada. La vista previa conserva su evaluación recursiva de filas
+cerradas; la política de actualización y agregación de los bindings sigue separada.
+
+El controlador activo es `window.form0PreviewEvents`. `dispatch()` y
+`prepareSave({ intent: 'submit' | 'draft' })` devuelven promesas con hallazgos/errores y esperan la
+presentación aceptada; preparar no envía ni cierra. Las filas requieren `instancePath` completo y
+el `scopeId` observado (`data-preview-scope-id`); las rutas posicionales exigen ese ID. Los metadatos
+son JSON; se rechazan funciones y archivos nativos. Los valores guardados no contienen metadatos de
+ámbito/diagnóstico. Cancelar/Cerrar notifica antes de retirar; recargar o descartar forzosamente solo
+retira. Reabrir inicia otra sesión. No cambia los códigos de salida de run/validate.

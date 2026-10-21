@@ -1,0 +1,26 @@
+---
+title: INVALID
+description: Synchronous custom validation messages for managed form events.
+---
+
+<PageBadges />
+
+Creates a scope-level custom validation finding during managed validation. It requires a nonempty string and is event-only.
+
+## Example
+
+```js
+ON("validate-record", function (event) {
+  if ($amount < 4) INVALID("Amount must be at least four.")
+})
+
+ON("validate-repeatable", "rows", function (event) {
+  if ($row_amount <= 0) INVALID("Enter a positive row amount.")
+})
+```
+
+## Behavior
+
+Dispatch with `engine.triggerDetailed()` and inspect both `validationIssues` and execution `issues`. Each attempt returns fresh findings. `INVALID()` does not write intrinsic `state.errors`, calculation diagnostics, values or saved records. It is rejected outside `validate-record` and `validate-repeatable`; validation handlers reject value/UI operations and promises. The host owns submission and draft policy. A validation finding alone is not an execution failure.
+
+See [Events and operations](/core/engine/events-operations) and the [maintained contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md). Binding UI integration follows core publication; registration alone does not run validation.
