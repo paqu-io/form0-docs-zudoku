@@ -79,3 +79,63 @@ Fermer ou supprimer un éditeur, remplacer son moteur ou schéma, ou le démonte
 Les diagnostics de calcul restent hors de `state.errors`, des snapshots enregistrés et des données d'enregistrement. Ils ne changent ni l'affichage de la validation, ni les décisions de soumission, ni l'enregistrement des brouillons, et ne créent ni alertes automatiques ni panneau de diagnostic.
 
 `onOperations(operations, meta, applyDefault)` reçoit les opérations autres que les alertes. Déléguez celles choisies avec `applyDefault(selected, meta)` ; sans callback, le traitement existant reste actif. Les dialogues `ALERT` du renderer apparaissent une fois. Les lots suivent le traitement existant de chaque plateforme ; les callbacks doivent traiter chaque lot reçu. `onWarning` conserve le canal d'avertissement historique et sa limitation de fréquence ; il ne remplace pas les snapshots de diagnostic. `onUpdate(state, engine)` conserve le moteur ou facade propre à l'exécution ; utilisez `onDiagnostics` pour une consommation portable.
+
+## Événements gérés et validation personnalisée
+
+Cette intégration exige form0-react 0.4.0 ou une version ultérieure et core 0.5.1 ou une version ultérieure. Le cycle de vie automatique étendu doit être activé explicitement :
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{
+    events: { lifecycle: true, recordKind: "existing", fieldInteractions: ["focus", "blur"] },
+    onEventController: (controller) => {
+      controllerRef.current = controller
+    },
+  }}
+/>
+```
+
+`recordKind` doit être explicitement `new` ou `existing`, jamais déduit des valeurs. La configuration
+est fixe pour la session ; remontez l’éditeur pour changer classification, cycle, helpers ou sécurité.
+Les callbacks restent actualisables. Sans activation, le comportement racine load/edit/change est
+conservé. Une ouverture en lecture seule exécute load ; l’édition exécute load puis new/edit.
+Les lignes ouvertes utilisent les événements repeatable et leur classification réelle.
+
+Le contrôleur lié à la génération est fourni après initialisation et retiré avec `null`.
+`dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` renvoie une promesse avec `status`,
+`operations`, `validationIssues` et `issues` après les opérations acceptées.
+`prepareSave({ intent: 'submit' | 'draft', instancePath?, scopeId? })` renvoie `eligible`, `payload`,
+`meta`, `validationSummary` et `issues` sans persister ni fermer. Les listeners utilisent `data_name` ;
+les chemins utilisent les clés du schéma et les IDs existants. Le repli positionnel exige le `scopeId`
+actif observé dans les diagnostics. Les cibles fermées et anciennes générations sont rejetées.
+
+`INVALID(message)` crée un message non vide, synchrone, au niveau du périmètre pendant validate-record
+ou validate-repeatable. Ces constats rejoignent le résumé/navigation existant, remplacent chaque essai
+et disparaissent lors d’une modification ou du retrait. Ils n’entrent jamais dans `state.errors`, les
+diagnostics de calcul, les valeurs ni les métadonnées des enregistrements/médias. Les handlers de
+validation et fermeture refusent les opérations de valeur/interface et les promesses. Une ligne peut
+lire les champs courants principaux/ancêtres ; SETVALUE écrit uniquement dans sa propre ligne.
+L’accès aux collections est exclu.
+
+La préparation attend les mises à jour, valide, exécute save-\* une seule fois si permis, attend les
+opérations, revalide les changements puis sérialise ce même état final. Submit et l’acceptation des
+lignes respectent la validation ; les brouillons racine acceptent `hasErrors: true`. Aucun brouillon
+de ligne n’est ajouté. Un échec d’exécution ne fournit aucun payload. `isDraft` décrit l’action actuelle
+et `isValid` la validité intrinsèque. Les diagnostics de calcul ne bloquent pas la sauvegarde.
+La fraîcheur des lignes fermées et l’agrégation restent séparées.
+
+Les modifications utilisateur émettent change après stabilisation. Les changements de lignes acceptés
+incluent `action` (add/edit/remove) et `affectedInstancePath` ; le statut activé émet change-status
+uniquement pour l’utilisateur. Defaults, SETVALUE et calculs n’ajoutent pas de change. Les interactions
+supplémentaires sont désactivées ; texte/nombre supportent focus/blur/click (pression du champ en Native).
+Les autres contrôles peuvent faire dispatch explicitement. Les promesses onOperations et le traitement
+sélectif applyDefault sont attendus ; le fallback expire avec le dispatch. Le renderer possède ALERT
+et le présente une seule fois.
+
+L’annulation confirmée exécute cancel puis unload ; une fermeture réussie prise en charge exécute
+unload avant libération. Le host doit envoyer unload avant un démontage direct. Rerenders, resets,
+nettoyage Strict Mode et démontage forcé retirent uniquement les périmètres. Save-_ précède la
+sauvegarde ; aucun événement saved-_ n’est ajouté. L’application possède persistance, succès et fermeture.
+
+Les fichiers File/Blob natifs conservent leurs métadonnées standard et données immuables. Les propriétés personnalisées restent hors de la sérialisation native. Le correctif de compatibilité multimédia est inclus dans core 0.5.1.

@@ -53,3 +53,12 @@ stato delle sezioni ripetibili, ai timestamp e al riepilogo della validazione.
 Il binding non rende persistenti né sincronizza nessuno dei due contenuti. Memorizza gli snapshot in
 locale, carica i record, ripeti i tentativi non riusciti e risolvi i conflitti nell'applicazione
 host.
+
+## API degli eventi gestiti
+
+Vedi il controller e il contratto degli ambiti in [FormRenderer](/it/bindings/react-native/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+La preparazione non persiste né chiude. Le bozze radice mantengono i risultati nel riepilogo; submit normale e accettazione delle righe sono bloccati dalla validazione. I diagnostici di calcolo restano separati. Nessuna valutazione o aggregazione delle righe chiuse.

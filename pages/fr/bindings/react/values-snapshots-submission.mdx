@@ -61,3 +61,12 @@ Si `onSubmit` renvoie une promesse, un overlay configuré avec `autoCloseOverlay
 qu’une fois la promesse résolue. En cas de rejet, il reste ouvert. Utilisez `submitBlockedReason`
 pour les exigences de l’application extérieures au schéma et `externalDirty` pour l’état de
 l’application extérieur au renderer.
+
+## API des événements gérés
+
+Voir le contrôleur et le contrat des périmètres dans [FormRenderer](/fr/bindings/react/form-renderer).
+
+`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+La préparation ne persiste ni ne ferme. Les brouillons racine conservent les constats dans le résumé ; submit et l’acceptation des lignes sont bloqués par une validation invalide. Les diagnostics de calcul restent indépendants. Aucune évaluation ou agrégation des lignes fermées.
