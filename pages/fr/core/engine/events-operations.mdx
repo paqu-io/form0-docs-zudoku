@@ -162,10 +162,9 @@ Par défaut, les renderers officiels :
   `SETVALUE`](/fr/core/builtins/events/setvalue) pour des exemples.
 </Callout>
 
-Le `FormRenderer` de React Native permet à une application de traiter les opérations autres que les
-alertes en passant `engineOptions.onOperations`. Il continue d'afficher les opérations `ALERT` dans
-sa propre boîte de dialogue et transmet les autres opérations à votre callback. Le `FormRenderer` de
-React traite actuellement les opérations en interne et n'expose pas de callback personnalisé.
+Les composants `FormRenderer` de React et React Native permettent à une application de traiter les
+opérations autres que les alertes via `engineOptions.onOperations`. Chaque renderer présente les
+opérations `ALERT` et transmet les autres opérations à votre callback.
 
 ```js
 function onOperations(operations, meta, applyDefault) {
@@ -175,7 +174,7 @@ function onOperations(operations, meta, applyDefault) {
 }
 ```
 
-Appelez `applyDefault` avec les opérations que React Native doit traiter comme d'habitude.
+Appelez `applyDefault` avec les opérations que le binding doit traiter comme d'habitude.
 
 ### Appliquer les opérations sans renderer
 
@@ -193,3 +192,17 @@ gestionnaires `change` de `adult_note`.
 Si la définition d'un champ doit aussi déclencher la logique d'un autre, placez les deux dans le
 même gestionnaire, ou utilisez un `CalculatedField` quand la valeur peut être dérivée d'autres
 champs.
+
+## Exécution gérée du core
+
+Le nouveau contrat du core ajoute `engine.triggerDetailed(eventType, fieldKey, metadata)` synchrone, qui renvoie des copies défensives de `operations`, `validationIssues` et des `issues` d’exécution. Une émission gérée en échec ne renvoie aucune opération applicable. La voie compatible `engine.trigger()` conserve son tableau d’opérations. Aucune méthode n’évalue, ne persiste ni ne ferme un éditeur.
+
+Configurez `eventScope.instancePath` lors de la création d’un moteur de ligne sans renderer ; la portée racine est `[]`. Les chemins complets utilisent `repeatableKey`, `instanceId`, `index` et `identity`. Les clés des chemins suivent les clés du schéma ; les identifiants des listeners utilisent `data_name`. L’absence d’ID est explicitement positionnelle. Le core valide l’ascendance du schéma et l’appartenance ; l’hôte doit vérifier l’identité et la génération de la ligne active. Les gestionnaires gérés d’une ligne peuvent lire les champs locaux, des ancêtres et principaux fournis par l’hôte ; `SETVALUE()` écrit uniquement dans la ligne courante. Les branches sœurs, descendantes ou étrangères et les collections répétables sont inaccessibles. Les métadonnées de l’application ne peuvent remplacer l’identité ni la portée du dispatcher.
+
+`INVALID(message)` est disponible pendant l’exécution gérée de `validate-record` et `validate-repeatable` et exige une chaîne non vide. Les constats appartiennent à la portée, sans association à un champ, et restent hors de `state.errors`, des diagnostics de calcul, des valeurs et des métadonnées enregistrées. Les gestionnaires de validation refusent les opérations de valeurs/interface et les promesses. Les gestionnaires d’annulation et de déchargement sont des notifications en lecture seule et refusent aussi les constats de validation et les alertes.
+
+Le registre ajoute `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` et `change-status`. Les enregistrer ne les automatise pas. `save-record` et `save-repeatable` restent des événements avant enregistrement ; aucun événement de schéma `saved-*` n’est ajouté. React 0.4.0, React Native 0.5.0 et CLI 0.7.0 adoptent le cycle de vie étendu, le contrôleur et la préparation de l’enregistrement. L’intégration automatique du cycle de vie reste facultative.
+
+Consultez le [contrat d’événements maintenu](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) pour le contrat complet et les étapes de livraison. La politique générale de validation, l’actualisation des lignes fermées et la responsabilité de persistance restent des travaux distincts.
+
+Les objets média File/Blob natifs sont copiés défensivement, avec métadonnées standard et contenu binaire immuable. Ce correctif est inclus dans core 0.5.1. Les autres objets non portables sont rejetés ; les handlers asynchrones restent incompatibles.

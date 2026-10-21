@@ -1,0 +1,26 @@
+---
+title: INVALID
+description: Messages synchrones de validation personnalisée pour les événements gérés.
+---
+
+<PageBadges />
+
+Crée un constat de validation personnalisée au niveau de la portée pendant une validation gérée. Exige une chaîne non vide et est réservé aux événements.
+
+## Exemple
+
+```js
+ON("validate-record", function (event) {
+  if ($amount < 4) INVALID("Amount must be at least four.")
+})
+
+ON("validate-repeatable", "rows", function (event) {
+  if ($row_amount <= 0) INVALID("Enter a positive row amount.")
+})
+```
+
+## Comportement
+
+Émettez avec `engine.triggerDetailed()` et examinez `validationIssues` ainsi que les `issues` d’exécution. Chaque tentative renvoie de nouveaux constats. `INVALID()` n’écrit pas dans les `state.errors` intrinsèques, les diagnostics de calcul, les valeurs ou les enregistrements sauvegardés. Il est refusé hors de `validate-record` et `validate-repeatable` ; les gestionnaires de validation refusent les opérations de valeurs/interface et les promesses. L’hôte définit la politique de soumission et de brouillons. Un constat de validation seul n’est pas un échec d’exécution.
+
+Consultez [Événements et opérations](/fr/core/engine/events-operations) et le [contrat maintenu](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md). L’intégration dans l’interface des bindings suit la publication du core ; l’enregistrement seul ne lance aucune validation.

@@ -152,10 +152,9 @@ By default, the official renderers:
   the [`SETVALUE` reference](/core/builtins/events/setvalue) for examples.
 </Callout>
 
-The React Native `FormRenderer` lets an application handle non-alert operations by passing
-`engineOptions.onOperations`. It continues to show `ALERT` operations in its own dialog and passes
-the other operations to your callback. The React `FormRenderer` currently handles operations
-internally and does not expose a custom operation callback.
+The React and React Native `FormRenderer` components let an application handle non-alert operations
+through `engineOptions.onOperations`. Each renderer owns `ALERT` presentation and passes the other
+operations to your callback.
 
 ```js
 function onOperations(operations, meta, applyDefault) {
@@ -165,7 +164,7 @@ function onOperations(operations, meta, applyDefault) {
 }
 ```
 
-Call `applyDefault` with any operations you want React Native to handle as usual.
+Call `applyDefault` with any operations you want the binding to handle as usual.
 
 ### Applying operations without a renderer
 
@@ -181,3 +180,17 @@ it set. A `change` handler for `age` that sets `adult_note` does not run the `ch
 
 If setting one field should also trigger the logic of another, put both in the same handler, or use
 a `CalculatedField` when the value can be derived from other fields.
+
+## Managed core execution
+
+The new core contract adds synchronous `engine.triggerDetailed(eventType, fieldKey, metadata)`, returning defensive `operations`, `validationIssues` and execution `issues`. A failed managed dispatch returns no applicable operations. The existing `engine.trigger()` compatibility path keeps its operation-array behavior. Neither method evaluates, persists or closes an editor.
+
+Configure `eventScope.instancePath` when creating a headless row engine; root scope is `[]`. Complete paths use `repeatableKey`, `instanceId`, `index` and `identity`. Path keys use schema keys; listener identifiers use `data_name`. A missing ID is explicitly positional. Core validates schema ancestry and ownership; the host must verify active row identity and generation. Managed row handlers may read current, ancestor and main fields supplied by the host; `SETVALUE()` writes only current-row fields. Sibling, descendant and unrelated branches and repeatable collections are inaccessible. Application metadata cannot override dispatcher-owned identity or scope.
+
+`INVALID(message)` is available during managed `validate-record` and `validate-repeatable` execution and requires a nonempty string. Findings belong to the scope, without a field association, and stay out of `state.errors`, calculation diagnostics, values and saved metadata. Validation handlers reject value/UI operations and promises. Cancel/unload handlers are read-only notifications and also reject validation findings and alerts.
+
+The registry adds `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` and `change-status`. Registering them does not automate them. `save-record` and `save-repeatable` remain pre-save; no `saved-*` schema events are introduced. React 0.4.0, React Native 0.5.0 and CLI 0.7.0 adopt the expanded lifecycle, controller and save preparation. Automatic lifecycle integration remains opt-in.
+
+See the [maintained event contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) for the complete contract and delivery stages. Broader validation policy, closed-row freshness and persistence ownership remain separate work.
+
+Native File/Blob media handles are copied defensively, preserving their standard metadata and immutable binary content. This compatibility correction is included in core 0.5.1. Other nonportable object types remain rejected; asynchronous schema handlers remain unsupported.

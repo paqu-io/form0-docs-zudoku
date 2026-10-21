@@ -158,10 +158,9 @@ Per impostazione predefinita, i renderer ufficiali:
   `SETVALUE`](/it/core/builtins/events/setvalue) per alcuni esempi.
 </Callout>
 
-Il `FormRenderer` di React Native permette a un'applicazione di gestire le operazioni diverse dagli
-avvisi passando `engineOptions.onOperations`. Continua a mostrare le operazioni `ALERT` nella propria
-finestra e passa le altre operazioni alla tua callback. Il `FormRenderer` di React attualmente
-gestisce le operazioni internamente e non espone una callback personalizzata.
+I componenti `FormRenderer` di React e React Native permettono a un’applicazione di gestire le
+operazioni diverse dagli avvisi tramite `engineOptions.onOperations`. Ogni renderer presenta le
+operazioni `ALERT` e passa le altre operazioni alla tua callback.
 
 ```js
 function onOperations(operations, meta, applyDefault) {
@@ -171,7 +170,7 @@ function onOperations(operations, meta, applyDefault) {
 }
 ```
 
-Chiama `applyDefault` con le operazioni che vuoi che React Native gestisca nel modo consueto.
+Chiama `applyDefault` con le operazioni che vuoi che il binding gestisca nel modo consueto.
 
 ### Applicare le operazioni senza un renderer
 
@@ -187,3 +186,17 @@ impostato. Un gestore `change` per `age` che imposta `adult_note` non esegue i g
 
 Se l'impostazione di un campo deve attivare anche la logica di un altro, mettile entrambe nello
 stesso gestore, oppure usa un `CalculatedField` quando il valore può essere derivato da altri campi.
+
+## Esecuzione gestita del core
+
+Il nuovo contratto del core aggiunge `engine.triggerDetailed(eventType, fieldKey, metadata)` sincrono, che restituisce copie difensive di `operations`, `validationIssues` e degli `issues` di esecuzione. Un dispatch gestito fallito non restituisce operazioni applicabili. Il percorso compatibile `engine.trigger()` mantiene il suo array di operazioni. Nessun metodo valuta, persiste o chiude un editor.
+
+Configura `eventScope.instancePath` quando crei un motore di riga senza renderer; l’ambito radice è `[]`. I percorsi completi usano `repeatableKey`, `instanceId`, `index` e `identity`. Le chiavi dei percorsi seguono le chiavi dello schema; gli identificatori dei listener usano `data_name`. Un ID mancante è esplicitamente posizionale. Il core verifica ascendenza dello schema e appartenenza; l’host deve verificare identità e generazione della riga attiva. I gestori gestiti della riga possono leggere campi locali, degli antenati e principali forniti dall’host; `SETVALUE()` scrive solo nei campi della riga corrente. Rami fratelli, discendenti o estranei e collezioni ripetibili non sono accessibili. I metadati dell’applicazione non possono sostituire identità o ambito del dispatcher.
+
+`INVALID(message)` è disponibile durante l’esecuzione gestita di `validate-record` e `validate-repeatable` e richiede una stringa non vuota. I risultati appartengono all’ambito, senza associazione a un campo, e restano fuori da `state.errors`, diagnostica dei calcoli, valori e metadati salvati. I gestori di validazione rifiutano operazioni su valori/interfaccia e promesse. I gestori di annullamento e scaricamento sono notifiche di sola lettura e rifiutano anche risultati di validazione e avvisi.
+
+Il registro aggiunge `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` e `change-status`. Registrarli non li rende automatici. `save-record` e `save-repeatable` rimangono eventi prima del salvataggio; non vengono introdotti eventi di schema `saved-*`. React 0.4.0, React Native 0.5.0 e CLI 0.7.0 adottano ciclo di vita esteso, controller e preparazione del salvataggio. L’integrazione automatica del ciclo di vita rimane facoltativa.
+
+Consulta il [contratto degli eventi mantenuto](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) per il contratto completo e le fasi di consegna. La politica generale di validazione, l’aggiornamento delle righe chiuse e la responsabilità di persistenza restano lavori separati.
+
+Gli oggetti media File/Blob nativi sono copiati difensivamente, mantenendo metadati standard e contenuto binario immutabile. La correzione è inclusa in core 0.5.1. Gli altri oggetti non portabili sono rifiutati; gli handler asincroni restano non supportati.

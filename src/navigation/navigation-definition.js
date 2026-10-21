@@ -42,6 +42,7 @@ const eventDocs = [
   ["off", "OFF"],
   ["alert", "ALERT"],
   ["setvalue", "SETVALUE"],
+  ["invalid", "INVALID"],
 ].map(([slug, label]) => doc(`core/builtins/events/${slug}`, label))
 
 function deepFreeze(value) {
