@@ -36,12 +36,12 @@ campo obligatorio esté vacío. La comprobación de campos obligatorios forma pa
 renderers oficiales combinan `visible`, `required` y el valor actual, omiten los campos ocultos y
 deciden cuándo mostrar el error.
 
-### Validación de envío compartida (sin publicar)
+### Validación de envío compartida
 
 `validateSubmission({ schema, snapshot, validationIssues })` comprueba un árbol de ejecución ya
 evaluado. No evalúa valores ni garantiza su actualización. `createRecordEvaluator().prepareSubmission()`
-combina evaluación, selección y esta misma política. Son interfaces posteriores a 0.6.0; la adopción
-en las interfaces de los consumidores se entrega por separado.
+combina evaluación, selección y esta misma política. Las aplicaciones sin interfaz y las integraciones
+de renderers pueden compartir estas reglas de envío.
 
 Los campos ocultos y sus descendientes no impiden el envío ordinario. Los campos de entrada visibles,
 obligatorios, de solo lectura y vacíos sí lo impiden. Cero y selecciones false legítimas son valores.

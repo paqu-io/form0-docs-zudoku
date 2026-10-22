@@ -146,12 +146,12 @@ const operations = engine.trigger("change", "quantity")
 Tu aplicación es responsable de aplicar las operaciones devueltas y de decidir cuándo un campo
 obligatorio vacío bloquea el envío.
 
-## Preparación del árbol de registros (sin publicar)
+## Preparación del árbol de registros
 
 `createRecordEvaluator({ schema, helpers, security })` reutiliza el ejecutor de expresiones y las
-reglas de ámbito existentes y coordina instancias reales de registros raíz e hijos. Es soporte futuro
-del núcleo; la adopción en React, worker, Native y CLI se entrega por separado. Core 0.6.0 no incluye
-esta interfaz. `engine.eval()` conserva su contrato de estado intrínseco.
+reglas de ámbito existentes y coordina instancias reales de registros raíz e hijos. Las aplicaciones
+usan esta API para seleccionar y validar una instantánea antes de persistirla y aplican el resultado
+mediante su renderer o controlador. `engine.eval()` conserva su contrato de estado intrínseco.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -191,7 +191,11 @@ Los borradores conservan cálculos hijos sin diálogo y permiten errores ordinar
 notificando junto con la actualización pendiente. Los fallos de ejecución impiden la elegibilidad.
 
 Persiste `freshness` fuera del registro: `{ version: 1, status: 'current' | 'pending', schemaRevision,
-affected: [{ instancePath, fieldName, fieldKey }] }`. Restáuralo para mostrar el estado pendiente.
+affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Restáuralo para mostrar el estado pendiente.
+
+Cada entrada afectada representa una fila; `fields` enumera las identidades de sus cálculos
+modificados. La ascendencia completa se guarda una sola vez por fila, conservando el ID cero y las
+referencias por posición. El estado actualizado tiene una lista de afectados vacía.
 Cada preparación recalcula desde las entradas actuales; los metadatos no reproducen una propuesta.
 Borra el estado pendiente almacenado solo tras persistir el resultado actualizado correspondiente.
 

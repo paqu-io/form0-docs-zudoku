@@ -36,12 +36,13 @@ campo obbligatorio è vuoto. Il controllo dei campi obbligatori riguarda l'invio
 combinano `visible`, `required` e il valore corrente, ignorano i campi nascosti e decidono quando
 mostrare l'errore.
 
-### Validazione condivisa dell’invio (non pubblicata)
+### Validazione condivisa dell’invio
 
 `validateSubmission({ schema, snapshot, validationIssues })` controlla un albero di esecuzione già
 valutato, senza valutare valori o garantirne l’aggiornamento.
 `createRecordEvaluator().prepareSubmission()` combina valutazione, selezione e la stessa politica.
-Le interfacce arriveranno dopo 0.6.0; l’adozione nelle interfacce dei consumatori rimane separata.
+Le applicazioni senza interfaccia e le integrazioni dei renderer possono condividere queste regole
+di invio.
 
 Campi nascosti e discendenti di antenati nascosti non bloccano l’invio ordinario. Campi di ingresso
 visibili, obbligatori, di sola lettura e vuoti lo bloccano. Zero e selezioni false legittime sono valori.

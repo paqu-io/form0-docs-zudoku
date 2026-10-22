@@ -36,12 +36,12 @@ required field is empty. Required-field enforcement is a submission concern: the
 renderers combine `visible`, `required`, and the current value, skip hidden fields, and decide when
 to display the error.
 
-### Shared submission validation (unreleased)
+### Shared submission validation
 
 `validateSubmission({ schema, snapshot, validationIssues })` checks an already evaluated runtime tree.
 It does not evaluate values or establish freshness. `createRecordEvaluator().prepareSubmission()`
-combines evaluation, selection and this same validation policy. Both interfaces are forthcoming after
-0.6.0; consumer UI adoption remains separate.
+combines evaluation, selection and this same validation policy. Headless applications and renderer
+integrations can share these submission rules.
 
 Hidden fields and fields under hidden ancestors do not block ordinary submission. Visible required
 read-only empty input fields do block. Numeric zero and legitimate false selections are populated

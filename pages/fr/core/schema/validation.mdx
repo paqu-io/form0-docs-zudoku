@@ -36,12 +36,12 @@ simplement parce qu'un champ obligatoire est vide. Le contrôle des champs oblig
 soumission : les renderers officiels combinent `visible`, `required` et la valeur actuelle, ignorent les
 champs masqués et décident quand afficher l'erreur.
 
-### Validation de soumission partagée (non publiée)
+### Validation de soumission partagée
 
 `validateSubmission({ schema, snapshot, validationIssues })` vérifie un arbre actif déjà évalué,
 sans évaluer les valeurs ni garantir leur fraîcheur. `createRecordEvaluator().prepareSubmission()`
-combine évaluation, sélection et cette même politique. Ces interfaces viennent après 0.6.0 ; leur
-adoption dans les interfaces des consommateurs reste séparée.
+combine évaluation, sélection et cette même politique. Les applications sans interface et les
+intégrations de renderers peuvent partager ces règles de soumission.
 
 Les champs masqués et leurs descendants ne bloquent pas la soumission ordinaire. Un champ de saisie
 visible, requis, en lecture seule et vide la bloque. Zéro et les sélections false légitimes sont des

@@ -150,12 +150,12 @@ const operations = engine.trigger("change", "quantity")
 Votre application doit appliquer les opérations renvoyées et décider quand un champ obligatoire vide
 bloque la soumission.
 
-## Préparation de l’arbre de données (non publiée)
+## Préparation de l’arbre de données
 
 `createRecordEvaluator({ schema, helpers, security })` réutilise l’exécuteur et les règles de portée
-existants pour coordonner les instances racine et enfants. Cette interface est prévue après core
-0.6.0, qui ne la contient pas. Son adoption dans React, worker, Native et CLI est une livraison
-séparée. `engine.eval()` conserve son contrat d’état intrinsèque.
+existants pour coordonner les instances racine et enfants. Les applications utilisent cette API pour
+sélectionner et valider un instantané avant sa persistance, puis appliquent le résultat via leur
+renderer ou contrôleur. `engine.eval()` conserve son contrat d’état intrinsèque.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -195,9 +195,13 @@ brouillons conservent les calculs enfants sans dialogue et autorisent les erreur
 signalant ces erreurs et la fraîcheur en attente. Les échecs d’exécution empêchent l’éligibilité.
 
 Persistez `freshness` hors de l’enregistrement : `{ version: 1, status: 'current' | 'pending',
-schemaRevision, affected: [{ instancePath, fieldName, fieldKey }] }`. Restaurez-le pour l’affichage
+schemaRevision, affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Restaurez-le pour l’affichage
 du statut en attente. Chaque préparation recalcule depuis les entrées actuelles ; les métadonnées
 ne rejouent aucune proposition. Effacez le statut stocké uniquement après persistance du résultat à jour.
+
+Chaque entrée affectée représente une ligne ; `fields` énumère les identités de ses calculs modifiés.
+L’ascendance complète est stockée une seule fois par ligne, en conservant l’ID zéro et les références
+par position. Le statut à jour contient une liste d’éléments affectés vide.
 
 L’enregistrement des handlers utilise chaque périmètre sélectionné ; analyse et compilation sont partagées.
 

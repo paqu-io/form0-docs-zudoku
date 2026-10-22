@@ -145,12 +145,12 @@ const operations = engine.trigger("change", "quantity")
 La tua applicazione è responsabile di applicare le operazioni restituite e di decidere quando un
 campo obbligatorio vuoto blocca l'invio.
 
-## Preparazione dell’albero di record (non pubblicata)
+## Preparazione dell’albero di record
 
 `createRecordEvaluator({ schema, helpers, security })` riusa l’esecutore di espressioni e le regole di
-ambito esistenti per coordinare istanze reali radice e figlie. L’interfaccia arriverà dopo core 0.6.0,
-che non la contiene. L’adozione in React, worker, Native e CLI è una consegna separata.
-`engine.eval()` mantiene il contratto dello stato intrinseco.
+ambito esistenti per coordinare istanze reali radice e figlie. Le applicazioni usano questa API per
+selezionare e validare uno snapshot prima della persistenza e applicano il risultato tramite il
+proprio renderer o controller. `engine.eval()` mantiene il contratto dello stato intrinseco.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -189,9 +189,13 @@ Le bozze mantengono calcoli figli senza dialogo e consentono errori ordinari, co
 insieme all’aggiornamento pendente. I fallimenti di esecuzione impediscono l’idoneità.
 
 Persisti `freshness` fuori dal record: `{ version: 1, status: 'current' | 'pending', schemaRevision,
-affected: [{ instancePath, fieldName, fieldKey }] }`. Ripristinalo per mostrare lo stato pendente.
+affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Ripristinalo per mostrare lo stato pendente.
 Ogni preparazione ricalcola dagli ingressi correnti; i metadati non riproducono proposte. Cancella lo
 stato pendente salvato solo dopo aver persistito il risultato aggiornato corrispondente.
+
+Ogni voce interessata rappresenta una riga; `fields` elenca le identità dei suoi calcoli modificati.
+L’ascendenza completa viene salvata una sola volta per riga, conservando l’ID zero e i riferimenti per
+posizione. Lo stato aggiornato ha un elenco di elementi interessati vuoto.
 
 La registrazione degli handler usa ogni ambito selezionato; analisi e compilazione sono condivise.
 

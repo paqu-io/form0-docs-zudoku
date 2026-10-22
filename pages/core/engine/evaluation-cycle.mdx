@@ -136,12 +136,12 @@ const operations = engine.trigger("change", "quantity")
 Your application is responsible for applying the returned operations and for deciding when an
 empty required field blocks submission.
 
-## Record-tree preparation (unreleased)
+## Record-tree preparation
 
 `createRecordEvaluator({ schema, helpers, security })` shares the existing expression executor and
-scope rules, and coordinates actual root/child record instances. This is forthcoming core support;
-React, worker, Native and CLI renderer adoption is a separate delivery. Core 0.6.0 does not contain
-this interface. `engine.eval()` retains its existing intrinsic-state behavior.
+scope rules, and coordinates actual root/child record instances. Hosts use this API to select and
+validate one snapshot before persistence, and apply its result through their renderer or controller.
+`engine.eval()` retains its existing intrinsic-state behavior.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -180,9 +180,13 @@ Drafts retain child calculations without a dialog and allow ordinary validation 
 report those failures and pending freshness; execution failures prevent eligibility.
 
 Persist `freshness` separately from the record: `{ version: 1, status: 'current' | 'pending',
-schemaRevision, affected: [{ instancePath, fieldName, fieldKey }] }`. Restore it for the host's
+schemaRevision, affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Restore it for the host's
 pending-state UI. Every new preparation recomputes from current inputs; metadata is not a replayable
 proposal. Clear stored pending status only after persisting the corresponding current result.
+
+Each affected entry represents one row; `fields` lists its changed calculation identities. Complete
+ancestry is stored once per row, preserving ID zero and positional targeting. Current freshness has
+an empty affected list.
 
 Handler registration uses each selected scope; parsing and compilation are shared.
 
