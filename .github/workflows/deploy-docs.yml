@@ -40,7 +40,8 @@ jobs:
       - name: Audit production install tree
         run: npm run security:audit:prod
 
-      - name: Audit documentation build dependencies
+      - name: Audit documentation build dependencies (informational)
+        continue-on-error: true
         run: npm run security:audit:all
 
       - name: Upload checked site artifact

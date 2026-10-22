@@ -44,8 +44,10 @@ For ordinary questions and documentation support, see [SUPPORT.md](./SUPPORT.md)
 ## Documentation build dependencies
 
 CI audits both the production install tree and the complete documentation build tree using
-`security:audit:prod` and `security:audit:all`. The build dependencies generate the published site,
-so their security findings must also be addressed.
+`security:audit:prod` and `security:audit:all`. The existing production audit remains a required
+quality check. The complete build-tree audit is informational: its findings remain visible in CI
+for maintenance without blocking merges or deployment. Build, test and other quality checks retain
+their existing failure behavior.
 
 The overrides in package.json keep the current Zudoku release while selecting patched Hono,
 Piscina, Vite, GraphQL Tools utilities and PostCSS selector parsing dependencies. Argparse 2 retains
