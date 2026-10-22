@@ -69,10 +69,37 @@ Los cálculos y los manejadores de eventos de campo siguen estas reglas de acces
 un cálculo fuera de los campos permitidos lee `undefined`, y el motor emite un aviso como
 `Field 'line_total' is not accessible from current context`.
 
-Las condiciones se evalúan con los valores disponibles en el motor actual. En un editor de filas
-oficial, eso incluye el formulario principal, las filas antecesoras y la fila actual. Las
-condiciones no deberían hacer referencia a campos de otra rama repetible. Actualmente, el core no
-emite avisos de acceso fuera de ámbito para las referencias en condiciones.
+La aplicación de ámbitos en condiciones descrita aquí corresponde a la próxima versión de core
+que aborda #103. La versión publicada 0.5.1 todavía no aplica estas comprobaciones de pertenencia.
+
+`visible_conditions`, `required_conditions` y `read_only_conditions` usan los mismos ámbitos de
+lectura de la tabla anterior: campos raíz, de la fila actual y de las filas antecesoras. No permiten
+leer filas descendientes, ramas hermanas ni ramas ajenas. `validateSchema()` y la creación del motor
+rechazan una referencia ilegal antes de abrir el formulario. El error identifica el elemento dueño,
+la propiedad de condición, el campo referenciado y ambas rutas de pertenencia a registros. Se mantiene
+el soporte de claves de campo y referencias por `data_name`.
+
+Una `Section` o `BuildingPlanSection` hereda la pertenencia del registro que la contiene. Las
+condiciones de una `RepeatableSection` gobiernan la colección en el registro que la contiene; sus
+campos hijos pertenecen a filas individuales. Por ejemplo, la colección raíz `line_items` puede
+condicionar su visibilidad al campo raíz `customer`, pero no a su propio campo de fila `qty`. Una
+colección anidada dentro de una fila de pedido sí puede leer el `qty` de esa fila.
+
+Se comprueba cada referencia en reglas de tipo array, AND u OR, incluso en una rama que no se
+evaluaría porque otra ya determina el resultado. Los valores predeterminados, ausentes y
+`not_equal_to` no conceden acceso. Una infracción detectada defensivamente durante la ejecución lanza
+un error de configuración y emite un aviso estructurado de acceso; no se convierte en un error
+intrínseco de `state.errors` ni en un diagnóstico de cálculo.
+
+Por ejemplo, las puntuaciones aceptadas en `inspections` pueden ser `95` y `90`, mientras que el
+valor predeterminado de `inspection_score` es `50`. Una condición de `payments.approval_note` no puede
+comparar directamente ese campo ajeno con `80`: se rechaza el esquema en vez de usar `50 < 80` para
+exigir la nota. Para corregir una regla inválida existente, referencia un resultado explícito raíz o
+antecesor, o un cálculo auxiliar local basado en ese resultado permitido. Si tu aplicación proporciona
+`inspection_scores: [95, 90]` en la raíz, un auxiliar dentro de `payments` puede calcular
+`SETRESULT($inspection_scores.some((score) => score < 80));` y la nota puede condicionar su estado a
+ese auxiliar local. La aplicación de ámbitos en condiciones no introduce funciones de colección ni
+actualización automática de filas cerradas.
 
 ## Los valores del padre son una copia
 
@@ -83,19 +110,16 @@ se vuelve a abrir.
 
 ## Eventos y filas
 
-Los renderers oficiales despachan `load-record`, `edit-record` y `change` solo para el registro
-principal. Abrir o editar una fila no despacha ningún evento, así que no vuelve a ejecutar los
-manejadores del registro principal.
+Los bindings oficiales de React y React Native ofrecen eventos portables del ciclo de vida de
+registros y repetibles al activar `engineOptions.events.lifecycle`. Los manejadores de fila reciben
+el ámbito de la instancia; abrir una fila no repite los manejadores de carga raíz. Sin esa activación,
+se mantiene el despacho heredado. Consulta
+[Despacho de eventos en los bindings oficiales](/es/core/builtins/events-overview) para conocer los
+momentos y los metadatos.
 
-form0-core reconoce nombres de eventos del ciclo de vida de los repetibles, como `new-repeatable` y
-`save-repeatable`, pero los bindings oficiales todavía no definen su momento portable, los metadatos
-de la fila ni el ámbito ligado a la instancia. Una aplicación que los despache directamente debe
-definir por ahora ese contrato por su cuenta. Consulta
-[Despacho de eventos en los bindings oficiales](/es/core/builtins/events-overview).
-
-Los eventos de registro, como `load-record`, solo pueden leer campos del formulario principal. Los
-eventos de campo, como `change`, siguen las mismas reglas que un cálculo definido en el campo que los
-desencadenó.
+Los eventos de registro, como `load-record`, solo pueden leer campos raíz. Los manejadores de eventos
+de campo y repetibles siguen su ámbito declarado; se mantienen las lecturas de antecesores y las
+escrituras exclusivamente locales.
 
 ## Las filas en el registro de salida
 

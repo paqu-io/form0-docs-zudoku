@@ -67,10 +67,36 @@ Calculations and field-event handlers follow these access rules. A calculation r
 allowed fields reads `undefined`, and the engine reports a warning such as
 `Field 'line_total' is not accessible from current context`.
 
-Conditions are evaluated against the values available in the current engine. In an official row
-editor, that includes the main form, ancestor rows, and the current row. Conditions should not
-reference fields from another repeatable branch. Core does not currently report an out-of-scope
-warning for condition references.
+Condition scope enforcement described here is for the forthcoming core release addressing #103.
+Published core 0.5.1 does not enforce these condition ownership checks.
+
+`visible_conditions`, `required_conditions` and `read_only_conditions` use the same read scopes
+shown above: root fields, fields in the current row and fields in ancestor rows. Descendant rows,
+sibling branches and unrelated branches are inaccessible. `validateSchema()` and engine construction
+reject an illegal reference before opening the form. The error identifies the owning element,
+condition property, referenced field and both record ownership paths. Existing field keys and
+`data_name` references remain supported.
+
+A `Section` or `BuildingPlanSection` inherits its containing record's ownership. A
+`RepeatableSection`'s own conditions govern the collection in its containing record, while its child
+fields belong to individual rows. For example, a root `line_items` collection can condition its
+visibility on root `customer`, but cannot reference its own row field `qty`. A collection nested
+inside a line-item row can reference that row's `qty`.
+
+Every reference in an array, AND or OR rule is checked, even in a branch that would not be evaluated
+because another branch already determines the result. Defaults, missing values and `not_equal_to`
+do not grant access. A defensive runtime violation throws a configuration error and emits a
+structured access warning; it does not become an intrinsic `state.errors` entry or a calculation
+diagnostic.
+
+For example, accepted `inspections` scores may be `95` and `90`, while the schema default for
+`inspection_score` is `50`. A `payments.approval_note` condition cannot directly compare that unrelated
+field with `80`: the schema is rejected instead of using `50 < 80` to require the note. To correct an
+existing invalid rule, reference an explicit root or ancestor result, or a local helper calculated
+from that permitted result. If your application supplies root `inspection_scores: [95, 90]`, a helper
+inside `payments` can calculate `SETRESULT($inspection_scores.some((score) => score < 80));` and the
+note can condition on that local helper. No collection builtin or automatic closed-row refresh is
+introduced by condition scope enforcement.
 
 ## Parent values are a copy
 
@@ -81,16 +107,13 @@ again.
 
 ## Events and rows
 
-The official renderers dispatch `load-record`, `edit-record`, and `change` only for the main record.
-Opening or editing a row does not dispatch any event, so it does not run main-record handlers again.
+The official React and React Native bindings offer portable record and repeatable lifecycle events
+when `engineOptions.events.lifecycle` is enabled. Row handlers receive instance scope; opening a row
+does not replay root load handlers. Without that opt-in, legacy dispatch remains available. See
+[Event dispatch in official bindings](/core/builtins/events-overview) for timing and metadata.
 
-form0-core recognizes repeatable lifecycle event names such as `new-repeatable` and
-`save-repeatable`, but the official bindings do not yet define their portable timing, row metadata,
-or instance-aware scope. An application dispatching them directly must currently define that
-contract itself. See [Event dispatch in official bindings](/core/builtins/events-overview).
-
-Record events, such as `load-record`, can read only main-form fields. Field events, such as
-`change`, follow the same rules as a calculation defined on the field that triggered them.
+Record events, such as `load-record`, can read only main-form fields. Field and repeatable event
+handlers follow their declared scope; ancestor reads and local-only writes remain unchanged.
 
 ## Rows in the output record
 
