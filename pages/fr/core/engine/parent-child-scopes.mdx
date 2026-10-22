@@ -69,10 +69,39 @@ Les calculs et les gestionnaires d'événements de champ suivent ces règles d'a
 calcul en dehors des champs autorisés lit `undefined`, et le moteur signale un avertissement comme
 `Field 'line_total' is not accessible from current context`.
 
-Les conditions sont évaluées avec les valeurs disponibles dans le moteur courant. Dans un éditeur de
-ligne officiel, cela comprend le formulaire principal, les lignes ancêtres et la ligne courante. Les
-conditions ne doivent pas référencer des champs d'une autre branche répétable. Le core ne signale pas
-encore d'avertissement d'accès hors portée pour les références dans les conditions.
+Le contrôle de portée des conditions décrit ici concerne la prochaine version de core traitant
+#103. La version publiée 0.5.1 n'applique pas encore ces contrôles d'appartenance.
+
+`visible_conditions`, `required_conditions` et `read_only_conditions` utilisent les mêmes portées de
+lecture que le tableau ci-dessus : champs racine, de la ligne courante et des lignes ancêtres. Les
+lignes descendantes, branches sœurs et branches sans lien sont inaccessibles. `validateSchema()` et
+la création du moteur rejettent une référence illégale avant l'ouverture du formulaire. L'erreur
+identifie l'élément propriétaire, la propriété de condition, le champ référencé et les deux chemins
+d'appartenance aux enregistrements. Les clés de champ et les références par `data_name` restent prises
+en charge.
+
+Une `Section` ou `BuildingPlanSection` hérite de l'appartenance de l'enregistrement qui la contient.
+Les conditions d'une `RepeatableSection` gouvernent la collection dans l'enregistrement qui la
+contient ; ses champs enfants appartiennent à des lignes individuelles. Par exemple, la collection
+racine `line_items` peut conditionner sa visibilité au champ racine `customer`, mais pas à son propre
+champ de ligne `qty`. Une collection imbriquée dans une ligne de commande peut lire le `qty` de cette
+ligne.
+
+Chaque référence d'une règle de type tableau, AND ou OR est vérifiée, même dans une branche qui ne
+serait pas évaluée car une autre détermine déjà le résultat. Les valeurs par défaut, absentes et
+`not_equal_to` n'accordent aucun accès. Une violation détectée défensivement à l'exécution lève une
+erreur de configuration et émet un avertissement d'accès structuré ; elle ne devient ni une erreur
+intrinsèque dans `state.errors`, ni un diagnostic de calcul.
+
+Par exemple, les scores acceptés dans `inspections` peuvent être `95` et `90`, alors que la valeur
+par défaut d'`inspection_score` est `50`. Une condition de `payments.approval_note` ne peut pas
+comparer directement ce champ sans lien à `80` : le schéma est rejeté au lieu d'utiliser `50 < 80`
+pour exiger la note. Pour corriger une règle invalide existante, référencez un résultat explicite à
+la racine ou dans un ancêtre, ou un calcul auxiliaire local fondé sur ce résultat autorisé. Si votre
+application fournit `inspection_scores: [95, 90]` à la racine, un auxiliaire dans `payments` peut
+calculer `SETRESULT($inspection_scores.some((score) => score < 80));` et la note peut utiliser cet
+auxiliaire local dans sa condition. Le contrôle de portée des conditions n'introduit ni fonction de
+collection ni actualisation automatique des lignes fermées.
 
 ## Les valeurs du parent sont une copie
 
@@ -83,19 +112,16 @@ dernière évaluation, jusqu'à ce qu'elle soit rouverte.
 
 ## Événements et lignes
 
-Les renderers officiels déclenchent `load-record`, `edit-record` et `change` uniquement pour
-l'enregistrement principal. Ouvrir ou modifier une ligne ne déclenche aucun événement, et ne
-relance donc pas les gestionnaires de l'enregistrement principal.
+Les bindings officiels React et React Native proposent des événements portables du cycle de vie
+des enregistrements et des répétables lorsque `engineOptions.events.lifecycle` est activé. Les
+gestionnaires de ligne reçoivent la portée d'instance ; ouvrir une ligne ne rejoue pas les
+gestionnaires de chargement racine. Sans cette activation, le déclenchement historique est conservé.
+Voir [Déclenchement des événements dans les bindings officiels](/fr/core/builtins/events-overview)
+pour le calendrier et les métadonnées.
 
-form0-core reconnaît des noms d'événements de cycle de vie des répétables comme `new-repeatable` et
-`save-repeatable`, mais les bindings officiels n'en définissent pas encore le moment portable, les
-métadonnées de ligne ni la portée liée à l'instance. Une application qui les déclenche directement
-doit pour l'instant définir ce contrat elle-même. Voir
-[Déclenchement des événements dans les bindings officiels](/fr/core/builtins/events-overview).
-
-Les événements d'enregistrement, comme `load-record`, ne peuvent lire que les champs du formulaire
-principal. Les événements de champ, comme `change`, suivent les mêmes règles qu'un calcul défini sur
-le champ qui les a déclenchés.
+Les événements d'enregistrement, comme `load-record`, ne peuvent lire que les champs racine. Les
+gestionnaires d'événements de champ et de répétable suivent leur portée déclarée ; les lectures
+d'ancêtres et les écritures uniquement locales restent inchangées.
 
 ## Les lignes dans l'enregistrement de sortie
 

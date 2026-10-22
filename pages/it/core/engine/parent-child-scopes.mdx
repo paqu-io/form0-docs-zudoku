@@ -69,10 +69,37 @@ I calcoli e i gestori di eventi di campo seguono queste regole di accesso. Un ri
 calcolo fuori dai campi consentiti legge `undefined` e il motore segnala un avviso come
 `Field 'line_total' is not accessible from current context`.
 
-Le condizioni vengono valutate sui valori disponibili nel motore corrente. In un editor di riga
-ufficiale, questi comprendono il modulo principale, le righe antenate e la riga corrente. Le
-condizioni non dovrebbero fare riferimento a campi di un altro ramo ripetibile. Il core attualmente
-non segnala avvisi di accesso fuori ambito per i riferimenti nelle condizioni.
+L'applicazione degli ambiti alle condizioni descritta qui riguarda la prossima versione del core
+che affronta #103. La versione pubblicata 0.5.1 non applica ancora questi controlli di appartenenza.
+
+`visible_conditions`, `required_conditions` e `read_only_conditions` usano gli stessi ambiti di
+lettura della tabella precedente: campi radice, della riga corrente e delle righe antenate. Le righe
+discendenti, i rami fratelli e i rami non correlati non sono accessibili. `validateSchema()` e la
+creazione del motore rifiutano un riferimento illegale prima dell'apertura del modulo. L'errore
+identifica l'elemento proprietario, la proprietà della condizione, il campo referenziato e i due
+percorsi di appartenenza ai record. Restano supportate le chiavi di campo e i riferimenti `data_name`.
+
+Una `Section` o `BuildingPlanSection` eredita l'appartenenza del record che la contiene. Le condizioni
+di una `RepeatableSection` governano la raccolta nel record che la contiene; i campi figli appartengono
+alle singole righe. Per esempio, la raccolta radice `line_items` può condizionare la propria visibilità
+al campo radice `customer`, ma non al proprio campo di riga `qty`. Una raccolta annidata in una riga
+d'ordine può leggere il `qty` di quella riga.
+
+Ogni riferimento in regole di tipo array, AND o OR viene controllato, anche in un ramo che non sarebbe
+valutato perché un altro determina già il risultato. Valori predefiniti, mancanti e `not_equal_to`
+non concedono accesso. Una violazione rilevata difensivamente durante l'esecuzione genera un errore
+di configurazione ed emette un avviso strutturato di accesso; non diventa un errore intrinseco in
+`state.errors` o una diagnostica di calcolo.
+
+Per esempio, i punteggi accettati in `inspections` possono essere `95` e `90`, mentre il valore
+predefinito di `inspection_score` è `50`. Una condizione di `payments.approval_note` non può confrontare
+direttamente quel campo non correlato con `80`: lo schema viene rifiutato invece di usare `50 < 80`
+per richiedere la nota. Per correggere una regola non valida esistente, usa un risultato esplicito
+radice o antenato, oppure un calcolo ausiliario locale basato su quel risultato consentito. Se
+l'applicazione fornisce `inspection_scores: [95, 90]` nella radice, un ausiliario in `payments` può
+calcolare `SETRESULT($inspection_scores.some((score) => score < 80));` e la nota può usare tale
+ausiliario locale nella condizione. L'applicazione degli ambiti alle condizioni non introduce funzioni
+di raccolta o aggiornamenti automatici delle righe chiuse.
 
 ## I valori del padre sono una copia
 
@@ -83,19 +110,16 @@ finché non viene riaperta.
 
 ## Eventi e righe
 
-I renderer ufficiali attivano `load-record`, `edit-record` e `change` solo per il record principale.
-Aprire o modificare una riga non attiva alcun evento, quindi non riesegue i gestori del record
-principale.
+I binding ufficiali React e React Native offrono eventi portabili del ciclo di vita di record e
+ripetibili quando `engineOptions.events.lifecycle` è attivato. I gestori di riga ricevono l'ambito
+dell'istanza; aprire una riga non ripete i gestori di caricamento della radice. Senza questa
+attivazione resta disponibile l'attivazione degli eventi precedente. Vedi
+[Attivazione degli eventi nei binding ufficiali](/it/core/builtins/events-overview) per tempistiche e
+metadati.
 
-form0-core riconosce nomi di eventi del ciclo di vita dei ripetibili come `new-repeatable` e
-`save-repeatable`, ma i binding ufficiali non ne definiscono ancora la tempistica portabile, i
-metadati della riga o l'ambito legato all'istanza. Un'applicazione che li attiva direttamente deve
-per ora definire da sé questo contratto. Vedi
-[Attivazione degli eventi nei binding ufficiali](/it/core/builtins/events-overview).
-
-Gli eventi di record, come `load-record`, possono leggere solo i campi del modulo principale. Gli
-eventi di campo, come `change`, seguono le stesse regole di un calcolo definito sul campo che li ha
-attivati.
+Gli eventi di record, come `load-record`, possono leggere solo i campi radice. I gestori di eventi di
+campo e ripetibili seguono il proprio ambito dichiarato; restano invariate le letture degli antenati
+e le scritture esclusivamente locali.
 
 ## Le righe nel record di output
 
