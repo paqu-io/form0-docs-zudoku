@@ -63,3 +63,33 @@ ROUND($price * $qty, 2)
 
 - [`SETRESULT`](/core/builtins/calculations-expressions/setresult)
 - [`EVAL`](/core/builtins/calculations-expressions/eval)
+
+## Repeatable collections (unreleased)
+
+`REPEATABLEVALUES($tasks, 'cost')` and `REPEATABLESUM($tasks, 'cost')` are calculation-only builtins
+requiring `createRecordEvaluator()` record-tree context. They are forthcoming after core 0.6.0;
+ordinary engine use without that context reports a diagnostic. Events can read an accessible
+aggregate CalculatedField result, but cannot call these builtins themselves.
+
+Use the RepeatableSection data_name and a literal target data_name owned by its rows. Ordinary
+Sections do not add a record scope. Dynamic names, aliases and calls inside EVAL are unsupported;
+unrelated existing EVAL behavior is preserved. The flat RepeatableSection placeholder remains null.
+
+| Row values                    | REPEATABLEVALUES                           | REPEATABLESUM      |
+| ----------------------------- | ------------------------------------------ | ------------------ |
+| Numeric 100, empty, 200       | `[100, null, 200]`                         | `300`              |
+| No rows                       | `[]`                                       | `0`                |
+| Single Red, empty, Other Teal | `['red', null, 'Teal']`                    | Unsupported target |
+| Multiple Red/Blue, empty      | `[['red', 'blue'], []]`                    | Unsupported target |
+| Linked records                | `[[{record_id:'R1'}], [{record_id:'R2'}]]` | Unsupported target |
+
+Sums accept only NumericField/CalculatedField finite numeric values, skip missing entries and reject
+strings, non-finite values and overflow. Choice codes remain strings, including `'100'`; convert them
+explicitly in a row calculation before summing. Malformed/ambiguous choices cause a calculation
+failure, not silent selection or filtering. Multiple selections preserve row grouping and predefined
+selection order followed by Other text. Links expose references only; no content is fetched.
+
+Other value targets are TextField, BooleanField, DateField and TimeField. Calculated arrays/objects
+retain their types and grouping. Containers, LabelField, media, StatusField and TitleField are not
+targets. Existing title rendering and media output remain supported outside collection projection.
+Accepted order and hidden rows are preserved. Diagnostics remain separate from submission validity.

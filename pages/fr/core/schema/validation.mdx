@@ -36,9 +36,28 @@ simplement parce qu'un champ obligatoire est vide. Le contrôle des champs oblig
 soumission : les renderers officiels combinent `visible`, `required` et la valeur actuelle, ignorent les
 champs masqués et décident quand afficher l'erreur.
 
-Si vous utilisez form0-core sans renderer, appliquez la même politique dans votre application. Dans
-la plupart des cas, un champ vide ne doit bloquer la soumission que s'il est visible et obligatoire.
-Incluez également les erreurs de valeur et de format du moteur dans ce contrôle.
+### Validation de soumission partagée (non publiée)
+
+`validateSubmission({ schema, snapshot, validationIssues })` vérifie un arbre actif déjà évalué,
+sans évaluer les valeurs ni garantir leur fraîcheur. `createRecordEvaluator().prepareSubmission()`
+combine évaluation, sélection et cette même politique. Ces interfaces viennent après 0.6.0 ; leur
+adoption dans les interfaces des consommateurs reste séparée.
+
+Les champs masqués et leurs descendants ne bloquent pas la soumission ordinaire. Un champ de saisie
+visible, requis, en lecture seule et vide la bloque. Zéro et les sélections false légitimes sont des
+valeurs. `state.errors` est inchangé ; les contraintes LabelField/CalculatedField restent valables.
+
+Le résumé contient `hasErrors`, `requiredFieldErrors`, `generalErrors`, `scopeIssues` et
+`orderedIssues`. Les constats identifient clé/data_name et `instancePath` complet ; `INVALID` reste
+associé au périmètre. La racine précède les descendants dans l’ordre des enregistrements.
+`managedEvents: true` revalide automatiquement les lignes fermées participantes. Les véritables
+erreurs de saisie exigent une correction, même nombreuses ; les brouillons racine restent autorisés.
+Les périmètres masqués ne participent pas. Les règles racine ne sont pas automatiquement attribuées
+à un champ masqué individuel.
+
+La conservation valide l’instantané sélectionné, y compris ses helpers calculés et conditions.
+La fraîcheur en attente reste distincte. Les validateurs ne peuvent ni écrire ni produire d’opérations
+UI ; les échecs d’exécution bloquent l’éligibilité, même pour les brouillons.
 
 ## Erreurs courantes
 

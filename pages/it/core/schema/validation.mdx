@@ -36,9 +36,27 @@ campo obbligatorio è vuoto. Il controllo dei campi obbligatori riguarda l'invio
 combinano `visible`, `required` e il valore corrente, ignorano i campi nascosti e decidono quando
 mostrare l'errore.
 
-Se utilizzi form0-core senza un renderer, applica la stessa politica nell'applicazione. Nella maggior
-parte dei casi, un campo vuoto dovrebbe bloccare l'invio solo quando è visibile e obbligatorio.
-Includi nel controllo anche gli errori di valore e formato prodotti dal motore.
+### Validazione condivisa dell’invio (non pubblicata)
+
+`validateSubmission({ schema, snapshot, validationIssues })` controlla un albero di esecuzione già
+valutato, senza valutare valori o garantirne l’aggiornamento.
+`createRecordEvaluator().prepareSubmission()` combina valutazione, selezione e la stessa politica.
+Le interfacce arriveranno dopo 0.6.0; l’adozione nelle interfacce dei consumatori rimane separata.
+
+Campi nascosti e discendenti di antenati nascosti non bloccano l’invio ordinario. Campi di ingresso
+visibili, obbligatori, di sola lettura e vuoti lo bloccano. Zero e selezioni false legittime sono valori.
+`state.errors` è invariato; restano i vincoli LabelField/CalculatedField.
+
+Il riepilogo contiene `hasErrors`, `requiredFieldErrors`, `generalErrors`, `scopeIssues` e
+`orderedIssues`. I rilievi identificano chiave/data_name e `instancePath` completo; `INVALID` resta
+associato all’ambito. La radice precede i discendenti nell’ordine dei record.
+`managedEvents: true` rivalida automaticamente righe chiuse partecipanti. Errori reali di ingresso
+richiedono correzione anche se numerosi; salvare bozze radice resta consentito. Gli ambiti nascosti non
+partecipano. Le regole radice non vengono attribuite automaticamente a singoli campi nascosti.
+
+Gli invii con valori mantenuti validano lo snapshot selezionato, inclusi helper calcolati e condizioni.
+L’aggiornamento pendente rimane separato. I validatori non possono scrivere o eseguire operazioni UI;
+i fallimenti di esecuzione bloccano anche le bozze.
 
 ## Errori comuni
 

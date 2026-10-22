@@ -144,3 +144,64 @@ const operations = engine.trigger("change", "quantity")
 
 La tua applicazione è responsabile di applicare le operazioni restituite e di decidere quando un
 campo obbligatorio vuoto blocca l'invio.
+
+## Preparazione dell’albero di record (non pubblicata)
+
+`createRecordEvaluator({ schema, helpers, security })` riusa l’esecutore di espressioni e le regole di
+ambito esistenti per coordinare istanze reali radice e figlie. L’interfaccia arriverà dopo core 0.6.0,
+che non la contiene. L’adozione in React, worker, Native e CLI è una consegna separata.
+`engine.eval()` mantiene il contratto dello stato intrinseco.
+
+```js
+import { createRecordEvaluator } from "form0-core"
+
+const evaluator = createRecordEvaluator({ schema })
+const accepted = await evaluator.evaluate(snapshot)
+const refreshed = await evaluator.evaluate(snapshot, { mode: "refresh" })
+const prepared = await evaluator.prepareSubmission(snapshot)
+```
+
+`snapshot` usa `{ values, repeatable }`. Ogni riga conserva `id`, `values`, raccolte `repeatable` annidate,
+allegati e metadati. I valori usano data_names; le raccolte usano le chiavi dello schema, se presenti.
+Converti prima le scelte salvate nel formato di esecuzione con le utilità esistenti. Nessuna chiamata
+modifica l’ingresso, persiste dati, genera ID/timestamp di record o applica proposte all’interfaccia.
+
+Accepted mantiene i calcoli dei figli chiusi e ricalcola gli aggregati radice dai valori accettati.
+Salvare un importo figlio da 100 a 150 aggiorna l’aggregato quando l’host fornisce quella riga
+accettata; annullare non lo cambia. Refresh prepara tutti i calcoli figli insieme. Con imposta dal
+10% al 20%, il totale accettato 110 diventa una proposta 120. Validazione e uscita usano lo stesso
+snapshot selezionato. I cicli reali fra record falliscono senza uno snapshot parziale; i diagnostici
+locali mantengono la semantica separata esistente.
+
+`prepareSubmission` accetta `intent: 'submit' | 'draft'`, `mode: 'automatic' | 'confirm'`,
+`allowRetain: true` e `managedEvents: true` (entrambi false per impostazione predefinita). Automatic
+è il comportamento predefinito; l’host non può indebolire una conferma dello schema. In confirm,
+calcoli figli cambiati restituiscono `status: 'requires_decision'`, `reviewId`, `proposal`, `changes`,
+`choices` e `snapshot: null`. La proposta serve per la revisione, non per l’invio. Dopo una scelta
+esplicita richiama con ingressi correnti, stesse opzioni e
+`decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Retain richiede il permesso dell’host
+in entrambe le chiamate. Nuove preparazioni, ingressi/opzioni diversi o un altro valutatore invalidano
+la revisione. L’accettazione usa i valori catturati; ogni decisione si consuma una volta sola.
+
+Controlla `eligible` prima dell’invio. Gli stati sono `ready`, `blocked`, `requires_decision`, `failed`
+e `cancelled`. `validationSummary`, `diagnostics` e `issues` di esecuzione rimangono separati.
+Le bozze mantengono calcoli figli senza dialogo e consentono errori ordinari, continuando a segnalarli
+insieme all’aggiornamento pendente. I fallimenti di esecuzione impediscono l’idoneità.
+
+Persisti `freshness` fuori dal record: `{ version: 1, status: 'current' | 'pending', schemaRevision,
+affected: [{ instancePath, fieldName, fieldKey }] }`. Ripristinalo per mostrare lo stato pendente.
+Ogni preparazione ricalcola dagli ingressi correnti; i metadati non riproducono proposte. Cancella lo
+stato pendente salvato solo dopo aver persistito il risultato aggiornato corrispondente.
+
+La registrazione degli handler usa ogni ambito selezionato; analisi e compilazione sono condivise.
+
+La preparazione gestita esegue solo validazione radice e di righe chiuse partecipanti con gli antenati
+selezionati correnti. Non riproduce load/edit/save/unload. L’host mantiene validare → salvare una volta
+→ rivalutare/rivalidare se cambia qualcosa → serializzare. Un hook che cambia ingressi invalida la
+revisione senza essere ripetuto. `event.isValid` descrive la validità intrinseca del suo ambito; quella
+combinata compare nel riepilogo.
+
+Sono disponibili `signal`, un obiettivo di pianificazione di 8ms (`budgetMs`) e `yieldToHost`
+asincrono. Le espressioni restano sincrone e possono superare l’intervallo. L’analisi dello schema è
+condivisa, senza motori permanenti per righe chiuse. Le sessioni di anteprima aggiungono
+`runRecord({ snapshot, instancePath })` per un’anteprima esplicita dell’albero.

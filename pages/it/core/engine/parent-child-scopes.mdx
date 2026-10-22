@@ -125,3 +125,20 @@ e le scritture esclusivamente locali.
 
 Quando il modulo viene inviato, ogni riga diventa un record figlio del record principale. Vedi
 [Output e record](/it/core/output-records).
+
+## Letture esplicite delle raccolte (non pubblicate)
+
+Una RepeatableSection annidata può avere molte istanze senza duplicare il data_name. Una definizione
+`projects` contiene una definizione `tasks`: P1 ha costi `[10,20]` e P2 ha `[100]`. In radice,
+`REPEATABLEVALUES($tasks, 'cost')` restituisce `[10,20,100]`; dentro P1 restituisce `[10,20]`. Le
+identità degli antenati delimitano la lettura. Rami annidati estranei sono rifiutati e la destinazione
+deve appartenere alle righe della sezione indicata. Raccolte esplicite di un antenato possono includere
+righe sorelle; le letture/scritture scalari non acquisiscono permessi.
+
+Le raccolte includono righe accettate nascoste; la validazione esclude separatamente gli antenati
+nascosti. Per visibilità dei pagamenti dipendente da ispezioni, usa una raccolta radice e un helper
+booleano locale. Gestisci esplicitamente numeri assenti, per esempio
+`$scores.some(score => typeof score === 'number' && score < 80)`.
+
+Le interfacce arriveranno dopo 0.6.0 e richiedono adozione nei consumatori. Il controllo esistente
+dell’ambito delle condizioni rimane invariato.

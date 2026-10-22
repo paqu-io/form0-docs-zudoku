@@ -63,3 +63,34 @@ ROUND($price * $qty, 2)
 
 - [`SETRESULT`](/fr/core/builtins/calculations-expressions/setresult)
 - [`EVAL`](/fr/core/builtins/calculations-expressions/eval)
+
+## Collections répétables (non publiées)
+
+`REPEATABLEVALUES($tasks, 'cost')` et `REPEATABLESUM($tasks, 'cost')` sont réservés aux calculs et
+exigent le contexte de `createRecordEvaluator()`. Ils sont prévus après core 0.6.0 ; sans ce contexte,
+le moteur ordinaire signale un diagnostic. Les événements peuvent lire un CalculatedField agrégé
+accessible, mais ne peuvent pas appeler directement ces fonctions.
+
+Utilisez le data_name de RepeatableSection et un data_name cible littéral appartenant à ses lignes.
+Section n’ajoute aucun périmètre d’enregistrement. Les noms dynamiques, alias et appels dans EVAL sont
+exclus ; les autres usages d’EVAL restent inchangés. Le marqueur plat RepeatableSection reste null.
+
+| Valeurs par ligne                  | REPEATABLEVALUES                           | REPEATABLESUM             |
+| ---------------------------------- | ------------------------------------------ | ------------------------- |
+| Nombres 100, vide, 200             | `[100, null, 200]`                         | `300`                     |
+| Aucune ligne                       | `[]`                                       | `0`                       |
+| Choix unique Red, vide, Other Teal | `['red', null, 'Teal']`                    | Cible non prise en charge |
+| Choix multiples Red/Blue, vide     | `[['red', 'blue'], []]`                    | Cible non prise en charge |
+| Références liées                   | `[[{record_id:'R1'}], [{record_id:'R2'}]]` | Cible non prise en charge |
+
+La somme accepte uniquement les nombres finis NumericField/CalculatedField, ignore les absences et
+rejette chaînes, nombres non finis et débordements. Les codes de choix restent des chaînes, même
+`'100'` ; convertissez-les explicitement dans un calcul de ligne avant de sommer. Un choix ambigu ou
+mal formé produit un échec de calcul, sans sélection ni suppression silencieuse. Les choix multiples
+restent groupés par ligne, choix prédéfinis puis texte Other. Les liens exposent uniquement les
+références, sans récupérer de contenu.
+
+Autres cibles : TextField, BooleanField, DateField, TimeField. Les tableaux/objets calculés conservent
+leurs types et regroupements. Conteneurs, LabelField, médias, StatusField et TitleField sont exclus.
+Les titres et médias restent pris en charge hors projection. L’ordre et les lignes acceptées masquées
+sont conservés. Les diagnostics restent distincts de la validité de soumission.

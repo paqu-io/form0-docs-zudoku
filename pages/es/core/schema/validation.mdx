@@ -36,9 +36,28 @@ campo obligatorio esté vacío. La comprobación de campos obligatorios forma pa
 renderers oficiales combinan `visible`, `required` y el valor actual, omiten los campos ocultos y
 deciden cuándo mostrar el error.
 
-Si utilizas form0-core sin un renderer, aplica la misma política en tu aplicación. En la mayoría de
-los casos, un campo vacío solo debe impedir el envío cuando sea visible y obligatorio. Incluye
-también en esa comprobación los errores de valor y formato generados por el motor.
+### Validación de envío compartida (sin publicar)
+
+`validateSubmission({ schema, snapshot, validationIssues })` comprueba un árbol de ejecución ya
+evaluado. No evalúa valores ni garantiza su actualización. `createRecordEvaluator().prepareSubmission()`
+combina evaluación, selección y esta misma política. Son interfaces posteriores a 0.6.0; la adopción
+en las interfaces de los consumidores se entrega por separado.
+
+Los campos ocultos y sus descendientes no impiden el envío ordinario. Los campos de entrada visibles,
+obligatorios, de solo lectura y vacíos sí lo impiden. Cero y selecciones false legítimas son valores.
+`state.errors` no cambia; se conservan las restricciones de LabelField/CalculatedField.
+
+El resumen contiene `hasErrors`, `requiredFieldErrors`, `generalErrors`, `scopeIssues` y
+`orderedIssues`. Los hallazgos identifican clave/data_name e `instancePath` completo; `INVALID`
+sigue asociado al ámbito. La raíz precede a los descendientes en orden de registro.
+`managedEvents: true` revalida automáticamente filas cerradas participantes. Los errores reales de
+entrada requieren corrección aunque afecten a muchas filas; los borradores raíz siguen permitidos.
+Los ámbitos ocultos no participan. Las reglas personalizadas raíz no se atribuyen automáticamente a
+un campo oculto concreto.
+
+Los envíos retenidos validan su instantánea seleccionada, incluidos helpers calculados y condiciones.
+La actualización pendiente es independiente. Los validadores no pueden escribir ni ejecutar
+operaciones de interfaz; los fallos de ejecución bloquean incluso borradores.
 
 ## Errores típicos
 

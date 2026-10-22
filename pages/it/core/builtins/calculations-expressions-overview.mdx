@@ -63,3 +63,33 @@ ROUND($price * $qty, 2)
 
 - [`SETRESULT`](/it/core/builtins/calculations-expressions/setresult)
 - [`EVAL`](/it/core/builtins/calculations-expressions/eval)
+
+## Raccolte ripetibili (non pubblicate)
+
+`REPEATABLEVALUES($tasks, 'cost')` e `REPEATABLESUM($tasks, 'cost')` sono esclusivi dei calcoli e
+richiedono il contesto di `createRecordEvaluator()`. Arriveranno dopo core 0.6.0; senza quel contesto
+il motore ordinario segnala un diagnostico. Gli eventi possono leggere un CalculatedField aggregato
+accessibile, ma non chiamare direttamente queste funzioni.
+
+Usa il data_name di RepeatableSection e un data_name di destinazione letterale delle sue righe.
+Section non aggiunge un ambito di record. Nomi dinamici, alias e chiamate dentro EVAL non sono
+supportati; gli altri usi di EVAL restano invariati. Il segnaposto piatto RepeatableSection resta null.
+
+| Valori delle righe                    | REPEATABLEVALUES                           | REPEATABLESUM               |
+| ------------------------------------- | ------------------------------------------ | --------------------------- |
+| Numeri 100, vuoto, 200                | `[100, null, 200]`                         | `300`                       |
+| Nessuna riga                          | `[]`                                       | `0`                         |
+| Scelta singola Red, vuota, Other Teal | `['red', null, 'Teal']`                    | Destinazione non supportata |
+| Scelte multiple Red/Blue, vuota       | `[['red', 'blue'], []]`                    | Destinazione non supportata |
+| Riferimenti collegati                 | `[[{record_id:'R1'}], [{record_id:'R2'}]]` | Destinazione non supportata |
+
+La somma accetta solo numeri finiti NumericField/CalculatedField, salta gli assenti e rifiuta stringhe,
+valori non finiti e overflow. I codici delle scelte rimangono stringhe, incluso `'100'`; convertili
+esplicitamente in un calcolo di riga prima della somma. Scelte ambigue o malformate producono un errore
+di calcolo, senza scegliere o scartare silenziosamente. Si preservano raggruppamento per riga, ordine
+delle scelte e poi testo Other. I collegamenti espongono solo riferimenti, senza recuperare contenuti.
+
+Altre destinazioni: TextField, BooleanField, DateField e TimeField. Array/oggetti calcolati mantengono
+tipi e raggruppamento. Contenitori, LabelField, media, StatusField e TitleField sono esclusi. Titoli e
+media restano supportati fuori dalla proiezione. Ordine e righe nascoste accettate sono preservati.
+I diagnostici restano separati dalla validità dell’invio.

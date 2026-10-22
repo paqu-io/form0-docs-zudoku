@@ -63,3 +63,34 @@ ROUND($price * $qty, 2)
 
 - [`SETRESULT`](/es/core/builtins/calculations-expressions/setresult)
 - [`EVAL`](/es/core/builtins/calculations-expressions/eval)
+
+## Colecciones repetibles (sin publicar)
+
+`REPEATABLEVALUES($tasks, 'cost')` y `REPEATABLESUM($tasks, 'cost')` son exclusivos de cálculos y
+requieren contexto de `createRecordEvaluator()`. Llegarán después de core 0.6.0; sin ese contexto,
+el motor ordinario devuelve un diagnóstico. Los eventos pueden leer un CalculatedField agregado
+accesible, pero no llamar directamente a estas funciones.
+
+Usa el data_name de RepeatableSection y un data_name destino literal de sus filas. Section no añade
+ámbito de registro. No se admiten nombres dinámicos, alias ni llamadas dentro de EVAL; el resto de
+EVAL mantiene su comportamiento. El marcador plano de RepeatableSection sigue siendo null.
+
+| Valores por fila             | REPEATABLEVALUES                           | REPEATABLESUM       |
+| ---------------------------- | ------------------------------------------ | ------------------- |
+| Numéricos 100, vacío, 200    | `[100, null, 200]`                         | `300`               |
+| Sin filas                    | `[]`                                       | `0`                 |
+| Única Red, vacía, Other Teal | `['red', null, 'Teal']`                    | Destino no admitido |
+| Múltiple Red/Blue, vacía     | `[['red', 'blue'], []]`                    | Destino no admitido |
+| Registros enlazados          | `[[{record_id:'R1'}], [{record_id:'R2'}]]` | Destino no admitido |
+
+La suma admite solo NumericField/CalculatedField con números finitos, omite ausentes y rechaza
+cadenas, valores no finitos y desbordamientos. Los códigos de opción siguen siendo cadenas, incluso
+`'100'`; conviértelos explícitamente en un cálculo de fila antes de sumar. Las selecciones ambiguas
+o malformadas producen un fallo de cálculo, sin elegir ni descartar silenciosamente. Se conserva
+la agrupación por fila y el orden de opciones seguido del texto Other. Los enlaces exponen solo
+referencias, sin recuperar contenidos.
+
+Otros destinos admitidos: TextField, BooleanField, DateField y TimeField. Arrays/objetos calculados
+conservan tipo y agrupación. Contenedores, LabelField, medios, StatusField y TitleField se excluyen.
+Los títulos y medios existentes siguen admitidos fuera de la proyección. Se preservan el orden y las
+filas ocultas aceptadas. Los diagnósticos siguen separados de la validez del envío.

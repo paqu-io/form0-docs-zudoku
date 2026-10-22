@@ -36,9 +36,27 @@ required field is empty. Required-field enforcement is a submission concern: the
 renderers combine `visible`, `required`, and the current value, skip hidden fields, and decide when
 to display the error.
 
-If you use form0-core without a renderer, apply the same policy in your application. In most cases,
-an empty field should block submission only when it is both visible and required. Keep the engine's
-value and format errors in that submission check as well.
+### Shared submission validation (unreleased)
+
+`validateSubmission({ schema, snapshot, validationIssues })` checks an already evaluated runtime tree.
+It does not evaluate values or establish freshness. `createRecordEvaluator().prepareSubmission()`
+combines evaluation, selection and this same validation policy. Both interfaces are forthcoming after
+0.6.0; consumer UI adoption remains separate.
+
+Hidden fields and fields under hidden ancestors do not block ordinary submission. Visible required
+read-only empty input fields do block. Numeric zero and legitimate false selections are populated
+values. Intrinsic `state.errors` is unchanged, and LabelField/CalculatedField constraints remain.
+
+The summary contains `hasErrors`, `requiredFieldErrors`, `generalErrors`, `scopeIssues` and
+`orderedIssues`. Findings identify field key/data_name and full row `instancePath`; custom `INVALID`
+remains scope-level. Root findings precede descendants in record order. `managedEvents: true` reruns
+participating closed-row validators automatically. Genuine input failures require correction even
+when many rows fail; root drafts remain allowed. Hidden record scopes do not participate. Root custom
+rules remain root-level and cannot be automatically attributed to an individual hidden field.
+
+Retained submissions validate the selected retained snapshot, including its calculated helpers and
+condition outcomes. Their pending freshness is a separate fact. Validation handlers cannot write
+values or perform UI operations; execution failures block eligibility, including drafts.
 
 ## Typical errors
 

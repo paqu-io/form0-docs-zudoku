@@ -434,3 +434,12 @@ Campos y contenedores del formulario. Consulta [Elementos y anidamiento](/es/cor
 | Predeterminado      | `[]`    |
 | Opciones            | -       |
 | Nivel de aplicación | -       |
+
+## repeatable_recalculation
+
+**Ajuste del evaluador de registros sin publicar, posterior a 0.6.0.** Propiedad directa opcional de
+form: `"repeatable_recalculation": "automatic" | "confirm"`. Si se omite, es automatic. Confirm pide
+revisión si cambian cálculos hijos; no concede permiso para enviar valores retenidos. Ese permiso lo
+habilita el host explícitamente. El host puede exigir confirmación, pero no debilitar la del esquema.
+Los borradores conservan valores hijos aceptados sin diálogo. La interfaz, controles Builder y
+persistencia de metadatos complementarios pertenecen a la adopción de consumidores.
