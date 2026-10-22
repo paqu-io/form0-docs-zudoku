@@ -69,8 +69,7 @@ Les calculs et les gestionnaires d'événements de champ suivent ces règles d'a
 calcul en dehors des champs autorisés lit `undefined`, et le moteur signale un avertissement comme
 `Field 'line_total' is not accessible from current context`.
 
-Le contrôle de portée des conditions décrit ici concerne la prochaine version de core traitant
-#103. La version publiée 0.5.1 n'applique pas encore ces contrôles d'appartenance.
+Le contrôle de portée des conditions est disponible depuis core 0.6.0.
 
 `visible_conditions`, `required_conditions` et `read_only_conditions` utilisent les mêmes portées de
 lecture que le tableau ci-dessus : champs racine, de la ligne courante et des lignes ancêtres. Les
@@ -127,3 +126,20 @@ d'ancêtres et les écritures uniquement locales restent inchangées.
 
 Lors de la soumission du formulaire, chaque ligne devient un enregistrement enfant de
 l'enregistrement principal. Voir [Sorties et enregistrements](/fr/core/output-records).
+
+## Lectures explicites de collections
+
+Une RepeatableSection imbriquée peut avoir plusieurs instances sans dupliquer son data_name. Une
+définition `projects` contient une définition `tasks` : P1 a les coûts `[10,20]`, P2 a `[100]`. À la
+racine, `REPEATABLEVALUES($tasks, 'cost')` retourne `[10,20,100]` ; dans P1, `[10,20]`. Les identités
+d’ancêtres délimitent la lecture. Les branches imbriquées sans relation sont rejetées et la cible
+appartient aux lignes de la section nommée. Une collection explicite appartenant à un ancêtre peut
+inclure des lignes sœurs ; les permissions scalaires de lecture/écriture ne sont pas élargies.
+
+Les collections incluent les lignes acceptées masquées ; la validation exclut séparément les ancêtres
+masqués. Pour une visibilité de paiement liée aux inspections, utilisez une collection racine et un
+helper booléen local. Traitez les nombres absents explicitement, par exemple
+`$scores.some(score => typeof score === 'number' && score < 80)`.
+
+Ces interfaces sont prévues après 0.6.0 et exigent une adoption des consommateurs. Le contrôle
+existant de portée des conditions reste inchangé.

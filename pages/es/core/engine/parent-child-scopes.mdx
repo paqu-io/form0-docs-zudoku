@@ -69,8 +69,7 @@ Los cálculos y los manejadores de eventos de campo siguen estas reglas de acces
 un cálculo fuera de los campos permitidos lee `undefined`, y el motor emite un aviso como
 `Field 'line_total' is not accessible from current context`.
 
-La aplicación de ámbitos en condiciones descrita aquí corresponde a la próxima versión de core
-que aborda #103. La versión publicada 0.5.1 todavía no aplica estas comprobaciones de pertenencia.
+La aplicación de ámbitos en condiciones está disponible desde core 0.6.0.
 
 `visible_conditions`, `required_conditions` y `read_only_conditions` usan los mismos ámbitos de
 lectura de la tabla anterior: campos raíz, de la fila actual y de las filas antecesoras. No permiten
@@ -125,3 +124,20 @@ escrituras exclusivamente locales.
 
 Al enviar el formulario, cada fila se convierte en un registro hijo del registro principal. Consulta
 [Salida y registros](/es/core/output-records).
+
+## Lecturas explícitas de colecciones
+
+Una RepeatableSection anidada puede tener muchas instancias sin duplicar su data_name. Una definición
+`projects` contiene una definición `tasks`: P1 tiene costes `[10,20]` y P2 tiene `[100]`. En raíz,
+`REPEATABLEVALUES($tasks, 'cost')` devuelve `[10,20,100]`; dentro de P1 devuelve `[10,20]`. Las
+identidades de ancestros delimitan las lecturas. Se rechazan ramas anidadas ajenas y el destino debe
+pertenecer a las filas de la sección nombrada. Las colecciones explícitas de un ancestro pueden incluir
+filas hermanas; las lecturas/escrituras escalares no ganan permisos.
+
+Las colecciones incluyen filas aceptadas ocultas; la validación de envío excluye por separado los
+ancestros ocultos. Para visibilidad de pagos dependiente de inspecciones, usa una colección raíz y un
+helper booleano local. Trata números ausentes explícitamente, por ejemplo
+`$scores.some(score => typeof score === 'number' && score < 80)`.
+
+Estas interfaces llegarán después de 0.6.0 y requieren adopción de consumidores. La comprobación
+existente del ámbito de condiciones se mantiene.

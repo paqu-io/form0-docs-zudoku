@@ -145,3 +145,69 @@ const operations = engine.trigger("change", "quantity")
 
 Tu aplicación es responsable de aplicar las operaciones devueltas y de decidir cuándo un campo
 obligatorio vacío bloquea el envío.
+
+## Preparación del árbol de registros
+
+`createRecordEvaluator({ schema, helpers, security })` reutiliza el ejecutor de expresiones y las
+reglas de ámbito existentes y coordina instancias reales de registros raíz e hijos. Las aplicaciones
+usan esta API para seleccionar y validar una instantánea antes de persistirla y aplican el resultado
+mediante su renderer o controlador. `engine.eval()` conserva su contrato de estado intrínseco.
+
+```js
+import { createRecordEvaluator } from "form0-core"
+
+const evaluator = createRecordEvaluator({ schema })
+const accepted = await evaluator.evaluate(snapshot)
+const refreshed = await evaluator.evaluate(snapshot, { mode: "refresh" })
+const prepared = await evaluator.prepareSubmission(snapshot)
+```
+
+`snapshot` utiliza `{ values, repeatable }`. Cada fila conserva su `id`, `values`, `repeatable`
+anidado, adjuntos y metadatos. Los valores usan data_names; los mapas repetibles usan las claves del
+esquema cuando existen. Convierte primero las opciones almacenadas al formato de ejecución con las
+utilidades de registros existentes. Ninguna llamada modifica la entrada, persiste datos, genera
+IDs/marcas temporales de registros ni aplica propuestas a la interfaz.
+
+El modo accepted conserva los cálculos hijos cerrados y recalcula agregados raíz desde los valores
+aceptados. Guardar un importe hijo de 100 a 150 actualiza el agregado cuando el host aporta esa fila
+aceptada; cancelar no lo cambia. Refresh prepara todos los cálculos hijos juntos. Si el impuesto pasa
+del 10% al 20%, el total hijo aceptado 110 pasa a ser una propuesta de 120. La validación y la salida
+usan la misma instantánea seleccionada. Los ciclos reales entre registros fallan sin entregar una
+instantánea parcial; los diagnósticos locales mantienen su semántica independiente.
+
+`prepareSubmission` acepta `intent: 'submit' | 'draft'`, `mode: 'automatic' | 'confirm'`,
+`allowRetain: true` y `managedEvents: true` (ambas banderas son false por defecto). Automatic es el
+modo predeterminado; el host no puede debilitar una confirmación del esquema. En confirm, los cambios
+hijos devuelven `status: 'requires_decision'`, `reviewId`, `proposal`, `changes`, `choices` y
+`snapshot: null`. La propuesta sirve para revisión, no para envío. Tras una decisión explícita,
+llama de nuevo con entradas actuales, las mismas opciones y
+`decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Retain requiere permiso del host en
+ambas llamadas. Una nueva preparación, entradas/opciones cambiadas u otro evaluador invalidan la
+revisión. La aceptación utiliza los valores capturados y cada decisión se consume una sola vez.
+
+Comprueba `eligible` antes del envío. Los estados son `ready`, `blocked`, `requires_decision`,
+`failed` y `cancelled`. `validationSummary`, `diagnostics` e `issues` de ejecución son independientes.
+Los borradores conservan cálculos hijos sin diálogo y permiten errores ordinarios, que se siguen
+notificando junto con la actualización pendiente. Los fallos de ejecución impiden la elegibilidad.
+
+Persiste `freshness` fuera del registro: `{ version: 1, status: 'current' | 'pending', schemaRevision,
+affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Restáuralo para mostrar el estado pendiente.
+
+Cada entrada afectada representa una fila; `fields` enumera las identidades de sus cálculos
+modificados. La ascendencia completa se guarda una sola vez por fila, conservando el ID cero y las
+referencias por posición. El estado actualizado tiene una lista de afectados vacía.
+Cada preparación recalcula desde las entradas actuales; los metadatos no reproducen una propuesta.
+Borra el estado pendiente almacenado solo tras persistir el resultado actualizado correspondiente.
+
+El registro de handlers usa cada ámbito seleccionado; el análisis y la compilación se comparten.
+
+La preparación administrada ejecuta solo validación raíz y de filas cerradas participantes, con
+ancestros seleccionados actuales. No reproduce load/edit/save/unload de filas cerradas. El host
+conserva validar → guardar una vez → reevaluar/revalidar si hay cambios → serializar. Los cambios de
+un hook de guardado invalidan la revisión anterior sin repetir ese hook. `event.isValid` describe la
+validez intrínseca de su ámbito; la validez combinada está en el resumen.
+
+Se admiten `signal`, un objetivo de planificación de 8ms (`budgetMs`) y `yieldToHost` asíncrono.
+Las expresiones individuales siguen siendo síncronas y pueden superar ese intervalo. El análisis del
+esquema se comparte y no requiere motores permanentes por fila cerrada. Las sesiones de vista previa
+añaden `runRecord({ snapshot, instancePath })` para evaluar explícitamente un árbol.

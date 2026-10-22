@@ -434,3 +434,12 @@ Form fields and containers. See [Elements and nesting](/core/schema/elements).
 | Default   | `[]`    |
 | Choices   | -       |
 | App-level | -       |
+
+## repeatable_recalculation
+
+Optional direct form property:
+`"repeatable_recalculation": "automatic" | "confirm"`. Omission means automatic. Confirm asks for
+review when child calculated values change; it does not grant permission to submit retained values.
+The host must explicitly enable retention. Hosts may require confirmation but cannot weaken authored
+confirmation. Draft preparation preserves accepted child values without a dialog. Renderer UI,
+Builder controls and durable companion storage integration are separate consumer work.
