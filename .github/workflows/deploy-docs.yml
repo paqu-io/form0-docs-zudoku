@@ -40,6 +40,9 @@ jobs:
       - name: Audit production install tree
         run: npm run security:audit:prod
 
+      - name: Audit documentation build dependencies
+        run: npm run security:audit:all
+
       - name: Upload checked site artifact
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
