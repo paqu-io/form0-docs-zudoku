@@ -22,10 +22,20 @@ registro padre permite editar; las nuevas se abren en modo de edición. Un padre
 permite consultar sus descendientes, pero impide editarlos, añadirlos o eliminarlos. La opción de
 edición directa no anula las restricciones del padre.
 
-Esta opción del renderer no cambia el esquema ni el registro guardado. El modo de visualización
-sigue evaluando cálculos, condiciones y validación intrínseca. Con el ciclo de vida gestionado,
-abrir ejecuta `load-repeatable`; entrar en edición ejecuta `edit-repeatable` o `new-repeatable`.
-Mostrar los valores calculados aceptados sin recalcular sigue siendo una política pendiente.
+La visualización conserva los valores calculados aceptados sin ejecutar cálculos ni aplicar
+valores predeterminados ausentes. Las condiciones y la validación intrínseca usan esos valores.
+Editar evalúa con los valores actuales de los antecesores permitidos. Con totales aceptados
+110/220 y raíz 330, visualizar conserva 110/220; editar la fila 1 produce 120, guardarla da raíz
+340 y cancelar conserva 330. Los valores seleccionados antes de un fallo de persistencia siguen
+siendo trabajo sin guardar al volver a visualización.
+
+La apertura gestionada espera `load-record`/`load-repeatable` y luego el evento new/edit
+correspondiente si se abre en edición. Visualizar → Editar ejecuta edit sin repetir load.
+`event.mode` es `readonly` o `edit` para el registro que ejecuta el evento, independientemente del
+modo del padre. Visualizar permite lecturas, ALERT y ON/OFF del ámbito; una escritura rechaza todo
+el lote antes de delegarlo al host. Mueve la inicialización que escribe a new/edit, o protege los
+setters de load para la edición directa. Requiere la versión coordinada del core con control de
+modo; no cambia la estructura del esquema ni del registro guardado.
 
 ## Ubicación
 

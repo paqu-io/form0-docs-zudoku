@@ -21,10 +21,18 @@ level. Existing rows open in view mode with Edit when their parent permits editi
 in edit mode. A read-only parent allows browsing descendants while preventing editing, adding and
 removing them. The direct-edit option does not override parent restrictions.
 
-This renderer option leaves the form schema and saved record unchanged. View mode still evaluates
-calculations, conditions and intrinsic validation. With managed lifecycle enabled, opening runs
-`load-repeatable`; entering editing runs `edit-repeatable` or `new-repeatable`. A view that preserves
-accepted calculated values without recalculation remains a separate policy discussion.
+View displays supplied accepted calculated values without running calculations or applying missing
+schema defaults. Conditions and intrinsic validation still use those values. Edit evaluates with
+current permitted ancestor values. With accepted child totals 110/220 and root 330, viewing keeps
+110/220; editing line 1 produces 120, saving it makes root 340, and cancelling keeps root 330.
+Working values selected before a failed persistence callback remain unsaved work when returning to View.
+
+Managed opening awaits `load-record`/`load-repeatable`, then the matching new/edit event for direct
+editing. View → Edit runs edit without repeating load. `event.mode` is `readonly` or `edit` for the
+executing record, independent of its parent's mode. View permits reads, ALERT and scoped ON/OFF;
+a record write rejects the complete operation batch before host delegation. Move writable
+initialization to new/edit, or guard load setters for direct editing. This requires the coordinated
+core release with mode control; it changes no form-schema or saved-record shape.
 
 ## Sections and validation
 
@@ -49,7 +57,7 @@ state.
 With `engineOptions.events.lifecycle: true`, the host must specify `recordKind: "new"` or
 `"existing"` for the root. Opening runs `load-record`; entering editing runs `new-record` or
 `edit-record`. Rows use their actual classification and the corresponding `*-repeatable` events.
-View mode runs load only; calculations, conditions and intrinsic validation still evaluate.
+View mode runs load only and preserves accepted calculations; conditions and intrinsic validation still evaluate.
 
 The default legacy opt-out preserves earlier lifecycle behavior. See the managed lifecycle
 contract in [FormRenderer](/bindings/react-native/form-renderer) and

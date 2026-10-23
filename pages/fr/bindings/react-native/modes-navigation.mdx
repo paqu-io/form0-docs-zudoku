@@ -23,10 +23,20 @@ permet la modification ; les nouvelles s’ouvrent en modification. Un parent en
 de consulter ses descendants, mais empêche leur modification, leur ajout et leur suppression.
 L’option de modification directe ne contourne pas les restrictions du parent.
 
-Cette option du renderer ne change ni le schéma ni l’enregistrement sauvegardé. La consultation
-évalue toujours les calculs, les conditions et la validation intrinsèque. Avec le cycle de vie géré,
-l’ouverture exécute `load-repeatable` ; le passage en modification exécute `edit-repeatable` ou
-`new-repeatable`. L’affichage des valeurs calculées acceptées sans recalcul reste à définir.
+La consultation conserve les valeurs calculées acceptées sans exécuter les calculs ni appliquer
+les valeurs par défaut manquantes. Les conditions et la validation intrinsèque utilisent ces
+valeurs. Modifier évalue avec les valeurs actuelles des ancêtres autorisés. Avec des totaux acceptés
+110/220 et une racine 330, consulter conserve 110/220 ; modifier la ligne 1 produit 120, l'enregistrer
+donne 340 à la racine et annuler conserve 330. Après un échec de persistance, les valeurs
+sélectionnées restent un travail non enregistré lors du retour en consultation.
+
+L'ouverture gérée attend `load-record`/`load-repeatable`, puis l'événement new/edit correspondant
+en modification directe. Consultation → Modification exécute edit sans répéter load. `event.mode`
+vaut `readonly` ou `edit` pour l'enregistrement exécutant l'événement, indépendamment du mode du
+parent. Consulter permet les lectures, ALERT et ON/OFF du périmètre ; une écriture rejette tout le
+lot avant délégation au host. Déplacez l'initialisation qui écrit vers new/edit ou protégez les
+setters de load pour la modification directe. La version coordonnée du core avec contrôle du mode
+est requise ; la structure du schéma et de l'enregistrement sauvegardé reste identique.
 
 ## Sections et validation
 
@@ -48,11 +58,11 @@ le schéma au lieu de le dupliquer dans l’état du composant.
 
 ## Événements d’enregistrement et entrées répétables
 
-Avec `engineOptions.events.lifecycle: true`, l’application doit préciser `recordKind: "new"` ou
-`"existing"` pour la racine. L’ouverture exécute `load-record` ; le passage en modification exécute
-`new-record` ou `edit-record`. Les lignes utilisent leur classification réelle et les événements
-`*-repeatable` correspondants. La consultation exécute uniquement load ; les calculs, les conditions
-et la validation intrinsèque restent actifs.
+Avec `engineOptions.events.lifecycle: true`, l'application précise `recordKind: "new"` ou
+`"existing"` pour la racine. L'ouverture attend `load-record` ; la modification directe exécute ensuite
+`new-record` ou `edit-record`. Les lignes utilisent les événements `*-repeatable` correspondants.
+Consulter exécute seulement load et conserve les calculs acceptés ; les conditions et la validation
+intrinsèque restent actives.
 
 Le mode historique, utilisé par défaut, conserve le comportement précédent du cycle de vie. Voir
 le contrat géré dans [FormRenderer](/fr/bindings/react-native/form-renderer) et

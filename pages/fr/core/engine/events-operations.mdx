@@ -43,8 +43,9 @@ ON("load-record", function onLoad() {
   `data_name`.
 - Omettez le champ pour exécuter le gestionnaire pour tous les champs.
 - Un type d'événement inconnu affiche un avertissement, et le gestionnaire n'est pas enregistré.
-- Enregistrez chaque gestionnaire au niveau supérieur de `form.events.code`. `ON` et `OFF` appelés à
-  l'intérieur d'un gestionnaire n'ont aucun effet.
+- `ON`/`OFF` synchrones dans les gestionnaires autorisés mettent à jour les listeners du moteur après
+  un dispatch réussi. Un lot rejeté n'enregistre rien. Les callbacks imbriqués écrits dans le schéma
+  fonctionnent sur Hermes sans capturer les variables locales du gestionnaire extérieur.
 
 ## Comment s'exécute le code des gestionnaires
 
@@ -80,7 +81,7 @@ pour les déclarations de fonction, les expressions de fonction et les fonctions
 dans `form.events.code`, y compris celles affectées à une variable puis passées à `ON`.
 
 Pour tout autre callback, le moteur lit le code source avec `toString()`. Cela concerne les
-callbacks qui proviennent de `helpers` ou sont créés à l'exécution, les méthodes d'objet, les
+callbacks qui proviennent de `helpers`, les méthodes d'objet, les
 getters et setters, et les membres de classe. Ce mécanisme fonctionne dans Node.js et dans les
 navigateurs, mais pas sur Hermes. Dans ce cas, le moteur affiche
 `Event callback source is unavailable` et exécute les autres gestionnaires.
@@ -206,3 +207,24 @@ Le registre ajoute `cancel-record`, `unload-record`, `cancel-repeatable`, `unloa
 Consultez le [contrat d’événements maintenu](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) pour le contrat complet et les étapes de livraison. La politique générale de validation, l’actualisation des lignes fermées et la responsabilité de persistance restent des travaux distincts.
 
 Les objets média File/Blob natifs sont copiés défensivement, avec métadonnées standard et contenu binaire immuable. Ce correctif est inclus dans core 0.5.1. Les autres objets non portables sont rejetés ; les handlers asynchrones restent incompatibles.
+
+## Mode et consultation des valeurs acceptées
+
+Chaque gestionnaire reçoit `event.mode: 'readonly' | 'edit'`, contrôlé par le moteur. Il décrit
+l'enregistrement exécutant l'événement, y compris un enfant consulté sous un parent modifiable.
+Nouveau/existant, intention de brouillon et champs en lecture seule restent indépendants. Les
+métadonnées du demandeur et les affectations du gestionnaire ne donnent aucun droit. La validation
+des périmètres fermés reçoit `readonly` sans les ouvrir ; celle d'un éditeur conserve son mode et
+ne produit que des constats.
+
+Load s'exécute une fois par ouverture dans les deux modes. La modification directe attend load
+avant new/edit. Consultation → Modification exécute edit sans répéter load. Consulter permet de
+lire les valeurs acceptées, d'afficher ALERT et de modifier les listeners du périmètre. SETVALUE ou
+une autre écriture rejette tout le lot, alertes et listeners compris, avant délégation.
+`triggerDetailed()` renvoie des problèmes d'exécution ; `trigger()` historique ne renvoie aucune
+opération et émet des avertissements structurés. La consultation reste disponible.
+
+Pour initialiser chaque entrée en modification, utilisez new/edit plutôt qu'un load protégé.
+Le catalogue des builtins déclare les effets ; les opérations ou effets inconnus sont rejetés.
+Les restrictions de validation/fermeture restent applicables. Les effets externes des helpers
+privilégiés ne sont pas annulés par les opérations ; modifier n'autorise pas la persistance externe.

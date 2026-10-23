@@ -242,3 +242,15 @@ Par exemple, un projet avec des coûts acceptés `[10,20]` et une majoration loc
 pendant l’édition. Annuler conserve l’agrégat accepté du parent. Enregistrer accepte ces valeurs et
 actualise l’agrégat parent. L’envoi complet utilise toujours `prepareSubmission()` ; `engine.eval()`
 conserve son contrat scalaire intrinsèque.
+
+## Consultation des valeurs acceptées
+
+Les moteurs scalaires acceptent `mode: 'readonly' | 'edit'` (`edit` par défaut). En readonly,
+`eval()` calcule les conditions et la validation intrinsèque depuis les valeurs fournies, conserve
+les calculs et n'applique pas les valeurs par défaut manquantes. Le host appelle `setMode('edit')`,
+puis `eval()` ; `getMode()` lit le mode courant. Changer de mode ne répète pas load, ne restaure pas
+une ancienne copie de la base et n'enregistre rien.
+
+Pour un arbre, utilisez `evaluateScope(snapshot, { interactionMode: 'readonly', instancePath })`.
+Le résultat contient l'état et la validation intégrée des valeurs acceptées sans calculer.
+La modification est le défaut. Les politiques de `evaluate()` et `prepareSubmission()` restent identiques.

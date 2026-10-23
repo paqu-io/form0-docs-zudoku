@@ -41,8 +41,9 @@ ON("load-record", function onLoad() {
   not translate between `key` and `data_name`.
 - Leave out the field to run the handler for every field.
 - An unknown event type prints a warning, and the handler is not registered.
-- Register every handler at the top level of `form.events.code`. `ON` and `OFF` called inside a
-  handler have no effect.
+- Synchronous `ON`/`OFF` inside permitted handlers update the engine's listener registry after
+  dispatch succeeds. A rejected batch registers nothing. Nested authored callbacks work on Hermes
+  and do not capture the outer handler's local variables.
 
 ## How handler code runs
 
@@ -77,7 +78,7 @@ declarations, function expressions, and arrow functions written in `form.events.
 those assigned to a variable and passed to `ON` later.
 
 For any other callback, the engine reads the source with `toString()`. This includes callbacks that
-come from `helpers` or are created at runtime, object methods, getters and setters, and class
+come from `helpers`, object methods, getters and setters, and class
 members. That works in Node.js and browsers, but not on Hermes. There, the engine prints
 `Event callback source is unavailable` and runs the remaining handlers.
 
@@ -194,3 +195,22 @@ The registry adds `cancel-record`, `unload-record`, `cancel-repeatable`, `unload
 See the [maintained event contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) for the complete contract and delivery stages. Broader validation policy, closed-row freshness and persistence ownership remain separate work.
 
 Native File/Blob media handles are copied defensively, preserving their standard metadata and immutable binary content. This compatibility correction is included in core 0.5.1. Other nonportable object types remain rejected; asynchronous schema handlers remain unsupported.
+
+## Mode and accepted-snapshot viewing
+
+Each handler receives authoritative `event.mode: 'readonly' | 'edit'`. It describes the executing
+record at dispatch, including a viewed child of an editable parent. New/existing classification,
+draft intent and individual field read-only flags are separate. Caller metadata and handler
+assignments cannot grant permissions. Closed-scope record-tree validation receives `readonly`
+without reopening those records; editor validation retains its editor mode and remains findings-only.
+
+Load runs once per opening in either mode. Direct editing awaits load before new/edit. View → Edit
+runs edit without replaying load. View can read accepted values, display ALERT and update scoped
+listeners. SETVALUE or another record write rejects the whole batch, including accompanying alerts
+and listener changes, before delegation. `triggerDetailed()` returns execution issues; legacy
+`trigger()` returns no operations and emits structured warnings. The view remains readable.
+
+For initialization needed whenever editing begins, use new/edit rather than a guarded load handler.
+Operation effects are declared in the builtin catalog; unknown operations/effects are rejected.
+Validation/close restrictions still apply. Privileged host helper side effects are outside operation
+rollback, and editing does not authorize external persistence.

@@ -42,8 +42,9 @@ ON("load-record", function onLoad() {
   compara la cadena de registro de forma exacta y no traduce entre `key` y `data_name`.
 - Omite el campo para ejecutar el manejador en todos los campos.
 - Un tipo de evento desconocido muestra un aviso y el manejador no se registra.
-- Registra todos los manejadores en el nivel superior de `form.events.code`. `ON` y `OFF` llamados
-  dentro de un manejador no tienen efecto.
+- `ON`/`OFF` síncronos dentro de manejadores permitidos actualizan los listeners del motor después
+  de un despacho correcto. Un lote rechazado no registra nada. Los callbacks anidados escritos en
+  el esquema funcionan en Hermes y no capturan variables locales del manejador exterior.
 
 ## Cómo se ejecuta el código de los manejadores
 
@@ -78,7 +79,7 @@ Esto funciona con declaraciones de función, expresiones de función y funciones
 `form.events.code`, incluidas las que se asignan a una variable y se pasan a `ON` más adelante.
 
 Para cualquier otro callback, el motor lee el código fuente con `toString()`. Esto incluye los
-callbacks que proceden de `helpers` o se crean en tiempo de ejecución, los métodos de objeto, los
+callbacks que proceden de `helpers`, los métodos de objeto, los
 getters y setters, y los miembros de clase. Funciona en Node.js y en los navegadores, pero no en
 Hermes. Allí, el motor muestra `Event callback source is unavailable` y ejecuta los demás
 manejadores.
@@ -201,3 +202,24 @@ El registro añade `cancel-record`, `unload-record`, `cancel-repeatable`, `unloa
 Consulta el [contrato de eventos mantenido](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) para conocer el contrato completo y las fases de entrega. La política general de validación, la actualización de filas cerradas y la responsabilidad de persistencia siguen siendo trabajos separados.
 
 Los objetos multimedia File/Blob nativos se copian defensivamente, conservando metadatos estándar y contenido binario inmutable. Esta corrección está incluida en core 0.5.1. Se rechazan otros objetos no portables; los handlers asíncronos siguen sin admitirse.
+
+## Modo y visualización de valores aceptados
+
+Cada manejador recibe `event.mode: 'readonly' | 'edit'`, propiedad del motor. Describe el registro
+que ejecuta el evento, incluido un hijo consultado cuyo padre se está editando. La clasificación
+nuevo/existente, la intención de borrador y los campos de solo lectura son independientes. Los
+metadatos del llamador y las asignaciones del manejador no conceden permisos. La validación de
+ámbitos cerrados del árbol recibe `readonly` sin abrirlos; la del editor conserva su modo y solo
+puede producir hallazgos.
+
+Load se ejecuta una vez por apertura en ambos modos. La edición directa espera load antes de
+new/edit. Visualizar → Editar ejecuta edit sin repetir load. Visualizar permite leer valores
+aceptados, mostrar ALERT y modificar listeners del ámbito. SETVALUE u otra escritura rechaza todo
+el lote, incluidos avisos y cambios de listeners, antes de delegarlo. `triggerDetailed()` devuelve
+problemas de ejecución; `trigger()` heredado no devuelve operaciones y emite avisos estructurados.
+La vista sigue disponible.
+
+Para inicializar cada entrada en edición, usa new/edit en lugar de load protegido. El catálogo de
+builtins declara los efectos; las operaciones o efectos desconocidos se rechazan. Se mantienen las
+restricciones de validación/cierre. Los efectos externos de helpers privilegiados no se revierten
+con las operaciones, y editar no autoriza persistencia externa.

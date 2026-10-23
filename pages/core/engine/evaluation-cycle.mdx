@@ -226,3 +226,14 @@ For example, a project with accepted task costs `[10,20]` and a local surcharge 
 `35` while editing. Cancelling leaves the parent's accepted aggregate unchanged. Saving the project
 accepts those values and updates its parent's aggregate. Whole-record submission still uses
 `prepareSubmission()`; intrinsic `engine.eval()` retains its existing scalar contract.
+
+## Accepted-snapshot viewing
+
+Scalar engines accept `mode: 'readonly' | 'edit'` (default `edit`). In readonly, `eval()` computes
+conditions and intrinsic validation from supplied values, preserving calculations and not applying
+missing schema defaults. The host can call `setMode('edit')`, then `eval()`; `getMode()` reads the
+current mode. Switching mode does not replay load, restore older database values or persist work.
+
+For a record tree, use `evaluateScope(snapshot, { interactionMode: 'readonly', instancePath })`.
+It returns field state and built-in validation from supplied accepted values without calculations.
+Editing is the default. Whole-tree `evaluate()` and `prepareSubmission()` policies are unchanged.

@@ -238,3 +238,15 @@ Por ejemplo, un proyecto con costes aceptados `[10,20]` y un recargo local de `5
 la edición. Cancelar conserva el agregado aceptado del padre. Guardar acepta esos valores y actualiza
 el agregado del padre. El envío completo sigue usando `prepareSubmission()`; `engine.eval()` conserva
 su contrato escalar intrínseco.
+
+## Visualización de valores aceptados
+
+Los motores escalares aceptan `mode: 'readonly' | 'edit'` (predeterminado `edit`). En readonly,
+`eval()` calcula condiciones y validación intrínseca con los valores suministrados, conserva los
+cálculos y no aplica valores predeterminados ausentes. El host llama `setMode('edit')` y luego
+`eval()`; `getMode()` devuelve el modo actual. Cambiar de modo no repite load, no restaura valores
+antiguos de la base de datos ni guarda el trabajo.
+
+Para un árbol, usa `evaluateScope(snapshot, { interactionMode: 'readonly', instancePath })`.
+Devuelve estado y validación incorporada con valores aceptados sin calcular. La edición es el
+valor predeterminado. Las políticas de `evaluate()` y `prepareSubmission()` no cambian.

@@ -22,10 +22,20 @@ la modifica; le nuove si aprono in modifica. Un padre in sola lettura consente d
 discendenti, ma ne impedisce la modifica, l’aggiunta e la rimozione. L’opzione di modifica diretta
 non supera le restrizioni del padre.
 
-Questa opzione del renderer non cambia lo schema né il record salvato. La visualizzazione continua
-a valutare calcoli, condizioni e validazione intrinseca. Con il ciclo di vita gestito, l’apertura
-esegue `load-repeatable`; l’ingresso in modifica esegue `edit-repeatable` o `new-repeatable`.
-Mostrare i valori calcolati accettati senza ricalcolo resta una politica da definire.
+La visualizzazione conserva i valori calcolati accettati senza eseguire calcoli né applicare
+valori predefiniti mancanti. Condizioni e validazione intrinseca usano questi valori. Modifica
+valuta con i valori attuali degli antenati consentiti. Con totali accettati 110/220 e radice 330,
+visualizzare conserva 110/220; modificare la riga 1 produce 120, salvarla porta la radice a 340 e
+annullare conserva 330. Dopo un errore di persistenza, i valori selezionati restano lavoro non
+salvato tornando in visualizzazione.
+
+L'apertura gestita attende `load-record`/`load-repeatable`, poi l'evento new/edit corrispondente in
+modifica diretta. Visualizzazione → Modifica esegue edit senza ripetere load. `event.mode` è
+`readonly` o `edit` per il record che esegue l'evento, indipendentemente dal modo del padre.
+Visualizzare consente letture, ALERT e ON/OFF dell'ambito; una scrittura rifiuta l'intero lotto
+prima della delega all'host. Sposta l'inizializzazione che scrive in new/edit o proteggi i setter
+di load per la modifica diretta. Serve la versione coordinata del core con controllo del modo;
+la struttura dello schema e del record salvato resta invariata.
 
 ## Posizionamento
 
