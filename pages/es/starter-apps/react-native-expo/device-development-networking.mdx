@@ -40,3 +40,18 @@ incluyas credenciales con privilegios en el bundle móvil.
 Usa una [development build](https://docs.expo.dev/develop/development-builds/introduction/) para el
 trabajo orientado a producción o con código nativo personalizado. Expo Go es un cliente opcional
 para aprender y evaluar cuando hay una versión compatible del SDK para la plataforma de destino.
+
+## Túnel de Expo CLI
+
+Para usar el túnel integrado de Expo SDK 58, inicia sesión localmente y arranca Expo:
+
+```bash
+npx expo login
+npm start -- --tunnel
+```
+
+El túnel de SDK 58 utiliza tu cuenta de Expo y no requiere `@expo/ngrok`. Si necesitas el proveedor
+anterior, usa `npm start -- --tunnel ngrok` con `@expo/ngrok` instalado. Es independiente de la URL
+pública anunciada por `form0 serve --app`.
+
+Consulta la [guía de túneles de SDK 58](https://expo.dev/changelog/sdk-58#a-faster-more-reliable-expo-cli-tunnel).
