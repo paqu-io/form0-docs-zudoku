@@ -61,3 +61,32 @@ e lo `scopeId` osservato (`data-preview-scope-id`); i percorsi posizionali richi
 metadati sono JSON; funzioni e file nativi sono rifiutati. I valori salvati non contengono metadati di
 ambito/diagnostica. Annulla/Chiudi notifica prima del ritiro; ricaricamento/eliminazione forzata ritira
 soltanto. Riaprire avvia una nuova sessione. I codici di uscita di run/validate restano invariati.
+
+## Preparazione condivisa e adattatore storage dell’host
+
+L’anteprima usa freschezza e validazione integrata condivise con ciclo di vita gestito attivo o
+inattivo. L’esclusione mantiene disabilitati hook e validazione personalizzata gestiti. Non vengono
+ripetuti eventi load/edit/change/save/unload delle righe chiuse. Accetta o annulla gli editor figli
+prima della preparazione radice.
+
+`createApp()` accetta `submissionOptions` del server e uno `storageAdapter` facoltativo. Mantenere i
+valori richiede adattatore e `allowRetain`; le richieste browser non possono concedere il permesso.
+L’adattatore implementa `load(identity)` asincrono, che restituisce `{ record, freshness }` o `null`, e
+`save(identity, { record, freshness })`. `record` mantiene la struttura esistente. La sessione ripristina
+`recordIdentity` o `recordOptions.mainRecordId`, incluso zero. L’esempio sostituisce atomicamente un
+contenitore locale; l’host di produzione definisce la gestione di revisioni e conflitti.
+
+Il successo riconosce la preparazione. Rifiuto, persistenza parziale o fallimento di un connettore
+lasciano il tentativo non salvato. I connettori ricevono lo stesso record senza nuovi obblighi di
+storage della freschezza. I client di preparazione riconoscono esplicitamente il salvataggio esterno.
+`getSaveChanges()` pagina le modifiche; le decisioni riguardano tutti i figli o nessuno.
+
+```js
+import { createApp } from "form0-cli/src/server/express-server.js"
+import { createFilePreviewStorage } from "form0-cli/src/server/preview-events/file-storage.js"
+
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { mode: "confirm", allowRetain: true },
+  storageAdapter: createFilePreviewStorage(previewStorageDirectory),
+})
+```

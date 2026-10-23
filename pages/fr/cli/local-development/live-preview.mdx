@@ -62,3 +62,32 @@ exigent cet ID. Les métadonnées sont JSON ; fonctions et fichiers natifs sont 
 métadonnée de périmètre/diagnostic n’entre dans les valeurs enregistrées. Annuler/Fermer notifie avant
 retrait ; rechargement/destruction forcée retire uniquement. Rouvrir crée une nouvelle session.
 Les codes de sortie de run/validate restent inchangés.
+
+## Préparation partagée et adaptateur de stockage du host
+
+L’aperçu utilise la fraîcheur et la validation intégrée partagées, avec ou sans cycle de vie géré.
+La désactivation laisse les hooks et la validation personnalisée gérés désactivés. Aucun événement
+load/edit/change/save/unload de ligne fermée n’est rejoué. Acceptez ou annulez les éditeurs enfants
+avant la préparation racine.
+
+`createApp()` accepte `submissionOptions` côté serveur et un `storageAdapter` facultatif. Conserver
+exige cet adaptateur et `allowRetain` ; le navigateur ne peut pas accorder cette permission.
+L’adaptateur implémente `load(identity)` asynchrone retournant `{ record, freshness }` ou `null`, et
+`save(identity, { record, freshness })`. `record` garde la structure existante. La session restaure
+`recordIdentity` ou `recordOptions.mainRecordId`, y compris zéro. L’exemple remplace atomiquement une
+enveloppe locale ; le host de production définit la gestion des révisions et conflits.
+
+La réussite reconnaît la préparation. Un rejet, une persistance partielle ou l’échec d’un connecteur
+laisse la tentative non enregistrée. Les connecteurs reçoivent le même enregistrement sans devoir
+stocker la fraîcheur. Les clients de préparation reconnaissent explicitement leur sauvegarde externe.
+`getSaveChanges()` pagine les changements ; les choix concernent tous les enfants ou aucun.
+
+```js
+import { createApp } from "form0-cli/src/server/express-server.js"
+import { createFilePreviewStorage } from "form0-cli/src/server/preview-events/file-storage.js"
+
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { mode: "confirm", allowRetain: true },
+  storageAdapter: createFilePreviewStorage(previewStorageDirectory),
+})
+```

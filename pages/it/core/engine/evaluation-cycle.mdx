@@ -209,3 +209,30 @@ Sono disponibili `signal`, un obiettivo di pianificazione di 8ms (`budgetMs`) e 
 asincrono. Le espressioni restano sincrone e possono superare l’intervallo. L’analisi dello schema è
 condivisa, senza motori permanenti per righe chiuse. Le sessioni di anteprima aggiungono
 `runRecord({ snapshot, instancePath })` per un’anteprima esplicita dell’albero.
+
+## Valutare un record aperto
+
+`evaluateScope()` valuta solo il record selezionato, usando gli antenati attuali forniti e le altre
+righe accettate. Un `instancePath` vuoto seleziona la radice. I percorsi figli includono tutti gli antenati;
+le righe identificate si risolvono per ID, incluso zero. I percorsi posizionali dipendono dall’ordine
+acquisito. I percorsi non validi falliscono esplicitamente. Il risultato contiene `state`, la
+`validationSummary` integrata, modifiche, diagnostica e problemi di esecuzione, senza un altro albero
+completo. Non modifica l’input, aggiorna righe chiuse, esegue eventi del ciclo di vita, salva dati o
+genera ID e timestamp.
+
+```js
+const editor = await evaluator.evaluateScope(snapshot, {
+  instancePath: [],
+  signal,
+  budgetMs: 8,
+  yieldToHost,
+})
+if (editor.status === "evaluated") {
+  renderEditor(editor.state, editor.validationSummary)
+}
+```
+
+Per esempio, un progetto con costi accettati `[10,20]` e una maggiorazione locale di `5` mostra `35`
+durante la modifica. Annullare conserva l’aggregato accettato del padre. Salvare accetta i valori e
+aggiorna l’aggregato del padre. L’invio completo usa ancora `prepareSubmission()`; `engine.eval()`
+mantiene il contratto scalare intrinseco.

@@ -200,3 +200,29 @@ Evaluation supports `signal`, an 8ms default scheduling target (`budgetMs`) and 
 `yieldToHost`. Individual expressions remain synchronous and can exceed a scheduling slice. Schema
 analysis is shared; no permanent engine per closed row is required. Preview sessions also expose
 `runRecord({ snapshot, instancePath })` for explicit tree-aware calculation preview.
+
+## Evaluate one open record
+
+`evaluateScope()` evaluates only the selected record, using supplied current ancestors and accepted
+other rows. An empty `instancePath` selects the root. Child paths contain every ancestry segment;
+identified rows resolve by ID, including zero. Positional paths refer to the captured ordering.
+Invalid paths fail explicitly. The result contains `state`, built-in `validationSummary`, changes,
+diagnostics and execution issues, with no additional complete record tree. It does not mutate the
+caller, refresh closed rows, run lifecycle events, persist data or generate IDs/timestamps.
+
+```js
+const editor = await evaluator.evaluateScope(snapshot, {
+  instancePath: [],
+  signal,
+  budgetMs: 8,
+  yieldToHost,
+})
+if (editor.status === "evaluated") {
+  renderEditor(editor.state, editor.validationSummary)
+}
+```
+
+For example, a project with accepted task costs `[10,20]` and a local surcharge of `5` displays
+`35` while editing. Cancelling leaves the parent's accepted aggregate unchanged. Saving the project
+accepts those values and updates its parent's aggregate. Whole-record submission still uses
+`prepareSubmission()`; intrinsic `engine.eval()` retains its existing scalar contract.

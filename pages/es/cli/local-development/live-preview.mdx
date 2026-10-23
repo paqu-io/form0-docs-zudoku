@@ -61,3 +61,32 @@ el `scopeId` observado (`data-preview-scope-id`); las rutas posicionales exigen 
 son JSON; se rechazan funciones y archivos nativos. Los valores guardados no contienen metadatos de
 ámbito/diagnóstico. Cancelar/Cerrar notifica antes de retirar; recargar o descartar forzosamente solo
 retira. Reabrir inicia otra sesión. No cambia los códigos de salida de run/validate.
+
+## Preparación compartida y adaptador de almacenamiento del host
+
+La vista previa usa frescura y validación integrada compartidas con el ciclo de vida gestionado
+activado o desactivado. La exclusión desactiva validación personalizada y hooks gestionados. No se
+repiten eventos load/edit/change/save/unload de filas cerradas. Acepta o cancela los editores
+secundarios antes de preparar la raíz.
+
+`createApp()` admite `submissionOptions` del servidor y un `storageAdapter` opcional. Retener exige
+el adaptador y `allowRetain`; las peticiones del navegador no conceden ese permiso. El adaptador
+implementa `load(identity)` asíncrono, que devuelve `{ record, freshness }` o `null`, y
+`save(identity, { record, freshness })`. `record` mantiene el formato estructurado existente. La sesión
+restaura `recordIdentity` o `recordOptions.mainRecordId`, incluido cero. El ejemplo sustituye
+atómicamente un sobre local; el host de producción define la política de revisiones y conflictos.
+
+El éxito del adaptador reconoce la preparación. Un rechazo, persistencia parcial o fallo de un
+conector deja el intento sin guardar. Los conectores reciben el mismo registro sin nueva obligación
+de almacenar frescura. Los clientes de preparación reconocen explícitamente el guardado externo.
+`getSaveChanges()` pagina los cambios; las decisiones afectan a todos o a ninguno.
+
+```js
+import { createApp } from "form0-cli/src/server/express-server.js"
+import { createFilePreviewStorage } from "form0-cli/src/server/preview-events/file-storage.js"
+
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { mode: "confirm", allowRetain: true },
+  storageAdapter: createFilePreviewStorage(previewStorageDirectory),
+})
+```

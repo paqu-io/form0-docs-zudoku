@@ -250,3 +250,17 @@ been set yet.
 A calculated field inside a `RepeatableSection` runs once for each row. It can reference main-form
 fields, fields in its own row, and fields in the rows that contain it. A reference to a field outside
 that scope reads `undefined` and produces a warning. See [Parent and child scopes](/core/engine/parent-child-scopes).
+
+## Builder preview for collection expressions
+
+reform Builder exposes Automatic / Ask before updating child calculations in root form settings.
+The latter writes `form.repeatable_recalculation: 'confirm'`; omission remains automatic. Collection
+completion and validation come from core's calculation-only metadata.
+
+Scalar expressions keep their quick preview. For a direct or dependent collection calculation,
+choose **Apply and preview form**. This applies to the unsaved Builder document and opens its existing
+full-form preview; it neither saves nor publishes the schema. Add task costs `10` and `20` to see
+`30`. In nested projects, a project's collection includes its own accepted tasks.
+
+Publish the core release containing `evaluateScope()` before dependent bindings, CLI and application
+upgrades. Core 0.7.0 contains whole-record preparation; this scoped editor capability is additive.

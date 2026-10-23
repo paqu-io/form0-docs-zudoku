@@ -211,3 +211,30 @@ Se admiten `signal`, un objetivo de planificación de 8ms (`budgetMs`) y `yieldT
 Las expresiones individuales siguen siendo síncronas y pueden superar ese intervalo. El análisis del
 esquema se comparte y no requiere motores permanentes por fila cerrada. Las sesiones de vista previa
 añaden `runRecord({ snapshot, instancePath })` para evaluar explícitamente un árbol.
+
+## Evaluar un registro abierto
+
+`evaluateScope()` evalúa solo el registro seleccionado, con los antecesores actuales suministrados y
+las demás filas aceptadas. Una ruta `instancePath` vacía selecciona la raíz. Las rutas secundarias incluyen todos
+los segmentos de ascendencia; los registros con ID se resuelven por ID, incluido cero. Las rutas
+posicionales dependen del orden capturado. Las rutas inválidas fallan explícitamente. El resultado
+incluye `state`, `validationSummary` integrada, cambios, diagnósticos y problemas de ejecución, sin
+otro árbol completo. No modifica la entrada, actualiza filas cerradas, ejecuta eventos del ciclo de
+vida, persiste datos ni genera IDs o marcas temporales.
+
+```js
+const editor = await evaluator.evaluateScope(snapshot, {
+  instancePath: [],
+  signal,
+  budgetMs: 8,
+  yieldToHost,
+})
+if (editor.status === "evaluated") {
+  renderEditor(editor.state, editor.validationSummary)
+}
+```
+
+Por ejemplo, un proyecto con costes aceptados `[10,20]` y un recargo local de `5` muestra `35` durante
+la edición. Cancelar conserva el agregado aceptado del padre. Guardar acepta esos valores y actualiza
+el agregado del padre. El envío completo sigue usando `prepareSubmission()`; `engine.eval()` conserva
+su contrato escalar intrínseco.

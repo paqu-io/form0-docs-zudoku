@@ -59,3 +59,33 @@ observed `scopeId` (also shown as `data-preview-scope-id`). Positional paths req
 is JSON; executable configuration and native file handles are rejected. Saved values contain no
 scope or diagnostic metadata. Cancel/Close notify before retirement; reload/forced disposal only
 retires. Reopen starts a fresh session. This does not change terminal run/validate exit behavior.
+
+## Shared preparation and a host storage adapter
+
+Preview uses shared freshness and built-in submission validation whether managed lifecycle is
+enabled or disabled. Opting out keeps managed custom validation/save hooks disabled. Closed-row
+load, edit, change, save and unload events are not replayed. Open row edits must be accepted or
+cancelled before root preparation.
+
+`createApp()` accepts server-owned `submissionOptions` and an optional `storageAdapter`. Retention
+requires the adapter and explicit `allowRetain`; browser requests cannot grant that permission.
+The adapter implements async `load(identity)` returning `{ record, freshness }` or `null`, and
+`save(identity, { record, freshness })`. `record` uses the existing structured record shape. The
+session uses `recordIdentity` or `recordOptions.mainRecordId` to restore a saved identity, including
+zero. The example atomically replaces a local envelope; production hosts own revision/conflict policy.
+
+Adapter success acknowledges the preparation. Rejection, partial persistence or failed connector
+submission leaves the attempt unsaved. Existing connectors continue receiving the same record
+payload and gain no freshness-storage responsibility. Preparation-only clients explicitly acknowledge
+a successful external save. Review details are paged through `getSaveChanges()` and decisions are
+all-or-none.
+
+```js
+import { createApp } from "form0-cli/src/server/express-server.js"
+import { createFilePreviewStorage } from "form0-cli/src/server/preview-events/file-storage.js"
+
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { mode: "confirm", allowRetain: true },
+  storageAdapter: createFilePreviewStorage(previewStorageDirectory),
+})
+```

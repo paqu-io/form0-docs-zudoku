@@ -215,3 +215,30 @@ L’évaluation accepte `signal`, une cible de planification de 8ms (`budgetMs`)
 asynchrone. Chaque expression reste synchrone et peut dépasser cette durée. L’analyse du schéma est
 partagée, sans moteur permanent par ligne fermée. Les sessions de prévisualisation ajoutent
 `runRecord({ snapshot, instancePath })` pour un aperçu explicite de l’arbre.
+
+## Évaluer un enregistrement ouvert
+
+`evaluateScope()` évalue uniquement l’enregistrement sélectionné, avec les ancêtres actuels fournis et
+les autres lignes acceptées. Un `instancePath` vide sélectionne la racine. Les chemins enfants incluent
+toute l’ascendance ; les lignes identifiées sont résolues par ID, y compris zéro. Les chemins
+positionnels dépendent de l’ordre capturé. Les chemins invalides échouent explicitement. Le résultat
+contient `state`, la `validationSummary` intégrée, les changements, diagnostics et problèmes d’exécution,
+sans nouvel arbre complet. Aucun changement de l’entrée, actualisation de ligne fermée, événement de
+cycle de vie, enregistrement, ID ou horodatage n’est effectué.
+
+```js
+const editor = await evaluator.evaluateScope(snapshot, {
+  instancePath: [],
+  signal,
+  budgetMs: 8,
+  yieldToHost,
+})
+if (editor.status === "evaluated") {
+  renderEditor(editor.state, editor.validationSummary)
+}
+```
+
+Par exemple, un projet avec des coûts acceptés `[10,20]` et une majoration locale de `5` affiche `35`
+pendant l’édition. Annuler conserve l’agrégat accepté du parent. Enregistrer accepte ces valeurs et
+actualise l’agrégat parent. L’envoi complet utilise toujours `prepareSubmission()` ; `engine.eval()`
+conserve son contrat scalaire intrinsèque.

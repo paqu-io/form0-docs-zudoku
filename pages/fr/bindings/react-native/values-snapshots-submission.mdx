@@ -62,3 +62,63 @@ Voir le contrôleur et le contrat des périmètres dans [FormRenderer](/fr/bindi
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
 
 La préparation ne persiste ni ne ferme. Les brouillons racine conservent les constats dans le résumé ; submit et l’acceptation des lignes sont bloqués par une validation invalide. Les diagnostics de calcul restent indépendants. Aucune évaluation ou agrégation des lignes fermées.
+
+## Révision des calculs enfants et persistance
+
+L’envoi ordinaire actualise automatiquement les calculs enfants fermés si le réglage est omis.
+`form.repeatable_recalculation: 'confirm'` exige une révision. Le host peut l’exiger avec
+`mode: 'confirm'`, mais `automatic` ne peut pas réduire cette exigence du formulaire. `allowRetain`
+est une permission explicite et n’active pas la confirmation à lui seul. Le choix concerne tous les
+enfants affectés ou aucun. La préparation racine est refusée tant qu’un éditeur enfant reste non accepté.
+
+La révision affiche titres/chemins, libellés, anciennes/nouvelles valeurs et compteurs par pages
+bornées. Personnalisez les textes avec `submissionOptions.messages`. Tous les résultats de validation
+restent disponibles avec leur chemin ; l’interface les pagine et mène à l’enregistrement ou au champ.
+Les résultats personnalisés de portée appartiennent à l’enregistrement, sans champ inventé.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  initialSnapshot={savedSnapshot}
+  initialFreshness={savedFreshness}
+  submissionOptions={{ mode: "confirm", allowRetain: true }}
+  onSubmit={async (record, meta) => {
+    await storage.save({ record, freshness: meta.freshness })
+  }}
+/>
+```
+
+La réussite du callback reconnaît la persistance. Enregistrez ensemble l’enregistrement sélectionné et
+son compagnon de fraîcheur avant de résoudre ; le callback doit lever une erreur ou rejeter en cas
+d’échec ou d’annulation. Choisir `20 → 24` conserve `24` comme travail non enregistré si la validation
+ou la persistance échoue ensuite. La fraîcheur reste hors des valeurs enregistrées. Restaurez-la avec
+`initialFreshness` ; une ancienne reconnaissance ne supprime pas un état en attente plus récent.
+Des totaux conservés `[110,220]` donnent `330`, jamais le `360` de la proposition actualisée.
+
+Les contrôleurs de préparation n’ouvrent pas de dialogue et ne persistent rien. Vérifiez `eligible`,
+gérez `requires_decision` avec `payload: null` et reconnaissez uniquement le `preparationId` enregistré.
+Les pages comportent 50 changements par défaut, 100 au maximum. Continuez avec `prepareSave()` et
+`decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Des entrées/configurations modifiées
+ou une nouvelle préparation invalident la révision. La validation précède le hook de sauvegarde,
+exécuté une fois ; ses écritures peuvent exiger une autre révision sans répéter le hook.
+
+```js
+const prepared = await controller.prepareSave({ intent: "submit", signal })
+if (prepared.status === "requires_decision") {
+  const page = await controller.getSaveChanges({
+    preparationId: prepared.preparationId,
+    offset: 0,
+    limit: 50,
+  })
+  showReview(prepared, page)
+} else if (prepared.eligible) {
+  await storage.save({ record: prepared.payload, freshness: prepared.meta.freshness })
+  controller.acknowledgeSave({ preparationId: prepared.preparationId })
+}
+```
+
+`prepareSave({ intent: 'draft' })` racine et l’action Native de brouillon conservent les calculs enfants
+acceptés sans dialogue. Les erreurs ordinaires restent signalées et permettent un brouillon racine ;
+les échecs d’exécution l’empêchent. Appliquez à `onSave` le même contrat enregistrement-compagnon.
+Une écriture locale durable est distincte de la synchronisation ultérieure avec le serveur.
+Ce contrat n’implémente pas le stockage de production du compagnon dans reform web/mobile/backend.
