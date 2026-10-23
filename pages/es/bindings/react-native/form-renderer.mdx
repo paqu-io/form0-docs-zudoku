@@ -21,16 +21,17 @@ secciones nativos y genera registros estructurados o snapshots restaurables.
 
 ## Propiedades esenciales
 
-| Propiedad          | Finalidad                                                                                                 |
-| ------------------ | --------------------------------------------------------------------------------------------------------- |
-| `schema`           | Un esquema form0 que contiene `form.elements`.                                                            |
-| `initialValues`    | Valores iniciales de los campos no repetibles.                                                            |
-| `initialSnapshot`  | Restaura a la vez los valores sin procesar, el estado de las secciones repetibles y las marcas de tiempo. |
-| `overrideValues`   | Aplica valores prioritarios sobre los valores iniciales.                                                  |
-| `onSubmit`         | Recibe el registro estructurado y sus metadatos, solo si el formulario supera la validación.              |
-| `onSave`           | Recibe un snapshot sin exigir que el formulario sea válido.                                               |
-| `onSnapshotChange` | Observa los snapshots iniciales y los de cambios del usuario.                                             |
-| `mode`             | Empieza en modo `edit` o `readonly`.                                                                      |
+| Propiedad             | Finalidad                                                                                                      |
+| --------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `schema`              | Un esquema form0 que contiene `form.elements`.                                                                 |
+| `initialValues`       | Valores iniciales de los campos no repetibles.                                                                 |
+| `initialSnapshot`     | Restaura a la vez los valores sin procesar, el estado de las secciones repetibles y las marcas de tiempo.      |
+| `overrideValues`      | Aplica valores prioritarios sobre los valores iniciales.                                                       |
+| `onSubmit`            | Recibe el registro estructurado y sus metadatos, solo si el formulario supera la validación.                   |
+| `onSave`              | Recibe un snapshot sin exigir que el formulario sea válido.                                                    |
+| `onSnapshotChange`    | Observa los snapshots iniciales y los de cambios del usuario.                                                  |
+| `mode`                | Empieza en modo `edit` o `readonly`.                                                                           |
+| `repeatableEntryMode` | Apertura de filas repetibles existentes: `readonly` (predeterminado) o `edit`; las nuevas se abren en edición. |
 
 ## Integración con la aplicación host
 

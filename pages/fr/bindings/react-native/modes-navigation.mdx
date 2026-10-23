@@ -15,6 +15,19 @@ Définissez `showHeader={false}` lorsque l’application fournit son propre en-t
 propres actions. `onRequestClose` active l’annulation et protège les formulaires modifiés par une
 confirmation d’abandon.
 
+## Mode d’ouverture des entrées répétables
+
+`repeatableEntryMode` accepte `readonly` (par défaut) ou `edit` pour les lignes existantes à tous
+les niveaux d’imbrication. Les lignes existantes s’ouvrent en consultation avec Edit si leur parent
+permet la modification ; les nouvelles s’ouvrent en modification. Un parent en lecture seule permet
+de consulter ses descendants, mais empêche leur modification, leur ajout et leur suppression.
+L’option de modification directe ne contourne pas les restrictions du parent.
+
+Cette option du renderer ne change ni le schéma ni l’enregistrement sauvegardé. La consultation
+évalue toujours les calculs, les conditions et la validation intrinsèque. Avec le cycle de vie géré,
+l’ouverture exécute `load-repeatable` ; le passage en modification exécute `edit-repeatable` ou
+`new-repeatable`. L’affichage des valeurs calculées acceptées sans recalcul reste à définir.
+
 ## Sections et validation
 
 `FormRenderer` gère :
@@ -35,23 +48,12 @@ le schéma au lieu de le dupliquer dans l’état du composant.
 
 ## Événements d’enregistrement et entrées répétables
 
-Pour le formulaire principal, `FormRenderer` déclenche automatiquement :
+Avec `engineOptions.events.lifecycle: true`, l’application doit préciser `recordKind: "new"` ou
+`"existing"` pour la racine. L’ouverture exécute `load-record` ; le passage en modification exécute
+`new-record` ou `edit-record`. Les lignes utilisent leur classification réelle et les événements
+`*-repeatable` correspondants. La consultation exécute uniquement load ; les calculs, les conditions
+et la validation intrinsèque restent actifs.
 
-- `load-record` lorsque le moteur du formulaire est prêt ;
-- `edit-record` lorsque le formulaire entre en mode d’édition, y compris s’il démarre dans ce mode ;
-- `change` après la modification d’un champ du formulaire principal et l’évaluation de ses calculs
-  et conditions.
-
-Depuis `form0-react-native` 0.3.0, ouvrir ou modifier une entrée répétable ne déclenche pas
-automatiquement ces événements pour cette ligne. Les calculs, les conditions et la validation de
-la ligne continuent de s’exécuter. Si vous migrez depuis la version 0.2.x, vérifiez les gestionnaires
-qui dépendaient d’événements automatiques dans les entrées répétables.
-
-Utilisez les valeurs par défaut et les calculs pour les valeurs des lignes, et
-[`onSnapshotChange`](/fr/bindings/react-native/values-snapshots-submission) pour enregistrer les
-brouillons lorsque les valeurs changent. Ne comptez pas sur ces événements automatiques pour
-initialiser les lignes ou gérer leur modification. Consultez
-[Événements et lignes](/fr/core/engine/parent-child-scopes#événements-et-lignes) pour savoir comment
-les renderers officiels gèrent les événements dans les lignes, et
-[Événements et opérations](/fr/core/engine/events-operations) pour écrire des gestionnaires
-d’événements dans le schéma.
+Le mode historique, utilisé par défaut, conserve le comportement précédent du cycle de vie. Voir
+le contrat géré dans [FormRenderer](/fr/bindings/react-native/form-renderer) et
+[Événements et opérations](/fr/core/engine/events-operations).

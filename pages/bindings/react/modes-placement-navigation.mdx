@@ -14,6 +14,18 @@ explain why editing is unavailable.
 `showPrimaryActionsInViewMode` controls whether disabled primary actions remain visible in view
 mode.
 
+## Repeatable entry opening mode
+
+`repeatableEntryMode` accepts `readonly` (default) or `edit` for existing rows at every nesting
+level. Existing rows open in view mode with Edit when their parent permits editing; new rows start
+in edit mode. A read-only parent allows browsing descendants while preventing editing, adding and
+removing them. The direct-edit option does not override parent restrictions.
+
+This renderer option leaves the form schema and saved record unchanged. View mode still evaluates
+calculations, conditions and intrinsic validation. With managed lifecycle enabled, opening runs
+`load-repeatable`; entering editing runs `edit-repeatable` or `new-repeatable`. A view that preserves
+accepted calculated values without recalculation remains a separate policy discussion.
+
 ## Placement
 
 `formPlacement` accepts:

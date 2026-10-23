@@ -21,16 +21,17 @@ sections natifs, et produit des enregistrements structurés ou des snapshots res
 
 ## Propriétés essentielles
 
-| Propriété          | Rôle                                                                                       |
-| ------------------ | ------------------------------------------------------------------------------------------ |
-| `schema`           | Un schéma form0 contenant `form.elements`.                                                 |
-| `initialValues`    | Valeurs initiales des champs non répétables.                                               |
-| `initialSnapshot`  | Restaure ensemble les valeurs brutes, l’état des sections répétables et les horodatages.   |
-| `overrideValues`   | Applique des valeurs prioritaires sur les valeurs initiales.                               |
-| `onSubmit`         | Reçoit l’enregistrement structuré et ses métadonnées, uniquement si la validation réussit. |
-| `onSave`           | Reçoit un snapshot sans exiger que le formulaire soit valide.                              |
-| `onSnapshotChange` | Observe les snapshots d’initialisation et de modification par l’utilisateur.               |
-| `mode`             | Démarre en mode `edit` ou `readonly`.                                                      |
+| Propriété             | Rôle                                                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `schema`              | Un schéma form0 contenant `form.elements`.                                                                                |
+| `initialValues`       | Valeurs initiales des champs non répétables.                                                                              |
+| `initialSnapshot`     | Restaure ensemble les valeurs brutes, l’état des sections répétables et les horodatages.                                  |
+| `overrideValues`      | Applique des valeurs prioritaires sur les valeurs initiales.                                                              |
+| `onSubmit`            | Reçoit l’enregistrement structuré et ses métadonnées, uniquement si la validation réussit.                                |
+| `onSave`              | Reçoit un snapshot sans exiger que le formulaire soit valide.                                                             |
+| `onSnapshotChange`    | Observe les snapshots d’initialisation et de modification par l’utilisateur.                                              |
+| `mode`                | Démarre en mode `edit` ou `readonly`.                                                                                     |
+| `repeatableEntryMode` | Ouverture des lignes répétables existantes : `readonly` (par défaut) ou `edit` ; les nouvelles s’ouvrent en modification. |
 
 ## Intégration avec l’application host
 

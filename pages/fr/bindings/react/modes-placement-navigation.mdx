@@ -15,6 +15,19 @@ n’est pas disponible.
 `showPrimaryActionsInViewMode` détermine si les actions principales désactivées restent visibles en
 mode consultation.
 
+## Mode d’ouverture des entrées répétables
+
+`repeatableEntryMode` accepte `readonly` (par défaut) ou `edit` pour les lignes existantes à tous
+les niveaux d’imbrication. Les lignes existantes s’ouvrent en consultation avec Edit si leur parent
+permet la modification ; les nouvelles s’ouvrent en modification. Un parent en lecture seule permet
+de consulter ses descendants, mais empêche leur modification, leur ajout et leur suppression.
+L’option de modification directe ne contourne pas les restrictions du parent.
+
+Cette option du renderer ne change ni le schéma ni l’enregistrement sauvegardé. La consultation
+évalue toujours les calculs, les conditions et la validation intrinsèque. Avec le cycle de vie géré,
+l’ouverture exécute `load-repeatable` ; le passage en modification exécute `edit-repeatable` ou
+`new-repeatable`. L’affichage des valeurs calculées acceptées sans recalcul reste à définir.
+
 ## Emplacement
 
 `formPlacement` accepte :

@@ -22,15 +22,16 @@ e sezioni e produce record strutturati all'invio.
 
 ## Proprietà essenziali
 
-| Proprietà          | Scopo                                                                         |
-| ------------------ | ----------------------------------------------------------------------------- |
-| `schema`           | Uno schema form0 che contiene `form.elements`.                                |
-| `initialValues`    | Valori iniziali dei campi non ripetibili.                                     |
-| `initialSnapshot`  | Ripristina insieme valori grezzi, stato delle sezioni ripetibili e timestamp. |
-| `overrideValues`   | Applica valori prioritari sopra quelli iniziali.                              |
-| `onSubmit`         | Riceve il record strutturato e i metadati dell'invio.                         |
-| `onSnapshotChange` | Osserva gli snapshot iniziali e quelli delle modifiche dell'utente.           |
-| `mode`             | Avvia in modalità `edit` o `readonly`.                                        |
+| Proprietà             | Scopo                                                                                                         |
+| --------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `schema`              | Uno schema form0 che contiene `form.elements`.                                                                |
+| `initialValues`       | Valori iniziali dei campi non ripetibili.                                                                     |
+| `initialSnapshot`     | Ripristina insieme valori grezzi, stato delle sezioni ripetibili e timestamp.                                 |
+| `overrideValues`      | Applica valori prioritari sopra quelli iniziali.                                                              |
+| `onSubmit`            | Riceve il record strutturato e i metadati dell'invio.                                                         |
+| `onSnapshotChange`    | Osserva gli snapshot iniziali e quelli delle modifiche dell'utente.                                           |
+| `mode`                | Avvia in modalità `edit` o `readonly`.                                                                        |
+| `repeatableEntryMode` | Apertura delle righe ripetibili esistenti: `readonly` (predefinito) o `edit`; le nuove si aprono in modifica. |
 
 ## Interfaccia e stato gestiti dall'applicazione
 

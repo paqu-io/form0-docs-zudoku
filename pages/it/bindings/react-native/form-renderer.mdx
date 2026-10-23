@@ -21,16 +21,17 @@ sezioni nativi e produce record strutturati o snapshot ripristinabili.
 
 ## Proprietà essenziali
 
-| Proprietà          | Scopo                                                                              |
-| ------------------ | ---------------------------------------------------------------------------------- |
-| `schema`           | Uno schema form0 che contiene `form.elements`.                                     |
-| `initialValues`    | Valori iniziali dei campi non ripetibili.                                          |
-| `initialSnapshot`  | Ripristina insieme valori grezzi, stato delle sezioni ripetibili e timestamp.      |
-| `overrideValues`   | Applica valori prioritari sopra quelli iniziali.                                   |
-| `onSubmit`         | Riceve il record strutturato e i relativi metadati, solo se la validazione riesce. |
-| `onSave`           | Riceve uno snapshot senza richiedere che il modulo sia valido.                     |
-| `onSnapshotChange` | Osserva gli snapshot iniziali e quelli delle modifiche dell'utente.                |
-| `mode`             | Avvia in modalità `edit` o `readonly`.                                             |
+| Proprietà             | Scopo                                                                                                         |
+| --------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `schema`              | Uno schema form0 che contiene `form.elements`.                                                                |
+| `initialValues`       | Valori iniziali dei campi non ripetibili.                                                                     |
+| `initialSnapshot`     | Ripristina insieme valori grezzi, stato delle sezioni ripetibili e timestamp.                                 |
+| `overrideValues`      | Applica valori prioritari sopra quelli iniziali.                                                              |
+| `onSubmit`            | Riceve il record strutturato e i relativi metadati, solo se la validazione riesce.                            |
+| `onSave`              | Riceve uno snapshot senza richiedere che il modulo sia valido.                                                |
+| `onSnapshotChange`    | Osserva gli snapshot iniziali e quelli delle modifiche dell'utente.                                           |
+| `mode`                | Avvia in modalità `edit` o `readonly`.                                                                        |
+| `repeatableEntryMode` | Apertura delle righe ripetibili esistenti: `readonly` (predefinito) o `edit`; le nuove si aprono in modifica. |
 
 ## Integrazione con l'applicazione host
 

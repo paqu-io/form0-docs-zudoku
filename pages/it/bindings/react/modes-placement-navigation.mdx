@@ -14,6 +14,19 @@ quando l'applicazione host deve spiegare perché la modifica non è disponibile.
 `showPrimaryActionsInViewMode` controlla se le azioni principali disabilitate restano visibili in
 modalità di visualizzazione.
 
+## Modalità di apertura delle voci ripetibili
+
+`repeatableEntryMode` accetta `readonly` (predefinito) o `edit` per le righe esistenti a ogni livello
+di annidamento. Le righe esistenti si aprono in visualizzazione con Edit se il record padre consente
+la modifica; le nuove si aprono in modifica. Un padre in sola lettura consente di consultare i
+discendenti, ma ne impedisce la modifica, l’aggiunta e la rimozione. L’opzione di modifica diretta
+non supera le restrizioni del padre.
+
+Questa opzione del renderer non cambia lo schema né il record salvato. La visualizzazione continua
+a valutare calcoli, condizioni e validazione intrinseca. Con il ciclo di vita gestito, l’apertura
+esegue `load-repeatable`; l’ingresso in modifica esegue `edit-repeatable` o `new-repeatable`.
+Mostrare i valori calcolati accettati senza ricalcolo resta una politica da definire.
+
 ## Posizionamento
 
 `formPlacement` accetta:
