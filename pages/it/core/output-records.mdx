@@ -34,5 +34,35 @@ const record = createStructuredRecord(state, fields, {
 
 ## Sezioni ripetibili
 
+### Serializzazione cooperativa
+
+Per un record valutato di grandi dimensioni, `createStructuredRecordAsync` usa la stessa
+trasformazione e restituisce il controllo all'ambiente tra le righe. Mantieni stabili stato, campi
+e opzioni fino al completamento; i controller di invio dei binding possiedono già lo snapshot scelto.
+
+```js
+const abortController = new AbortController()
+const record = await createStructuredRecordAsync(
+  snapshot,
+  fields,
+  {
+    originalElements: schema.form.elements,
+    mainRecordId: 0,
+  },
+  {
+    signal: abortController.signal,
+    budgetMs: 8,
+    yieldToHost,
+  },
+)
+```
+
+Il quarto argomento controlla la pianificazione e rimane esterno al record. `yieldToHost` è una
+funzione facoltativa che restituisce una promessa per un'attività dell'ambiente; in sua assenza,
+core usa un timer. L'annullamento rifiuta la promessa con `AbortError` senza restituire record
+parziali. Il metodo non esegue calcoli, validazione o persistenza. Conserva struttura, ID zero,
+ordine delle righe, formato dei media, titoli e regole dei timestamp del serializzatore sincrono.
+I formattatori dei singoli campi rimangono sincroni.
+
 Le sezioni ripetibili creano record annidati. Usa `originalElements` per mantenere la corretta
 struttura di annidamento quando crei i record.

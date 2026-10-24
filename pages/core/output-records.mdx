@@ -34,5 +34,34 @@ const record = createStructuredRecord(state, fields, {
 
 ## Repeatable sections
 
+### Cooperative serialization
+
+For a large evaluated record, `createStructuredRecordAsync` uses the same transformation and
+yields to the host between rows. Keep the supplied state, fields and options stable until it
+finishes; binding submission controllers already own the selected snapshot.
+
+```js
+const abortController = new AbortController()
+const record = await createStructuredRecordAsync(
+  snapshot,
+  fields,
+  {
+    originalElements: schema.form.elements,
+    mainRecordId: 0,
+  },
+  {
+    signal: abortController.signal,
+    budgetMs: 8,
+    yieldToHost,
+  },
+)
+```
+
+The fourth argument controls scheduling and stays outside the record. `yieldToHost` is an optional
+function returning a promise for a host task; without it, core uses a timer. Cancellation rejects
+with `AbortError` and returns no partial record. This method performs no calculation, validation or
+persistence. It preserves the synchronous serializer's record shape, ID zero, row order, media
+formatting, titles and timestamp rules. Individual field formatters remain synchronous.
+
 Repeatable sections create nested records. Use `originalElements` to preserve the correct nesting
 structure when building records.
