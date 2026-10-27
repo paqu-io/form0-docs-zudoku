@@ -28,11 +28,16 @@ leur comportement ; les diagnostics n’ajoutent pas d’alertes ni de blocages 
 
 ## Événements portables de l’aperçu (CLI 0.7.0+)
 
-CLI 0.7.0 aligne l’aperçu intégré sur le contrat d’événements de core. Dans les
-**Paramètres du formulaire**, activez les **Événements portables de l’aperçu** et choisissez
-explicitement **Nouvel enregistrement** ou **Enregistrement existant**. Le cycle de vie est désactivé
-par défaut. L’ouverture en lecture seule exécute uniquement load ; un changement de configuration
-ouvre une nouvelle session avec les valeurs acceptées. `serve --app` conserve les options de l’application.
+L’aperçu intégré actuel utilise l’évaluation partagée de core et nécessite core 0.8.1 ou ultérieur
+dans la branche compatible 0.8.x. Les nouveaux aperçus activent le cycle de vie et sélectionnent
+**Nouvel enregistrement**. Dans **Paramètres du formulaire → Aperçu de l’enregistrement**, choisissez
+**Enregistrement existant** ou **Ouvrir en lecture seule**. La classification choisit les hooks ;
+elle ne charge aucun enregistrement de la base de données. Les désactivations explicitement
+sauvegardées restent respectées. **Paramètres avancés des événements** contient le commutateur de
+compatibilité et les abonnements facultatifs de focus, blur et clic. L’ouverture en lecture seule
+exécute uniquement load ; changer la configuration démarre une nouvelle session avec les valeurs
+acceptées. `serve --app` conserve les options de l’application. React et Native proposent ces options
+par API, sans cette interface ; leur activation explicite par défaut reste inchangée.
 
 L’initialisation évalue les valeurs effectives, exécute `load-record`, puis `new-record` ou
 `edit-record`. Les changements utilisateur attendent les mises à jour en file ; valeurs par défaut,
@@ -51,8 +56,7 @@ utilisent les événements repeatable et des valeurs provisoires : enregistrer v
 acceptation ; annuler abandonne les modifications imbriquées provisoires. Lecture des champs
 principaux/ancêtres autorisés, écritures limitées à la ligne. Réduire est uniquement visuel. Les
 ajouts/modifications/suppressions acceptés notifient le repeatable propriétaire ; les erreurs de
-notification ultérieures restent distinctes de la préparation acceptée. L’évaluation récursive des
-lignes fermées reste celle de l’aperçu ; fraîcheur/agrégation des bindings restent séparées.
+notification ultérieures restent distinctes de la préparation acceptée. Les lignes fermées utilisent la préparation partagée décrite ci-dessous sans rejouer leur cycle d’édition.
 
 Le contrôleur actif est `window.form0PreviewEvents`. `dispatch()` et
 `prepareSave({ intent: 'submit' | 'draft' })` renvoient des promesses avec résultats/problèmes et
@@ -62,6 +66,13 @@ exigent cet ID. Les métadonnées sont JSON ; fonctions et fichiers natifs sont 
 métadonnée de périmètre/diagnostic n’entre dans les valeurs enregistrées. Annuler/Fermer notifie avant
 retrait ; rechargement/destruction forcée retire uniquement. Rouvrir crée une nouvelle session.
 Les codes de sortie de run/validate restent inchangés.
+
+**Actions avancées de l’aperçu** regroupe **Préparer le brouillon**, **Annuler l’enregistrement** et
+**Fermer l’enregistrement** dans une section repliée. Préparer un brouillon permet de l’inspecter et
+ne le sauvegarde jamais via un connecteur. Les contrôles désactivés des lignes imbriquées indiquent
+quel éditeur parent ouvrir d’abord. L’envoi affiche l’objet final dépliable et le résultat de chaque
+connecteur dans la console. Sans connecteur, il indique que l’enregistrement est préparé uniquement
+pour l’aperçu ; un échec de connecteur ou de stockage ne constitue pas une sauvegarde réussie.
 
 ## Préparation partagée et adaptateur de stockage du host
 

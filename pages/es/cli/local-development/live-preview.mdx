@@ -29,11 +29,16 @@ su comportamiento; los diagnósticos no añaden alertas ni bloqueos de envío.
 
 ## Eventos portátiles de vista previa (CLI 0.7.0+)
 
-CLI 0.7.0 alinea la vista previa integrada con el contrato de eventos de core.
-En **Ajustes del formulario**, activa **Eventos portátiles de vista previa** y selecciona
-explícitamente **Registro nuevo** o **Registro existente**. El ciclo de vida está desactivado por
-defecto. Abrir en solo lectura ejecuta únicamente load; cambiar la configuración inicia una nueva
-sesión con los valores aceptados. `serve --app` conserva las opciones de la aplicación.
+La vista previa integrada actual usa la evaluación compartida de core y requiere core 0.8.1 o posterior
+dentro de la línea compatible 0.8.x. Las vistas previas nuevas activan los eventos del ciclo de vida y
+seleccionan **Nuevo registro**. En **Ajustes del formulario → Vista previa del registro**, elige
+**Registro existente** o **Abrir en solo lectura**. La clasificación selecciona los eventos; no carga
+un registro de la base de datos. Se respetan las desactivaciones guardadas explícitamente.
+**Opciones avanzadas de eventos** contiene el interruptor de compatibilidad y las suscripciones
+opcionales de foco, desenfoque y clic. En solo lectura se ejecuta únicamente load; cambiar la
+configuración inicia una sesión nueva con los valores aceptados. `serve --app` conserva las opciones
+de la aplicación. React y Native ofrecen estas opciones por API, sin esta interfaz; sus valores
+predeterminados de activación explícita no cambian.
 
 La inicialización evalúa los valores efectivos, ejecuta `load-record` y después `new-record` o
 `edit-record`. Los cambios del usuario esperan las actualizaciones pendientes; los valores por
@@ -51,8 +56,7 @@ repeatable y valores provisionales: guardar valida/prepara antes de aceptar; can
 las ediciones anidadas provisionales. Se permite leer campos principales y antecesores autorizados;
 las escrituras son locales a la fila. Contraer solo cambia la presentación. Añadir/editar/eliminar
 aceptado notifica al repeatable propietario; los errores posteriores de notificación se presentan
-separados de la preparación aceptada. La vista previa conserva su evaluación recursiva de filas
-cerradas; la política de actualización y agregación de los bindings sigue separada.
+separados de la preparación aceptada. Las filas cerradas usan la preparación de envío compartida descrita abajo sin repetir su ciclo de edición.
 
 El controlador activo es `window.form0PreviewEvents`. `dispatch()` y
 `prepareSave({ intent: 'submit' | 'draft' })` devuelven promesas con hallazgos/errores y esperan la
@@ -61,6 +65,13 @@ el `scopeId` observado (`data-preview-scope-id`); las rutas posicionales exigen 
 son JSON; se rechazan funciones y archivos nativos. Los valores guardados no contienen metadatos de
 ámbito/diagnóstico. Cancelar/Cerrar notifica antes de retirar; recargar o descartar forzosamente solo
 retira. Reabrir inicia otra sesión. No cambia los códigos de salida de run/validate.
+
+**Acciones avanzadas de vista previa** agrupa **Preparar borrador**, **Cancelar registro** y
+**Cerrar registro** en una sección plegada. Preparar un borrador permite inspeccionarlo y nunca lo
+guarda en un conector. Los controles de filas anidadas desactivados indican qué editor padre debe
+abrirse primero. El envío muestra el registro final expandible y el resultado de cada conector en
+la consola. Sin conectores, indica que el registro se preparó solo para vista previa; un fallo de
+conector o almacenamiento no se considera un guardado correcto.
 
 ## Preparación compartida y adaptador de almacenamiento del host
 

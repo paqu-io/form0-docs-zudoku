@@ -28,11 +28,15 @@ diagnostics do not add form alerts or submission blockers.
 
 ## Portable preview events (CLI 0.7.0+)
 
-CLI 0.7.0 aligns the built-in browser preview with core's portable event contract.
-In **Form Settings**, enable **Portable preview events** and explicitly select **New record** or
-**Existing record**. Lifecycle integration is off by default. Read-only opening runs load only;
-changing the configuration starts a fresh session with accepted values. An app launched through
-`serve --app` retains its own event options.
+The current built-in preview uses core's shared record evaluation and requires core 0.8.1 or later
+within the supported 0.8.x range. Fresh previews enable lifecycle events and select **New record**.
+In **Form Settings → Record preview**, choose **Existing record** or **Open read-only** as needed.
+Classification selects lifecycle hooks; it does not load a database record. Explicitly saved legacy
+opt-outs remain respected. **Advanced event settings** contains the lifecycle compatibility switch
+and optional focus/blur/click subscriptions. Read-only opening runs load only; changing configuration
+starts a fresh session with accepted values. `serve --app` retains app-owned event options.
+React and Native expose these options through their APIs, with no preview-settings UI; their current
+opt-in defaults remain unchanged.
 
 Initialization evaluates effective values, runs `load-record`, then the applicable `new-record` or
 `edit-record`. User changes run after queued updates settle; defaults, calculations and `SETVALUE()`
@@ -49,8 +53,7 @@ Inline rows offer **Edit**, **Save row** and **Cancel row**. They use repeatable
 staged values: Save validates/prepares before accepting; Cancel discards staged nested edits.
 Handlers read permitted ancestor/main fields and write only their current row. Collapsing changes
 presentation only. Accepted add/edit/remove notifies the owning repeatable; later notification
-issues are reported separately from the already accepted preparation. Preview keeps its existing
-recursive closed-row evaluation; binding freshness/aggregation policy remains separate.
+issues are reported separately from the already accepted preparation. Closed rows use the shared submission preparation described below without replaying their editing lifecycle.
 
 The active developer controller is `window.form0PreviewEvents`. Its promise-based `dispatch()` and
 `prepareSave({ intent: 'submit' | 'draft' })` return findings/issues and finish accepted presentation;
@@ -59,6 +62,12 @@ observed `scopeId` (also shown as `data-preview-scope-id`). Positional paths req
 is JSON; executable configuration and native file handles are rejected. Saved values contain no
 scope or diagnostic metadata. Cancel/Close notify before retirement; reload/forced disposal only
 retires. Reopen starts a fresh session. This does not change terminal run/validate exit behavior.
+
+**Advanced preview actions** groups **Prepare draft**, **Cancel record** and **Close record** in a
+collapsed section. Preparing a draft is inspection only and never saves it to a connector. Disabled
+nested row controls explain which parent editor must be opened first. Submit logs the expandable
+final record and individual connector outcomes. With no connector configured, it explicitly reports
+that the record is prepared for preview only; a connector or persistence failure is not a saved result.
 
 ## Shared preparation and a host storage adapter
 

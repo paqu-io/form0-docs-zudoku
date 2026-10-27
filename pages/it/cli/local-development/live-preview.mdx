@@ -29,11 +29,16 @@ la diagnostica non aggiunge avvisi del modulo né blocchi all’invio.
 
 ## Eventi portabili dell’anteprima (CLI 0.7.0+)
 
-CLI 0.7.0 allinea l’anteprima integrata al contratto degli eventi di core. Nelle
-**Impostazioni del modulo**, abilita gli **Eventi portabili dell’anteprima** e scegli esplicitamente
-**Nuovo record** o **Record esistente**. Il ciclo di vita è disabilitato per impostazione predefinita.
+L’anteprima integrata attuale usa la valutazione condivisa di core e richiede core 0.8.1 o successivo
+nella serie compatibile 0.8.x. Le nuove anteprime abilitano gli eventi del ciclo di vita e selezionano
+**Nuovo record**. In **Impostazioni del modulo → Anteprima del record**, scegli **Record esistente**
+o **Apri in sola lettura**. La classificazione sceglie gli hook; non carica un record dal database.
+Le disattivazioni salvate esplicitamente restano rispettate. **Impostazioni avanzate degli eventi**
+contiene l’interruttore di compatibilità e le sottoscrizioni facoltative per focus, blur e clic.
 L’apertura in sola lettura esegue solo load; cambiare configurazione avvia una nuova sessione con i
-valori accettati. `serve --app` conserva le opzioni dell’applicazione.
+valori accettati. `serve --app` conserva le opzioni dell’applicazione. React e Native espongono queste
+opzioni tramite API, senza questa interfaccia; i loro valori predefiniti di attivazione esplicita
+restano invariati.
 
 L’inizializzazione valuta i valori effettivi, esegue `load-record`, poi `new-record` o `edit-record`.
 Le modifiche dell’utente attendono gli aggiornamenti in coda; valori predefiniti, calcoli e
@@ -51,8 +56,7 @@ valori provvisori: salvare valida/prepara prima di accettare; annullare scarta l
 provvisorie. Sono permesse letture principali/degli antenati autorizzati e scritture solo nella riga.
 Comprimere cambia solo la visualizzazione. Aggiunte/modifiche/rimozioni accettate notificano il
 repeatable proprietario; gli errori successivi di notifica restano separati dalla preparazione
-accettata. L’anteprima conserva la valutazione ricorsiva delle righe chiuse; le politiche di
-aggiornamento e aggregazione dei bindings restano separate.
+accettata. Le righe chiuse usano la preparazione condivisa descritta sotto senza ripetere il ciclo di modifica.
 
 Il controller attivo è `window.form0PreviewEvents`. `dispatch()` e
 `prepareSave({ intent: 'submit' | 'draft' })` restituiscono promesse con risultati/problemi e attendono
@@ -61,6 +65,13 @@ e lo `scopeId` osservato (`data-preview-scope-id`); i percorsi posizionali richi
 metadati sono JSON; funzioni e file nativi sono rifiutati. I valori salvati non contengono metadati di
 ambito/diagnostica. Annulla/Chiudi notifica prima del ritiro; ricaricamento/eliminazione forzata ritira
 soltanto. Riaprire avvia una nuova sessione. I codici di uscita di run/validate restano invariati.
+
+**Azioni avanzate di anteprima** raggruppa **Prepara bozza**, **Annulla record** e **Chiudi record**
+in una sezione chiusa inizialmente. Preparare una bozza permette solo di esaminarla e non la salva
+tramite un connettore. I controlli disabilitati delle righe annidate indicano quale editor padre
+aprire prima. L’invio mostra in console l’oggetto finale espandibile e l’esito di ogni connettore.
+Senza connettori, indica che il record è preparato solo per l’anteprima; un errore del connettore o
+del salvataggio non viene considerato un salvataggio riuscito.
 
 ## Preparazione condivisa e adattatore storage dell’host
 
