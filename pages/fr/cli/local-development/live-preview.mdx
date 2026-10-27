@@ -35,7 +35,7 @@ L’aperçu utilise des API introduites dans core 0.8.1 ; CLI installe core comp
 L’initialisation évalue les valeurs effectives, exécute `load-record`, puis `new-record` ou
 `edit-record`. Les changements utilisateur attendent les mises à jour en file ; valeurs par défaut,
 calculs et `SETVALUE()` ne produisent pas de changements supplémentaires. Le statut activé utilise
-`change-status` ; focus/blur et clic des contrôles texte et numériques sont activés par défaut.
+`change-status` ; focus et blur des contrôles texte et numériques sont activés par défaut ; les choix utilisent change. Le click automatique est réservé aux champs d’activation pris en charge. HyperlinkField n’existe pas actuellement et aucun contrôle intégré n’émet click automatiquement. Le dispatch explicite du contrôleur du host reste disponible.
 
 L’envoi suit validation intégrée/personnalisée → `save-record` une fois → nouvelle validation
 uniquement si les valeurs changent → sérialisation finale → envoi au connecteur existant.

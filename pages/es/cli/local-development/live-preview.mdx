@@ -36,7 +36,7 @@ La vista previa usa API introducidas en core 0.8.1; CLI instala core compatible 
 La inicialización evalúa los valores efectivos, ejecuta `load-record` y después `new-record` o
 `edit-record`. Los cambios del usuario esperan las actualizaciones pendientes; los valores por
 defecto, los cálculos y `SETVALUE()` no generan cambios adicionales. El estado habilitado utiliza
-`change-status`; focus/blur y clic en controles de texto y números están activos por defecto.
+`change-status`; focus y blur en controles de texto y números están activos por defecto; las opciones usan change. El click automático se reserva para campos de activación compatibles. Actualmente no existe HyperlinkField y ningún control integrado emite click automáticamente. El dispatch explícito del controlador del host sigue disponible.
 
 Enviar sigue validación integrada/personalizada → `save-record` una vez → nueva validación solo si
 cambian los valores → serialización final → envío al conector existente. `INVALID(message)` síncrono

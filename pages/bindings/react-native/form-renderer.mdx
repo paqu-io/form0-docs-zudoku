@@ -100,7 +100,7 @@ Current bindings use core 0.8.1 or later. Lifecycle and supported focus/blur/cli
 />
 ```
 
-`recordKind` must explicitly be `new` or `existing`; omission is a configuration error unless `lifecycle: false` is explicit. Values never determine classification. Configuration belongs to an editor session; remount to change classification, lifecycle, helpers or security. Callbacks remain live. Readonly opening runs load; editing runs load then new/edit. Open rows use repeatable events and their actual classification. Use `lifecycle: false` to preserve legacy lifecycle and `fieldInteractions: []` to disable automatic interactions. Built-in text/numeric inputs emit focus, blur and click (input press in Native); custom controls may dispatch supported events explicitly. This does not add a hyperlink field.
+`recordKind` must explicitly be `new` or `existing`; omission is a configuration error unless `lifecycle: false` is explicit. Values never determine classification. Configuration belongs to an editor session; remount to change classification, lifecycle, helpers or security. Callbacks remain live. Readonly opening runs load; editing runs load then new/edit. Open rows use repeatable events and their actual classification. Use `lifecycle: false` to preserve legacy lifecycle and `fieldInteractions: []` to disable automatic interactions. Built-in text/numeric inputs emit focus and blur; choices use change. Automatic click is reserved for supported activation fields. There is currently no HyperlinkField and no built-in control automatically emits click. Explicit host controller dispatch remains available.
 
 The generation-bound controller is delivered after initialization and retired with `null`.
 `dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` returns a promise with `status`,
@@ -125,9 +125,8 @@ Calculation diagnostics alone never block saving. Closed-row freshness and aggre
 
 User edits emit contextual change after updates settle. Accepted row membership changes include
 `action` (add/edit/remove) and `affectedInstancePath`; enabled status fields emit user-only change-status.
-Defaults, SETVALUE and calculations do not emit additional change. Extra interactions default to none;
-built-in text/numeric controls support focus/blur/click (Native click means input press). Other controls
-may dispatch explicitly. Async onOperations work and selective applyDefault work are awaited; the
+Defaults, SETVALUE and calculations do not emit additional change. Interaction subscriptions default on; text/numeric controls emit focus/blur and choices use change.
+No built-in control automatically emits click. Explicit host controller dispatch remains available. Async onOperations work and selective applyDefault work are awaited; the
 fallback expires with its dispatch. Alerts remain renderer-owned and occur once.
 
 Confirmed cancel runs cancel then unload; supported successful closes run unload before disposal.

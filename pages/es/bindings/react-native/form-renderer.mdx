@@ -102,7 +102,7 @@ Los bindings actuales usan core 0.8.1 o posterior. El ciclo de vida y las intera
 />
 ```
 
-`recordKind` debe ser explícitamente `new` o `existing`; omitirlo es un error de configuración salvo con `lifecycle: false`. Los valores no determinan la clasificación. La configuración pertenece a la sesión; vuelve a montar para cambiar clasificación, ciclo, helpers o seguridad. Los callbacks siguen actualizándose. La apertura de solo lectura ejecuta load; al editar, load y luego new/edit. Las filas abiertas usan sus eventos repeatable y clasificación real. Usa `lifecycle: false` para conservar el ciclo heredado y `fieldInteractions: []` para desactivar interacciones. Los controles de texto y números emiten focus, blur y click (pulsación en Native); los controles personalizados pueden despachar eventos compatibles. Esto no añade un campo de hipervínculo.
+`recordKind` debe ser explícitamente `new` o `existing`; omitirlo es un error de configuración salvo con `lifecycle: false`. Los valores no determinan la clasificación. La configuración pertenece a la sesión; vuelve a montar para cambiar clasificación, ciclo, helpers o seguridad. Los callbacks siguen actualizándose. La apertura de solo lectura ejecuta load; al editar, load y luego new/edit. Las filas abiertas usan sus eventos repeatable y clasificación real. Usa `lifecycle: false` para conservar el ciclo heredado y `fieldInteractions: []` para desactivar interacciones. Los controles de texto y números emiten focus y blur; las opciones usan change. El click automático se reserva para campos de activación compatibles. Actualmente no existe HyperlinkField y ningún control integrado emite click automáticamente. El dispatch explícito del controlador del host sigue disponible.
 
 El controlador de la generación se entrega tras inicializar y se retira con `null`.
 `dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` devuelve una promesa con `status`,
@@ -128,9 +128,9 @@ y la agregación siguen siendo trabajos separados.
 
 Las ediciones del usuario notifican change tras asentarse. Los cambios de filas aceptados incluyen
 `action` (add/edit/remove) y `affectedInstancePath`; el estado habilitado notifica change-status solo
-por cambios del usuario. Defaults, SETVALUE y cálculos no generan change adicionales. Las interacciones
-extra están desactivadas por defecto; texto/número admiten focus/blur/click (en Native, pulsar el campo).
-Otros controles pueden hacer dispatch explícito. Se esperan onOperations asíncrono y applyDefault
+por cambios del usuario. Defaults, SETVALUE y cálculos no generan change adicionales. Las suscripciones de interacción están activadas por defecto; texto/número emiten focus/blur y las
+opciones usan change. Ningún control integrado emite click automáticamente. El dispatch explícito
+del controlador del host sigue disponible. Se esperan onOperations asíncrono y applyDefault
 selectivo; el fallback caduca al terminar el dispatch. El renderer gestiona ALERT una sola vez.
 
 Cancelar confirmado ejecuta cancel y luego unload; un cierre correcto soportado ejecuta unload antes

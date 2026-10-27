@@ -34,7 +34,7 @@ The current preview uses APIs introduced in core 0.8.1. CLI installs a compatibl
 
 Initialization evaluates effective values, runs `load-record`, then the applicable `new-record` or
 `edit-record`. User changes run after queued updates settle; defaults, calculations and `SETVALUE()`
-do not generate extra changes. Enabled status uses `change-status`; supported text/numeric focus, blur and input click default on.
+do not generate extra changes. Enabled status uses `change-status`; text/numeric focus and blur default on; choices use change. Automatic click is reserved for supported activation fields. There is currently no HyperlinkField and no built-in control automatically emits click. Explicit host controller dispatch remains available.
 
 Submit follows built-in/custom validation → `save-record` once → validation again only if values
 changed → final serialization → existing connector submission. Synchronous `INVALID(message)` adds

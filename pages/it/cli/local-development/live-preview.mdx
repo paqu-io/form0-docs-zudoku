@@ -35,7 +35,7 @@ L’anteprima usa API introdotte in core 0.8.1; CLI installa core compatibile au
 
 L’inizializzazione valuta i valori effettivi, esegue `load-record`, poi `new-record` o `edit-record`.
 Le modifiche dell’utente attendono gli aggiornamenti in coda; valori predefiniti, calcoli e
-`SETVALUE()` non generano altre modifiche. Lo stato abilitato usa `change-status`; focus/blur e clic dei controlli di testo e numerici sono attivi per impostazione predefinita.
+`SETVALUE()` non generano altre modifiche. Lo stato abilitato usa `change-status`; focus e blur dei controlli di testo e numerici sono attivi per impostazione predefinita; le scelte usano change. Il click automatico è riservato ai campi di attivazione supportati. Attualmente HyperlinkField non esiste e nessun controllo integrato emette click automaticamente. Il dispatch esplicito del controller dell’host rimane disponibile.
 
 L’invio segue validazione integrata/personalizzata → `save-record` una volta → nuova validazione
 solo se cambiano i valori → serializzazione finale → invio al connettore esistente.
