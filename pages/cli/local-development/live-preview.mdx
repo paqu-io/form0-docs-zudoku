@@ -30,20 +30,11 @@ diagnostics do not add form alerts or submission blockers.
 
 ## Record preview and lifecycle events
 
-The current preview uses APIs introduced in core 0.8.1. CLI installs a compatible core dependency
-automatically. Fresh previews enable lifecycle events and select **New record**.
-In **Form Settings → Record preview**, choose **Existing record** or **Open read-only** as needed.
-Classification selects lifecycle hooks; it does not load a database record. Explicitly saved legacy
-opt-outs remain respected. **Advanced event settings** contains the lifecycle compatibility switch
-and optional focus/blur/click subscriptions. Read-only opening runs load only; changing configuration
-starts a fresh session with accepted values. `serve --app` retains app-owned event options.
-React and Native expose these options through their APIs, with no preview-settings UI; their current
-opt-in defaults remain unchanged.
+The current preview uses APIs introduced in core 0.8.1. CLI installs a compatible core automatically. Fresh previews enable lifecycle and supported focus/blur/click interactions and select **New record**. In **Form Settings → Record preview**, choose **Existing record** or **Open read-only** as needed. Classification selects hooks; it does not load a database record. Explicitly saved opt-outs remain respected. **Advanced event settings** contains the compatibility switches. Read-only opening runs load only; changing configuration starts a fresh session with accepted values. `serve --app` retains app-owned options. Bindings expose these options through APIs and require explicit host classification. CLI headless lifecycle keeps its existing default.
 
 Initialization evaluates effective values, runs `load-record`, then the applicable `new-record` or
 `edit-record`. User changes run after queued updates settle; defaults, calculations and `SETVALUE()`
-do not generate extra changes. Enabled status uses `change-status`; optional text/numeric focus and
-blur, and supported hyperlink click, are selected separately.
+do not generate extra changes. Enabled status uses `change-status`; supported text/numeric focus, blur and input click default on.
 
 Submit follows built-in/custom validation → `save-record` once → validation again only if values
 changed → final serialization → existing connector submission. Synchronous `INVALID(message)` adds

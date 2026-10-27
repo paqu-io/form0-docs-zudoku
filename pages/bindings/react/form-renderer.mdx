@@ -10,6 +10,7 @@ sections, and produces structured records on submission.
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
   schema={schema}
   initialValues={{ name: "Ada" }}
   mode="edit"
@@ -61,6 +62,7 @@ const findingsByScope = new Map()
 ;<FormRenderer
   schema={schema}
   engineOptions={{
+    events: { recordKind: "new" },
     diagnostics: { console: false },
     onDiagnostics(snapshot, meta) {
       if (meta.kind === "scope-ended") findingsByScope.delete(meta.scopeId)
@@ -84,13 +86,13 @@ Calculation diagnostics remain outside `state.errors`, saved snapshots and recor
 
 ## Managed events and custom validation
 
-This integration requires form0-react 0.4.0 or newer and core 0.5.1 or newer. Expanded automatic lifecycle events are opt-in:
+Current bindings use core 0.8.1 or later. Lifecycle and supported focus/blur/click interactions are enabled by default:
 
 ```jsx
 <FormRenderer
   schema={schema}
   engineOptions={{
-    events: { lifecycle: true, recordKind: "existing", fieldInteractions: ["focus", "blur"] },
+    events: { recordKind: "existing" },
     onEventController: (controller) => {
       controllerRef.current = controller
     },
@@ -98,11 +100,7 @@ This integration requires form0-react 0.4.0 or newer and core 0.5.1 or newer. Ex
 />
 ```
 
-`recordKind` must explicitly be `new` or `existing`; values never determine it. Configuration is
-fixed for an editor session; remount to change classification, lifecycle, helpers or security.
-Callbacks remain live. Without opt-in, automatic root load/edit/change behavior is preserved.
-Readonly opening runs load only; editable opening runs load then new/edit. Open rows use the
-repeatable equivalents and their actual classification.
+`recordKind` must explicitly be `new` or `existing`; omission is a configuration error unless `lifecycle: false` is explicit. Values never determine classification. Configuration belongs to an editor session; remount to change classification, lifecycle, helpers or security. Callbacks remain live. Readonly opening runs load; editing runs load then new/edit. Open rows use repeatable events and their actual classification. Use `lifecycle: false` to preserve legacy lifecycle and `fieldInteractions: []` to disable automatic interactions. Built-in text/numeric inputs emit focus, blur and click (input press in Native); custom controls may dispatch supported events explicitly. This does not add a hyperlink field.
 
 The generation-bound controller is delivered after initialization and retired with `null`.
 `dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` returns a promise with `status`,

@@ -12,6 +12,7 @@ authoritative host values. For complete restoration, prefer `initialSnapshot`:
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={savedDraft}
   onSnapshotChange={(snapshot, change) => {
@@ -55,7 +56,7 @@ records, retry failures, and resolve conflicts in the host application.
 
 See the managed event controller and scope contract in [FormRenderer](/bindings/react-native/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), required `recordKind` (new/existing), `fieldInteractions` ([focus, blur, click]). Set `lifecycle: false` for legacy lifecycle or `fieldInteractions: []` to disable automatic interactions.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
 
 Preparation does not persist or close. Root draft validation findings remain visible in the returned summary; normal submit and row acceptance are blocked by validation failures. Calculation diagnostics remain independent. No closed-row evaluation or aggregation is added.
@@ -75,6 +76,7 @@ Scope-level custom findings belong to their record, with no invented field assoc
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={savedSnapshot}
   initialFreshness={savedFreshness}

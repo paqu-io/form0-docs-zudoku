@@ -15,8 +15,11 @@ Transmettez une table de renderers directement à `FormRenderer` pour un formula
 ```jsx
 import { FormRenderer } from "form0-react-native"
 import { PhotoField } from "./photo-field.jsx"
-
-;<FormRenderer schema={schema} renderers={{ PhotoField }} />
+;<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  renderers={{ PhotoField }}
+/>
 ```
 
 Un renderer reçoit le champ et son état d’interaction évalué :

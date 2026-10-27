@@ -15,8 +15,11 @@ Pass a renderer map directly to `FormRenderer` for an isolated form:
 ```jsx
 import { FormRenderer } from "form0-react-native"
 import { PhotoField } from "./photo-field.jsx"
-
-;<FormRenderer schema={schema} renderers={{ PhotoField }} />
+;<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  renderers={{ PhotoField }}
+/>
 ```
 
 A renderer receives the field and its evaluated interaction state:

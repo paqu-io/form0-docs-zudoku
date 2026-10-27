@@ -15,6 +15,7 @@ Para una restauración completa, usa preferentemente `initialSnapshot`:
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={{
     raw_values: saved.raw_values,
@@ -67,7 +68,7 @@ ajeno al renderer.
 
 Consulta el controlador de eventos y el contrato de ámbitos en [FormRenderer](/es/bindings/react/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), `recordKind` obligatorio (new/existing), `fieldInteractions` ([focus, blur, click]). Usa `lifecycle: false` para el ciclo heredado o `fieldInteractions: []` para desactivar interacciones automáticas.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
 
 La preparación no persiste ni cierra. Los borradores raíz conservan los hallazgos en el resumen; submit normal y la aceptación de filas se bloquean ante validación fallida. Los diagnósticos de cálculo siguen separados. No se evalúan ni agregan filas cerradas.
@@ -87,6 +88,7 @@ Los resultados personalizados de ámbito pertenecen al registro, sin asociarlos 
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={savedSnapshot}
   initialFreshness={savedFreshness}

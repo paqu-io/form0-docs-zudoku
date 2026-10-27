@@ -13,6 +13,7 @@ privilégiez `initialSnapshot` :
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={savedDraft}
   onSnapshotChange={(snapshot, change) => {
@@ -58,7 +59,7 @@ l’application host.
 
 Voir le contrôleur et le contrat des périmètres dans [FormRenderer](/fr/bindings/react-native/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), `recordKind` obligatoire (new/existing), `fieldInteractions` ([focus, blur, click]). Utilisez `lifecycle: false` pour le cycle historique ou `fieldInteractions: []` pour désactiver les interactions automatiques.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
 
 La préparation ne persiste ni ne ferme. Les brouillons racine conservent les constats dans le résumé ; submit et l’acceptation des lignes sont bloqués par une validation invalide. Les diagnostics de calcul restent indépendants. Aucune évaluation ou agrégation des lignes fermées.
@@ -78,6 +79,7 @@ Les résultats personnalisés de portée appartiennent à l’enregistrement, sa
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={savedSnapshot}
   initialFreshness={savedFreshness}

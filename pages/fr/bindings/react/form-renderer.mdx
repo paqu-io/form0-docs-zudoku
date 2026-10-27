@@ -10,6 +10,7 @@ sections, et produit des enregistrements structurés lors de la soumission.
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
   schema={schema}
   initialValues={{ name: "Ada" }}
   mode="edit"
@@ -60,6 +61,7 @@ const findingsByScope = new Map()
 ;<FormRenderer
   schema={schema}
   engineOptions={{
+    events: { recordKind: "new" },
     diagnostics: { console: false },
     onDiagnostics(snapshot, meta) {
       if (meta.kind === "scope-ended") findingsByScope.delete(meta.scopeId)
@@ -83,13 +85,13 @@ Les diagnostics de calcul restent hors de `state.errors`, des snapshots enregist
 
 ## Événements gérés et validation personnalisée
 
-Cette intégration exige form0-react 0.4.0 ou une version ultérieure et core 0.5.1 ou une version ultérieure. Le cycle de vie automatique étendu doit être activé explicitement :
+Les bindings actuels utilisent core 0.8.1 ou ultérieur. Le cycle de vie et les interactions compatibles focus/blur/click sont activés par défaut :
 
 ```jsx
 <FormRenderer
   schema={schema}
   engineOptions={{
-    events: { lifecycle: true, recordKind: "existing", fieldInteractions: ["focus", "blur"] },
+    events: { recordKind: "existing" },
     onEventController: (controller) => {
       controllerRef.current = controller
     },
@@ -97,11 +99,7 @@ Cette intégration exige form0-react 0.4.0 ou une version ultérieure et core 0.
 />
 ```
 
-`recordKind` doit être explicitement `new` ou `existing`, jamais déduit des valeurs. La configuration
-est fixe pour la session ; remontez l’éditeur pour changer classification, cycle, helpers ou sécurité.
-Les callbacks restent actualisables. Sans activation, le comportement racine load/edit/change est
-conservé. Une ouverture en lecture seule exécute load ; l’édition exécute load puis new/edit.
-Les lignes ouvertes utilisent les événements repeatable et leur classification réelle.
+`recordKind` doit être explicitement `new` ou `existing` ; son absence est une erreur sauf avec `lifecycle: false`. Les valeurs ne déterminent jamais la classification. La configuration est fixe pour la session ; remontez pour changer classification, cycle, helpers ou sécurité. Les callbacks restent actualisables. La lecture seule exécute load ; l’édition exécute load puis new/edit. Les lignes ouvertes utilisent leurs événements repeatable et leur classification réelle. Utilisez `lifecycle: false` pour conserver le cycle historique et `fieldInteractions: []` pour désactiver les interactions. Les contrôles texte et numériques émettent focus, blur et click (pression dans Native) ; les contrôles personnalisés peuvent émettre les événements compatibles. Cela n’ajoute pas de champ hyperlien.
 
 Le contrôleur lié à la génération est fourni après initialisation et retiré avec `null`.
 `dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` renvoie une promesse avec `status`,

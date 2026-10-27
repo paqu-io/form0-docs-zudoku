@@ -31,21 +31,11 @@ la diagnostica non aggiunge avvisi del modulo né blocchi all’invio.
 
 ## Anteprima dei record ed eventi del ciclo di vita
 
-L’anteprima attuale usa API introdotte in core 0.8.1. CLI installa automaticamente una dipendenza core
-compatibile. Le nuove anteprime abilitano gli eventi del ciclo di vita e selezionano
-**Nuovo record**. In **Impostazioni del modulo → Anteprima del record**, scegli **Record esistente**
-o **Apri in sola lettura**. La classificazione sceglie gli hook; non carica un record dal database.
-Le disattivazioni salvate esplicitamente restano rispettate. **Impostazioni avanzate degli eventi**
-contiene l’interruttore di compatibilità e le sottoscrizioni facoltative per focus, blur e clic.
-L’apertura in sola lettura esegue solo load; cambiare configurazione avvia una nuova sessione con i
-valori accettati. `serve --app` conserva le opzioni dell’applicazione. React e Native espongono queste
-opzioni tramite API, senza questa interfaccia; i loro valori predefiniti di attivazione esplicita
-restano invariati.
+L’anteprima usa API introdotte in core 0.8.1; CLI installa core compatibile automaticamente. Le nuove anteprime abilitano ciclo di vita e focus/blur/click supportati e selezionano **Nuovo record**. In **Impostazioni del modulo → Anteprima del record**, scegli **Record esistente** o **Apri in sola lettura**. La classificazione sceglie gli hook senza caricare record. Le disattivazioni salvate esplicitamente restano rispettate. **Impostazioni avanzate degli eventi** contiene gli interruttori di compatibilità. La sola lettura esegue load; cambiare configurazione avvia una sessione con valori accettati. `serve --app` conserva le opzioni dell’applicazione. I binding offrono API con classificazione esplicita dell’host. Il ciclo CLI senza interfaccia conserva il valore precedente.
 
 L’inizializzazione valuta i valori effettivi, esegue `load-record`, poi `new-record` o `edit-record`.
 Le modifiche dell’utente attendono gli aggiornamenti in coda; valori predefiniti, calcoli e
-`SETVALUE()` non generano altre modifiche. Lo stato abilitato usa `change-status`; focus/blur testo e
-numerici e clic sui collegamenti supportati sono facoltativi.
+`SETVALUE()` non generano altre modifiche. Lo stato abilitato usa `change-status`; focus/blur e clic dei controlli di testo e numerici sono attivi per impostazione predefinita.
 
 L’invio segue validazione integrata/personalizzata → `save-record` una volta → nuova validazione
 solo se cambiano i valori → serializzazione finale → invio al connettore esistente.

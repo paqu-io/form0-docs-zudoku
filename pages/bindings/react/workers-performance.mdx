@@ -12,7 +12,11 @@ The default `engineMode="main-thread"` evaluates the form engine on the UI threa
 are available:
 
 ```jsx
-<FormRenderer schema={schema} engineMode="worker" />
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  engineMode="worker"
+/>
 ```
 
 Vite supports the static module-worker pattern used by the package and emits the worker during a

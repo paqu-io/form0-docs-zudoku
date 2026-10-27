@@ -50,5 +50,5 @@ controller delle sezioni ripetibili e le utility di invio non sono esportazioni 
 
 Vedi il controller e il contratto degli ambiti in [FormRenderer](/it/bindings/react-native/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), `recordKind` obbligatorio (new/existing), `fieldInteractions` ([focus, blur, click]). Usa `lifecycle: false` per il ciclo legacy o `fieldInteractions: []` per disabilitare le interazioni automatiche.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.

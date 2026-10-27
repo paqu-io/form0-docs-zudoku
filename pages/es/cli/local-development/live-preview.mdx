@@ -31,21 +31,12 @@ su comportamiento; los diagnósticos no añaden alertas ni bloqueos de envío.
 
 ## Vista previa del registro y eventos del ciclo de vida
 
-La vista previa actual usa API introducidas en core 0.8.1. CLI instala automáticamente una dependencia
-de core compatible. Las vistas previas nuevas activan los eventos del ciclo de vida y
-seleccionan **Nuevo registro**. En **Ajustes del formulario → Vista previa del registro**, elige
-**Registro existente** o **Abrir en solo lectura**. La clasificación selecciona los eventos; no carga
-un registro de la base de datos. Se respetan las desactivaciones guardadas explícitamente.
-**Opciones avanzadas de eventos** contiene el interruptor de compatibilidad y las suscripciones
-opcionales de foco, desenfoque y clic. En solo lectura se ejecuta únicamente load; cambiar la
-configuración inicia una sesión nueva con los valores aceptados. `serve --app` conserva las opciones
-de la aplicación. React y Native ofrecen estas opciones por API, sin esta interfaz; sus valores
-predeterminados de activación explícita no cambian.
+La vista previa usa API introducidas en core 0.8.1; CLI instala core compatible automáticamente. Las vistas previas nuevas activan ciclo de vida y focus/blur/click compatibles y seleccionan **Nuevo registro**. En **Ajustes del formulario → Vista previa del registro**, elige **Registro existente** o **Abrir en solo lectura**. La clasificación selecciona eventos, no carga registros. Se respetan las desactivaciones guardadas explícitamente. **Opciones avanzadas de eventos** contiene los interruptores de compatibilidad. Solo lectura ejecuta load; cambiar configuración inicia otra sesión con valores aceptados. `serve --app` conserva las opciones de la aplicación. Los bindings ofrecen API y exigen clasificación explícita del host. El ciclo CLI sin interfaz conserva su valor anterior.
 
 La inicialización evalúa los valores efectivos, ejecuta `load-record` y después `new-record` o
 `edit-record`. Los cambios del usuario esperan las actualizaciones pendientes; los valores por
 defecto, los cálculos y `SETVALUE()` no generan cambios adicionales. El estado habilitado utiliza
-`change-status`; focus/blur de texto y números y clic en hipervínculos compatibles son opcionales.
+`change-status`; focus/blur y clic en controles de texto y números están activos por defecto.
 
 Enviar sigue validación integrada/personalizada → `save-record` una vez → nueva validación solo si
 cambian los valores → serialización final → envío al conector existente. `INVALID(message)` síncrono

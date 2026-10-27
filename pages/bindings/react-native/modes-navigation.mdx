@@ -59,6 +59,6 @@ With `engineOptions.events.lifecycle: true`, the host must specify `recordKind: 
 `edit-record`. Rows use their actual classification and the corresponding `*-repeatable` events.
 View mode runs load only and preserves accepted calculations; conditions and intrinsic validation still evaluate.
 
-The default legacy opt-out preserves earlier lifecycle behavior. See the managed lifecycle
+Explicit `lifecycle: false` preserves legacy lifecycle behavior. See the managed lifecycle
 contract in [FormRenderer](/bindings/react-native/form-renderer) and
 [Events and operations](/core/engine/events-operations).

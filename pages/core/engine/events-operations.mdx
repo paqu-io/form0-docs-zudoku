@@ -190,7 +190,7 @@ Configure `eventScope.instancePath` when creating a headless row engine; root sc
 
 `INVALID(message)` is available during managed `validate-record` and `validate-repeatable` execution and requires a nonempty string. Findings belong to the scope, without a field association, and stay out of `state.errors`, calculation diagnostics, values and saved metadata. Validation handlers reject value/UI operations and promises. Cancel/unload handlers are read-only notifications and also reject validation findings and alerts.
 
-The registry adds `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` and `change-status`. Registering them does not automate them. `save-record` and `save-repeatable` remain pre-save; no `saved-*` schema events are introduced. React 0.4.0, React Native 0.5.0 and CLI 0.7.0 adopt the expanded lifecycle, controller and save preparation. Automatic lifecycle integration remains opt-in.
+The registry adds `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` and `change-status`. Registering them does not automate them. `save-record` and `save-repeatable` remain pre-save; no `saved-*` schema events are introduced. React 0.4.0, React Native 0.5.0 and CLI 0.7.0 adopt the expanded lifecycle, controller and save preparation. Current bindings default lifecycle on and require explicit new/existing classification. CLI browser preview also defaults lifecycle on; standalone commands remain host-driven.
 
 See the [maintained event contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) for the complete contract and delivery stages. Broader validation policy, closed-row freshness and persistence ownership remain separate work.
 

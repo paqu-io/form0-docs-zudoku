@@ -51,5 +51,5 @@ sont pas des exportations publiques.
 
 Voir le contrôleur et le contrat des périmètres dans [FormRenderer](/fr/bindings/react-native/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), `recordKind` obligatoire (new/existing), `fieldInteractions` ([focus, blur, click]). Utilisez `lifecycle: false` pour le cycle historique ou `fieldInteractions: []` pour désactiver les interactions automatiques.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.

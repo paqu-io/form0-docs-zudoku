@@ -17,7 +17,12 @@ import "form0-react/index.css"
 `dark` ou `system`.
 
 ```jsx
-<FormRenderer schema={schema} theme="standard" colorMode="system" />
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  theme="standard"
+  colorMode="system"
+/>
 ```
 
 Le nom du thème et le mode de couleur sélectionnent la classe Vanilla Extract intégrée
@@ -40,7 +45,12 @@ export const appTheme = createTheme(vars, {
 Passez la classe générée à `theme` :
 
 ```jsx
-<FormRenderer schema={schema} theme={appTheme} colorMode="light" />
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  theme={appTheme}
+  colorMode="light"
+/>
 ```
 
 Utilisez `className` pour les styles au niveau du formulaire et des éléments conteneurs ordinaires

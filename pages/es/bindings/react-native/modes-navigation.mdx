@@ -63,6 +63,6 @@ Con `engineOptions.events.lifecycle: true`, la aplicación debe indicar `recordK
 `new-record` o `edit-record`. Las filas usan los eventos `*-repeatable` correspondientes. Visualizar
 ejecuta solo load y conserva los cálculos aceptados; las condiciones y la validación intrínseca siguen activas.
 
-La opción heredada, predeterminada, conserva el comportamiento anterior del ciclo de vida. Consulta
+La opción explícita `lifecycle: false` conserva el ciclo de vida heredado. Consulta
 el contrato gestionado en [FormRenderer](/es/bindings/react-native/form-renderer) y
 [Eventos y operaciones](/es/core/engine/events-operations).

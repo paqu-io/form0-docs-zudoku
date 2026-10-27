@@ -13,7 +13,12 @@ peut déterminer la préférence de l’appareil avec `useColorScheme` de React 
 mode obtenu.
 
 ```jsx
-<FormRenderer schema={schema} colorMode="dark" customTheme={{ color: { primary: "#7c3aed" } }} />
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  colorMode="dark"
+  customTheme={{ color: { primary: "#7c3aed" } }}
+/>
 ```
 
 `lightTheme`, `darkTheme`, `mergeThemes` et `getThemeByName` sont exportés pour composer des thèmes
@@ -32,7 +37,7 @@ import { form0Fonts, FormRenderer } from "form0-react-native"
 const [fontsLoaded] = useFonts(form0Fonts)
 if (!fontsLoaded) return null
 
-return <FormRenderer schema={schema} />
+return <FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
 ```
 
 ## Images d’appui

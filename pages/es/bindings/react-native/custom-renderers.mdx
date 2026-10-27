@@ -15,8 +15,11 @@ Pasa un mapa de renderers directamente a `FormRenderer` para un formulario concr
 ```jsx
 import { FormRenderer } from "form0-react-native"
 import { PhotoField } from "./photo-field.jsx"
-
-;<FormRenderer schema={schema} renderers={{ PhotoField }} />
+;<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  renderers={{ PhotoField }}
+/>
 ```
 
 Un renderer recibe el campo y su estado de interacción evaluado:

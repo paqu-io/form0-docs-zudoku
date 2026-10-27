@@ -56,5 +56,5 @@ available as `form0-react/index.css`.
 
 See the managed event controller and scope contract in [FormRenderer](/bindings/react/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), required `recordKind` (new/existing), `fieldInteractions` ([focus, blur, click]). Set `lifecycle: false` for legacy lifecycle or `fieldInteractions: []` to disable automatic interactions.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.

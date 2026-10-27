@@ -12,7 +12,12 @@ binding deep-merges it with the selected built-in theme. An application can reso
 preference with React Native's `useColorScheme` and pass the resulting mode.
 
 ```jsx
-<FormRenderer schema={schema} colorMode="dark" customTheme={{ color: { primary: "#7c3aed" } }} />
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  colorMode="dark"
+  customTheme={{ color: { primary: "#7c3aed" } }}
+/>
 ```
 
 `lightTheme`, `darkTheme`, `mergeThemes`, and `getThemeByName` are exported for application-level
@@ -31,7 +36,7 @@ import { form0Fonts, FormRenderer } from "form0-react-native"
 const [fontsLoaded] = useFonts(form0Fonts)
 if (!fontsLoaded) return null
 
-return <FormRenderer schema={schema} />
+return <FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
 ```
 
 ## Supporting images

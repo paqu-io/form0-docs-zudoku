@@ -31,6 +31,7 @@ import schema from "./contact.form0.json"
 export function ContactForm() {
   return (
     <FormRenderer
+      engineOptions={{ events: { recordKind: "new" } }}
       schema={schema}
       onSubmit={(record, meta) => {
         console.log(record)

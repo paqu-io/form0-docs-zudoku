@@ -13,6 +13,7 @@ ed è utile per i valori che devono prevalere lato host. Per un ripristino compl
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={savedDraft}
   onSnapshotChange={(snapshot, change) => {
@@ -58,7 +59,7 @@ host.
 
 Vedi il controller e il contratto degli ambiti in [FormRenderer](/it/bindings/react-native/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), `recordKind` obbligatorio (new/existing), `fieldInteractions` ([focus, blur, click]). Usa `lifecycle: false` per il ciclo legacy o `fieldInteractions: []` per disabilitare le interazioni automatiche.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
 
 La preparazione non persiste né chiude. Le bozze radice mantengono i risultati nel riepilogo; submit normale e accettazione delle righe sono bloccati dalla validazione. I diagnostici di calcolo restano separati. Nessuna valutazione o aggregazione delle righe chiuse.
@@ -78,6 +79,7 @@ personalizzati di ambito appartengono al record, senza attribuirli a un campo in
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={savedSnapshot}
   initialFreshness={savedFreshness}
