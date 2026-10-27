@@ -27,10 +27,12 @@ Una valutazione completata restituisce lo stato anche quando la diagnostica cont
 Validazione dei campi, operazioni degli eventi, invio e bozze mantengono il loro comportamento;
 la diagnostica non aggiunge avvisi del modulo né blocchi all’invio.
 
-## Eventi portabili dell’anteprima (CLI 0.7.0+)
+<span id="eventi-portabili-dellanteprima-cli-070" />
 
-L’anteprima integrata attuale usa la valutazione condivisa di core e richiede core 0.8.1 o successivo
-nella serie compatibile 0.8.x. Le nuove anteprime abilitano gli eventi del ciclo di vita e selezionano
+## Anteprima dei record ed eventi del ciclo di vita
+
+L’anteprima attuale usa API introdotte in core 0.8.1. CLI installa automaticamente una dipendenza core
+compatibile. Le nuove anteprime abilitano gli eventi del ciclo di vita e selezionano
 **Nuovo record**. In **Impostazioni del modulo → Anteprima del record**, scegli **Record esistente**
 o **Apri in sola lettura**. La classificazione sceglie gli hook; non carica un record dal database.
 Le disattivazioni salvate esplicitamente restano rispettate. **Impostazioni avanzate degli eventi**

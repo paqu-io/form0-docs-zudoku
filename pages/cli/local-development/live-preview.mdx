@@ -26,10 +26,12 @@ A completed calculation evaluation still returns state when diagnostics contain 
 validation, event operations, submission policy, and draft saving retain their own behavior;
 diagnostics do not add form alerts or submission blockers.
 
-## Portable preview events (CLI 0.7.0+)
+<span id="portable-preview-events-cli-070" />
 
-The current built-in preview uses core's shared record evaluation and requires core 0.8.1 or later
-within the supported 0.8.x range. Fresh previews enable lifecycle events and select **New record**.
+## Record preview and lifecycle events
+
+The current preview uses APIs introduced in core 0.8.1. CLI installs a compatible core dependency
+automatically. Fresh previews enable lifecycle events and select **New record**.
 In **Form Settings → Record preview**, choose **Existing record** or **Open read-only** as needed.
 Classification selects lifecycle hooks; it does not load a database record. Explicitly saved legacy
 opt-outs remain respected. **Advanced event settings** contains the lifecycle compatibility switch

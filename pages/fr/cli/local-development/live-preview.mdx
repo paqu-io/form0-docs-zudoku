@@ -26,10 +26,12 @@ Une évaluation terminée renvoie l’état même si ses diagnostics contiennent
 validation des champs, les opérations d’événement, la soumission et les brouillons conservent
 leur comportement ; les diagnostics n’ajoutent pas d’alertes ni de blocages de soumission.
 
-## Événements portables de l’aperçu (CLI 0.7.0+)
+<span id="événements-portables-de-laperçu-cli-070" />
 
-L’aperçu intégré actuel utilise l’évaluation partagée de core et nécessite core 0.8.1 ou ultérieur
-dans la branche compatible 0.8.x. Les nouveaux aperçus activent le cycle de vie et sélectionnent
+## Aperçu des enregistrements et événements du cycle de vie
+
+L’aperçu actuel utilise des API introduites dans core 0.8.1. CLI installe automatiquement une
+dépendance core compatible. Les nouveaux aperçus activent le cycle de vie et sélectionnent
 **Nouvel enregistrement**. Dans **Paramètres du formulaire → Aperçu de l’enregistrement**, choisissez
 **Enregistrement existant** ou **Ouvrir en lecture seule**. La classification choisit les hooks ;
 elle ne charge aucun enregistrement de la base de données. Les désactivations explicitement
