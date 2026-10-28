@@ -15,6 +15,7 @@ Para una restauración completa, usa preferentemente `initialSnapshot`:
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={{
     raw_values: saved.raw_values,
@@ -67,7 +68,64 @@ ajeno al renderer.
 
 Consulta el controlador de eventos y el contrato de ámbitos en [FormRenderer](/es/bindings/react/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), `recordKind` obligatorio (new/existing), `fieldInteractions` ([focus, blur, click]). Usa `lifecycle: false` para el ciclo heredado o `fieldInteractions: []` para desactivar interacciones automáticas.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
 
 La preparación no persiste ni cierra. Los borradores raíz conservan los hallazgos en el resumen; submit normal y la aceptación de filas se bloquean ante validación fallida. Los diagnósticos de cálculo siguen separados. No se evalúan ni agregan filas cerradas.
+
+## Revisión de cálculos secundarios y persistencia
+
+El envío ordinario actualiza automáticamente los cálculos secundarios cerrados si se omite el ajuste.
+`form.repeatable_recalculation: 'confirm'` exige revisión. El host puede exigirla con `mode: 'confirm'`,
+pero `automatic` no puede debilitar la confirmación del formulario. `allowRetain` es un permiso explícito
+del host y no activa por sí mismo la confirmación. La decisión afecta a todos los secundarios o a
+ninguno. La preparación raíz se rechaza si queda un editor secundario sin aceptar.
+
+La revisión muestra títulos/rutas, etiquetas, valores anteriores/nuevos y recuentos en páginas
+limitadas. Personaliza los textos con `submissionOptions.messages`. Se conservan todos los resultados
+de validación con sus rutas; la interfaz los pagina y permite navegar al registro o campo afectado.
+Los resultados personalizados de ámbito pertenecen al registro, sin asociarlos a un campo inventado.
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
+  schema={schema}
+  initialSnapshot={savedSnapshot}
+  initialFreshness={savedFreshness}
+  submissionOptions={{ mode: "confirm", allowRetain: true }}
+  onSubmit={async (record, meta) => {
+    await storage.save({ record, freshness: meta.freshness })
+  }}
+/>
+```
+
+La finalización correcta del callback reconoce la persistencia. Guarda conjuntamente el registro
+seleccionado y su complemento de frescura antes de resolver; lanza un error o rechaza ante un fallo o
+cancelación. Elegir `20 → 24` conserva `24` como trabajo sin guardar aunque después falle la validación
+o persistencia. La frescura queda fuera de los valores guardados. Restáurala con `initialFreshness`;
+los reconocimientos antiguos no borran estados pendientes nuevos. Con totales retenidos `[110,220]`,
+el total enviado es `330`, nunca el `360` de la propuesta actualizada.
+
+Los controladores de preparación no abren diálogos ni persisten. Comprueba `eligible`, gestiona
+`requires_decision` con `payload: null` y reconoce solo el `preparationId` guardado correctamente.
+Las páginas de cambios contienen 50 entradas por defecto y hasta 100. Continúa mediante
+`prepareSave()` y `decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Los cambios de
+entradas/configuración o una nueva preparación invalidan la revisión. La validación precede al hook
+de guardado, ejecutado una vez por intento; sus escrituras pueden exigir otra revisión sin repetirlo.
+
+```js
+const prepared = await controller.prepareSave({ intent: "submit", signal })
+if (prepared.status === "requires_decision") {
+  const page = await controller.getSaveChanges({
+    preparationId: prepared.preparationId,
+    offset: 0,
+    limit: 50,
+  })
+  showReview(prepared, page)
+} else if (prepared.eligible) {
+  await storage.save({ record: prepared.payload, freshness: prepared.meta.freshness })
+  controller.acknowledgeSave({ preparationId: prepared.preparationId })
+}
+```
+
+Los workers conservan internamente revisiones e informes. Las respuestas habituales incluyen los datos seleccionados y resúmenes; los detalles se solicitan por páginas limitadas. Los helpers de tipo función siguen sin admitirse en workers. Las señales y callbacks no se envían mediante clonación estructurada.

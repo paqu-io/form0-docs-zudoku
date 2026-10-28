@@ -12,6 +12,7 @@ authoritative host values. For complete restoration, prefer `initialSnapshot`:
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={savedDraft}
   onSnapshotChange={(snapshot, change) => {
@@ -55,7 +56,68 @@ records, retry failures, and resolve conflicts in the host application.
 
 See the managed event controller and scope contract in [FormRenderer](/bindings/react-native/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), required `recordKind` (new/existing), `fieldInteractions` ([focus, blur, click]). Set `lifecycle: false` for legacy lifecycle or `fieldInteractions: []` to disable automatic interactions.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
 
 Preparation does not persist or close. Root draft validation findings remain visible in the returned summary; normal submit and row acceptance are blocked by validation failures. Calculation diagnostics remain independent. No closed-row evaluation or aggregation is added.
+
+## Child calculation review and persistence
+
+Ordinary submission automatically refreshes closed-child calculations when the form setting is
+omitted. `form.repeatable_recalculation: 'confirm'` requires review. Host `mode: 'confirm'` may
+strengthen that requirement; `automatic` cannot weaken an authored confirmation. `allowRetain` is
+explicit host permission and does not enable confirmation by itself. Review choices apply to all
+affected children or none. A root save is rejected while a child editor is still unaccepted.
+
+The default review shows row titles/paths, field labels, old/new values and counts in bounded pages.
+Override review/status text with `submissionOptions.messages`. Complete validation findings remain
+available with record paths; the UI pages them and navigates to the affected record or field.
+Scope-level custom findings belong to their record, with no invented field association.
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
+  schema={schema}
+  initialSnapshot={savedSnapshot}
+  initialFreshness={savedFreshness}
+  submissionOptions={{ mode: "confirm", allowRetain: true }}
+  onSubmit={async (record, meta) => {
+    await storage.save({ record, freshness: meta.freshness })
+  }}
+/>
+```
+
+A successfully completed callback acknowledges persistence. It must save the selected record and
+matching freshness companion together before resolving; throw or reject on failure or cancellation.
+Selecting `20 → 24` keeps `24` as unsaved editor work even if validation or persistence then fails.
+Freshness stays outside saved form values. Restore the host's persisted companion through
+`initialFreshness`; older acknowledgements cannot clear newer pending state. For retained child
+totals `[110,220]`, the submitted root sum is `330`, never the refreshed proposal's `360`.
+
+Prepare-only controllers do not open a dialog or persist data. Check `eligible`, handle
+`requires_decision` with `payload: null`, and acknowledge only the exact successfully saved
+`preparationId`. Change pages default to 50 and allow at most 100 entries. Continue a review by calling
+`prepareSave()` with `decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Changed inputs,
+configuration or a newer preparation invalidate the review. Validation runs before the save hook,
+which executes once per attempt; accepted hook writes can require a new review without repeating it.
+
+```js
+const prepared = await controller.prepareSave({ intent: "submit", signal })
+if (prepared.status === "requires_decision") {
+  const page = await controller.getSaveChanges({
+    preparationId: prepared.preparationId,
+    offset: 0,
+    limit: 50,
+  })
+  showReview(prepared, page)
+} else if (prepared.eligible) {
+  await storage.save({ record: prepared.payload, freshness: prepared.meta.freshness })
+  controller.acknowledgeSave({ preparationId: prepared.preparationId })
+}
+```
+
+Root `prepareSave({ intent: 'draft' })` and the Native draft save action preserve accepted child
+calculations without a dialog. Ordinary validation failures remain reportable and permit a root
+draft; execution failures prevent it. Apply the same record-plus-companion persistence contract to
+`onSave`. A successful durable offline write is separate from later server synchronization.
+This package contract does not implement production reform web/mobile/backend companion storage.

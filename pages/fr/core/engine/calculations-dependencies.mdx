@@ -263,3 +263,17 @@ Un champ calculé placé dans une `RepeatableSection` s'exécute une fois par li
 les champs du formulaire principal, les champs de sa propre ligne et les champs des lignes qui la
 contiennent. Une référence à un champ hors de cette portée lit `undefined` et produit un
 avertissement. Voir [Portées parent et enfant](/fr/core/engine/parent-child-scopes).
+
+## Aperçu Builder des expressions de collection
+
+reform Builder propose Automatique / Demander avant d’actualiser les calculs enfants dans les réglages
+racine. Le second écrit `form.repeatable_recalculation: 'confirm'` ; l’omission reste automatique.
+Complétion et validation utilisent les métadonnées core réservées aux calculs.
+
+Les expressions scalaires gardent leur aperçu rapide. Pour une collection directe ou dépendante,
+choisissez **Appliquer et prévisualiser le formulaire**. Cela applique au document non enregistré et
+ouvre l’aperçu complet existant, sans enregistrer ni publier le schéma. Ajoutez des coûts `10` et `20`
+pour obtenir `30`. Dans des projets imbriqués, chaque projet agrège ses propres tâches acceptées.
+
+Publiez core avec `evaluateScope()` avant les bindings, CLI et applications dépendants. Core 0.7.0
+inclut la préparation complète ; l’évaluation d’un éditeur est une capacité supplémentaire.

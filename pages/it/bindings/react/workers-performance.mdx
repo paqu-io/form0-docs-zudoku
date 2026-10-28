@@ -12,7 +12,11 @@ dell'interfaccia. Usa `engineMode="worker"` per spostare la valutazione del moto
 incluso nel pacchetto quando i Web Worker sono disponibili:
 
 ```jsx
-<FormRenderer schema={schema} engineMode="worker" />
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  engineMode="worker"
+/>
 ```
 
 Vite supporta il pattern di module worker statico usato dal pacchetto e genera il worker durante la

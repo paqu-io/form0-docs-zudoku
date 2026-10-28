@@ -12,7 +12,11 @@ interfaz. Usa `engineMode="worker"` para llevar la evaluación del motor al modu
 el paquete cuando haya Web Workers disponibles:
 
 ```jsx
-<FormRenderer schema={schema} engineMode="worker" />
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  engineMode="worker"
+/>
 ```
 
 Vite admite el patrón de module worker estático que usa el paquete y genera el worker durante la

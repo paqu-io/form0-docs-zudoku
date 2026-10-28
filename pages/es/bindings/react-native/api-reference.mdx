@@ -51,5 +51,5 @@ de envío no son exportaciones públicas.
 
 Consulta el controlador de eventos y el contrato de ámbitos en [FormRenderer](/es/bindings/react-native/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), `recordKind` obligatorio (new/existing), `fieldInteractions` ([focus, blur, click]). Usa `lifecycle: false` para el ciclo heredado o `fieldInteractions: []` para desactivar interacciones automáticas.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.

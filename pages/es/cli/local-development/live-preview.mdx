@@ -27,18 +27,16 @@ Una evaluación completada devuelve el estado aunque sus diagnósticos contengan
 validación de campos, las operaciones de eventos, el envío y el guardado de borradores mantienen
 su comportamiento; los diagnósticos no añaden alertas ni bloqueos de envío.
 
-## Eventos portátiles de vista previa (CLI 0.7.0+)
+<span id="eventos-portátiles-de-vista-previa-cli-070" />
 
-CLI 0.7.0 alinea la vista previa integrada con el contrato de eventos de core.
-En **Ajustes del formulario**, activa **Eventos portátiles de vista previa** y selecciona
-explícitamente **Registro nuevo** o **Registro existente**. El ciclo de vida está desactivado por
-defecto. Abrir en solo lectura ejecuta únicamente load; cambiar la configuración inicia una nueva
-sesión con los valores aceptados. `serve --app` conserva las opciones de la aplicación.
+## Vista previa del registro y eventos del ciclo de vida
+
+La vista previa usa API introducidas en core 0.8.1; CLI instala core compatible automáticamente. Las vistas previas nuevas activan ciclo de vida y focus/blur/click compatibles y seleccionan **Nuevo registro**. En **Ajustes del formulario → Vista previa del registro**, elige **Registro existente** o **Abrir en solo lectura**. La clasificación selecciona eventos, no carga registros. Se respetan las desactivaciones guardadas explícitamente. **Opciones avanzadas de eventos** contiene los interruptores de compatibilidad. Solo lectura ejecuta load; cambiar configuración inicia otra sesión con valores aceptados. `serve --app` conserva las opciones de la aplicación. Los bindings ofrecen API y exigen clasificación explícita del host. El ciclo CLI sin interfaz conserva su valor anterior.
 
 La inicialización evalúa los valores efectivos, ejecuta `load-record` y después `new-record` o
 `edit-record`. Los cambios del usuario esperan las actualizaciones pendientes; los valores por
 defecto, los cálculos y `SETVALUE()` no generan cambios adicionales. El estado habilitado utiliza
-`change-status`; focus/blur de texto y números y clic en hipervínculos compatibles son opcionales.
+`change-status`; focus y blur en controles de texto y números están activos por defecto; las opciones usan change. El click automático se reserva para campos de activación compatibles. Actualmente no existe HyperlinkField y ningún control integrado emite click automáticamente. El dispatch explícito del controlador del host sigue disponible.
 
 Enviar sigue validación integrada/personalizada → `save-record` una vez → nueva validación solo si
 cambian los valores → serialización final → envío al conector existente. `INVALID(message)` síncrono
@@ -51,8 +49,7 @@ repeatable y valores provisionales: guardar valida/prepara antes de aceptar; can
 las ediciones anidadas provisionales. Se permite leer campos principales y antecesores autorizados;
 las escrituras son locales a la fila. Contraer solo cambia la presentación. Añadir/editar/eliminar
 aceptado notifica al repeatable propietario; los errores posteriores de notificación se presentan
-separados de la preparación aceptada. La vista previa conserva su evaluación recursiva de filas
-cerradas; la política de actualización y agregación de los bindings sigue separada.
+separados de la preparación aceptada. Las filas cerradas usan la preparación de envío compartida descrita abajo sin repetir su ciclo de edición.
 
 El controlador activo es `window.form0PreviewEvents`. `dispatch()` y
 `prepareSave({ intent: 'submit' | 'draft' })` devuelven promesas con hallazgos/errores y esperan la
@@ -61,3 +58,39 @@ el `scopeId` observado (`data-preview-scope-id`); las rutas posicionales exigen 
 son JSON; se rechazan funciones y archivos nativos. Los valores guardados no contienen metadatos de
 ámbito/diagnóstico. Cancelar/Cerrar notifica antes de retirar; recargar o descartar forzosamente solo
 retira. Reabrir inicia otra sesión. No cambia los códigos de salida de run/validate.
+
+**Acciones avanzadas de vista previa** agrupa **Preparar borrador**, **Cancelar registro** y
+**Cerrar registro** en una sección plegada. Preparar un borrador permite inspeccionarlo y nunca lo
+guarda en un conector. Los controles de filas anidadas desactivados indican qué editor padre debe
+abrirse primero. El envío muestra el registro final expandible y el resultado de cada conector en
+la consola. Sin conectores, indica que el registro se preparó solo para vista previa; un fallo de
+conector o almacenamiento no se considera un guardado correcto.
+
+## Preparación compartida y adaptador de almacenamiento del host
+
+La vista previa usa frescura y validación integrada compartidas con el ciclo de vida gestionado
+activado o desactivado. La exclusión desactiva validación personalizada y hooks gestionados. No se
+repiten eventos load/edit/change/save/unload de filas cerradas. Acepta o cancela los editores
+secundarios antes de preparar la raíz.
+
+`createApp()` admite `submissionOptions` del servidor y un `storageAdapter` opcional. Retener exige
+el adaptador y `allowRetain`; las peticiones del navegador no conceden ese permiso. El adaptador
+implementa `load(identity)` asíncrono, que devuelve `{ record, freshness }` o `null`, y
+`save(identity, { record, freshness })`. `record` mantiene el formato estructurado existente. La sesión
+restaura `recordIdentity` o `recordOptions.mainRecordId`, incluido cero. El ejemplo sustituye
+atómicamente un sobre local; el host de producción define la política de revisiones y conflictos.
+
+El éxito del adaptador reconoce la preparación. Un rechazo, persistencia parcial o fallo de un
+conector deja el intento sin guardar. Los conectores reciben el mismo registro sin nueva obligación
+de almacenar frescura. Los clientes de preparación reconocen explícitamente el guardado externo.
+`getSaveChanges()` pagina los cambios; las decisiones afectan a todos o a ninguno.
+
+```js
+import { createApp } from "form0-cli/src/server/express-server.js"
+import { createFilePreviewStorage } from "form0-cli/src/server/preview-events/file-storage.js"
+
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { mode: "confirm", allowRetain: true },
+  storageAdapter: createFilePreviewStorage(previewStorageDirectory),
+})
+```

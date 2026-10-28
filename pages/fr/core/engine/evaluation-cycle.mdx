@@ -149,3 +149,108 @@ const operations = engine.trigger("change", "quantity")
 
 Votre application doit appliquer les opérations renvoyées et décider quand un champ obligatoire vide
 bloque la soumission.
+
+## Préparation de l’arbre de données
+
+`createRecordEvaluator({ schema, helpers, security })` réutilise l’exécuteur et les règles de portée
+existants pour coordonner les instances racine et enfants. Les applications utilisent cette API pour
+sélectionner et valider un instantané avant sa persistance, puis appliquent le résultat via leur
+renderer ou contrôleur. `engine.eval()` conserve son contrat d’état intrinsèque.
+
+```js
+import { createRecordEvaluator } from "form0-core"
+
+const evaluator = createRecordEvaluator({ schema })
+const accepted = await evaluator.evaluate(snapshot)
+const refreshed = await evaluator.evaluate(snapshot, { mode: "refresh" })
+const prepared = await evaluator.prepareSubmission(snapshot)
+```
+
+`snapshot` utilise `{ values, repeatable }`. Chaque ligne conserve `id`, `values`, ses collections
+`repeatable` imbriquées, pièces jointes et métadonnées. Les valeurs utilisent les data_names ; les collections
+utilisent les clés du schéma lorsqu’elles existent. Convertissez les choix stockés au format actif
+avec les utilitaires existants. Aucun appel ne modifie l’entrée, ne persiste, ne génère d’ID ou de
+date d’enregistrement et n’applique une proposition à l’interface.
+
+Le mode accepted conserve les calculs enfants fermés et recalcule les agrégats racine à partir des
+valeurs acceptées. Enregistrer un montant enfant de 100 à 150 actualise l’agrégat lorsque l’hôte
+fournit cette ligne acceptée ; annuler ne le change pas. Refresh prépare tous les calculs enfants
+ensemble. Si la taxe passe de 10% à 20%, le total accepté 110 devient une proposition 120. Validation
+et sortie utilisent le même instantané sélectionné. Les cycles entre enregistrements échouent sans
+instantané partiel ; les diagnostics locaux conservent leur sémantique indépendante.
+
+`prepareSubmission` accepte `intent: 'submit' | 'draft'`, `mode: 'automatic' | 'confirm'`,
+`allowRetain: true` et `managedEvents: true` (ces deux indicateurs valent false par défaut).
+Automatic est le mode par défaut ; l’hôte ne peut pas affaiblir une confirmation du schéma. En mode
+confirm, des calculs enfants modifiés retournent `status: 'requires_decision'`, `reviewId`, `proposal`,
+`changes`, `choices` et `snapshot: null`. La proposition sert à la revue, pas à la livraison. Après
+une décision explicite, rappelez avec les entrées actuelles, les mêmes options et
+`decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Retain exige l’autorisation de
+l’hôte aux deux appels. Une nouvelle préparation, des entrées/options modifiées ou un autre
+évaluateur invalident la revue. L’acceptation utilise les valeurs capturées ; la décision est unique.
+
+Vérifiez `eligible` avant livraison. Les états sont `ready`, `blocked`, `requires_decision`, `failed`
+ou `cancelled`. `validationSummary`, `diagnostics` et `issues` d’exécution restent distincts. Les
+brouillons conservent les calculs enfants sans dialogue et autorisent les erreurs ordinaires, tout en
+signalant ces erreurs et la fraîcheur en attente. Les échecs d’exécution empêchent l’éligibilité.
+
+Persistez `freshness` hors de l’enregistrement : `{ version: 1, status: 'current' | 'pending',
+schemaRevision, affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Restaurez-le pour l’affichage
+du statut en attente. Chaque préparation recalcule depuis les entrées actuelles ; les métadonnées
+ne rejouent aucune proposition. Effacez le statut stocké uniquement après persistance du résultat à jour.
+
+Chaque entrée affectée représente une ligne ; `fields` énumère les identités de ses calculs modifiés.
+L’ascendance complète est stockée une seule fois par ligne, en conservant l’ID zéro et les références
+par position. Le statut à jour contient une liste d’éléments affectés vide.
+
+L’enregistrement des handlers utilise chaque périmètre sélectionné ; analyse et compilation sont partagées.
+
+La préparation gérée exécute seulement la validation racine et des lignes fermées participantes,
+avec leurs ancêtres sélectionnés actuels. Elle ne rejoue pas load/edit/save/unload. L’hôte conserve
+valider → sauvegarder une fois → réévaluer/revalider si changement → sérialiser. Un hook modifiant
+les entrées invalide la revue sans être rejoué. `event.isValid` décrit la validité intrinsèque de son
+périmètre ; la validité combinée figure dans le résumé.
+
+L’évaluation accepte `signal`, une cible de planification de 8ms (`budgetMs`) et `yieldToHost`
+asynchrone. Chaque expression reste synchrone et peut dépasser cette durée. L’analyse du schéma est
+partagée, sans moteur permanent par ligne fermée. Les sessions de prévisualisation ajoutent
+`runRecord({ snapshot, instancePath })` pour un aperçu explicite de l’arbre.
+
+## Évaluer un enregistrement ouvert
+
+`evaluateScope()` évalue uniquement l’enregistrement sélectionné, avec les ancêtres actuels fournis et
+les autres lignes acceptées. Un `instancePath` vide sélectionne la racine. Les chemins enfants incluent
+toute l’ascendance ; les lignes identifiées sont résolues par ID, y compris zéro. Les chemins
+positionnels dépendent de l’ordre capturé. Les chemins invalides échouent explicitement. Le résultat
+contient `state`, la `validationSummary` intégrée, les changements, diagnostics et problèmes d’exécution,
+sans nouvel arbre complet. Aucun changement de l’entrée, actualisation de ligne fermée, événement de
+cycle de vie, enregistrement, ID ou horodatage n’est effectué.
+
+```js
+const editor = await evaluator.evaluateScope(snapshot, {
+  instancePath: [],
+  signal,
+  budgetMs: 8,
+  yieldToHost,
+})
+if (editor.status === "evaluated") {
+  renderEditor(editor.state, editor.validationSummary)
+}
+```
+
+Par exemple, un projet avec des coûts acceptés `[10,20]` et une majoration locale de `5` affiche `35`
+pendant l’édition. Annuler conserve l’agrégat accepté du parent. Enregistrer accepte ces valeurs et
+actualise l’agrégat parent. L’envoi complet utilise toujours `prepareSubmission()` ; `engine.eval()`
+conserve son contrat scalaire intrinsèque.
+
+## Consultation des valeurs acceptées
+
+Les moteurs scalaires acceptent `mode: 'readonly' | 'edit'` (`edit` par défaut). En readonly,
+`eval()` calcule les conditions et la validation intrinsèque depuis les valeurs fournies, conserve
+les calculs et n'applique pas les valeurs par défaut manquantes. Le host appelle `setMode('edit')`,
+puis `eval()` ; `getMode()` lit le mode courant. Changer de mode ne répète pas load, ne restaure pas
+une ancienne copie de la base et n'enregistre rien.
+
+Pour un arbre, utilisez `evaluateScope(snapshot, { interactionMode: 'readonly', instancePath })`.
+Le résultat contient l'état et la validation intégrée des valeurs acceptées sans calculer.
+La modification est le défaut. Les politiques de `evaluate()` et `prepareSubmission()` restent identiques.

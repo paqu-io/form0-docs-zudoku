@@ -14,6 +14,7 @@ Per un ripristino completo, preferisci `initialSnapshot`:
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
   schema={schema}
   initialSnapshot={{
     raw_values: saved.raw_values,
@@ -65,7 +66,64 @@ stato dell'applicazione esterno al renderer.
 
 Vedi il controller e il contratto degli ambiti in [FormRenderer](/it/bindings/react/form-renderer).
 
-`engineOptions.events`: `lifecycle` (false), `recordKind` (new/existing), `fieldInteractions` ([]).
+`engineOptions.events`: `lifecycle` (true), `recordKind` obbligatorio (new/existing), `fieldInteractions` ([focus, blur, click]). Usa `lifecycle: false` per il ciclo legacy o `fieldInteractions: []` per disabilitare le interazioni automatiche.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
 
 La preparazione non persiste né chiude. Le bozze radice mantengono i risultati nel riepilogo; submit normale e accettazione delle righe sono bloccati dalla validazione. I diagnostici di calcolo restano separati. Nessuna valutazione o aggregazione delle righe chiuse.
+
+## Revisione dei calcoli figli e persistenza
+
+L’invio ordinario aggiorna automaticamente i calcoli figli chiusi se l’impostazione è omessa.
+`form.repeatable_recalculation: 'confirm'` richiede revisione. L’host può imporla con `mode: 'confirm'`,
+ma `automatic` non può ridurre il requisito del modulo. `allowRetain` è un permesso esplicito e non
+attiva da solo la conferma. La scelta riguarda tutti i figli interessati o nessuno. La preparazione
+radice è rifiutata se rimane un editor figlio non accettato.
+
+La revisione mostra titoli/percorsi, etichette, vecchi/nuovi valori e conteggi in pagine limitate.
+Personalizza i testi con `submissionOptions.messages`. Tutti gli esiti di validazione restano
+disponibili con i percorsi; l’interfaccia li pagina e porta al record o campo interessato. Gli esiti
+personalizzati di ambito appartengono al record, senza attribuirli a un campo inventato.
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
+  schema={schema}
+  initialSnapshot={savedSnapshot}
+  initialFreshness={savedFreshness}
+  submissionOptions={{ mode: "confirm", allowRetain: true }}
+  onSubmit={async (record, meta) => {
+    await storage.save({ record, freshness: meta.freshness })
+  }}
+/>
+```
+
+Il completamento corretto del callback riconosce la persistenza. Salva insieme record selezionato e
+compagno di freschezza prima di risolvere; genera un errore o rifiuta in caso di fallimento o
+annullamento. Scegliere `20 → 24` conserva `24` come lavoro non salvato se validazione o persistenza
+falliscono dopo. La freschezza resta fuori dai valori salvati. Ripristinala con `initialFreshness`;
+riconoscimenti vecchi non cancellano stati in sospeso nuovi. Con totali mantenuti `[110,220]`, la somma
+inviata è `330`, mai il `360` della proposta aggiornata.
+
+I controller di preparazione non aprono dialoghi né salvano dati. Controlla `eligible`, gestisci
+`requires_decision` con `payload: null` e riconosci solo il `preparationId` salvato correttamente.
+Le pagine contengono 50 modifiche per impostazione predefinita e al massimo 100. Continua con
+`prepareSave()` e `decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Input/configurazioni
+modificati o una nuova preparazione invalidano la revisione. La validazione precede l’hook di
+salvataggio, eseguito una volta; le sue scritture possono richiedere revisione senza ripetere l’hook.
+
+```js
+const prepared = await controller.prepareSave({ intent: "submit", signal })
+if (prepared.status === "requires_decision") {
+  const page = await controller.getSaveChanges({
+    preparationId: prepared.preparationId,
+    offset: 0,
+    limit: 50,
+  })
+  showReview(prepared, page)
+} else if (prepared.eligible) {
+  await storage.save({ record: prepared.payload, freshness: prepared.meta.freshness })
+  controller.acknowledgeSave({ preparationId: prepared.preparationId })
+}
+```
+
+I worker conservano revisioni e report internamente. Le risposte ordinarie contengono dati selezionati e riepiloghi; i dettagli vengono richiesti in pagine limitate. Gli helper di tipo funzione restano esclusi dai worker. Segnali e callback non vengono inviati nei messaggi di clonazione strutturata.

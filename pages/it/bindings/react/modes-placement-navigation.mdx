@@ -14,6 +14,29 @@ quando l'applicazione host deve spiegare perché la modifica non è disponibile.
 `showPrimaryActionsInViewMode` controlla se le azioni principali disabilitate restano visibili in
 modalità di visualizzazione.
 
+## Modalità di apertura delle voci ripetibili
+
+`repeatableEntryMode` accetta `readonly` (predefinito) o `edit` per le righe esistenti a ogni livello
+di annidamento. Le righe esistenti si aprono in visualizzazione con Edit se il record padre consente
+la modifica; le nuove si aprono in modifica. Un padre in sola lettura consente di consultare i
+discendenti, ma ne impedisce la modifica, l’aggiunta e la rimozione. L’opzione di modifica diretta
+non supera le restrizioni del padre.
+
+La visualizzazione conserva i valori calcolati accettati senza eseguire calcoli né applicare
+valori predefiniti mancanti. Condizioni e validazione intrinseca usano questi valori. Modifica
+valuta con i valori attuali degli antenati consentiti. Con totali accettati 110/220 e radice 330,
+visualizzare conserva 110/220; modificare la riga 1 produce 120, salvarla porta la radice a 340 e
+annullare conserva 330. Dopo un errore di persistenza, i valori selezionati restano lavoro non
+salvato tornando in visualizzazione.
+
+L'apertura gestita attende `load-record`/`load-repeatable`, poi l'evento new/edit corrispondente in
+modifica diretta. Visualizzazione → Modifica esegue edit senza ripetere load. `event.mode` è
+`readonly` o `edit` per il record che esegue l'evento, indipendentemente dal modo del padre.
+Visualizzare consente letture, ALERT e ON/OFF dell'ambito; una scrittura rifiuta l'intero lotto
+prima della delega all'host. Sposta l'inizializzazione che scrive in new/edit o proteggi i setter
+di load per la modifica diretta. Serve la versione coordinata del core con controllo del modo;
+la struttura dello schema e del record salvato resta invariata.
+
 ## Posizionamento
 
 `formPlacement` accetta:

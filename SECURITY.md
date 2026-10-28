@@ -40,3 +40,20 @@ package. Vulnerabilities in an upstream dependency may also need to be reported 
 project.
 
 For ordinary questions and documentation support, see [SUPPORT.md](./SUPPORT.md).
+
+## Documentation build dependencies
+
+CI audits both the production install tree and the complete documentation build tree using
+`security:audit:prod` and `security:audit:all`. The existing production audit remains a required
+quality check. The complete build-tree audit is informational: its findings remain visible in CI
+for maintenance without blocking merges or deployment. Build, test and other quality checks retain
+their existing failure behavior.
+
+The overrides in package.json keep the current Zudoku release while selecting patched Hono,
+Piscina, Vite, GraphQL Tools utilities and PostCSS selector parsing dependencies. Argparse 2 retains
+its legacy API and removes the unpatched sprintf-js dependency used by the older YAML CLI. Tests
+cover frontmatter parsing/serialization, that CLI and GraphQL query execution across these overrides.
+Compatible lockfile updates also select patched brace-expansion, fast-uri and source-map-js versions.
+
+Reassess overrides when upstream dependency pins include the fixes. Run source/localization tests,
+dependency compatibility tests and both audits locally; production/rendered validation runs in PR CI.

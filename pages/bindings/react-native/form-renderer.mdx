@@ -10,6 +10,7 @@ sections, and produces structured records or restorable snapshots.
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
   schema={schema}
   initialValues={{ name: "Ada" }}
   mode="edit"
@@ -21,16 +22,17 @@ sections, and produces structured records or restorable snapshots.
 
 ## Essential properties
 
-| Property           | Purpose                                                        |
-| ------------------ | -------------------------------------------------------------- |
-| `schema`           | A form0 schema containing `form.elements`.                     |
-| `initialValues`    | Initial non-repeatable field values.                           |
-| `initialSnapshot`  | Restore raw values, repeatable state, and timestamps together. |
-| `overrideValues`   | Apply authoritative values over initial values.                |
-| `onSubmit`         | Receive a validation-gated structured record and metadata.     |
-| `onSave`           | Receive a snapshot without requiring the form to be valid.     |
-| `onSnapshotChange` | Observe seed and user-change snapshots.                        |
-| `mode`             | Start in `edit` or `readonly` mode.                            |
+| Property              | Purpose                                                                                            |
+| --------------------- | -------------------------------------------------------------------------------------------------- |
+| `schema`              | A form0 schema containing `form.elements`.                                                         |
+| `initialValues`       | Initial non-repeatable field values.                                                               |
+| `initialSnapshot`     | Restore raw values, repeatable state, and timestamps together.                                     |
+| `overrideValues`      | Apply authoritative values over initial values.                                                    |
+| `onSubmit`            | Receive a validation-gated structured record and metadata.                                         |
+| `onSave`              | Receive a snapshot without requiring the form to be valid.                                         |
+| `onSnapshotChange`    | Observe seed and user-change snapshots.                                                            |
+| `mode`                | Start in `edit` or `readonly` mode.                                                                |
+| `repeatableEntryMode` | Opening mode for existing repeatable rows: `readonly` (default) or `edit`; new rows start editing. |
 
 ## Host integration
 
@@ -60,6 +62,7 @@ const findingsByScope = new Map()
 ;<FormRenderer
   schema={schema}
   engineOptions={{
+    events: { recordKind: "new" },
     diagnostics: { console: false },
     onDiagnostics(snapshot, meta) {
       if (meta.kind === "scope-ended") findingsByScope.delete(meta.scopeId)
@@ -83,13 +86,13 @@ Calculation diagnostics remain outside `state.errors`, saved snapshots and recor
 
 ## Managed events and custom validation
 
-This integration requires form0-react-native 0.5.0 or newer and core 0.5.1 or newer. Expanded automatic lifecycle events are opt-in:
+Current bindings use core 0.8.1 or later. Lifecycle and supported focus/blur/click interactions are enabled by default:
 
 ```jsx
 <FormRenderer
   schema={schema}
   engineOptions={{
-    events: { lifecycle: true, recordKind: "existing", fieldInteractions: ["focus", "blur"] },
+    events: { recordKind: "existing" },
     onEventController: (controller) => {
       controllerRef.current = controller
     },
@@ -97,11 +100,7 @@ This integration requires form0-react-native 0.5.0 or newer and core 0.5.1 or ne
 />
 ```
 
-`recordKind` must explicitly be `new` or `existing`; values never determine it. Configuration is
-fixed for an editor session; remount to change classification, lifecycle, helpers or security.
-Callbacks remain live. Without opt-in, automatic root load/edit/change behavior is preserved.
-Readonly opening runs load only; editable opening runs load then new/edit. Open rows use the
-repeatable equivalents and their actual classification.
+`recordKind` must explicitly be `new` or `existing`; omission is a configuration error unless `lifecycle: false` is explicit. Values never determine classification. Configuration belongs to an editor session; remount to change classification, lifecycle, helpers or security. Callbacks remain live. Readonly opening runs load; editing runs load then new/edit. Open rows use repeatable events and their actual classification. Use `lifecycle: false` to preserve legacy lifecycle and `fieldInteractions: []` to disable automatic interactions. Built-in text/numeric inputs emit focus and blur; choices use change. Automatic click is reserved for supported activation fields. There is currently no HyperlinkField and no built-in control automatically emits click. Explicit host controller dispatch remains available.
 
 The generation-bound controller is delivered after initialization and retired with `null`.
 `dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` returns a promise with `status`,
@@ -126,9 +125,8 @@ Calculation diagnostics alone never block saving. Closed-row freshness and aggre
 
 User edits emit contextual change after updates settle. Accepted row membership changes include
 `action` (add/edit/remove) and `affectedInstancePath`; enabled status fields emit user-only change-status.
-Defaults, SETVALUE and calculations do not emit additional change. Extra interactions default to none;
-built-in text/numeric controls support focus/blur/click (Native click means input press). Other controls
-may dispatch explicitly. Async onOperations work and selective applyDefault work are awaited; the
+Defaults, SETVALUE and calculations do not emit additional change. Interaction subscriptions default on; text/numeric controls emit focus/blur and choices use change.
+No built-in control automatically emits click. Explicit host controller dispatch remains available. Async onOperations work and selective applyDefault work are awaited; the
 fallback expires with its dispatch. Alerts remain renderer-owned and occur once.
 
 Confirmed cancel runs cancel then unload; supported successful closes run unload before disposal.

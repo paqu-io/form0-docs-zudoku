@@ -20,7 +20,7 @@ import { DateField } from "./date-field.jsx"
 export function AppForm({ schema }) {
   return (
     <FieldRegistryProvider renderers={{ DateField }}>
-      <FormRenderer schema={schema} />
+      <FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
     </FieldRegistryProvider>
   )
 }

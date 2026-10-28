@@ -10,6 +10,7 @@ sections natifs, et produit des enregistrements structurés ou des snapshots res
 
 ```jsx
 <FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
   schema={schema}
   initialValues={{ name: "Ada" }}
   mode="edit"
@@ -21,16 +22,17 @@ sections natifs, et produit des enregistrements structurés ou des snapshots res
 
 ## Propriétés essentielles
 
-| Propriété          | Rôle                                                                                       |
-| ------------------ | ------------------------------------------------------------------------------------------ |
-| `schema`           | Un schéma form0 contenant `form.elements`.                                                 |
-| `initialValues`    | Valeurs initiales des champs non répétables.                                               |
-| `initialSnapshot`  | Restaure ensemble les valeurs brutes, l’état des sections répétables et les horodatages.   |
-| `overrideValues`   | Applique des valeurs prioritaires sur les valeurs initiales.                               |
-| `onSubmit`         | Reçoit l’enregistrement structuré et ses métadonnées, uniquement si la validation réussit. |
-| `onSave`           | Reçoit un snapshot sans exiger que le formulaire soit valide.                              |
-| `onSnapshotChange` | Observe les snapshots d’initialisation et de modification par l’utilisateur.               |
-| `mode`             | Démarre en mode `edit` ou `readonly`.                                                      |
+| Propriété             | Rôle                                                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `schema`              | Un schéma form0 contenant `form.elements`.                                                                                |
+| `initialValues`       | Valeurs initiales des champs non répétables.                                                                              |
+| `initialSnapshot`     | Restaure ensemble les valeurs brutes, l’état des sections répétables et les horodatages.                                  |
+| `overrideValues`      | Applique des valeurs prioritaires sur les valeurs initiales.                                                              |
+| `onSubmit`            | Reçoit l’enregistrement structuré et ses métadonnées, uniquement si la validation réussit.                                |
+| `onSave`              | Reçoit un snapshot sans exiger que le formulaire soit valide.                                                             |
+| `onSnapshotChange`    | Observe les snapshots d’initialisation et de modification par l’utilisateur.                                              |
+| `mode`                | Démarre en mode `edit` ou `readonly`.                                                                                     |
+| `repeatableEntryMode` | Ouverture des lignes répétables existantes : `readonly` (par défaut) ou `edit` ; les nouvelles s’ouvrent en modification. |
 
 ## Intégration avec l’application host
 
@@ -63,6 +65,7 @@ const findingsByScope = new Map()
 ;<FormRenderer
   schema={schema}
   engineOptions={{
+    events: { recordKind: "new" },
     diagnostics: { console: false },
     onDiagnostics(snapshot, meta) {
       if (meta.kind === "scope-ended") findingsByScope.delete(meta.scopeId)
@@ -86,13 +89,13 @@ Les diagnostics de calcul restent hors de `state.errors`, des snapshots enregist
 
 ## Événements gérés et validation personnalisée
 
-Cette intégration exige form0-react-native 0.5.0 ou une version ultérieure et core 0.5.1 ou une version ultérieure. Le cycle de vie automatique étendu doit être activé explicitement :
+Les bindings actuels utilisent core 0.8.1 ou ultérieur. Le cycle de vie et les interactions compatibles focus/blur/click sont activés par défaut :
 
 ```jsx
 <FormRenderer
   schema={schema}
   engineOptions={{
-    events: { lifecycle: true, recordKind: "existing", fieldInteractions: ["focus", "blur"] },
+    events: { recordKind: "existing" },
     onEventController: (controller) => {
       controllerRef.current = controller
     },
@@ -100,11 +103,7 @@ Cette intégration exige form0-react-native 0.5.0 ou une version ultérieure et 
 />
 ```
 
-`recordKind` doit être explicitement `new` ou `existing`, jamais déduit des valeurs. La configuration
-est fixe pour la session ; remontez l’éditeur pour changer classification, cycle, helpers ou sécurité.
-Les callbacks restent actualisables. Sans activation, le comportement racine load/edit/change est
-conservé. Une ouverture en lecture seule exécute load ; l’édition exécute load puis new/edit.
-Les lignes ouvertes utilisent les événements repeatable et leur classification réelle.
+`recordKind` doit être explicitement `new` ou `existing` ; son absence est une erreur sauf avec `lifecycle: false`. Les valeurs ne déterminent jamais la classification. La configuration est fixe pour la session ; remontez pour changer classification, cycle, helpers ou sécurité. Les callbacks restent actualisables. La lecture seule exécute load ; l’édition exécute load puis new/edit. Les lignes ouvertes utilisent leurs événements repeatable et leur classification réelle. Utilisez `lifecycle: false` pour conserver le cycle historique et `fieldInteractions: []` pour désactiver les interactions. Les contrôles texte et numériques émettent focus et blur ; les choix utilisent change. Le click automatique est réservé aux champs d’activation pris en charge. HyperlinkField n’existe pas actuellement et aucun contrôle intégré n’émet click automatiquement. Le dispatch explicite du contrôleur du host reste disponible.
 
 Le contrôleur lié à la génération est fourni après initialisation et retiré avec `null`.
 `dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` renvoie une promesse avec `status`,
@@ -131,9 +130,9 @@ La fraîcheur des lignes fermées et l’agrégation restent séparées.
 
 Les modifications utilisateur émettent change après stabilisation. Les changements de lignes acceptés
 incluent `action` (add/edit/remove) et `affectedInstancePath` ; le statut activé émet change-status
-uniquement pour l’utilisateur. Defaults, SETVALUE et calculs n’ajoutent pas de change. Les interactions
-supplémentaires sont désactivées ; texte/nombre supportent focus/blur/click (pression du champ en Native).
-Les autres contrôles peuvent faire dispatch explicitement. Les promesses onOperations et le traitement
+uniquement pour l’utilisateur. Defaults, SETVALUE et calculs n’ajoutent pas de change. Les abonnements aux interactions sont activés par défaut ; texte/nombre émettent focus/blur et les
+choix utilisent change. Aucun contrôle intégré n’émet click automatiquement. Le dispatch explicite
+du contrôleur du host reste disponible. Les promesses onOperations et le traitement
 sélectif applyDefault sont attendus ; le fallback expire avec le dispatch. Le renderer possède ALERT
 et le présente une seule fois.
 

@@ -67,8 +67,7 @@ Calculations and field-event handlers follow these access rules. A calculation r
 allowed fields reads `undefined`, and the engine reports a warning such as
 `Field 'line_total' is not accessible from current context`.
 
-Condition scope enforcement described here is for the forthcoming core release addressing #103.
-Published core 0.5.1 does not enforce these condition ownership checks.
+Condition scope enforcement is available from core 0.6.0.
 
 `visible_conditions`, `required_conditions` and `read_only_conditions` use the same read scopes
 shown above: root fields, fields in the current row and fields in ancestor rows. Descendant rows,
@@ -119,3 +118,20 @@ handlers follow their declared scope; ancestor reads and local-only writes remai
 
 When the form is submitted, each row becomes a child record of the main record. See
 [Output and records](/core/output-records).
+
+## Explicit collection reads
+
+A named nested RepeatableSection may have many record instances without duplicating its data_name.
+For example, one `projects` definition contains one `tasks` definition: P1 has task costs `[10,20]`,
+and P2 has `[100]`. At root, `REPEATABLEVALUES($tasks, 'cost')` returns `[10,20,100]`; inside P1 it
+returns `[10,20]`. Known ancestor identities anchor collection reads. Unrelated nested branches are
+rejected, and the target must belong to the named section's rows. Explicit ancestor-owned collections
+can include sibling rows; ordinary scalar reads/writes gain no additional permissions.
+
+Collection membership includes accepted rows even when hidden. Submission validation separately
+excludes hidden ancestors. Use a root collection result and a payment-local boolean helper for
+inspection-dependent visibility; missing numeric values should be handled explicitly, for example
+`$scores.some(score => typeof score === 'number' && score < 80)`.
+
+These collection/record-evaluator interfaces are forthcoming after 0.6.0 and require separate
+consumer adoption. Existing condition-scope enforcement remains unchanged.

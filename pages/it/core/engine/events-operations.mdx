@@ -42,8 +42,9 @@ ON("load-record", function onLoad() {
   esattamente la stringa di registrazione e non converte tra `key` e `data_name`.
 - Ometti il campo per eseguire il gestore per tutti i campi.
 - Un tipo di evento sconosciuto stampa un avviso e il gestore non viene registrato.
-- Registra ogni gestore al livello più alto di `form.events.code`. `ON` e `OFF` chiamati all'interno
-  di un gestore non hanno effetto.
+- `ON`/`OFF` sincroni nei gestori consentiti aggiornano i listener del motore dopo un dispatch
+  riuscito. Un lotto rifiutato non registra nulla. I callback annidati scritti nello schema
+  funzionano su Hermes senza catturare le variabili locali del gestore esterno.
 
 ## Come viene eseguito il codice dei gestori
 
@@ -79,7 +80,7 @@ dichiarazioni di funzione, le espressioni di funzione e le arrow function scritt
 momento.
 
 Per qualsiasi altro callback, il motore legge il codice sorgente con `toString()`. Rientrano in
-questo caso i callback che provengono da `helpers` o vengono creati durante l'esecuzione, i metodi
+questo caso i callback che provengono da `helpers`, i metodi
 degli oggetti, i getter e i setter e i membri delle classi. Questo funziona in Node.js e nei
 browser, ma non su Hermes, dove il motore stampa `Event callback source is unavailable` ed esegue
 gli altri gestori.
@@ -195,8 +196,28 @@ Configura `eventScope.instancePath` quando crei un motore di riga senza renderer
 
 `INVALID(message)` è disponibile durante l’esecuzione gestita di `validate-record` e `validate-repeatable` e richiede una stringa non vuota. I risultati appartengono all’ambito, senza associazione a un campo, e restano fuori da `state.errors`, diagnostica dei calcoli, valori e metadati salvati. I gestori di validazione rifiutano operazioni su valori/interfaccia e promesse. I gestori di annullamento e scaricamento sono notifiche di sola lettura e rifiutano anche risultati di validazione e avvisi.
 
-Il registro aggiunge `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` e `change-status`. Registrarli non li rende automatici. `save-record` e `save-repeatable` rimangono eventi prima del salvataggio; non vengono introdotti eventi di schema `saved-*`. React 0.4.0, React Native 0.5.0 e CLI 0.7.0 adottano ciclo di vita esteso, controller e preparazione del salvataggio. L’integrazione automatica del ciclo di vita rimane facoltativa.
+Il registro aggiunge `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` e `change-status`. Registrarli non li rende automatici. `save-record` e `save-repeatable` rimangono eventi prima del salvataggio; non vengono introdotti eventi di schema `saved-*`. React 0.4.0, React Native 0.5.0 e CLI 0.7.0 adottano ciclo di vita esteso, controller e preparazione del salvataggio. I binding attuali abilitano il ciclo di vita per impostazione predefinita e richiedono classificazione esplicita new/existing. Anche CLI abilita questi eventi nell’anteprima browser; i comandi indipendenti rimangono gestiti dall’host.
 
 Consulta il [contratto degli eventi mantenuto](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) per il contratto completo e le fasi di consegna. La politica generale di validazione, l’aggiornamento delle righe chiuse e la responsabilità di persistenza restano lavori separati.
 
 Gli oggetti media File/Blob nativi sono copiati difensivamente, mantenendo metadati standard e contenuto binario immutabile. La correzione è inclusa in core 0.5.1. Gli altri oggetti non portabili sono rifiutati; gli handler asincroni restano non supportati.
+
+## Modalità e visualizzazione dei valori accettati
+
+Ogni gestore riceve `event.mode: 'readonly' | 'edit'`, controllato dal motore. Descrive il record
+che esegue l'evento, incluso un figlio visualizzato con padre modificabile. Nuovo/esistente,
+intento bozza e campi di sola lettura restano indipendenti. I metadati del chiamante e le assegnazioni
+del gestore non concedono permessi. La validazione degli ambiti chiusi riceve `readonly` senza
+aprirli; quella dell'editor conserva la sua modalità e produce solo segnalazioni.
+
+Load viene eseguito una volta per apertura in entrambe le modalità. La modifica diretta attende
+load prima di new/edit. Visualizzazione → Modifica esegue edit senza ripetere load. Visualizzare
+consente letture dei valori accettati, ALERT e modifiche dei listener dell'ambito. SETVALUE o
+un'altra scrittura rifiuta l'intero lotto, inclusi avvisi e listener, prima della delega.
+`triggerDetailed()` restituisce problemi di esecuzione; `trigger()` precedente non restituisce
+operazioni ed emette avvisi strutturati. La vista resta disponibile.
+
+Per inizializzare ogni ingresso in modifica, usa new/edit invece di load protetto. Il catalogo dei
+builtin dichiara gli effetti; operazioni o effetti sconosciuti vengono rifiutati. Restano le
+restrizioni di validazione/chiusura. Gli effetti esterni degli helper privilegiati non vengono
+annullati dalle operazioni; modificare non autorizza la persistenza esterna.

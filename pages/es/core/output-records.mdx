@@ -34,5 +34,35 @@ const record = createStructuredRecord(state, fields, {
 
 ## Secciones repetibles
 
+### Serialización cooperativa
+
+Para un registro evaluado grande, `createStructuredRecordAsync` usa la misma transformación y
+cede el control al entorno entre filas. Mantén estables el estado, los campos y las opciones hasta
+que termine; los controladores de envío de los bindings ya controlan la instantánea seleccionada.
+
+```js
+const abortController = new AbortController()
+const record = await createStructuredRecordAsync(
+  snapshot,
+  fields,
+  {
+    originalElements: schema.form.elements,
+    mainRecordId: 0,
+  },
+  {
+    signal: abortController.signal,
+    budgetMs: 8,
+    yieldToHost,
+  },
+)
+```
+
+El cuarto argumento controla la planificación y queda fuera del registro. `yieldToHost` es una
+función opcional que devuelve una promesa para una tarea del entorno; sin ella, core usa un
+temporizador. La cancelación rechaza la promesa con `AbortError` y no devuelve un registro parcial.
+Este método no realiza cálculos, validación ni persistencia. Conserva la estructura del registro,
+el ID cero, el orden de las filas, el formato multimedia, los títulos y las reglas de marcas de
+tiempo del serializador síncrono. Los formateadores de campos siguen siendo síncronos.
+
 Las secciones repetibles crean registros anidados. Utiliza `originalElements` para conservar la
 estructura de anidamiento correcta al crear registros.

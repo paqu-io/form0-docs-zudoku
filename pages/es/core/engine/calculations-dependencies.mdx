@@ -259,3 +259,17 @@ Un campo calculado dentro de una `RepeatableSection` se ejecuta una vez por cada
 referencia a campos del formulario principal, a campos de su propia fila y a campos de las filas que
 la contienen. Una referencia a un campo fuera de ese ámbito lee `undefined` y genera un aviso.
 Consulta [Ámbitos padre e hijo](/es/core/engine/parent-child-scopes).
+
+## Vista previa de expresiones de colección en Builder
+
+reform Builder ofrece Automático / Preguntar antes de actualizar los cálculos secundarios en los
+ajustes raíz. La segunda opción escribe `form.repeatable_recalculation: 'confirm'`; omitirla mantiene
+el modo automático. El autocompletado y validación usan metadatos de core exclusivos de cálculos.
+
+Las expresiones escalares conservan su vista previa rápida. Para colecciones directas o dependientes,
+usa **Aplicar y previsualizar formulario**. Aplica al documento sin guardar y abre la vista previa
+completa existente; no guarda ni publica el esquema. Añade costes `10` y `20` para obtener `30`.
+En proyectos anidados, cada proyecto agrega sus propias tareas aceptadas.
+
+Publica core con `evaluateScope()` antes de actualizar bindings, CLI y aplicaciones dependientes.
+Core 0.7.0 incorpora la preparación completa; la evaluación del editor es una capacidad adicional.

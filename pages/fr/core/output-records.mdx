@@ -34,5 +34,35 @@ const record = createStructuredRecord(state, fields, {
 
 ## Sections répétables
 
+### Sérialisation coopérative
+
+Pour un grand enregistrement évalué, `createStructuredRecordAsync` utilise la même transformation
+et rend le contrôle à l'environnement entre les lignes. Gardez l'état, les champs et les options
+stables jusqu'à la fin ; les contrôleurs de soumission des bindings possèdent déjà l'instantané choisi.
+
+```js
+const abortController = new AbortController()
+const record = await createStructuredRecordAsync(
+  snapshot,
+  fields,
+  {
+    originalElements: schema.form.elements,
+    mainRecordId: 0,
+  },
+  {
+    signal: abortController.signal,
+    budgetMs: 8,
+    yieldToHost,
+  },
+)
+```
+
+Le quatrième argument contrôle la planification et reste hors de l'enregistrement. `yieldToHost`
+est une fonction facultative renvoyant une promesse pour une tâche de l'environnement ; sans elle,
+core utilise un temporisateur. L'annulation rejette la promesse avec `AbortError` sans renvoyer
+d'enregistrement partiel. Cette méthode n'effectue ni calcul, ni validation, ni persistance. Elle
+conserve la structure du sérialiseur synchrone, l'ID zéro, l'ordre des lignes, le format des médias,
+les titres et les règles d'horodatage. Les formateurs de champs restent synchrones.
+
 Les sections répétables créent des enregistrements imbriqués. Utilisez `originalElements` pour conserver
 la bonne structure d'imbrication lors de la création des enregistrements.

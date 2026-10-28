@@ -135,3 +135,105 @@ const operations = engine.trigger("change", "quantity")
 
 Your application is responsible for applying the returned operations and for deciding when an
 empty required field blocks submission.
+
+## Record-tree preparation
+
+`createRecordEvaluator({ schema, helpers, security })` shares the existing expression executor and
+scope rules, and coordinates actual root/child record instances. Hosts use this API to select and
+validate one snapshot before persistence, and apply its result through their renderer or controller.
+`engine.eval()` retains its existing intrinsic-state behavior.
+
+```js
+import { createRecordEvaluator } from "form0-core"
+
+const evaluator = createRecordEvaluator({ schema })
+const accepted = await evaluator.evaluate(snapshot)
+const refreshed = await evaluator.evaluate(snapshot, { mode: "refresh" })
+const prepared = await evaluator.prepareSubmission(snapshot)
+```
+
+`snapshot` uses `{ values, repeatable }`. Each row retains its existing `id`, `values`, nested
+`repeatable`, attachments and metadata. Values use data_names; repeatable maps use schema keys when
+present. Stored choice objects must first be converted to live shape with existing record utilities.
+No call mutates the input, persists data, generates record IDs/timestamps or applies a proposal to UI.
+
+Accepted mode keeps closed child calculations and recomputes root aggregates from accepted values.
+Saving a child amount from 100 to 150 updates the aggregate when the host supplies that accepted row;
+cancelling the edit does not. Refresh mode prepares all child calculations together. With tax changed
+from 10% to 20%, accepted child total 110 becomes proposed 120. Validation and output use the same
+selected snapshot. Real record-spanning dependency cycles fail without a partial snapshot; local
+calculation diagnostics retain their existing separate semantics.
+
+`prepareSubmission` accepts `intent: 'submit' | 'draft'`, `mode: 'automatic' | 'confirm'`,
+`allowRetain: true`, and `managedEvents: true` (both flags default false). Automatic is the default;
+a host-required confirmation cannot weaken schema confirmation. Changed child values in confirm
+mode return `status: 'requires_decision'`, `reviewId`, `proposal`, `changes`, `choices` and
+`snapshot: null`. The proposal is for review, not delivery. After an explicit host/user decision,
+call again with current inputs, identical policy options and
+`decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Retention requires host permission
+on both calls. New preparations, changed inputs/options or another evaluator invalidate the review;
+acceptance uses the captured values, and decisions are single-use.
+
+Check `eligible` before delivery. Status is `ready`, `blocked`, `requires_decision`, `failed` or
+`cancelled`. `validationSummary`, calculation `diagnostics` and execution `issues` remain separate.
+Drafts retain child calculations without a dialog and allow ordinary validation failures. They still
+report those failures and pending freshness; execution failures prevent eligibility.
+
+Persist `freshness` separately from the record: `{ version: 1, status: 'current' | 'pending',
+schemaRevision, affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Restore it for the host's
+pending-state UI. Every new preparation recomputes from current inputs; metadata is not a replayable
+proposal. Clear stored pending status only after persisting the corresponding current result.
+
+Each affected entry represents one row; `fields` lists its changed calculation identities. Complete
+ancestry is stored once per row, preserving ID zero and positional targeting. Current freshness has
+an empty affected list.
+
+Handler registration uses each selected scope; parsing and compilation are shared.
+
+Managed preparation runs root and participating closed-row validation only, with current selected
+ancestor values. It does not replay closed-row load/edit/save/unload. Hosts keep the existing
+validate → save once → conditional re-evaluate/revalidate → serialize sequence. Changed save-hook
+inputs invalidate an earlier review without rerunning that hook. `event.isValid` describes built-in
+validity of its executing scope; combined tree validity is in the summary.
+
+Evaluation supports `signal`, an 8ms default scheduling target (`budgetMs`) and optional async
+`yieldToHost`. Individual expressions remain synchronous and can exceed a scheduling slice. Schema
+analysis is shared; no permanent engine per closed row is required. Preview sessions also expose
+`runRecord({ snapshot, instancePath })` for explicit tree-aware calculation preview.
+
+## Evaluate one open record
+
+`evaluateScope()` evaluates only the selected record, using supplied current ancestors and accepted
+other rows. An empty `instancePath` selects the root. Child paths contain every ancestry segment;
+identified rows resolve by ID, including zero. Positional paths refer to the captured ordering.
+Invalid paths fail explicitly. The result contains `state`, built-in `validationSummary`, changes,
+diagnostics and execution issues, with no additional complete record tree. It does not mutate the
+caller, refresh closed rows, run lifecycle events, persist data or generate IDs/timestamps.
+
+```js
+const editor = await evaluator.evaluateScope(snapshot, {
+  instancePath: [],
+  signal,
+  budgetMs: 8,
+  yieldToHost,
+})
+if (editor.status === "evaluated") {
+  renderEditor(editor.state, editor.validationSummary)
+}
+```
+
+For example, a project with accepted task costs `[10,20]` and a local surcharge of `5` displays
+`35` while editing. Cancelling leaves the parent's accepted aggregate unchanged. Saving the project
+accepts those values and updates its parent's aggregate. Whole-record submission still uses
+`prepareSubmission()`; intrinsic `engine.eval()` retains its existing scalar contract.
+
+## Accepted-snapshot viewing
+
+Scalar engines accept `mode: 'readonly' | 'edit'` (default `edit`). In readonly, `eval()` computes
+conditions and intrinsic validation from supplied values, preserving calculations and not applying
+missing schema defaults. The host can call `setMode('edit')`, then `eval()`; `getMode()` reads the
+current mode. Switching mode does not replay load, restore older database values or persist work.
+
+For a record tree, use `evaluateScope(snapshot, { interactionMode: 'readonly', instancePath })`.
+It returns field state and built-in validation from supplied accepted values without calculations.
+Editing is the default. Whole-tree `evaluate()` and `prepareSubmission()` policies are unchanged.

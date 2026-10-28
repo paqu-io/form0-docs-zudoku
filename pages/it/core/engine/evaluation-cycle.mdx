@@ -144,3 +144,106 @@ const operations = engine.trigger("change", "quantity")
 
 La tua applicazione è responsabile di applicare le operazioni restituite e di decidere quando un
 campo obbligatorio vuoto blocca l'invio.
+
+## Preparazione dell’albero di record
+
+`createRecordEvaluator({ schema, helpers, security })` riusa l’esecutore di espressioni e le regole di
+ambito esistenti per coordinare istanze reali radice e figlie. Le applicazioni usano questa API per
+selezionare e validare uno snapshot prima della persistenza e applicano il risultato tramite il
+proprio renderer o controller. `engine.eval()` mantiene il contratto dello stato intrinseco.
+
+```js
+import { createRecordEvaluator } from "form0-core"
+
+const evaluator = createRecordEvaluator({ schema })
+const accepted = await evaluator.evaluate(snapshot)
+const refreshed = await evaluator.evaluate(snapshot, { mode: "refresh" })
+const prepared = await evaluator.prepareSubmission(snapshot)
+```
+
+`snapshot` usa `{ values, repeatable }`. Ogni riga conserva `id`, `values`, raccolte `repeatable` annidate,
+allegati e metadati. I valori usano data_names; le raccolte usano le chiavi dello schema, se presenti.
+Converti prima le scelte salvate nel formato di esecuzione con le utilità esistenti. Nessuna chiamata
+modifica l’ingresso, persiste dati, genera ID/timestamp di record o applica proposte all’interfaccia.
+
+Accepted mantiene i calcoli dei figli chiusi e ricalcola gli aggregati radice dai valori accettati.
+Salvare un importo figlio da 100 a 150 aggiorna l’aggregato quando l’host fornisce quella riga
+accettata; annullare non lo cambia. Refresh prepara tutti i calcoli figli insieme. Con imposta dal
+10% al 20%, il totale accettato 110 diventa una proposta 120. Validazione e uscita usano lo stesso
+snapshot selezionato. I cicli reali fra record falliscono senza uno snapshot parziale; i diagnostici
+locali mantengono la semantica separata esistente.
+
+`prepareSubmission` accetta `intent: 'submit' | 'draft'`, `mode: 'automatic' | 'confirm'`,
+`allowRetain: true` e `managedEvents: true` (entrambi false per impostazione predefinita). Automatic
+è il comportamento predefinito; l’host non può indebolire una conferma dello schema. In confirm,
+calcoli figli cambiati restituiscono `status: 'requires_decision'`, `reviewId`, `proposal`, `changes`,
+`choices` e `snapshot: null`. La proposta serve per la revisione, non per l’invio. Dopo una scelta
+esplicita richiama con ingressi correnti, stesse opzioni e
+`decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Retain richiede il permesso dell’host
+in entrambe le chiamate. Nuove preparazioni, ingressi/opzioni diversi o un altro valutatore invalidano
+la revisione. L’accettazione usa i valori catturati; ogni decisione si consuma una volta sola.
+
+Controlla `eligible` prima dell’invio. Gli stati sono `ready`, `blocked`, `requires_decision`, `failed`
+e `cancelled`. `validationSummary`, `diagnostics` e `issues` di esecuzione rimangono separati.
+Le bozze mantengono calcoli figli senza dialogo e consentono errori ordinari, continuando a segnalarli
+insieme all’aggiornamento pendente. I fallimenti di esecuzione impediscono l’idoneità.
+
+Persisti `freshness` fuori dal record: `{ version: 1, status: 'current' | 'pending', schemaRevision,
+affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Ripristinalo per mostrare lo stato pendente.
+Ogni preparazione ricalcola dagli ingressi correnti; i metadati non riproducono proposte. Cancella lo
+stato pendente salvato solo dopo aver persistito il risultato aggiornato corrispondente.
+
+Ogni voce interessata rappresenta una riga; `fields` elenca le identità dei suoi calcoli modificati.
+L’ascendenza completa viene salvata una sola volta per riga, conservando l’ID zero e i riferimenti per
+posizione. Lo stato aggiornato ha un elenco di elementi interessati vuoto.
+
+La registrazione degli handler usa ogni ambito selezionato; analisi e compilazione sono condivise.
+
+La preparazione gestita esegue solo validazione radice e di righe chiuse partecipanti con gli antenati
+selezionati correnti. Non riproduce load/edit/save/unload. L’host mantiene validare → salvare una volta
+→ rivalutare/rivalidare se cambia qualcosa → serializzare. Un hook che cambia ingressi invalida la
+revisione senza essere ripetuto. `event.isValid` descrive la validità intrinseca del suo ambito; quella
+combinata compare nel riepilogo.
+
+Sono disponibili `signal`, un obiettivo di pianificazione di 8ms (`budgetMs`) e `yieldToHost`
+asincrono. Le espressioni restano sincrone e possono superare l’intervallo. L’analisi dello schema è
+condivisa, senza motori permanenti per righe chiuse. Le sessioni di anteprima aggiungono
+`runRecord({ snapshot, instancePath })` per un’anteprima esplicita dell’albero.
+
+## Valutare un record aperto
+
+`evaluateScope()` valuta solo il record selezionato, usando gli antenati attuali forniti e le altre
+righe accettate. Un `instancePath` vuoto seleziona la radice. I percorsi figli includono tutti gli antenati;
+le righe identificate si risolvono per ID, incluso zero. I percorsi posizionali dipendono dall’ordine
+acquisito. I percorsi non validi falliscono esplicitamente. Il risultato contiene `state`, la
+`validationSummary` integrata, modifiche, diagnostica e problemi di esecuzione, senza un altro albero
+completo. Non modifica l’input, aggiorna righe chiuse, esegue eventi del ciclo di vita, salva dati o
+genera ID e timestamp.
+
+```js
+const editor = await evaluator.evaluateScope(snapshot, {
+  instancePath: [],
+  signal,
+  budgetMs: 8,
+  yieldToHost,
+})
+if (editor.status === "evaluated") {
+  renderEditor(editor.state, editor.validationSummary)
+}
+```
+
+Per esempio, un progetto con costi accettati `[10,20]` e una maggiorazione locale di `5` mostra `35`
+durante la modifica. Annullare conserva l’aggregato accettato del padre. Salvare accetta i valori e
+aggiorna l’aggregato del padre. L’invio completo usa ancora `prepareSubmission()`; `engine.eval()`
+mantiene il contratto scalare intrinseco.
+
+## Visualizzazione dei valori accettati
+
+I motori scalari accettano `mode: 'readonly' | 'edit'` (`edit` predefinito). In readonly, `eval()`
+calcola condizioni e validazione intrinseca dai valori forniti, conserva i calcoli e non applica
+valori predefiniti mancanti. L'host chiama `setMode('edit')`, poi `eval()`; `getMode()` legge la modalità
+attuale. Cambiare modalità non ripete load, non ripristina vecchi valori dal database e non salva.
+
+Per un albero usa `evaluateScope(snapshot, { interactionMode: 'readonly', instancePath })`.
+Restituisce stato e validazione incorporata dai valori accettati senza calcolare. La modifica è
+predefinita. Le politiche di `evaluate()` e `prepareSubmission()` restano invariate.

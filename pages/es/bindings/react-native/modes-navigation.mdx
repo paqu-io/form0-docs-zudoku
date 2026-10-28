@@ -15,6 +15,29 @@ Establece `showHeader={false}` cuando la aplicación proporcione su propio encab
 sus propias acciones. `onRequestClose` activa la acción de cancelar y protege los formularios con
 cambios sin guardar mediante una confirmación de descarte.
 
+## Modo de apertura de las entradas repetibles
+
+`repeatableEntryMode` acepta `readonly` (predeterminado) o `edit` para las filas existentes en todos
+los niveles de anidamiento. Las filas existentes se abren en modo de visualización con Edit si el
+registro padre permite editar; las nuevas se abren en modo de edición. Un padre de solo lectura
+permite consultar sus descendientes, pero impide editarlos, añadirlos o eliminarlos. La opción de
+edición directa no anula las restricciones del padre.
+
+La visualización conserva los valores calculados aceptados sin ejecutar cálculos ni aplicar
+valores predeterminados ausentes. Las condiciones y la validación intrínseca usan esos valores.
+Editar evalúa con los valores actuales de los antecesores permitidos. Con totales aceptados
+110/220 y raíz 330, visualizar conserva 110/220; editar la fila 1 produce 120, guardarla da raíz
+340 y cancelar conserva 330. Los valores seleccionados antes de un fallo de persistencia siguen
+siendo trabajo sin guardar al volver a visualización.
+
+La apertura gestionada espera `load-record`/`load-repeatable` y luego el evento new/edit
+correspondiente si se abre en edición. Visualizar → Editar ejecuta edit sin repetir load.
+`event.mode` es `readonly` o `edit` para el registro que ejecuta el evento, independientemente del
+modo del padre. Visualizar permite lecturas, ALERT y ON/OFF del ámbito; una escritura rechaza todo
+el lote antes de delegarlo al host. Mueve la inicialización que escribe a new/edit, o protege los
+setters de load para la edición directa. Requiere la versión coordinada del core con control de
+modo; no cambia la estructura del esquema ni del registro guardado.
+
 ## Secciones y validación
 
 `FormRenderer` se encarga de:
@@ -35,22 +58,11 @@ en lugar de duplicarlo en el estado del componente.
 
 ## Eventos de registro y entradas repetibles
 
-Para el formulario principal, `FormRenderer` dispara automáticamente:
+Con `engineOptions.events.lifecycle: true`, la aplicación debe indicar `recordKind: "new"` o
+`"existing"` para la raíz. La apertura espera `load-record`; la edición directa ejecuta después
+`new-record` o `edit-record`. Las filas usan los eventos `*-repeatable` correspondientes. Visualizar
+ejecuta solo load y conserva los cálculos aceptados; las condiciones y la validación intrínseca siguen activas.
 
-- `load-record` cuando el motor del formulario está listo;
-- `edit-record` cuando el formulario entra en modo de edición, incluso si se inicia en ese modo;
-- `change` después de editar un campo del formulario principal y evaluar sus cálculos y condiciones.
-
-Desde `form0-react-native` 0.3.0, abrir o editar una entrada repetible no dispara automáticamente estos
-eventos para esa fila. Los cálculos, las condiciones y la validación de la fila siguen ejecutándose.
-Si actualizas desde 0.2.x, revisa los manejadores que dependían de eventos automáticos dentro de
-entradas repetibles.
-
-Usa valores predeterminados y cálculos para los valores de las filas, y
-[`onSnapshotChange`](/es/bindings/react-native/values-snapshots-submission) para guardar borradores
-cuando cambien los valores. No dependas de estos eventos automáticos para inicializar filas ni
-gestionar sus ediciones. Consulta
-[Eventos y filas](/es/core/engine/parent-child-scopes#eventos-y-filas) para ver cómo gestionan los
-renderers oficiales los eventos en las filas, y
-[Eventos y operaciones](/es/core/engine/events-operations) para escribir manejadores de eventos en
-el esquema.
+La opción explícita `lifecycle: false` conserva el ciclo de vida heredado. Consulta
+el contrato gestionado en [FormRenderer](/es/bindings/react-native/form-renderer) y
+[Eventos y operaciones](/es/core/engine/events-operations).

@@ -15,6 +15,29 @@ Imposta `showHeader={false}` quando l'applicazione fornisce una propria intestaz
 le proprie azioni. `onRequestClose` abilita l'annullamento e protegge i moduli con modifiche non
 salvate con una conferma di abbandono.
 
+## Modalità di apertura delle voci ripetibili
+
+`repeatableEntryMode` accetta `readonly` (predefinito) o `edit` per le righe esistenti a ogni livello
+di annidamento. Le righe esistenti si aprono in visualizzazione con Edit se il record padre consente
+la modifica; le nuove si aprono in modifica. Un padre in sola lettura consente di consultare i
+discendenti, ma ne impedisce la modifica, l’aggiunta e la rimozione. L’opzione di modifica diretta
+non supera le restrizioni del padre.
+
+La visualizzazione conserva i valori calcolati accettati senza eseguire calcoli né applicare
+valori predefiniti mancanti. Condizioni e validazione intrinseca usano questi valori. Modifica
+valuta con i valori attuali degli antenati consentiti. Con totali accettati 110/220 e radice 330,
+visualizzare conserva 110/220; modificare la riga 1 produce 120, salvarla porta la radice a 340 e
+annullare conserva 330. Dopo un errore di persistenza, i valori selezionati restano lavoro non
+salvato tornando in visualizzazione.
+
+L'apertura gestita attende `load-record`/`load-repeatable`, poi l'evento new/edit corrispondente in
+modifica diretta. Visualizzazione → Modifica esegue edit senza ripetere load. `event.mode` è
+`readonly` o `edit` per il record che esegue l'evento, indipendentemente dal modo del padre.
+Visualizzare consente letture, ALERT e ON/OFF dell'ambito; una scrittura rifiuta l'intero lotto
+prima della delega all'host. Sposta l'inizializzazione che scrive in new/edit o proteggi i setter
+di load per la modifica diretta. Serve la versione coordinata del core con controllo del modo;
+la struttura dello schema e del record salvato resta invariata.
+
 ## Sezioni e validazione
 
 `FormRenderer` gestisce:
@@ -35,22 +58,11 @@ invece di duplicarlo nello stato del componente.
 
 ## Eventi del record e voci ripetibili
 
-Per il modulo principale, `FormRenderer` attiva automaticamente:
+Con `engineOptions.events.lifecycle: true`, l'applicazione specifica `recordKind: "new"` o
+`"existing"` per la radice. L'apertura attende `load-record`; la modifica diretta esegue poi
+`new-record` o `edit-record`. Le righe usano gli eventi `*-repeatable` corrispondenti. Visualizzare
+esegue solo load e conserva i calcoli accettati; condizioni e validazione intrinseca restano attive.
 
-- `load-record` quando il motore del modulo è pronto;
-- `edit-record` quando il modulo entra in modalità di modifica, anche se viene avviato in tale modalità;
-- `change` dopo la modifica di un campo del modulo principale e la valutazione dei suoi calcoli e
-  condizioni.
-
-A partire da `form0-react-native` 0.3.0, aprire o modificare una voce ripetibile non attiva automaticamente
-questi eventi per quella riga. I calcoli, le condizioni e la validazione della riga continuano a
-essere eseguiti. Se aggiorni dalla versione 0.2.x, controlla i gestori che dipendevano dagli eventi
-automatici nelle voci ripetibili.
-
-Usa valori predefiniti e calcoli per i valori delle righe, e
-[`onSnapshotChange`](/it/bindings/react-native/values-snapshots-submission) per salvare le bozze
-quando cambiano i valori. Non affidarti a questi eventi automatici per inizializzare le righe o
-gestirne le modifiche. Vedi [Eventi e righe](/it/core/engine/parent-child-scopes#eventi-e-righe) per
-sapere come i renderer ufficiali gestiscono gli eventi nelle righe, e
-[Eventi e operazioni](/it/core/engine/events-operations) per scrivere gestori di eventi nello
-schema.
+La modalità esplicita `lifecycle: false` conserva il ciclo legacy. Vedi il
+contratto gestito in [FormRenderer](/it/bindings/react-native/form-renderer) e
+[Eventi e operazioni](/it/core/engine/events-operations).

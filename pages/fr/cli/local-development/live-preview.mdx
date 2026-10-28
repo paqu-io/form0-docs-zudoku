@@ -26,18 +26,16 @@ Une évaluation terminée renvoie l’état même si ses diagnostics contiennent
 validation des champs, les opérations d’événement, la soumission et les brouillons conservent
 leur comportement ; les diagnostics n’ajoutent pas d’alertes ni de blocages de soumission.
 
-## Événements portables de l’aperçu (CLI 0.7.0+)
+<span id="événements-portables-de-laperçu-cli-070" />
 
-CLI 0.7.0 aligne l’aperçu intégré sur le contrat d’événements de core. Dans les
-**Paramètres du formulaire**, activez les **Événements portables de l’aperçu** et choisissez
-explicitement **Nouvel enregistrement** ou **Enregistrement existant**. Le cycle de vie est désactivé
-par défaut. L’ouverture en lecture seule exécute uniquement load ; un changement de configuration
-ouvre une nouvelle session avec les valeurs acceptées. `serve --app` conserve les options de l’application.
+## Aperçu des enregistrements et événements du cycle de vie
+
+L’aperçu utilise des API introduites dans core 0.8.1 ; CLI installe core compatible automatiquement. Les nouveaux aperçus activent le cycle de vie et les interactions compatibles focus/blur/click et sélectionnent **Nouvel enregistrement**. Dans **Paramètres du formulaire → Aperçu de l’enregistrement**, choisissez **Enregistrement existant** ou **Ouvrir en lecture seule**. La classification choisit les hooks sans charger d’enregistrement. Les désactivations explicitement sauvegardées restent respectées. **Paramètres avancés des événements** contient les commutateurs de compatibilité. La lecture seule exécute load ; changer la configuration démarre une session avec les valeurs acceptées. `serve --app` conserve les options de l’application. Les bindings proposent des API avec classification explicite du host. Le cycle CLI sans interface conserve sa valeur précédente.
 
 L’initialisation évalue les valeurs effectives, exécute `load-record`, puis `new-record` ou
 `edit-record`. Les changements utilisateur attendent les mises à jour en file ; valeurs par défaut,
 calculs et `SETVALUE()` ne produisent pas de changements supplémentaires. Le statut activé utilise
-`change-status` ; focus/blur texte et numérique et clic sur les liens compatibles sont facultatifs.
+`change-status` ; focus et blur des contrôles texte et numériques sont activés par défaut ; les choix utilisent change. Le click automatique est réservé aux champs d’activation pris en charge. HyperlinkField n’existe pas actuellement et aucun contrôle intégré n’émet click automatiquement. Le dispatch explicite du contrôleur du host reste disponible.
 
 L’envoi suit validation intégrée/personnalisée → `save-record` une fois → nouvelle validation
 uniquement si les valeurs changent → sérialisation finale → envoi au connecteur existant.
@@ -51,8 +49,7 @@ utilisent les événements repeatable et des valeurs provisoires : enregistrer v
 acceptation ; annuler abandonne les modifications imbriquées provisoires. Lecture des champs
 principaux/ancêtres autorisés, écritures limitées à la ligne. Réduire est uniquement visuel. Les
 ajouts/modifications/suppressions acceptés notifient le repeatable propriétaire ; les erreurs de
-notification ultérieures restent distinctes de la préparation acceptée. L’évaluation récursive des
-lignes fermées reste celle de l’aperçu ; fraîcheur/agrégation des bindings restent séparées.
+notification ultérieures restent distinctes de la préparation acceptée. Les lignes fermées utilisent la préparation partagée décrite ci-dessous sans rejouer leur cycle d’édition.
 
 Le contrôleur actif est `window.form0PreviewEvents`. `dispatch()` et
 `prepareSave({ intent: 'submit' | 'draft' })` renvoient des promesses avec résultats/problèmes et
@@ -62,3 +59,39 @@ exigent cet ID. Les métadonnées sont JSON ; fonctions et fichiers natifs sont 
 métadonnée de périmètre/diagnostic n’entre dans les valeurs enregistrées. Annuler/Fermer notifie avant
 retrait ; rechargement/destruction forcée retire uniquement. Rouvrir crée une nouvelle session.
 Les codes de sortie de run/validate restent inchangés.
+
+**Actions avancées de l’aperçu** regroupe **Préparer le brouillon**, **Annuler l’enregistrement** et
+**Fermer l’enregistrement** dans une section repliée. Préparer un brouillon permet de l’inspecter et
+ne le sauvegarde jamais via un connecteur. Les contrôles désactivés des lignes imbriquées indiquent
+quel éditeur parent ouvrir d’abord. L’envoi affiche l’objet final dépliable et le résultat de chaque
+connecteur dans la console. Sans connecteur, il indique que l’enregistrement est préparé uniquement
+pour l’aperçu ; un échec de connecteur ou de stockage ne constitue pas une sauvegarde réussie.
+
+## Préparation partagée et adaptateur de stockage du host
+
+L’aperçu utilise la fraîcheur et la validation intégrée partagées, avec ou sans cycle de vie géré.
+La désactivation laisse les hooks et la validation personnalisée gérés désactivés. Aucun événement
+load/edit/change/save/unload de ligne fermée n’est rejoué. Acceptez ou annulez les éditeurs enfants
+avant la préparation racine.
+
+`createApp()` accepte `submissionOptions` côté serveur et un `storageAdapter` facultatif. Conserver
+exige cet adaptateur et `allowRetain` ; le navigateur ne peut pas accorder cette permission.
+L’adaptateur implémente `load(identity)` asynchrone retournant `{ record, freshness }` ou `null`, et
+`save(identity, { record, freshness })`. `record` garde la structure existante. La session restaure
+`recordIdentity` ou `recordOptions.mainRecordId`, y compris zéro. L’exemple remplace atomiquement une
+enveloppe locale ; le host de production définit la gestion des révisions et conflits.
+
+La réussite reconnaît la préparation. Un rejet, une persistance partielle ou l’échec d’un connecteur
+laisse la tentative non enregistrée. Les connecteurs reçoivent le même enregistrement sans devoir
+stocker la fraîcheur. Les clients de préparation reconnaissent explicitement leur sauvegarde externe.
+`getSaveChanges()` pagine les changements ; les choix concernent tous les enfants ou aucun.
+
+```js
+import { createApp } from "form0-cli/src/server/express-server.js"
+import { createFilePreviewStorage } from "form0-cli/src/server/preview-events/file-storage.js"
+
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { mode: "confirm", allowRetain: true },
+  storageAdapter: createFilePreviewStorage(previewStorageDirectory),
+})
+```
