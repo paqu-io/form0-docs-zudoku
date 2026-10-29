@@ -126,22 +126,13 @@ const engine = createFormEngine({ schema, initialValues: { quantity: 2 } })
 engine.eval()
 
 // When the user changes a value:
-engine.getState().values.quantity = 3
-engine.eval()
+engine.setValue("quantity", 3)
 
 // Then dispatch the change event and apply the operations it returns.
 const operations = engine.trigger("change", "quantity")
 ```
 
-<Callout type="caution" title="Los campos de elección usan formas de valor en tiempo de ejecución">
-  `initialValues` y las escrituras directas en `engine.getState().values` deben usar la forma de valor
-  en tiempo de ejecución del motor. Por ejemplo, un `SingleChoiceField` o un `BooleanField` usa
-  `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`, mientras que un
-  `MultiChoiceField` usa `choices` en lugar de `choice`. Esta forma es distinta del `default_value`
-  escalar o de tipo array de un campo de elección en el esquema. Los componentes de campo de los
-  renderers oficiales producen estas formas; form0-core no ofrece actualmente un método público para
-  asignar y normalizar valores.
-</Callout>
+Los setters aceptan entradas abreviadas adecuadas al tipo y objetos de elección completos en vivo. Las escrituras directas siguen necesitando formas en vivo. Los valores predeterminados y los registros guardados siguen siendo distintos; consulta el contrato de actualización de valores. [Consulta el contrato de actualización de valores](/es/core/engine/value-updates).
 
 Tu aplicación es responsable de aplicar las operaciones devueltas y de decidir cuándo un campo
 obligatorio vacío bloquea el envío.

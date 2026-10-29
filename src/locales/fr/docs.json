@@ -23,55 +23,121 @@
     }
   },
   "cli": {
-    "overview": { "title": "Vue d’ensemble" },
-    "install-update": { "title": "Installer et mettre à jour" },
-    "initialize-project": { "title": "Initialiser un projet" },
-    "interactive-shell": { "title": "Shell interactif" },
+    "overview": {
+      "title": "Vue d’ensemble"
+    },
+    "install-update": {
+      "title": "Installer et mettre à jour"
+    },
+    "initialize-project": {
+      "title": "Initialiser un projet"
+    },
+    "interactive-shell": {
+      "title": "Shell interactif"
+    },
     "ai-authoring": {
-      "overview": { "title": "Vue d’ensemble" },
-      "getting-started": { "title": "Prise en main" },
-      "providers-models": { "title": "Fournisseurs et modèles" },
-      "authoring-workflow": { "title": "Flux de création" },
-      "commands-status": { "title": "Commandes et état" },
-      "privacy-security": { "title": "Confidentialité et sécurité" },
-      "limitations-troubleshooting": { "title": "Limites et résolution des problèmes" }
+      "overview": {
+        "title": "Vue d’ensemble"
+      },
+      "getting-started": {
+        "title": "Prise en main"
+      },
+      "providers-models": {
+        "title": "Fournisseurs et modèles"
+      },
+      "authoring-workflow": {
+        "title": "Flux de création"
+      },
+      "commands-status": {
+        "title": "Commandes et état"
+      },
+      "privacy-security": {
+        "title": "Confidentialité et sécurité"
+      },
+      "limitations-troubleshooting": {
+        "title": "Limites et résolution des problèmes"
+      }
     },
     "schemas": {
-      "load-edit": { "title": "Charger et modifier des schémas" },
-      "validate-preview": { "title": "Valider et prévisualiser" },
-      "run-values": { "title": "Exécuter avec des valeurs" },
-      "watch-test": { "title": "Surveiller et tester" },
-      "import-export-csv": { "title": "Importer et exporter en CSV" }
+      "load-edit": {
+        "title": "Charger et modifier des schémas"
+      },
+      "validate-preview": {
+        "title": "Valider et prévisualiser"
+      },
+      "run-values": {
+        "title": "Exécuter avec des valeurs"
+      },
+      "watch-test": {
+        "title": "Surveiller et tester"
+      },
+      "import-export-csv": {
+        "title": "Importer et exporter en CSV"
+      }
     },
     "local-development": {
-      "live-preview": { "title": "Serveur d'aperçu en direct" },
-      "app-development-servers": { "title": "Serveurs de développement d’applications" }
+      "live-preview": {
+        "title": "Serveur d'aperçu en direct"
+      },
+      "app-development-servers": {
+        "title": "Serveurs de développement d’applications"
+      }
     },
-    "project-configuration": { "title": "Configuration du projet" },
-    "connector-management": { "title": "Gestion des connecteurs" },
+    "project-configuration": {
+      "title": "Configuration du projet"
+    },
+    "connector-management": {
+      "title": "Gestion des connecteurs"
+    },
     "reform": {
-      "sign-in-organization": { "title": "Se connecter et choisir une organisation" },
-      "sync-forms": { "title": "Synchroniser des formulaires" }
+      "sign-in-organization": {
+        "title": "Se connecter et choisir une organisation"
+      },
+      "sync-forms": {
+        "title": "Synchroniser des formulaires"
+      }
     },
-    "command-reference": { "title": "Référence des commandes" },
-    "troubleshooting": { "title": "Dépannage" },
-    "security": { "title": "Sécurité" }
+    "command-reference": {
+      "title": "Référence des commandes"
+    },
+    "troubleshooting": {
+      "title": "Dépannage"
+    },
+    "security": {
+      "title": "Sécurité"
+    }
   },
   "starter-apps": {
-    "overview": { "title": "Vue d’ensemble des applications starter" },
+    "overview": {
+      "title": "Vue d’ensemble des applications starter"
+    },
     "react-vite": {
-      "create-run": { "title": "Créer et exécuter le starter React et Vite" },
+      "create-run": {
+        "title": "Créer et exécuter le starter React et Vite"
+      },
       "project-structure-configuration": {
         "title": "Structure et configuration du projet React et Vite"
       },
-      "forms-routes-presentations": { "title": "Formulaires, routes et présentations" },
-      "renderers-themes-styling": { "title": "Renderers, thèmes et styles" },
-      "submissions-connectors": { "title": "Soumissions et connecteurs" },
-      "build-deployment": { "title": "Compiler et déployer le starter React et Vite" },
-      "troubleshooting": { "title": "Dépannage du starter React et Vite" }
+      "forms-routes-presentations": {
+        "title": "Formulaires, routes et présentations"
+      },
+      "renderers-themes-styling": {
+        "title": "Renderers, thèmes et styles"
+      },
+      "submissions-connectors": {
+        "title": "Soumissions et connecteurs"
+      },
+      "build-deployment": {
+        "title": "Compiler et déployer le starter React et Vite"
+      },
+      "troubleshooting": {
+        "title": "Dépannage du starter React et Vite"
+      }
     },
     "react-native-expo": {
-      "create-run": { "title": "Créer et exécuter le starter React Native et Expo" },
+      "create-run": {
+        "title": "Créer et exécuter le starter React Native et Expo"
+      },
       "project-structure-configuration": {
         "title": "Structure et configuration du projet React Native et Expo"
       },
@@ -81,52 +147,120 @@
       "renderers-themes-fonts-images": {
         "title": "Renderers, thèmes, polices et images"
       },
-      "device-development-networking": { "title": "Développement sur appareil et réseau" },
-      "local-storage-submissions": { "title": "Stockage local et soumissions" },
-      "build-distribution": { "title": "Compiler et distribuer le starter React Native et Expo" },
-      "troubleshooting": { "title": "Dépannage du starter React Native et Expo" }
+      "device-development-networking": {
+        "title": "Développement sur appareil et réseau"
+      },
+      "local-storage-submissions": {
+        "title": "Stockage local et soumissions"
+      },
+      "build-distribution": {
+        "title": "Compiler et distribuer le starter React Native et Expo"
+      },
+      "troubleshooting": {
+        "title": "Dépannage du starter React Native et Expo"
+      }
     }
   },
   "connectors": {
-    "overview": { "title": "Vue d’ensemble des connecteurs" },
-    "choose": { "title": "Choisir un connecteur" },
-    "direct-integration": { "title": "Intégration directe" },
+    "overview": {
+      "title": "Vue d’ensemble des connecteurs"
+    },
+    "choose": {
+      "title": "Choisir un connecteur"
+    },
+    "direct-integration": {
+      "title": "Intégration directe"
+    },
     "postgresql": {
-      "setup": { "title": "Installation et configuration de PostgreSQL" },
-      "storage": { "title": "Modèle de stockage et exploitation de PostgreSQL" }
+      "setup": {
+        "title": "Installation et configuration de PostgreSQL"
+      },
+      "storage": {
+        "title": "Modèle de stockage et exploitation de PostgreSQL"
+      }
     },
     "sqlite": {
-      "setup": { "title": "Installation et configuration de SQLite" },
-      "storage": { "title": "Modèle de stockage et exploitation de SQLite" }
+      "setup": {
+        "title": "Installation et configuration de SQLite"
+      },
+      "storage": {
+        "title": "Modèle de stockage et exploitation de SQLite"
+      }
     },
-    "security": { "title": "Sécurité et responsabilité des données" },
-    "troubleshooting": { "title": "Dépannage des connecteurs" }
+    "security": {
+      "title": "Sécurité et responsabilité des données"
+    },
+    "troubleshooting": {
+      "title": "Dépannage des connecteurs"
+    }
   },
   "bindings": {
-    "overview": { "title": "Vue d’ensemble des bindings" },
+    "overview": {
+      "title": "Vue d’ensemble des bindings"
+    },
     "react": {
-      "install-render": { "title": "Installer et afficher" },
-      "form-renderer": { "title": "FormRenderer" },
-      "values-snapshots-submission": { "title": "Valeurs, snapshots et soumission" },
-      "built-in-renderers": { "title": "Renderers de champ intégrés" },
-      "custom-renderers": { "title": "Renderers de champ personnalisés" },
-      "modes-placement-navigation": { "title": "Modes, emplacement et navigation" },
-      "themes-styling": { "title": "Thèmes et styles" },
-      "workers-performance": { "title": "Workers et performances" },
-      "api-reference": { "title": "Référence de l'API React" },
-      "troubleshooting": { "title": "Dépannage React" }
+      "install-render": {
+        "title": "Installer et afficher"
+      },
+      "form-renderer": {
+        "title": "FormRenderer"
+      },
+      "values-snapshots-submission": {
+        "title": "Valeurs, snapshots et soumission"
+      },
+      "built-in-renderers": {
+        "title": "Renderers de champ intégrés"
+      },
+      "custom-renderers": {
+        "title": "Renderers de champ personnalisés"
+      },
+      "modes-placement-navigation": {
+        "title": "Modes, emplacement et navigation"
+      },
+      "themes-styling": {
+        "title": "Thèmes et styles"
+      },
+      "workers-performance": {
+        "title": "Workers et performances"
+      },
+      "api-reference": {
+        "title": "Référence de l'API React"
+      },
+      "troubleshooting": {
+        "title": "Dépannage React"
+      }
     },
     "react-native": {
-      "install-render": { "title": "Installer et afficher" },
-      "form-renderer": { "title": "FormRenderer" },
-      "values-snapshots-submission": { "title": "Valeurs, snapshots et soumission" },
-      "built-in-renderers": { "title": "Renderers de champ intégrés" },
-      "custom-renderers": { "title": "Renderers de champ personnalisés" },
-      "modes-navigation": { "title": "Modes et navigation" },
-      "themes-assets": { "title": "Thèmes, polices et images" },
-      "mobile-integration": { "title": "Intégration mobile" },
-      "api-reference": { "title": "Référence de l'API React Native" },
-      "troubleshooting": { "title": "Dépannage React Native" }
+      "install-render": {
+        "title": "Installer et afficher"
+      },
+      "form-renderer": {
+        "title": "FormRenderer"
+      },
+      "values-snapshots-submission": {
+        "title": "Valeurs, snapshots et soumission"
+      },
+      "built-in-renderers": {
+        "title": "Renderers de champ intégrés"
+      },
+      "custom-renderers": {
+        "title": "Renderers de champ personnalisés"
+      },
+      "modes-navigation": {
+        "title": "Modes et navigation"
+      },
+      "themes-assets": {
+        "title": "Thèmes, polices et images"
+      },
+      "mobile-integration": {
+        "title": "Intégration mobile"
+      },
+      "api-reference": {
+        "title": "Référence de l'API React Native"
+      },
+      "troubleshooting": {
+        "title": "Dépannage React Native"
+      }
     }
   },
   "core": {
@@ -148,6 +282,9 @@
       },
       "events-operations": {
         "title": "Événements et opérations"
+      },
+      "value-updates": {
+        "title": "Mise à jour et normalisation des valeurs"
       }
     },
     "schema": {

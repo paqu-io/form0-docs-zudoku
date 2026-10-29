@@ -1,0 +1,69 @@
+---
+title: Value updates and normalization
+description: Supported setters, strict choice inputs, loading, and unchanged record formats.
+---
+
+<PageBadges />
+
+Use the supported setters for programmatic input changes. A nonempty batch evaluates once and returns the current engine state; an empty batch does nothing. Construction still requires an explicit initial evaluation.
+
+```js
+const engine = createFormEngine({ schema, initialValues: { width: 3, height: 10 } })
+engine.eval()
+const state = engine.setValues({ width: 4, height: 5 })
+engine.setValue("country", "it")
+engine.setValue("countries", ["it", "fr"])
+```
+
+## Schema, live values, and record output
+
+| Representation          | SingleChoice / Boolean                       | MultiChoice                                  |
+| ----------------------- | -------------------------------------------- | -------------------------------------------- |
+| Schema choices          | `choices: [{ value: 'it', label: 'Italy' }]` | `choices: [{ value: 'it', label: 'Italy' }]` |
+| Schema default          | `default_value: 'it'`                        | `default_value: ['it']`                      |
+| Setter shorthand        | `'it'`                                       | `['it']`                                     |
+| Live selection key      | `choice`                                     | `choices`                                    |
+| Submitted selection key | `choice_value`                               | `choices_value`                              |
+
+Both types retain their existing schema choices. Boolean uses its configured string IDs, not JavaScript booleans. Submitted choice entries and Other entries retain the existing record format. Stored records must pass through the existing record-loading utilities before becoming live values.
+
+```js
+// SingleChoice / Boolean live value:
+{ choice: [{ value: "it", label: "Italy" }], other: [] }
+// MultiChoice live value:
+{ choices: [{ value: "it", label: "Italy" }], other: [] }
+// SingleChoice / Boolean submitted field value:
+{ choice_value: [{ value: "it", label: "Italy" }], other_value: [] }
+// MultiChoice submitted field value:
+{ choices_value: [{ value: "it", label: "Italy" }], other_value: [] }
+```
+
+## Accepted inputs and errors
+
+- SingleChoice/Boolean accepts a string ID or its own live object. MultiChoice accepts an array of string IDs or its own live object. Numeric and boolean choice shorthand, cross-type aliases, and label-only selection objects throw TypeError.
+- Explicit labels and metadata are copied and preserved. Missing labels come from matching schema choices; unknown IDs keep their ID as the fallback label. Missing Other arrays become empty arrays. Supplied Other arrays must contain objects with a label, including empty text during editing.
+- Null or undefined clears a choice field. An empty string remains invalid selection data. Unknown IDs are retained for ordinary field validation; they never become Other automatically. Selection order and duplicate entries are preserved.
+- Unknown or unowned field names, malformed choice structures, and calculated/display/container targets reject the entire batch before mutation or evaluation. Other field types retain their existing live values and validation constraints.
+
+## Loading and write permissions
+
+Initialization and reset normalize supported shorthand while retaining malformed loaded drafts for validation. Unknown metadata and supplied accepted calculations remain available. Direct state mutation remains compatible for this release, but setters are the recommended update interface.
+
+Updates use data_name identifiers and belong to the executing record scope. A row can read supplied ancestor values but cannot write an ancestor or sibling field. CalculatedField, TitleField, LabelField, and containers cannot be setter or official SETVALUE targets. An ordinary input marked read_only remains writable by programmatic code.
+
+Record readonly mode blocks setters and event writes. Existing host overrideValues and snapshot replacement remain loading paths: the application can refresh a status received from its backend while keeping View noneditable. View preserves accepted calculations; these replacements do not save records or replay lifecycle events.
+
+## Events and adapters
+
+Setters do not dispatch change or lifecycle events and do not perform submission preparation. SETVALUE collects an instruction; the host applies accepted instructions and evaluates. Changing width recalculates an area expression that references width, while directly assigning area is rejected. Ordinary edits retain existing scoped evaluation rather than refreshing every closed descendant.
+
+Adapters use the pure normalizeFieldValue helper to stage values before their existing evaluation. It copies input values and rejects protected field types, but does not evaluate or dispatch events; the adapter must also check record mode and ownership for the entire batch. React main-thread/worker, Native, and CLI preview share these input rules. Binding state-update timing remains unchanged.
+
+```js
+import { normalizeFieldValue } from "form0-core"
+const value = normalizeFieldValue(countryField, "it")
+```
+
+## Compatibility notes
+
+React’s former array SingleChoice, scalar MultiChoice, opposite selection keys, label-only selections, and numeric/boolean choice-ID coercion are intentionally removed for new updates. Existing malformed loaded data remains inspectable. Schema definitions and submitted record shapes are unchanged.

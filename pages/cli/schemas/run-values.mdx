@@ -11,6 +11,12 @@ or a path to a JSON, YAML, or YML file.
 The command prints the evaluated engine state, including values, validation errors, visibility,
 requirements, and read-only state. Unknown input fields are ignored with warnings.
 
+These are initial values, rather than setter calls. For schema fields named `country` (SingleChoice) and `countries` (MultiChoice), the following JSON uses their distinct shorthand shapes. Supported shorthand is normalized during loading; malformed loaded values remain available for validation. See [value updates and normalization](/core/engine/value-updates) for the live and submitted representations and the stricter setter contract.
+
+```json
+{ "country": "it", "countries": ["it", "fr"] }
+```
+
 ## Calculation diagnostics
 
 The following reporting controls describe form0-cli 0.6.0 and later. Runtime calculation diagnostics

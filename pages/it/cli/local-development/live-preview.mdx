@@ -12,6 +12,8 @@ questi valori.
 Il server di anteprima è uno strumento di sviluppo. Usa progetti e connettori affidabili, ed
 esponilo solo su una rete affidabile.
 
+L’analisi degli input dell’anteprima resta invariata. Gli aggiornamenti programmatici e l’applicazione ufficiale di `SETVALUE()` condividono [il contratto dei valori supportato](/it/core/engine/value-updates): verificare l’intero lotto prima di applicarlo, conservare le selezioni di stringhe sconosciute per la validazione e distinguere `choice` da `choices`. La modalità View del record blocca le scritture degli eventi, anche durante `load-record`; i normali campi di sola lettura consentono ancora aggiornamenti programmatici.
+
 ## Diagnostica dei calcoli nel browser
 
 In form0-cli 0.6.0 e versioni successive, il server restituisce diagnostica strutturata insieme allo
@@ -66,6 +68,21 @@ Senza connettori, indica che il record è preparato solo per l’anteprima; un e
 del salvataggio non viene considerato un salvataggio riuscito.
 
 ## Preparazione condivisa e adattatore storage dell’host
+
+Disegnare nel canvas BuildingPlan apre automaticamente la bozza di modifica del piano interessato.
+Stanze, pareti, aperture e altri elementi compaiono subito come righe figlie. **Salva riga** valida e
+accetta il piano; **Annulla riga** ripristina insieme geometria e figli. Le domande obbligatorie
+richiedono ancora risposte. Conferma o annulla un editor di stanza/parete aperto prima di disegnare
+ancora e termina la bozza del piano prima dell’invio radice. Comprimere o cambiare piano non salva.
+Record e sezioni BuildingPlan in sola lettura disabilitano il disegno. I formati dello schema e del
+record inviato restano invariati; il canvas non concede a `SETVALUE()` scritture tra record diversi.
+
+Imposta `form.repeatable_recalculation` su `"confirm"` nello schema per rivedere i calcoli dei figli
+salvati che cambiano all’invio del record radice. Ometterlo o usare `"automatic"` li aggiorna
+automaticamente. Non esiste un interruttore separato nelle impostazioni dell’anteprima. Un editor
+figlio aperto continua a ricalcolare con i valori correnti degli antenati: confermalo o annullalo
+prima dell’invio radice. La conferma riguarda figli salvati e chiusi. Mantenere i valori precedenti
+richiede anche il permesso dell’host descritto sotto.
 
 L’anteprima usa freschezza e validazione integrata condivise con ciclo di vita gestito attivo o
 inattivo. L’esclusione mantiene disabilitati hook e validazione personalizzata gestiti. Non vengono

@@ -128,3 +128,5 @@ if (prepared.status === "requires_decision") {
 ```
 
 Les workers conservent les révisions et rapports en interne. Les réponses usuelles contiennent les données sélectionnées et résumés ; les détails sont demandés par pages bornées. Les helpers de type fonction restent interdits dans les workers. Signaux et callbacks ne passent pas dans les messages à clonage structuré.
+
+Les setters programmatiques utilisent le contrat strict partagé. Les valeurs initiales et remplacements du host restent des voies de chargement tolérantes, y compris en vue ; celle-ci conserve les calculs acceptés. Voir le contrat de mise à jour des valeurs. [Voir le contrat de mise à jour des valeurs](/fr/core/engine/value-updates).

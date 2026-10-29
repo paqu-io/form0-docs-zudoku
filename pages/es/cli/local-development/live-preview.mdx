@@ -12,6 +12,8 @@ valores.
 El servidor de vista previa es una herramienta de desarrollo. Usa proyectos y conectores de
 confianza, y exponlo solo en una red de confianza.
 
+El análisis de entradas de la vista previa no cambia. Las actualizaciones programáticas y la aplicación oficial de `SETVALUE()` comparten [el contrato de valores compatible](/es/core/engine/value-updates): comprobar todo el lote antes de aplicarlo, conservar las selecciones de cadenas desconocidas para validación y distinguir `choice` de `choices`. El modo de registro View bloquea las escrituras de eventos, incluso durante `load-record`; los campos ordinarios de solo lectura siguen permitiendo actualizaciones programáticas.
+
 ## Diagnósticos de cálculo en el navegador
 
 En form0-cli 0.6.0 y versiones posteriores, el servidor devuelve diagnósticos estructurados junto al estado
@@ -67,6 +69,22 @@ la consola. Sin conectores, indica que el registro se preparó solo para vista p
 conector o almacenamiento no se considera un guardado correcto.
 
 ## Preparación compartida y adaptador de almacenamiento del host
+
+Dibujar en el lienzo BuildingPlan abre automáticamente el borrador de edición de la planta
+correspondiente. Habitaciones, paredes, aberturas y otros elementos aparecen enseguida como filas
+hijas. **Guardar fila** valida y acepta la planta; **Cancelar fila** restaura su geometría y sus hijos
+juntos. Las preguntas obligatorias siguen requiriendo respuestas. Acepta o cancela un editor de
+habitación/pared abierto antes de volver a dibujar y termina el borrador de la planta antes del envío
+raíz. Contraer o cambiar de planta no guarda. Los registros y secciones BuildingPlan de solo lectura
+desactivan el dibujo. Los formatos del esquema y del registro enviado se conservan; el lienzo no
+concede a `SETVALUE()` permiso para escribir entre registros.
+
+Define `form.repeatable_recalculation` como `"confirm"` en el esquema para revisar los cambios de
+cálculos de hijos guardados al enviar el registro raíz. Omitirlo o usar `"automatic"` los actualiza
+automáticamente. No hay un interruptor independiente en los ajustes de vista previa. Un editor hijo
+abierto sigue recalculando con los valores actuales de los antecesores; acéptalo o cancélalo antes
+del envío raíz. La confirmación se aplica a hijos guardados y cerrados. Conservar valores anteriores
+requiere además el permiso del host descrito a continuación.
 
 La vista previa usa frescura y validación integrada compartidas con el ciclo de vida gestionado
 activado o desactivado. La exclusión desactiva validación personalizada y hooks gestionados. No se

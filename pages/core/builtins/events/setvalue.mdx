@@ -5,8 +5,6 @@ description: Sets a field value during an event.
 
 <PageBadges />
 
-import { Callout } from "zudoku/ui/Callout"
-
 Sets a field value during an event.
 
 ## Example
@@ -15,13 +13,7 @@ Sets a field value during an event.
 SETVALUE("age", 18)
 ```
 
-<Callout type="caution" title="Use live value shapes for choice fields">
-  Primitive choice values are not currently normalized consistently by every official binding. For
-  portable event code, set a `SingleChoiceField` or `BooleanField` with
-  `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`. Set a
-  `MultiChoiceField` with `{ "choices": [...], "other": [] }`. Text, numeric, and other scalar
-  fields continue to accept their normal scalar values.
-</Callout>
+Official consumers apply string SingleChoice/Boolean IDs, arrays of MultiChoice IDs, or the matching full live objects through shared normalization. Dispatch collects operations; application evaluates affected calculations without implicitly dispatching change. See the value-update contract. [See the value-update contract](/core/engine/value-updates).
 
 ## Parameters
 

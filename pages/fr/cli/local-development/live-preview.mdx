@@ -11,6 +11,8 @@ port `3030` et écoute sur `localhost` ; `--port` et `--host` permettent de modi
 Le serveur d’aperçu est un outil de développement. Utilisez des projets et des connecteurs de
 confiance, et ne l’exposez que sur un réseau de confiance.
 
+L’analyse des saisies de l’aperçu reste inchangée. Les mises à jour programmatiques et l’application officielle de `SETVALUE()` partagent [le contrat de valeurs pris en charge](/fr/core/engine/value-updates) : vérifier tout le lot avant application, conserver les sélections de chaînes inconnues pour la validation et distinguer `choice` de `choices`. Le mode View du dossier bloque les écritures des événements, y compris pendant `load-record` ; les champs ordinaires en lecture seule permettent toujours les mises à jour programmatiques.
+
 ## Diagnostics de calcul dans le navigateur
 
 Dans form0-cli 0.6.0 et les versions ultérieures, le serveur renvoie des diagnostics structurés avec l’état
@@ -68,6 +70,22 @@ connecteur dans la console. Sans connecteur, il indique que l’enregistrement e
 pour l’aperçu ; un échec de connecteur ou de stockage ne constitue pas une sauvegarde réussie.
 
 ## Préparation partagée et adaptateur de stockage du host
+
+Dessiner dans le canevas BuildingPlan ouvre automatiquement le brouillon de modification de l’étage
+concerné. Pièces, murs, ouvertures et autres éléments apparaissent immédiatement comme lignes enfants.
+**Enregistrer la ligne** valide et accepte l’étage ; **Annuler la ligne** restaure ensemble sa géométrie
+et ses enfants. Les questions obligatoires demandent toujours une réponse. Acceptez ou annulez un
+éditeur de pièce/mur ouvert avant de dessiner à nouveau, puis terminez le brouillon de l’étage avant
+l’envoi racine. Replier ou changer d’étage n’enregistre rien. Les records et sections BuildingPlan en
+lecture seule désactivent le dessin. Les formats du schéma et du record envoyé sont conservés ; le
+canevas n’accorde pas à `SETVALUE()` le droit d’écrire dans d’autres records.
+
+Définissez `form.repeatable_recalculation` sur `"confirm"` dans le schéma pour vérifier les calculs
+enfants enregistrés qui changent lors de l’envoi du record racine. L’omission ou `"automatic"` les
+actualise automatiquement. Aucun interrupteur distinct ne figure dans les paramètres d’aperçu.
+Un éditeur enfant ouvert continue de recalculer avec les valeurs actuelles des ancêtres ; acceptez-le
+ou annulez-le avant l’envoi racine. La confirmation concerne les enfants enregistrés et fermés.
+Conserver les anciennes valeurs exige aussi l’autorisation du host décrite ci-dessous.
 
 L’aperçu utilise la fraîcheur et la validation intégrée partagées, avec ou sans cycle de vie géré.
 La désactivation laisse les hooks et la validation personnalisée gérés désactivés. Aucun événement

@@ -126,21 +126,13 @@ const engine = createFormEngine({ schema, initialValues: { quantity: 2 } })
 engine.eval()
 
 // When the user changes a value:
-engine.getState().values.quantity = 3
-engine.eval()
+engine.setValue("quantity", 3)
 
 // Then dispatch the change event and apply the operations it returns.
 const operations = engine.trigger("change", "quantity")
 ```
 
-<Callout type="caution" title="I campi a scelta usano le forme dei valori a runtime">
-  `initialValues` e le scritture dirette in `engine.getState().values` devono usare la forma dei
-  valori a runtime del motore. Ad esempio, un `SingleChoiceField` o un `BooleanField` usa
-  `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`, mentre un `MultiChoiceField`
-  usa `choices` al posto di `choice`. Questa forma è diversa dal `default_value` scalare o array di
-  un campo a scelta nello schema. I componenti di campo dei renderer ufficiali producono queste
-  forme; form0-core attualmente non offre un metodo pubblico per impostare e normalizzare i valori.
-</Callout>
+I setter accettano input abbreviati adatti al tipo e oggetti di scelta live completi. Le scritture dirette richiedono ancora forme live. Valori predefiniti e record salvati restano distinti; vedi il contratto di aggiornamento dei valori. [Vedi il contratto di aggiornamento dei valori](/it/core/engine/value-updates).
 
 La tua applicazione è responsabile di applicare le operazioni restituite e di decidere quando un
 campo obbligatorio vuoto blocca l'invio.

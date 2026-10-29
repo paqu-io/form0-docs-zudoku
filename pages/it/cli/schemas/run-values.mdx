@@ -11,6 +11,12 @@ inline o il percorso di un file JSON, YAML o YML.
 Il comando stampa lo stato valutato del motore: valori, errori di validazione, visibilità,
 obbligatorietà e sola lettura. I campi di input sconosciuti vengono ignorati con un avviso.
 
+Questi sono valori iniziali, non chiamate ai setter. Per i campi dello schema chiamati `country` (SingleChoice) e `countries` (MultiChoice), il JSON seguente usa le rispettive forme abbreviate. Le forme supportate vengono normalizzate al caricamento; i valori caricati malformati restano disponibili per la validazione. Consulta [aggiornamento e normalizzazione dei valori](/it/core/engine/value-updates) per le rappresentazioni in memoria e inviate e il contratto più rigoroso dei setter.
+
+```json
+{ "country": "it", "countries": ["it", "fr"] }
+```
+
 ## Diagnostica dei calcoli
 
 Questi controlli di presentazione riguardano form0-cli 0.6.0 e versioni successive. La diagnostica di

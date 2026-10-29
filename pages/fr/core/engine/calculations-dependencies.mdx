@@ -147,12 +147,10 @@ SETRESULT($numerator / $divisor)
 ```
 
 ```js
-engine.getState().values.divisor = 0
-engine.eval()
+engine.setValue("divisor", 0)
 engine.getDiagnostics() // [{ code: "runtime_exception", fieldName: "quotient", ... }]
 
-engine.getState().values.divisor = 4
-engine.eval()
+engine.setValue("divisor", 4)
 engine.getDiagnostics() // []
 ```
 

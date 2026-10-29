@@ -2537,6 +2537,33 @@
       }
     ]
   },
+  "/core/engine/value-updates": {
+    "pathname": "/core/engine/value-updates",
+    "translationKey": "/core/engine/value-updates",
+    "locale": "en",
+    "title": "Value updates and normalization",
+    "description": "Supported setters, strict choice inputs, loading, and unchanged record formats.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/value-updates"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/value-updates"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/value-updates"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/value-updates"
+      }
+    ]
+  },
   "/core/fields/catalog": {
     "pathname": "/core/fields/catalog",
     "translationKey": "/core/fields/catalog",
@@ -5477,6 +5504,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/engine/parent-child-scopes"
+      }
+    ]
+  },
+  "/es/core/engine/value-updates": {
+    "pathname": "/es/core/engine/value-updates",
+    "translationKey": "/core/engine/value-updates",
+    "locale": "es",
+    "title": "Actualización y normalización de valores",
+    "description": "Setters admitidos, entradas de elección estrictas, carga y formatos de registro conservados.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/value-updates"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/value-updates"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/value-updates"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/value-updates"
       }
     ]
   },
@@ -8960,6 +9014,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/engine/parent-child-scopes"
+      }
+    ]
+  },
+  "/fr/core/engine/value-updates": {
+    "pathname": "/fr/core/engine/value-updates",
+    "translationKey": "/core/engine/value-updates",
+    "locale": "fr",
+    "title": "Mise à jour et normalisation des valeurs",
+    "description": "Setters pris en charge, entrées de choix strictes, chargement et formats conservés.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/value-updates"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/value-updates"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/value-updates"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/value-updates"
       }
     ]
   },
@@ -12551,6 +12632,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/engine/parent-child-scopes"
+      }
+    ]
+  },
+  "/it/core/engine/value-updates": {
+    "pathname": "/it/core/engine/value-updates",
+    "translationKey": "/core/engine/value-updates",
+    "locale": "it",
+    "title": "Aggiornamento e normalizzazione dei valori",
+    "description": "Setter supportati, input di scelta rigorosi, caricamento e formati invariati.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/value-updates"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/value-updates"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/value-updates"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/value-updates"
       }
     ]
   },

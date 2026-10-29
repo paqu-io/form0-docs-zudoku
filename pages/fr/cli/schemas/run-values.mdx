@@ -11,6 +11,12 @@ valeur JSON en ligne ou le chemin d’un fichier JSON, YAML ou YML.
 La commande affiche l’état évalué du moteur : valeurs, erreurs de validation, visibilité, caractère
 obligatoire et lecture seule. Les champs d’entrée inconnus sont ignorés avec un avertissement.
 
+Il s’agit de valeurs initiales, et non d’appels aux setters. Pour des champs nommés `country` (SingleChoice) et `countries` (MultiChoice), le JSON suivant utilise leurs formes abrégées distinctes. Les formes prises en charge sont normalisées au chargement ; les valeurs chargées mal formées restent disponibles pour la validation. Consultez [la mise à jour et la normalisation des valeurs](/fr/core/engine/value-updates) pour les représentations en mémoire et soumises ainsi que le contrat plus strict des setters.
+
+```json
+{ "country": "it", "countries": ["it", "fr"] }
+```
+
 ## Diagnostics de calcul
 
 Ces contrôles de présentation concernent form0-cli 0.6.0 et les versions ultérieures. Les diagnostics

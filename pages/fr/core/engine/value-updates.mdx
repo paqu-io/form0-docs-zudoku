@@ -1,0 +1,69 @@
+---
+title: Mise à jour et normalisation des valeurs
+description: Setters pris en charge, entrées de choix strictes, chargement et formats conservés.
+---
+
+<PageBadges />
+
+Utilisez les setters pour modifier les entrées par programmation. Un lot non vide évalue une fois et renvoie l’état actuel du moteur ; un lot vide ne fait rien. La construction nécessite toujours une évaluation initiale explicite.
+
+```js
+const engine = createFormEngine({ schema, initialValues: { width: 3, height: 10 } })
+engine.eval()
+const state = engine.setValues({ width: 4, height: 5 })
+engine.setValue("country", "it")
+engine.setValue("countries", ["it", "fr"])
+```
+
+## Schéma, valeurs actives et sortie des enregistrements
+
+| Représentation              | SingleChoice / Boolean                       | MultiChoice                                  |
+| --------------------------- | -------------------------------------------- | -------------------------------------------- |
+| Choix du schéma             | `choices: [{ value: 'it', label: 'Italy' }]` | `choices: [{ value: 'it', label: 'Italy' }]` |
+| Valeur par défaut du schéma | `default_value: 'it'`                        | `default_value: ['it']`                      |
+| Entrée abrégée du setter    | `'it'`                                       | `['it']`                                     |
+| Clé de sélection active     | `choice`                                     | `choices`                                    |
+| Clé de sélection soumise    | `choice_value`                               | `choices_value`                              |
+
+Les deux types conservent leurs choix de schéma actuels. Boolean utilise les identifiants textuels configurés, pas des booléens JavaScript. Les entrées de choix et Autre soumises conservent le format existant. Les enregistrements stockés passent par les utilitaires de chargement existants avant de devenir des valeurs actives.
+
+```js
+// SingleChoice / Boolean live value:
+{ choice: [{ value: "it", label: "Italy" }], other: [] }
+// MultiChoice live value:
+{ choices: [{ value: "it", label: "Italy" }], other: [] }
+// SingleChoice / Boolean submitted field value:
+{ choice_value: [{ value: "it", label: "Italy" }], other_value: [] }
+// MultiChoice submitted field value:
+{ choices_value: [{ value: "it", label: "Italy" }], other_value: [] }
+```
+
+## Entrées acceptées et erreurs
+
+- SingleChoice/Boolean accepte un identifiant textuel ou son propre objet actif. MultiChoice accepte un tableau d’identifiants textuels ou son propre objet actif. Les entrées numériques ou booléennes, les alias entre types et les sélections contenant seulement un libellé lèvent TypeError.
+- Les libellés explicites et métadonnées sont copiés et conservés. Les libellés absents viennent des choix du schéma ; un identifiant inconnu devient son propre libellé de repli. Les tableaux Autre absents deviennent des tableaux vides. Ceux fournis doivent contenir des objets avec un libellé, y compris du texte vide pendant la saisie.
+- Null ou undefined vide un champ de choix. Une chaîne vide reste une sélection invalide. Les identifiants inconnus sont conservés pour la validation habituelle ; ils ne deviennent jamais automatiquement Autre. L’ordre et les doublons sont conservés.
+- Les noms inconnus ou hors portée, les structures de choix incorrectes et les cibles calculées, d’affichage ou conteneurs rejettent tout le lot avant mutation ou évaluation. Les autres types conservent leurs valeurs actives et contraintes de validation existantes.
+
+## Chargement et droits d’écriture
+
+L’initialisation et la réinitialisation normalisent les formes abrégées acceptées tout en conservant les brouillons chargés incorrects pour validation. Les métadonnées inconnues et calculs acceptés restent disponibles. La mutation directe de l’état reste compatible pour cette version, mais les setters sont recommandés.
+
+Les mises à jour utilisent les identifiants data_name et appartiennent à la portée de l’enregistrement exécutant. Une ligne peut lire les ancêtres fournis mais ne peut écrire leurs champs ni ceux de ses frères. CalculatedField, TitleField, LabelField et les conteneurs ne peuvent être ciblés par les setters ou SETVALUE officiel. Une entrée ordinaire marquée read_only reste modifiable par programmation.
+
+Le mode readonly de l’enregistrement bloque setters et écritures d’événements. Les overrideValues du host et le remplacement de snapshot restent des voies de chargement : l’application peut afficher un statut reçu du backend sans rendre la vue modifiable. La vue conserve les calculs acceptés ; ces remplacements ne sauvegardent rien et ne rejouent pas le cycle de vie.
+
+## Événements et adaptateurs
+
+Les setters ne déclenchent ni change ni événements de cycle de vie et ne préparent pas la soumission. SETVALUE collecte une instruction ; le host applique les instructions acceptées puis évalue. Modifier width recalcule une expression area qui lit width ; affecter directement area est rejeté. Les éditions ordinaires gardent l’évaluation par portée sans rafraîchir tous les descendants fermés.
+
+Les adaptateurs utilisent normalizeFieldValue pur pour préparer les valeurs avant leur évaluation existante. Il copie les entrées et rejette les types protégés, mais n’évalue ni ne déclenche d’événement ; l’adaptateur vérifie aussi le mode et la propriété du lot complet. React sur le fil principal/worker, Native et l’aperçu CLI partagent ces règles. La temporalité des mises à jour des bindings reste inchangée.
+
+```js
+import { normalizeFieldValue } from "form0-core"
+const value = normalizeFieldValue(countryField, "it")
+```
+
+## Notes de compatibilité
+
+Les anciens tableaux SingleChoice, MultiChoice scalaires, clés opposées, sélections sans identifiant et conversions numériques/booléennes de React sont volontairement supprimés pour les nouvelles mises à jour. Les données chargées incorrectes restent inspectables. Les définitions du schéma et les formes des enregistrements soumis ne changent pas.

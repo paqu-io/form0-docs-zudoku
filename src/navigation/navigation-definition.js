@@ -164,6 +164,7 @@ const documentationItems = [
       doc("core/concepts", "Concepts"),
       category("How the engine works", [
         doc("core/engine/evaluation-cycle", "Evaluation cycle"),
+        doc("core/engine/value-updates", "Value updates and normalization"),
         doc("core/engine/calculations-dependencies", "Calculations and dependencies"),
         doc("core/engine/parent-child-scopes", "Parent and child scopes"),
         doc("core/engine/events-operations", "Events and operations"),

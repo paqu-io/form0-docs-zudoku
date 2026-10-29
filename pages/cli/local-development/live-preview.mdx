@@ -11,6 +11,8 @@ Run `form0 serve [schema]` to start the local preview server. It uses port `3030
 The preview server is a development tool. Use trusted projects and connectors, and only expose it
 to a trusted network.
 
+Preview input parsing stays unchanged. Programmatic updates and official `SETVALUE()` application share [the supported value contract](/core/engine/value-updates): preflight the whole batch, preserve unknown string selections for validation, and keep `choice` separate from `choices`. Record View blocks event writes, including writes during `load-record`; ordinary field read-only settings still permit programmatic input updates.
+
 ## Calculation diagnostics in the browser
 
 In form0-cli 0.6.0 and later, the server returns structured diagnostics alongside evaluated state.
@@ -63,6 +65,20 @@ final record and individual connector outcomes. With no connector configured, it
 that the record is prepared for preview only; a connector or persistence failure is not a saved result.
 
 ## Shared preparation and a host storage adapter
+
+Drawing in a BuildingPlan canvas automatically opens the owning floor's Edit draft. Rooms, walls,
+openings and other geometry appear immediately as child rows. **Save row** validates and accepts the
+floor; **Cancel row** restores its geometry and children together. Required survey questions still
+need answers. Accept or cancel an open room/wall editor before drawing again, and finish the floor
+draft before root submission. Collapsing or switching floors does not save. Read-only records and
+read-only BuildingPlan sections disable drawing. Schema and submitted record formats stay unchanged;
+canvas editing does not grant `SETVALUE()` permission to write across records.
+
+Set `form.repeatable_recalculation` to `"confirm"` in the schema to review changed saved-child
+calculations when submitting the root record. Omission or `"automatic"` refreshes them automatically.
+There is no separate switch in preview settings. An open child editor continues recalculating with
+current ancestor values; accept or cancel it before root submission. Confirmation concerns saved,
+closed children. Keeping previous values additionally requires the host permission described below.
 
 Preview uses shared freshness and built-in submission validation whether managed lifecycle is
 enabled or disabled. Opting out keeps managed custom validation/save hooks disabled. Closed-row

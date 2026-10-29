@@ -117,21 +117,13 @@ const engine = createFormEngine({ schema, initialValues: { quantity: 2 } })
 engine.eval()
 
 // When the user changes a value:
-engine.getState().values.quantity = 3
-engine.eval()
+engine.setValue("quantity", 3)
 
 // Then dispatch the change event and apply the operations it returns.
 const operations = engine.trigger("change", "quantity")
 ```
 
-<Callout type="caution" title="Choice fields use runtime value shapes">
-  `initialValues` and direct writes to `engine.getState().values` must use the engine's live value
-  shape. For example, a `SingleChoiceField` or `BooleanField` uses
-  `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`, while a
-  `MultiChoiceField` uses `choices` instead of `choice`. This differs from a choice field's scalar or
-  array `default_value` in the schema. Official renderer field components produce these live shapes;
-  form0-core does not currently provide a public value-setting and normalization method.
-</Callout>
+Setters accept type-appropriate shorthand and full live choice objects. Direct state writes still require live shapes. Schema defaults and stored record formats remain distinct; see the value-update contract. [See the value-update contract](/core/engine/value-updates).
 
 Your application is responsible for applying the returned operations and for deciding when an
 empty required field blocks submission.

@@ -236,3 +236,5 @@ Additional attributes:
   Choice values must match `^[a-z0-9_]+$`. If a choice does not provide a `value`, form0-core will
   generate one from the label.
 </Callout>
+
+Setter convenience inputs do not alter schema defaults or submitted record formats. SingleChoice/Boolean uses choice_value and other_value; MultiChoice uses choices_value and other_value. See the value-update contract. [See the value-update contract](/core/engine/value-updates).
