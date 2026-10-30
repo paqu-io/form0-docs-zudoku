@@ -41,6 +41,48 @@ Le snapshot regroupe les valeurs brutes, les entrées répétables imbriquées e
 `onSnapshotChange(snapshot, meta)` signale d’abord `{ kind: "seed", dirty: false }` ; les
 modifications ultérieures de l’utilisateur utilisent `{ kind: "change", dirty }`.
 
+## Échecs d’enregistrement et messages de console
+
+Si le callback `onSubmit` échoue, un rapport est écrit par défaut dans `console.error`, avec l’étape
+de l’échec et l’erreur d’origine. Le rejet du callback de persistance conserve les modifications pour
+une nouvelle tentative et ne confirme pas un enregistrement réussi. Affichez un message utile dans
+votre application et relancez l’erreur ; terminer normalement ou intercepter sans relancer signifie
+que l’enregistrement a réussi.
+
+`submissionDiagnostics` contrôle ces messages de console :
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "new" } }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+  onSubmit={saveRecord}
+/>
+```
+
+- `saveFailures` vaut `true` par défaut. Utilisez `false` si votre application signale déjà les échecs.
+- `validationBlocks` vaut `false` par défaut. Utilisez `true` pour journaliser les tentatives bloquées
+  de Submit et de Save dans les lignes répétables. Un champ obligatoire vide bloque la validation ;
+  ce n’est pas une exception d’enregistrement.
+
+Ces réglages restent à jour, même pendant un enregistrement en cours. Ils sont indépendants de
+`debug`, de `engineOptions.diagnostics.console` et du cycle de vie. Les rapports n’ajoutent ni valeurs
+du formulaire, ni snapshots, ni chemins d’enregistrements. Les échecs de préparation incluent les
+codes et messages des problèmes. Annuler une confirmation reste silencieux ; une exception du
+callback est signalée comme un échec du callback. Les messages existants du noyau conservent leur
+propre comportement.
+
+Essayez avec un champ obligatoire : cliquez sur Submit avec ce champ vide. Son message de validation
+apparaît et la console reste silencieuse. Activez `validationBlocks` et cliquez à nouveau sur Submit :
+une ligne de blocage par validation apparaît. Remplissez le champ, modifiez temporairement `saveRecord` pour qu’il lance
+`new Error("Example save failure")`, puis cliquez sur Submit : un rapport d’échec
+apparaît et les valeurs modifiées restent disponibles pour réessayer.
+
+Ces contrôles concernent les actions intégrées du renderer. Une application qui appelle directement
+`prepareSave()` reste responsable de l’inspection et du signalement du résultat renvoyé.
+
+Les mêmes réglages couvrent les échecs de `onSave` pour les brouillons. Les brouillons invalides restent enregistrables ; un enregistrement réussi du brouillon ne produit pas de message de blocage par validation.
+
 ## Enregistrer des brouillons ou soumettre des enregistrements
 
 Définissez `primaryActionMode="save"` et fournissez `onSave(snapshot, meta)` pour une action

@@ -41,6 +41,47 @@ Lo snapshot mantiene insieme valori grezzi, voci ripetibili annidate e timestamp
 `onSnapshotChange(snapshot, meta)` segnala prima `{ kind: "seed", dirty: false }`; le modifiche
 successive dell'utente usano `{ kind: "change", dirty }`.
 
+## Errori di salvataggio e messaggi della console
+
+Se il callback `onSubmit` fallisce, per impostazione predefinita viene scritto un rapporto in
+`console.error`, con la fase del fallimento e l’errore originale. Se il callback di persistenza
+rifiuta l’operazione, le modifiche restano disponibili per riprovare e il salvataggio non viene
+confermato. Mostra un messaggio utile nella tua applicazione e rilancia l’errore; terminare normalmente
+o intercettarlo senza rilanciarlo equivale a un salvataggio riuscito.
+
+`submissionDiagnostics` controlla questi messaggi della console:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "new" } }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+  onSubmit={saveRecord}
+/>
+```
+
+- `saveFailures` è `true` per impostazione predefinita. Usa `false` se l’applicazione segnala già gli errori.
+- `validationBlocks` è `false` per impostazione predefinita. Usa `true` per registrare i tentativi
+  bloccati di Submit e di Save nelle righe ripetibili. Un campo obbligatorio vuoto blocca la
+  validazione; non è un’eccezione di salvataggio.
+
+Le impostazioni restano aggiornate, anche durante un salvataggio in corso. Sono indipendenti da
+`debug`, `engineOptions.diagnostics.console` e dal ciclo di vita. I rapporti non aggiungono valori del
+modulo, snapshot o percorsi dei record. Gli errori di preparazione includono i codici e i messaggi dei
+problemi. Annullare una conferma non genera messaggi; un’eccezione del callback viene segnalata come
+fallimento del callback. I messaggi esistenti del nucleo mantengono il proprio comportamento.
+
+Prova con un campo obbligatorio: premi Submit lasciandolo vuoto. Appare il messaggio di validazione e
+la console resta silenziosa. Attiva `validationBlocks` e premi di nuovo Submit: appare una riga sul
+blocco di validazione. Compila il campo, modifica temporaneamente `saveRecord` per lanciare
+`new Error("Example save failure")` e premi Submit: appare un rapporto dell’errore e i valori modificati restano disponibili
+per riprovare.
+
+Questi controlli riguardano le azioni integrate del renderer. Le applicazioni che chiamano direttamente
+`prepareSave()` devono esaminare e segnalare il risultato restituito.
+
+Le stesse impostazioni coprono i fallimenti di `onSave` per le bozze. Le bozze non valide restano salvabili; un salvataggio riuscito della bozza non produce un messaggio di blocco della validazione.
+
 ## Salvare bozze o inviare record
 
 Imposta `primaryActionMode="save"` e fornisci `onSave(snapshot, meta)` per un'azione di salvataggio

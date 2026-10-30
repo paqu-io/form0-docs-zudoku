@@ -33,6 +33,46 @@ Un snapshot inicial sustituye a `initialValues` para los valores sin procesar de
 restaura las entradas repetibles anidadas y las marcas de tiempo del cliente y del servidor como un
 estado coherente.
 
+## Fallos de guardado y mensajes de consola
+
+Si el callback `onSubmit` falla, se escribe por defecto un informe en `console.error`, con la etapa
+del fallo y el error original. Si el callback de persistencia rechaza la operación, las ediciones
+siguen disponibles para reintentar y el guardado no se confirma. Muestra un mensaje útil en tu
+aplicación y vuelve a lanzar el error; terminar normalmente o capturarlo sin volver a lanzarlo cuenta
+como éxito.
+
+`submissionDiagnostics` controla estos mensajes de consola:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "new" } }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+  onSubmit={saveRecord}
+/>
+```
+
+- `saveFailures` vale `true` por defecto. Usa `false` si tu aplicación ya informa de los fallos.
+- `validationBlocks` vale `false` por defecto. Usa `true` para registrar los intentos bloqueados de
+  Submit y Save en filas repetibles. Un campo obligatorio vacío bloquea la validación; no es una
+  excepción de guardado.
+
+Los ajustes se mantienen actualizados, incluso durante un guardado pendiente. Son independientes de
+`debug`, `engineOptions.diagnostics.console` y la configuración del ciclo de vida. Los informes no
+adjuntan valores del formulario, snapshots ni rutas de registros. Los fallos de preparación incluyen
+los códigos y mensajes de sus incidencias. Cancelar una confirmación no genera mensajes; una excepción
+del callback se informa como fallo del callback. Los mensajes existentes del núcleo mantienen su
+propio comportamiento.
+
+Pruébalo con un campo obligatorio: pulsa Submit con el campo vacío. Aparece el mensaje de validación
+y la consola permanece en silencio. Activa `validationBlocks` y pulsa Submit otra vez: aparece una
+línea de bloqueo por validación. Completa el campo, haz que `saveRecord` lance temporalmente
+`new Error("Example save failure")` y pulsa Submit: aparece un informe del fallo y los valores editados
+siguen disponibles para reintentar.
+
+Estos controles se aplican a las acciones integradas del renderer. Si tu aplicación llama directamente
+a `prepareSave()`, debe inspeccionar e informar del resultado devuelto.
+
 ## Observa los borradores
 
 `onSnapshotChange(snapshot, change)` se llama primero con `{ kind: "seed", dirty: false }`. Los
