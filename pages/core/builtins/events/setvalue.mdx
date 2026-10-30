@@ -13,7 +13,18 @@ Sets a field value during an event.
 SETVALUE("age", 18)
 ```
 
-Official consumers apply string SingleChoice/Boolean IDs, arrays of MultiChoice IDs, or the matching full live objects through shared normalization. Dispatch collects operations; application evaluates affected calculations without implicitly dispatching change. [See the value-update contract](/core/engine/value-updates).
+The value must match the field. Use a number for a `NumericField` and a string for a `TextField`. A
+`SingleChoiceField` or `BooleanField` takes a string ID, and a `MultiChoiceField` takes an array of
+string IDs:
+
+```js
+SETVALUE("rating", "1")
+SETVALUE("tags", ["red", "blue"])
+```
+
+If one call in a handler is rejected, none of that event's operations are applied. Applying a
+`SETVALUE()` recalculates the form, but it does not dispatch `change`. See
+[Value updates and normalization](/core/engine/value-updates).
 
 ## Parameters
 
@@ -23,3 +34,18 @@ Official consumers apply string SingleChoice/Boolean IDs, arrays of MultiChoice 
 ## Returns
 
 Operation descriptor (used by clients).
+
+## Try it
+
+You need [form0-cli](/cli/install-update). All event builtin pages use the same test form.
+
+1. Download the form and start the preview:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Open `http://localhost:3030`.
+
+1. Enter `7` in **Amount**. **Note** shows **Amount is 7**.

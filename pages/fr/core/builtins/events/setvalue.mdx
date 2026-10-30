@@ -13,7 +13,18 @@ Définit la valeur d’un champ pendant un événement.
 SETVALUE("age", 18)
 ```
 
-Les consommateurs officiels appliquent les identifiants textuels SingleChoice/Boolean, les tableaux MultiChoice ou leurs objets actifs complets par normalisation partagée. Le déclenchement collecte les opérations ; leur application évalue les calculs concernés sans déclencher change implicitement. [Voir le contrat de mise à jour des valeurs](/fr/core/engine/value-updates).
+La valeur doit correspondre au champ. Utilisez un nombre pour un `NumericField` et une chaîne pour
+un `TextField`. Un `SingleChoiceField` ou `BooleanField` accepte un identifiant textuel, et un
+`MultiChoiceField` accepte un tableau d’identifiants textuels :
+
+```js
+SETVALUE("rating", "1")
+SETVALUE("tags", ["red", "blue"])
+```
+
+Si un appel d’un gestionnaire est rejeté, aucune opération de cet événement n’est appliquée.
+Appliquer un `SETVALUE()` recalcule le formulaire, mais ne déclenche pas `change`. Consultez
+[Mise à jour et normalisation des valeurs](/fr/core/engine/value-updates).
 
 ## Paramètres
 
@@ -23,3 +34,19 @@ Les consommateurs officiels appliquent les identifiants textuels SingleChoice/Bo
 ## Valeur renvoyée
 
 Le descripteur de l’opération (utilisé par les clients).
+
+## Essayez
+
+Il vous faut [form0-cli](/fr/cli/install-update). Toutes les pages des builtins d’événements
+utilisent le même formulaire de test.
+
+1. Téléchargez le formulaire et démarrez l’aperçu :
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Ouvrez `http://localhost:3030`.
+
+1. Saisissez `7` dans **Amount**. **Note** affiche **Amount is 7**.

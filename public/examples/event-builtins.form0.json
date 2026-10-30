@@ -1,0 +1,116 @@
+{
+  "form": {
+    "name": "Event builtins",
+    "description": null,
+    "events": {
+      "code": "ON(\"change\", \"city\", function () {\n  ALERT(\"City changed\", \"Check the delivery address.\")\n})\n\nON(\"change\", \"amount\", function () {\n  SETVALUE(\"note\", \"Amount is \" + $amount)\n})\n\nON(\"change\", \"mute\", function () {\n  OFF(\"change\", \"city\")\n})\n\nON(\"validate-record\", function () {\n  if ($amount < 4) INVALID(\"Amount must be at least four.\")\n})\n"
+    },
+    "elements": [
+      {
+        "type": "SingleChoiceField",
+        "key": "city",
+        "data_name": "city",
+        "label": "City",
+        "display": "default",
+        "description": null,
+        "description_mode": null,
+        "required": false,
+        "required_conditions": null,
+        "visible": true,
+        "visible_conditions": null,
+        "read_only": false,
+        "read_only_conditions": null,
+        "default_value": null,
+        "allow_other": false,
+        "supporting_image": false,
+        "supporting_image_path": null,
+        "supporting_image_display": null,
+        "is_searchable": false,
+        "is_searchable_mode": null,
+        "choices": [
+          {
+            "value": "rome",
+            "label": "Rome"
+          },
+          {
+            "value": "paris",
+            "label": "Paris"
+          }
+        ]
+      },
+      {
+        "type": "NumericField",
+        "key": "amount",
+        "data_name": "amount",
+        "label": "Amount",
+        "display": "default",
+        "description": null,
+        "description_mode": null,
+        "required": false,
+        "required_conditions": null,
+        "visible": true,
+        "visible_conditions": null,
+        "read_only": false,
+        "read_only_conditions": null,
+        "default_value": null,
+        "format": "integer",
+        "min": null,
+        "max": null,
+        "supporting_image": false,
+        "supporting_image_path": null,
+        "supporting_image_display": null
+      },
+      {
+        "type": "TextField",
+        "key": "note",
+        "data_name": "note",
+        "label": "Note",
+        "display": "default",
+        "description": null,
+        "description_mode": null,
+        "required": false,
+        "required_conditions": null,
+        "visible": true,
+        "visible_conditions": null,
+        "read_only": false,
+        "read_only_conditions": null,
+        "default_value": null,
+        "pattern": null,
+        "pattern_description": null,
+        "supporting_image": false,
+        "supporting_image_path": null,
+        "supporting_image_display": null
+      },
+      {
+        "type": "BooleanField",
+        "key": "mute",
+        "data_name": "mute",
+        "label": "Stop the city alert",
+        "display": "default",
+        "description": null,
+        "description_mode": null,
+        "required": false,
+        "required_conditions": null,
+        "visible": true,
+        "visible_conditions": null,
+        "read_only": false,
+        "read_only_conditions": null,
+        "default_value": null,
+        "supporting_image": false,
+        "supporting_image_path": null,
+        "supporting_image_display": null,
+        "third_option_enabled": false,
+        "choices": [
+          {
+            "value": "yes",
+            "label": "Yes"
+          },
+          {
+            "value": "no",
+            "label": "No"
+          }
+        ]
+      }
+    ]
+  }
+}

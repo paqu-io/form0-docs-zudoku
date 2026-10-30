@@ -24,72 +24,23 @@ ON("validate-repeatable", "rows", function () {
 `validate-record` runs when the user submits the form. `validate-repeatable` runs when the user
 saves a row of the named repeatable section, here `rows`.
 
-## Try it
+## Parameters
 
-You need [form0-cli](/cli/install-update).
+- message: nonempty string
 
-1. Save this schema as `order.json`:
+## Returns
 
-   ```json
-   {
-     "form": {
-       "name": "Order",
-       "description": null,
-       "events": {
-         "code": "ON(\"validate-record\", function () {\n  if ($amount < 4) INVALID(\"Amount must be at least four.\")\n})"
-       },
-       "elements": [
-         {
-           "type": "NumericField",
-           "key": "amount",
-           "data_name": "amount",
-           "label": "Amount",
-           "display": "default",
-           "description": null,
-           "description_mode": null,
-           "required": true,
-           "required_conditions": null,
-           "visible": true,
-           "visible_conditions": null,
-           "read_only": false,
-           "read_only_conditions": null,
-           "default_value": null,
-           "format": "integer",
-           "min": null,
-           "max": null,
-           "supporting_image": false,
-           "supporting_image_path": null,
-           "supporting_image_display": null
-         }
-       ]
-     }
-   }
-   ```
+Operation descriptor (used by clients).
 
-1. Start the preview:
-
-   ```bash
-   form0 serve order.json
-   ```
-
-1. Open `http://localhost:3030`, enter `2` in **Amount**, and click **Submit**. The form shows
-   **Amount must be at least four.** and does not submit.
-
-1. Change **Amount** to `10` and click **Submit**. The message disappears, and the browser console
-   shows the prepared record.
-
-## Rules
+## Notes
 
 - Call `INVALID()` inside a `validate-record` or `validate-repeatable` handler. Anywhere else, it is
   rejected.
-- The message must be a nonempty string.
 - The message belongs to the whole record or row, not to one field, so it appears in the form's
   validation list.
 - Validation handlers can only check values. They cannot change values, show alerts, or return
   promises.
 - `INVALID()` does not add to `state.errors`, calculation diagnostics, or the saved record.
-
-## Use it without a renderer
 
 With `form0-core` alone, dispatch the event yourself and read `validationIssues`:
 
@@ -104,3 +55,22 @@ draft.
 
 See [Events and operations](/core/engine/events-operations) and the
 [maintained contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md).
+
+## Try it
+
+You need [form0-cli](/cli/install-update). All event builtin pages use the same test form.
+
+1. Download the form and start the preview:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Open `http://localhost:3030`.
+
+1. Enter `2` in **Amount** and click **Submit Record**. The form shows
+   **Amount must be at least four.** and does not submit.
+
+1. Change **Amount** to `10` and click **Submit Record**. The message disappears, and the browser
+   console shows `[STRUCTURED RECORD] Record prepared`.

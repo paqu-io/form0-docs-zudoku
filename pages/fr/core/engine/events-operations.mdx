@@ -1,6 +1,6 @@
 ---
 title: Événements et opérations
-description: Comment les gestionnaires d'événements form0 sont enregistrés et exécutés, ce qu'ils peuvent lire et comment les opérations qu'ils renvoient parviennent à l'application host.
+description: Comment les gestionnaires d'événements form0 sont enregistrés et exécutés, ce qu'ils peuvent lire et comment les opérations qu'ils renvoient parviennent à votre application.
 ---
 
 <PageBadges />
@@ -10,7 +10,7 @@ import { Callout } from "zudoku/ui/Callout"
 Les gestionnaires d'événements permettent à un schéma de réagir à ce qui se passe dans un
 formulaire, comme le chargement d'un enregistrement ou la modification d'un champ. Un gestionnaire
 ne modifie jamais directement le formulaire. Il décrit ce qui doit se passer sous forme d'une liste
-d'opérations, et l'application host les applique. Cette page explique comment les gestionnaires sont
+d'opérations, et le renderer ou votre application les applique. Cette page explique comment les gestionnaires sont
 enregistrés, ce qu'ils peuvent lire et comment leurs opérations sont appliquées.
 
 Pour savoir quels événements les renderers officiels déclenchent, voir
@@ -43,9 +43,10 @@ ON("load-record", function onLoad() {
   `data_name`.
 - Omettez le champ pour exécuter le gestionnaire pour tous les champs.
 - Un type d'événement inconnu affiche un avertissement, et le gestionnaire n'est pas enregistré.
-- `ON`/`OFF` synchrones dans les gestionnaires autorisés mettent à jour les listeners du moteur après
-  un dispatch réussi. Un lot rejeté n'enregistre rien. Les callbacks imbriqués écrits dans le schéma
-  fonctionnent sur Hermes sans capturer les variables locales du gestionnaire extérieur.
+- `ON` et `OFF` dans un gestionnaire prennent effet une fois le déclenchement réussi. Si le
+  déclenchement est rejeté, ils n’ont aucun effet. Les callbacks imbriqués dans un gestionnaire
+  fonctionnent sur Hermes, mais ils ne peuvent pas utiliser les variables locales du gestionnaire
+  englobant.
 
 ## Comment s'exécute le code des gestionnaires
 
@@ -122,7 +123,7 @@ disponibles.
 <Callout type="info" title="SETVALUE ne met pas à jour ce que lit le gestionnaire">
   `SETVALUE` ne fait qu'enregistrer une opération. Pour le reste du gestionnaire, `$data_name`
   renvoie toujours la valeur du moment où l'événement a été déclenché. La nouvelle valeur est
-  visible une fois que le host a appliqué l'opération.
+  visible une fois l'opération appliquée.
 </Callout>
 
 ## Opérations
@@ -143,9 +144,10 @@ l'ordre d'exécution des gestionnaires.
 ### Les opérations sont vérifiées avant d'être renvoyées
 
 Avant que `trigger()` ne renvoie son résultat, le moteur vérifie chaque `SETVALUE` par rapport à la
-portée du gestionnaire. Un `SETVALUE` qui cible un champ que le gestionnaire ne peut pas lire, ou un
-champ absent du schéma, est retiré de la liste, et le moteur signale un avertissement. Chaque
-`SETVALUE` renvoyé par `trigger()` cible un champ que le gestionnaire a le droit de modifier.
+portée du gestionnaire. Si l’un d’eux cible un champ que le gestionnaire ne peut pas écrire, ou un
+champ absent du schéma, le moteur signale un avertissement et `trigger()` ne renvoie aucune
+opération pour cet événement. Chaque `SETVALUE` renvoyé par `trigger()` cible un champ que le
+gestionnaire a le droit de modifier.
 
 ### Comment les bindings officiels appliquent les opérations
 
@@ -155,12 +157,11 @@ Par défaut, les renderers officiels :
 - écrivent la valeur de chaque `SETVALUE` dans le formulaire et exécutent une nouvelle passe
   d'évaluation.
 
-<Callout type="caution" title="Les valeurs SETVALUE des champs à choix doivent être portables">
-  Le binding React convertit une valeur de choix primitive comme `"it"` dans la forme de valeur
-  d'exécution du champ, mais React Native n'effectue pas encore cette conversion. Tant que les
-  bindings ne partagent pas un contrat de normalisation unique, utilisez les formes canoniques
-  d'exécution quand `SETVALUE` cible un champ à choix. Voir la [référence de
-  `SETVALUE`](/fr/core/builtins/events/setvalue) pour des exemples.
+<Callout type="caution" title="Les champs de choix acceptent des identifiants textuels">
+  `SETVALUE` accepte un identifiant textuel pour un `SingleChoiceField` ou `BooleanField`, et un
+  tableau d’identifiants textuels pour un `MultiChoiceField`. Si une valeur a une forme incorrecte,
+  aucune opération de cet événement n’est appliquée, et le renderer journalise `Event failed.` dans
+  la console. Consultez la [référence de `SETVALUE`](/fr/core/builtins/events/setvalue).
 </Callout>
 
 Les composants `FormRenderer` de React et React Native permettent à une application de traiter les
@@ -180,9 +181,9 @@ Appelez `applyDefault` avec les opérations que le binding doit traiter comme d'
 ### Appliquer les opérations sans renderer
 
 Si vous utilisez form0-core directement, appliquez vous-même la liste renvoyée. Pour `SETVALUE`,
-écrivez la valeur et exécutez `eval()`, comme décrit dans
-[Cycle d'évaluation](/fr/core/engine/evaluation-cycle). Les champs à choix nécessitent leur forme de
-valeur d'exécution, et non une simple valeur de choix.
+appelez `engine.setValue(fieldDataName, valueToSet)`, qui accepte un identifiant textuel pour un
+champ de choix et lance l’évaluation. Consultez
+[Cycle d'évaluation](/fr/core/engine/evaluation-cycle).
 
 ## Pas de chaîne d'événements de modification
 
@@ -194,37 +195,77 @@ Si la définition d'un champ doit aussi déclencher la logique d'un autre, place
 même gestionnaire, ou utilisez un `CalculatedField` quand la valeur peut être dérivée d'autres
 champs.
 
-## Exécution gérée du core
+## Obtenir des résultats détaillés
 
-Le nouveau contrat du core ajoute `engine.triggerDetailed(eventType, fieldKey, metadata)` synchrone, qui renvoie des copies défensives de `operations`, `validationIssues` et des `issues` d’exécution. Une émission gérée en échec ne renvoie aucune opération applicable. La voie compatible `engine.trigger()` conserve son tableau d’opérations. Aucune méthode n’évalue, ne persiste ni ne ferme un éditeur.
+`engine.trigger()` renvoie seulement les opérations. Utilisez
+`engine.triggerDetailed(eventType, fieldKey, metadata)` lorsque vous avez aussi besoin des messages
+de validation et des échecs. Cette méthode est synchrone et renvoie trois tableaux :
 
-Configurez `eventScope.instancePath` lors de la création d’un moteur de ligne sans renderer ; la portée racine est `[]`. Les chemins complets utilisent `repeatableKey`, `instanceId`, `index` et `identity`. Les clés des chemins suivent les clés du schéma ; les identifiants des listeners utilisent `data_name`. L’absence d’ID est explicitement positionnelle. Le core valide l’ascendance du schéma et l’appartenance ; l’hôte doit vérifier l’identité et la génération de la ligne active. Les gestionnaires gérés d’une ligne peuvent lire les champs locaux, des ancêtres et principaux fournis par l’hôte ; `SETVALUE()` écrit uniquement dans la ligne courante. Les branches sœurs, descendantes ou étrangères et les collections répétables sont inaccessibles. Les métadonnées de l’application ne peuvent remplacer l’identité ni la portée du dispatcher.
+```js
+const { operations, validationIssues, issues } = engine.triggerDetailed("validate-record")
+```
 
-`INVALID(message)` est disponible pendant l’exécution gérée de `validate-record` et `validate-repeatable` et exige une chaîne non vide. Les constats appartiennent à la portée, sans association à un champ, et restent hors de `state.errors`, des diagnostics de calcul, des valeurs et des métadonnées enregistrées. Les gestionnaires de validation refusent les opérations de valeurs/interface et les promesses. Les gestionnaires d’annulation et de déchargement sont des notifications en lecture seule et refusent aussi les constats de validation et les alertes.
+- `operations` : ce qu’il faut appliquer. Si un gestionnaire échoue, ce tableau est vide.
+- `validationIssues` : les messages de `INVALID()`.
+- `issues` : les échecs survenus pendant l’exécution des gestionnaires, chacun avec `code`,
+  `message`, `eventType` et `instancePath`.
 
-Le registre ajoute `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` et `change-status`. Les enregistrer ne les automatise pas. `save-record` et `save-repeatable` restent des événements avant enregistrement ; aucun événement de schéma `saved-*` n’est ajouté. React 0.4.0, React Native 0.5.0 et CLI 0.7.0 adoptent le cycle de vie étendu, le contrôleur et la préparation de l’enregistrement. Les bindings actuels activent le cycle de vie par défaut et exigent une classification explicite new/existing. CLI active aussi ces événements dans l’aperçu navigateur ; les commandes autonomes restent pilotées par le host.
+Aucune de ces méthodes n’évalue le formulaire, ne sauvegarde un enregistrement ni ne ferme un
+éditeur.
 
-Consultez le [contrat d’événements maintenu](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) pour le contrat complet et les étapes de livraison.
+### Exécuter les gestionnaires d’une ligne
 
-Les objets média File/Blob natifs sont copiés défensivement, avec métadonnées standard et contenu binaire immuable. Ce correctif est inclus dans core 0.5.1. Les autres objets non portables sont rejetés ; les handlers asynchrones restent incompatibles.
+Pour exécuter les gestionnaires d’une ligne sans renderer, passez `eventScope.instancePath` à la
+création du moteur. Le chemin de l’enregistrement principal est `[]`. Chaque segment de ligne
+comporte `repeatableKey`, `instanceId`, `index` et `identity`. Les chemins utilisent les clés du
+schéma, et les écouteurs utilisent `data_name`. Une ligne sans identifiant utilise
+`identity: "position"`. form0 vérifie le chemin par rapport au schéma, mais votre application doit
+vérifier que la ligne existe toujours.
 
-## Mode et consultation des valeurs acceptées
+Un gestionnaire de ligne peut lire ses propres champs, ainsi que les champs des lignes parentes et
+du formulaire principal fournis par votre application. `SETVALUE()` écrit uniquement dans la ligne
+actuelle. Les lignes sœurs, les lignes enfants et les collections répétables sont hors de portée.
+Les métadonnées ne peuvent pas remplacer les propriétés de l’événement lui-même, comme son type ou
+sa portée.
 
-Chaque gestionnaire reçoit `event.mode: 'readonly' | 'edit'`, contrôlé par le moteur. Il décrit
-l'enregistrement exécutant l'événement, y compris un enfant consulté sous un parent modifiable.
-Nouveau/existant, intention de brouillon et champs en lecture seule restent indépendants. Les
-métadonnées du demandeur et les affectations du gestionnaire ne donnent aucun droit. La validation
-des périmètres fermés reçoit `readonly` sans les ouvrir ; celle d'un éditeur conserve son mode et
-ne produit que des constats.
+### Ce que chaque type de gestionnaire peut faire
 
-Load s'exécute une fois par ouverture dans les deux modes. La modification directe attend load
-avant new/edit. Consultation → Modification exécute edit sans répéter load. Consulter permet de
-lire les valeurs acceptées, d'afficher ALERT et de modifier les listeners du périmètre. SETVALUE ou
-une autre écriture rejette tout le lot, alertes et listeners compris, avant délégation.
-`triggerDetailed()` renvoie des problèmes d'exécution ; `trigger()` historique ne renvoie aucune
-opération et émet des avertissements structurés. La consultation reste disponible.
+| Gestionnaires                            | Peuvent                    | Ne peuvent pas                                                       |
+| ---------------------------------------- | -------------------------- | -------------------------------------------------------------------- |
+| `validate-record`, `validate-repeatable` | Appeler `INVALID(message)` | Modifier des valeurs, afficher des alertes ou renvoyer des promesses |
+| `cancel-record`, `cancel-repeatable`     | Lire des valeurs           | Modifier des valeurs, appeler `INVALID()` ou afficher des alertes    |
+| `unload-record`, `unload-repeatable`     | Lire des valeurs           | Modifier des valeurs, appeler `INVALID()` ou afficher des alertes    |
 
-Pour initialiser chaque entrée en modification, utilisez new/edit plutôt qu'un load protégé.
-Le catalogue des builtins déclare les effets ; les opérations ou effets inconnus sont rejetés.
-Les restrictions de validation/fermeture restent applicables. Les effets externes des helpers
-privilégiés ne sont pas annulés par les opérations ; modifier n'autorise pas la persistance externe.
+`save-record` et `save-repeatable` s’exécutent avant une sauvegarde. Il n’existe pas d’événements de
+schéma `saved-*`. Les applications gèrent la sauvegarde, les messages de réussite et la fermeture de
+l’éditeur.
+
+Les métadonnées d’un événement peuvent contenir des objets simples, des tableaux, des dates, des
+valeurs simples et des références `File` ou `Blob`, qui conservent leurs métadonnées et leur
+contenu. Les autres types d’objets sont rejetés. Les gestionnaires du schéma ne peuvent pas être
+asynchrones.
+
+Consultez le
+[contrat d’événements maintenu](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md)
+pour connaître toutes les règles.
+
+## Enregistrements en lecture seule
+
+Chaque gestionnaire reçoit `event.mode`, qui vaut `"readonly"` ou `"edit"` pour l’enregistrement
+dans lequel il s’exécute. Une ligne en lecture seule dans un enregistrement modifiable reçoit
+`"readonly"`. Le mode est indépendant du fait que l’enregistrement soit nouveau, qu’il s’agisse d’un
+brouillon, et du réglage `read_only` d’un champ. Les métadonnées et les gestionnaires ne peuvent pas
+le modifier.
+
+`load-record` s’exécute une fois à chaque ouverture d’un enregistrement, dans les deux modes. Un
+enregistrement ouvert en modification exécute ensuite `new-record` ou `edit-record`. Passer de la
+lecture seule à la modification exécute `edit-record` sans relancer `load-record`.
+
+Dans un enregistrement en lecture seule, les gestionnaires peuvent lire des valeurs, afficher un
+`ALERT` et ajouter ou retirer des écouteurs. Un `SETVALUE` rejette tout le lot, y compris les
+alertes et les changements d’écouteurs, et l’enregistrement reste lisible. `triggerDetailed()` le
+signale dans `issues`, et `trigger()` ne renvoie aucune opération et signale un avertissement.
+
+Placez l’initialisation qui doit s’exécuter à chaque début de modification dans un gestionnaire de
+`new-record` ou `edit-record`, pas dans `load-record`. Les helpers que votre application passe au
+moteur peuvent avoir leurs propres effets de bord, que form0 ne peut pas annuler.

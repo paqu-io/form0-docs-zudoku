@@ -1,6 +1,6 @@
 ---
 title: Eventi e operazioni
-description: Come vengono registrati ed eseguiti i gestori di eventi di form0, cosa possono leggere e come le operazioni che restituiscono arrivano all'applicazione host.
+description: Come vengono registrati ed eseguiti i gestori di eventi di form0, cosa possono leggere e come le operazioni che restituiscono arrivano alla tua applicazione.
 ---
 
 <PageBadges />
@@ -9,8 +9,7 @@ import { Callout } from "zudoku/ui/Callout"
 
 I gestori di eventi permettono a uno schema di reagire a ciò che accade in un modulo, come il
 caricamento di un record o la modifica di un campo. Un gestore non modifica mai direttamente il
-modulo. Descrive cosa deve succedere sotto forma di un elenco di operazioni, e l'applicazione host le
-applica. Questa pagina spiega come vengono registrati i gestori, cosa possono leggere e come vengono
+modulo. Descrive cosa deve succedere sotto forma di un elenco di operazioni, e il renderer o la tua applicazione le applica. Questa pagina spiega come vengono registrati i gestori, cosa possono leggere e come vengono
 applicate le loro operazioni.
 
 Per sapere quali eventi attivano i renderer ufficiali, vedi
@@ -42,9 +41,9 @@ ON("load-record", function onLoad() {
   esattamente la stringa di registrazione e non converte tra `key` e `data_name`.
 - Ometti il campo per eseguire il gestore per tutti i campi.
 - Un tipo di evento sconosciuto stampa un avviso e il gestore non viene registrato.
-- `ON`/`OFF` sincroni nei gestori consentiti aggiornano i listener del motore dopo un dispatch
-  riuscito. Un lotto rifiutato non registra nulla. I callback annidati scritti nello schema
-  funzionano su Hermes senza catturare le variabili locali del gestore esterno.
+- `ON` e `OFF` dentro un gestore hanno effetto quando l'attivazione va a buon fine. Se l'attivazione
+  viene rifiutata, non fanno nulla. Le callback annidate in un gestore funzionano su Hermes, ma non
+  possono usare le variabili locali del gestore esterno.
 
 ## Come viene eseguito il codice dei gestori
 
@@ -118,8 +117,8 @@ builtin per gli eventi. I builtin riservati ai calcoli, come `SETRESULT`, non so
 
 <Callout type="info" title="SETVALUE non aggiorna ciò che legge il gestore">
   `SETVALUE` registra solo un'operazione. Per il resto del gestore, `$data_name` restituisce ancora
-  il valore del momento in cui l'evento è stato attivato. Il nuovo valore è visibile dopo che l'host
-  ha applicato l'operazione.
+  il valore del momento in cui l'evento è stato attivato. Il nuovo valore è visibile dopo
+  l'applicazione dell'operazione.
 </Callout>
 
 ## Operazioni
@@ -140,9 +139,10 @@ cui i gestori sono stati eseguiti.
 ### Le operazioni vengono controllate prima di essere restituite
 
 Prima che `trigger()` restituisca il risultato, il motore controlla ogni `SETVALUE` rispetto
-all'ambito del gestore. Un `SETVALUE` che punta a un campo che il gestore non può leggere, o a un
-campo che non esiste nello schema, viene rimosso dall'elenco e il motore segnala un avviso. Ogni
-`SETVALUE` restituito da `trigger()` punta a un campo che il gestore può modificare.
+all'ambito del gestore. Se uno punta a un campo che il gestore non può scrivere, o a un campo che
+non è nello schema, il motore segnala un avviso e `trigger()` non restituisce alcuna operazione per
+quell'evento. Ogni `SETVALUE` restituito da `trigger()` punta a un campo che il gestore può
+modificare.
 
 ### Come i binding ufficiali applicano le operazioni
 
@@ -151,12 +151,11 @@ Per impostazione predefinita, i renderer ufficiali:
 - mostrano ogni `ALERT` nella propria finestra di avviso; e
 - scrivono il valore di ogni `SETVALUE` nel modulo ed eseguono un nuovo passaggio di valutazione.
 
-<Callout type="caution" title="I valori SETVALUE per i campi a scelta devono essere portabili">
-  Il binding React converte un valore di scelta primitivo come `"it"` nella forma a runtime del
-  campo, ma React Native attualmente non esegue la stessa conversione. Finché i binding non
-  condivideranno un unico contratto di normalizzazione, usa le forme canoniche a runtime quando
-  `SETVALUE` punta a un campo a scelta. Vedi il [riferimento di
-  `SETVALUE`](/it/core/builtins/events/setvalue) per alcuni esempi.
+<Callout type="caution" title="I campi di scelta accettano identificatori testuali">
+  `SETVALUE` accetta un identificatore testuale per un `SingleChoiceField` o `BooleanField`, e un
+  array di identificatori testuali per un `MultiChoiceField`. Se un valore ha una forma errata,
+  nessuna operazione di quell'evento viene applicata, e il renderer registra `Event failed.` nella
+  console. Vedi il [riferimento di `SETVALUE`](/it/core/builtins/events/setvalue).
 </Callout>
 
 I componenti `FormRenderer` di React e React Native permettono a un’applicazione di gestire le
@@ -175,9 +174,9 @@ Chiama `applyDefault` con le operazioni che vuoi che il binding gestisca nel mod
 
 ### Applicare le operazioni senza un renderer
 
-Se usi direttamente form0-core, applica tu l'elenco restituito. Per `SETVALUE`, scrivi il valore ed
-esegui `eval()`, come descritto in [Ciclo di valutazione](/it/core/engine/evaluation-cycle). I
-campi a scelta richiedono la loro forma a runtime, non un semplice valore di scelta.
+Se usi direttamente form0-core, applica tu l'elenco restituito. Per `SETVALUE`, chiama
+`engine.setValue(fieldDataName, valueToSet)`, che accetta un identificatore testuale per un campo di
+scelta ed esegue la valutazione. Vedi [Ciclo di valutazione](/it/core/engine/evaluation-cycle).
 
 ## Nessuna catena di eventi di modifica
 
@@ -188,36 +187,72 @@ impostato. Un gestore `change` per `age` che imposta `adult_note` non esegue i g
 Se l'impostazione di un campo deve attivare anche la logica di un altro, mettile entrambe nello
 stesso gestore, oppure usa un `CalculatedField` quando il valore può essere derivato da altri campi.
 
-## Esecuzione gestita del core
+## Ottenere risultati dettagliati
 
-Il nuovo contratto del core aggiunge `engine.triggerDetailed(eventType, fieldKey, metadata)` sincrono, che restituisce copie difensive di `operations`, `validationIssues` e degli `issues` di esecuzione. Un dispatch gestito fallito non restituisce operazioni applicabili. Il percorso compatibile `engine.trigger()` mantiene il suo array di operazioni. Nessun metodo valuta, persiste o chiude un editor.
+`engine.trigger()` restituisce solo le operazioni. Usa
+`engine.triggerDetailed(eventType, fieldKey, metadata)` quando ti servono anche i messaggi di
+validazione e gli errori. È sincrono e restituisce tre array:
 
-Configura `eventScope.instancePath` quando crei un motore di riga senza renderer; l’ambito radice è `[]`. I percorsi completi usano `repeatableKey`, `instanceId`, `index` e `identity`. Le chiavi dei percorsi seguono le chiavi dello schema; gli identificatori dei listener usano `data_name`. Un ID mancante è esplicitamente posizionale. Il core verifica ascendenza dello schema e appartenenza; l’host deve verificare identità e generazione della riga attiva. I gestori gestiti della riga possono leggere campi locali, degli antenati e principali forniti dall’host; `SETVALUE()` scrive solo nei campi della riga corrente. Rami fratelli, discendenti o estranei e collezioni ripetibili non sono accessibili. I metadati dell’applicazione non possono sostituire identità o ambito del dispatcher.
+```js
+const { operations, validationIssues, issues } = engine.triggerDetailed("validate-record")
+```
 
-`INVALID(message)` è disponibile durante l’esecuzione gestita di `validate-record` e `validate-repeatable` e richiede una stringa non vuota. I risultati appartengono all’ambito, senza associazione a un campo, e restano fuori da `state.errors`, diagnostica dei calcoli, valori e metadati salvati. I gestori di validazione rifiutano operazioni su valori/interfaccia e promesse. I gestori di annullamento e scaricamento sono notifiche di sola lettura e rifiutano anche risultati di validazione e avvisi.
+- `operations`: ciò che va applicato. Se un gestore fallisce, è vuoto.
+- `validationIssues`: i messaggi di `INVALID()`.
+- `issues`: gli errori durante l'esecuzione dei gestori, ognuno con `code`, `message`, `eventType` e
+  `instancePath`.
 
-Il registro aggiunge `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` e `change-status`. Registrarli non li rende automatici. `save-record` e `save-repeatable` rimangono eventi prima del salvataggio; non vengono introdotti eventi di schema `saved-*`. React 0.4.0, React Native 0.5.0 e CLI 0.7.0 adottano ciclo di vita esteso, controller e preparazione del salvataggio. I binding attuali abilitano il ciclo di vita per impostazione predefinita e richiedono classificazione esplicita new/existing. Anche CLI abilita questi eventi nell’anteprima browser; i comandi indipendenti rimangono gestiti dall’host.
+Nessuno dei due metodi valuta il modulo, salva un record o chiude un editor.
 
-Consulta il [contratto degli eventi mantenuto](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) per il contratto completo e le fasi di consegna.
+### Eseguire i gestori di una riga
 
-Gli oggetti media File/Blob nativi sono copiati difensivamente, mantenendo metadati standard e contenuto binario immutabile. La correzione è inclusa in core 0.5.1. Gli altri oggetti non portabili sono rifiutati; gli handler asincroni restano non supportati.
+Per eseguire i gestori di una riga senza renderer, passa `eventScope.instancePath` quando crei il
+motore. Il percorso del record principale è `[]`. Ogni segmento di riga ha `repeatableKey`,
+`instanceId`, `index` e `identity`. I percorsi usano le chiavi dello schema, e i listener usano
+`data_name`. Una riga senza identificatore usa `identity: "position"`. form0 controlla il percorso
+rispetto allo schema, ma la tua applicazione deve controllare che la riga esista ancora.
 
-## Modalità e visualizzazione dei valori accettati
+Un gestore di riga può leggere i propri campi, e i campi delle righe genitori e del modulo
+principale forniti dalla tua applicazione. `SETVALUE()` scrive solo nella riga corrente. Le righe
+sorelle, le righe figlie e le raccolte ripetibili sono fuori portata. I metadati non possono
+sostituire le proprietà dell'evento stesso, come il tipo o l'ambito.
 
-Ogni gestore riceve `event.mode: 'readonly' | 'edit'`, controllato dal motore. Descrive il record
-che esegue l'evento, incluso un figlio visualizzato con padre modificabile. Nuovo/esistente,
-intento bozza e campi di sola lettura restano indipendenti. I metadati del chiamante e le assegnazioni
-del gestore non concedono permessi. La validazione degli ambiti chiusi riceve `readonly` senza
-aprirli; quella dell'editor conserva la sua modalità e produce solo segnalazioni.
+### Cosa può fare ogni tipo di gestore
 
-Load viene eseguito una volta per apertura in entrambe le modalità. La modifica diretta attende
-load prima di new/edit. Visualizzazione → Modifica esegue edit senza ripetere load. Visualizzare
-consente letture dei valori accettati, ALERT e modifiche dei listener dell'ambito. SETVALUE o
-un'altra scrittura rifiuta l'intero lotto, inclusi avvisi e listener, prima della delega.
-`triggerDetailed()` restituisce problemi di esecuzione; `trigger()` precedente non restituisce
-operazioni ed emette avvisi strutturati. La vista resta disponibile.
+| Gestori                                  | Possono                     | Non possono                                             |
+| ---------------------------------------- | --------------------------- | ------------------------------------------------------- |
+| `validate-record`, `validate-repeatable` | Chiamare `INVALID(message)` | Cambiare valori, mostrare avvisi o restituire promise   |
+| `cancel-record`, `cancel-repeatable`     | Leggere valori              | Cambiare valori, chiamare `INVALID()` o mostrare avvisi |
+| `unload-record`, `unload-repeatable`     | Leggere valori              | Cambiare valori, chiamare `INVALID()` o mostrare avvisi |
 
-Per inizializzare ogni ingresso in modifica, usa new/edit invece di load protetto. Il catalogo dei
-builtin dichiara gli effetti; operazioni o effetti sconosciuti vengono rifiutati. Restano le
-restrizioni di validazione/chiusura. Gli effetti esterni degli helper privilegiati non vengono
-annullati dalle operazioni; modificare non autorizza la persistenza esterna.
+`save-record` e `save-repeatable` vengono eseguiti prima di un salvataggio. Non esistono eventi di
+schema `saved-*`. Le applicazioni gestiscono il salvataggio, i messaggi di conferma e la chiusura
+dell'editor.
+
+I metadati di un evento possono contenere oggetti semplici, array, date, valori semplici e
+riferimenti `File` o `Blob`, che conservano metadati e contenuto. Gli altri tipi di oggetto vengono
+rifiutati. I gestori dello schema non possono essere asincroni.
+
+Consulta il
+[contratto degli eventi mantenuto](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md)
+per tutte le regole.
+
+## Record in sola lettura
+
+Ogni gestore riceve `event.mode`, che è `"readonly"` o `"edit"` per il record in cui viene eseguito.
+Una riga in sola lettura dentro un record modificabile riceve `"readonly"`. La modalità è
+indipendente dal fatto che il record sia nuovo, che sia una bozza, e dall'impostazione `read_only`
+di un campo. I metadati e i gestori non possono cambiarla.
+
+`load-record` viene eseguito una volta ogni volta che si apre un record, in entrambe le modalità. Un
+record aperto in modifica esegue poi `new-record` o `edit-record`. Passare dalla sola lettura alla
+modifica esegue `edit-record` senza eseguire di nuovo `load-record`.
+
+In un record in sola lettura, i gestori possono leggere valori, mostrare un `ALERT` e aggiungere o
+rimuovere listener. Un `SETVALUE` rifiuta l'intero lotto, compresi gli avvisi e le modifiche ai
+listener, e il record resta leggibile. `triggerDetailed()` lo riporta in `issues`, mentre
+`trigger()` non restituisce operazioni e segnala un avviso.
+
+Metti l'inizializzazione che deve essere eseguita a ogni inizio di modifica in un gestore di
+`new-record` o `edit-record`, non in `load-record`. Gli helper che la tua applicazione passa al
+motore possono avere effetti collaterali propri, che form0 non può annullare.

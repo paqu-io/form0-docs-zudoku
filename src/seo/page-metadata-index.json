@@ -2488,7 +2488,7 @@
     "translationKey": "/core/engine/events-operations",
     "locale": "en",
     "title": "Events and operations",
-    "description": "How form0 event handlers are registered and run, what they can read, and how the operations they return reach the host application.",
+    "description": "How form0 event handlers are registered and run, what they can read, and how the operations they return reach your application.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5458,7 +5458,7 @@
     "translationKey": "/core/engine/events-operations",
     "locale": "es",
     "title": "Eventos y operaciones",
-    "description": "Cómo se registran y ejecutan los manejadores de eventos de form0, qué pueden leer y cómo llegan a la aplicación host las operaciones que devuelven.",
+    "description": "Cómo se registran y ejecutan los manejadores de eventos de form0, qué pueden leer y cómo llegan a tu aplicación las operaciones que devuelven.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9022,7 +9022,7 @@
     "translationKey": "/core/engine/events-operations",
     "locale": "fr",
     "title": "Événements et opérations",
-    "description": "Comment les gestionnaires d'événements form0 sont enregistrés et exécutés, ce qu'ils peuvent lire et comment les opérations qu'ils renvoient parviennent à l'application host.",
+    "description": "Comment les gestionnaires d'événements form0 sont enregistrés et exécutés, ce qu'ils peuvent lire et comment les opérations qu'ils renvoient parviennent à votre application.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12748,7 +12748,7 @@
     "translationKey": "/core/engine/events-operations",
     "locale": "it",
     "title": "Eventi e operazioni",
-    "description": "Come vengono registrati ed eseguiti i gestori di eventi di form0, cosa possono leggere e come le operazioni che restituiscono arrivano all'applicazione host.",
+    "description": "Come vengono registrati ed eseguiti i gestori di eventi di form0, cosa possono leggere e come le operazioni che restituiscono arrivano alla tua applicazione.",
     "indexable": true,
     "status": "published",
     "alternates": [

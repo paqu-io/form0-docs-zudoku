@@ -22,3 +22,23 @@ OFF("change", "city")
 ## Returns
 
 Operation descriptor (used by clients).
+
+## Try it
+
+You need [form0-cli](/cli/install-update). All event builtin pages use the same test form.
+
+1. Download the form and start the preview:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Open `http://localhost:3030`.
+
+1. Choose **Rome** in **City**. An alert opens. Click **OK**.
+
+1. Under **Stop the city alert**, select **Yes**. That field's handler calls
+   `OFF("change", "city")`.
+
+1. Choose **Paris** in **City**. No alert opens.

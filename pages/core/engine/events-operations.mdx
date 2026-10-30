@@ -1,6 +1,6 @@
 ---
 title: Events and operations
-description: How form0 event handlers are registered and run, what they can read, and how the operations they return reach the host application.
+description: How form0 event handlers are registered and run, what they can read, and how the operations they return reach your application.
 ---
 
 <PageBadges />
@@ -9,7 +9,7 @@ import { Callout } from "zudoku/ui/Callout"
 
 Event handlers let a schema react to what happens in a form, such as a record loading or a field
 changing. A handler never changes the form directly. It describes what should happen as a list of
-operations, and the host application applies them. This page explains how handlers are registered,
+operations, and the renderer or your application applies them. This page explains how handlers are registered,
 what they can read, and how their operations are applied.
 
 For which events the official renderers dispatch, see
@@ -41,9 +41,9 @@ ON("load-record", function onLoad() {
   not translate between `key` and `data_name`.
 - Leave out the field to run the handler for every field.
 - An unknown event type prints a warning, and the handler is not registered.
-- Synchronous `ON`/`OFF` inside permitted handlers update the engine's listener registry after
-  dispatch succeeds. A rejected batch registers nothing. Nested authored callbacks work on Hermes
-  and do not capture the outer handler's local variables.
+- `ON` and `OFF` inside a handler take effect after the dispatch succeeds. If the dispatch is
+  rejected, they do nothing. Callbacks nested inside a handler work on Hermes, but they cannot use
+  the outer handler's local variables.
 
 ## How handler code runs
 
@@ -113,8 +113,7 @@ event builtins. Calculation-only builtins such as `SETRESULT` are not available.
 
 <Callout type="info" title="SETVALUE does not update what the handler reads">
   `SETVALUE` only records an operation. For the rest of the handler, `$data_name` still returns the
-  value from when the event was dispatched. The new value is visible after the host applies the
-  operation.
+  value from when the event was dispatched. The new value is visible after the operation is applied.
 </Callout>
 
 ## Operations
@@ -134,10 +133,10 @@ ran.
 
 ### Operations are checked before they are returned
 
-Before `trigger()` returns, the engine checks every `SETVALUE` against the handler's scope. A
-`SETVALUE` that targets a field the handler cannot read, or a field that is not in the schema, is
-removed from the list, and the engine reports a warning. Every `SETVALUE` that `trigger()` returns
-targets a field the handler is allowed to change.
+Before `trigger()` returns, the engine checks every `SETVALUE` against the handler's scope. If one
+targets a field the handler cannot write, or a field that is not in the schema, the engine reports a
+warning, and `trigger()` returns no operations for that event. Every `SETVALUE` that `trigger()`
+returns targets a field the handler is allowed to change.
 
 ### How the official bindings apply operations
 
@@ -146,11 +145,11 @@ By default, the official renderers:
 - show each `ALERT` in their own alert dialog; and
 - write each `SETVALUE` value into the form and run a new evaluation pass.
 
-<Callout type="caution" title="Choice-field SETVALUE values must be portable">
-  The React binding converts a primitive choice value such as `"it"` into the field's live value
-  shape, but React Native does not currently perform the same conversion. Until the bindings share
-  one normalization contract, use canonical live shapes when `SETVALUE` targets a choice field. See
-  the [`SETVALUE` reference](/core/builtins/events/setvalue) for examples.
+<Callout type="caution" title="Choice fields take string IDs">
+  `SETVALUE` takes a string ID for a `SingleChoiceField` or `BooleanField`, and an array of string
+  IDs for a `MultiChoiceField`. If a value has the wrong shape, none of that event's operations are
+  applied, and the renderer logs `Event failed.` to the console. See the [`SETVALUE`
+  reference](/core/builtins/events/setvalue).
 </Callout>
 
 The React and React Native `FormRenderer` components let an application handle non-alert operations
@@ -169,9 +168,9 @@ Call `applyDefault` with any operations you want the binding to handle as usual.
 
 ### Applying operations without a renderer
 
-If you use form0-core directly, apply the returned list yourself. For `SETVALUE`, write the value
-and run `eval()`, as described in [Evaluation cycle](/core/engine/evaluation-cycle). Choice fields
-need their runtime value shape, not a plain choice value.
+If you use form0-core directly, apply the returned list yourself. For `SETVALUE`, call
+`engine.setValue(fieldDataName, valueToSet)`, which accepts a string ID for a choice field and runs
+the evaluation. See [Evaluation cycle](/core/engine/evaluation-cycle).
 
 ## No chains of change events
 
@@ -182,35 +181,71 @@ it set. A `change` handler for `age` that sets `adult_note` does not run the `ch
 If setting one field should also trigger the logic of another, put both in the same handler, or use
 a `CalculatedField` when the value can be derived from other fields.
 
-## Managed core execution
+## Get detailed results
 
-The new core contract adds synchronous `engine.triggerDetailed(eventType, fieldKey, metadata)`, returning defensive `operations`, `validationIssues` and execution `issues`. A failed managed dispatch returns no applicable operations. The existing `engine.trigger()` compatibility path keeps its operation-array behavior. Neither method evaluates, persists or closes an editor.
+`engine.trigger()` returns only the operations. Use
+`engine.triggerDetailed(eventType, fieldKey, metadata)` when you also need validation messages and
+failures. It is synchronous, and it returns three arrays:
 
-Configure `eventScope.instancePath` when creating a headless row engine; root scope is `[]`. Complete paths use `repeatableKey`, `instanceId`, `index` and `identity`. Path keys use schema keys; listener identifiers use `data_name`. A missing ID is explicitly positional. Core validates schema ancestry and ownership; the host must verify active row identity and generation. Managed row handlers may read current, ancestor and main fields supplied by the host; `SETVALUE()` writes only current-row fields. Sibling, descendant and unrelated branches and repeatable collections are inaccessible. Application metadata cannot override dispatcher-owned identity or scope.
+```js
+const { operations, validationIssues, issues } = engine.triggerDetailed("validate-record")
+```
 
-`INVALID(message)` is available during managed `validate-record` and `validate-repeatable` execution and requires a nonempty string. Findings belong to the scope, without a field association, and stay out of `state.errors`, calculation diagnostics, values and saved metadata. Validation handlers reject value/UI operations and promises. Cancel/unload handlers are read-only notifications and also reject validation findings and alerts.
+- `operations`: what to apply. If a handler fails, this is empty.
+- `validationIssues`: messages from `INVALID()`.
+- `issues`: failures while handlers ran, each with `code`, `message`, `eventType`, and
+  `instancePath`.
 
-The registry adds `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` and `change-status`. Registering them does not automate them. `save-record` and `save-repeatable` remain pre-save; no `saved-*` schema events are introduced. React 0.4.0, React Native 0.5.0 and CLI 0.7.0 adopt the expanded lifecycle, controller and save preparation. Current bindings default lifecycle on and require explicit new/existing classification. CLI browser preview also defaults lifecycle on; standalone commands remain host-driven.
+Neither method evaluates the form, saves a record, or closes an editor.
 
-See the [maintained event contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) for the complete contract and delivery stages.
+### Run a row's handlers
 
-Native File/Blob media handles are copied defensively, preserving their standard metadata and immutable binary content. This compatibility correction is included in core 0.5.1. Other nonportable object types remain rejected; asynchronous schema handlers remain unsupported.
+To run a row's handlers without a renderer, pass `eventScope.instancePath` when you create the
+engine. The main record's path is `[]`. Each row segment has `repeatableKey`, `instanceId`, `index`,
+and `identity`. Paths use schema keys, and listeners use `data_name`. A row without an ID uses
+`identity: "position"`. form0 checks the path against the schema, but your application must check
+that the row still exists.
 
-## Mode and accepted-snapshot viewing
+A row handler can read its own fields, and the parent-row and main-form fields your application
+supplies. `SETVALUE()` writes only to the current row. Sibling rows, child rows, and repeatable
+collections are out of reach. Metadata cannot replace the event's own properties, such as its type
+or scope.
 
-Each handler receives authoritative `event.mode: 'readonly' | 'edit'`. It describes the executing
-record at dispatch, including a viewed child of an editable parent. New/existing classification,
-draft intent and individual field read-only flags are separate. Caller metadata and handler
-assignments cannot grant permissions. Closed-scope record-tree validation receives `readonly`
-without reopening those records; editor validation retains its editor mode and remains findings-only.
+### What each kind of handler can do
 
-Load runs once per opening in either mode. Direct editing awaits load before new/edit. View → Edit
-runs edit without replaying load. View can read accepted values, display ALERT and update scoped
-listeners. SETVALUE or another record write rejects the whole batch, including accompanying alerts
-and listener changes, before delegation. `triggerDetailed()` returns execution issues; legacy
-`trigger()` returns no operations and emits structured warnings. The view remains readable.
+| Handlers                                 | Can                     | Cannot                                          |
+| ---------------------------------------- | ----------------------- | ----------------------------------------------- |
+| `validate-record`, `validate-repeatable` | Call `INVALID(message)` | Change values, show alerts, or return promises  |
+| `cancel-record`, `cancel-repeatable`     | Read values             | Change values, call `INVALID()`, or show alerts |
+| `unload-record`, `unload-repeatable`     | Read values             | Change values, call `INVALID()`, or show alerts |
 
-For initialization needed whenever editing begins, use new/edit rather than a guarded load handler.
-Operation effects are declared in the builtin catalog; unknown operations/effects are rejected.
-Validation/close restrictions still apply. Privileged host helper side effects are outside operation
-rollback, and editing does not authorize external persistence.
+`save-record` and `save-repeatable` run before a save. There are no `saved-*` schema events.
+Applications own saving, success messages, and closing the editor.
+
+Event metadata can contain plain objects, arrays, dates, simple values, and `File` or `Blob`
+handles, which keep their metadata and content. Other object types are rejected. Schema handlers
+cannot be asynchronous.
+
+See the
+[maintained event contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md)
+for the complete rules.
+
+## Read-only records
+
+Each handler receives `event.mode`, which is `"readonly"` or `"edit"` for the record it runs in. A
+read-only row inside an editable record receives `"readonly"`. The mode is separate from whether the
+record is new, whether this is a draft, and the `read_only` setting of a field. Metadata and
+handlers cannot change it.
+
+`load-record` runs once each time a record opens, in either mode. A record opened for editing runs
+`new-record` or `edit-record` after it. Switching from read-only to editing runs `edit-record`
+without running `load-record` again.
+
+In a read-only record, handlers can read values, show an `ALERT`, and add or remove listeners. A
+`SETVALUE` rejects the whole batch, including any alerts and listener changes, and the record stays
+readable. `triggerDetailed()` reports this in `issues`, and `trigger()` returns no operations and
+reports a warning.
+
+Put setup that must run whenever editing begins in a `new-record` or `edit-record` handler, not in
+`load-record`. Helpers your application passes to the engine can have their own side effects, which
+form0 cannot undo.

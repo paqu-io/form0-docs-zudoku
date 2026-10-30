@@ -13,7 +13,18 @@ Imposta il valore di un campo durante un evento.
 SETVALUE("age", 18)
 ```
 
-I consumer ufficiali applicano identificatori testuali SingleChoice/Boolean, array di identificatori MultiChoice o i rispettivi oggetti live completi tramite normalizzazione condivisa. Il dispatch raccoglie operazioni; applicarle valuta i calcoli coinvolti senza attivare change implicitamente. [Vedi il contratto di aggiornamento dei valori](/it/core/engine/value-updates).
+Il valore deve corrispondere al campo. Usa un numero per un `NumericField` e una stringa per un
+`TextField`. Un `SingleChoiceField` o `BooleanField` accetta un identificatore testuale, e un
+`MultiChoiceField` accetta un array di identificatori testuali:
+
+```js
+SETVALUE("rating", "1")
+SETVALUE("tags", ["red", "blue"])
+```
+
+Se una chiamata di un gestore viene rifiutata, nessuna operazione di quell'evento viene applicata.
+Applicare un `SETVALUE()` ricalcola il modulo, ma non attiva `change`. Vedi
+[Aggiornamento e normalizzazione dei valori](/it/core/engine/value-updates).
 
 ## Parametri
 
@@ -23,3 +34,19 @@ I consumer ufficiali applicano identificatori testuali SingleChoice/Boolean, arr
 ## Valore restituito
 
 Il descrittore dell’operazione (utilizzato dai client).
+
+## Prova
+
+Ti serve [form0-cli](/it/cli/install-update). Tutte le pagine dei builtin per gli eventi usano lo
+stesso modulo di prova.
+
+1. Scarica il modulo e avvia l'anteprima:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Apri `http://localhost:3030`.
+
+1. Inserisci `7` in **Amount**. **Note** mostra **Amount is 7**.

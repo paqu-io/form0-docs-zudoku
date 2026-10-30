@@ -24,73 +24,24 @@ ON("validate-repeatable", "rows", function () {
 `validate-record` s’exécute lorsque l’utilisateur soumet le formulaire. `validate-repeatable`
 s’exécute lorsque l’utilisateur enregistre une ligne de la section répétable indiquée, ici `rows`.
 
-## Essayez
+## Paramètres
 
-Il vous faut [form0-cli](/fr/cli/install-update).
+- message : chaîne non vide
 
-1. Enregistrez ce schéma sous le nom `order.json` :
+## Valeur renvoyée
 
-   ```json
-   {
-     "form": {
-       "name": "Order",
-       "description": null,
-       "events": {
-         "code": "ON(\"validate-record\", function () {\n  if ($amount < 4) INVALID(\"Amount must be at least four.\")\n})"
-       },
-       "elements": [
-         {
-           "type": "NumericField",
-           "key": "amount",
-           "data_name": "amount",
-           "label": "Amount",
-           "display": "default",
-           "description": null,
-           "description_mode": null,
-           "required": true,
-           "required_conditions": null,
-           "visible": true,
-           "visible_conditions": null,
-           "read_only": false,
-           "read_only_conditions": null,
-           "default_value": null,
-           "format": "integer",
-           "min": null,
-           "max": null,
-           "supporting_image": false,
-           "supporting_image_path": null,
-           "supporting_image_display": null
-         }
-       ]
-     }
-   }
-   ```
+Le descripteur de l’opération (utilisé par les clients).
 
-1. Lancez l’aperçu :
-
-   ```bash
-   form0 serve order.json
-   ```
-
-1. Ouvrez `http://localhost:3030`, saisissez `2` dans **Amount** et cliquez sur **Submit**. Le
-   formulaire affiche **Amount must be at least four.** et n’est pas soumis.
-
-1. Remplacez **Amount** par `10` et cliquez sur **Submit**. Le message disparaît et la console du
-   navigateur affiche l’enregistrement préparé.
-
-## Règles
+## Remarques
 
 - Appelez `INVALID()` dans un gestionnaire de `validate-record` ou `validate-repeatable`. Ailleurs,
   l’appel est rejeté.
-- Le message doit être une chaîne non vide.
 - Le message concerne tout l’enregistrement ou toute la ligne, pas un champ précis : il apparaît
   donc dans la liste de validation du formulaire.
 - Les gestionnaires de validation peuvent seulement vérifier des valeurs. Ils ne peuvent pas
   modifier de valeurs, afficher d’alertes ni renvoyer de promesses.
 - `INVALID()` n’ajoute rien à `state.errors`, aux diagnostics de calcul ni à l’enregistrement
   sauvegardé.
-
-## L’utiliser sans renderer
 
 Avec `form0-core` seul, déclenchez l’événement vous-même et lisez `validationIssues` :
 
@@ -105,3 +56,23 @@ autorise un brouillon.
 
 Consultez [Événements et opérations](/fr/core/engine/events-operations) et le
 [contrat maintenu](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md).
+
+## Essayez
+
+Il vous faut [form0-cli](/fr/cli/install-update). Toutes les pages des builtins d’événements
+utilisent le même formulaire de test.
+
+1. Téléchargez le formulaire et démarrez l’aperçu :
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Ouvrez `http://localhost:3030`.
+
+1. Saisissez `2` dans **Amount** et cliquez sur **Submit Record**. Le formulaire affiche
+   **Amount must be at least four.** et n’est pas soumis.
+
+1. Remplacez **Amount** par `10` et cliquez sur **Submit Record**. Le message disparaît, et la
+   console du navigateur affiche `[STRUCTURED RECORD] Record prepared`.

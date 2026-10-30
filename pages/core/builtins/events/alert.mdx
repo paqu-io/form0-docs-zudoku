@@ -21,3 +21,21 @@ ALERT("Warning", "Check the form")
 ## Returns
 
 Operation descriptor (used by clients).
+
+## Try it
+
+You need [form0-cli](/cli/install-update). All event builtin pages use the same test form.
+
+1. Download the form and start the preview:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Open `http://localhost:3030`.
+
+1. Choose **Rome** in **City**. A dialog opens with the title **City changed** and the message
+   **Check the delivery address.**
+
+1. Click **OK** to close it.

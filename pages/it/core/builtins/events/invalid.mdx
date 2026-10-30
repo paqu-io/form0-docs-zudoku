@@ -24,72 +24,23 @@ ON("validate-repeatable", "rows", function () {
 `validate-record` viene eseguito quando l'utente invia il modulo. `validate-repeatable` viene
 eseguito quando l'utente salva una riga della sezione ripetibile indicata, qui `rows`.
 
-## Prova
+## Parametri
 
-Ti serve [form0-cli](/it/cli/install-update).
+- message: stringa non vuota
 
-1. Salva questo schema come `order.json`:
+## Valore restituito
 
-   ```json
-   {
-     "form": {
-       "name": "Order",
-       "description": null,
-       "events": {
-         "code": "ON(\"validate-record\", function () {\n  if ($amount < 4) INVALID(\"Amount must be at least four.\")\n})"
-       },
-       "elements": [
-         {
-           "type": "NumericField",
-           "key": "amount",
-           "data_name": "amount",
-           "label": "Amount",
-           "display": "default",
-           "description": null,
-           "description_mode": null,
-           "required": true,
-           "required_conditions": null,
-           "visible": true,
-           "visible_conditions": null,
-           "read_only": false,
-           "read_only_conditions": null,
-           "default_value": null,
-           "format": "integer",
-           "min": null,
-           "max": null,
-           "supporting_image": false,
-           "supporting_image_path": null,
-           "supporting_image_display": null
-         }
-       ]
-     }
-   }
-   ```
+Il descrittore dell’operazione (utilizzato dai client).
 
-1. Avvia l'anteprima:
-
-   ```bash
-   form0 serve order.json
-   ```
-
-1. Apri `http://localhost:3030`, inserisci `2` in **Amount** e fai clic su **Submit**. Il modulo
-   mostra **Amount must be at least four.** e non viene inviato.
-
-1. Cambia **Amount** in `10` e fai clic su **Submit**. Il messaggio scompare e la console del
-   browser mostra il record preparato.
-
-## Regole
+## Note
 
 - Chiama `INVALID()` dentro un gestore di `validate-record` o `validate-repeatable`. Altrove viene
   rifiutato.
-- Il messaggio deve essere una stringa non vuota.
 - Il messaggio riguarda l'intero record o l'intera riga, non un singolo campo, quindi compare
   nell'elenco di validazione del modulo.
 - I gestori di validazione possono solo controllare i valori. Non possono cambiare valori, mostrare
   avvisi o restituire promise.
 - `INVALID()` non aggiunge nulla a `state.errors`, alla diagnostica dei calcoli o al record salvato.
-
-## Usarlo senza un renderer
 
 Con il solo `form0-core`, attiva tu l'evento e leggi `validationIssues`:
 
@@ -103,3 +54,23 @@ non compare in `issues`. La tua applicazione decide cosa farne, ad esempio se co
 
 Consulta [Eventi e operazioni](/it/core/engine/events-operations) e il
 [contratto mantenuto](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md).
+
+## Prova
+
+Ti serve [form0-cli](/it/cli/install-update). Tutte le pagine dei builtin per gli eventi usano lo
+stesso modulo di prova.
+
+1. Scarica il modulo e avvia l'anteprima:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Apri `http://localhost:3030`.
+
+1. Inserisci `2` in **Amount** e fai clic su **Submit Record**. Il modulo mostra
+   **Amount must be at least four.** e non viene inviato.
+
+1. Cambia **Amount** in `10` e fai clic su **Submit Record**. Il messaggio scompare, e la console
+   del browser mostra `[STRUCTURED RECORD] Record prepared`.

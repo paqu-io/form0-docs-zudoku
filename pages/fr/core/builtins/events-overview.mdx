@@ -11,7 +11,7 @@ Les événements sont définis dans `form.events.code` et évalués à l'exécut
 enregistrer des gestionnaires et `SETVALUE`/`ALERT` pour interagir avec le formulaire.
 
 Lors de la création du moteur, `events.code` s'exécute une fois afin d'enregistrer les gestionnaires.
-Cela ne déclenche aucun événement. Un événement s'exécute uniquement lorsque le host appelle
+Cela ne déclenche aucun événement. Un événement s'exécute uniquement lorsque votre application appelle
 `engine.trigger(...)` ou lorsqu'un binding le déclenche en réponse à une interaction utilisateur ou
 à une transition du cycle de vie de l'application.
 
@@ -28,31 +28,36 @@ ON("change", "age", function (event) {
 
 ## Déclenchement des événements dans les bindings officiels
 
-`form0-react` et `form0-react-native` déclenchent volontairement un petit ensemble portable
-d'événements depuis leurs composants `FormRenderer` :
+Par défaut, `FormRenderer` dans `form0-react` et `form0-react-native` déclenche ces événements :
 
-| Événement     | Moment du déclenchement                                        |
-| ------------- | -------------------------------------------------------------- |
-| `load-record` | Lorsque le moteur de l'enregistrement principal est prêt       |
-| `edit-record` | Lorsque l'enregistrement principal passe en mode édition       |
-| `change`      | Après la modification d'un champ de l'enregistrement principal |
+| Événement         | Quand il s’exécute                                                            |
+| ----------------- | ----------------------------------------------------------------------------- |
+| `load-record`     | Chaque fois qu’un enregistrement s’ouvre, en modification ou en lecture seule |
+| `new-record`      | Un nouvel enregistrement passe en modification                                |
+| `edit-record`     | Un enregistrement existant passe en modification                              |
+| `change`          | Un utilisateur modifie un champ, ou ajoute, modifie ou supprime une ligne     |
+| `focus`, `blur`   | Un champ texte ou numérique gagne ou perd le focus                            |
+| `validate-record` | Un utilisateur soumet le formulaire ou sauvegarde un brouillon                |
+| `save-record`     | Après la validation, une fois par tentative de sauvegarde                     |
+| `cancel-record`   | Un utilisateur confirme l’annulation d’un enregistrement                      |
+| `unload-record`   | Un enregistrement se ferme                                                    |
+| `change-status`   | Un utilisateur modifie le champ de statut, s’il est activé                    |
 
-Les éditeurs de lignes répétables ne déclenchent pas automatiquement ces événements. En
-particulier, l'ouverture d'une ligne ne relance pas les gestionnaires `load-record` ou `edit-record`
-de l'enregistrement principal, et la modification d'un champ de la ligne ne déclenche pas `change`.
-Pour l'instant, l'application gère les événements du cycle de vie des éléments répétables.
+Les lignes ont leurs propres événements : `load-repeatable`, `new-repeatable`, `edit-repeatable`,
+`validate-repeatable`, `save-repeatable`, `cancel-repeatable`, `unload-repeatable`. Une ligne
+n’exécute jamais les événements de l’enregistrement principal.
 
-Le registre du noyau accepte également `new-record`, `save-record`, `validate-record`, `blur`,
-`focus`, `click` et les événements `*-repeatable`. Ils dépendent du cycle de vie et des choix
-d'interface propres à l'application ; les renderers officiels ne les déclenchent donc
-actuellement pas automatiquement. Une application qui intègre directement `form0-core` peut les
-déclencher avec `engine.trigger(eventType, fieldKey, metadata)` au moment approprié de son propre flux.
+Les champs de choix signalent les changements avec `change`, pas avec `focus` ou `blur`. `click` est
+disponible, mais aucun contrôle intégré ne l’émet : déclenchez-le donc vous-même. Les valeurs par
+défaut, les calculs et `SETVALUE` ne déclenchent pas `change`.
 
-Le déclenchement automatique d'autres événements peut être étudié au cas par cas, mais il ne découle
-pas de leur seule présence dans le noyau. Un schéma ne doit dépendre que des événements que son
-application host ou son binding déclare prendre en charge.
+Utilisez `engineOptions.events` pour modifier ce comportement. `lifecycle: false` ne garde que
+`load-record`, `edit-record` et `change` pour les champs de l’enregistrement principal.
+`fieldInteractions: []` désactive `focus` et `blur`.
 
-L'enregistrement d'un gestionnaire avec `ON` ne rend pas l'événement automatique.
+Si vous utilisez `form0-core` directement, rien n’est déclenché à votre place. Appelez
+`engine.trigger(eventType, fieldKey, metadata)` au bon moment dans votre application. Enregistrer un
+gestionnaire avec `ON` ne fait pas s’exécuter son événement.
 
 ## Builtins d'événement
 
