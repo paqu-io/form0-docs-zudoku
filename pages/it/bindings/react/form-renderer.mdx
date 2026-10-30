@@ -136,3 +136,34 @@ Strict Mode e smontaggio forzato ritirano solo gli ambiti. Save-_ precede il sal
 eventi saved-_. L’applicazione gestisce persistenza, successo e chiusura.
 
 I file File/Blob nativi conservano metadati standard e dati immutabili. Le proprietà personalizzate restano fuori dalla serializzazione nativa. La correzione della compatibilità multimediale è inclusa in core 0.5.1.
+
+## Segnalazione degli errori degli eventi gestiti
+
+`eventDiagnostics` controlla la segnalazione degli errori degli eventi gestiti separatamente da `submissionDiagnostics`:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  eventDiagnostics={{ failures: true }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+/>
+```
+
+Gli eventi gestiti non riusciti vengono segnalati una volta in `console.error` per impostazione
+predefinita, comprese le operazioni `SETVALUE()` rifiutate e le promesse `onOperations` rifiutate.
+Il rapporto contiene tipo di evento, campo che lo avvia, ambito radice/riga e codici/messaggi, senza
+allegare valori, argomenti delle operazioni, snapshot o ID dei record. Usa `failures: false` se
+l’applicazione li segnala già. La preferenza resta aggiornata negli editor aperti e nelle operazioni
+in corso, senza ricostruire o valutare il motore.
+
+La validazione normale e i risultati di `INVALID()` restano separati. Le operazioni annullate o
+ritirate non producono messaggi. La preparazione di Submit e Save di riga usa il rapporto di invio,
+senza duplicarlo. L’host che chiama direttamente `prepareSave()` continua a controllarne il risultato.
+`dispatch()` conserva il risultato strutturato anche con la segnalazione console disattivata.
+Gli avvisi del core e il comportamento console precedente con `lifecycle: false` non cambiano.
+
+I campi numerici continuano ad accettare numeri: `SETVALUE("quantity", 1)` è valido. Le scelte richiedono
+ID testuali: `SETVALUE("rating", "1")` per la selezione singola e `SETVALUE("tags", ["1"])` per quella
+multipla. Una chiamata rifiutata lascia il suo lotto non applicato; la segnalazione non cambia valori,
+validazione, record inviati o numero di valutazioni.

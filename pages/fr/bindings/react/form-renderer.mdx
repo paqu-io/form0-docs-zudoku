@@ -139,3 +139,34 @@ nettoyage Strict Mode et démontage forcé retirent uniquement les périmètres.
 sauvegarde ; aucun événement saved-_ n’est ajouté. L’application possède persistance, succès et fermeture.
 
 Les fichiers File/Blob natifs conservent leurs métadonnées standard et données immuables. Les propriétés personnalisées restent hors de la sérialisation native. Le correctif de compatibilité multimédia est inclus dans core 0.5.1.
+
+## Signalement des échecs des événements gérés
+
+`eventDiagnostics` contrôle le signalement des échecs des événements gérés séparément de `submissionDiagnostics` :
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  eventDiagnostics={{ failures: true }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+/>
+```
+
+Les événements gérés en échec sont signalés une fois dans `console.error` par défaut, y compris les
+opérations `SETVALUE()` rejetées et les promesses `onOperations` rejetées. Le rapport contient le type
+d’événement, le champ déclencheur, la portée racine/ligne et les codes/messages, sans joindre de
+valeurs, d’arguments d’opération, de snapshots ou d’IDs d’enregistrements. Utilisez `failures: false`
+si votre application les signale déjà. La préférence reste actuelle dans les éditeurs ouverts et les
+opérations en cours, sans reconstruire ni évaluer le moteur.
+
+La validation normale et les constats `INVALID()` restent séparés. Le travail annulé ou retiré reste
+silencieux. La préparation de Submit et Save de ligne utilise le rapport de soumission sans doublon.
+L’hôte qui appelle directement `prepareSave()` continue d’inspecter le résultat renvoyé.
+`dispatch()` conserve son résultat structuré même si le signalement console est désactivé.
+Les avertissements du core et le comportement console hérité avec `lifecycle: false` ne changent pas.
+
+Les champs numériques acceptent toujours les nombres : `SETVALUE("quantity", 1)` est valide. Les choix
+exigent des IDs textuels : `SETVALUE("rating", "1")` en sélection unique et `SETVALUE("tags", ["1"])`
+en sélection multiple. Un appel rejeté laisse son lot non appliqué ; le signalement ne change ni les
+valeurs, ni la validation, ni les enregistrements soumis, ni le nombre d’évaluations.

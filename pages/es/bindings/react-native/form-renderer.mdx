@@ -140,3 +140,34 @@ limpieza de Strict Mode y desmontaje forzado solo retiran ámbitos. Save-_ ocurr
 no hay eventos saved-_. La aplicación controla persistencia, éxito y cierre.
 
 Los archivos File/Blob nativos conservan sus metadatos estándar y datos inmutables. Las propiedades personalizadas quedan fuera de la serialización nativa. La corrección de compatibilidad multimedia está incluida en core 0.5.1.
+
+## Informe de fallos de eventos gestionados
+
+`eventDiagnostics` controla los informes de fallos de eventos gestionados por separado de `submissionDiagnostics`:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  eventDiagnostics={{ failures: true }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+/>
+```
+
+Los eventos gestionados fallidos se notifican una vez en `console.error` por defecto, incluidas las
+operaciones `SETVALUE()` rechazadas y las promesas `onOperations` rechazadas. El informe contiene el
+tipo de evento, el campo que lo inicia, el ámbito raíz/fila y códigos/mensajes, sin adjuntar valores,
+argumentos de operaciones, snapshots ni IDs de registros. Usa `failures: false` si tu aplicación ya
+los informa. La preferencia se actualiza en editores abiertos y operaciones pendientes sin reconstruir
+ni evaluar el motor.
+
+La validación normal y los hallazgos de `INVALID()` siguen separados. El trabajo cancelado o retirado
+no genera mensajes. La preparación de Submit y Save de fila usa el informe de envío, sin duplicarlo.
+El host que llama directamente a `prepareSave()` sigue inspeccionando el resultado devuelto.
+`dispatch()` conserva su resultado estructurado incluso con los informes de consola desactivados.
+No cambian los avisos del core ni el comportamiento de consola heredado de `lifecycle: false`.
+
+Los campos numéricos siguen aceptando números: `SETVALUE("quantity", 1)` es válido. Las opciones
+requieren IDs de texto: `SETVALUE("rating", "1")` para selección única y `SETVALUE("tags", ["1"])`
+para selección múltiple. Una llamada rechazada deja su lote sin aplicar; informar no cambia los
+valores, la validación, los registros enviados ni el número de evaluaciones.
