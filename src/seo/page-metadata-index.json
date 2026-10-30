@@ -6020,6 +6020,33 @@
       }
     ]
   },
+  "/es/getting-started/upgrade-notes": {
+    "pathname": "/es/getting-started/upgrade-notes",
+    "translationKey": "/getting-started/upgrade-notes",
+    "locale": "es",
+    "title": "Notas de actualización",
+    "description": "Qué cambiar en tu aplicación al actualizar los paquetes de form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/upgrade-notes"
+      }
+    ]
+  },
   "/es/guides/case-intake-form": {
     "pathname": "/es/guides/case-intake-form",
     "translationKey": "/guides/case-intake-form",
@@ -9530,6 +9557,33 @@
       }
     ]
   },
+  "/fr/getting-started/upgrade-notes": {
+    "pathname": "/fr/getting-started/upgrade-notes",
+    "translationKey": "/getting-started/upgrade-notes",
+    "locale": "fr",
+    "title": "Notes de mise à niveau",
+    "description": "Ce qu’il faut changer dans votre application lors de la mise à niveau des paquets form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/upgrade-notes"
+      }
+    ]
+  },
   "/fr/guides/case-intake-form": {
     "pathname": "/fr/guides/case-intake-form",
     "translationKey": "/guides/case-intake-form",
@@ -10067,6 +10121,33 @@
       {
         "locale": "it",
         "pathname": "/it/getting-started/schema-edit"
+      }
+    ]
+  },
+  "/getting-started/upgrade-notes": {
+    "pathname": "/getting-started/upgrade-notes",
+    "translationKey": "/getting-started/upgrade-notes",
+    "locale": "en",
+    "title": "Upgrade notes",
+    "description": "What to change in your application when you upgrade form0 packages.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/upgrade-notes"
       }
     ]
   },
@@ -13145,6 +13226,33 @@
       {
         "locale": "it",
         "pathname": "/it/getting-started/schema-edit"
+      }
+    ]
+  },
+  "/it/getting-started/upgrade-notes": {
+    "pathname": "/it/getting-started/upgrade-notes",
+    "translationKey": "/getting-started/upgrade-notes",
+    "locale": "it",
+    "title": "Note di aggiornamento",
+    "description": "Cosa cambiare nella tua applicazione quando aggiorni i pacchetti form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/upgrade-notes"
       }
     ]
   },

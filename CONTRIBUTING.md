@@ -161,6 +161,27 @@ Guides show the finished result with screenshots. Keep them few and easy to main
 - Do not document planned or speculative behavior as available.
 - Link to the owning form0 repository when implementation details matter.
 - Use sentence case for headings.
+- Start with what a feature is for and when to use it, before any rules or options.
+- Write "your application" rather than "host" unless the difference from a worker or another
+  process matters. Define other internal terms on first use, or replace them.
+- Describe what is true today. Avoid "new", "existing", "legacy", "for this release", and version
+  numbers in reference pages. Changes that need reader action belong in
+  [Upgrade notes](#upgrade-notes).
+- Put the common case first and edge rules at the end of the section.
+- Mention reform only where it is the subject, such as the `cli/reform/` pages.
+
+### Try it
+
+When a page describes behavior a reader can observe, add numbered steps that show how to see it:
+the schema or code to use, the command or action to run, and the expected result. Run the steps
+against the released packages before committing, and show the actual output.
+
+### Upgrade notes
+
+When a release requires readers to change something, add an entry to
+`pages/getting-started/upgrade-notes.mdx` in all four languages, newest first. Each entry says
+which versions it applies from, who needs to act, what to do, and how to check the result. Changes
+that need no action stay in the GitHub release notes.
 
 Technical statements should match the current released package or repository behavior. When a
 change depends on an unreleased implementation, link the corresponding pull request and coordinate

@@ -20,6 +20,9 @@
     },
     "how-form0-compares": {
       "title": "How form0 compares"
+    },
+    "upgrade-notes": {
+      "title": "Upgrade notes"
     }
   },
   "cli": {

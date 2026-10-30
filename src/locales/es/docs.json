@@ -20,6 +20,9 @@
     },
     "how-form0-compares": {
       "title": "form0 frente a otras soluciones"
+    },
+    "upgrade-notes": {
+      "title": "Notas de actualización"
     }
   },
   "cli": {

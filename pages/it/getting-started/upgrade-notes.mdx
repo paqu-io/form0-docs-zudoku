@@ -1,0 +1,169 @@
+---
+title: Note di aggiornamento
+description: Cosa cambiare nella tua applicazione quando aggiorni i pacchetti form0.
+---
+
+<PageBadges />
+
+Questa pagina elenca le modifiche di form0 che richiedono un tuo intervento. Se una versione non
+compare qui, puoi installarla senza cambiare il codice. Per le nuove funzionalità e le correzioni,
+consulta le note di rilascio di [form0-core](https://github.com/paqu-io/form0-core/releases),
+[form0-react](https://github.com/paqu-io/form0-react/releases),
+[form0-react-native](https://github.com/paqu-io/form0-react-native/releases) e
+[form0-cli](https://github.com/paqu-io/form0-cli/releases).
+
+Le modifiche sono elencate dalla più recente. Per aggiornare, controlla tutte le voci più recenti
+delle versioni che usi oggi.
+
+## Aggiorna i pacchetti insieme
+
+Ogni binding dipende da una versione corrispondente di `form0-core`, quindi installali insieme:
+
+- React: `npm install form0-react@latest form0-core@latest`
+- React Native: `npm install form0-react-native@latest form0-core@latest`
+- CLI: `npm install --global form0-cli@latest`
+
+## I campi di scelta richiedono identificatori testuali in `SETVALUE()`
+
+**Si applica da:** `form0-core` 0.9.0, `form0-react` 0.6.0, `form0-react-native` 0.7.0, `form0-cli`
+0.9.0
+
+**Intervieni se** un gestore passa a `SETVALUE()` un valore di scelta come numero, come booleano o
+con una forma errata.
+
+**Cosa fare:** `SingleChoiceField` e `BooleanField` accettano un identificatore testuale.
+`MultiChoiceField` accetta un array di identificatori testuali.
+
+```js
+// Before: these leave the field unchanged
+SETVALUE("rating", 1)
+SETVALUE("tags", "red")
+
+// Now
+SETVALUE("rating", "1")
+SETVALUE("tags", ["red"])
+```
+
+Un gestore che scrive in un campo non raggiungibile, come un campo di riga da un gestore del modulo
+principale, ora perde tutte le sue chiamate a `SETVALUE()`, non solo quella.
+
+**Verifica:** Cerca `SETVALUE(` nei tuoi schemi, attiva ogni gestore e verifica che il campo mostri
+il valore. Versioni precedenti di `form0-react` possono lasciare il campo invariato senza messaggi
+console in modalità gestita. I binding con `eventDiagnostics` segnalano questi errori per impostazione
+predefinita; controlla anche il modulo.
+
+## I gestori non possono modificare un record in sola lettura
+
+**Si applica da:** `form0-core` 0.8.0, `form0-react` 0.5.0, `form0-react-native` 0.6.0, `form0-cli`
+0.8.0
+
+**Intervieni se** un gestore di `load-record` chiama `SETVALUE()` e il modulo può aprirsi in sola
+lettura. `load-record` viene eseguito in entrambe le modalità.
+
+**Cosa fare:** Sposta la scrittura in `new-record` o `edit-record`:
+
+```js
+// Before: rejected when the form opens read-only
+ON("load-record", function () {
+  SETVALUE("status_note", "Opened")
+})
+
+// Now: runs only when the user is editing
+ON("edit-record", function () {
+  SETVALUE("status_note", "Opened")
+})
+```
+
+Puoi anche mantenere il gestore e controllare `event.mode`:
+
+```js
+ON("load-record", function (event) {
+  if (event.mode === "edit") SETVALUE("status_note", "Opened")
+})
+```
+
+**Verifica:** Apri il modulo con `mode="readonly"`. Se un gestore scrive ancora, la console mostra
+questo messaggio e il modulo si apre senza le modifiche di quel gestore:
+`View-mode handlers cannot change record data.`
+
+## `FormRenderer` richiede `recordKind`
+
+**Si applica da:** `form0-react` 0.5.0, `form0-react-native` 0.6.0
+
+**Intervieni se** usi `FormRenderer` di `form0-react` o `form0-react-native`. Senza `recordKind`,
+genera questo errore:
+
+```text
+form0: events.recordKind must be "new" or "existing" when lifecycle is enabled.
+```
+
+**Cosa fare:** Imposta `recordKind` su `"new"` per un nuovo record, oppure su `"existing"` quando
+apri un record salvato:
+
+```jsx
+<FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
+```
+
+Gli eventi del ciclo di vita e gli eventi di focus e blur dei campi ora sono attivi per impostazione
+predefinita, quindi i relativi gestori iniziano a essere eseguiti. I controlli integrati non
+emettono `click` automaticamente. Per mantenere il comportamento precedente, disattiva questi
+eventi:
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { lifecycle: false, fieldInteractions: [] } }}
+  schema={schema}
+/>
+```
+
+**Verifica:** Apri il modulo e verifica che venga visualizzato senza l'errore. Se usi gestori del
+ciclo di vita, verifica che ognuno venga eseguito una sola volta.
+
+## Le condizioni possono leggere solo il proprio record e i suoi genitori
+
+**Si applica da:** `form0-core` 0.6.0
+
+**Intervieni se** il tuo schema ha sezioni ripetibili e una condizione legge un campo di riga
+dall'esterno di quella riga. `form0-core` rifiuta lo schema con un errore come questo:
+
+```text
+Field "note" visible_conditions references "amount" outside its record scope (owner: main form; reference: payments)
+```
+
+**Cosa fare:** Fai puntare la condizione a un campo della stessa riga, di una riga genitore o del
+modulo principale. [Ambiti padre e figlio](/it/core/engine/parent-child-scopes) contiene un esempio
+completo.
+
+**Verifica:** Esegui questo comando per ogni schema. Termina con stato `1` e mostra l'errore se una
+condizione è fuori ambito:
+
+```bash
+form0 validate path/to/schema.json
+```
+
+## Gli editor di riga su mobile non eseguono più gli eventi del record
+
+**Si applica da:** `form0-react-native` 0.3.0
+
+**Intervieni se** aggiorni da `form0-react-native` 0.2.x e un gestore si aspetta che `load-record`,
+`edit-record` o `change` vengano eseguiti dentro una voce ripetibile.
+
+**Cosa fare:** Sposta la logica di riga negli eventi ripetibili, usando il `data_name` della tua
+sezione ripetibile:
+
+```js
+ON("load-repeatable", "rows", function () {
+  // Runs when a row opens
+})
+
+ON("new-repeatable", "rows", function () {
+  // Runs when a new row starts editing
+})
+
+ON("edit-repeatable", "rows", function () {
+  // Runs when an existing row starts editing
+})
+```
+
+**Verifica:** Apri una riga e verifica che il gestore venga eseguito. I gestori del modulo
+principale non vengono più eseguiti quando si apre una riga.
