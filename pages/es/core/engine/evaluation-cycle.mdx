@@ -155,9 +155,10 @@ const prepared = await evaluator.prepareSubmission(snapshot)
 
 `snapshot` utiliza `{ values, repeatable }`. Cada fila conserva su `id`, `values`, `repeatable`
 anidado, adjuntos y metadatos. Los valores usan data_names; los mapas repetibles usan las claves del
-esquema cuando existen. Convierte primero las opciones almacenadas al formato de ejecución con las
-utilidades de registros existentes. Ninguna llamada modifica la entrada, persiste datos, genera
-IDs/marcas temporales de registros ni aplica propuestas a la interfaz.
+esquema cuando existen. Convierte primero un registro guardado con
+[`buildFormRecordSnapshot`](/es/core/output-records#cargar-un-registro-guardado). Ninguna llamada
+modifica la entrada, persiste datos, genera IDs/marcas temporales de registros ni aplica propuestas
+a la interfaz.
 
 El modo accepted conserva los cálculos hijos cerrados y recalcula agregados raíz desde los valores
 aceptados. Guardar un importe hijo de 100 a 150 actualiza el agregado cuando el host aporta esa fila

@@ -34,6 +34,7 @@ e sezioni e produce record strutturati all'invio.
 | `onSnapshotChange`      | Osserva gli snapshot iniziali e quelli delle modifiche dell'utente.                                           |
 | `mode`                  | Avvia in modalità `edit` o `readonly`.                                                                        |
 | `repeatableEntryMode`   | Apertura delle righe ripetibili esistenti: `readonly` (predefinito) o `edit`; le nuove si aprono in modifica. |
+| `formWidth`             | Larghezza massima del modulo, ad esempio `100%`. Il valore predefinito è `30vw`.                              |
 
 ## Interfaccia e stato gestiti dall'applicazione
 
@@ -130,10 +131,11 @@ focus/blur e le scelte usano change. Nessun controllo integrato emette click aut
 Il dispatch esplicito del controller dell’host rimane disponibile. Si attendono onOperations asincrono e applyDefault selettivo; il fallback
 scade con il dispatch. Il renderer possiede ALERT e lo presenta una volta sola.
 
-L’annullamento confermato esegue cancel e poi unload; le chiusure riuscite supportate eseguono unload
-prima del rilascio. L’host deve inviare unload prima di smontare direttamente. Rerender, reset, pulizia
-Strict Mode e smontaggio forzato ritirano solo gli ambiti. Save-_ precede il salvataggio; non si aggiungono
-eventi saved-_. L’applicazione gestisce persistenza, successo e chiusura.
+L’annullamento confermato esegue cancel e poi unload; le chiusure riuscite supportate eseguono
+unload prima del rilascio. L’host deve inviare unload prima di smontare direttamente. Rerender,
+reset, pulizia Strict Mode e smontaggio forzato ritirano solo gli ambiti. `save-record` e
+`save-repeatable` vengono eseguiti prima del salvataggio; non esistono eventi `saved-*`.
+L’applicazione gestisce persistenza, successo e chiusura.
 
 I file File/Blob nativi conservano metadati standard e dati immutabili. Le proprietà personalizzate restano fuori dalla serializzazione nativa. La correzione della compatibilità multimediale è inclusa in core 0.5.1.
 

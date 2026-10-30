@@ -136,8 +136,9 @@ selectivo; el fallback caduca al terminar el dispatch. El renderer gestiona ALER
 
 Cancelar confirmado ejecuta cancel y luego unload; un cierre correcto soportado ejecuta unload antes
 de liberar el motor. El host debe enviar unload antes de desmontar directamente. Rerenders, resets,
-limpieza de Strict Mode y desmontaje forzado solo retiran ámbitos. Save-_ ocurre antes del guardado;
-no hay eventos saved-_. La aplicación controla persistencia, éxito y cierre.
+limpieza de Strict Mode y desmontaje forzado solo retiran ámbitos. `save-record` y `save-repeatable`
+se ejecutan antes de guardar; no existen eventos `saved-*`. La aplicación controla persistencia,
+éxito y cierre.
 
 Los archivos File/Blob nativos conservan sus metadatos estándar y datos inmutables. Las propiedades personalizadas quedan fuera de la serialización nativa. La corrección de compatibilidad multimedia está incluida en core 0.5.1.
 

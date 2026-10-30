@@ -69,8 +69,6 @@ I calcoli e i gestori di eventi di campo seguono queste regole di accesso. Un ri
 calcolo fuori dai campi consentiti legge `undefined` e il motore segnala un avviso come
 `Field 'line_total' is not accessible from current context`.
 
-L'applicazione degli ambiti alle condizioni è disponibile da core 0.6.0.
-
 `visible_conditions`, `required_conditions` e `read_only_conditions` usano gli stessi ambiti di
 lettura della tabella precedente: campi radice, della riga corrente e delle righe antenate. Le righe
 discendenti, i rami fratelli e i rami non correlati non sono accessibili. `validateSchema()` e la
@@ -91,14 +89,13 @@ di configurazione ed emette un avviso strutturato di accesso; non diventa un err
 `state.errors` o una diagnostica di calcolo.
 
 Per esempio, i punteggi accettati in `inspections` possono essere `95` e `90`, mentre il valore
-predefinito di `inspection_score` è `50`. Una condizione di `payments.approval_note` non può confrontare
-direttamente quel campo non correlato con `80`: lo schema viene rifiutato invece di usare `50 < 80`
-per richiedere la nota. Per correggere una regola non valida esistente, usa un risultato esplicito
-radice o antenato, oppure un calcolo ausiliario locale basato su quel risultato consentito. Se
-l'applicazione fornisce `inspection_scores: [95, 90]` nella radice, un ausiliario in `payments` può
-calcolare `SETRESULT($inspection_scores.some((score) => score < 80));` e la nota può usare tale
-ausiliario locale nella condizione. L'applicazione degli ambiti alle condizioni non introduce funzioni
-di raccolta o aggiornamenti automatici delle righe chiuse.
+predefinito di `inspection_score` è `50`. Una condizione di `payments.approval_note` non può
+confrontare direttamente quel campo non correlato con `80`: lo schema viene rifiutato invece di
+usare `50 < 80` per richiedere la nota. Per correggere una regola non valida esistente, usa un
+risultato esplicito radice o antenato, oppure un calcolo ausiliario locale basato su quel risultato
+consentito. Se l'applicazione fornisce `inspection_scores: [95, 90]` nella radice, un ausiliario in
+`payments` può calcolare `SETRESULT($inspection_scores.some((score) => score < 80));` e la nota può
+usare tale ausiliario locale nella condizione.
 
 ## I valori del padre sono una copia
 
@@ -109,12 +106,12 @@ finché non viene riaperta.
 
 ## Eventi e righe
 
-I binding ufficiali React e React Native offrono eventi portabili del ciclo di vita di record e
-ripetibili quando `engineOptions.events.lifecycle` è attivato. I gestori di riga ricevono l'ambito
-dell'istanza; aprire una riga non ripete i gestori di caricamento della radice. Senza questa
-attivazione resta disponibile l'attivazione degli eventi precedente. Vedi
-[Attivazione degli eventi nei binding ufficiali](/it/core/builtins/events-overview) per tempistiche e
-metadati.
+I binding ufficiali React e React Native attivano per impostazione predefinita gli eventi del ciclo
+di vita di record e ripetibili. I gestori di riga vengono eseguiti nell'ambito della loro riga, e
+aprire una riga non riesegue i gestori di caricamento del record principale. Per disattivare questi
+eventi, imposta `engineOptions.events.lifecycle` su `false`. Vedi
+[Attivazione degli eventi nei binding ufficiali](/it/core/builtins/events-overview) per tempistiche
+e metadati.
 
 Gli eventi di record, come `load-record`, possono leggere solo i campi radice. I gestori di eventi di
 campo e ripetibili seguono il proprio ambito dichiarato; restano invariate le letture degli antenati
@@ -138,6 +135,3 @@ Le raccolte includono righe accettate nascoste; la validazione esclude separatam
 nascosti. Per visibilità dei pagamenti dipendente da ispezioni, usa una raccolta radice e un helper
 booleano locale. Gestisci esplicitamente numeri assenti, per esempio
 `$scores.some(score => typeof score === 'number' && score < 80)`.
-
-Le interfacce arriveranno dopo 0.6.0 e richiedono adozione nei consumatori. Il controllo esistente
-dell’ambito delle condizioni rimane invariato.

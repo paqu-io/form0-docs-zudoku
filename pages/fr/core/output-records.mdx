@@ -67,4 +67,31 @@ les titres et les règles d'horodatage. Les formateurs de champs restent synchro
 Les sections répétables créent des enregistrements imbriqués. Utilisez `originalElements` pour conserver
 la bonne structure d'imbrication lors de la création des enregistrements.
 
-Les entrées abrégées ne modifient ni les valeurs par défaut ni les formats soumis. SingleChoice/Boolean utilise choice_value et other_value ; MultiChoice utilise choices_value et other_value. Voir le contrat de mise à jour des valeurs. [Voir le contrat de mise à jour des valeurs](/fr/core/engine/value-updates).
+Les entrées abrégées ne modifient ni les valeurs par défaut ni les formats soumis. SingleChoice/Boolean utilise choice_value et other_value ; MultiChoice utilise choices_value et other_value. [Voir le contrat de mise à jour des valeurs](/fr/core/engine/value-updates).
+
+## Charger un enregistrement stocké
+
+Utilisez `buildFormRecordSnapshot(schema, record)` pour reconvertir un enregistrement stocké en
+valeurs exploitables par form0, par exemple pour le rouvrir. La fonction renvoie `raw_values`,
+`repeatable` et `timestamps`, la même forme que `initialSnapshot`.
+
+```jsx
+import { buildFormRecordSnapshot } from "form0-core"
+import { FormRenderer } from "form0-react"
+
+export function SavedCase({ schema, savedRecord }) {
+  const snapshot = buildFormRecordSnapshot(schema, savedRecord)
+
+  return (
+    <FormRenderer
+      engineOptions={{ events: { recordKind: "existing" } }}
+      schema={schema}
+      initialSnapshot={snapshot}
+    />
+  )
+}
+```
+
+Elle lève une erreur si un champ a une forme incorrecte, comme un champ de choix stocké en texte
+simple. Pour vérifier un enregistrement stocké par rapport au schéma, passez `raw_values` et
+`repeatable` à `createRecordEvaluator().prepareSubmission()`.

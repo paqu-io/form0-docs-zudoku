@@ -199,7 +199,7 @@ Configura `eventScope.instancePath` al crear un motor de fila sin renderer; el �
 
 El registro añade `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` y `change-status`. Registrarlos no los automatiza. `save-record` y `save-repeatable` siguen siendo previos al guardado; no se introducen eventos de esquema `saved-*`. React 0.4.0, React Native 0.5.0 y CLI 0.7.0 adoptan el ciclo de vida ampliado, el controlador y la preparación del guardado. Los bindings actuales activan el ciclo de vida por defecto y exigen clasificación explícita new/existing. CLI también activa estos eventos en la vista previa del navegador; los comandos independientes siguen controlados por el host.
 
-Consulta el [contrato de eventos mantenido](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) para conocer el contrato completo y las fases de entrega. La política general de validación, la actualización de filas cerradas y la responsabilidad de persistencia siguen siendo trabajos separados.
+Consulta el [contrato de eventos mantenido](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) para conocer el contrato completo y las fases de entrega.
 
 Los objetos multimedia File/Blob nativos se copian defensivamente, conservando metadatos estándar y contenido binario inmutable. Esta corrección está incluida en core 0.5.1. Se rechazan otros objetos no portables; los handlers asíncronos siguen sin admitirse.
 

@@ -158,10 +158,12 @@ const prepared = await evaluator.prepareSubmission(snapshot)
 ```
 
 `snapshot` utilise `{ values, repeatable }`. Chaque ligne conserve `id`, `values`, ses collections
-`repeatable` imbriquées, pièces jointes et métadonnées. Les valeurs utilisent les data_names ; les collections
-utilisent les clés du schéma lorsqu’elles existent. Convertissez les choix stockés au format actif
-avec les utilitaires existants. Aucun appel ne modifie l’entrée, ne persiste, ne génère d’ID ou de
-date d’enregistrement et n’applique une proposition à l’interface.
+`repeatable` imbriquées, pièces jointes et métadonnées. Les valeurs utilisent les data_names ; les
+collections utilisent les clés du schéma lorsqu’elles existent. Convertissez d’abord un
+enregistrement stocké avec
+[`buildFormRecordSnapshot`](/fr/core/output-records#charger-un-enregistrement-stocké). Aucun appel
+ne modifie l’entrée, ne persiste, ne génère d’ID ou de date d’enregistrement et n’applique une
+proposition à l’interface.
 
 Le mode accepted conserve les calculs enfants fermés et recalcule les agrégats racine à partir des
 valeurs acceptées. Enregistrer un montant enfant de 100 à 150 actualise l’agrégat lorsque l’hôte

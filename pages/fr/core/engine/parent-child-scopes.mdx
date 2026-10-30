@@ -69,8 +69,6 @@ Les calculs et les gestionnaires d'événements de champ suivent ces règles d'a
 calcul en dehors des champs autorisés lit `undefined`, et le moteur signale un avertissement comme
 `Field 'line_total' is not accessible from current context`.
 
-Le contrôle de portée des conditions est disponible depuis core 0.6.0.
-
 `visible_conditions`, `required_conditions` et `read_only_conditions` utilisent les mêmes portées de
 lecture que le tableau ci-dessus : champs racine, de la ligne courante et des lignes ancêtres. Les
 lignes descendantes, branches sœurs et branches sans lien sont inaccessibles. `validateSchema()` et
@@ -99,8 +97,7 @@ pour exiger la note. Pour corriger une règle invalide existante, référencez u
 la racine ou dans un ancêtre, ou un calcul auxiliaire local fondé sur ce résultat autorisé. Si votre
 application fournit `inspection_scores: [95, 90]` à la racine, un auxiliaire dans `payments` peut
 calculer `SETRESULT($inspection_scores.some((score) => score < 80));` et la note peut utiliser cet
-auxiliaire local dans sa condition. Le contrôle de portée des conditions n'introduit ni fonction de
-collection ni actualisation automatique des lignes fermées.
+auxiliaire local dans sa condition.
 
 ## Les valeurs du parent sont une copie
 
@@ -111,12 +108,12 @@ dernière évaluation, jusqu'à ce qu'elle soit rouverte.
 
 ## Événements et lignes
 
-Les bindings officiels React et React Native proposent des événements portables du cycle de vie
-des enregistrements et des répétables lorsque `engineOptions.events.lifecycle` est activé. Les
-gestionnaires de ligne reçoivent la portée d'instance ; ouvrir une ligne ne rejoue pas les
-gestionnaires de chargement racine. Sans cette activation, le déclenchement historique est conservé.
-Voir [Déclenchement des événements dans les bindings officiels](/fr/core/builtins/events-overview)
-pour le calendrier et les métadonnées.
+Les bindings officiels React et React Native déclenchent par défaut les événements du cycle de vie
+des enregistrements et des répétables. Les gestionnaires de ligne s’exécutent dans la portée de leur
+ligne, et ouvrir une ligne ne relance pas les gestionnaires de chargement de l’enregistrement
+principal. Pour désactiver ces événements, réglez `engineOptions.events.lifecycle` sur `false`. Voir
+[Déclenchement des événements dans les bindings officiels](/fr/core/builtins/events-overview) pour
+le calendrier et les métadonnées.
 
 Les événements d'enregistrement, comme `load-record`, ne peuvent lire que les champs racine. Les
 gestionnaires d'événements de champ et de répétable suivent leur portée déclarée ; les lectures
@@ -140,6 +137,3 @@ Les collections incluent les lignes acceptées masquées ; la validation exclut 
 masqués. Pour une visibilité de paiement liée aux inspections, utilisez une collection racine et un
 helper booléen local. Traitez les nombres absents explicitement, par exemple
 `$scores.some(score => typeof score === 'number' && score < 80)`.
-
-Ces interfaces sont prévues après 0.6.0 et exigent une adoption des consommateurs. Le contrôle
-existant de portée des conditions reste inchangé.

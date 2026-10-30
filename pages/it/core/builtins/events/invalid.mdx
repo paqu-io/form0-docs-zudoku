@@ -23,4 +23,4 @@ ON("validate-repeatable", "rows", function (event) {
 
 Esegui il dispatch con `engine.triggerDetailed()` e verifica sia `validationIssues` sia gli `issues` di esecuzione. Ogni tentativo restituisce risultati nuovi. `INVALID()` non scrive negli `state.errors` intrinseci, nella diagnostica dei calcoli, nei valori o nei record salvati. È rifiutato fuori da `validate-record` e `validate-repeatable`; i gestori di validazione rifiutano operazioni su valori/interfaccia e promesse. L’host definisce la politica di invio e bozze. Un risultato di validazione da solo non è un errore di esecuzione.
 
-Consulta [Eventi e operazioni](/it/core/engine/events-operations) e il [contratto mantenuto](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md). L’integrazione nell’interfaccia dei binding segue la pubblicazione del core; la sola registrazione non avvia la validazione.
+Consulta [Eventi e operazioni](/it/core/engine/events-operations) e il [contratto mantenuto](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md). La sola registrazione non avvia la validazione.

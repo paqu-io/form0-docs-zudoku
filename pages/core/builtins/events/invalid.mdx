@@ -23,4 +23,4 @@ ON("validate-repeatable", "rows", function (event) {
 
 Dispatch with `engine.triggerDetailed()` and inspect both `validationIssues` and execution `issues`. Each attempt returns fresh findings. `INVALID()` does not write intrinsic `state.errors`, calculation diagnostics, values or saved records. It is rejected outside `validate-record` and `validate-repeatable`; validation handlers reject value/UI operations and promises. The host owns submission and draft policy. A validation finding alone is not an execution failure.
 
-See [Events and operations](/core/engine/events-operations) and the [maintained contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md). Binding UI integration follows core publication; registration alone does not run validation.
+See [Events and operations](/core/engine/events-operations) and the [maintained contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md). Registration alone does not run validation.

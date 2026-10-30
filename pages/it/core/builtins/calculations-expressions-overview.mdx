@@ -67,9 +67,9 @@ ROUND($price * $qty, 2)
 ## Raccolte ripetibili
 
 `REPEATABLEVALUES($tasks, 'cost')` e `REPEATABLESUM($tasks, 'cost')` sono esclusivi dei calcoli e
-richiedono il contesto di `createRecordEvaluator()`. Arriveranno dopo core 0.6.0; senza quel contesto
-il motore ordinario segnala un diagnostico. Gli eventi possono leggere un CalculatedField aggregato
-accessibile, ma non chiamare direttamente queste funzioni.
+richiedono il contesto di `createRecordEvaluator()`. Senza quel contesto il motore ordinario segnala
+un diagnostico. Gli eventi possono leggere un CalculatedField aggregato accessibile, ma non chiamare
+direttamente queste funzioni.
 
 Usa il data_name di RepeatableSection e un data_name di destinazione letterale delle sue righe.
 Section non aggiunge un ambito di record. Nomi dinamici, alias e chiamate dentro EVAL non sono

@@ -192,7 +192,7 @@ Configure `eventScope.instancePath` when creating a headless row engine; root sc
 
 The registry adds `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` and `change-status`. Registering them does not automate them. `save-record` and `save-repeatable` remain pre-save; no `saved-*` schema events are introduced. React 0.4.0, React Native 0.5.0 and CLI 0.7.0 adopt the expanded lifecycle, controller and save preparation. Current bindings default lifecycle on and require explicit new/existing classification. CLI browser preview also defaults lifecycle on; standalone commands remain host-driven.
 
-See the [maintained event contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) for the complete contract and delivery stages. Broader validation policy, closed-row freshness and persistence ownership remain separate work.
+See the [maintained event contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) for the complete contract and delivery stages.
 
 Native File/Blob media handles are copied defensively, preserving their standard metadata and immutable binary content. This compatibility correction is included in core 0.5.1. Other nonportable object types remain rejected; asynchronous schema handlers remain unsupported.
 

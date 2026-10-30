@@ -153,10 +153,12 @@ const refreshed = await evaluator.evaluate(snapshot, { mode: "refresh" })
 const prepared = await evaluator.prepareSubmission(snapshot)
 ```
 
-`snapshot` usa `{ values, repeatable }`. Ogni riga conserva `id`, `values`, raccolte `repeatable` annidate,
-allegati e metadati. I valori usano data_names; le raccolte usano le chiavi dello schema, se presenti.
-Converti prima le scelte salvate nel formato di esecuzione con le utilità esistenti. Nessuna chiamata
-modifica l’ingresso, persiste dati, genera ID/timestamp di record o applica proposte all’interfaccia.
+`snapshot` usa `{ values, repeatable }`. Ogni riga conserva `id`, `values`, raccolte `repeatable`
+annidate, allegati e metadati. I valori usano data_names; le raccolte usano le chiavi dello schema,
+se presenti. Converti prima un record salvato con
+[`buildFormRecordSnapshot`](/it/core/output-records#caricare-un-record-salvato). Nessuna chiamata
+modifica l’ingresso, persiste dati, genera ID/timestamp di record o applica proposte
+all’interfaccia.
 
 Accepted mantiene i calcoli dei figli chiusi e ricalcola gli aggregati radice dai valori accettati.
 Salvare un importo figlio da 100 a 150 aggiorna l’aggregato quando l’host fornisce quella riga

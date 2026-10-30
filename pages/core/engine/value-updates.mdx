@@ -25,7 +25,7 @@ engine.setValue("countries", ["it", "fr"])
 | Live selection key      | `choice`                                     | `choices`                                    |
 | Submitted selection key | `choice_value`                               | `choices_value`                              |
 
-Both types retain their existing schema choices. Boolean uses its configured string IDs, not JavaScript booleans. Submitted choice entries and Other entries retain the existing record format. Stored records must pass through the existing record-loading utilities before becoming live values.
+Both types retain their existing schema choices. Boolean uses its configured string IDs, not JavaScript booleans. Submitted choice entries and Other entries retain the existing record format. Use [`buildFormRecordSnapshot`](/core/output-records#load-a-stored-record) to turn a stored record back into live values.
 
 ```js
 // SingleChoice / Boolean live value:

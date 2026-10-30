@@ -131,9 +131,10 @@ No built-in control automatically emits click. Explicit host controller dispatch
 fallback expires with its dispatch. Alerts remain renderer-owned and occur once.
 
 Confirmed cancel runs cancel then unload; supported successful closes run unload before disposal.
-Hosts closing directly must dispatch unload before unmounting. Rerenders, resets, Strict Mode cleanup
-and forced unmount only retire scopes. Save-_ is pre-save; no saved-_ schema events are added.
-Applications own persistence, success notifications and closing.
+Hosts closing directly must dispatch unload before unmounting. Rerenders, resets, Strict Mode
+cleanup and forced unmount only retire scopes. `save-record` and `save-repeatable` run before
+saving; there are no `saved-*` schema events. Applications own persistence, success notifications
+and closing.
 
 Native File/Blob uploads preserve standard metadata and immutable data. Their custom properties are outside native serialization. The media compatibility correction is included in core 0.5.1.
 

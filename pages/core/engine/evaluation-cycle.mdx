@@ -146,8 +146,9 @@ const prepared = await evaluator.prepareSubmission(snapshot)
 
 `snapshot` uses `{ values, repeatable }`. Each row retains its existing `id`, `values`, nested
 `repeatable`, attachments and metadata. Values use data_names; repeatable maps use schema keys when
-present. Stored choice objects must first be converted to live shape with existing record utilities.
-No call mutates the input, persists data, generates record IDs/timestamps or applies a proposal to UI.
+present. Convert a stored record first with
+[`buildFormRecordSnapshot`](/core/output-records#load-a-stored-record). No call mutates the input,
+persists data, generates record IDs/timestamps or applies a proposal to UI.
 
 Accepted mode keeps closed child calculations and recomputes root aggregates from accepted values.
 Saving a child amount from 100 to 150 updates the aggregate when the host supplies that accepted row;

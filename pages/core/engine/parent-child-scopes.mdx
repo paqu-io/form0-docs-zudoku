@@ -67,8 +67,6 @@ Calculations and field-event handlers follow these access rules. A calculation r
 allowed fields reads `undefined`, and the engine reports a warning such as
 `Field 'line_total' is not accessible from current context`.
 
-Condition scope enforcement is available from core 0.6.0.
-
 `visible_conditions`, `required_conditions` and `read_only_conditions` use the same read scopes
 shown above: root fields, fields in the current row and fields in ancestor rows. Descendant rows,
 sibling branches and unrelated branches are inaccessible. `validateSchema()` and engine construction
@@ -89,13 +87,13 @@ structured access warning; it does not become an intrinsic `state.errors` entry 
 diagnostic.
 
 For example, accepted `inspections` scores may be `95` and `90`, while the schema default for
-`inspection_score` is `50`. A `payments.approval_note` condition cannot directly compare that unrelated
-field with `80`: the schema is rejected instead of using `50 < 80` to require the note. To correct an
-existing invalid rule, reference an explicit root or ancestor result, or a local helper calculated
-from that permitted result. If your application supplies root `inspection_scores: [95, 90]`, a helper
-inside `payments` can calculate `SETRESULT($inspection_scores.some((score) => score < 80));` and the
-note can condition on that local helper. No collection builtin or automatic closed-row refresh is
-introduced by condition scope enforcement.
+`inspection_score` is `50`. A `payments.approval_note` condition cannot directly compare that
+unrelated field with `80`: the schema is rejected instead of using `50 < 80` to require the note. To
+correct an existing invalid rule, reference an explicit root or ancestor result, or a local helper
+calculated from that permitted result. If your application supplies root
+`inspection_scores: [95, 90]`, a helper inside `payments` can calculate
+`SETRESULT($inspection_scores.some((score) => score < 80));` and the note can condition on that
+local helper.
 
 ## Parent values are a copy
 
@@ -106,10 +104,11 @@ again.
 
 ## Events and rows
 
-The official React and React Native bindings offer portable record and repeatable lifecycle events
-when `engineOptions.events.lifecycle` is enabled. Row handlers receive instance scope; opening a row
-does not replay root load handlers. Without that opt-in, legacy dispatch remains available. See
-[Event dispatch in official bindings](/core/builtins/events-overview) for timing and metadata.
+The official React and React Native bindings dispatch record and repeatable lifecycle events by
+default. Row handlers run in the scope of their row, and opening a row does not run the main
+record's load handlers again. To turn these events off, set `engineOptions.events.lifecycle` to
+`false`. See [Event dispatch in official bindings](/core/builtins/events-overview) for timing and
+metadata.
 
 Record events, such as `load-record`, can read only main-form fields. Field and repeatable event
 handlers follow their declared scope; ancestor reads and local-only writes remain unchanged.
@@ -132,6 +131,3 @@ Collection membership includes accepted rows even when hidden. Submission valida
 excludes hidden ancestors. Use a root collection result and a payment-local boolean helper for
 inspection-dependent visibility; missing numeric values should be handled explicitly, for example
 `$scores.some(score => typeof score === 'number' && score < 80)`.
-
-These collection/record-evaluator interfaces are forthcoming after 0.6.0 and require separate
-consumer adoption. Existing condition-scope enforcement remains unchanged.

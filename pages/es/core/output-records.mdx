@@ -67,4 +67,31 @@ tiempo del serializador síncrono. Los formateadores de campos siguen siendo sí
 Las secciones repetibles crean registros anidados. Utiliza `originalElements` para conservar la
 estructura de anidamiento correcta al crear registros.
 
-Las entradas abreviadas de setters no alteran los valores predeterminados ni los formatos enviados. SingleChoice/Boolean usa choice_value y other_value; MultiChoice usa choices_value y other_value. Consulta el contrato de actualización de valores. [Consulta el contrato de actualización de valores](/es/core/engine/value-updates).
+Las entradas abreviadas de setters no alteran los valores predeterminados ni los formatos enviados. SingleChoice/Boolean usa choice_value y other_value; MultiChoice usa choices_value y other_value. [Consulta el contrato de actualización de valores](/es/core/engine/value-updates).
+
+## Cargar un registro guardado
+
+Usa `buildFormRecordSnapshot(schema, record)` para convertir un registro guardado en valores con los
+que form0 pueda trabajar, por ejemplo para volver a abrirlo. Devuelve `raw_values`, `repeatable` y
+`timestamps`, la misma forma que `initialSnapshot`.
+
+```jsx
+import { buildFormRecordSnapshot } from "form0-core"
+import { FormRenderer } from "form0-react"
+
+export function SavedCase({ schema, savedRecord }) {
+  const snapshot = buildFormRecordSnapshot(schema, savedRecord)
+
+  return (
+    <FormRenderer
+      engineOptions={{ events: { recordKind: "existing" } }}
+      schema={schema}
+      initialSnapshot={snapshot}
+    />
+  )
+}
+```
+
+Lanza un error si un campo tiene una forma incorrecta, como un campo de selección guardado como
+texto simple. Para comprobar un registro guardado con el esquema, pasa `raw_values` y `repeatable` a
+`createRecordEvaluator().prepareSubmission()`.

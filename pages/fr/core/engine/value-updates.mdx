@@ -25,7 +25,7 @@ engine.setValue("countries", ["it", "fr"])
 | Clé de sélection active     | `choice`                                     | `choices`                                    |
 | Clé de sélection soumise    | `choice_value`                               | `choices_value`                              |
 
-Les deux types conservent leurs choix de schéma actuels. Boolean utilise les identifiants textuels configurés, pas des booléens JavaScript. Les entrées de choix et Autre soumises conservent le format existant. Les enregistrements stockés passent par les utilitaires de chargement existants avant de devenir des valeurs actives.
+Les deux types conservent leurs choix de schéma actuels. Boolean utilise les identifiants textuels configurés, pas des booléens JavaScript. Les entrées de choix et Autre soumises conservent le format existant. Utilisez [`buildFormRecordSnapshot`](/fr/core/output-records#charger-un-enregistrement-stocké) pour reconvertir un enregistrement stocké en valeurs actives.
 
 ```js
 // SingleChoice / Boolean live value:

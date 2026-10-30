@@ -25,7 +25,7 @@ engine.setValue("countries", ["it", "fr"])
 | Chiave di selezione live        | `choice`                                     | `choices`                                    |
 | Chiave di selezione inviata     | `choice_value`                               | `choices_value`                              |
 
-Entrambi i tipi mantengono le scelte dello schema esistenti. Boolean usa gli identificatori testuali configurati, non booleani JavaScript. Le voci di scelta e Altro inviate conservano il formato esistente. I record salvati devono passare dalle utilità di caricamento esistenti prima di diventare valori live.
+Entrambi i tipi mantengono le scelte dello schema esistenti. Boolean usa gli identificatori testuali configurati, non booleani JavaScript. Le voci di scelta e Altro inviate conservano il formato esistente. Usa [`buildFormRecordSnapshot`](/it/core/output-records#caricare-un-record-salvato) per riconvertire un record salvato in valori live.
 
 ```js
 // SingleChoice / Boolean live value:

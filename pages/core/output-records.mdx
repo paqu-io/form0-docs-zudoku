@@ -66,4 +66,31 @@ formatting, titles and timestamp rules. Individual field formatters remain synch
 Repeatable sections create nested records. Use `originalElements` to preserve the correct nesting
 structure when building records.
 
-Setter convenience inputs do not alter schema defaults or submitted record formats. SingleChoice/Boolean uses choice_value and other_value; MultiChoice uses choices_value and other_value. See the value-update contract. [See the value-update contract](/core/engine/value-updates).
+Setter convenience inputs do not alter schema defaults or submitted record formats. SingleChoice/Boolean uses choice_value and other_value; MultiChoice uses choices_value and other_value. [See the value-update contract](/core/engine/value-updates).
+
+## Load a stored record
+
+Use `buildFormRecordSnapshot(schema, record)` to turn a stored record back into values form0 can
+work with, for example to reopen a saved record. It returns `raw_values`, `repeatable`, and
+`timestamps`, the same shape as `initialSnapshot`.
+
+```jsx
+import { buildFormRecordSnapshot } from "form0-core"
+import { FormRenderer } from "form0-react"
+
+export function SavedCase({ schema, savedRecord }) {
+  const snapshot = buildFormRecordSnapshot(schema, savedRecord)
+
+  return (
+    <FormRenderer
+      engineOptions={{ events: { recordKind: "existing" } }}
+      schema={schema}
+      initialSnapshot={snapshot}
+    />
+  )
+}
+```
+
+It throws an error if a field has the wrong shape, such as a choice field stored as a plain string.
+To check a stored record against the schema, pass `raw_values` and `repeatable` to
+`createRecordEvaluator().prepareSubmission()`.

@@ -67,9 +67,9 @@ ROUND($price * $qty, 2)
 ## Repeatable collections
 
 `REPEATABLEVALUES($tasks, 'cost')` and `REPEATABLESUM($tasks, 'cost')` are calculation-only builtins
-requiring `createRecordEvaluator()` record-tree context. They are forthcoming after core 0.6.0;
-ordinary engine use without that context reports a diagnostic. Events can read an accessible
-aggregate CalculatedField result, but cannot call these builtins themselves.
+requiring `createRecordEvaluator()` record-tree context. In an ordinary engine, without that
+context, they report a diagnostic. Events can read an accessible aggregate CalculatedField result,
+but cannot call these builtins themselves.
 
 Use the RepeatableSection data_name and a literal target data_name owned by its rows. Ordinary
 Sections do not add a record scope. Dynamic names, aliases and calls inside EVAL are unsupported;

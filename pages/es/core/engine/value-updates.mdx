@@ -25,7 +25,7 @@ engine.setValue("countries", ["it", "fr"])
 | Clave de selección en vivo       | `choice`                                     | `choices`                                    |
 | Clave de selección enviada       | `choice_value`                               | `choices_value`                              |
 
-Ambos tipos conservan sus opciones de esquema actuales. Boolean usa los identificadores de texto configurados, no booleanos JavaScript. Las entradas de selección y Otro enviadas conservan el formato de registro existente. Los registros guardados deben pasar por las utilidades actuales de carga antes de convertirse en valores en vivo.
+Ambos tipos conservan sus opciones de esquema actuales. Boolean usa los identificadores de texto configurados, no booleanos JavaScript. Las entradas de selección y Otro enviadas conservan el formato de registro existente. Usa [`buildFormRecordSnapshot`](/es/core/output-records#cargar-un-registro-guardado) para convertir un registro guardado en valores en vivo.
 
 ```js
 // SingleChoice / Boolean live value:

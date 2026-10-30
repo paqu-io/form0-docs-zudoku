@@ -34,6 +34,7 @@ sections, et produit des enregistrements structurés lors de la soumission.
 | `onSnapshotChange`      | Observe les snapshots d’initialisation et de modification par l’utilisateur.                                              |
 | `mode`                  | Démarre en mode `edit` ou `readonly`.                                                                                     |
 | `repeatableEntryMode`   | Ouverture des lignes répétables existantes : `readonly` (par défaut) ou `edit` ; les nouvelles s’ouvrent en modification. |
+| `formWidth`             | Largeur maximale du formulaire, par exemple `100%`. La valeur par défaut est `30vw`.                                      |
 
 ## Interface et état gérés par l’application
 
@@ -135,8 +136,9 @@ et le présente une seule fois.
 
 L’annulation confirmée exécute cancel puis unload ; une fermeture réussie prise en charge exécute
 unload avant libération. Le host doit envoyer unload avant un démontage direct. Rerenders, resets,
-nettoyage Strict Mode et démontage forcé retirent uniquement les périmètres. Save-_ précède la
-sauvegarde ; aucun événement saved-_ n’est ajouté. L’application possède persistance, succès et fermeture.
+nettoyage Strict Mode et démontage forcé retirent uniquement les périmètres. `save-record` et
+`save-repeatable` s’exécutent avant la sauvegarde ; il n’existe aucun événement `saved-*`.
+L’application possède persistance, succès et fermeture.
 
 Les fichiers File/Blob natifs conservent leurs métadonnées standard et données immuables. Les propriétés personnalisées restent hors de la sérialisation native. Le correctif de compatibilité multimédia est inclus dans core 0.5.1.
 
