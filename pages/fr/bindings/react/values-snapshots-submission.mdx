@@ -8,8 +8,7 @@ description: Initialisez, observez, restaurez et soumettez l’état form0 dans 
 ## Valeurs initiales et valeurs prioritaires
 
 Utilisez `initialValues` pour l’enregistrement en cours de modification. `overrideValues` est
-prioritaire et sert aux valeurs qui doivent l’emporter côté host, comme un statut fourni par
-l’application.
+prioritaire et sert aux valeurs que contrôle votre application, comme un statut fourni par votre backend.
 
 Pour une restauration complète, privilégiez `initialSnapshot` :
 
@@ -158,27 +157,47 @@ Un champ obligatoire vide est un blocage de validation, pas un échec d’enregi
 - Ces réglages couvrent les actions intégrées du renderer. Si vous appelez directement
   `prepareSave()`, examinez le résultat renvoyé.
 
-## API des événements gérés
+## Utiliser les événements depuis votre code
 
-Voir le contrôleur et le contrat des périmètres dans [FormRenderer](/fr/bindings/react/form-renderer).
+`engineOptions.events` définit les événements exécutés, et `engineOptions.onEventController` vous
+donne un contrôleur pour vos propres boutons. [FormRenderer](/fr/bindings/react/form-renderer)
+décrit les deux en détail.
 
-`engineOptions.events`: `lifecycle` (true), `recordKind` obligatoire (new/existing), `fieldInteractions` ([focus, blur, click]). Utilisez `lifecycle: false` pour le cycle historique ou `fieldInteractions: []` pour désactiver les interactions automatiques.
-`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+| Option                     | Par défaut                   | Rôle                                                                            |
+| -------------------------- | ---------------------------- | ------------------------------------------------------------------------------- |
+| `events.recordKind`        | Obligatoire                  | `"new"` / `"existing"`.                                                         |
+| `events.lifecycle`         | `true`                       | Définissez `false` pour ne garder que `load-record`, `edit-record` et `change`. |
+| `events.fieldInteractions` | `["focus", "blur", "click"]` | Définissez `[]` pour désactiver les interactions automatiques.                  |
 
-La préparation ne persiste ni ne ferme. Les brouillons racine conservent les constats dans le résumé ; submit et l’acceptation des lignes sont bloqués par une validation invalide. Les diagnostics de calcul restent indépendants. Aucune évaluation ou agrégation des lignes fermées.
+`onEventController(controller | null)` vous donne `dispatch(request)` et `prepareSave(request)`.
 
-## Révision des calculs enfants et persistance
+`prepareSave()` ne sauvegarde et ne ferme jamais rien. Le résumé renvoyé liste les messages de
+validation d’un brouillon de l’enregistrement principal. Les échecs de validation bloquent une
+soumission normale et l’acceptation d’une ligne, et les diagnostics de calcul ne bloquent rien.
 
-L’envoi ordinaire actualise automatiquement les calculs enfants fermés si le réglage est omis.
-`form.repeatable_recalculation: 'confirm'` exige une révision. Le host peut l’exiger avec
-`mode: 'confirm'`, mais `automatic` ne peut pas réduire cette exigence du formulaire. `allowRetain`
-est une permission explicite et n’active pas la confirmation à lui seul. Le choix concerne tous les
-enfants affectés ou aucun. La préparation racine est refusée tant qu’un éditeur enfant reste non accepté.
+## Examiner les lignes recalculées
 
-La révision affiche titres/chemins, libellés, anciennes/nouvelles valeurs et compteurs par pages
-bornées. Personnalisez les textes avec `submissionOptions.messages`. Tous les résultats de validation
-restent disponibles avec leur chemin ; l’interface les pagine et mène à l’enregistrement ou au champ.
-Les résultats personnalisés de portée appartiennent à l’enregistrement, sans champ inventé.
+Lorsqu’un utilisateur soumet le formulaire, `FormRenderer` recalcule automatiquement les lignes
+sauvegardées. Définissez `form.repeatable_recalculation` sur `"confirm"` dans le schéma lorsque les
+utilisateurs doivent d’abord examiner les valeurs modifiées.
+
+`submissionOptions` modifie ce comportement depuis votre code :
+
+- `mode: "confirm"` exige une revue même si le schéma ne le fait pas. `"automatic"` ne peut pas
+  désactiver une confirmation définie dans le schéma.
+- `allowRetain: true` permet à l’utilisateur de conserver d’anciennes valeurs. Cela n’active pas de
+  revue à soi seul.
+- `messages` remplace les textes de revue et de statut.
+
+La revue par défaut affiche par pages les titres et chemins des lignes, les libellés des champs, les
+anciennes et nouvelles valeurs et les totaux. Un choix s’applique à toutes les lignes modifiées ou à
+aucune. Une sauvegarde est rejetée tant qu’un éditeur de ligne reste ouvert.
+
+Tous les constats de validation restent disponibles avec leurs chemins d’enregistrement, et le
+formulaire les pagine et renvoie vers l’enregistrement ou le champ. Un message de `INVALID()`
+concerne son enregistrement, pas un champ.
+
+### Sauvegarder l’enregistrement et son `freshness`
 
 ```jsx
 <FormRenderer
@@ -193,19 +212,19 @@ Les résultats personnalisés de portée appartiennent à l’enregistrement, sa
 />
 ```
 
-La réussite du callback reconnaît la persistance. Enregistrez ensemble l’enregistrement sélectionné et
-son compagnon de fraîcheur avant de résoudre ; le callback doit lever une erreur ou rejeter en cas
-d’échec ou d’annulation. Choisir `20 → 24` conserve `24` comme travail non enregistré si la validation
-ou la persistance échoue ensuite. La fraîcheur reste hors des valeurs enregistrées. Restaurez-la avec
-`initialFreshness` ; une ancienne reconnaissance ne supprime pas un état en attente plus récent.
-Des totaux conservés `[110,220]` donnent `330`, jamais le `360` de la proposition actualisée.
+Lorsque votre callback se termine, form0 considère que la sauvegarde a réussi. Sauvegardez
+l’enregistrement et `meta.freshness` ensemble avant sa résolution, et levez une erreur ou rejetez la
+promesse en cas d’échec ou d’annulation.
 
-Les contrôleurs de préparation n’ouvrent pas de dialogue et ne persistent rien. Vérifiez `eligible`,
-gérez `requires_decision` avec `payload: null` et reconnaissez uniquement le `preparationId` enregistré.
-Les pages comportent 50 changements par défaut, 100 au maximum. Continuez avec `prepareSave()` et
-`decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Des entrées/configurations modifiées
-ou une nouvelle préparation invalident la révision. La validation précède le hook de sauvegarde,
-exécuté une fois ; ses écritures peuvent exiger une autre révision sans répéter le hook.
+`freshness` reste en dehors des valeurs du formulaire. Repassez celui qui est sauvegardé via
+`initialFreshness`. Un accusé de réception plus ancien ne peut pas effacer un état en attente plus
+récent. Si un utilisateur conserve d’anciens totaux de ligne `[110,220]`, la somme soumise est
+`330`, jamais les `360` de la proposition actualisée. Si l’utilisateur change une valeur de `20` à
+`24`, `24` reste un travail non sauvegardé même si la validation ou la sauvegarde échoue ensuite.
+
+### Lancer une revue depuis votre interface
+
+Un contrôleur prépare une sauvegarde sans ouvrir de boîte de dialogue ni rien sauvegarder :
 
 ```js
 const prepared = await controller.prepareSave({ intent: "submit", signal })
@@ -222,6 +241,48 @@ if (prepared.status === "requires_decision") {
 }
 ```
 
-Les workers conservent les révisions et rapports en interne. Les réponses usuelles contiennent les données sélectionnées et résumés ; les détails sont demandés par pages bornées. Les helpers de type fonction restent interdits dans les workers. Signaux et callbacks ne passent pas dans les messages à clonage structuré.
+Vérifiez `eligible`, gérez `requires_decision`, où `payload` vaut `null`, et n’accusez réception que
+du `preparationId` que vous avez sauvegardé. `getSaveChanges()` renvoie 50 entrées par défaut et 100
+au maximum. Pour poursuivre une revue, appelez `prepareSave()` avec
+`decision: { reviewId, action: "refresh" | "retain" | "cancel" }`. Modifier les entrées ou la
+configuration, ou lancer une préparation plus récente, met fin à la revue.
 
-Les setters programmatiques utilisent le contrat strict partagé. Les valeurs initiales et remplacements du host restent des voies de chargement tolérantes, y compris en vue ; celle-ci conserve les calculs acceptés. [Voir le contrat de mise à jour des valeurs](/fr/core/engine/value-updates).
+La validation s’exécute avant le gestionnaire de sauvegarde, qui s’exécute une fois par tentative.
+Si le gestionnaire modifie des valeurs, une nouvelle revue peut être nécessaire, mais il ne
+s’exécute pas de nouveau.
+
+En mode worker, les revues en attente et les rapports restent dans le worker. Les réponses
+contiennent les données sélectionnées et les résumés, et vous demandez les détails des changements
+par pages. Les helpers sous forme de fonctions ne sont pas pris en charge en mode worker. Les
+signaux d’annulation et les callbacks restent en dehors des messages envoyés au worker.
+
+Les setters suivent les [règles de valeurs](/fr/core/engine/value-updates). `initialValues` et
+`overrideValues` sont plus tolérants, y compris en lecture seule, où les valeurs calculées restent
+telles qu’elles sont fournies.
+
+## Valeurs masquées
+
+Un champ avec
+[`visible_preserve_value: false`](/fr/core/fields/common-attributes#effacer-une-valeur-lorsquun-champ-est-masqué)
+est effacé pendant que l’utilisateur modifie le formulaire, y compris dans les lignes fermées. Il
+reste effacé dans `raw_values`, `repeatable` et l’enregistrement soumis. Les autres champs
+conservent leurs valeurs lorsqu’ils sont masqués, et un formulaire en lecture seule n’efface rien.
+
+Pour vérifier les valeurs masquées conservées lors de la soumission finale, définissez
+`validateHiddenValues` :
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
+  schema={schema}
+  submissionOptions={{ validateHiddenValues: true }}
+  onSubmit={saveRecord}
+/>
+```
+
+Une valeur masquée qui ne respecte pas ses propres règles bloque alors **Submit**. Le message
+apparaît dans l’onglet **Validation**, mais il ne peut pas amener l’utilisateur au champ masqué :
+celui-ci ne peut donc la corriger qu’en rendant le champ de nouveau visible. Utilisez cette option
+lorsque les utilisateurs peuvent le faire. Sinon,
+[vérifiez les valeurs masquées sur votre serveur](/fr/core/schema/validation#vérifier-les-valeurs-masquées-sur-un-serveur).
+Les brouillons et les champs obligatoires masqués et vides ne sont pas concernés.

@@ -10,3 +10,41 @@ Usa `form0 schema export` per creare una rappresentazione CSV di uno schema JSON
 
 Entrambi i comandi accettano percorsi di input o di output espliciti e `--force` per una
 sostituzione intenzionale. Valida e revisiona lo schema generato dopo la conversione.
+
+## Colonna dei valori nascosti
+
+Il CSV ha una colonna `visible_preserve_value`, subito dopo `visible_conditions`. Usala per definire
+[cosa succede a un valore quando il suo campo viene nascosto](/it/core/fields/common-attributes#cancellare-un-valore-quando-un-campo-viene-nascosto):
+
+| Cella   | Risultato                                                  |
+| ------- | ---------------------------------------------------------- |
+| Vuota   | L'attributo viene omesso, quindi il valore resta.          |
+| `true`  | Il valore resta.                                           |
+| `false` | Il valore viene cancellato quando il campo viene nascosto. |
+
+Compilala solo per i campi di input. Lasciala vuota per le sezioni, i campi calcolati e le righe di
+titolo e stato.
+
+### Prova
+
+Ti serve [form0-cli](/it/cli/install-update).
+
+1. Scarica un modulo di esempio ed esportalo. Il campo `email` imposta l'attributo, il campo `phone`
+   no:
+
+   ```bash
+   curl -o hidden-value.json https://docs.form0.dev/examples/hidden-value.form0.json
+   form0 schema export hidden-value.csv --input hidden-value.json --force
+   ```
+
+1. Apri `hidden-value.csv`. La colonna `visible_preserve_value` mostra `false` per `email` ed è
+   vuota per `phone`.
+
+1. Importa il CSV in un nuovo file:
+
+   ```bash
+   form0 schema import hidden-value.csv --output hidden-value-copy.json --force
+   ```
+
+   In `hidden-value-copy.json`, `email` ha `"visible_preserve_value": false`, mentre `phone` non ha
+   questo attributo.

@@ -31,6 +31,9 @@ sections, and produces structured records on submission.
 | `overrideValues`        | Apply authoritative values over initial values.                                                    |
 | `onSubmit`              | Receive the structured record and submission metadata.                                             |
 | `submissionDiagnostics` | Control save-failure reports (on) and routine validation-block messages (off).                     |
+| `submissionOptions`     | Set review options, messages, and `validateHiddenValues`.                                          |
+| `initialFreshness`      | Restore a record's saved `freshness`.                                                              |
+| `eventDiagnostics`      | Control failed-event reports (on).                                                                 |
 | `onSnapshotChange`      | Observe seed and user-change snapshots.                                                            |
 | `mode`                  | Start in `edit` or `readonly` mode.                                                                |
 | `repeatableEntryMode`   | Opening mode for existing repeatable rows: `readonly` (default) or `edit`; new rows start editing. |
@@ -56,7 +59,10 @@ Continue with [Values, snapshots, and submission](/bindings/react/values-snapsho
 
 ## Engine options and calculation diagnostics
 
-`engineOptions` forwards helpers, security, `onWarning`, `onUpdate`, `onOperations`, and calculation diagnostic controls to root and repeatable-row engines. Helpers and security are engine-construction settings: remount `FormRenderer` to replace them predictably. Callbacks and the console preference stay current in already-open editors without an extra evaluation.
+`engineOptions` passes helpers, security settings, `onWarning`, `onUpdate`, `onOperations`, and
+calculation diagnostic settings to the main engine and to row engines. Helpers and security are set
+when the engine is created, so remount `FormRenderer` to change them. Callbacks and the console
+setting update in open editors without another evaluation.
 
 ```jsx
 const findingsByScope = new Map()
@@ -74,21 +80,44 @@ const findingsByScope = new Map()
 />
 ```
 
-Console reporting is enabled by default. `diagnostics.console: false` suppresses calculation details, recovery and scope-ended console notices; collection and callbacks remain active. Providing `onDiagnostics` does not implicitly disable console reporting. Core codes, severity, messages, phases, suggestions and context are preserved. Developer console headings use English, as with the existing binding messages.
+Console reports are on by default. `diagnostics.console: false` turns off calculation details and
+recovery and scope-ended messages in the console, while collection and callbacks continue. Adding
+`onDiagnostics` does not turn console reports off. Console headings are in English.
 
-`onDiagnostics(snapshot, meta)` receives a defensive array after each accepted completed evaluation, including the first, identical findings and `[]` after recovery. Console output suppresses identical repeats and reports new/changed findings, recovery and recurrence. Errors from diagnostic observers, including rejected promises, cannot interrupt evaluation or operation processing.
+`onDiagnostics(snapshot, meta)` receives a copy of the findings after each completed evaluation,
+including the first one, repeated findings, and `[]` after recovery. The console skips identical
+repeats and reports new or changed findings, recovery, and problems that come back. An error in your
+callback, including a rejected promise, cannot interrupt evaluation.
 
-Metadata contains `scopeId`, `instancePath`, `evaluationId` and `kind`. A scope identifies one transient engine lifetime; evaluation IDs increase within that scope. Root paths are `[]`. Each row path segment contains `repeatableKey`, `instanceId`, zero-based `index`, and `identity: "id" | "position"`. Existing `id` or `record_id` values are used, with an explicitly positional fallback when absent. Findings carry the same path in `context.instancePath`; reporting never creates record IDs.
+`meta` contains `scopeId`, `instancePath`, `evaluationId`, and `kind`. A scope is the lifetime of
+one engine, and evaluation IDs increase within it. The main record's path is `[]`. Each row segment
+has `repeatableKey`, `instanceId`, a zero-based `index`, and `identity: "id" | "position"`. form0
+uses a row's `id` or `record_id`, and falls back to its position. Findings carry the same path in
+`context.instancePath`. Reporting never creates record IDs.
 
-Closing/deleting an editor, replacing its engine/schema, or unmounting retires the old scope with `onDiagnostics([], { ...meta, kind: "scope-ended" })`. This means the scope is no longer observed, not that the saved row recovered. Only engines that actually evaluate are represented: the callback is not a complete submission-health report and does not re-evaluate closed rows.
+Closing or deleting an editor, replacing its engine or schema, or unmounting ends the scope with
+`onDiagnostics([], { ...meta, kind: "scope-ended" })`. That means the scope is no longer observed,
+not that the row recovered. Only engines that evaluate are reported, so this callback is not a full
+health report, and it does not evaluate closed rows again.
 
-Calculation diagnostics remain outside `state.errors`, saved snapshots and record payloads. They do not change validation display timing, submission decisions or draft saving, and do not create automatic alerts or a diagnostics panel.
+Calculation diagnostics stay out of `state.errors`, saved snapshots, and records. They do not change
+validation, submission, or draft saving, and they add no alerts or panels.
 
-`onOperations(operations, meta, applyDefault)` receives non-alert operations. Delegate selected operations with `applyDefault(selected, meta)`; without a callback, existing default processing remains active. Renderer-owned `ALERT` dialogs appear once. Operation batches follow the existing platform processing; callbacks must handle every supplied batch. `onWarning` remains the legacy warning route, including its existing throttling, and is not a replacement for diagnostic snapshots. `onUpdate(state, engine)` retains the execution-specific engine/facade argument; use `onDiagnostics` for portable diagnostic consumption.
+### Handle operations and warnings
 
-## Managed events and custom validation
+`onOperations(operations, meta, applyDefault)` receives every operation except alerts. Pass the ones
+you want handled normally to `applyDefault(selected, meta)`. Without the callback, the default
+handling applies. The renderer shows each `ALERT` once. Your callback must handle every batch it
+receives.
 
-Current bindings use core 0.8.1 or later. Lifecycle and supported focus/blur/click interactions are enabled by default:
+`onWarning` receives engine warnings, which can be throttled, and does not replace `onDiagnostics`.
+`onUpdate(state, engine)` receives the state and an engine object whose type depends on how the form
+runs. If you only need diagnostics, use `onDiagnostics`.
+
+## Events and custom validation
+
+Lifecycle events and field interactions are on by default. Use `recordKind` to say whether the form
+holds a new or an existing record:
 
 ```jsx
 <FormRenderer
@@ -102,46 +131,77 @@ Current bindings use core 0.8.1 or later. Lifecycle and supported focus/blur/cli
 />
 ```
 
-`recordKind` must explicitly be `new` or `existing`; omission is a configuration error unless `lifecycle: false` is explicit. Values never determine classification. Configuration belongs to an editor session; remount to change classification, lifecycle, helpers or security. Callbacks remain live. Readonly opening runs load; editing runs load then new/edit. Open rows use repeatable events and their actual classification. Use `lifecycle: false` to preserve legacy lifecycle and `fieldInteractions: []` to disable automatic interactions. Built-in text/numeric inputs emit focus and blur; choices use change. Automatic click is reserved for supported activation fields. There is currently no HyperlinkField and no built-in control automatically emits click. Explicit host controller dispatch remains available.
+`recordKind` must be `new` or `existing`, unless you set `lifecycle: false`. form0 does not work it
+out from the values. These settings last for the life of the editor, so remount to change
+`recordKind`, `lifecycle`, helpers, or security. Callbacks stay live.
 
-The generation-bound controller is delivered after initialization and retired with `null`.
-`dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` returns a promise with `status`,
-`operations`, `validationIssues` and `issues` after accepted operation work finishes.
-`prepareSave({ intent: 'submit' | 'draft', instancePath?, scopeId? })` returns a promise with
-`eligible`, `payload`, `meta`, `validationSummary` and `issues`. It never persists or closes.
-Field listeners use `data_name`; paths use schema keys and existing row IDs. Positional fallback
-requires the observed active `scopeId` from diagnostics. Closed targets and old generations are rejected.
+- A read-only form runs `load-record`. An editing form runs `load-record`, then `new-record` or
+  `edit-record`.
+- Open rows use the repeatable events, with the row's own new or existing kind.
+- `lifecycle: false` keeps only `load-record`, `edit-record`, and `change` for the main record.
+  `fieldInteractions: []` turns off automatic interactions.
+- Text and numeric inputs emit `focus` and `blur`, and choice fields use `change`. No built-in
+  control emits `click`, so dispatch it through the controller.
 
-`INVALID(message)` creates a nonempty synchronous scope-level message during validate-record or
-validate-repeatable. Custom findings join the existing validation summary/navigation, replace each
-attempt and clear on editable changes or retirement. They never enter intrinsic `state.errors`,
-calculation diagnostics, values or record/media metadata. Validation and close handlers reject value/UI
-operations and promises. Row handlers can read current main/ancestor fields, but SETVALUE writes only
-in their current row; collection access is excluded.
+### The event controller
 
-Preparation waits for updates, validates, runs save-\* once when policy allows, awaits operations,
-revalidates changed values and serializes that final snapshot. Submit and row acceptance respect
-validation; root drafts remain allowed with `hasErrors: true`. Row drafts are unsupported. Execution
-failure returns no payload. `isDraft` describes the current action; `isValid` is intrinsic validity.
-Calculation diagnostics alone never block saving. Closed-row freshness and aggregation remain separate.
+`onEventController` receives a controller after the form initializes, and `null` when that
+controller is retired:
 
-User edits emit contextual change after updates settle. Accepted row membership changes include
-`action` (add/edit/remove) and `affectedInstancePath`; enabled status fields emit user-only change-status.
-Defaults, SETVALUE and calculations do not emit additional change. Interaction subscriptions default on; text/numeric controls emit focus/blur and choices use change.
-No built-in control automatically emits click. Explicit host controller dispatch remains available. Async onOperations work and selective applyDefault work are awaited; the
-fallback expires with its dispatch. Alerts remain renderer-owned and occur once.
+- `dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` returns a promise with
+  `status`, `operations`, `validationIssues`, and `issues`, after accepted operations finish.
+- `prepareSave({ intent: "submit" | "draft", instancePath?, scopeId? })` returns a promise with
+  `eligible`, `payload`, `meta`, `validationSummary`, and `issues`. It never saves or closes
+  anything.
 
-Confirmed cancel runs cancel then unload; supported successful closes run unload before disposal.
-Hosts closing directly must dispatch unload before unmounting. Rerenders, resets, Strict Mode
-cleanup and forced unmount only retire scopes. `save-record` and `save-repeatable` run before
-saving; there are no `saved-*` schema events. Applications own persistence, success notifications
-and closing.
+Field listeners use `data_name`, and paths use schema keys and row IDs. A position-based path needs
+the active `scopeId` from diagnostics. Closed targets and retired controllers are rejected.
 
-Native File/Blob uploads preserve standard metadata and immutable data. Their custom properties are outside native serialization. The media compatibility correction is included in core 0.5.1.
+### Custom validation
 
-## Managed event failure reporting
+`INVALID(message)` adds a message to a record or row during `validate-record` or
+`validate-repeatable`. Messages join the validation list and its navigation, are replaced on each
+attempt, and clear when data changes or the editor closes. They never enter `state.errors`,
+calculation diagnostics, values, or record metadata.
 
-`eventDiagnostics` controls managed event failure reporting separately from `submissionDiagnostics`:
+Validation and close handlers cannot change values, show alerts, or return promises. Row handlers
+can read the current main-record and parent fields, but `SETVALUE` writes only to their own row, and
+repeatable collections are out of reach.
+
+### How a save is prepared
+
+1. Wait for pending updates.
+2. Validate.
+3. Run `save-record` or `save-repeatable` once, if validation allows it.
+4. Wait for its operations to finish.
+5. Validate again if values changed.
+6. Build the record from that final snapshot.
+
+Submit and row acceptance stop on validation failures. A main-record draft continues with
+`hasErrors: true`, and rows have no drafts. If a handler fails, no `payload` is returned. `isDraft`
+describes the current action, and `isValid` is the built-in validity. Calculation diagnostics alone
+never block a save.
+
+### When events run
+
+User edits emit `change` after updates settle. Accepted row changes add `action` (`add`, `edit`, or
+`remove`) and `affectedInstancePath`. An enabled status field emits `change-status` for user changes
+only. Defaults, `SETVALUE`, and calculations do not emit `change`. form0 waits for async
+`onOperations` and `applyDefault` work. The fallback expires with its dispatch.
+
+A confirmed cancel runs the cancel event and then the unload event. A successful close runs the
+unload event before the editor is removed. If your application closes an editor directly, dispatch
+the unload event before you unmount it. Rerenders, resets, React Strict Mode cleanup, and forced
+unmounts do not count as closing. `save-record` and `save-repeatable` run before saving, and there
+are no `saved-*` schema events. Your application handles saving, success messages, and closing.
+
+`File` and `Blob` uploads keep their standard metadata and content. Custom properties on them are
+not kept.
+
+## Event failure reports
+
+`eventDiagnostics` controls console reports for failed events, separately from
+`submissionDiagnostics`:
 
 ```jsx
 <FormRenderer
@@ -152,19 +212,33 @@ Native File/Blob uploads preserve standard metadata and immutable data. Their cu
 />
 ```
 
-Failed managed events report once to `console.error` by default, including rejected `SETVALUE()`
-operations and rejected `onOperations` promises. Reports contain the event type, triggering field,
-root/row scope and issue codes/messages, without attaching values, operation arguments, snapshots or
-record IDs. Set `failures: false` when your application handles these reports. The preference stays
-current in open editors and pending operations without rebuilding or evaluating the engine.
+A failed event logs one `console.error` by default, including a rejected `SETVALUE()` and a rejected
+`onOperations` promise. The report has the event type, the field, the main-record or row scope, and
+issue codes and messages. It has no values, operation arguments, snapshots, or record IDs. Set
+`failures: false` if your application handles these reports. The setting updates in open editors and
+pending operations.
 
-Normal field validation and `INVALID()` findings remain separate. Cancelled or retired work stays
-quiet. Built-in Submit and row Save preparation use the submission reporter instead of emitting a
-second event report. Hosts calling `prepareSave()` directly still inspect its returned result.
-`dispatch()` continues returning its structured result even when console reporting is disabled.
-Existing core warnings and legacy `lifecycle: false` console behavior are unchanged.
+Validation messages and `INVALID()` are not failures, and cancelled work stays quiet. **Submit** and
+a row's **Save** use the submission reports, so you do not get two. If you call `prepareSave()`
+directly, inspect its result. `dispatch()` returns its result even when console reports are off.
+These settings do not control `form0-core` warnings or the console output with `lifecycle: false`.
 
-Numeric fields still accept numbers: `SETVALUE("quantity", 1)` is valid. Choice fields require string
-IDs: `SETVALUE("rating", "1")` for single selection and `SETVALUE("tags", ["1"])` for multiple
-selection. A rejected call leaves its operation batch unapplied; reporting does not change values,
-validation, submitted records or evaluation counts.
+Numeric fields take numbers, such as `SETVALUE("quantity", 1)`. Choice fields take string IDs:
+`SETVALUE("rating", "1")` for single selection and `SETVALUE("tags", ["1"])` for multiple selection.
+A rejected call leaves its whole batch unapplied. Reporting changes no values, validation, records,
+or evaluation counts.
+
+### Try it
+
+1. In a schema with a `SingleChoiceField` named `rating`, add this handler to `form.events.code`:
+
+   ```js
+   ON("load-record", function () {
+     SETVALUE("rating", 1)
+   })
+   ```
+
+1. Open the form. **rating** stays empty, and the console shows `[form0-react] Event failed.`
+
+1. Replace `1` with the string ID of one of the field's choices, and open the form again. The choice
+   is selected, and the console shows no report.

@@ -7,8 +7,7 @@ description: Seed, persist, restore, save, and submit form0 React Native state.
 
 ## Initial state and restoration
 
-Use `initialValues` for an ordinary record seed. `overrideValues` take precedence and suit
-authoritative host values. For complete restoration, prefer `initialSnapshot`:
+Use `initialValues` for an ordinary record seed. `overrideValues` take precedence and suit values your application controls. For complete restoration, prefer `initialSnapshot`:
 
 ```jsx
 <FormRenderer
@@ -112,29 +111,47 @@ described in [Output and records](/core/output-records), plus raw values, repeat
 timestamps, and the validation summary.
 
 The binding does not persist or synchronize either payload. Store snapshots locally, upload
-records, retry failures, and resolve conflicts in the host application.
+records, retry failures, and resolve conflicts in your application.
 
-## Managed event API
+## Use events from your own code
 
-See the managed event controller and scope contract in [FormRenderer](/bindings/react-native/form-renderer).
+`engineOptions.events` sets which events run, and `engineOptions.onEventController` gives you a
+controller for your own buttons. [FormRenderer](/bindings/react-native/form-renderer) describes both
+in full.
 
-`engineOptions.events`: `lifecycle` (true), required `recordKind` (new/existing), `fieldInteractions` ([focus, blur, click]). Set `lifecycle: false` for legacy lifecycle or `fieldInteractions: []` to disable automatic interactions.
-`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+| Option                     | Default                      | Purpose                                                                 |
+| -------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
+| `events.recordKind`        | Required                     | `"new"` / `"existing"`.                                                 |
+| `events.lifecycle`         | `true`                       | Set to `false` to keep only `load-record`, `edit-record`, and `change`. |
+| `events.fieldInteractions` | `["focus", "blur", "click"]` | Set to `[]` to turn off automatic interactions.                         |
 
-Preparation does not persist or close. Root draft validation findings remain visible in the returned summary; normal submit and row acceptance are blocked by validation failures. Calculation diagnostics remain independent. No closed-row evaluation or aggregation is added.
+`onEventController(controller | null)` gives you `dispatch(request)` and `prepareSave(request)`.
 
-## Child calculation review and persistence
+`prepareSave()` never saves or closes anything. The returned summary lists validation messages for a
+main-record draft. Validation failures block a normal submit and row acceptance, and calculation
+diagnostics block nothing.
 
-Ordinary submission automatically refreshes closed-child calculations when the form setting is
-omitted. `form.repeatable_recalculation: 'confirm'` requires review. Host `mode: 'confirm'` may
-strengthen that requirement; `automatic` cannot weaken an authored confirmation. `allowRetain` is
-explicit host permission and does not enable confirmation by itself. Review choices apply to all
-affected children or none. A root save is rejected while a child editor is still unaccepted.
+## Review recalculated rows
 
-The default review shows row titles/paths, field labels, old/new values and counts in bounded pages.
-Override review/status text with `submissionOptions.messages`. Complete validation findings remain
-available with record paths; the UI pages them and navigates to the affected record or field.
-Scope-level custom findings belong to their record, with no invented field association.
+When a user submits, `FormRenderer` recalculates saved rows automatically. Set
+`form.repeatable_recalculation` to `"confirm"` in the schema when users should review changed values
+first.
+
+`submissionOptions` changes this from your code:
+
+- `mode: "confirm"` requires a review even if the schema does not. `"automatic"` cannot turn off a
+  confirmation set in the schema.
+- `allowRetain: true` lets the user keep older values. It does not turn on a review by itself.
+- `messages` replaces the review and status text.
+
+The default review shows row titles and paths, field labels, old and new values, and counts, in
+pages. A choice applies to all changed rows or none. A save is rejected while a row editor is still
+open.
+
+All validation findings stay available with their record paths, and the form pages them and links to
+the record or field. An `INVALID()` message belongs to its record, not to a field.
+
+### Save the record and its `freshness`
 
 ```jsx
 <FormRenderer
@@ -149,19 +166,17 @@ Scope-level custom findings belong to their record, with no invented field assoc
 />
 ```
 
-A successfully completed callback acknowledges persistence. It must save the selected record and
-matching freshness companion together before resolving; throw or reject on failure or cancellation.
-Selecting `20 → 24` keeps `24` as unsaved editor work even if validation or persistence then fails.
-Freshness stays outside saved form values. Restore the host's persisted companion through
-`initialFreshness`; older acknowledgements cannot clear newer pending state. For retained child
-totals `[110,220]`, the submitted root sum is `330`, never the refreshed proposal's `360`.
+When your callback completes, form0 treats the save as successful. Save the record and
+`meta.freshness` together before it resolves, and throw or reject on failure or cancellation.
 
-Prepare-only controllers do not open a dialog or persist data. Check `eligible`, handle
-`requires_decision` with `payload: null`, and acknowledge only the exact successfully saved
-`preparationId`. Change pages default to 50 and allow at most 100 entries. Continue a review by calling
-`prepareSave()` with `decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Changed inputs,
-configuration or a newer preparation invalidate the review. Validation runs before the save hook,
-which executes once per attempt; accepted hook writes can require a new review without repeating it.
+`freshness` stays outside the form values. Pass the saved one back as `initialFreshness`. An older
+acknowledgement cannot clear newer pending state. If a user keeps older row totals `[110,220]`, the
+submitted sum is `330`, never the `360` of the refreshed proposal. If the user changes a value from
+`20` to `24`, `24` stays as unsaved work even if validation or saving then fails.
+
+### Run a review from your own interface
+
+A controller prepares a save without opening a dialog or saving anything:
 
 ```js
 const prepared = await controller.prepareSave({ intent: "submit", signal })
@@ -178,9 +193,43 @@ if (prepared.status === "requires_decision") {
 }
 ```
 
-Root `prepareSave({ intent: 'draft' })` and the Native draft save action preserve accepted child
-calculations without a dialog. Ordinary validation failures remain reportable and permit a root
-draft; execution failures prevent it. Apply the same record-plus-companion persistence contract to
-`onSave`. A successful durable offline write is separate from later server synchronization.
+Check `eligible`, handle `requires_decision`, where `payload` is `null`, and acknowledge only the
+`preparationId` you saved. `getSaveChanges()` returns 50 entries by default and at most 100. To
+continue a review, call `prepareSave()` with
+`decision: { reviewId, action: "refresh" | "retain" | "cancel" }`. Changing the inputs or
+configuration, or starting a newer preparation, ends the review.
 
-Programmatic setters use the shared strict input contract. Initial values and host overrides remain tolerant loading paths, including View; accepted calculations are preserved in View. [See the value-update contract](/core/engine/value-updates).
+Validation runs before the save handler, which runs once for each attempt. If the handler changes
+values, a new review may be needed, but the handler does not run again.
+
+`prepareSave({ intent: "draft" })` and the draft save action keep the saved rows' calculated values
+without a dialog. Validation failures are reported and still allow a main-record draft, but a
+handler failure prevents it. In `onSave`, save the record and `freshness` together too. A successful
+offline write is separate from later server synchronization.
+
+Setters follow the [value rules](/core/engine/value-updates). `initialValues` and `overrideValues`
+are more tolerant, including in read-only mode, where calculated values stay as supplied.
+
+## Hidden values
+
+A field with
+[`visible_preserve_value: false`](/core/fields/common-attributes#clear-a-value-when-a-field-is-hidden)
+is cleared while the user edits, including in closed rows. It stays cleared in `raw_values`,
+`repeatable`, and the submitted record. Other fields keep their values when hidden, and a read-only
+form clears nothing.
+
+To check kept hidden values on final submission, set `validateHiddenValues`:
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
+  schema={schema}
+  submissionOptions={{ validateHiddenValues: true }}
+  onSubmit={saveRecord}
+/>
+```
+
+A hidden value that fails its own rules then blocks **Submit**. The user can fix it only by making
+the field visible again. Use this option when users can do that. Otherwise,
+[check hidden values on your server](/core/schema/validation#check-hidden-values-on-a-server).
+Drafts and empty hidden required fields are not affected.

@@ -31,6 +31,9 @@ e sezioni e produce record strutturati all'invio.
 | `overrideValues`        | Applica valori prioritari sopra quelli iniziali.                                                              |
 | `onSubmit`              | Riceve il record strutturato e i metadati dell'invio.                                                         |
 | `submissionDiagnostics` | Controlla gli errori di salvataggio (attivi) e i messaggi di blocco della validazione (disattivi).            |
+| `submissionOptions`     | Imposta le opzioni di revisione, i messaggi e `validateHiddenValues`.                                         |
+| `initialFreshness`      | Ripristina il `freshness` salvato di un record.                                                               |
+| `eventDiagnostics`      | Controlla i report degli eventi non riusciti (attivi).                                                        |
 | `onSnapshotChange`      | Osserva gli snapshot iniziali e quelli delle modifiche dell'utente.                                           |
 | `mode`                  | Avvia in modalità `edit` o `readonly`.                                                                        |
 | `repeatableEntryMode`   | Apertura delle righe ripetibili esistenti: `readonly` (predefinito) o `edit`; le nuove si aprono in modifica. |
@@ -54,7 +57,11 @@ Prosegui con [Valori, snapshot e invio](/it/bindings/react/values-snapshots-subm
 
 ## Opzioni del motore e diagnostica dei calcoli
 
-`engineOptions` inoltra helper, sicurezza, `onWarning`, `onUpdate`, `onOperations` e i controlli diagnostici ai motori radice e delle righe ripetibili. Helper e sicurezza sono impostazioni di costruzione del motore: rimonta `FormRenderer` per sostituirli in modo prevedibile. Callback e preferenza della console restano aggiornati negli editor aperti senza una valutazione aggiuntiva.
+`engineOptions` passa helper, impostazioni di sicurezza, `onWarning`, `onUpdate`, `onOperations` e
+le impostazioni di diagnostica dei calcoli al motore principale e ai motori di riga. Gli helper e la
+sicurezza vengono impostati alla creazione del motore, quindi rimonta `FormRenderer` per cambiarli.
+Le callback e l'impostazione della console si aggiornano negli editor aperti senza un'altra
+valutazione.
 
 ```jsx
 const findingsByScope = new Map()
@@ -72,21 +79,46 @@ const findingsByScope = new Map()
 />
 ```
 
-I rapporti della console sono abilitati per impostazione predefinita. `diagnostics.console: false` nasconde i dettagli dei calcoli e gli avvisi di recupero e fine ambito; raccolta e callback restano attivi. Fornire `onDiagnostics` non disabilita implicitamente la console. Codici, gravità, messaggi, fasi, suggerimenti e contesto di core sono conservati. Le intestazioni della console di sviluppo sono in inglese, come i messaggi esistenti del binding.
+I report della console sono attivi per impostazione predefinita. `diagnostics.console: false`
+disattiva nella console i dettagli dei calcoli e i messaggi di ripristino e di fine ambito, mentre
+la raccolta e le callback continuano. Aggiungere `onDiagnostics` non disattiva i report della
+console. I titoli della console sono in inglese.
 
-`onDiagnostics(snapshot, meta)` riceve una copia difensiva dell'array dopo ogni valutazione completata e accettata, inclusa la prima, i risultati identici e `[]` dopo il recupero. La console evita ripetizioni identiche e segnala risultati nuovi o modificati, recupero e ricorrenza. Gli errori degli osservatori, incluse le promesse rifiutate, non interrompono valutazione o operazioni.
+`onDiagnostics(snapshot, meta)` riceve una copia dei risultati dopo ogni valutazione completata,
+compresa la prima, i risultati ripetuti e `[]` dopo un ripristino. La console salta le ripetizioni
+identiche e riporta i risultati nuovi o modificati, il ripristino e i problemi che si ripresentano.
+Un errore nella tua callback, compresa una promise rifiutata, non può interrompere la valutazione.
 
-I metadati contengono `scopeId`, `instancePath`, `evaluationId` e `kind`. Un ambito identifica una vita transitoria del motore; gli identificatori di valutazione aumentano al suo interno. Il percorso radice è `[]`. Ogni segmento di riga contiene `repeatableKey`, `instanceId`, `index` da zero e `identity: "id" | "position"`. Si usano i valori esistenti di `id` o `record_id`, con un'alternativa esplicitamente posizionale quando mancano. I risultati contengono lo stesso percorso in `context.instancePath`; i rapporti non creano identificatori dei record.
+`meta` contiene `scopeId`, `instancePath`, `evaluationId` e `kind`. Un ambito è la durata di un
+motore, e gli identificatori di valutazione aumentano al suo interno. Il percorso del record
+principale è `[]`. Ogni segmento di riga ha `repeatableKey`, `instanceId`, un `index` che parte da
+zero e `identity: "id" | "position"`. form0 usa l'`id` o il `record_id` di una riga e, in mancanza,
+la sua posizione. I risultati riportano lo stesso percorso in `context.instancePath`. I report non
+creano mai identificatori di record.
 
-Chiudere o eliminare un editor, sostituirne il motore o schema, o smontarlo ritira il vecchio ambito con `onDiagnostics([], { ...meta, kind: "scope-ended" })`. Indica la fine dell'osservazione, non il recupero della riga salvata. Sono rappresentati solo i motori effettivamente valutati: il callback non è un rapporto completo di validità dell'invio e non rivaluta le righe chiuse.
+Chiudere o eliminare un editor, sostituirne il motore o lo schema, o smontarlo termina l'ambito con
+`onDiagnostics([], { ...meta, kind: "scope-ended" })`. Questo significa che l'ambito non è più
+osservato, non che la riga si è ripristinata. Vengono riportati solo i motori che valutano, quindi
+questa callback non è un report completo dello stato e non valuta di nuovo le righe chiuse.
 
-La diagnostica dei calcoli resta fuori da `state.errors`, snapshot salvati e dati dei record. Non cambia la visualizzazione della validazione, le decisioni di invio o il salvataggio delle bozze, e non genera avvisi automatici o un pannello diagnostico.
+La diagnostica dei calcoli resta fuori da `state.errors`, dagli snapshot salvati e dai record. Non
+cambia la validazione, l'invio o il salvataggio delle bozze, e non aggiunge avvisi o pannelli.
 
-`onOperations(operations, meta, applyDefault)` riceve le operazioni diverse dagli avvisi. Delega quelle scelte con `applyDefault(selected, meta)`; senza callback resta attivo il processamento esistente. I dialoghi `ALERT` del renderer appaiono una volta. I lotti seguono il comportamento esistente di ogni piattaforma; i callback devono gestire ogni lotto ricevuto. `onWarning` conserva il canale storico degli avvisi e la sua limitazione di frequenza; non sostituisce gli snapshot diagnostici. `onUpdate(state, engine)` conserva il motore o facade specifico dell'esecuzione; usa `onDiagnostics` per un consumo portabile.
+### Gestire operazioni e avvisi
 
-## Eventi gestiti e validazione personalizzata
+`onOperations(operations, meta, applyDefault)` riceve tutte le operazioni tranne gli avvisi. Passa
+quelle da gestire normalmente ad `applyDefault(selected, meta)`. Senza la callback si applica la
+gestione predefinita. Il renderer mostra ogni `ALERT` una volta. La tua callback deve gestire ogni
+lotto che riceve.
 
-I binding attuali usano core 0.8.1 o successivo. Il ciclo di vita e le interazioni supportate focus/blur/click sono attivi per impostazione predefinita:
+`onWarning` riceve gli avvisi del motore, che possono essere limitati, e non sostituisce
+`onDiagnostics`. `onUpdate(state, engine)` riceve lo stato e un oggetto motore il cui tipo dipende
+da come viene eseguito il modulo. Se ti serve solo la diagnostica, usa `onDiagnostics`.
+
+## Eventi e validazione personalizzata
+
+Gli eventi del ciclo di vita e le interazioni dei campi sono attivi per impostazione predefinita.
+Usa `recordKind` per indicare se il modulo contiene un record nuovo o esistente:
 
 ```jsx
 <FormRenderer
@@ -100,48 +132,80 @@ I binding attuali usano core 0.8.1 o successivo. Il ciclo di vita e le interazio
 />
 ```
 
-`recordKind` deve essere esplicitamente `new` o `existing`; ometterlo è un errore salvo con `lifecycle: false`. I valori non determinano la classificazione. La configurazione è fissa per la sessione; rimonta per cambiare classificazione, ciclo, helper o sicurezza. I callback restano aggiornabili. La sola lettura esegue load; la modifica esegue load e poi new/edit. Le righe aperte usano gli eventi repeatable e la classificazione reale. Usa `lifecycle: false` per conservare il ciclo legacy e `fieldInteractions: []` per disabilitare le interazioni. I controlli di testo e numerici emettono focus e blur; le scelte usano change. Il click automatico è riservato ai campi di attivazione supportati. Attualmente HyperlinkField non esiste e nessun controllo integrato emette click automaticamente. Il dispatch esplicito del controller dell’host rimane disponibile.
+`recordKind` deve essere `new` o `existing`, a meno che tu non imposti `lifecycle: false`. form0 non
+lo ricava dai valori. Queste impostazioni durano per tutta la vita dell'editor, quindi rimontalo per
+cambiare `recordKind`, `lifecycle`, gli helper o la sicurezza. Le callback restano attive.
 
-Il controller della generazione viene consegnato dopo l’inizializzazione e ritirato con `null`.
-`dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` restituisce una promessa con
-`status`, `operations`, `validationIssues` e `issues` dopo le operazioni accettate.
-`prepareSave({ intent: 'submit' | 'draft', instancePath?, scopeId? })` restituisce `eligible`, `payload`,
-`meta`, `validationSummary` e `issues`, senza persistere né chiudere. I listener usano `data_name`;
-i percorsi usano chiavi dello schema e ID esistenti. Il ripiego posizionale richiede il `scopeId` attivo
-osservato nei diagnostici. Destinazioni chiuse e generazioni precedenti vengono rifiutate.
+- Un modulo in sola lettura esegue `load-record`. Un modulo in modifica esegue `load-record` e poi
+  `new-record` o `edit-record`.
+- Le righe aperte usano gli eventi ripetibili, a seconda che siano nuove o esistenti.
+- `lifecycle: false` mantiene solo `load-record`, `edit-record` e `change` per il record principale.
+  `fieldInteractions: []` disattiva le interazioni automatiche.
+- I campi di testo e numerici emettono `focus` e `blur`, mentre i campi di scelta usano `change`.
+  Nessun controllo integrato emette `click`, quindi attivalo con il controller.
 
-`INVALID(message)` crea un messaggio non vuoto e sincrono del proprio ambito durante validate-record o
-validate-repeatable. I risultati entrano nel riepilogo/navigazione esistente, sostituiscono ogni tentativo
-e si cancellano con modifiche o ritiro. Non entrano in `state.errors`, diagnostici di calcolo, valori
-o metadati di record/media. Gli handler di validazione e chiusura rifiutano operazioni di valore/UI e
-promesse. Le righe possono leggere i campi attuali principali/antenati; SETVALUE scrive solo nella
-riga corrente. L’accesso alle collezioni è escluso.
+### Il controller degli eventi
 
-La preparazione attende aggiornamenti, valida, esegue save-\* una volta se consentito, attende le
-operazioni, rivalida i valori modificati e serializza lo stesso stato finale. Submit e accettazione delle
-righe rispettano la validazione; le bozze radice consentono `hasErrors: true`. Non si introducono bozze
-di riga. Un errore di esecuzione non consegna payload. `isDraft` indica l’azione attuale e `isValid` la
-validità intrinseca. I diagnostici di calcolo non bloccano il salvataggio. Aggiornamento delle righe
-chiuse e aggregazione restano separati.
+`onEventController` riceve un controller dopo l'inizializzazione del modulo, e `null` quando quel
+controller viene ritirato:
 
-Le modifiche utente notificano change dopo gli aggiornamenti. Le modifiche di righe accettate includono
-`action` (add/edit/remove) e `affectedInstancePath`; lo stato abilitato notifica change-status solo per
-l’utente. Default, SETVALUE e calcoli non aggiungono change. Le sottoscrizioni alle interazioni sono attive per impostazione predefinita; testo/numero emettono
-focus/blur e le scelte usano change. Nessun controllo integrato emette click automaticamente.
-Il dispatch esplicito del controller dell’host rimane disponibile. Si attendono onOperations asincrono e applyDefault selettivo; il fallback
-scade con il dispatch. Il renderer possiede ALERT e lo presenta una volta sola.
+- `dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` restituisce una promise con
+  `status`, `operations`, `validationIssues` e `issues`, al termine delle operazioni accettate.
+- `prepareSave({ intent: "submit" | "draft", instancePath?, scopeId? })` restituisce una promise con
+  `eligible`, `payload`, `meta`, `validationSummary` e `issues`. Non salva e non chiude mai nulla.
 
-L’annullamento confermato esegue cancel e poi unload; le chiusure riuscite supportate eseguono
-unload prima del rilascio. L’host deve inviare unload prima di smontare direttamente. Rerender,
-reset, pulizia Strict Mode e smontaggio forzato ritirano solo gli ambiti. `save-record` e
-`save-repeatable` vengono eseguiti prima del salvataggio; non esistono eventi `saved-*`.
-L’applicazione gestisce persistenza, successo e chiusura.
+I listener dei campi usano `data_name`, e i percorsi usano le chiavi dello schema e gli
+identificatori di riga. Un percorso per posizione richiede lo `scopeId` attivo dalla diagnostica. Le
+destinazioni chiuse e i controller ritirati vengono rifiutati.
 
-I file File/Blob nativi conservano metadati standard e dati immutabili. Le proprietà personalizzate restano fuori dalla serializzazione nativa. La correzione della compatibilità multimediale è inclusa in core 0.5.1.
+### Validazione personalizzata
 
-## Segnalazione degli errori degli eventi gestiti
+`INVALID(message)` aggiunge un messaggio a un record o a una riga durante `validate-record` o
+`validate-repeatable`. I messaggi entrano nell'elenco di validazione e nella sua navigazione,
+vengono sostituiti a ogni tentativo e si cancellano quando i dati cambiano o l'editor si chiude. Non
+entrano mai in `state.errors`, nella diagnostica dei calcoli, nei valori o nei metadati del record.
 
-`eventDiagnostics` controlla la segnalazione degli errori degli eventi gestiti separatamente da `submissionDiagnostics`:
+I gestori di validazione e di chiusura non possono cambiare valori, mostrare avvisi o restituire
+promise. I gestori di riga possono leggere i campi attuali del record principale e dei genitori, ma
+`SETVALUE` scrive solo nella propria riga, e le raccolte ripetibili sono fuori portata.
+
+### Come viene preparato un salvataggio
+
+1. Attende gli aggiornamenti in sospeso.
+2. Valida.
+3. Esegue `save-record` o `save-repeatable` una volta, se la validazione lo consente.
+4. Attende il termine delle sue operazioni.
+5. Valida di nuovo se sono cambiati dei valori.
+6. Costruisce il record da quello snapshot finale.
+
+L'invio e l'accettazione di una riga si fermano in caso di errori di validazione. Una bozza del
+record principale prosegue con `hasErrors: true`, e le righe non hanno bozze. Se un gestore
+fallisce, non viene restituito alcun `payload`. `isDraft` descrive l'azione corrente, e `isValid` è
+la validità integrata. La diagnostica dei calcoli da sola non blocca mai un salvataggio.
+
+### Quando vengono eseguiti gli eventi
+
+Le modifiche dell'utente emettono `change` al termine degli aggiornamenti. Le modifiche di riga
+accettate aggiungono `action` (`add`, `edit` o `remove`) e `affectedInstancePath`. Un campo di stato
+attivo emette `change-status` solo per le modifiche dell'utente. I valori predefiniti, `SETVALUE` e
+i calcoli non emettono `change`. form0 attende il lavoro asincrono di `onOperations` e
+`applyDefault`. Il fallback scade con la sua attivazione.
+
+Un annullamento confermato esegue l'evento di annullamento e poi quello di scaricamento. Una
+chiusura riuscita esegue l'evento di scaricamento prima di rimuovere l'editor. Se la tua
+applicazione chiude direttamente un editor, attiva l'evento di scaricamento prima di smontarlo. I
+nuovi rendering, i reset, la pulizia di React Strict Mode e gli smontaggi forzati non contano come
+chiusura. `save-record` e `save-repeatable` vengono eseguiti prima del salvataggio, e non esistono
+eventi di schema `saved-*`. La tua applicazione gestisce il salvataggio, i messaggi di conferma e la
+chiusura.
+
+I caricamenti `File` e `Blob` conservano i metadati standard e il contenuto. Le loro proprietà
+personalizzate non vengono conservate.
+
+## Report degli eventi non riusciti
+
+`eventDiagnostics` controlla i report della console per gli eventi non riusciti, separatamente da
+`submissionDiagnostics`:
 
 ```jsx
 <FormRenderer
@@ -152,20 +216,36 @@ I file File/Blob nativi conservano metadati standard e dati immutabili. Le propr
 />
 ```
 
-Gli eventi gestiti non riusciti vengono segnalati una volta in `console.error` per impostazione
-predefinita, comprese le operazioni `SETVALUE()` rifiutate e le promesse `onOperations` rifiutate.
-Il rapporto contiene tipo di evento, campo che lo avvia, ambito radice/riga e codici/messaggi, senza
-allegare valori, argomenti delle operazioni, snapshot o ID dei record. Usa `failures: false` se
-l’applicazione li segnala già. La preferenza resta aggiornata negli editor aperti e nelle operazioni
-in corso, senza ricostruire o valutare il motore.
+Un evento non riuscito registra un `console.error` per impostazione predefinita, compresi un
+`SETVALUE()` rifiutato e una promise `onOperations` rifiutata. Il report contiene il tipo di evento,
+il campo, l'ambito del record principale o della riga, e i codici e i messaggi dei problemi. Non
+contiene valori, argomenti delle operazioni, snapshot o identificatori di record. Imposta
+`failures: false` se la tua applicazione gestisce questi report. L'impostazione si aggiorna negli
+editor aperti e nelle operazioni in sospeso.
 
-La validazione normale e i risultati di `INVALID()` restano separati. Le operazioni annullate o
-ritirate non producono messaggi. La preparazione di Submit e Save di riga usa il rapporto di invio,
-senza duplicarlo. L’host che chiama direttamente `prepareSave()` continua a controllarne il risultato.
-`dispatch()` conserva il risultato strutturato anche con la segnalazione console disattivata.
-Gli avvisi del core e il comportamento console precedente con `lifecycle: false` non cambiano.
+I messaggi di validazione e `INVALID()` non sono errori, e il lavoro annullato non riporta nulla.
+**Submit** e **Save** di una riga usano i report di invio, quindi non ne ricevi due. Se chiami
+direttamente `prepareSave()`, ispeziona il risultato. `dispatch()` restituisce il risultato anche
+quando i report della console sono disattivati. Queste impostazioni non controllano gli avvisi di
+`form0-core` né l'output della console con `lifecycle: false`.
 
-I campi numerici continuano ad accettare numeri: `SETVALUE("quantity", 1)` è valido. Le scelte richiedono
-ID testuali: `SETVALUE("rating", "1")` per la selezione singola e `SETVALUE("tags", ["1"])` per quella
-multipla. Una chiamata rifiutata lascia il suo lotto non applicato; la segnalazione non cambia valori,
-validazione, record inviati o numero di valutazioni.
+I campi numerici accettano numeri, come `SETVALUE("quantity", 1)`. I campi di scelta accettano
+identificatori testuali: `SETVALUE("rating", "1")` per la selezione singola e
+`SETVALUE("tags", ["1"])` per la selezione multipla. Una chiamata rifiutata lascia non applicato
+l'intero lotto. I report non cambiano valori, validazione, record o conteggi delle valutazioni.
+
+### Prova
+
+1. In uno schema con un `SingleChoiceField` chiamato `rating`, aggiungi questo gestore a
+   `form.events.code`:
+
+   ```js
+   ON("load-record", function () {
+     SETVALUE("rating", 1)
+   })
+   ```
+
+1. Apri il modulo. **rating** resta vuoto, e la console mostra `[form0-react] Event failed.`
+
+1. Sostituisci `1` con l'identificatore testuale di una delle scelte del campo e apri di nuovo il
+   modulo. La scelta risulta selezionata, e la console non mostra alcun report.

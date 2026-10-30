@@ -27,10 +27,74 @@ champ décrivent tout ce qui ne figure pas ici.
 
 - `visible` : visibilité de base (booléen).
 - `visible_conditions` : objet de condition ; lorsqu'il est présent, il remplace `visible`.
+- `visible_preserve_value` : indique si un champ masqué conserve sa valeur (booléen, facultatif).
+  Consultez
+  [Effacer une valeur lorsqu’un champ est masqué](#effacer-une-valeur-lorsquun-champ-est-masqué).
 - `required` : caractère obligatoire de base (booléen).
 - `required_conditions` : objet de condition ; lorsqu'il est présent, il remplace `required`.
 - `read_only` : indicateur de lecture seule de base (booléen).
 - `read_only_conditions` : objet de condition ; lorsqu'il est présent, il remplace `read_only`.
+
+## Effacer une valeur lorsqu’un champ est masqué
+
+Par défaut, un champ masqué conserve sa valeur. Elle reste dans les valeurs du formulaire, est
+sauvegardée avec l’enregistrement et compte toujours dans les calculs. Définissez
+`visible_preserve_value` sur `false` lorsqu’une réponse masquée ne doit pas être conservée, comme
+une adresse e-mail après que l’utilisateur a choisi d’être contacté par téléphone :
+
+```json
+{
+  "type": "TextField",
+  "data_name": "email",
+  "label": "Email",
+  "visible": false,
+  "visible_conditions": { "field_id": "contact_method", "operator": "equal_to", "value": "email" },
+  "visible_preserve_value": false
+}
+```
+
+Cet exemple montre seulement les attributs utiles ici.
+
+Lorsque le champ est masqué, sa valeur devient `null`. Cela s’applique :
+
+- aux champs masqués par leur propre condition ou par un `Section` ou `RepeatableSection` parent, y
+  compris dans les lignes fermées ; et
+- aux champs masqués dès le départ, y compris leur `default_value` et toute valeur chargée.
+
+Les autres règles sont les suivantes :
+
+- Lorsque le champ réapparaît, il reste vide. form0 ne restaure pas l’ancienne valeur et n’applique
+  pas de nouveau `default_value`.
+- Un enregistrement en lecture seule conserve ses valeurs stockées.
+- Dans l’enregistrement sauvegardé, un champ effacé ressemble à n’importe quel champ vide. Les
+  lignes, leurs ID et leurs métadonnées restent.
+- Effacer un champ média ou de lien supprime seulement la référence. Le fichier ou l’enregistrement
+  lié n’est pas supprimé.
+
+Ces champs de saisie prennent en charge l’attribut : `TextField`, `NumericField`,
+`SingleChoiceField`, `MultiChoiceField`, `BooleanField`, `DateField`, `TimeField`, `PhotoField`,
+`VideoField`, `SignatureField` et `FormLinkField`. Les conteneurs, les libellés, les champs calculés
+ainsi que les titres et statuts générés ne le prennent pas en charge.
+
+### Essayez
+
+Il vous faut [form0-cli](/fr/cli/install-update).
+
+1. Téléchargez le formulaire d’exemple et démarrez l’aperçu :
+
+   ```bash
+   curl -o hidden-value.json https://docs.form0.dev/examples/hidden-value.form0.json
+   form0 serve hidden-value.json
+   ```
+
+1. Ouvrez `http://localhost:3030`. Le champ `email` définit `visible_preserve_value` sur `false`, et
+   le champ `phone` l’omet.
+
+1. Choisissez **Email**, saisissez une adresse, choisissez **Phone**, puis de nouveau **Email**. Le
+   champ **Email** est vide.
+
+1. Choisissez **Phone**, saisissez un numéro, choisissez **Email**, puis de nouveau **Phone**. Le
+   numéro est toujours là.
 
 ## Valeur par défaut
 

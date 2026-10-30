@@ -429,8 +429,9 @@ Una condizione su un campo a scelta confronta il `value` della scelta selezionat
 etichetta. Vedi [Condizioni e operatori](/it/core/schema/conditions-operators).
 
 Nascondere un campo non ne cancella il valore. Se qualcuno inserisce un indirizzo email e poi passa
-a **Phone**, l'indirizzo resta nei valori del modulo. Decidi nella tua applicazione se i valori
-nascosti vanno conservati.
+a **Phone**, l'indirizzo resta nei valori del modulo. Per cancellarlo, aggiungi
+`"visible_preserve_value": false` al campo. Vedi
+[Cancellare un valore quando un campo viene nascosto](/it/core/fields/common-attributes#cancellare-un-valore-quando-un-campo-viene-nascosto).
 
 ### Priorità calcolata
 

@@ -20,14 +20,55 @@ l'exactitude des attributs, pas sur les questions d'interface.
 
 ## Validation à l'exécution
 
-À l'exécution, les champs valident aussi leurs valeurs lorsque le moteur évalue le formulaire :
+À l’exécution, chaque champ vérifie sa valeur lorsque le moteur évalue le formulaire. Le résultat se
+trouve dans la table `errors` de l’état du moteur.
 
-- Contrôles numériques de minimum et de maximum
-- Correspondance avec un motif pour les champs texte
-- Correspondance des valeurs de choix avec les choix définis
+| Champ           | Valeur acceptée                                                                       | Vérifié aussi                                                        |
+| --------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `TextField`     | Une chaîne                                                                            | `pattern`, s’il est défini                                           |
+| `NumericField`  | Un nombre fini                                                                        | `min` et `max`, et les nombres entiers quand `format` vaut `integer` |
+| `DateField`     | Une vraie date du calendrier au format `YYYY-MM-DD`, de l’année `0001` à `9999`       | Rien d’autre                                                         |
+| `TimeField`     | `HH:MM` ou `HH:MM:SS`, avec des heures `00`–`23` et des minutes et secondes `00`–`59` | Rien d’autre                                                         |
+| Champs de choix | Valeurs définies dans `choices`                                                       | Rien d’autre                                                         |
 
-La validation des valeurs à l'exécution s'applique à tous les champs, y compris ceux qui sont
-actuellement masqués. Le résultat est disponible dans la map `errors` de l'état du moteur.
+- form0 ne convertit pas les valeurs : `"12"` dans un `NumericField` est donc une erreur.
+- `null`, `undefined` et `""` comptent comme vides, pas comme un mauvais type. Un `TextField`
+  facultatif vide ignore aussi `pattern`.
+- Une valeur en échec reste dans `values` et apparaît dans `errors` : un enregistrement chargé peut
+  donc toujours être inspecté et corrigé.
+- Ces vérifications s’appliquent à tous les champs, y compris aux champs masqués.
+
+### Essayez
+
+Il vous faut [form0-cli](/fr/cli/install-update).
+
+1. Téléchargez un formulaire avec un `TextField`, un `NumericField` et un `DateField` :
+
+   ```bash
+   curl -o value-types.json https://docs.form0.dev/examples/value-types.form0.json
+   ```
+
+1. Exécutez-le avec des valeurs correctes. La sortie affiche `"errors": {}` :
+
+   ```bash
+   form0 run value-types.json --values '{"name":"Ada","age":36,"start":"2026-02-28"}'
+   ```
+
+1. Exécutez-le avec des valeurs incorrectes :
+
+   ```bash
+   form0 run value-types.json --values '{"name":42,"age":"36","start":"2026-02-30"}'
+   ```
+
+   Chaque champ apparaît maintenant dans `errors` :
+
+   ```json
+   "errors": {
+     "name": "name must be a string",
+     "age": "age must be a finite number",
+     "start": "start must be a valid YYYY-MM-DD date"
+   }
+   ```
 
 ### Champs obligatoires et soumission
 
@@ -36,28 +77,73 @@ simplement parce qu'un champ obligatoire est vide. Le contrôle des champs oblig
 soumission : les renderers officiels combinent `visible`, `required` et la valeur actuelle, ignorent les
 champs masqués et décident quand afficher l'erreur.
 
-### Validation de soumission partagée
+### Vérifier une soumission
 
-`validateSubmission({ schema, snapshot, validationIssues })` vérifie un arbre actif déjà évalué,
-sans évaluer les valeurs ni garantir leur fraîcheur. `createRecordEvaluator().prepareSubmission()`
-combine évaluation, sélection et cette même politique. Les applications sans interface et les
-intégrations de renderers peuvent partager ces règles de soumission.
+`createRecordEvaluator().prepareSubmission()` exécute les calculs, sélectionne les valeurs à
+soumettre et applique les mêmes vérifications que les renderers officiels. Utilisez-la sur un
+serveur ou dans toute application sans renderer. Consultez ses options dans
+[Préparer une soumission](/fr/core/engine/evaluation-cycle#préparer-une-soumission).
 
-Les champs masqués et leurs descendants ne bloquent pas la soumission ordinaire. Un champ de saisie
-visible, requis, en lecture seule et vide la bloque. Zéro et les sélections false légitimes sont des
-valeurs. `state.errors` est inchangé ; les contraintes LabelField/CalculatedField restent valables.
+Si vous avez déjà un snapshot évalué, appelez
+`validateSubmission({ schema, snapshot, validationIssues })`. Elle se contente de vérifier : elle ne
+recalcule rien et ne supprime pas les champs inconnus.
 
-Le résumé contient `hasErrors`, `requiredFieldErrors`, `generalErrors`, `scopeIssues` et
-`orderedIssues`. Les constats identifient clé/data_name et `instancePath` complet ; `INVALID` reste
-associé au périmètre. La racine précède les descendants dans l’ordre des enregistrements.
-`managedEvents: true` revalide automatiquement les lignes fermées participantes. Les véritables
-erreurs de saisie exigent une correction, même nombreuses ; les brouillons racine restent autorisés.
-Les périmètres masqués ne participent pas. Les règles racine ne sont pas automatiquement attribuées
-à un champ masqué individuel.
+Les deux suivent les mêmes règles :
 
-La conservation valide l’instantané sélectionné, y compris ses helpers calculés et conditions.
-La fraîcheur en attente reste distincte. Les validateurs ne peuvent ni écrire ni produire d’opérations
-UI ; les échecs d’exécution bloquent l’éligibilité, même pour les brouillons.
+- Par défaut, les champs masqués et les champs sous des parents masqués ne bloquent pas une
+  soumission.
+- Un champ obligatoire visible et vide bloque la soumission, même en lecture seule.
+- `0` et un **No** sélectionné comptent comme renseignés.
+- Une ligne masquée ne participe pas à la vérification.
+- Un brouillon peut être sauvegardé avec des erreurs de validation. Un gestionnaire qui échoue à
+  l’exécution bloque aussi les brouillons.
+- Les gestionnaires de validation ne peuvent ni modifier de valeurs ni afficher d’alertes.
+- Ces vérifications ne modifient pas `state.errors`. `LabelField` et `CalculatedField` suivent leurs
+  propres règles.
+
+Le résultat inclut un `validationSummary` :
+
+| Propriété             | Contenu                                                                                            |
+| --------------------- | -------------------------------------------------------------------------------------------------- |
+| `hasErrors`           | Indique si quelque chose a échoué.                                                                 |
+| `requiredFieldErrors` | Champs obligatoires restés vides.                                                                  |
+| `generalErrors`       | Valeurs qui ne respectent pas les règles de leur champ.                                            |
+| `scopeIssues`         | Messages de `INVALID()`, qui concernent un enregistrement ou une ligne, pas un champ.              |
+| `orderedIssues`       | Tout ce qui précède dans l’ordre de l’enregistrement, l’enregistrement principal avant ses lignes. |
+
+Chaque constat désigne son champ par sa clé et son `data_name`, et sa ligne par `instancePath`. Un
+message de `INVALID()` de l’enregistrement principal reste sur l’enregistrement principal, car form0
+ne peut pas savoir quel champ il concerne. `managedEvents: true` exécute aussi les gestionnaires de
+validation des lignes fermées. Chaque ligne en échec doit être corrigée avant que la soumission
+réussisse, quel que soit leur nombre.
+
+Si un utilisateur conserve d’anciennes valeurs calculées pendant une
+[revue](/fr/core/engine/evaluation-cycle#examiner-les-lignes-modifiées), les vérifications portent
+sur ces valeurs conservées, y compris les conditions qui en dépendent.
+
+### Vérifier les valeurs masquées sur un serveur
+
+Par défaut, une soumission ignore les erreurs des champs masqués, car l’utilisateur ne peut pas les
+voir. Un client qui appelle votre API peut mettre n’importe quoi dans ces champs : activez donc la
+vérification dans le code de votre serveur :
+
+```js
+const result = await evaluator.prepareSubmission(snapshot, { validateHiddenValues: true })
+```
+
+`validateSubmission()` accepte la même option. Lorsqu’elle est activée, une valeur masquée qui ne
+respecte pas ses propres règles bloque la soumission, comme un nombre dans un `TextField`. Cela
+inclut les lignes masquées. Les autres règles restent les mêmes :
+
+- Un champ obligatoire masqué et vide ne bloque pas, et les gestionnaires de validation des lignes
+  masquées ne s’exécutent pas.
+- Un brouillon peut toujours être sauvegardé avec ces erreurs.
+- Lorsque vous poursuivez une revue avec `decision`, passez le même réglage.
+
+Cette vérification ne couvre que les valeurs. Elle ne supprime pas les champs inconnus et ne décide
+pas qui peut soumettre.
+[Ajouter un formulaire à une application React existante](/fr/guides/add-form-to-react-app) contient
+un exemple complet de serveur.
 
 ## Erreurs courantes
 

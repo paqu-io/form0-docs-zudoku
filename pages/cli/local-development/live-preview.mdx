@@ -11,92 +11,153 @@ Run `form0 serve [schema]` to start the local preview server. It uses port `3030
 The preview server is a development tool. Use trusted projects and connectors, and only expose it
 to a trusted network.
 
-Preview input parsing stays unchanged. Programmatic updates and official `SETVALUE()` application share [the supported value contract](/core/engine/value-updates): preflight the whole batch, preserve unknown string selections for validation, and keep `choice` separate from `choices`. Record View blocks event writes, including writes during `load-record`; ordinary field read-only settings still permit programmatic input updates.
+## How the preview applies values
+
+The preview follows the same [value rules](/core/engine/value-updates) as the official bindings:
+
+- `SETVALUE()` and programmatic updates are checked as one batch. If one is rejected, none is
+  applied.
+- An unknown string selection stays in the field, so validation can report it.
+- A read-only record blocks event writes, including during `load-record`. A field's own `read_only`
+  setting does not, so code can still change that field.
 
 ## Calculation diagnostics in the browser
 
-In form0-cli 0.6.0 and later, the server returns structured diagnostics alongside evaluated state.
-The browser console shows new or changed findings, resolved findings, and problems that recur;
-identical evaluations do not repeatedly print them. Nested-row findings identify their repeatable
-path and existing row ID, or explicitly show a positional reference when no ID exists.
+The server returns diagnostics with each evaluation. The browser console shows new or changed
+findings, resolved findings, and problems that come back. Identical evaluations do not print them
+again. A finding in a nested row shows its repeatable path and row ID, or says that it uses a row
+position when there is no ID.
 
-Use `form0 serve [schema] --no-diagnostics` to suppress CLI-owned calculation reports and built-in
-preview console output. Diagnostics are still collected. An app started with `serve --app` keeps
-its own application reporting policy.
+Use `form0 serve [schema] --no-diagnostics` to hide calculation reports and built-in preview console
+output. Diagnostics are still collected. An app started with `serve --app` keeps its own reporting.
 
-A completed calculation evaluation still returns state when diagnostics contain errors. Field
-validation, event operations, submission policy, and draft saving retain their own behavior;
-diagnostics do not add form alerts or submission blockers.
+A calculation that completes still returns state when its diagnostics contain errors. Diagnostics do
+not add form alerts or block submission, and field validation, events, and draft saving work as
+usual.
 
 <span id="portable-preview-events-cli-070" />
 
 ## Record preview and lifecycle events
 
-The current preview uses APIs introduced in core 0.8.1. CLI installs a compatible core automatically. Fresh previews enable lifecycle and supported focus/blur/click interactions and select **New record**. In **Form Settings → Record preview**, choose **Existing record** or **Open read-only** as needed. Classification selects hooks; it does not load a database record. Explicitly saved opt-outs remain respected. **Advanced event settings** contains the compatibility switches. Read-only opening runs load only; changing configuration starts a fresh session with accepted values. `serve --app` retains app-owned options. Bindings expose these options through APIs and require explicit host classification. CLI headless lifecycle keeps its existing default.
+A new preview starts as a new record, with lifecycle events and field focus and blur events on. To
+change how it opens, go to **Form Settings** > **Record preview**:
 
-Initialization evaluates effective values, runs `load-record`, then the applicable `new-record` or
-`edit-record`. User changes run after queued updates settle; defaults, calculations and `SETVALUE()`
-do not generate extra changes. Enabled status uses `change-status`; text/numeric focus and blur default on; choices use change. Automatic click is reserved for supported activation fields. There is currently no HyperlinkField and no built-in control automatically emits click. Explicit host controller dispatch remains available.
+- **New record** runs `new-record` handlers. This is the default.
+- **Existing record** runs `edit-record` handlers. It does not load a database record, it only
+  chooses which handlers run.
+- **Open read-only** runs `load-record` only.
 
-Submit follows built-in/custom validation → `save-record` once → validation again only if values
-changed → final serialization → existing connector submission. Synchronous `INVALID(message)` adds
-a scope-level summary message without changing intrinsic `state.errors`. Calculation diagnostics
-alone do not block submission. **Prepare draft** produces a raw snapshot and possibly invalid
-summary in the console, with no connector call or persistence. There are no `saved-*` schema events.
+**Advanced event settings** has the switches for turning events off, and a saved choice stays in
+place. Changing these settings starts a new session with the values already accepted. An app started
+with `serve --app` keeps its own options, and standalone commands such as `form0 run` keep their own
+defaults.
 
-Inline rows offer **Edit**, **Save row** and **Cancel row**. They use repeatable lifecycle hooks and
-staged values: Save validates/prepares before accepting; Cancel discards staged nested edits.
-Handlers read permitted ancestor/main fields and write only their current row. Collapsing changes
-presentation only. Accepted add/edit/remove notifies the owning repeatable; later notification
-issues are reported separately from the already accepted preparation. Closed rows use the shared submission preparation described below without replaying their editing lifecycle.
+### What runs and when
 
-The active developer controller is `window.form0PreviewEvents`. Its promise-based `dispatch()` and
-`prepareSave({ intent: 'submit' | 'draft' })` return findings/issues and finish accepted presentation;
-preparation itself neither submits nor closes. Row targets supply complete `instancePath` and the
-observed `scopeId` (also shown as `data-preview-scope-id`). Positional paths require that ID. Metadata
-is JSON; executable configuration and native file handles are rejected. Saved values contain no
-scope or diagnostic metadata. Cancel/Close notify before retirement; reload/forced disposal only
-retires. Reopen starts a fresh session. This does not change terminal run/validate exit behavior.
+- When a record opens, the form evaluates, `load-record` runs, and then `new-record` or
+  `edit-record` runs.
+- When a user edits a field, `change` runs after queued updates settle. In a text field, that means
+  every keystroke.
+- Defaults, calculations, and `SETVALUE()` do not add `change` events.
+- Text and numeric inputs emit `focus` and `blur`, and choice fields use `change`.
+- An enabled status field emits `change-status` when a user changes it.
+- No built-in control emits `click`. Dispatch it yourself through the controller described below.
 
-**Advanced preview actions** groups **Prepare draft**, **Cancel record** and **Close record** in a
-collapsed section. Preparing a draft is inspection only and never saves it to a connector. Disabled
-nested row controls explain which parent editor must be opened first. Submit logs the expandable
-final record and individual connector outcomes. With no connector configured, it explicitly reports
-that the record is prepared for preview only; a connector or persistence failure is not a saved result.
+### What happens on submit
 
-## Shared preparation and a host storage adapter
+1. Built-in and custom validation run.
+2. `save-record` runs once.
+3. Validation runs again, only if values changed.
+4. The final record is built and sent to any connector.
 
-Drawing in a BuildingPlan canvas automatically opens the owning floor's Edit draft. Rooms, walls,
-openings and other geometry appear immediately as child rows. **Save row** validates and accepts the
-floor; **Cancel row** restores its geometry and children together. Required survey questions still
-need answers. Accept or cancel an open room/wall editor before drawing again, and finish the floor
-draft before root submission. Collapsing or switching floors does not save. Read-only records and
-read-only BuildingPlan sections disable drawing. Schema and submitted record formats stay unchanged;
-canvas editing does not grant `SETVALUE()` permission to write across records.
+`INVALID(message)` adds a message to the validation list without changing `state.errors`.
+Calculation diagnostics alone do not block a submission. There are no `saved-*` schema events.
 
-Set `form.repeatable_recalculation` to `"confirm"` in the schema to review changed saved-child
-calculations when submitting the root record. Omission or `"automatic"` refreshes them automatically.
-There is no separate switch in preview settings. An open child editor continues recalculating with
-current ancestor values; accept or cancel it before root submission. Confirmation concerns saved,
-closed children. Keeping previous values additionally requires the host permission described below.
+Submit logs the final record and each connector's outcome to the console. A connector or storage
+failure does not count as a saved result.
 
-Preview uses shared freshness and built-in submission validation whether managed lifecycle is
-enabled or disabled. Opting out keeps managed custom validation/save hooks disabled. Closed-row
-load, edit, change, save and unload events are not replayed. Open row edits must be accepted or
-cancelled before root preparation.
+### Try it
 
-`createApp()` accepts server-owned `submissionOptions` and an optional `storageAdapter`. Retention
-requires the adapter and explicit `allowRetain`; browser requests cannot grant that permission.
-The adapter implements async `load(identity)` returning `{ record, freshness }` or `null`, and
-`save(identity, { record, freshness })`. `record` uses the existing structured record shape. The
-session uses `recordIdentity` or `recordOptions.mainRecordId` to restore a saved identity, including
-zero. The example atomically replaces a local envelope; production hosts own revision/conflict policy.
+You need [form0-cli](/cli/install-update).
 
-Adapter success acknowledges the preparation. Rejection, partial persistence or failed connector
-submission leaves the attempt unsaved. Existing connectors continue receiving the same record
-payload and gain no freshness-storage responsibility. Preparation-only clients explicitly acknowledge
-a successful external save. Review details are paged through `getSaveChanges()` and decisions are
-all-or-none.
+1. Start the preview with an example form:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Open `http://localhost:3030`, enter `10` in **Amount**, and click **Submit Record**.
+
+1. Open the browser console. It shows `[STRUCTURED RECORD] Record prepared`, and then
+   `No database connector configured; record prepared for preview only.`
+
+### Rows
+
+Inline rows offer **Edit**, **Save row**, and **Cancel row**. Edits stay staged until you accept
+them: **Save row** validates the row first, and **Cancel row** discards its staged nested edits.
+Collapsing a row only changes how it looks.
+
+Row handlers use the repeatable events. They can read permitted parent and main-form fields, and
+they write only to their own row. Adding, editing, or removing a row notifies the repeatable section
+that owns it. A problem in that notification is reported separately, and the accepted row stays.
+
+Closed rows are prepared with the rest of the record on submit, without replaying their editing
+events.
+
+### Advanced actions
+
+**Advanced preview actions** is a collapsed section with three actions:
+
+- **Prepare draft** prints a raw snapshot and any validation summary to the console. It never saves
+  the draft or calls a connector.
+- **Cancel record** discards editor changes.
+- **Close record** runs the unload lifecycle.
+
+Cancelling or closing notifies handlers before the session ends. Reloading the page ends it without
+notice, and reopening starts a new session. A disabled nested row control explains which parent
+editor to open first.
+
+### Control the preview from the console
+
+`window.form0PreviewEvents` is a developer controller for the active preview:
+
+- `dispatch()` runs an event and returns its findings and issues.
+- `prepareSave({ intent: "submit" | "draft" })` prepares a save without submitting or closing
+  anything.
+
+To target a row, pass its complete `instancePath` and the `scopeId` shown as `data-preview-scope-id`
+on the page. A position-based path requires that ID. Metadata must be JSON, so executable
+configuration and native file handles are rejected. Saved values contain no scope or diagnostic
+data. The controller does not change the exit status of terminal commands.
+
+## Draw in a BuildingPlan
+
+Drawing in a BuildingPlan canvas opens an Edit draft of the floor. Rooms, walls, openings, and other
+geometry appear right away as rows. **Save row** validates and accepts the floor, and **Cancel row**
+restores its geometry and rows together. Required survey questions still need answers.
+
+Before you draw again, accept or cancel any open room or wall editor. Finish the floor draft before
+you submit the main record. Collapsing or switching floors does not save. Read-only records and
+read-only BuildingPlan sections disable drawing. Drawing does not change the schema or record
+format, and it does not let `SETVALUE()` write across records.
+
+## Review recalculated rows
+
+Set `form.repeatable_recalculation` to `"confirm"` in the schema to review changed calculations in
+saved rows when you submit the main record. If you leave it out or use `"automatic"`, they refresh
+automatically. There is no switch for this in the preview settings.
+
+An open row keeps recalculating with its parents' current values, so accept or cancel it before you
+submit. Keeping older values also needs the server permission described in the next section.
+
+The preview uses the same checks with lifecycle events on or off. With events off, custom validation
+and save handlers stay off.
+
+## Save preview records
+
+`createApp()` accepts server-side `submissionOptions` and an optional `storageAdapter`, so you can
+test saving and restoring records in your own preview server:
 
 ```js
 import { createApp } from "form0-cli/src/server/express-server.js"
@@ -105,5 +166,36 @@ import { createFilePreviewStorage } from "form0-cli/src/server/preview-events/fi
 const app = createApp(getSchema, getSchemaSource, projectDir, {
   submissionOptions: { mode: "confirm", allowRetain: true },
   storageAdapter: createFilePreviewStorage(previewStorageDirectory),
+})
+```
+
+The adapter implements two async methods:
+
+- `load(identity)` returns `{ record, freshness }` or `null`.
+- `save(identity, { record, freshness })` stores them.
+
+`record` uses the structured record format. To restore a record, the session uses `recordIdentity`
+or `recordOptions.mainRecordId`, including ID zero. The example adapter replaces a local file
+atomically. In production, your application decides how to handle revisions and conflicts.
+
+`allowRetain` requires an adapter, and browser requests cannot grant it. A successful `save`
+acknowledges the preparation. If it rejects, stores only part of the data, or a connector fails, the
+attempt stays unsaved. Connectors receive the same record as usual and do not store `freshness`. A
+client that only prepares a save must acknowledge a successful external save itself.
+`getSaveChanges()` returns review details in pages, and a decision applies to all changed rows or
+none.
+
+## Hidden values in the preview
+
+The preview applies the same [value checks](/core/schema/validation#runtime-validation) and
+[`visible_preserve_value`](/core/fields/common-attributes#clear-a-value-when-a-field-is-hidden)
+rules as the bindings, including in closed rows.
+[CSV export and import](/cli/schemas/import-export-csv) keeps the attribute.
+
+To check hidden values on submit, set the option on the server. Browser requests cannot change it:
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
 })
 ```

@@ -20,14 +20,55 @@ correttezza degli attributi, non gli aspetti dell'interfaccia.
 
 ## Validazione in fase di esecuzione
 
-In fase di esecuzione, i campi validano anche i propri valori quando il motore valuta il modulo:
+In fase di esecuzione, ogni campo controlla il proprio valore quando il motore valuta il modulo. Il
+risultato si trova nella mappa `errors` dello stato del motore.
 
-- Controlli numerici di minimo e massimo
-- Corrispondenza con un pattern per i campi di testo
-- I valori di scelta devono corrispondere alle scelte definite
+| Campo           | Valore accettato                                                            | Controllato anche                                            |
+| --------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `TextField`     | Una stringa                                                                 | `pattern`, se impostato                                      |
+| `NumericField`  | Un numero finito                                                            | `min` e `max`, e i numeri interi quando `format` è `integer` |
+| `DateField`     | Una data reale del calendario come `YYYY-MM-DD`, dall'anno `0001` al `9999` | Nient'altro                                                  |
+| `TimeField`     | `HH:MM` o `HH:MM:SS`, con ore `00`–`23` e minuti e secondi `00`–`59`        | Nient'altro                                                  |
+| Campi di scelta | Valori definiti in `choices`                                                | Nient'altro                                                  |
 
-La validazione dei valori in fase di esecuzione viene applicata a tutti i campi, inclusi quelli
-attualmente nascosti. Il risultato è disponibile nella mappa `errors` dello stato del motore.
+- form0 non converte i valori, quindi `"12"` in un `NumericField` è un errore.
+- `null`, `undefined` e `""` contano come vuoti, non come tipo sbagliato. Un `TextField` facoltativo
+  vuoto salta anche `pattern`.
+- Un valore che non passa resta in `values` e compare in `errors`, quindi un record caricato si può
+  ancora ispezionare e correggere.
+- Questi controlli valgono per tutti i campi, compresi quelli nascosti.
+
+### Prova
+
+Ti serve [form0-cli](/it/cli/install-update).
+
+1. Scarica un modulo con un `TextField`, un `NumericField` e un `DateField`:
+
+   ```bash
+   curl -o value-types.json https://docs.form0.dev/examples/value-types.form0.json
+   ```
+
+1. Eseguilo con valori corretti. L'output mostra `"errors": {}`:
+
+   ```bash
+   form0 run value-types.json --values '{"name":"Ada","age":36,"start":"2026-02-28"}'
+   ```
+
+1. Eseguilo con valori sbagliati:
+
+   ```bash
+   form0 run value-types.json --values '{"name":42,"age":"36","start":"2026-02-30"}'
+   ```
+
+   Ora ogni campo compare in `errors`:
+
+   ```json
+   "errors": {
+     "name": "name must be a string",
+     "age": "age must be a finite number",
+     "start": "start must be a valid YYYY-MM-DD date"
+   }
+   ```
 
 ### Campi obbligatori e invio
 
@@ -36,28 +77,72 @@ campo obbligatorio è vuoto. Il controllo dei campi obbligatori riguarda l'invio
 combinano `visible`, `required` e il valore corrente, ignorano i campi nascosti e decidono quando
 mostrare l'errore.
 
-### Validazione condivisa dell’invio
+### Controllare un invio
 
-`validateSubmission({ schema, snapshot, validationIssues })` controlla un albero di esecuzione già
-valutato, senza valutare valori o garantirne l’aggiornamento.
-`createRecordEvaluator().prepareSubmission()` combina valutazione, selezione e la stessa politica.
-Le applicazioni senza interfaccia e le integrazioni dei renderer possono condividere queste regole
-di invio.
+`createRecordEvaluator().prepareSubmission()` esegue i calcoli, seleziona i valori da inviare e
+applica gli stessi controlli dei renderer ufficiali. Usalo su un server o in qualsiasi applicazione
+senza renderer. Vedi le sue opzioni in
+[Preparare un invio](/it/core/engine/evaluation-cycle#preparare-un-invio).
 
-Campi nascosti e discendenti di antenati nascosti non bloccano l’invio ordinario. Campi di ingresso
-visibili, obbligatori, di sola lettura e vuoti lo bloccano. Zero e selezioni false legittime sono valori.
-`state.errors` è invariato; restano i vincoli LabelField/CalculatedField.
+Se hai già uno snapshot valutato, chiama
+`validateSubmission({ schema, snapshot, validationIssues })`. Si limita a controllare: non ricalcola
+nulla e non rimuove i campi sconosciuti.
 
-Il riepilogo contiene `hasErrors`, `requiredFieldErrors`, `generalErrors`, `scopeIssues` e
-`orderedIssues`. I rilievi identificano chiave/data_name e `instancePath` completo; `INVALID` resta
-associato all’ambito. La radice precede i discendenti nell’ordine dei record.
-`managedEvents: true` rivalida automaticamente righe chiuse partecipanti. Errori reali di ingresso
-richiedono correzione anche se numerosi; salvare bozze radice resta consentito. Gli ambiti nascosti non
-partecipano. Le regole radice non vengono attribuite automaticamente a singoli campi nascosti.
+Entrambi seguono le stesse regole:
 
-Gli invii con valori mantenuti validano lo snapshot selezionato, inclusi helper calcolati e condizioni.
-L’aggiornamento pendente rimane separato. I validatori non possono scrivere o eseguire operazioni UI;
-i fallimenti di esecuzione bloccano anche le bozze.
+- Per impostazione predefinita, i campi nascosti e i campi sotto genitori nascosti non bloccano un
+  invio.
+- Un campo obbligatorio visibile e vuoto blocca l'invio, anche se è in sola lettura.
+- `0` e un **No** selezionato contano come compilati.
+- Una riga nascosta non partecipa al controllo.
+- Una bozza si può salvare con errori di validazione. Un gestore che fallisce durante l'esecuzione
+  blocca anche le bozze.
+- I gestori di validazione non possono cambiare valori o mostrare avvisi.
+- Questi controlli non cambiano `state.errors`. `LabelField` e `CalculatedField` seguono regole
+  proprie.
+
+Il risultato include un `validationSummary`:
+
+| Proprietà             | Contiene                                                                                   |
+| --------------------- | ------------------------------------------------------------------------------------------ |
+| `hasErrors`           | Se qualcosa non è andato a buon fine.                                                      |
+| `requiredFieldErrors` | Campi obbligatori rimasti vuoti.                                                           |
+| `generalErrors`       | Valori che non rispettano le regole del loro campo.                                        |
+| `scopeIssues`         | Messaggi di `INVALID()`, che riguardano un record o una riga, non un campo.                |
+| `orderedIssues`       | Tutto quanto sopra nell'ordine del record, con il record principale prima delle sue righe. |
+
+Ogni risultato indica il campo con la chiave e il `data_name`, e la riga con `instancePath`. Un
+messaggio di `INVALID()` del record principale resta sul record principale, perché form0 non può
+sapere a quale campo si riferisce. `managedEvents: true` esegue anche i gestori di validazione delle
+righe chiuse. Ogni riga con errori va corretta prima che l'invio passi, indipendentemente dal loro
+numero.
+
+Se un utente mantiene valori calcolati precedenti durante una
+[revisione](/it/core/engine/evaluation-cycle#rivedere-le-righe-modificate), i controlli si applicano
+a quei valori mantenuti, comprese le condizioni che ne dipendono.
+
+### Controllare i valori nascosti su un server
+
+Per impostazione predefinita, un invio ignora gli errori dei campi nascosti, perché l'utente non può
+vederli. Un client che chiama la tua API può mettere qualsiasi cosa in quei campi, quindi attiva il
+controllo nel codice del tuo server:
+
+```js
+const result = await evaluator.prepareSubmission(snapshot, { validateHiddenValues: true })
+```
+
+`validateSubmission()` accetta la stessa opzione. Quando è attiva, un valore nascosto che non
+rispetta le proprie regole blocca l'invio, come un numero in un `TextField`. Questo include le righe
+nascoste. Le altre regole non cambiano:
+
+- Un campo obbligatorio nascosto e vuoto non blocca, e i gestori di validazione delle righe nascoste
+  non vengono eseguiti.
+- Una bozza si può ancora salvare con questi errori.
+- Quando continui una revisione con `decision`, passa la stessa impostazione.
+
+Questo controllo copre solo i valori. Non rimuove i campi sconosciuti e non decide chi può inviare.
+[Aggiungi un modulo a un'app React esistente](/it/guides/add-form-to-react-app) contiene un
+esempio completo di server.
 
 ## Errori comuni
 

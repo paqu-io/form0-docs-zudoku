@@ -429,8 +429,9 @@ Una condición sobre un campo de selección compara el `value` de la opción ele
 Consulta [Condiciones y operadores](/es/core/schema/conditions-operators).
 
 Ocultar un campo no borra su valor. Si alguien escribe una dirección de email y luego cambia a
-**Phone**, la dirección sigue en los valores del formulario. Decide en tu aplicación si los valores
-ocultos deben conservarse.
+**Phone**, la dirección sigue en los valores del formulario. Para borrarla, añade
+`"visible_preserve_value": false` al campo. Consulta
+[Borrar un valor cuando un campo se oculta](/es/core/fields/common-attributes#borrar-un-valor-cuando-un-campo-se-oculta).
 
 ### Prioridad calculada
 

@@ -431,8 +431,9 @@ Une condition sur un champ de choix compare la `value` du choix sélectionné, p
 Consultez [Conditions et opérateurs](/fr/core/schema/conditions-operators).
 
 Masquer un champ n’efface pas sa valeur. Si quelqu’un saisit une adresse e-mail puis passe à
-**Phone**, l’adresse reste dans les valeurs du formulaire. C’est à votre application de décider si
-les valeurs masquées doivent être conservées.
+**Phone**, l’adresse reste dans les valeurs du formulaire. Pour l’effacer, ajoutez
+`"visible_preserve_value": false` au champ. Consultez
+[Effacer une valeur lorsqu’un champ est masqué](/fr/core/fields/common-attributes#effacer-une-valeur-lorsquun-champ-est-masqué).
 
 ### Priorité calculée
 

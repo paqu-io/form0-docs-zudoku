@@ -73,8 +73,10 @@ conditions, ni les événements. Consultez
 - **Les conditions voient les valeurs calculées.** Les calculs s'exécutent en premier : un
   `visible_conditions` ou un `required_conditions` peut donc référencer un `CalculatedField` et
   obtient toujours sa valeur actuelle.
-- **Les calculs ignorent la visibilité.** Masquer un champ n'efface pas sa valeur. La valeur d'un
-  champ masqué reste dans `values` et compte toujours dans tout calcul qui la référence.
+- **Les calculs ignorent la visibilité.** Par défaut, un champ masqué conserve sa valeur : elle
+  reste donc dans `values` et compte toujours dans tout calcul qui la référence. Pour l’effacer,
+  consultez
+  [Effacer une valeur lorsqu’un champ est masqué](/fr/core/fields/common-attributes#effacer-une-valeur-lorsquun-champ-est-masqué).
 - **La validation couvre tous les champs.** Les erreurs de valeur sont aussi calculées pour les
   champs masqués. Un champ obligatoire vide n'est pas une erreur dans `errors` : c'est le renderer ou
   votre application qui décide s'il bloque la soumission. Voir
@@ -101,22 +103,17 @@ bindings officiels :
 4. Déclenchent `change` pour le champ modifié, ce qui exécute tout gestionnaire
    `ON("change", ...)` correspondant.
 
-Les gestionnaires d'événements ne modifient jamais le formulaire eux-mêmes. Ils renvoient une liste
-d'opérations, comme `SETVALUE` ou `ALERT`, et le host les applique. Quand le host applique un
-`SETVALUE`, il écrit la valeur et exécute de nouveau `eval()`, mais il ne déclenche pas d'autre
-événement `change`. Un gestionnaire ne peut donc pas lancer une chaîne d'événements de modification
-en définissant d'autres champs.
+Les gestionnaires d’événements ne modifient jamais le formulaire eux-mêmes. Ils renvoient une liste
+d’opérations, comme `SETVALUE` ou `ALERT`, et le renderer ou votre application les applique.
+Appliquer un `SETVALUE` écrit la valeur et relance `eval()`, mais ne déclenche pas d’autre événement
+`change`. Un gestionnaire ne peut donc pas lancer une chaîne d’événements change en définissant
+d’autres champs.
 
-<Callout type="info" title="Prise en charge des événements dans les bindings">
-  form0-core définit un vocabulaire d'événements plus large, qui comprend des événements
-  d'enregistrement, de champ et de section répétable. Les renderers officiels déclenchent
-  actuellement les événements de cycle de vie portables `load-record`, `edit-record` et `change`.
-  Les autres événements ne sont pas déclenchés automatiquement, car leur moment dépend du flux et de
-  l'interface de l'application host. Les applications peuvent les déclencher explicitement avec
-  `engine.trigger(...)`. D'autres déclenchements automatiques pourront être étudiés au cas par cas,
-  mais les schémas ne doivent s'appuyer que sur les événements documentés par leur host ou leur
-  binding. Voir [Déclenchement des événements dans les bindings
-  officiels](/fr/core/builtins/events-overview).
+<Callout type="info" title="Les événements dans les renderers officiels">
+  Les renderers officiels déclenchent par défaut les événements de cycle de vie, comme `load-record`
+  et `save-record`, ainsi que `change`, `focus` et `blur`. Si vous utilisez `form0-core`
+  directement, déclenchez vous-même les événements avec `engine.trigger(...)`. Consultez
+  [Déclenchement des événements dans les bindings officiels](/fr/core/builtins/events-overview).
 </Callout>
 
 ## Utiliser le moteur sans renderer
@@ -136,17 +133,20 @@ engine.setValue("quantity", 3)
 const operations = engine.trigger("change", "quantity")
 ```
 
-Les setters acceptent les formes abrégées adaptées au type et les objets de choix actifs complets. Les écritures directes nécessitent toujours les formes actives. Valeurs par défaut et enregistrements stockés restent distincts ; voir le contrat de mise à jour des valeurs. [Voir le contrat de mise à jour des valeurs](/fr/core/engine/value-updates).
+`setValue()` et `setValues()` acceptent des valeurs simples, y compris un identifiant textuel pour
+un champ de choix, et lancent l’évaluation à votre place. Les enregistrements stockés utilisent un
+autre format. Consultez [Mise à jour et normalisation des valeurs](/fr/core/engine/value-updates).
 
 Votre application doit appliquer les opérations renvoyées et décider quand un champ obligatoire vide
 bloque la soumission.
 
-## Préparation de l’arbre de données
+## Évaluer un enregistrement complet
 
-`createRecordEvaluator({ schema, helpers, security })` réutilise l’exécuteur et les règles de portée
-existants pour coordonner les instances racine et enfants. Les applications utilisent cette API pour
-sélectionner et valider un instantané avant sa persistance, puis appliquent le résultat via leur
-renderer ou contrôleur. `engine.eval()` conserve son contrat d’état intrinsèque.
+`engine.eval()` couvre un seul enregistrement. Un formulaire avec des sections répétables est un
+arbre : un enregistrement principal, ses lignes et les lignes qu’elles contiennent. Utilisez
+`createRecordEvaluator({ schema, helpers, security })` lorsque vous avez besoin d’un résultat pour
+tout l’arbre, par exemple pour vérifier un enregistrement avant de le sauvegarder. Il utilise les
+mêmes expressions et règles de portée que le moteur.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -157,67 +157,138 @@ const refreshed = await evaluator.evaluate(snapshot, { mode: "refresh" })
 const prepared = await evaluator.prepareSubmission(snapshot)
 ```
 
-`snapshot` utilise `{ values, repeatable }`. Chaque ligne conserve `id`, `values`, ses collections
-`repeatable` imbriquées, pièces jointes et métadonnées. Les valeurs utilisent les data_names ; les
-collections utilisent les clés du schéma lorsqu’elles existent. Convertissez d’abord un
-enregistrement stocké avec
-[`buildFormRecordSnapshot`](/fr/core/output-records#charger-un-enregistrement-stocké). Aucun appel
-ne modifie l’entrée, ne persiste, ne génère d’ID ou de date d’enregistrement et n’applique une
-proposition à l’interface.
+`snapshot` a la forme `{ values, repeatable }`. Les valeurs utilisent les `data_name`, et les tables
+de répétables utilisent les clés du schéma lorsqu’elles existent. Chaque ligne conserve son `id`,
+ses `values`, son `repeatable` imbriqué, ses pièces jointes et ses métadonnées. Pour partir d’un
+enregistrement stocké, convertissez-le avec
+[`buildFormRecordSnapshot`](/fr/core/output-records#charger-un-enregistrement-stocké).
 
-Le mode accepted conserve les calculs enfants fermés et recalcule les agrégats racine à partir des
-valeurs acceptées. Enregistrer un montant enfant de 100 à 150 actualise l’agrégat lorsque l’hôte
-fournit cette ligne acceptée ; annuler ne le change pas. Refresh prépare tous les calculs enfants
-ensemble. Si la taxe passe de 10% à 20%, le total accepté 110 devient une proposition 120. Validation
-et sortie utilisent le même instantané sélectionné. Les cycles entre enregistrements échouent sans
-instantané partiel ; les diagnostics locaux conservent leur sémantique indépendante.
+Aucun de ces appels ne modifie `snapshot`, ne sauvegarde de données, ne crée d’identifiants
+d’enregistrement ou d’horodatages, et ne met à jour un formulaire à l’écran.
 
-`prepareSubmission` accepte `intent: 'submit' | 'draft'`, `mode: 'automatic' | 'confirm'`,
-`allowRetain: true` et `managedEvents: true` (ces deux indicateurs valent false par défaut).
-Automatic est le mode par défaut ; l’hôte ne peut pas affaiblir une confirmation du schéma. En mode
-confirm, des calculs enfants modifiés retournent `status: 'requires_decision'`, `reviewId`, `proposal`,
-`changes`, `choices` et `snapshot: null`. La proposition sert à la revue, pas à la livraison. Après
-une décision explicite, rappelez avec les entrées actuelles, les mêmes options et
-`decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Retain exige l’autorisation de
-l’hôte aux deux appels. Une nouvelle préparation, des entrées/options modifiées ou un autre
-évaluateur invalident la revue. L’acceptation utilise les valeurs capturées ; la décision est unique.
+### Conserver ou actualiser les lignes sauvegardées
 
-Vérifiez `eligible` avant livraison. Les états sont `ready`, `blocked`, `requires_decision`, `failed`
-ou `cancelled`. `validationSummary`, `diagnostics` et `issues` d’exécution restent distincts. Les
-brouillons conservent les calculs enfants sans dialogue et autorisent les erreurs ordinaires, tout en
-signalant ces erreurs et la fraîcheur en attente. Les échecs d’exécution empêchent l’éligibilité.
+Une ligne sauvegardée stocke ses valeurs calculées. `evaluate()` vous permet de choisir quoi en
+faire :
 
-Persistez `freshness` hors de l’enregistrement : `{ version: 1, status: 'current' | 'pending',
-schemaRevision, affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Restaurez-le pour l’affichage
-du statut en attente. Chaque préparation recalcule depuis les entrées actuelles ; les métadonnées
-ne rejouent aucune proposition. Effacez le statut stocké uniquement après persistance du résultat à jour.
+- **Par défaut**, les lignes sauvegardées conservent leurs valeurs calculées, et les totaux de
+  l’enregistrement principal sont obtenus à partir d’elles. Si le montant d’une ligne passe de 100 à
+  150 et que votre application fournit cette ligne sauvegardée, le total est mis à jour. Si
+  l’utilisateur annule la modification, il ne l’est pas.
+- **Avec `mode: "refresh"`**, toutes les lignes sont recalculées ensemble. Si un taux de taxe passe
+  de 10 % à 20 %, un total sauvegardé de 110 devient 120 dans le résultat.
 
-Chaque entrée affectée représente une ligne ; `fields` énumère les identités de ses calculs modifiés.
-L’ascendance complète est stockée une seule fois par ligne, en conservant l’ID zéro et les références
-par position. Le statut à jour contient une liste d’éléments affectés vide.
+La validation et la sortie utilisent ce même résultat. Un cycle de dépendances qui s’étend sur
+plusieurs enregistrements échoue et ne renvoie aucun snapshot. Les diagnostics de calcul au sein
+d’un enregistrement sont signalés comme d’habitude.
 
-L’enregistrement des handlers utilise chaque périmètre sélectionné ; analyse et compilation sont partagées.
+### Préparer une soumission
 
-La préparation gérée exécute seulement la validation racine et des lignes fermées participantes,
-avec leurs ancêtres sélectionnés actuels. Elle ne rejoue pas load/edit/save/unload. L’hôte conserve
-valider → sauvegarder une fois → réévaluer/revalider si changement → sérialiser. Un hook modifiant
-les entrées invalide la revue sans être rejoué. `event.isValid` décrit la validité intrinsèque de son
-périmètre ; la validité combinée figure dans le résumé.
+`prepareSubmission(snapshot, options)` produit le snapshot à sauvegarder, après les calculs et la
+validation. Vérifiez `eligible` avant de le sauvegarder.
 
-L’évaluation accepte `signal`, une cible de planification de 8ms (`budgetMs`) et `yieldToHost`
-asynchrone. Chaque expression reste synchrone et peut dépasser cette durée. L’analyse du schéma est
-partagée, sans moteur permanent par ligne fermée. Les sessions de prévisualisation ajoutent
-`runRecord({ snapshot, instancePath })` pour un aperçu explicite de l’arbre.
+| Option                 | Valeurs                    | Par défaut    | Rôle                                                                                                     |
+| ---------------------- | -------------------------- | ------------- | -------------------------------------------------------------------------------------------------------- |
+| `intent`               | `"submit"`, `"draft"`      | `"submit"`    | Indique s’il s’agit d’une soumission finale ou d’un brouillon.                                           |
+| `mode`                 | `"automatic"`, `"confirm"` | `"automatic"` | Indique si les lignes modifiées exigent une revue.                                                       |
+| `allowRetain`          | Booléen                    | `false`       | Permet à une revue de conserver d’anciennes valeurs calculées.                                           |
+| `managedEvents`        | Booléen                    | `false`       | Exécute les gestionnaires de validation.                                                                 |
+| `validateHiddenValues` | Booléen                    | `false`       | [Vérifie les valeurs masquées](/fr/core/schema/validation#vérifier-les-valeurs-masquées-sur-un-serveur). |
+
+`status` vaut `ready`, `blocked`, `requires_decision`, `failed` ou `cancelled`. Les constats de
+validation (`validationSummary`), les `diagnostics` de calcul et les `issues` d’exécution sont
+signalés séparément.
+
+Par défaut, les valeurs de ligne modifiées sont actualisées automatiquement. Un brouillon
+(`intent: "draft"`) conserve au contraire les valeurs calculées sauvegardées des lignes sans revue,
+et il peut être admissible avec des erreurs de validation. Il signale quand même ces erreurs et les
+lignes qui ne sont plus à jour. Un gestionnaire qui échoue le rend non admissible.
+
+### Examiner les lignes modifiées
+
+Utilisez une revue lorsque les utilisateurs doivent voir les valeurs recalculées avant leur
+sauvegarde. Passez `mode: "confirm"` ou définissez `"repeatable_recalculation": "confirm"` dans le
+formulaire. `mode: "automatic"` ne peut pas désactiver une confirmation définie dans le schéma.
+
+Si une valeur de ligne devait changer, `prepareSubmission()` renvoie `status: "requires_decision"`,
+avec `reviewId`, `proposal`, `changes`, `choices` et `snapshot: null`. Montrez `proposal` à
+l’utilisateur, mais ne le sauvegardez pas. Une fois la décision prise, appelez de nouveau
+`prepareSubmission()` avec les mêmes entrées et options, plus la décision :
+
+```js
+const prepared = await evaluator.prepareSubmission(snapshot, { mode: "confirm" })
+
+if (prepared.status === "requires_decision") {
+  showReview(prepared.proposal, prepared.changes)
+}
+
+// After the user decides, with the same evaluator, snapshot, and options:
+const result = await evaluator.prepareSubmission(snapshot, {
+  mode: "confirm",
+  decision: { reviewId: prepared.reviewId, action: "refresh" },
+})
+```
+
+`action` vaut `refresh`, `retain` ou `cancel`. `retain` conserve les anciennes valeurs calculées et
+exige `allowRetain: true` lors des deux appels. Sans cela, l’appel échoue avec
+`retention_not_allowed`.
+
+Une revue prend fin lorsque vous lancez une autre préparation, modifiez les entrées ou les options,
+ou utilisez un autre évaluateur. Une décision ne fonctionne qu’une fois et applique les valeurs
+capturées pour la revue.
+
+### Sauvegarder `freshness` avec l’enregistrement
+
+`freshness` indique si les calculs stockés d’un enregistrement sont à jour. Un enregistrement est
+`pending` lorsque l’utilisateur a conservé d’anciennes valeurs ou sauvegardé un brouillon :
+
+```js
+{
+  version: 1,
+  status: "pending", // or "current"
+  schemaRevision: "form0-bffe7ba2caa7302e",
+  affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }],
+}
+```
+
+Sauvegardez-le à côté de l’enregistrement, pas à l’intérieur, et restaurez-le pour que votre
+application puisse montrer quelles lignes ne sont plus à jour. N’effacez un statut `pending` stocké
+qu’après avoir sauvegardé le résultat actuel correspondant. Chaque préparation part des entrées
+actuelles : un `freshness` stocké ne peut donc pas rejouer une ancienne proposition.
+
+Chaque entrée de `affected` correspond à une ligne, et `fields` liste les champs calculés qui y ont
+changé. `instancePath` est le chemin complet vers la ligne, ce qui garde exacts l’identifiant zéro
+et les lignes par position. Lorsque `status` vaut `current`, `affected` est vide.
+
+### Gestionnaires de validation dans une soumission
+
+Avec `managedEvents: true`, `prepareSubmission()` exécute les gestionnaires de validation de
+l’enregistrement principal et des lignes fermées, avec les valeurs actuelles de leurs parents. Elle
+ne rejoue pas les événements de chargement, de modification, de sauvegarde ou de déchargement des
+lignes fermées. `event.isValid` décrit seulement l’enregistrement dans lequel le gestionnaire
+s’exécute. Le résultat de tout l’arbre se trouve dans `validationSummary`.
+
+Si votre application exécute elle-même les gestionnaires de sauvegarde, gardez cet ordre : valider,
+exécuter le gestionnaire de sauvegarde une fois, évaluer et valider de nouveau s’il a modifié des
+valeurs, puis construire l’enregistrement. Un gestionnaire de sauvegarde qui modifie les entrées met
+fin à une revue antérieure, et il ne s’exécute pas de nouveau.
+
+### Évaluations longues
+
+Les grands arbres peuvent prendre du temps. Passez `signal` pour annuler une évaluation, `budgetMs`
+pour fixer un objectif pour chaque tranche de travail (8 ms par défaut) et `yieldToHost`, une
+fonction asynchrone qui laisse votre interface répondre entre les tranches. Une expression s’exécute
+toujours jusqu’au bout : elle peut donc dépasser cet objectif. Les lignes partagent une seule
+analyse du schéma : vous n’avez donc pas besoin d’un moteur par ligne fermée.
+
+Les sessions d’aperçu offrent aussi `runRecord({ snapshot, instancePath })` pour prévisualiser les
+calculs dans tout l’arbre.
 
 ## Évaluer un enregistrement ouvert
 
-`evaluateScope()` évalue uniquement l’enregistrement sélectionné, avec les ancêtres actuels fournis et
-les autres lignes acceptées. Un `instancePath` vide sélectionne la racine. Les chemins enfants incluent
-toute l’ascendance ; les lignes identifiées sont résolues par ID, y compris zéro. Les chemins
-positionnels dépendent de l’ordre capturé. Les chemins invalides échouent explicitement. Le résultat
-contient `state`, la `validationSummary` intégrée, les changements, diagnostics et problèmes d’exécution,
-sans nouvel arbre complet. Aucun changement de l’entrée, actualisation de ligne fermée, événement de
-cycle de vie, enregistrement, ID ou horodatage n’est effectué.
+Utilisez `evaluateScope()` pendant qu’un utilisateur modifie un enregistrement, comme une ligne
+ouverte. Elle évalue seulement cet enregistrement, avec les valeurs actuelles de ses parents et les
+valeurs sauvegardées des autres lignes :
 
 ```js
 const editor = await evaluator.evaluateScope(snapshot, {
@@ -231,19 +302,53 @@ if (editor.status === "evaluated") {
 }
 ```
 
-Par exemple, un projet avec des coûts acceptés `[10,20]` et une majoration locale de `5` affiche `35`
-pendant l’édition. Annuler conserve l’agrégat accepté du parent. Enregistrer accepte ces valeurs et
-actualise l’agrégat parent. L’envoi complet utilise toujours `prepareSubmission()` ; `engine.eval()`
-conserve son contrat scalaire intrinsèque.
+Un `instancePath` vide sélectionne l’enregistrement principal. Le chemin d’une ligne comporte un
+segment par niveau d’imbrication. Une ligne avec un identifiant est trouvée par cet identifiant, y
+compris zéro, et une ligne sans identifiant est trouvée par sa position dans le snapshot. Un chemin
+non valide échoue avec une erreur.
 
-## Consultation des valeurs acceptées
+Le résultat contient `state`, le `validationSummary` intégré, les changements, les diagnostics et
+les problèmes d’exécution, mais pas un arbre complet. L’appel ne modifie pas votre entrée,
+n’actualise pas les lignes fermées, n’exécute pas d’événements de cycle de vie, ne sauvegarde pas de
+données et ne crée ni identifiants ni horodatages.
 
-Les moteurs scalaires acceptent `mode: 'readonly' | 'edit'` (`edit` par défaut). En readonly,
-`eval()` calcule les conditions et la validation intrinsèque depuis les valeurs fournies, conserve
-les calculs et n'applique pas les valeurs par défaut manquantes. Le host appelle `setMode('edit')`,
-puis `eval()` ; `getMode()` lit le mode courant. Changer de mode ne répète pas load, ne restaure pas
-une ancienne copie de la base et n'enregistre rien.
+Par exemple, un projet avec des coûts de tâches sauvegardés `[10,20]` et une majoration locale de
+`5` affiche `35` pendant que l’utilisateur le modifie. Annuler laisse inchangé le total sauvegardé
+dans le parent. Sauvegarder le projet conserve ces valeurs et met à jour le total du parent. Pour
+soumettre un enregistrement complet, utilisez `prepareSubmission()`.
 
-Pour un arbre, utilisez `evaluateScope(snapshot, { interactionMode: 'readonly', instancePath })`.
-Le résultat contient l'état et la validation intégrée des valeurs acceptées sans calculer.
-La modification est le défaut. Les politiques de `evaluate()` et `prepareSubmission()` restent identiques.
+## Afficher un enregistrement sans le modifier
+
+Pour afficher un enregistrement sauvegardé, créez le moteur avec `mode: "readonly"`. `eval()`
+calcule alors les conditions et la validation à partir des valeurs fournies, garde les valeurs
+calculées telles quelles et n’applique pas les valeurs par défaut manquantes. Le mode par défaut est
+`"edit"`.
+
+Pour permettre la modification, appelez `setMode("edit")` puis `eval()`. `getMode()` renvoie le mode
+actuel. Changer de mode ne relance pas les événements de chargement, ne restaure pas d’anciennes
+valeurs de la base de données et ne sauvegarde rien.
+
+Pour un arbre d’enregistrements, utilisez
+`evaluateScope(snapshot, { interactionMode: "readonly", instancePath })`. Elle renvoie l’état des
+champs et la validation intégrée à partir des valeurs fournies, sans calculs.
+
+## Effacer les valeurs masquées
+
+Si un champ définit
+[`visible_preserve_value`](/fr/core/fields/common-attributes#effacer-une-valeur-lorsquun-champ-est-masqué)
+sur `false`, l’évaluation l’efface lorsqu’il est masqué. Effacer une valeur peut modifier des
+calculs et des conditions, qui peuvent masquer d’autres champs : l’évaluation se répète donc jusqu’à
+ce que plus rien ne change. Cela n’exécute aucun événement `change` ni événement de cycle de vie.
+Les schémas qui n’utilisent pas l’attribut sautent cette étape.
+
+`evaluate()`, `evaluateScope()` et `prepareSubmission()` listent ce qu’elles ont effacé dans
+`clearedFields` :
+
+```js
+;[{ instancePath: [], fieldName: "email", fieldKey: "email" }]
+```
+
+Les entrées ne contiennent jamais l’ancienne valeur. Si vous gérez vous-même l’état du formulaire,
+effacez les champs listés, y compris ceux des lignes que vous n’affichez pas. Votre `snapshot` ne
+change pas, et une évaluation en lecture seule n’efface rien. L’effacement n’a aucun effet sur le
+fait que les lignes sauvegardées conservent ou actualisent leurs valeurs calculées.

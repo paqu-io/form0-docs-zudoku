@@ -20,14 +20,55 @@ en la corrección de los atributos, no en aspectos de la interfaz.
 
 ## Validación en tiempo de ejecución
 
-Durante la ejecución, los campos también validan sus valores cuando el motor evalúa el formulario:
+Durante la ejecución, cada campo comprueba su valor cuando el motor evalúa el formulario. El
+resultado está en el mapa `errors` del estado del motor.
 
-- Comprobaciones numéricas de mínimo y máximo
-- Coincidencia de patrones en los campos de texto
-- Los valores de opción deben coincidir con las opciones definidas
+| Campo            | Valor aceptado                                                            | También se comprueba                                          |
+| ---------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `TextField`      | Un texto                                                                  | `pattern`, si está definido                                   |
+| `NumericField`   | Un número finito                                                          | `min` y `max`, y números enteros cuando `format` es `integer` |
+| `DateField`      | Una fecha real del calendario como `YYYY-MM-DD`, del año `0001` al `9999` | Nada más                                                      |
+| `TimeField`      | `HH:MM` o `HH:MM:SS`, con horas `00`–`23` y minutos y segundos `00`–`59`  | Nada más                                                      |
+| Campos de opción | Valores definidos en `choices`                                            | Nada más                                                      |
 
-La validación de valores en tiempo de ejecución se aplica a todos los campos, incluidos los que están
-ocultos en ese momento. El resultado está disponible en el mapa `errors` del estado del motor.
+- form0 no convierte valores, así que `"12"` en un `NumericField` es un error.
+- `null`, `undefined` y `""` cuentan como vacíos, no como un tipo incorrecto. Un `TextField`
+  opcional vacío también omite `pattern`.
+- Un valor que falla sigue en `values` y aparece en `errors`, así que un registro cargado se puede
+  inspeccionar y corregir.
+- Estas comprobaciones se aplican a todos los campos, incluidos los ocultos.
+
+### Pruébalo
+
+Necesitas [form0-cli](/es/cli/install-update).
+
+1. Descarga un formulario con un `TextField`, un `NumericField` y un `DateField`:
+
+   ```bash
+   curl -o value-types.json https://docs.form0.dev/examples/value-types.form0.json
+   ```
+
+1. Ejecútalo con valores correctos. La salida muestra `"errors": {}`:
+
+   ```bash
+   form0 run value-types.json --values '{"name":"Ada","age":36,"start":"2026-02-28"}'
+   ```
+
+1. Ejecútalo con valores incorrectos:
+
+   ```bash
+   form0 run value-types.json --values '{"name":42,"age":"36","start":"2026-02-30"}'
+   ```
+
+   Ahora cada campo aparece en `errors`:
+
+   ```json
+   "errors": {
+     "name": "name must be a string",
+     "age": "age must be a finite number",
+     "start": "start must be a valid YYYY-MM-DD date"
+   }
+   ```
 
 ### Campos obligatorios y envío
 
@@ -36,28 +77,71 @@ campo obligatorio esté vacío. La comprobación de campos obligatorios forma pa
 renderers oficiales combinan `visible`, `required` y el valor actual, omiten los campos ocultos y
 deciden cuándo mostrar el error.
 
-### Validación de envío compartida
+### Comprobar un envío
 
-`validateSubmission({ schema, snapshot, validationIssues })` comprueba un árbol de ejecución ya
-evaluado. No evalúa valores ni garantiza su actualización. `createRecordEvaluator().prepareSubmission()`
-combina evaluación, selección y esta misma política. Las aplicaciones sin interfaz y las integraciones
-de renderers pueden compartir estas reglas de envío.
+`createRecordEvaluator().prepareSubmission()` ejecuta los cálculos, selecciona los valores que se
+enviarán y aplica las mismas comprobaciones que los renderers oficiales. Úsalo en un servidor o en
+cualquier aplicación sin renderer. Consulta sus opciones en
+[Preparar un envío](/es/core/engine/evaluation-cycle#preparar-un-envío).
 
-Los campos ocultos y sus descendientes no impiden el envío ordinario. Los campos de entrada visibles,
-obligatorios, de solo lectura y vacíos sí lo impiden. Cero y selecciones false legítimas son valores.
-`state.errors` no cambia; se conservan las restricciones de LabelField/CalculatedField.
+Si ya tienes un snapshot evaluado, llama a
+`validateSubmission({ schema, snapshot, validationIssues })`. Solo comprueba: no recalcula nada ni
+elimina campos desconocidos.
 
-El resumen contiene `hasErrors`, `requiredFieldErrors`, `generalErrors`, `scopeIssues` y
-`orderedIssues`. Los hallazgos identifican clave/data_name e `instancePath` completo; `INVALID`
-sigue asociado al ámbito. La raíz precede a los descendientes en orden de registro.
-`managedEvents: true` revalida automáticamente filas cerradas participantes. Los errores reales de
-entrada requieren corrección aunque afecten a muchas filas; los borradores raíz siguen permitidos.
-Los ámbitos ocultos no participan. Las reglas personalizadas raíz no se atribuyen automáticamente a
-un campo oculto concreto.
+Ambos siguen las mismas reglas:
 
-Los envíos retenidos validan su instantánea seleccionada, incluidos helpers calculados y condiciones.
-La actualización pendiente es independiente. Los validadores no pueden escribir ni ejecutar
-operaciones de interfaz; los fallos de ejecución bloquean incluso borradores.
+- De forma predeterminada, los campos ocultos y los campos bajo padres ocultos no bloquean un envío.
+- Un campo obligatorio visible y vacío bloquea el envío, aunque sea de solo lectura.
+- `0` y un **No** seleccionado cuentan como rellenados.
+- Una fila oculta no participa en la comprobación.
+- Un borrador se puede guardar con errores de validación. Un manejador que falla durante la
+  ejecución también bloquea los borradores.
+- Los manejadores de validación no pueden cambiar valores ni mostrar alertas.
+- Estas comprobaciones no cambian `state.errors`. `LabelField` y `CalculatedField` siguen sus
+  propias reglas.
+
+El resultado incluye un `validationSummary`:
+
+| Propiedad             | Contiene                                                                                  |
+| --------------------- | ----------------------------------------------------------------------------------------- |
+| `hasErrors`           | Si algo ha fallado.                                                                       |
+| `requiredFieldErrors` | Campos obligatorios vacíos.                                                               |
+| `generalErrors`       | Valores que no cumplen las reglas de su campo.                                            |
+| `scopeIssues`         | Mensajes de `INVALID()`, que pertenecen a un registro o una fila, no a un campo.          |
+| `orderedIssues`       | Todo lo anterior en el orden del registro, con el registro principal antes que sus filas. |
+
+Cada hallazgo identifica su campo por clave y `data_name`, y su fila por `instancePath`. Un mensaje
+de `INVALID()` del registro principal se queda en el registro principal, porque form0 no puede saber
+a qué campo se refiere. `managedEvents: true` también ejecuta los manejadores de validación de las
+filas cerradas. Todas las filas que fallan deben corregirse antes de que el envío pase, sean las que
+sean.
+
+Si un usuario conserva valores calculados anteriores durante una
+[revisión](/es/core/engine/evaluation-cycle#revisar-filas-modificadas), las comprobaciones se
+aplican a esos valores conservados, incluidas las condiciones que dependen de ellos.
+
+### Comprobar valores ocultos en un servidor
+
+De forma predeterminada, un envío ignora los errores de los campos ocultos, porque el usuario no
+puede verlos. Un cliente que llama a tu API puede poner cualquier cosa en esos campos, así que
+activa la comprobación en el código de tu servidor:
+
+```js
+const result = await evaluator.prepareSubmission(snapshot, { validateHiddenValues: true })
+```
+
+`validateSubmission()` acepta la misma opción. Con ella activada, un valor oculto que no cumple sus
+propias reglas bloquea el envío, como un número en un `TextField`. Esto incluye las filas ocultas.
+Las demás reglas no cambian:
+
+- Un campo obligatorio oculto y vacío no bloquea, y los manejadores de validación de las filas
+  ocultas no se ejecutan.
+- Un borrador se puede seguir guardando con estos errores.
+- Cuando continúes una revisión con `decision`, pasa el mismo ajuste.
+
+Esta comprobación solo cubre valores. No elimina campos desconocidos ni decide quién puede enviar.
+[Añade un formulario a una aplicación React existente](/es/guides/add-form-to-react-app) incluye un
+ejemplo completo de servidor.
 
 ## Errores típicos
 
