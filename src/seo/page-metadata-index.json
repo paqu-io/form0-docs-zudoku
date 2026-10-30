@@ -6047,6 +6047,33 @@
       }
     ]
   },
+  "/es/guides/add-form-to-react-app": {
+    "pathname": "/es/guides/add-form-to-react-app",
+    "translationKey": "/guides/add-form-to-react-app",
+    "locale": "es",
+    "title": "Añade un formulario a una aplicación React existente",
+    "description": "Añade el formulario de registro de casos a una aplicación React, envía cada registro a tu propia API y compruébalo en tu servidor.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/add-form-to-react-app"
+      }
+    ]
+  },
   "/es/guides/case-intake-form": {
     "pathname": "/es/guides/case-intake-form",
     "translationKey": "/guides/case-intake-form",
@@ -9584,6 +9611,33 @@
       }
     ]
   },
+  "/fr/guides/add-form-to-react-app": {
+    "pathname": "/fr/guides/add-form-to-react-app",
+    "translationKey": "/guides/add-form-to-react-app",
+    "locale": "fr",
+    "title": "Ajouter un formulaire à une application React existante",
+    "description": "Ajoutez le formulaire d’ouverture de dossier à une application React, envoyez chaque enregistrement à votre propre API et vérifiez-le sur votre serveur.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/add-form-to-react-app"
+      }
+    ]
+  },
   "/fr/guides/case-intake-form": {
     "pathname": "/fr/guides/case-intake-form",
     "translationKey": "/guides/case-intake-form",
@@ -10148,6 +10202,33 @@
       {
         "locale": "it",
         "pathname": "/it/getting-started/upgrade-notes"
+      }
+    ]
+  },
+  "/guides/add-form-to-react-app": {
+    "pathname": "/guides/add-form-to-react-app",
+    "translationKey": "/guides/add-form-to-react-app",
+    "locale": "en",
+    "title": "Add a form to an existing React app",
+    "description": "Add the case intake form to a React application, send each record to your own API, and check it on your server.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/add-form-to-react-app"
       }
     ]
   },
@@ -13253,6 +13334,33 @@
       {
         "locale": "it",
         "pathname": "/it/getting-started/upgrade-notes"
+      }
+    ]
+  },
+  "/it/guides/add-form-to-react-app": {
+    "pathname": "/it/guides/add-form-to-react-app",
+    "translationKey": "/guides/add-form-to-react-app",
+    "locale": "it",
+    "title": "Aggiungi un modulo a un'app React esistente",
+    "description": "Aggiungi il modulo di apertura pratiche a un'applicazione React, invia ogni record alla tua API e controllalo sul tuo server.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/add-form-to-react-app"
       }
     ]
   },

@@ -441,6 +441,9 @@
   "guides": {
     "case-intake-form": {
       "title": "Crea un modulo di apertura pratiche"
+    },
+    "add-form-to-react-app": {
+      "title": "Aggiungi un modulo a un'app React esistente"
     }
   },
   "diagrams": {

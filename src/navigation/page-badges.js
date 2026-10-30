@@ -36,7 +36,10 @@ const GENERAL_CONNECTOR_PAGES = new Set([
   "connectors/troubleshooting",
 ])
 
-const GUIDE_BADGES = new Map([["guides/case-intake-form", ["React", "Vite"]]])
+const GUIDE_BADGES = new Map([
+  ["guides/case-intake-form", ["React", "Vite"]],
+  ["guides/add-form-to-react-app", ["React", "Vite"]],
+])
 
 const normalizePath = (pathname) => stripLocalePrefix(pathname || "").replace(/^\/+|\/+$/g, "")
 

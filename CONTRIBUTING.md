@@ -150,7 +150,8 @@ Guides show the finished result with screenshots. Keep them few and easy to main
 - Take one screenshot of the finished result per guide, plus at most one for a key moment.
 - Use the English schema and UI labels. All locales share the same image, as they share the same
   English JSON examples. Translate only the alt text.
-- Save screenshots as WebP under `public/guides/<guide-slug>/`, using the light theme.
+- Save screenshots as WebP under `public/guides/assets/<guide-slug>/`, using the light theme. Keep
+  guide files under `assets/`: a folder named like a guide would sit beside that page in the build.
 - Retake them when the renderer UI changes noticeably.
 
 ## Writing style

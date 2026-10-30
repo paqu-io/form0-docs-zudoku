@@ -441,6 +441,9 @@
   "guides": {
     "case-intake-form": {
       "title": "Créer un formulaire d’ouverture de dossier"
+    },
+    "add-form-to-react-app": {
+      "title": "Ajouter un formulaire à une application React existante"
     }
   },
   "diagrams": {

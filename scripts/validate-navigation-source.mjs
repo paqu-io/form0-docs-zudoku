@@ -26,6 +26,15 @@ async function documentExists(relativePath) {
   return false
 }
 
+async function publicAssetExists(relativePath) {
+  try {
+    await access(path.join(repositoryRoot, "public", relativePath))
+    return true
+  } catch {
+    return false
+  }
+}
+
 async function collectMarkdownFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true })
   const files = await Promise.all(
@@ -59,7 +68,7 @@ for (const file of await collectMarkdownFiles(path.join(repositoryRoot, "pages")
 
   for (const match of source.matchAll(/\]\((\/[^)\s?#]+)(?:[?#][^)]*)?\)/g)) {
     const route = match[1].replace(/\/$/, "").replace(/^\//, "")
-    if (route && !(await documentExists(route))) {
+    if (route && !(await documentExists(route)) && !(await publicAssetExists(route))) {
       brokenLinks.push(`${relativeFile}: /${route}`)
     }
   }

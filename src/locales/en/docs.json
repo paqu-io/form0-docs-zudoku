@@ -441,6 +441,9 @@
   "guides": {
     "case-intake-form": {
       "title": "Build a case intake form"
+    },
+    "add-form-to-react-app": {
+      "title": "Add a form to an existing React app"
     }
   },
   "diagrams": {

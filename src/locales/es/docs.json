@@ -441,6 +441,9 @@
   "guides": {
     "case-intake-form": {
       "title": "Crea un formulario de registro de casos"
+    },
+    "add-form-to-react-app": {
+      "title": "Añade un formulario a una aplicación React existente"
     }
   },
   "diagrams": {

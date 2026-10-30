@@ -298,7 +298,10 @@ const documentationItems = [
   ),
 ]
 
-const guidesItems = [doc("guides/case-intake-form", "Build a case intake form")]
+const guidesItems = [
+  doc("guides/case-intake-form", "Build a case intake form"),
+  doc("guides/add-form-to-react-app", "Add a form to an existing React app"),
+]
 
 export const navigationDefinition = deepFreeze([
   category("Documentation", documentationItems),

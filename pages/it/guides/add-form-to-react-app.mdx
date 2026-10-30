@@ -1,0 +1,393 @@
+---
+title: Aggiungi un modulo a un'app React esistente
+description: Aggiungi il modulo di apertura pratiche a un'applicazione React, invia ogni record alla tua API e controllalo sul tuo server.
+---
+
+<PageBadges />
+
+import { Stepper } from "zudoku/ui/Stepper"
+
+In questa guida aggiungi il [modulo di apertura pratiche](/it/guides/case-intake-form) a
+un'applicazione React che hai già. Alla fine:
+
+- il modulo funziona in una pagina della tua applicazione;
+- ogni invio arriva alla tua API come record strutturato;
+- il tuo server controlla di nuovo il record prima di salvarlo; e
+- un salvataggio non riuscito mostra un messaggio e conserva ciò che l'utente ha inserito.
+
+**Tempo:** circa 20 minuti.
+
+## Prima di iniziare
+
+- **Node.js** `22` o versione successiva
+- **Un'applicazione React 18 o 19.** I passaggi usano Vite. Con un altro strumento di build, adatta
+  il passaggio del proxy.
+- **`box-sizing: border-box` su tutti gli elementi.** La maggior parte dei reset CSS lo imposta,
+  compreso quello di Tailwind. Senza questa regola, i campi del modulo escono dal loro contenitore.
+
+Per seguire la guida con una nuova applicazione, creala con Vite:
+
+```bash
+npm create vite@latest case-intake-demo -- --template react
+cd case-intake-demo
+npm install
+```
+
+Poi sostituisci il contenuto di `src/index.css` con questa regola. Imposta `box-sizing` e rimuove il
+testo centrato del modello:
+
+```css
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+```
+
+## Aggiungi il modulo
+
+<Stepper>
+
+1. Installa i pacchetti form0:
+
+   ```bash
+   npm install form0-react form0-core
+   ```
+
+1. Scarica lo schema di [Crea un modulo di apertura pratiche](/it/guides/case-intake-form). Se hai
+   già creato quel modulo, copia il tuo `schema.json` in questo percorso.
+
+   ```bash
+   mkdir -p src/forms
+   curl -o src/forms/case-intake.form0.json https://docs.form0.dev/guides/assets/case-intake-form/case-intake.form0.json
+   ```
+
+1. Crea `src/CaseIntakeForm.jsx`:
+
+   ```jsx
+   import { FormRenderer } from "form0-react"
+   import "form0-react/index.css"
+   import schema from "./forms/case-intake.form0.json"
+
+   export function CaseIntakeForm() {
+     return (
+       <FormRenderer
+         engineOptions={{ events: { recordKind: "new" } }}
+         formWidth="100%"
+         schema={schema}
+         onSubmit={(record) => console.log(record)}
+       />
+     )
+   }
+   ```
+
+   `recordKind` indica a form0 se questo modulo crea un nuovo record o ne apre uno salvato, e
+   `FormRenderer` lo richiede. `formWidth` imposta la larghezza massima del modulo, che per
+   impostazione predefinita è `30vw`.
+
+1. Mostra il modulo in una pagina. In una nuova applicazione Vite, sostituisci il contenuto di
+   `src/App.jsx`:
+
+   ```jsx
+   import { CaseIntakeForm } from "./CaseIntakeForm"
+
+   export default function App() {
+     return <CaseIntakeForm />
+   }
+   ```
+
+   Nella tua applicazione, visualizza `<CaseIntakeForm />` nella pagina in cui deve trovarsi il
+   modulo.
+
+1. Avvia l'applicazione e apri l'URL mostrato, di solito `http://localhost:5173`:
+
+   ```bash
+   npm run dev
+   ```
+
+   Compila i campi obbligatori e fai clic su **Submit**. La console del browser mostra il record
+   strutturato.
+
+</Stepper>
+
+`FormRenderer` mostra la sua intestazione standard, il pannello di navigazione e i metadati del
+record. Per cambiare l'aspetto del modulo, vedi [Temi e stili](/it/bindings/react/themes-styling).
+
+![Il modulo di apertura pratiche in un'applicazione React, compilato, con priorità alta e una data di risposta calcolata](/guides/assets/add-form-to-react-app/result.webp)
+
+## Invia i record alla tua API
+
+<Stepper>
+
+1. Sostituisci `src/CaseIntakeForm.jsx` con questa versione, che invia ogni record a `/api/cases`:
+
+   ```jsx
+   import { useState } from "react"
+   import { FormRenderer } from "form0-react"
+   import "form0-react/index.css"
+   import schema from "./forms/case-intake.form0.json"
+
+   export function CaseIntakeForm() {
+     const [formKey, setFormKey] = useState(0)
+     const [sending, setSending] = useState(false)
+     const [message, setMessage] = useState(null)
+
+     async function sendCase(record) {
+       setSending(true)
+       setMessage(null)
+
+       try {
+         const response = await fetch("/api/cases", {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify(record),
+         })
+
+         if (!response.ok) throw new Error(`The server answered ${response.status}`)
+
+         setMessage("Case saved.")
+         setFormKey((key) => key + 1)
+       } catch (error) {
+         setMessage("The case was not saved. Try again.")
+         throw error
+       } finally {
+         setSending(false)
+       }
+     }
+
+     return (
+       <main>
+         {message && <p role="status">{message}</p>}
+         <FormRenderer
+           key={formKey}
+           engineOptions={{ events: { recordKind: "new" } }}
+           formWidth="100%"
+           schema={schema}
+           submitBlockedReason={sending ? "Sending the case" : undefined}
+           onSubmit={sendCase}
+         />
+       </main>
+     )
+   }
+   ```
+
+   Qui contano tre dettagli:
+
+   - `fetch` non rifiuta la promise con una risposta `500`, quindi il codice controlla `response.ok`
+     e genera un errore.
+   - Il blocco `catch` mostra un messaggio e poi rilancia l'errore. Senza il `throw`, `FormRenderer`
+     considera riuscito il salvataggio.
+   - Cambiare `key` sostituisce il modulo con uno nuovo e vuoto dopo un salvataggio riuscito.
+
+1. Crea `server/cases-api.mjs`. Questo esempio usa solo Node.js e `form0-core`:
+
+   ```js
+   import { readFileSync } from "node:fs"
+   import { createServer } from "node:http"
+   import {
+     buildFormRecordSnapshot,
+     createRecordEvaluator,
+     createStructuredRecord,
+     flattenFields,
+   } from "form0-core"
+
+   const schema = JSON.parse(readFileSync("src/forms/case-intake.form0.json", "utf8"))
+   const fields = flattenFields(schema.form.elements)
+
+   async function checkRecord(record) {
+     const { raw_values, repeatable } = buildFormRecordSnapshot(schema, record)
+     const result = await createRecordEvaluator({ schema }).prepareSubmission(
+       {
+         values: raw_values,
+         repeatable,
+       },
+       { validateHiddenValues: true },
+     )
+
+     if (!result.eligible) {
+       return {
+         issues: result.validationSummary.orderedIssues.map(({ fieldName, message }) => ({
+           fieldName,
+           message,
+         })),
+       }
+     }
+
+     const checkedRecord = createStructuredRecord(result.snapshot, fields, {
+       originalElements: schema.form.elements,
+     })
+     return { checkedRecord }
+   }
+
+   function reply(response, status, body) {
+     response.writeHead(status, { "Content-Type": "application/json" })
+     response.end(JSON.stringify(body))
+   }
+
+   createServer(async (request, response) => {
+     if (request.method !== "POST" || request.url !== "/api/cases") {
+       return reply(response, 404, { error: "Not found" })
+     }
+
+     try {
+       let body = ""
+       for await (const chunk of request) body += chunk
+
+       const { checkedRecord, issues } = await checkRecord(JSON.parse(body))
+       if (issues) return reply(response, 422, { issues })
+
+       console.log("Saved case:", checkedRecord.form_values)
+       reply(response, 201, { saved: true })
+     } catch (error) {
+       console.error(error)
+       reply(response, 400, { error: "The record could not be read." })
+     }
+   }).listen(3001, () => console.log("Cases API listening on port 3001"))
+   ```
+
+   Il server legge lo stesso file di schema del modulo, quindi entrambi applicano le stesse regole.
+   Crea un nuovo valutatore per ogni richiesta perché una chiamata a `prepareSubmission()` annulla
+   qualsiasi chiamata precedente ancora in corso sullo stesso valutatore.
+
+1. Inoltra le richieste `/api` a quel server durante lo sviluppo. Sostituisci `vite.config.js` con:
+
+   ```js
+   import react from "@vitejs/plugin-react"
+   import { defineConfig } from "vite"
+
+   export default defineConfig({
+     plugins: [react()],
+     server: {
+       proxy: { "/api": "http://localhost:3001" },
+     },
+   })
+   ```
+
+1. Avvia l'API in un secondo terminale, dalla radice del progetto:
+
+   ```bash
+   node server/cases-api.mjs
+   ```
+
+   Mostra `Cases API listening on port 3001`.
+
+</Stepper>
+
+## Prova
+
+Lascia in esecuzione entrambi i terminali, apri il modulo e segui questi passaggi.
+
+1. **Invia un modulo vuoto.** Fai clic su **Submit**. I campi obbligatori mostrano i loro messaggi e
+   il terminale dell'API non mostra nulla.
+
+1. **Salva una pratica.** Compila **Full name**, scegli **Email** come metodo di contatto, poi
+   compila **Email** e **Summary**. Scegli **My team**, rispondi **Yes** a **Is work blocked?**,
+   compila **Describe the business impact** e fai clic su **Submit**. La pagina mostra
+   **Case saved.**, il modulo si svuota e il terminale dell'API mostra `Saved case:` con
+   `priority: 'high'`.
+
+1. **Fai fallire un salvataggio.** Ferma l'API con `Ctrl+C`, compila di nuovo il modulo e fai clic
+   su **Submit**. La pagina mostra **The case was not saved. Try again.**, i tuoi valori restano nel
+   modulo e la console del browser mostra `[form0-react] Submit failed during onSubmit.`
+
+1. **Riprova.** Avvia di nuovo l'API e fai clic su **Submit**. La pratica viene salvata.
+
+1. **Invia un record incompleto.** Chiama direttamente l'API, senza il modulo:
+
+   ```bash
+   curl -i -X POST http://localhost:3001/api/cases \
+     -H "Content-Type: application/json" \
+     -d '{"form_values":{"name":"Ada"}}'
+   ```
+
+   Il server risponde `422` ed elenca i campi mancanti.
+
+1. **Invia una priorità errata.** Salva questo record come `tampered-case.json`. Le sue risposte
+   danno una priorità `low`, ma il record indica `high`:
+
+   ```json
+   {
+     "form_values": {
+       "name": "Ada Lovelace",
+       "contact_method": {
+         "choice_value": [{ "value": "email", "label": "Email" }],
+         "other_value": []
+       },
+       "email": "ada@example.com",
+       "received_on": "2026-11-02",
+       "summary": "Cannot log in",
+       "impact": { "choice_value": [{ "value": "person", "label": "Only me" }], "other_value": [] },
+       "blocked": { "choice_value": [{ "value": "no", "label": "No" }], "other_value": [] },
+       "priority": "high"
+     }
+   }
+   ```
+
+   Invialo all'API:
+
+   ```bash
+   curl -i -X POST http://localhost:3001/api/cases \
+     -H "Content-Type: application/json" \
+     -d @tampered-case.json
+   ```
+
+   Il server risponde `201` e il terminale dell'API mostra `priority: 'low'`. Il server calcola da
+   solo i campi calcolati.
+
+## Come funziona
+
+### La validazione viene eseguita due volte
+
+`FormRenderer` valida nel browser, quindi l'utente riceve un riscontro immediato e `onSubmit` viene
+eseguito solo con un modulo valido. Un client può saltare questo passaggio, perciò `checkRecord()`
+ripete il controllo sul server:
+
+1. `buildFormRecordSnapshot()` riconverte il record ricevuto in valori del modulo e rimuove i campi
+   che non sono nello schema. Genera un errore se il record è malformato, e il server risponde
+   `400`.
+2. `prepareSubmission()` esegue di nuovo i calcoli e applica le regole dello schema. `eligible`
+   indica se il record ha superato il controllo.
+3. `createStructuredRecord()` crea il record da salvare a partire dai valori controllati, quindi
+   contiene i risultati calcolati dal server.
+
+### Cosa copre il controllo del server
+
+Il server applica le regole del tuo schema e controlla che ogni valore abbia il tipo corretto:
+
+| Un client invia                                                       | Risultato                           |
+| --------------------------------------------------------------------- | ----------------------------------- |
+| Un campo obbligatorio vuoto, compreso uno obbligatorio per condizione | Rifiutato con `422`                 |
+| Un valore di scelta che non è nello schema                            | Rifiutato con `422`                 |
+| Un valore calcolato modificato                                        | Sostituito dal risultato del server |
+| Un campo che non è nello schema                                       | Rimosso                             |
+| Un campo di scelta con una struttura errata                           | Rifiutato con `400`                 |
+| Una data malformata, come `not-a-date`                                | Rifiutata con `422`                 |
+| Un numero in un `TextField`                                           | Rifiutato con `422`                 |
+| Un valore del tipo sbagliato in un campo nascosto                     | Rifiutato con `422`                 |
+| Un valore valido in un campo nascosto                                 | Salvato con il record               |
+
+Il server rifiuta un tipo sbagliato in un campo nascosto perché `checkRecord()` passa
+`validateHiddenValues: true`. Un valore valido resta perché form0 conserva i valori nascosti per
+impostazione predefinita. Per cancellare un campo quando viene nascosto, imposta
+`"visible_preserve_value": false` nello schema.
+
+Questi controlli conoscono solo il tuo schema. Aggiungi i tuoi controlli prima di salvare, ad
+esempio se questo utente può creare la pratica.
+
+### Prima della produzione
+
+Questo esempio resta breve perché le chiamate a form0 siano facili da vedere. Prima di usarlo
+davvero:
+
+- Aggiungi autenticazione e un limite alla dimensione delle richieste.
+- Salva `checkedRecord` nel tuo database invece di stamparlo. I
+  [connettori](/it/connectors/overview) possono archiviare i record form0 in PostgreSQL o SQLite.
+- Tieni lo schema sul tuo server. Non accettare mai uno schema da un client, perché gli schemi
+  contengono codice che viene eseguito sul tuo server.
+
+## Dove andare ora
+
+- [Valori, snapshot e invio](/it/bindings/react/values-snapshots-submission): ripristinare record
+  salvati e osservare le bozze.
+- [FormRenderer](/it/bindings/react/form-renderer): tutte le proprietà del componente.
+- [Output e record](/it/core/output-records): la struttura del record che ricevi.
