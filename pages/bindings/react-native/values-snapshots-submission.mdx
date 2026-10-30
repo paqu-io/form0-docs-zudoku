@@ -42,10 +42,22 @@ changes use `{ kind: "change", dirty }`.
 
 ## Save failures and console messages
 
-A failed `onSubmit` callback produces one `console.error` report by default, with the failure
-stage and the original error. A rejected persistence callback keeps your edits available for retry
-and does not acknowledge a successful save. Display a useful message in your application and
-rethrow the error; returning normally or catching without rethrowing counts as success.
+When a save fails, `FormRenderer` keeps the user's values so they can retry, and prints one
+`console.error` report with the failure stage and the original error. It does not show a message to
+the user, so do that in your application and then rethrow the error:
+
+```jsx
+async function handleSubmit(record) {
+  try {
+    await saveRecord(record)
+  } catch (error) {
+    setMessage("The record was not saved. Try again.")
+    throw error
+  }
+}
+```
+
+If you catch the error without rethrowing it, `FormRenderer` treats the save as successful.
 
 `submissionDiagnostics` controls these console messages:
 
@@ -54,29 +66,41 @@ rethrow the error; returning normally or catching without rethrowing counts as s
   schema={schema}
   engineOptions={{ events: { recordKind: "new" } }}
   submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
-  onSubmit={saveRecord}
+  onSubmit={handleSubmit}
 />
 ```
 
-- `saveFailures` defaults to `true`. Set it to `false` if your application already reports failures.
-- `validationBlocks` defaults to `false`. Set it to `true` to log blocked Submit and repeatable-row
-  Save attempts. Leaving a required field empty is a validation block, not a save exception.
+- `saveFailures` is on by default. Set it to `false` if your application already reports failures.
+- `validationBlocks` is off by default. Set it to `true` to log one line each time validation blocks
+  **Submit** or a repeatable row's **Save**.
 
-These settings stay current, including while a save is pending. They are independent of `debug`,
-`engineOptions.diagnostics.console` and lifecycle settings. Reports do not attach form values,
-snapshots or record paths. Preparation failures include their issue codes/messages. Confirmation
-cancellation stays quiet; an exception thrown by your callback is reported as a callback failure.
-Existing core event messages have their own behavior.
+A required field left empty is a validation block, not a save failure.
 
-Try it with a required field: click Submit with that field empty. Its validation message appears
-and the console stays quiet. Enable `validationBlocks` and click Submit again: one validation-block
-line appears. Fill the field, temporarily make `saveRecord` throw `new Error("Example save failure")`,
-and click Submit: one failure report appears and the edited values remain available for retry.
+### Try it
 
-These controls apply to the renderer's built-in actions. Applications calling `prepareSave()`
-directly remain responsible for inspecting and reporting the returned result.
+1. Tap **Submit** with a required field empty. The field shows its validation message, and the
+   console stays quiet.
+2. Add `validationBlocks: true` and tap **Submit** again. The console shows
+   `[form0-react-native] Submit blocked by validation.`
+3. Fill in the field, make `saveRecord` throw `new Error("Example save failure")`, and tap
+   **Submit**. The console shows `[form0-react-native] Submit failed during onSubmit.` with your
+   error, and your values stay in the form.
+4. Remove the `throw` and tap **Submit** again. The save succeeds.
 
-The same settings apply to draft `onSave` failures. Invalid drafts remain saveable; a successful draft save does not produce a validation-block message.
+### Details
+
+- These settings take effect immediately, even while a save is pending. They are separate from
+  `debug`, `engineOptions.diagnostics.console`, and lifecycle settings.
+- Reports do not include form values, snapshots, or record paths. Preparation failures include their
+  issue codes and messages.
+- Cancelling a confirmation stays quiet. An exception thrown by your callback is reported as a
+  callback failure.
+- `form0-core` prints its own lines, such as `[EVENT HANDLER] Registered`. These settings do not
+  control them.
+- These settings cover the renderer's built-in actions. If you call `prepareSave()` directly,
+  inspect the result it returns.
+- The same settings apply to draft `onSave` failures. Invalid drafts stay saveable, and a successful
+  draft save logs no validation block.
 
 ## Save drafts or submit records
 

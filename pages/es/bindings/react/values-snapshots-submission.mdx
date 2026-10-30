@@ -33,46 +33,6 @@ Un snapshot inicial sustituye a `initialValues` para los valores sin procesar de
 restaura las entradas repetibles anidadas y las marcas de tiempo del cliente y del servidor como un
 estado coherente.
 
-## Fallos de guardado y mensajes de consola
-
-Si el callback `onSubmit` falla, se escribe por defecto un informe en `console.error`, con la etapa
-del fallo y el error original. Si el callback de persistencia rechaza la operación, las ediciones
-siguen disponibles para reintentar y el guardado no se confirma. Muestra un mensaje útil en tu
-aplicación y vuelve a lanzar el error; terminar normalmente o capturarlo sin volver a lanzarlo cuenta
-como éxito.
-
-`submissionDiagnostics` controla estos mensajes de consola:
-
-```jsx
-<FormRenderer
-  schema={schema}
-  engineOptions={{ events: { recordKind: "new" } }}
-  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
-  onSubmit={saveRecord}
-/>
-```
-
-- `saveFailures` vale `true` por defecto. Usa `false` si tu aplicación ya informa de los fallos.
-- `validationBlocks` vale `false` por defecto. Usa `true` para registrar los intentos bloqueados de
-  Submit y Save en filas repetibles. Un campo obligatorio vacío bloquea la validación; no es una
-  excepción de guardado.
-
-Los ajustes se mantienen actualizados, incluso durante un guardado pendiente. Son independientes de
-`debug`, `engineOptions.diagnostics.console` y la configuración del ciclo de vida. Los informes no
-adjuntan valores del formulario, snapshots ni rutas de registros. Los fallos de preparación incluyen
-los códigos y mensajes de sus incidencias. Cancelar una confirmación no genera mensajes; una excepción
-del callback se informa como fallo del callback. Los mensajes existentes del núcleo mantienen su
-propio comportamiento.
-
-Pruébalo con un campo obligatorio: pulsa Submit con el campo vacío. Aparece el mensaje de validación
-y la consola permanece en silencio. Activa `validationBlocks` y pulsa Submit otra vez: aparece una
-línea de bloqueo por validación. Completa el campo, haz que `saveRecord` lance temporalmente
-`new Error("Example save failure")` y pulsa Submit: aparece un informe del fallo y los valores editados
-siguen disponibles para reintentar.
-
-Estos controles se aplican a las acciones integradas del renderer. Si tu aplicación llama directamente
-a `prepareSave()`, debe inspeccionar e informar del resultado devuelto.
-
 ## Observa los borradores
 
 `onSnapshotChange(snapshot, change)` se llama primero con `{ kind: "seed", dirty: false }`. Los
@@ -95,14 +55,107 @@ El snapshot contiene:
 
 ## Envía registros
 
+Usa `onSubmit` para enviar un registro terminado a tu API. `FormRenderer` lo llama solo cuando el
+formulario supera la validación.
+
+```jsx
+async function saveRecord(record) {
+  const response = await fetch("/api/records", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(record),
+  })
+
+  if (!response.ok) throw new Error(`The server answered ${response.status}`)
+}
+```
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  onSubmit={saveRecord}
+/>
+```
+
 `onSubmit(record, meta)` recibe el registro estructurado que se describe en
 [Salida y registros](/es/core/output-records). `meta` contiene `rawValues`, `repeatable`,
 `timestamps` y `validationSummary`.
 
-Si `onSubmit` devuelve una promesa, un overlay configurado con `autoCloseOverlayOnSubmit` solo se
-cierra cuando se resuelve la promesa. Si se rechaza, sigue abierto. Usa `submitBlockedReason` para
-requisitos de la aplicación ajenos al esquema y `externalDirty` para el estado de la aplicación
-ajeno al renderer.
+El guardado se considera correcto cuando `onSubmit` termina o su promesa se resuelve. Para indicar
+un fallo, lanza un error o rechaza la promesa. `fetch` no rechaza la promesa ante una respuesta
+`500`, así que comprueba `response.ok` como en el ejemplo.
+
+Si el formulario se ejecuta en un overlay con `autoCloseOverlayOnSubmit`, el overlay solo se cierra
+después de un guardado correcto.
+
+Usa `submitBlockedReason` para desactivar **Submit** mientras quede algo sin resolver fuera del
+esquema, como una petición en curso. Usa `externalDirty` para los cambios que tu aplicación mantiene
+fuera del formulario.
+
+Para ver un ejemplo completo con servidor, consulta
+[Añade un formulario a una aplicación React existente](/es/guides/add-form-to-react-app).
+
+## Fallos de guardado y mensajes de consola
+
+Cuando un guardado falla, `FormRenderer` conserva los valores del usuario para que pueda reintentar
+y escribe un informe en `console.error` con la etapa del fallo y el error original. No muestra
+ningún mensaje al usuario, así que hazlo en tu aplicación y vuelve a lanzar el error:
+
+```jsx
+async function handleSubmit(record) {
+  try {
+    await saveRecord(record)
+  } catch (error) {
+    setMessage("The record was not saved. Try again.")
+    throw error
+  }
+}
+```
+
+Si capturas el error sin volver a lanzarlo, `FormRenderer` considera que el guardado ha salido bien.
+
+`submissionDiagnostics` controla estos mensajes de consola:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "new" } }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+  onSubmit={handleSubmit}
+/>
+```
+
+- `saveFailures` está activo por defecto. Asígnale `false` si tu aplicación ya informa de los
+  fallos.
+- `validationBlocks` está desactivado por defecto. Asígnale `true` para registrar una línea cada vez
+  que la validación bloquee **Submit** o **Save** en una fila repetible.
+
+Un campo obligatorio vacío es un bloqueo de validación, no un fallo de guardado.
+
+### Pruébalo
+
+1. Haz clic en **Submit** con un campo obligatorio vacío. El campo muestra su mensaje de validación
+   y la consola no muestra nada.
+2. Añade `validationBlocks: true` y haz clic en **Submit** otra vez. La consola muestra
+   `[form0-react] Submit blocked by validation.`
+3. Rellena el campo, haz que `saveRecord` lance `new Error("Example save failure")` y haz clic en
+   **Submit**. La consola muestra `[form0-react] Submit failed during onSubmit.` con tu error, y los
+   valores siguen en el formulario.
+4. Quita el `throw` y haz clic en **Submit** otra vez. El guardado se completa.
+
+### Detalles
+
+- Estos ajustes se aplican de inmediato, incluso durante un guardado en curso. Son independientes de
+  `debug`, `engineOptions.diagnostics.console` y los ajustes del ciclo de vida.
+- Los informes no incluyen valores del formulario, snapshots ni rutas de registros. Los fallos de
+  preparación incluyen sus códigos y mensajes.
+- Cancelar una confirmación no escribe nada en la consola. Una excepción lanzada por tu callback se
+  informa como fallo del callback.
+- `form0-core` escribe sus propias líneas, como `[EVENT HANDLER] Registered`. Estos ajustes no las
+  controlan.
+- Estos ajustes cubren las acciones integradas del renderer. Si llamas directamente a
+  `prepareSave()`, revisa el resultado que devuelve.
 
 ## API de eventos gestionados
 

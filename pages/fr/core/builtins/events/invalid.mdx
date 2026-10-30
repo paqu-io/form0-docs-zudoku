@@ -1,26 +1,107 @@
 ---
 title: INVALID
-description: Messages synchrones de validation personnalisée pour les événements gérés.
+description: Rejetez une soumission avec votre propre message de validation.
 ---
 
 <PageBadges />
 
-Crée un constat de validation personnalisée au niveau de la portée pendant une validation gérée. Exige une chaîne non vide et est réservé aux événements.
+`INVALID(message)` empêche la soumission d’un enregistrement et affiche votre message à
+l’utilisateur. Utilisez-le pour les règles qu’un réglage de champ ne peut pas exprimer, comme un
+montant minimal ou une vérification qui compare deux champs.
 
 ## Exemple
 
 ```js
-ON("validate-record", function (event) {
+ON("validate-record", function () {
   if ($amount < 4) INVALID("Amount must be at least four.")
 })
 
-ON("validate-repeatable", "rows", function (event) {
+ON("validate-repeatable", "rows", function () {
   if ($row_amount <= 0) INVALID("Enter a positive row amount.")
 })
 ```
 
-## Comportement
+`validate-record` s’exécute lorsque l’utilisateur soumet le formulaire. `validate-repeatable`
+s’exécute lorsque l’utilisateur enregistre une ligne de la section répétable indiquée, ici `rows`.
 
-Émettez avec `engine.triggerDetailed()` et examinez `validationIssues` ainsi que les `issues` d’exécution. Chaque tentative renvoie de nouveaux constats. `INVALID()` n’écrit pas dans les `state.errors` intrinsèques, les diagnostics de calcul, les valeurs ou les enregistrements sauvegardés. Il est refusé hors de `validate-record` et `validate-repeatable` ; les gestionnaires de validation refusent les opérations de valeurs/interface et les promesses. L’hôte définit la politique de soumission et de brouillons. Un constat de validation seul n’est pas un échec d’exécution.
+## Essayez
 
-Consultez [Événements et opérations](/fr/core/engine/events-operations) et le [contrat maintenu](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md). L’enregistrement seul ne lance aucune validation.
+Il vous faut [form0-cli](/fr/cli/install-update).
+
+1. Enregistrez ce schéma sous le nom `order.json` :
+
+   ```json
+   {
+     "form": {
+       "name": "Order",
+       "description": null,
+       "events": {
+         "code": "ON(\"validate-record\", function () {\n  if ($amount < 4) INVALID(\"Amount must be at least four.\")\n})"
+       },
+       "elements": [
+         {
+           "type": "NumericField",
+           "key": "amount",
+           "data_name": "amount",
+           "label": "Amount",
+           "display": "default",
+           "description": null,
+           "description_mode": null,
+           "required": true,
+           "required_conditions": null,
+           "visible": true,
+           "visible_conditions": null,
+           "read_only": false,
+           "read_only_conditions": null,
+           "default_value": null,
+           "format": "integer",
+           "min": null,
+           "max": null,
+           "supporting_image": false,
+           "supporting_image_path": null,
+           "supporting_image_display": null
+         }
+       ]
+     }
+   }
+   ```
+
+1. Lancez l’aperçu :
+
+   ```bash
+   form0 serve order.json
+   ```
+
+1. Ouvrez `http://localhost:3030`, saisissez `2` dans **Amount** et cliquez sur **Submit**. Le
+   formulaire affiche **Amount must be at least four.** et n’est pas soumis.
+
+1. Remplacez **Amount** par `10` et cliquez sur **Submit**. Le message disparaît et la console du
+   navigateur affiche l’enregistrement préparé.
+
+## Règles
+
+- Appelez `INVALID()` dans un gestionnaire de `validate-record` ou `validate-repeatable`. Ailleurs,
+  l’appel est rejeté.
+- Le message doit être une chaîne non vide.
+- Le message concerne tout l’enregistrement ou toute la ligne, pas un champ précis : il apparaît
+  donc dans la liste de validation du formulaire.
+- Les gestionnaires de validation peuvent seulement vérifier des valeurs. Ils ne peuvent pas
+  modifier de valeurs, afficher d’alertes ni renvoyer de promesses.
+- `INVALID()` n’ajoute rien à `state.errors`, aux diagnostics de calcul ni à l’enregistrement
+  sauvegardé.
+
+## L’utiliser sans renderer
+
+Avec `form0-core` seul, déclenchez l’événement vous-même et lisez `validationIssues` :
+
+```js
+const { validationIssues } = engine.triggerDetailed("validate-record")
+// [{ message: "Amount must be at least four.", instancePath: [] }]
+```
+
+Chaque appel renvoie de nouveaux constats. Un constat ne compte pas comme un échec d’exécution : il
+n’apparaît donc pas dans `issues`. Votre application décide de la suite, par exemple si elle
+autorise un brouillon.
+
+Consultez [Événements et opérations](/fr/core/engine/events-operations) et le
+[contrat maintenu](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md).

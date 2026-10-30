@@ -31,45 +31,6 @@ Per un ripristino completo, preferisci `initialSnapshot`:
 Uno snapshot iniziale sostituisce `initialValues` per i valori grezzi dei campi. Ripristina anche le
 voci ripetibili annidate e i timestamp di client e server come un unico stato coerente.
 
-## Errori di salvataggio e messaggi della console
-
-Se il callback `onSubmit` fallisce, per impostazione predefinita viene scritto un rapporto in
-`console.error`, con la fase del fallimento e l’errore originale. Se il callback di persistenza
-rifiuta l’operazione, le modifiche restano disponibili per riprovare e il salvataggio non viene
-confermato. Mostra un messaggio utile nella tua applicazione e rilancia l’errore; terminare normalmente
-o intercettarlo senza rilanciarlo equivale a un salvataggio riuscito.
-
-`submissionDiagnostics` controlla questi messaggi della console:
-
-```jsx
-<FormRenderer
-  schema={schema}
-  engineOptions={{ events: { recordKind: "new" } }}
-  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
-  onSubmit={saveRecord}
-/>
-```
-
-- `saveFailures` è `true` per impostazione predefinita. Usa `false` se l’applicazione segnala già gli errori.
-- `validationBlocks` è `false` per impostazione predefinita. Usa `true` per registrare i tentativi
-  bloccati di Submit e di Save nelle righe ripetibili. Un campo obbligatorio vuoto blocca la
-  validazione; non è un’eccezione di salvataggio.
-
-Le impostazioni restano aggiornate, anche durante un salvataggio in corso. Sono indipendenti da
-`debug`, `engineOptions.diagnostics.console` e dal ciclo di vita. I rapporti non aggiungono valori del
-modulo, snapshot o percorsi dei record. Gli errori di preparazione includono i codici e i messaggi dei
-problemi. Annullare una conferma non genera messaggi; un’eccezione del callback viene segnalata come
-fallimento del callback. I messaggi esistenti del nucleo mantengono il proprio comportamento.
-
-Prova con un campo obbligatorio: premi Submit lasciandolo vuoto. Appare il messaggio di validazione e
-la console resta silenziosa. Attiva `validationBlocks` e premi di nuovo Submit: appare una riga sul
-blocco di validazione. Compila il campo, modifica temporaneamente `saveRecord` per lanciare
-`new Error("Example save failure")` e premi Submit: appare un rapporto dell’errore e i valori modificati restano disponibili
-per riprovare.
-
-Questi controlli riguardano le azioni integrate del renderer. Le applicazioni che chiamano direttamente
-`prepareSave()` devono esaminare e segnalare il risultato restituito.
-
 ## Osservare le bozze
 
 `onSnapshotChange(snapshot, change)` viene chiamato prima con `{ kind: "seed", dirty: false }`. Le
@@ -92,14 +53,107 @@ Lo snapshot contiene:
 
 ## Inviare i record
 
+Usa `onSubmit` per inviare un record completato alla tua API. `FormRenderer` lo chiama solo quando
+il modulo supera la validazione.
+
+```jsx
+async function saveRecord(record) {
+  const response = await fetch("/api/records", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(record),
+  })
+
+  if (!response.ok) throw new Error(`The server answered ${response.status}`)
+}
+```
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  onSubmit={saveRecord}
+/>
+```
+
 `onSubmit(record, meta)` riceve il record strutturato descritto in
 [Output e record](/it/core/output-records). `meta` contiene `rawValues`, `repeatable`, `timestamps`
 e `validationSummary`.
 
-Se `onSubmit` restituisce una promise, un overlay configurato con `autoCloseOverlayOnSubmit` si
-chiude solo dopo la risoluzione della promise. In caso di rifiuto resta aperto. Usa
-`submitBlockedReason` per i requisiti dell'applicazione esterni allo schema e `externalDirty` per lo
-stato dell'applicazione esterno al renderer.
+Il salvataggio è riuscito quando `onSubmit` termina o la sua promise viene risolta. Per segnalare un
+errore, genera un errore o rifiuta la promise. `fetch` non rifiuta la promise con una risposta
+`500`, quindi controlla `response.ok` come nell'esempio.
+
+Se il modulo è in un overlay con `autoCloseOverlayOnSubmit`, l'overlay si chiude solo dopo un
+salvataggio riuscito.
+
+Usa `submitBlockedReason` per disattivare **Submit** finché resta irrisolto qualcosa di esterno allo
+schema, come una richiesta in corso. Usa `externalDirty` per le modifiche che la tua applicazione
+mantiene fuori dal modulo.
+
+Per un esempio completo con un server, vedi
+[Aggiungi un modulo a un'app React esistente](/it/guides/add-form-to-react-app).
+
+## Errori di salvataggio e messaggi della console
+
+Quando un salvataggio non riesce, `FormRenderer` conserva i valori dell'utente perché possa
+riprovare e scrive un rapporto in `console.error` con la fase dell'errore e l'errore originale. Non
+mostra alcun messaggio all'utente, quindi fallo nella tua applicazione e poi rilancia l'errore:
+
+```jsx
+async function handleSubmit(record) {
+  try {
+    await saveRecord(record)
+  } catch (error) {
+    setMessage("The record was not saved. Try again.")
+    throw error
+  }
+}
+```
+
+Se intercetti l'errore senza rilanciarlo, `FormRenderer` considera riuscito il salvataggio.
+
+`submissionDiagnostics` controlla questi messaggi della console:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "new" } }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+  onSubmit={handleSubmit}
+/>
+```
+
+- `saveFailures` è attivo per impostazione predefinita. Impostalo su `false` se l'applicazione
+  segnala già gli errori.
+- `validationBlocks` è disattivato per impostazione predefinita. Impostalo su `true` per registrare
+  una riga ogni volta che la validazione blocca **Submit** o **Save** su una riga ripetibile.
+
+Un campo obbligatorio vuoto è un blocco di validazione, non un errore di salvataggio.
+
+### Prova
+
+1. Fai clic su **Submit** con un campo obbligatorio vuoto. Il campo mostra il suo messaggio di
+   validazione e la console resta silenziosa.
+2. Aggiungi `validationBlocks: true` e fai di nuovo clic su **Submit**. La console mostra
+   `[form0-react] Submit blocked by validation.`
+3. Compila il campo, fai in modo che `saveRecord` generi `new Error("Example save failure")` e fai
+   clic su **Submit**. La console mostra `[form0-react] Submit failed during onSubmit.` con il tuo
+   errore, e i valori restano nel modulo.
+4. Rimuovi il `throw` e fai di nuovo clic su **Submit**. Il salvataggio riesce.
+
+### Dettagli
+
+- Queste impostazioni si applicano subito, anche durante un salvataggio in corso. Sono indipendenti
+  da `debug`, `engineOptions.diagnostics.console` e dalle impostazioni del ciclo di vita.
+- I rapporti non includono valori del modulo, snapshot o percorsi dei record. Gli errori di
+  preparazione includono i relativi codici e messaggi.
+- Annullare una conferma non scrive nulla nella console. Un'eccezione generata dal tuo callback
+  viene segnalata come errore del callback.
+- `form0-core` scrive le proprie righe, come `[EVENT HANDLER] Registered`. Queste impostazioni non
+  le controllano.
+- Queste impostazioni coprono le azioni integrate del renderer. Se chiami direttamente
+  `prepareSave()`, controlla il risultato restituito.
 
 ## API degli eventi gestiti
 

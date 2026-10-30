@@ -1,26 +1,106 @@
 ---
 title: INVALID
-description: Synchronous custom validation messages for managed form events.
+description: Reject a submission with your own validation message.
 ---
 
 <PageBadges />
 
-Creates a scope-level custom validation finding during managed validation. It requires a nonempty string and is event-only.
+`INVALID(message)` stops a record from being submitted and shows your message to the user. Use it
+for rules that a field setting cannot express, such as a minimum amount or a check that compares two
+fields.
 
 ## Example
 
 ```js
-ON("validate-record", function (event) {
+ON("validate-record", function () {
   if ($amount < 4) INVALID("Amount must be at least four.")
 })
 
-ON("validate-repeatable", "rows", function (event) {
+ON("validate-repeatable", "rows", function () {
   if ($row_amount <= 0) INVALID("Enter a positive row amount.")
 })
 ```
 
-## Behavior
+`validate-record` runs when the user submits the form. `validate-repeatable` runs when the user
+saves a row of the named repeatable section, here `rows`.
 
-Dispatch with `engine.triggerDetailed()` and inspect both `validationIssues` and execution `issues`. Each attempt returns fresh findings. `INVALID()` does not write intrinsic `state.errors`, calculation diagnostics, values or saved records. It is rejected outside `validate-record` and `validate-repeatable`; validation handlers reject value/UI operations and promises. The host owns submission and draft policy. A validation finding alone is not an execution failure.
+## Try it
 
-See [Events and operations](/core/engine/events-operations) and the [maintained contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md). Registration alone does not run validation.
+You need [form0-cli](/cli/install-update).
+
+1. Save this schema as `order.json`:
+
+   ```json
+   {
+     "form": {
+       "name": "Order",
+       "description": null,
+       "events": {
+         "code": "ON(\"validate-record\", function () {\n  if ($amount < 4) INVALID(\"Amount must be at least four.\")\n})"
+       },
+       "elements": [
+         {
+           "type": "NumericField",
+           "key": "amount",
+           "data_name": "amount",
+           "label": "Amount",
+           "display": "default",
+           "description": null,
+           "description_mode": null,
+           "required": true,
+           "required_conditions": null,
+           "visible": true,
+           "visible_conditions": null,
+           "read_only": false,
+           "read_only_conditions": null,
+           "default_value": null,
+           "format": "integer",
+           "min": null,
+           "max": null,
+           "supporting_image": false,
+           "supporting_image_path": null,
+           "supporting_image_display": null
+         }
+       ]
+     }
+   }
+   ```
+
+1. Start the preview:
+
+   ```bash
+   form0 serve order.json
+   ```
+
+1. Open `http://localhost:3030`, enter `2` in **Amount**, and click **Submit**. The form shows
+   **Amount must be at least four.** and does not submit.
+
+1. Change **Amount** to `10` and click **Submit**. The message disappears, and the browser console
+   shows the prepared record.
+
+## Rules
+
+- Call `INVALID()` inside a `validate-record` or `validate-repeatable` handler. Anywhere else, it is
+  rejected.
+- The message must be a nonempty string.
+- The message belongs to the whole record or row, not to one field, so it appears in the form's
+  validation list.
+- Validation handlers can only check values. They cannot change values, show alerts, or return
+  promises.
+- `INVALID()` does not add to `state.errors`, calculation diagnostics, or the saved record.
+
+## Use it without a renderer
+
+With `form0-core` alone, dispatch the event yourself and read `validationIssues`:
+
+```js
+const { validationIssues } = engine.triggerDetailed("validate-record")
+// [{ message: "Amount must be at least four.", instancePath: [] }]
+```
+
+Each call returns fresh findings. A finding does not count as an execution failure, so it does not
+appear in `issues`. Your application decides what to do with it, for example whether to allow a
+draft.
+
+See [Events and operations](/core/engine/events-operations) and the
+[maintained contract](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md).

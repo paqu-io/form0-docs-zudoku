@@ -2245,7 +2245,7 @@
     "translationKey": "/core/builtins/events/invalid",
     "locale": "en",
     "title": "INVALID",
-    "description": "Synchronous custom validation messages for managed form events.",
+    "description": "Reject a submission with your own validation message.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5215,7 +5215,7 @@
     "translationKey": "/core/builtins/events/invalid",
     "locale": "es",
     "title": "INVALID",
-    "description": "Mensajes de validación personalizada síncrona para eventos gestionados.",
+    "description": "Rechaza un envío con tu propio mensaje de validación.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8779,7 +8779,7 @@
     "translationKey": "/core/builtins/events/invalid",
     "locale": "fr",
     "title": "INVALID",
-    "description": "Messages synchrones de validation personnalisée pour les événements gérés.",
+    "description": "Rejetez une soumission avec votre propre message de validation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12505,7 +12505,7 @@
     "translationKey": "/core/builtins/events/invalid",
     "locale": "it",
     "title": "INVALID",
-    "description": "Messaggi sincroni di validazione personalizzata per gli eventi gestiti.",
+    "description": "Rifiuta un invio con un tuo messaggio di validazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
