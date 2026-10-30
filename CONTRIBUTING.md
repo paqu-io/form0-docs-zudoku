@@ -181,8 +181,10 @@ against the released packages before committing, and show the actual output.
 
 When a release requires readers to change something, add an entry to
 `pages/getting-started/upgrade-notes.mdx` in all four languages, newest first. Each entry says
-which versions it applies from, who needs to act, what to do, and how to check the result. Changes
-that need no action stay in the GitHub release notes.
+when it was released, which versions it applies from, who needs to act, what to do, and how to
+check the result. Add a row to the table at the top too, dated with the first package that shipped
+the change, in `YYYY-MM-DD` format so the date reads the same in every language. Changes that need
+no action stay in the GitHub release notes.
 
 Technical statements should match the current released package or repository behavior. When a
 change depends on an unreleased implementation, link the corresponding pull request and coordinate

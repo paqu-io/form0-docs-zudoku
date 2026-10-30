@@ -15,6 +15,22 @@ consulta le note di rilascio di [form0-core](https://github.com/paqu-io/form0-co
 Le modifiche sono elencate dalla più recente. Per aggiornare, controlla tutte le voci più recenti
 delle versioni che usi oggi.
 
+## Trova le modifiche che ti riguardano
+
+Confronta le versioni che usi con ogni riga. Una riga ti riguarda se la tua versione è precedente a
+quella indicata. La data è quella di pubblicazione del primo pacchetto con la modifica. Un pacchetto
+non elencato non è interessato.
+
+| Data         | Modifica                                                                                                                                                                    | Versioni                                                  |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `2026-10-30` | [I valori dei campi vengono controllati per tipo](#i-valori-dei-campi-vengono-controllati-per-tipo)                                                                         | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
+| `2026-10-30` | [Gli schemi che cancellano i valori nascosti richiedono tutti i pacchetti aggiornati](#gli-schemi-che-cancellano-i-valori-nascosti-richiedono-tutti-i-pacchetti-aggiornati) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
+| `2026-10-29` | [I campi di scelta richiedono identificatori testuali in `SETVALUE()`](#i-campi-di-scelta-richiedono-identificatori-testuali-in-setvalue)                                   | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0    |
+| `2026-10-28` | [`FormRenderer` richiede `recordKind`](#formrenderer-richiede-recordkind)                                                                                                   | react 0.5.0, react-native 0.6.0                           |
+| `2026-10-27` | [I gestori non possono modificare un record in sola lettura](#i-gestori-non-possono-modificare-un-record-in-sola-lettura)                                                   | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0    |
+| `2026-10-22` | [Le condizioni possono leggere solo il proprio record e i suoi genitori](#le-condizioni-possono-leggere-solo-il-proprio-record-e-i-suoi-genitori)                           | core 0.6.0                                                |
+| `2026-10-08` | [Gli editor di riga su mobile non eseguono più gli eventi del record](#gli-editor-di-riga-su-mobile-non-eseguono-più-gli-eventi-del-record)                                 | react-native 0.3.0                                        |
+
 ## Aggiorna i pacchetti insieme
 
 Ogni binding dipende da una versione corrispondente di `form0-core`, quindi installali insieme:
@@ -23,7 +39,61 @@ Ogni binding dipende da una versione corrispondente di `form0-core`, quindi inst
 - React Native: `npm install form0-react-native@latest form0-core@latest`
 - CLI: `npm install --global form0-cli@latest`
 
+## I valori dei campi vengono controllati per tipo
+
+**Pubblicato:** 2026-10-30
+
+**Si applica da:** `form0-core` 0.10.0, `form0-react` 0.9.0, `form0-react-native` 0.10.0,
+`form0-cli` 0.10.0
+
+**Intervieni se** la tua applicazione o i tuoi record salvati contengono valori che non
+corrispondono al tipo del campo. form0 non li converte, quindi un campo visibile con uno di questi
+valori mostra un errore e blocca **Submit**:
+
+| Campo          | Ora è un errore            | Usa invece                       |
+| -------------- | -------------------------- | -------------------------------- |
+| `NumericField` | `"12"`                     | `12`                             |
+| `TextField`    | `42`                       | `"42"`                           |
+| `DateField`    | `2026-02-30`, `not-a-date` | Una data reale come `YYYY-MM-DD` |
+| `TimeField`    | `24:00`                    | `HH:MM` o `HH:MM:SS`             |
+
+**Cosa fare:** Converti i valori prima di passarli a `initialValues`, `initialSnapshot`,
+`overrideValues` o `SETVALUE()`, e correggi i record salvati che li contengono. Anche un server che
+chiama `prepareSubmission()` rifiuta questi valori.
+
+**Verifica:** Salva un campione dei tuoi valori come `values.json` ed esegui questo comando. Ogni
+problema compare in `errors` nell'output:
+
+```bash
+form0 run path/to/schema.json --values values.json
+```
+
+## Gli schemi che cancellano i valori nascosti richiedono tutti i pacchetti aggiornati
+
+**Pubblicato:** 2026-10-30
+
+**Si applica da:** `form0-core` 0.10.0, `form0-react` 0.9.0, `form0-react-native` 0.10.0,
+`form0-cli` 0.10.0
+
+**Intervieni se** aggiungi `visible_preserve_value` a uno schema. I pacchetti precedenti rifiutano
+l'attributo con questo errore:
+
+```text
+Field "email" (TextField) does not support visible_preserve_value attribute
+```
+
+**Cosa fare:** Aggiorna tutti i pacchetti che leggono lo schema prima di aggiungere l'attributo,
+compresi `form0-core` sul tuo server e `form0-cli` sulla tua macchina.
+
+**Verifica:** Esegui questo comando. Termina con stato `0`:
+
+```bash
+form0 validate path/to/schema.json
+```
+
 ## I campi di scelta richiedono identificatori testuali in `SETVALUE()`
+
+**Pubblicato:** 2026-10-29
 
 **Si applica da:** `form0-core` 0.9.0, `form0-react` 0.6.0, `form0-react-native` 0.7.0, `form0-cli`
 0.9.0
@@ -52,7 +122,44 @@ il valore. Versioni precedenti di `form0-react` possono lasciare il campo invari
 console in modalità gestita. I binding con `eventDiagnostics` segnalano questi errori per impostazione
 predefinita; controlla anche il modulo.
 
+## `FormRenderer` richiede `recordKind`
+
+**Pubblicato:** 2026-10-28
+
+**Si applica da:** `form0-react` 0.5.0, `form0-react-native` 0.6.0
+
+**Intervieni se** usi `FormRenderer` di `form0-react` o `form0-react-native`. Senza `recordKind`,
+genera questo errore:
+
+```text
+form0: events.recordKind must be "new" or "existing" when lifecycle is enabled.
+```
+
+**Cosa fare:** Imposta `recordKind` su `"new"` per un nuovo record, oppure su `"existing"` quando
+apri un record salvato:
+
+```jsx
+<FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
+```
+
+Gli eventi del ciclo di vita e gli eventi di focus e blur dei campi ora sono attivi per impostazione
+predefinita, quindi i relativi gestori iniziano a essere eseguiti. I controlli integrati non
+emettono `click` automaticamente. Per mantenere il comportamento precedente, disattiva questi
+eventi:
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { lifecycle: false, fieldInteractions: [] } }}
+  schema={schema}
+/>
+```
+
+**Verifica:** Apri il modulo e verifica che venga visualizzato senza l'errore. Se usi gestori del
+ciclo di vita, verifica che ognuno venga eseguito una sola volta.
+
 ## I gestori non possono modificare un record in sola lettura
+
+**Pubblicato:** 2026-10-27
 
 **Si applica da:** `form0-core` 0.8.0, `form0-react` 0.5.0, `form0-react-native` 0.6.0, `form0-cli`
 0.8.0
@@ -86,40 +193,9 @@ ON("load-record", function (event) {
 questo messaggio e il modulo si apre senza le modifiche di quel gestore:
 `View-mode handlers cannot change record data.`
 
-## `FormRenderer` richiede `recordKind`
-
-**Si applica da:** `form0-react` 0.5.0, `form0-react-native` 0.6.0
-
-**Intervieni se** usi `FormRenderer` di `form0-react` o `form0-react-native`. Senza `recordKind`,
-genera questo errore:
-
-```text
-form0: events.recordKind must be "new" or "existing" when lifecycle is enabled.
-```
-
-**Cosa fare:** Imposta `recordKind` su `"new"` per un nuovo record, oppure su `"existing"` quando
-apri un record salvato:
-
-```jsx
-<FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
-```
-
-Gli eventi del ciclo di vita e gli eventi di focus e blur dei campi ora sono attivi per impostazione
-predefinita, quindi i relativi gestori iniziano a essere eseguiti. I controlli integrati non
-emettono `click` automaticamente. Per mantenere il comportamento precedente, disattiva questi
-eventi:
-
-```jsx
-<FormRenderer
-  engineOptions={{ events: { lifecycle: false, fieldInteractions: [] } }}
-  schema={schema}
-/>
-```
-
-**Verifica:** Apri il modulo e verifica che venga visualizzato senza l'errore. Se usi gestori del
-ciclo di vita, verifica che ognuno venga eseguito una sola volta.
-
 ## Le condizioni possono leggere solo il proprio record e i suoi genitori
+
+**Pubblicato:** 2026-10-22
 
 **Si applica da:** `form0-core` 0.6.0
 
@@ -142,6 +218,8 @@ form0 validate path/to/schema.json
 ```
 
 ## Gli editor di riga su mobile non eseguono più gli eventi del record
+
+**Pubblicato:** 2026-10-08
 
 **Si applica da:** `form0-react-native` 0.3.0
 

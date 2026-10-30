@@ -15,6 +15,22 @@ can install it without changing your code. For new features and fixes, see the r
 Changes are listed newest first. To upgrade, work through every entry newer than the versions you
 use today.
 
+## Find the changes that apply to you
+
+Compare the versions you use with each row. A row applies if your version is older than the one
+shown. The date is when the first package with the change was released. A package that is not listed
+is not affected.
+
+| Date         | Change                                                                                                                        | Versions                                                  |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `2026-10-30` | [Field values are checked by type](#field-values-are-checked-by-type)                                                         | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
+| `2026-10-30` | [Schemas that clear hidden values need every package upgraded](#schemas-that-clear-hidden-values-need-every-package-upgraded) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
+| `2026-10-29` | [Choice fields need string IDs in `SETVALUE()`](#choice-fields-need-string-ids-in-setvalue)                                   | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0    |
+| `2026-10-28` | [`FormRenderer` requires `recordKind`](#formrenderer-requires-recordkind)                                                     | react 0.5.0, react-native 0.6.0                           |
+| `2026-10-27` | [Handlers cannot change a read-only record](#handlers-cannot-change-a-read-only-record)                                       | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0    |
+| `2026-10-22` | [Conditions can only read their own record and its parents](#conditions-can-only-read-their-own-record-and-its-parents)       | core 0.6.0                                                |
+| `2026-10-08` | [Mobile row editors no longer run record events](#mobile-row-editors-no-longer-run-record-events)                             | react-native 0.3.0                                        |
+
 ## Upgrade the packages together
 
 Each binding depends on a matching `form0-core` version, so install them at the same time:
@@ -23,7 +39,61 @@ Each binding depends on a matching `form0-core` version, so install them at the 
 - React Native: `npm install form0-react-native@latest form0-core@latest`
 - CLI: `npm install --global form0-cli@latest`
 
+## Field values are checked by type
+
+**Released:** 2026-10-30
+
+**Applies from:** `form0-core` 0.10.0, `form0-react` 0.9.0, `form0-react-native` 0.10.0, `form0-cli`
+0.10.0
+
+**Act if** your application or your stored records hold values that do not match the field type.
+form0 does not convert them, so a visible field with one of these values shows an error and blocks
+**Submit**:
+
+| Field          | Now an error               | Use instead                 |
+| -------------- | -------------------------- | --------------------------- |
+| `NumericField` | `"12"`                     | `12`                        |
+| `TextField`    | `42`                       | `"42"`                      |
+| `DateField`    | `2026-02-30`, `not-a-date` | A real date as `YYYY-MM-DD` |
+| `TimeField`    | `24:00`                    | `HH:MM` or `HH:MM:SS`       |
+
+**What to do:** Convert the values before you pass them to `initialValues`, `initialSnapshot`,
+`overrideValues`, or `SETVALUE()`, and correct stored records that hold them. A server that calls
+`prepareSubmission()` rejects these values too.
+
+**Check it:** Save a sample of your values as `values.json` and run this command. Any problem
+appears under `errors` in the output:
+
+```bash
+form0 run path/to/schema.json --values values.json
+```
+
+## Schemas that clear hidden values need every package upgraded
+
+**Released:** 2026-10-30
+
+**Applies from:** `form0-core` 0.10.0, `form0-react` 0.9.0, `form0-react-native` 0.10.0, `form0-cli`
+0.10.0
+
+**Act if** you add `visible_preserve_value` to a schema. Older packages reject the attribute with
+this error:
+
+```text
+Field "email" (TextField) does not support visible_preserve_value attribute
+```
+
+**What to do:** Upgrade every package that reads the schema before you add the attribute, including
+`form0-core` on your server and `form0-cli` on your machine.
+
+**Check it:** Run this command. It exits with status `0`:
+
+```bash
+form0 validate path/to/schema.json
+```
+
 ## Choice fields need string IDs in `SETVALUE()`
+
+**Released:** 2026-10-29
 
 **Applies from:** `form0-core` 0.9.0, `form0-react` 0.6.0, `form0-react-native` 0.7.0, `form0-cli`
 0.9.0
@@ -52,7 +122,43 @@ shows the value. Earlier `form0-react` releases can leave the field unchanged wi
 message in managed mode. Bindings with `eventDiagnostics` report these failures by default;
 verify the form itself as well.
 
+## `FormRenderer` requires `recordKind`
+
+**Released:** 2026-10-28
+
+**Applies from:** `form0-react` 0.5.0, `form0-react-native` 0.6.0
+
+**Act if** you use `FormRenderer` from `form0-react` or `form0-react-native`. Without `recordKind`,
+it throws this error:
+
+```text
+form0: events.recordKind must be "new" or "existing" when lifecycle is enabled.
+```
+
+**What to do:** Set `recordKind` to `"new"` for a new record, or `"existing"` when you open a saved
+one:
+
+```jsx
+<FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
+```
+
+Lifecycle events and field focus and blur events are now on by default, so handlers for them start
+running. Built-in controls do not emit `click` automatically. To keep the earlier behavior, turn
+these events off:
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { lifecycle: false, fieldInteractions: [] } }}
+  schema={schema}
+/>
+```
+
+**Check it:** Open the form and confirm it renders without the error. If you use lifecycle handlers,
+confirm each one runs once.
+
 ## Handlers cannot change a read-only record
+
+**Released:** 2026-10-27
 
 **Applies from:** `form0-core` 0.8.0, `form0-react` 0.5.0, `form0-react-native` 0.6.0, `form0-cli`
 0.8.0
@@ -86,39 +192,9 @@ ON("load-record", function (event) {
 this message and the form opens without that handler's changes:
 `View-mode handlers cannot change record data.`
 
-## `FormRenderer` requires `recordKind`
-
-**Applies from:** `form0-react` 0.5.0, `form0-react-native` 0.6.0
-
-**Act if** you use `FormRenderer` from `form0-react` or `form0-react-native`. Without `recordKind`,
-it throws this error:
-
-```text
-form0: events.recordKind must be "new" or "existing" when lifecycle is enabled.
-```
-
-**What to do:** Set `recordKind` to `"new"` for a new record, or `"existing"` when you open a saved
-one:
-
-```jsx
-<FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
-```
-
-Lifecycle events and field focus and blur events are now on by default, so handlers for them start
-running. Built-in controls do not emit `click` automatically. To keep the earlier behavior, turn
-these events off:
-
-```jsx
-<FormRenderer
-  engineOptions={{ events: { lifecycle: false, fieldInteractions: [] } }}
-  schema={schema}
-/>
-```
-
-**Check it:** Open the form and confirm it renders without the error. If you use lifecycle handlers,
-confirm each one runs once.
-
 ## Conditions can only read their own record and its parents
+
+**Released:** 2026-10-22
 
 **Applies from:** `form0-core` 0.6.0
 
@@ -140,6 +216,8 @@ form0 validate path/to/schema.json
 ```
 
 ## Mobile row editors no longer run record events
+
+**Released:** 2026-10-08
 
 **Applies from:** `form0-react-native` 0.3.0
 
