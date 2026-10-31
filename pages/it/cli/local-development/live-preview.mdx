@@ -50,7 +50,8 @@ focus dei campi attivi. Per cambiare come si apre, vai in **Form Settings** >
 - **Nuovo record** esegue i gestori di `new-record`. È l'opzione predefinita.
 - **Record esistente** esegue i gestori di `edit-record`. Non carica un record dal database, sceglie
   solo quali gestori eseguire.
-- **Apri in sola lettura** esegue solo `load-record`.
+- **Apri in sola lettura** esegue `load-record` invece di `new-record` o `edit-record`. I campi
+  appaiono in grigio e non si possono modificare, e **Submit Record** è disattivato.
 
 **Impostazioni avanzate degli eventi** contiene gli interruttori per disattivare gli eventi, e una
 scelta salvata resta valida. Cambiare queste impostazioni avvia una nuova sessione con i valori già
@@ -96,6 +97,33 @@ Ti serve [form0-cli](/it/cli/install-update).
 
 1. Apri la console del browser. Mostra `[STRUCTURED RECORD] Record prepared` e poi
    `No database connector configured; record prepared for preview only.`
+
+### Prova un record in sola lettura
+
+Ti serve [form0-cli](/it/cli/install-update).
+
+1. Avvia l'anteprima con il modulo di esempio. Se è già avviata, passa al punto successivo.
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Apri `http://localhost:3030` e fai clic su **⚙** per aprire **Form Settings**.
+
+1. In **Anteprima del record**, seleziona **Apri in sola lettura** e fai clic su **Save**.
+
+1. Fai clic su **Amount** e digita un numero. Non appare nulla. **City** non si apre e
+   **Submit Record** è disattivato.
+
+1. Ricarica la pagina. Il modulo resta in sola lettura, perché l'impostazione viene salvata nel
+   browser.
+
+1. Apri di nuovo **Form Settings**, deseleziona **Apri in sola lettura** e fai clic su **Save** per
+   tornare a modificare il modulo.
+
+L'anteprima non mostra alcun banner di sola lettura, quindi controlla che i campi e il pulsante
+**Submit Record** siano disattivati (in grigio).
 
 ### Righe
 

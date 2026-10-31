@@ -50,7 +50,8 @@ Un nouvel aperçu démarre comme un nouvel enregistrement, avec les événements
 - **Nouvel enregistrement** exécute les gestionnaires de `new-record`. C’est le choix par défaut.
 - **Enregistrement existant** exécute les gestionnaires de `edit-record`. Il ne charge pas
   d’enregistrement de base de données, il choisit seulement les gestionnaires à exécuter.
-- **Ouvrir en lecture seule** exécute seulement `load-record`.
+- **Ouvrir en lecture seule** exécute `load-record` au lieu de `new-record` ou `edit-record`. Les
+  champs sont grisés et ne peuvent pas être modifiés, et **Submit Record** est désactivé.
 
 **Paramètres avancés des événements** contient les interrupteurs pour désactiver des événements, et
 un choix enregistré reste en place. Modifier ces réglages démarre une nouvelle session avec les
@@ -98,6 +99,34 @@ Il vous faut [form0-cli](/fr/cli/install-update).
 
 1. Ouvrez la console du navigateur. Elle affiche `[STRUCTURED RECORD] Record prepared`, puis
    `No database connector configured; record prepared for preview only.`
+
+### Essayez un enregistrement en lecture seule
+
+Il vous faut [form0-cli](/fr/cli/install-update).
+
+1. Démarrez l’aperçu avec le formulaire d’exemple. S’il est déjà lancé, passez à l’étape suivante.
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Ouvrez `http://localhost:3030` et cliquez sur **⚙** pour ouvrir **Form Settings**.
+
+1. Sous **Aperçu de l’enregistrement**, sélectionnez **Ouvrir en lecture seule** et cliquez sur
+   **Save**.
+
+1. Cliquez sur **Amount** et saisissez un nombre. Rien ne s’affiche. **City** ne peut pas être
+   ouvert, et **Submit Record** est désactivé.
+
+1. Rechargez la page. Le formulaire reste en lecture seule, car le réglage est enregistré dans votre
+   navigateur.
+
+1. Ouvrez de nouveau **Form Settings**, décochez **Ouvrir en lecture seule** et cliquez sur **Save**
+   pour modifier à nouveau le formulaire.
+
+L’aperçu n’affiche aucune bannière de lecture seule : vérifiez donc que les champs et le bouton
+**Submit Record** sont désactivés (grisés).
 
 ### Lignes
 

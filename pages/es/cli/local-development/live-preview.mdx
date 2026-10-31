@@ -50,7 +50,8 @@ eventos de foco de los campos activados. Para cambiar cómo se abre, ve a **Form
 - **Registro nuevo** ejecuta los manejadores de `new-record`. Es la opción predeterminada.
 - **Registro existente** ejecuta los manejadores de `edit-record`. No carga un registro de la base
   de datos, solo elige qué manejadores se ejecutan.
-- **Abrir en modo de solo lectura** ejecuta solo `load-record`.
+- **Abrir en modo de solo lectura** ejecuta `load-record` en lugar de `new-record` o `edit-record`.
+  Los campos aparecen en gris y no se pueden editar, y **Submit Record** está desactivado.
 
 **Opciones avanzadas de eventos** tiene los interruptores para desactivar eventos, y una elección
 guardada se mantiene. Cambiar estos ajustes inicia una sesión nueva con los valores ya aceptados.
@@ -96,6 +97,34 @@ Necesitas [form0-cli](/es/cli/install-update).
 
 1. Abre la consola del navegador. Muestra `[STRUCTURED RECORD] Record prepared` y después
    `No database connector configured; record prepared for preview only.`
+
+### Prueba un registro de solo lectura
+
+Necesitas [form0-cli](/es/cli/install-update).
+
+1. Inicia la vista previa con el formulario de ejemplo. Si ya está en marcha, pasa al siguiente paso.
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Abre `http://localhost:3030` y haz clic en **⚙** para abrir **Form Settings**.
+
+1. En **Vista previa del registro**, selecciona **Abrir en modo de solo lectura** y haz clic en
+   **Save**.
+
+1. Haz clic en **Amount** y escribe un número. No aparece nada. **City** no se puede abrir, y
+   **Submit Record** está desactivado.
+
+1. Recarga la página. El formulario sigue en solo lectura, porque el ajuste se guarda en tu
+   navegador.
+
+1. Abre **Form Settings** otra vez, desmarca **Abrir en modo de solo lectura** y haz clic en
+   **Save** para volver a editar el formulario.
+
+La vista previa no muestra ningún banner de solo lectura, así que comprueba que los campos y el
+botón **Submit Record** estén desactivados (en gris).
 
 ### Filas
 

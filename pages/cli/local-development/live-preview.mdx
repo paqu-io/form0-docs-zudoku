@@ -45,7 +45,8 @@ change how it opens, go to **Form Settings** > **Record preview**:
 - **New record** runs `new-record` handlers. This is the default.
 - **Existing record** runs `edit-record` handlers. It does not load a database record, it only
   chooses which handlers run.
-- **Open read-only** runs `load-record` only.
+- **Open read-only** runs `load-record` instead of `new-record` or `edit-record`. Fields are grayed
+  out and can't be edited, and **Submit Record** is disabled.
 
 **Advanced event settings** has the switches for turning events off, and a saved choice stays in
 place. Changing these settings starts a new session with the values already accepted. An app started
@@ -91,6 +92,31 @@ You need [form0-cli](/cli/install-update).
 
 1. Open the browser console. It shows `[STRUCTURED RECORD] Record prepared`, and then
    `No database connector configured; record prepared for preview only.`
+
+### Try a read-only record
+
+You need [form0-cli](/cli/install-update).
+
+1. Start the preview with the example form. If it is already running, go to the next step.
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Open `http://localhost:3030` and click **⚙** to open **Form Settings**.
+
+1. Under **Record preview**, select **Open read-only** and click **Save**.
+
+1. Click **Amount** and type a number. Nothing appears. **City** can't be opened, and
+   **Submit Record** is disabled.
+
+1. Reload the page. The form is still read-only, because the setting is saved in your browser.
+
+1. Open **Form Settings** again, clear **Open read-only**, and click **Save** to edit the form again.
+
+The preview shows no read-only banner, so look for the disabled (grayed-out) fields and
+**Submit Record** button.
 
 ### Rows
 
