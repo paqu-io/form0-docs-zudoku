@@ -352,3 +352,44 @@ Les entrées ne contiennent jamais l’ancienne valeur. Si vous gérez vous-mêm
 effacez les champs listés, y compris ceux des lignes que vous n’affichez pas. Votre `snapshot` ne
 change pas, et une évaluation en lecture seule n’efface rien. L’effacement n’a aucun effet sur le
 fait que les lignes sauvegardées conservent ou actualisent leurs valeurs calculées.
+
+## Résoudre une valeur masquée qui échoue à la validation
+
+Lorsque vous passez `validateHiddenValues`, `prepareSubmission()` et `validateSubmission()` marquent
+chaque valeur masquée qui ne respecte pas ses propres règles avec `hidden: true`. Pour remplacer ou
+effacer l’une de ces valeurs depuis votre code, inspectez-la d’abord, puis corrigez-la :
+
+```js
+const finding = { fieldName: "hidden_note", instancePath: [] }
+const inspected = await evaluator.inspectHiddenValue(snapshot, finding)
+
+if (inspected.status === "inspected") {
+  // inspected.value holds the current value. Decide what to do with it.
+  const corrected = await evaluator.correctHiddenValue(snapshot, { ...finding, value: null })
+
+  if (corrected.status === "evaluated") {
+    // Use corrected.snapshot, unless the record changed since you inspected it.
+  }
+}
+```
+
+- `inspectHiddenValue()` vérifie que la valeur est toujours masquée et qu’elle échoue toujours. Elle
+  renvoie une copie dans `value`.
+- `correctHiddenValue()` accepte un remplacement qui respecte les règles propres au champ, ou `null`
+  pour effacer la valeur. Elle renvoie l’enregistrement mis à jour dans `snapshot` et le résultat
+  des vérifications dans `validationSummary`.
+
+Aucune de ces méthodes ne modifie votre `snapshot`, n’affiche le champ, n’exécute de gestionnaire
+`change` ou de cycle de vie, ne supprime de ligne ni ne sauvegarde quoi que ce soit. Les lignes
+sauvegardées gardent leurs valeurs calculées, comme avec `evaluate()`.
+
+En cas d’échec, `status` vaut `"failed"` et `issues` contient l’un de ces codes :
+
+- `hidden_value_not_invalid` : la valeur n’échoue plus ou le champ n’est plus masqué.
+- `invalid_replacement` : le remplacement ne respecte pas les règles propres au champ.
+- `readonly_scope` : vous avez passé `interactionMode: "readonly"`.
+
+Vérifiez que l’enregistrement n’a pas changé avant d’utiliser `corrected.snapshot`. Les bindings et
+l’aperçu de la CLI le font pour vous, et demandent de fermer d’abord toute ligne ouverte.
+
+Les lignes enregistrées explicitement restent dans l’enregistrement soumis même si toutes leurs réponses sont vides. Leurs identifiants et métadonnées sont conservés, et les réponses TextField/NumericField vides sont sérialisées en `null`. Les deux sérialiseurs structurés appliquent cette règle sans option. Annulez une ligne non enregistrée ou supprimez une ligne enregistrée pour l’exclure.

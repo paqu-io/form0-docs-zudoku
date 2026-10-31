@@ -277,9 +277,89 @@ Per controllare i valori nascosti conservati nell'invio finale, imposta `validat
 />
 ```
 
-Un valore nascosto che non rispetta le proprie regole blocca allora **Submit**. Il messaggio compare
-nella scheda **Validation**, ma non può portare l'utente al campo nascosto, quindi può correggerlo
-solo rendendo di nuovo visibile il campo. Usa questa opzione quando gli utenti possono farlo.
-Altrimenti,
+Un valore nascosto che non rispetta le proprie regole blocca quindi **Submit**. L'utente può
+correggerlo rendendo di nuovo visibile il campo, oppure la tua applicazione può
+[risolverlo](#risolvere-un-valore-nascosto-che-non-supera-la-validazione). Inoltre,
 [controlla i valori nascosti sul tuo server](/it/core/schema/validation#controllare-i-valori-nascosti-su-un-server).
 Le bozze e i campi obbligatori nascosti e vuoti non sono interessati.
+
+## Risolvere un valore nascosto che non supera la validazione
+
+Con `validateHiddenValues` attivo, un valore nascosto che non rispetta le proprie regole blocca
+**Submit**, e l'utente non può raggiungere il campo per correggerlo. La scheda **Validation** lo
+spiega. Per consentire alla tua applicazione di correggere il valore, passa `onResolveHiddenValue`.
+La scheda mostra allora il pulsante **Resolve hidden value**.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={async ({ fieldName }) => {
+    if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+    return { value: null }
+  }}
+  onSubmit={saveRecord}
+/>
+```
+
+Il tuo gestore riceve `fieldName`, `fieldKey`, `instancePath`, `message` e una copia del `value`
+attuale. Può restituire:
+
+- `{ value: replacement }` per sostituire il valore, che deve rispettare le regole del campo
+- `{ value: null }` per cancellarlo
+- `undefined` o `null` per annullare
+
+Il campo resta nascosto, non viene eseguito alcun gestore di `change` o del ciclo di vita, e non
+viene salvato nulla finché l'utente non fa clic su **Submit**. Se il record cambia mentre il gestore
+è in esecuzione, la risposta viene scartata e l'utente deve inviare di nuovo. Chiudi prima qualsiasi
+riga aperta. I moduli in sola lettura non mostrano il pulsante.
+
+Le righe salvate esplicitamente rimangono nel record inviato anche quando tutte le risposte sono vuote. Conservano identificatori e metadati, e le risposte vuote di TextField/NumericField vengono serializzate come `null`. Questo non dipende da `onResolveHiddenValue`. Annulla una riga non salvata o elimina una riga salvata per escluderla.
+
+### Prova a risolvere un valore nascosto
+
+Ti serve un'app React con `form0-react`.
+[Aggiungi un modulo a un'app React esistente](/it/guides/add-form-to-react-app) ne crea una.
+
+1. Scarica il modulo di esempio e mostralo. Ha un campo di testo nascosto, `legacy_code`, e questo
+   codice vi carica un numero:
+
+   ```bash
+   mkdir -p src/forms
+   curl -o src/forms/hidden-value-recovery.form0.json https://docs.form0.dev/examples/hidden-value-recovery.form0.json
+   ```
+
+   ```jsx
+   import { FormRenderer } from "form0-react"
+   import "form0-react/index.css"
+   import schema from "./forms/hidden-value-recovery.form0.json"
+
+   export default function App() {
+     return (
+       <FormRenderer
+         schema={schema}
+         formWidth="100%"
+         initialValues={{ name: "Ada", legacy_code: 42 }}
+         engineOptions={{ events: { recordKind: "existing" } }}
+         submissionOptions={{ validateHiddenValues: true }}
+         onResolveHiddenValue={async ({ fieldName }) => {
+           if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+           return { value: null }
+         }}
+         onSubmit={(record) => console.log(record)}
+       />
+     )
+   }
+   ```
+
+1. Fai clic su **Submit**. Il modulo non viene inviato. Apri la scheda **Validation**. Mostra
+   `legacy_code must be a string` e indica che il valore è nascosto.
+
+1. Fai clic su **Resolve hidden value** e annulla la finestra di dialogo. Non cambia nulla.
+
+1. Fai di nuovo clic su **Resolve hidden value** e conferma. Il risultato scompare e il campo resta
+   nascosto.
+
+1. Fai clic su **Submit**. La console del browser mostra il record, con `legacy_code` impostato su
+   `null`.

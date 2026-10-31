@@ -225,3 +225,25 @@ const app = createApp(getSchema, getSchemaSource, projectDir, {
   submissionOptions: { validateHiddenValues: true },
 })
 ```
+
+### Resolve a hidden value
+
+To let the preview fix a hidden value that fails validation, pass `onResolveHiddenValue` to
+`createApp()`. The validation findings then show a **Resolve hidden value** button.
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
+  onResolveHiddenValue: async (finding) => {
+    // Return { value: replacement }, { value: null }, or nothing to cancel.
+    return { value: null }
+  },
+})
+```
+
+The handler runs on your server, so it can't open a browser dialog. `form0 serve` has no option for
+it.
+[Resolve a hidden value](/bindings/react/values-snapshots-submission#resolve-a-hidden-value-that-fails-validation)
+in the React docs explains what the handler receives and returns.
+
+Explicitly saved rows stay in the submitted record even when every answer is empty. Their IDs and metadata are retained, and empty TextField/NumericField answers serialize as `null`. This does not depend on `onResolveHiddenValue`. Cancel an unsaved row or remove a saved row to exclude it.

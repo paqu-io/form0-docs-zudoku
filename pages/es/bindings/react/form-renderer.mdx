@@ -23,21 +23,22 @@ secciones y genera registros estructurados al enviar.
 
 ## Propiedades esenciales
 
-| Propiedad               | Finalidad                                                                                                      |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `schema`                | Un esquema form0 que contiene `form.elements`.                                                                 |
-| `initialValues`         | Valores iniciales de los campos no repetibles.                                                                 |
-| `initialSnapshot`       | Restaura a la vez los valores sin procesar, el estado de las secciones repetibles y las marcas de tiempo.      |
-| `overrideValues`        | Aplica valores prioritarios sobre los valores iniciales.                                                       |
-| `onSubmit`              | Recibe el registro estructurado y los metadatos del envío.                                                     |
-| `submissionDiagnostics` | Controla los informes de fallos de guardado (activos) y los bloqueos de validación (inactivos).                |
-| `submissionOptions`     | Define las opciones de revisión, los mensajes y `validateHiddenValues`.                                        |
-| `initialFreshness`      | Restaura el `freshness` guardado de un registro.                                                               |
-| `eventDiagnostics`      | Controla los informes de eventos fallidos (activos).                                                           |
-| `onSnapshotChange`      | Observa los snapshots iniciales y los de cambios del usuario.                                                  |
-| `mode`                  | Empieza en modo `edit` o `readonly`.                                                                           |
-| `repeatableEntryMode`   | Apertura de filas repetibles existentes: `readonly` (predeterminado) o `edit`; las nuevas se abren en edición. |
-| `formWidth`             | Ancho máximo del formulario, como `100%`. El valor predeterminado es `30vw`.                                   |
+| Propiedad               | Finalidad                                                                                                                                                                         |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `schema`                | Un esquema form0 que contiene `form.elements`.                                                                                                                                    |
+| `initialValues`         | Valores iniciales de los campos no repetibles.                                                                                                                                    |
+| `initialSnapshot`       | Restaura a la vez los valores sin procesar, el estado de las secciones repetibles y las marcas de tiempo.                                                                         |
+| `overrideValues`        | Aplica valores prioritarios sobre los valores iniciales.                                                                                                                          |
+| `onSubmit`              | Recibe el registro estructurado y los metadatos del envío.                                                                                                                        |
+| `submissionDiagnostics` | Controla los informes de fallos de guardado (activos) y los bloqueos de validación (inactivos).                                                                                   |
+| `submissionOptions`     | Define las opciones de revisión, los mensajes y `validateHiddenValues`.                                                                                                           |
+| `onResolveHiddenValue`  | Permite que tu aplicación [corrija un valor oculto](/es/bindings/react/values-snapshots-submission#resolver-un-valor-oculto-que-no-pasa-la-validación) que no pasa la validación. |
+| `initialFreshness`      | Restaura el `freshness` guardado de un registro.                                                                                                                                  |
+| `eventDiagnostics`      | Controla los informes de eventos fallidos (activos).                                                                                                                              |
+| `onSnapshotChange`      | Observa los snapshots iniciales y los de cambios del usuario.                                                                                                                     |
+| `mode`                  | Empieza en modo `edit` o `readonly`.                                                                                                                                              |
+| `repeatableEntryMode`   | Apertura de filas repetibles existentes: `readonly` (predeterminado) o `edit`; las nuevas se abren en edición.                                                                    |
+| `formWidth`             | Ancho máximo del formulario, como `100%`. El valor predeterminado es `30vw`.                                                                                                      |
 
 ## Interfaz y estado propios de la aplicación
 

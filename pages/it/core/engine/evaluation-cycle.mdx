@@ -344,3 +344,44 @@ Le voci non contengono mai il vecchio valore. Se gestisci tu lo stato del modulo
 elencati, compresi quelli nelle righe che non stai mostrando. Il tuo `snapshot` non cambia, e una
 valutazione in sola lettura non cancella nulla. La cancellazione non influisce sul fatto che le
 righe salvate mantengano o aggiornino i valori calcolati.
+
+## Risolvere un valore nascosto che non supera la validazione
+
+Quando passi `validateHiddenValues`, `prepareSubmission()` e `validateSubmission()` contrassegnano
+ogni valore nascosto che non rispetta le proprie regole con `hidden: true`. Per sostituire o
+cancellare uno di questi valori dal tuo codice, prima ispezionalo e poi correggilo:
+
+```js
+const finding = { fieldName: "hidden_note", instancePath: [] }
+const inspected = await evaluator.inspectHiddenValue(snapshot, finding)
+
+if (inspected.status === "inspected") {
+  // inspected.value holds the current value. Decide what to do with it.
+  const corrected = await evaluator.correctHiddenValue(snapshot, { ...finding, value: null })
+
+  if (corrected.status === "evaluated") {
+    // Use corrected.snapshot, unless the record changed since you inspected it.
+  }
+}
+```
+
+- `inspectHiddenValue()` controlla che il valore sia ancora nascosto e continui a non rispettare le
+  regole. Restituisce una copia in `value`.
+- `correctHiddenValue()` accetta un valore sostitutivo che rispetti le regole del campo, oppure
+  `null` per cancellare il valore. Restituisce il record aggiornato in `snapshot` e l'esito dei
+  controlli in `validationSummary`.
+
+Nessuno dei due metodi cambia il tuo `snapshot`, mostra il campo, esegue gestori di `change` o del
+ciclo di vita, elimina righe o salva qualcosa. Le righe salvate mantengono i propri valori
+calcolati, come con `evaluate()`.
+
+Se qualcosa non va, `status` è `"failed"` e `issues` contiene uno di questi codici:
+
+- `hidden_value_not_invalid`: il valore non è più errato oppure il campo non è più nascosto.
+- `invalid_replacement`: il valore sostitutivo non rispetta le regole del campo.
+- `readonly_scope`: hai passato `interactionMode: "readonly"`.
+
+Assicurati che il record non sia cambiato prima di usare `corrected.snapshot`. I binding e
+l'anteprima della CLI lo fanno per te, e chiedono di chiudere prima qualsiasi riga aperta.
+
+Le righe salvate esplicitamente rimangono nel record inviato anche quando tutte le risposte sono vuote. Conservano identificatori e metadati, e le risposte vuote di TextField/NumericField vengono serializzate come `null`. Entrambi i serializzatori strutturati applicano questa regola senza opzioni. Annulla una riga non salvata o elimina una riga salvata per escluderla.

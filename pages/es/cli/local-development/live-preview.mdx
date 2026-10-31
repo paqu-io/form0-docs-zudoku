@@ -243,3 +243,26 @@ const app = createApp(getSchema, getSchemaSource, projectDir, {
   submissionOptions: { validateHiddenValues: true },
 })
 ```
+
+### Resolver un valor oculto
+
+Para que la vista previa pueda corregir un valor oculto que no pasa la validación, pasa
+`onResolveHiddenValue` a `createApp()`. Los resultados de validación muestran entonces el botón
+**Resolver valor oculto**.
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
+  onResolveHiddenValue: async (finding) => {
+    // Return { value: replacement }, { value: null }, or nothing to cancel.
+    return { value: null }
+  },
+})
+```
+
+El manejador se ejecuta en tu servidor, así que no puede abrir un diálogo del navegador.
+`form0 serve` no tiene ninguna opción para esto.
+[Resolver un valor oculto](/es/bindings/react/values-snapshots-submission#resolver-un-valor-oculto-que-no-pasa-la-validación)
+en la documentación de React explica qué recibe y qué devuelve el manejador.
+
+Las filas guardadas explícitamente permanecen en el registro enviado aunque todas sus respuestas estén vacías. Conservan sus identificadores y metadatos, y las respuestas vacías de TextField/NumericField se serializan como `null`. Esto no depende de `onResolveHiddenValue`. Cancela una fila sin guardar o elimina una fila guardada para excluirla.

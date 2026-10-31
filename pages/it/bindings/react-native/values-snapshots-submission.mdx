@@ -240,8 +240,55 @@ Per controllare i valori nascosti conservati nell'invio finale, imposta `validat
 />
 ```
 
-Un valore nascosto che non rispetta le proprie regole blocca allora **Submit**. L'utente può
-correggerlo solo rendendo di nuovo visibile il campo. Usa questa opzione quando gli utenti possono
-farlo. Altrimenti,
+Un valore nascosto che non rispetta le proprie regole blocca quindi **Submit**. L'utente può
+correggerlo rendendo di nuovo visibile il campo, oppure la tua applicazione può
+[risolverlo](#risolvere-un-valore-nascosto-che-non-supera-la-validazione). Inoltre,
 [controlla i valori nascosti sul tuo server](/it/core/schema/validation#controllare-i-valori-nascosti-su-un-server).
 Le bozze e i campi obbligatori nascosti e vuoti non sono interessati.
+
+## Risolvere un valore nascosto che non supera la validazione
+
+Con `validateHiddenValues` attivo, un valore nascosto che non rispetta le proprie regole blocca
+**Submit**, e l'utente non può raggiungere il campo per correggerlo. La scheda **Issues** del
+pannello di navigazione lo spiega. Per consentire alla tua applicazione di correggere il valore,
+passa `onResolveHiddenValue`. L'utente può quindi premere il risultato, che termina con **Resolve
+hidden value**, per eseguire il tuo gestore.
+
+```jsx
+import { Alert } from "react-native"
+
+const resolveHiddenValue = ({ fieldName }) =>
+  new Promise((resolve) => {
+    Alert.alert(
+      "Hidden value",
+      `Clear ${fieldName}?`,
+      [
+        { text: "Cancel", style: "cancel", onPress: () => resolve() },
+        { text: "Clear", style: "destructive", onPress: () => resolve({ value: null }) },
+      ],
+      { cancelable: true, onDismiss: () => resolve() },
+    )
+  })
+
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={resolveHiddenValue}
+  onSubmit={saveRecord}
+/>
+```
+
+Il tuo gestore riceve `fieldName`, `fieldKey`, `instancePath`, `message` e una copia del `value`
+attuale. Può restituire:
+
+- `{ value: replacement }` per sostituire il valore, che deve rispettare le regole del campo
+- `{ value: null }` per cancellarlo
+- `undefined` o `null` per annullare
+
+Il campo resta nascosto, non viene eseguito alcun gestore di `change` o del ciclo di vita, e non
+viene salvato nulla finché l'utente non preme **Submit**. Se il record cambia mentre il gestore è in
+esecuzione, la risposta viene scartata e l'utente deve inviare di nuovo. Chiudi prima qualsiasi riga
+aperta. In un modulo in sola lettura, l'utente non può premere il risultato.
+
+Le righe salvate esplicitamente rimangono nel record inviato anche quando tutte le risposte sono vuote. Conservano identificatori e metadati, e le risposte vuote di TextField/NumericField vengono serializzate come `null`. Questo non dipende da `onResolveHiddenValue`. Annulla una riga non salvata o elimina una riga salvata per escluderla.

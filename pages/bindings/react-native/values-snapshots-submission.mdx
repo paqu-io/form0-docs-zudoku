@@ -229,7 +229,54 @@ To check kept hidden values on final submission, set `validateHiddenValues`:
 />
 ```
 
-A hidden value that fails its own rules then blocks **Submit**. The user can fix it only by making
-the field visible again. Use this option when users can do that. Otherwise,
+A hidden value that fails its own rules then blocks **Submit**. The user can fix it by making the
+field visible again, or your application can
+[resolve it](#resolve-a-hidden-value-that-fails-validation). Also
 [check hidden values on your server](/core/schema/validation#check-hidden-values-on-a-server).
 Drafts and empty hidden required fields are not affected.
+
+## Resolve a hidden value that fails validation
+
+With `validateHiddenValues` on, a hidden value that fails its own rules blocks **Submit**, and the
+user can't reach the field to fix it. The **Issues** tab of the navigation sheet explains this. To
+let your application fix the value, pass `onResolveHiddenValue`. The user can then press the
+finding, which ends with **Resolve hidden value**, to run your handler.
+
+```jsx
+import { Alert } from "react-native"
+
+const resolveHiddenValue = ({ fieldName }) =>
+  new Promise((resolve) => {
+    Alert.alert(
+      "Hidden value",
+      `Clear ${fieldName}?`,
+      [
+        { text: "Cancel", style: "cancel", onPress: () => resolve() },
+        { text: "Clear", style: "destructive", onPress: () => resolve({ value: null }) },
+      ],
+      { cancelable: true, onDismiss: () => resolve() },
+    )
+  })
+
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={resolveHiddenValue}
+  onSubmit={saveRecord}
+/>
+```
+
+Your handler receives `fieldName`, `fieldKey`, `instancePath`, `message`, and a copy of the current
+`value`. It can return:
+
+- `{ value: replacement }` to replace the value, which must pass the field's own rules
+- `{ value: null }` to clear it
+- `undefined` or `null` to cancel
+
+The field stays hidden, no `change` or lifecycle handlers run, and nothing is saved until the user
+presses **Submit**. If the record changes while your handler runs, the reply is discarded and the
+user has to submit again. Close any open row first. In a read-only form, the user can't press the
+finding.
+
+Explicitly saved rows stay in the submitted record even when every answer is empty. Their IDs and metadata are retained, and empty TextField/NumericField answers serialize as `null`. This does not depend on `onResolveHiddenValue`. Cancel an unsaved row or remove a saved row to exclude it.

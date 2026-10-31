@@ -246,3 +246,26 @@ const app = createApp(getSchema, getSchemaSource, projectDir, {
   submissionOptions: { validateHiddenValues: true },
 })
 ```
+
+### Résoudre une valeur masquée
+
+Pour que l’aperçu puisse corriger une valeur masquée qui échoue à la validation, passez
+`onResolveHiddenValue` à `createApp()`. Les résultats de validation affichent alors le bouton
+**Résoudre la valeur masquée**.
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
+  onResolveHiddenValue: async (finding) => {
+    // Return { value: replacement }, { value: null }, or nothing to cancel.
+    return { value: null }
+  },
+})
+```
+
+Le gestionnaire s’exécute sur votre serveur : il ne peut donc pas ouvrir de boîte de dialogue du
+navigateur. `form0 serve` n’a aucune option pour cela.
+[Résoudre une valeur masquée](/fr/bindings/react/values-snapshots-submission#résoudre-une-valeur-masquée-qui-échoue-à-la-validation)
+dans la documentation React explique ce que le gestionnaire reçoit et renvoie.
+
+Les lignes enregistrées explicitement restent dans l’enregistrement soumis même si toutes leurs réponses sont vides. Leurs identifiants et métadonnées sont conservés, et les réponses TextField/NumericField vides sont sérialisées en `null`. Cela ne dépend pas de `onResolveHiddenValue`. Annulez une ligne non enregistrée ou supprimez une ligne enregistrée pour l’exclure.

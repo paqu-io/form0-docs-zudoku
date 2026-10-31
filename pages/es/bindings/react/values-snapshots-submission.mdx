@@ -278,9 +278,89 @@ Para comprobar los valores ocultos conservados en el envío final, define `valid
 />
 ```
 
-Un valor oculto que no cumple sus propias reglas bloquea entonces **Submit**. El mensaje aparece en
-la pestaña **Validation**, pero no puede llevar al usuario al campo oculto, así que solo puede
-corregirlo haciendo visible el campo de nuevo. Usa esta opción cuando los usuarios puedan hacerlo.
-Si no,
+Un valor oculto que no cumple sus propias reglas bloquea entonces **Submit**. El usuario puede
+corregirlo haciendo visible el campo de nuevo, o tu aplicación puede
+[resolverlo](#resolver-un-valor-oculto-que-no-pasa-la-validación). Además,
 [comprueba los valores ocultos en tu servidor](/es/core/schema/validation#comprobar-valores-ocultos-en-un-servidor).
 Los borradores y los campos obligatorios ocultos y vacíos no se ven afectados.
+
+## Resolver un valor oculto que no pasa la validación
+
+Con `validateHiddenValues` activado, un valor oculto que no cumple sus propias reglas bloquea
+**Submit**, y el usuario no puede llegar al campo para corregirlo. La pestaña **Validation** lo
+explica. Para que tu aplicación pueda corregir el valor, pasa `onResolveHiddenValue`. La pestaña
+muestra entonces el botón **Resolve hidden value**.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={async ({ fieldName }) => {
+    if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+    return { value: null }
+  }}
+  onSubmit={saveRecord}
+/>
+```
+
+Tu manejador recibe `fieldName`, `fieldKey`, `instancePath`, `message` y una copia del `value`
+actual. Puede devolver:
+
+- `{ value: replacement }` para reemplazar el valor, que debe cumplir las reglas propias del campo
+- `{ value: null }` para borrarlo
+- `undefined` o `null` para cancelar
+
+El campo sigue oculto, no se ejecutan manejadores de `change` ni de ciclo de vida, y no se guarda
+nada hasta que el usuario hace clic en **Submit**. Si el registro cambia mientras se ejecuta tu
+manejador, la respuesta se descarta y el usuario tiene que volver a enviar. Cierra antes cualquier
+fila abierta. Los formularios de solo lectura no muestran el botón.
+
+Las filas guardadas explícitamente permanecen en el registro enviado aunque todas sus respuestas estén vacías. Conservan sus identificadores y metadatos, y las respuestas vacías de TextField/NumericField se serializan como `null`. Esto no depende de `onResolveHiddenValue`. Cancela una fila sin guardar o elimina una fila guardada para excluirla.
+
+### Prueba a resolver un valor oculto
+
+Necesitas una aplicación React con `form0-react`.
+[Añade un formulario a una aplicación React existente](/es/guides/add-form-to-react-app) crea una.
+
+1. Descarga el formulario de ejemplo y muéstralo. Tiene un campo de texto oculto, `legacy_code`, y
+   este código carga un número en él:
+
+   ```bash
+   mkdir -p src/forms
+   curl -o src/forms/hidden-value-recovery.form0.json https://docs.form0.dev/examples/hidden-value-recovery.form0.json
+   ```
+
+   ```jsx
+   import { FormRenderer } from "form0-react"
+   import "form0-react/index.css"
+   import schema from "./forms/hidden-value-recovery.form0.json"
+
+   export default function App() {
+     return (
+       <FormRenderer
+         schema={schema}
+         formWidth="100%"
+         initialValues={{ name: "Ada", legacy_code: 42 }}
+         engineOptions={{ events: { recordKind: "existing" } }}
+         submissionOptions={{ validateHiddenValues: true }}
+         onResolveHiddenValue={async ({ fieldName }) => {
+           if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+           return { value: null }
+         }}
+         onSubmit={(record) => console.log(record)}
+       />
+     )
+   }
+   ```
+
+1. Haz clic en **Submit**. El formulario no se envía. Abre la pestaña **Validation**. Muestra
+   `legacy_code must be a string` e indica que el valor está oculto.
+
+1. Haz clic en **Resolve hidden value** y cancela el diálogo. No cambia nada.
+
+1. Haz clic de nuevo en **Resolve hidden value** y confirma. El hallazgo desaparece y el campo sigue
+   oculto.
+
+1. Haz clic en **Submit**. La consola del navegador muestra el registro, con `legacy_code` en
+   `null`.

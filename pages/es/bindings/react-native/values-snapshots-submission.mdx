@@ -243,8 +243,55 @@ Para comprobar los valores ocultos conservados en el envío final, define `valid
 />
 ```
 
-Un valor oculto que no cumple sus propias reglas bloquea entonces **Submit**. El usuario solo puede
-corregirlo haciendo visible el campo de nuevo. Usa esta opción cuando los usuarios puedan hacerlo.
-Si no,
+Un valor oculto que no cumple sus propias reglas bloquea entonces **Submit**. El usuario puede
+corregirlo haciendo visible el campo de nuevo, o tu aplicación puede
+[resolverlo](#resolver-un-valor-oculto-que-no-pasa-la-validación). Además,
 [comprueba los valores ocultos en tu servidor](/es/core/schema/validation#comprobar-valores-ocultos-en-un-servidor).
 Los borradores y los campos obligatorios ocultos y vacíos no se ven afectados.
+
+## Resolver un valor oculto que no pasa la validación
+
+Con `validateHiddenValues` activado, un valor oculto que no cumple sus propias reglas bloquea
+**Submit**, y el usuario no puede llegar al campo para corregirlo. La pestaña **Issues** del panel
+de navegación lo explica. Para que tu aplicación pueda corregir el valor, pasa
+`onResolveHiddenValue`. El usuario puede entonces pulsar el hallazgo, que termina con **Resolve
+hidden value**, para ejecutar tu manejador.
+
+```jsx
+import { Alert } from "react-native"
+
+const resolveHiddenValue = ({ fieldName }) =>
+  new Promise((resolve) => {
+    Alert.alert(
+      "Hidden value",
+      `Clear ${fieldName}?`,
+      [
+        { text: "Cancel", style: "cancel", onPress: () => resolve() },
+        { text: "Clear", style: "destructive", onPress: () => resolve({ value: null }) },
+      ],
+      { cancelable: true, onDismiss: () => resolve() },
+    )
+  })
+
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={resolveHiddenValue}
+  onSubmit={saveRecord}
+/>
+```
+
+Tu manejador recibe `fieldName`, `fieldKey`, `instancePath`, `message` y una copia del `value`
+actual. Puede devolver:
+
+- `{ value: replacement }` para reemplazar el valor, que debe cumplir las reglas propias del campo
+- `{ value: null }` para borrarlo
+- `undefined` o `null` para cancelar
+
+El campo sigue oculto, no se ejecutan manejadores de `change` ni de ciclo de vida, y no se guarda
+nada hasta que el usuario pulsa **Submit**. Si el registro cambia mientras se ejecuta tu manejador,
+la respuesta se descarta y el usuario tiene que volver a enviar. Cierra antes cualquier fila
+abierta. En un formulario de solo lectura, el usuario no puede pulsar el hallazgo.
+
+Las filas guardadas explícitamente permanecen en el registro enviado aunque todas sus respuestas estén vacías. Conservan sus identificadores y metadatos, y las respuestas vacías de TextField/NumericField se serializan como `null`. Esto no depende de `onResolveHiddenValue`. Cancela una fila sin guardar o elimina una fila guardada para excluirla.

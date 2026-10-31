@@ -95,3 +95,7 @@ export function SavedCase({ schema, savedRecord }) {
 Lanza un error si un campo tiene una forma incorrecta, como un campo de selección guardado como
 texto simple. Para comprobar un registro guardado con el esquema, pasa `raw_values` y `repeatable` a
 `createRecordEvaluator().prepareSubmission()`.
+
+## Filas vacías guardadas
+
+Una fila repetible guardada explícitamente permanece en el registro aunque todas sus respuestas estén vacías. Por ejemplo, un artículo de pedido aceptado con TextField `product` y NumericField `quantity` opcionales se serializa con ambas respuestas en `null`, conservando su identificador y marcas de tiempo. Esto se aplica a las filas anidadas y a ambos serializadores estructurados, independientemente de la conservación de valores ocultos o de un manejador de recuperación. Cancela una fila sin guardar o elimina una fila guardada para excluirla. Las colecciones vacías permanecen vacías; la serialización no crea filas.

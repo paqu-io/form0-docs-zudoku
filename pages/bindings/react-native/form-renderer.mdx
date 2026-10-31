@@ -22,21 +22,22 @@ sections, and produces structured records or restorable snapshots.
 
 ## Essential properties
 
-| Property                | Purpose                                                                                            |
-| ----------------------- | -------------------------------------------------------------------------------------------------- |
-| `schema`                | A form0 schema containing `form.elements`.                                                         |
-| `initialValues`         | Initial non-repeatable field values.                                                               |
-| `initialSnapshot`       | Restore raw values, repeatable state, and timestamps together.                                     |
-| `overrideValues`        | Apply authoritative values over initial values.                                                    |
-| `onSubmit`              | Receive a validation-gated structured record and metadata.                                         |
-| `submissionDiagnostics` | Control save-failure reports (on) and routine validation-block messages (off).                     |
-| `submissionOptions`     | Set review options, messages, and `validateHiddenValues`.                                          |
-| `initialFreshness`      | Restore a record's saved `freshness`.                                                              |
-| `eventDiagnostics`      | Control failed-event reports (on).                                                                 |
-| `onSave`                | Receive a snapshot without requiring the form to be valid.                                         |
-| `onSnapshotChange`      | Observe seed and user-change snapshots.                                                            |
-| `mode`                  | Start in `edit` or `readonly` mode.                                                                |
-| `repeatableEntryMode`   | Opening mode for existing repeatable rows: `readonly` (default) or `edit`; new rows start editing. |
+| Property                | Purpose                                                                                                                                                           |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `schema`                | A form0 schema containing `form.elements`.                                                                                                                        |
+| `initialValues`         | Initial non-repeatable field values.                                                                                                                              |
+| `initialSnapshot`       | Restore raw values, repeatable state, and timestamps together.                                                                                                    |
+| `overrideValues`        | Apply authoritative values over initial values.                                                                                                                   |
+| `onSubmit`              | Receive a validation-gated structured record and metadata.                                                                                                        |
+| `submissionDiagnostics` | Control save-failure reports (on) and routine validation-block messages (off).                                                                                    |
+| `submissionOptions`     | Set review options, messages, and `validateHiddenValues`.                                                                                                         |
+| `onResolveHiddenValue`  | Let your application [fix a hidden value](/bindings/react-native/values-snapshots-submission#resolve-a-hidden-value-that-fails-validation) that fails validation. |
+| `initialFreshness`      | Restore a record's saved `freshness`.                                                                                                                             |
+| `eventDiagnostics`      | Control failed-event reports (on).                                                                                                                                |
+| `onSave`                | Receive a snapshot without requiring the form to be valid.                                                                                                        |
+| `onSnapshotChange`      | Observe seed and user-change snapshots.                                                                                                                           |
+| `mode`                  | Start in `edit` or `readonly` mode.                                                                                                                               |
+| `repeatableEntryMode`   | Opening mode for existing repeatable rows: `readonly` (default) or `edit`; new rows start editing.                                                                |
 
 ## Integrate with your application
 

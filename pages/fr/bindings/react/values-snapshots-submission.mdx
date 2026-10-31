@@ -280,9 +280,91 @@ Pour vérifier les valeurs masquées conservées lors de la soumission finale, d
 />
 ```
 
-Une valeur masquée qui ne respecte pas ses propres règles bloque alors **Submit**. Le message
-apparaît dans l’onglet **Validation**, mais il ne peut pas amener l’utilisateur au champ masqué :
-celui-ci ne peut donc la corriger qu’en rendant le champ de nouveau visible. Utilisez cette option
-lorsque les utilisateurs peuvent le faire. Sinon,
-[vérifiez les valeurs masquées sur votre serveur](/fr/core/schema/validation#vérifier-les-valeurs-masquées-sur-un-serveur).
+Une valeur masquée qui ne respecte pas ses propres règles bloque alors **Submit**. L’utilisateur
+peut la corriger en rendant le champ de nouveau visible, ou votre application peut
+[la résoudre](#résoudre-une-valeur-masquée-qui-échoue-à-la-validation).
+[Vérifiez également les valeurs masquées sur votre serveur](/fr/core/schema/validation#vérifier-les-valeurs-masquées-sur-un-serveur).
 Les brouillons et les champs obligatoires masqués et vides ne sont pas concernés.
+
+## Résoudre une valeur masquée qui échoue à la validation
+
+Lorsque `validateHiddenValues` est activé, une valeur masquée qui ne respecte pas ses propres règles
+bloque **Submit**, et l’utilisateur ne peut pas atteindre le champ pour la corriger. L’onglet
+**Validation** l’explique. Pour que votre application puisse corriger la valeur, passez
+`onResolveHiddenValue`. L’onglet affiche alors le bouton **Resolve hidden value**.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={async ({ fieldName }) => {
+    if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+    return { value: null }
+  }}
+  onSubmit={saveRecord}
+/>
+```
+
+Votre gestionnaire reçoit `fieldName`, `fieldKey`, `instancePath`, `message` et une copie de la
+`value` actuelle. Il peut renvoyer :
+
+- `{ value: replacement }` pour remplacer la valeur, qui doit respecter les règles propres au champ
+- `{ value: null }` pour l’effacer
+- `undefined` ou `null` pour annuler
+
+Le champ reste masqué, aucun gestionnaire `change` ou de cycle de vie ne s’exécute, et rien n’est
+sauvegardé tant que l’utilisateur n’a pas cliqué sur **Submit**. Si l’enregistrement change pendant
+l’exécution de votre gestionnaire, la réponse est ignorée et l’utilisateur doit soumettre de
+nouveau. Fermez d’abord toute ligne ouverte. Les formulaires en lecture seule n’affichent pas le
+bouton.
+
+Les lignes enregistrées explicitement restent dans l’enregistrement soumis même si toutes leurs réponses sont vides. Leurs identifiants et métadonnées sont conservés, et les réponses TextField/NumericField vides sont sérialisées en `null`. Cela ne dépend pas de `onResolveHiddenValue`. Annulez une ligne non enregistrée ou supprimez une ligne enregistrée pour l’exclure.
+
+### Essayez de résoudre une valeur masquée
+
+Il vous faut une application React avec `form0-react`.
+[Ajouter un formulaire à une application React existante](/fr/guides/add-form-to-react-app) en crée
+une.
+
+1. Téléchargez le formulaire d’exemple et affichez-le. Il contient un champ texte masqué,
+   `legacy_code`, et ce code y charge un nombre :
+
+   ```bash
+   mkdir -p src/forms
+   curl -o src/forms/hidden-value-recovery.form0.json https://docs.form0.dev/examples/hidden-value-recovery.form0.json
+   ```
+
+   ```jsx
+   import { FormRenderer } from "form0-react"
+   import "form0-react/index.css"
+   import schema from "./forms/hidden-value-recovery.form0.json"
+
+   export default function App() {
+     return (
+       <FormRenderer
+         schema={schema}
+         formWidth="100%"
+         initialValues={{ name: "Ada", legacy_code: 42 }}
+         engineOptions={{ events: { recordKind: "existing" } }}
+         submissionOptions={{ validateHiddenValues: true }}
+         onResolveHiddenValue={async ({ fieldName }) => {
+           if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+           return { value: null }
+         }}
+         onSubmit={(record) => console.log(record)}
+       />
+     )
+   }
+   ```
+
+1. Cliquez sur **Submit**. Le formulaire n’est pas soumis. Ouvrez l’onglet **Validation**. Il
+   affiche `legacy_code must be a string` et indique que la valeur est masquée.
+
+1. Cliquez sur **Resolve hidden value** et annulez la boîte de dialogue. Rien ne change.
+
+1. Cliquez de nouveau sur **Resolve hidden value** et confirmez. Le constat disparaît et le champ
+   reste masqué.
+
+1. Cliquez sur **Submit**. La console du navigateur affiche l’enregistrement, avec `legacy_code` à
+   `null`.

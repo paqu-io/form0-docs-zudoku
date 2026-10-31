@@ -244,8 +244,56 @@ Pour vérifier les valeurs masquées conservées lors de la soumission finale, d
 />
 ```
 
-Une valeur masquée qui ne respecte pas ses propres règles bloque alors **Submit**. L’utilisateur ne
-peut la corriger qu’en rendant le champ de nouveau visible. Utilisez cette option lorsque les
-utilisateurs peuvent le faire. Sinon,
-[vérifiez les valeurs masquées sur votre serveur](/fr/core/schema/validation#vérifier-les-valeurs-masquées-sur-un-serveur).
+Une valeur masquée qui ne respecte pas ses propres règles bloque alors **Submit**. L’utilisateur
+peut la corriger en rendant le champ de nouveau visible, ou votre application peut
+[la résoudre](#résoudre-une-valeur-masquée-qui-échoue-à-la-validation).
+[Vérifiez également les valeurs masquées sur votre serveur](/fr/core/schema/validation#vérifier-les-valeurs-masquées-sur-un-serveur).
 Les brouillons et les champs obligatoires masqués et vides ne sont pas concernés.
+
+## Résoudre une valeur masquée qui échoue à la validation
+
+Lorsque `validateHiddenValues` est activé, une valeur masquée qui ne respecte pas ses propres règles
+bloque **Submit**, et l’utilisateur ne peut pas atteindre le champ pour la corriger. L’onglet
+**Issues** du panneau de navigation l’explique. Pour que votre application puisse corriger la
+valeur, passez `onResolveHiddenValue`. L’utilisateur peut alors appuyer sur le constat, qui se
+termine par **Resolve hidden value**, pour exécuter votre gestionnaire.
+
+```jsx
+import { Alert } from "react-native"
+
+const resolveHiddenValue = ({ fieldName }) =>
+  new Promise((resolve) => {
+    Alert.alert(
+      "Hidden value",
+      `Clear ${fieldName}?`,
+      [
+        { text: "Cancel", style: "cancel", onPress: () => resolve() },
+        { text: "Clear", style: "destructive", onPress: () => resolve({ value: null }) },
+      ],
+      { cancelable: true, onDismiss: () => resolve() },
+    )
+  })
+
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={resolveHiddenValue}
+  onSubmit={saveRecord}
+/>
+```
+
+Votre gestionnaire reçoit `fieldName`, `fieldKey`, `instancePath`, `message` et une copie de la
+`value` actuelle. Il peut renvoyer :
+
+- `{ value: replacement }` pour remplacer la valeur, qui doit respecter les règles propres au champ
+- `{ value: null }` pour l’effacer
+- `undefined` ou `null` pour annuler
+
+Le champ reste masqué, aucun gestionnaire `change` ou de cycle de vie ne s’exécute, et rien n’est
+sauvegardé tant que l’utilisateur n’a pas appuyé sur **Submit**. Si l’enregistrement change pendant
+l’exécution de votre gestionnaire, la réponse est ignorée et l’utilisateur doit soumettre de
+nouveau. Fermez d’abord toute ligne ouverte. Dans un formulaire en lecture seule, l’utilisateur ne
+peut pas appuyer sur le constat.
+
+Les lignes enregistrées explicitement restent dans l’enregistrement soumis même si toutes leurs réponses sont vides. Leurs identifiants et métadonnées sont conservés, et les réponses TextField/NumericField vides sont sérialisées en `null`. Cela ne dépend pas de `onResolveHiddenValue`. Annulez une ligne non enregistrée ou supprimez une ligne enregistrée pour l’exclure.

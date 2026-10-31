@@ -240,3 +240,26 @@ const app = createApp(getSchema, getSchemaSource, projectDir, {
   submissionOptions: { validateHiddenValues: true },
 })
 ```
+
+### Risolvere un valore nascosto
+
+Per consentire all'anteprima di correggere un valore nascosto che non supera la validazione, passa
+`onResolveHiddenValue` a `createApp()`. Gli esiti di validazione mostrano allora il pulsante
+**Risolvi valore nascosto**.
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
+  onResolveHiddenValue: async (finding) => {
+    // Return { value: replacement }, { value: null }, or nothing to cancel.
+    return { value: null }
+  },
+})
+```
+
+Il gestore viene eseguito sul tuo server, quindi non può aprire una finestra di dialogo del browser.
+`form0 serve` non ha alcuna opzione per questo.
+[Risolvere un valore nascosto](/it/bindings/react/values-snapshots-submission#risolvere-un-valore-nascosto-che-non-supera-la-validazione)
+nella documentazione di React spiega cosa riceve e cosa restituisce il gestore.
+
+Le righe salvate esplicitamente rimangono nel record inviato anche quando tutte le risposte sono vuote. Conservano identificatori e metadati, e le risposte vuote di TextField/NumericField vengono serializzate come `null`. Questo non dipende da `onResolveHiddenValue`. Annulla una riga non salvata o elimina una riga salvata per escluderla.

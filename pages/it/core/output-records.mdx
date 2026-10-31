@@ -95,3 +95,7 @@ export function SavedCase({ schema, savedRecord }) {
 Genera un errore se un campo ha una forma errata, come un campo di scelta salvato come testo
 semplice. Per verificare un record salvato rispetto allo schema, passa `raw_values` e `repeatable` a
 `createRecordEvaluator().prepareSubmission()`.
+
+## Righe vuote salvate
+
+Una riga ripetibile salvata esplicitamente rimane nel record anche quando tutte le risposte sono vuote. Per esempio, un articolo di ordine accettato con TextField `product` e NumericField `quantity` facoltativi viene serializzato con entrambe le risposte a `null`, conservando identificatore e timestamp della riga. Questo vale per le righe annidate e per entrambi i serializzatori strutturati, indipendentemente dalla conservazione dei valori nascosti o da un gestore di recupero. Annulla una riga non salvata o elimina una riga salvata per escluderla. Le raccolte vuote rimangono vuote; la serializzazione non crea righe.

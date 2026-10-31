@@ -94,3 +94,7 @@ export function SavedCase({ schema, savedRecord }) {
 It throws an error if a field has the wrong shape, such as a choice field stored as a plain string.
 To check a stored record against the schema, pass `raw_values` and `repeatable` to
 `createRecordEvaluator().prepareSubmission()`.
+
+## Saved empty rows
+
+An explicitly saved repeatable row stays in the record even when every answer is empty. For example, an accepted order item with optional TextField `product` and NumericField `quantity` is serialized with both answers set to `null`, while keeping its row ID and timestamps. This applies to nested rows and to both structured serializers, independently of hidden-value retention or a recovery callback. Cancel an unsaved row or remove a saved row to exclude it. Empty collections stay empty; serialization creates no rows.

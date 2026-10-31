@@ -95,3 +95,7 @@ export function SavedCase({ schema, savedRecord }) {
 Elle lève une erreur si un champ a une forme incorrecte, comme un champ de choix stocké en texte
 simple. Pour vérifier un enregistrement stocké par rapport au schéma, passez `raw_values` et
 `repeatable` à `createRecordEvaluator().prepareSubmission()`.
+
+## Lignes vides enregistrées
+
+Une ligne répétable enregistrée explicitement reste dans l’enregistrement même si toutes ses réponses sont vides. Par exemple, un article de commande accepté avec TextField `product` et NumericField `quantity` facultatifs est sérialisé avec les deux réponses à `null`, en conservant son identifiant et ses horodatages. Cela s’applique aux lignes imbriquées et aux deux sérialiseurs structurés, indépendamment de la conservation des valeurs masquées ou d’un gestionnaire de récupération. Annulez une ligne non enregistrée ou supprimez une ligne enregistrée pour l’exclure. Les collections vides restent vides ; la sérialisation ne crée pas de lignes.

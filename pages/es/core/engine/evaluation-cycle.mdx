@@ -345,3 +345,44 @@ Las entradas nunca contienen el valor anterior. Si mantienes tú el estado del f
 campos indicados, incluidos los de las filas que no estás mostrando. Tu `snapshot` no cambia, y una
 evaluación de solo lectura no borra nada. Borrar no influye en si las filas guardadas conservan o
 actualizan sus valores calculados.
+
+## Resolver un valor oculto que no pasa la validación
+
+Cuando pasas `validateHiddenValues`, `prepareSubmission()` y `validateSubmission()` marcan cada
+valor oculto que no cumple sus propias reglas con `hidden: true`. Para reemplazar o borrar uno de
+esos valores desde tu código, primero inspecciónalo y después corrígelo:
+
+```js
+const finding = { fieldName: "hidden_note", instancePath: [] }
+const inspected = await evaluator.inspectHiddenValue(snapshot, finding)
+
+if (inspected.status === "inspected") {
+  // inspected.value holds the current value. Decide what to do with it.
+  const corrected = await evaluator.correctHiddenValue(snapshot, { ...finding, value: null })
+
+  if (corrected.status === "evaluated") {
+    // Use corrected.snapshot, unless the record changed since you inspected it.
+  }
+}
+```
+
+- `inspectHiddenValue()` comprueba que el valor sigue oculto y sigue sin cumplir sus reglas.
+  Devuelve una copia en `value`.
+- `correctHiddenValue()` acepta un reemplazo que cumpla las reglas propias del campo, o `null` para
+  borrar el valor. Devuelve el registro actualizado en `snapshot` y el resultado de las
+  comprobaciones en `validationSummary`.
+
+Ninguno de los dos métodos cambia tu `snapshot`, muestra el campo, ejecuta manejadores de `change` o
+de ciclo de vida, elimina filas ni guarda nada. Las filas guardadas conservan sus valores
+calculados, igual que con `evaluate()`.
+
+Si algo falla, `status` es `"failed"` e `issues` incluye uno de estos códigos:
+
+- `hidden_value_not_invalid`: el valor ya no falla o el campo ya no está oculto.
+- `invalid_replacement`: el reemplazo no cumple las reglas propias del campo.
+- `readonly_scope`: pasaste `interactionMode: "readonly"`.
+
+Asegúrate de que el registro no haya cambiado antes de usar `corrected.snapshot`. Los bindings y la
+vista previa de la CLI lo hacen por ti, y piden cerrar antes cualquier fila abierta.
+
+Las filas guardadas explícitamente permanecen en el registro enviado aunque todas sus respuestas estén vacías. Conservan sus identificadores y metadatos, y las respuestas vacías de TextField/NumericField se serializan como `null`. Ambos serializadores estructurados aplican esta regla sin ninguna opción. Cancela una fila sin guardar o elimina una fila guardada para excluirla.

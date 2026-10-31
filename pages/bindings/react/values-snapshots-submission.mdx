@@ -269,8 +269,86 @@ To check kept hidden values on final submission, set `validateHiddenValues`:
 />
 ```
 
-A hidden value that fails its own rules then blocks **Submit**. The message appears in the
-**Validation** tab, but it cannot take the user to the hidden field, so they can fix it only by
-making the field visible again. Use this option when users can do that. Otherwise,
+A hidden value that fails its own rules then blocks **Submit**. The user can fix it by making the
+field visible again, or your application can
+[resolve it](#resolve-a-hidden-value-that-fails-validation). Also
 [check hidden values on your server](/core/schema/validation#check-hidden-values-on-a-server).
 Drafts and empty hidden required fields are not affected.
+
+## Resolve a hidden value that fails validation
+
+With `validateHiddenValues` on, a hidden value that fails its own rules blocks **Submit**, and the
+user can't reach the field to fix it. The **Validation** tab explains this. To let your application
+fix the value, pass `onResolveHiddenValue`. The tab then shows a **Resolve hidden value** button.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={async ({ fieldName }) => {
+    if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+    return { value: null }
+  }}
+  onSubmit={saveRecord}
+/>
+```
+
+Your handler receives `fieldName`, `fieldKey`, `instancePath`, `message`, and a copy of the current
+`value`. It can return:
+
+- `{ value: replacement }` to replace the value, which must pass the field's own rules
+- `{ value: null }` to clear it
+- `undefined` or `null` to cancel
+
+The field stays hidden, no `change` or lifecycle handlers run, and nothing is saved until the user
+clicks **Submit**. If the record changes while your handler runs, the reply is discarded and the
+user has to submit again. Close any open row first. Read-only forms don't show the button.
+
+Explicitly saved rows stay in the submitted record even when every answer is empty. Their IDs and metadata are retained, and empty TextField/NumericField answers serialize as `null`. This does not depend on `onResolveHiddenValue`. Cancel an unsaved row or remove a saved row to exclude it.
+
+### Try resolving a hidden value
+
+You need a React app with `form0-react`.
+[Add a form to an existing React app](/guides/add-form-to-react-app) creates one.
+
+1. Download the example form and render it. It has a hidden text field, `legacy_code`, and this code
+   loads a number into it:
+
+   ```bash
+   mkdir -p src/forms
+   curl -o src/forms/hidden-value-recovery.form0.json https://docs.form0.dev/examples/hidden-value-recovery.form0.json
+   ```
+
+   ```jsx
+   import { FormRenderer } from "form0-react"
+   import "form0-react/index.css"
+   import schema from "./forms/hidden-value-recovery.form0.json"
+
+   export default function App() {
+     return (
+       <FormRenderer
+         schema={schema}
+         formWidth="100%"
+         initialValues={{ name: "Ada", legacy_code: 42 }}
+         engineOptions={{ events: { recordKind: "existing" } }}
+         submissionOptions={{ validateHiddenValues: true }}
+         onResolveHiddenValue={async ({ fieldName }) => {
+           if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+           return { value: null }
+         }}
+         onSubmit={(record) => console.log(record)}
+       />
+     )
+   }
+   ```
+
+1. Click **Submit**. The form is not submitted. Open the **Validation** tab. It shows
+   `legacy_code must be a string` and says that the value is hidden.
+
+1. Click **Resolve hidden value** and cancel the dialog. Nothing changes.
+
+1. Click **Resolve hidden value** again and confirm. The finding disappears, and the field stays
+   hidden.
+
+1. Click **Submit**. The browser console shows the record, with `legacy_code` set to `null`.

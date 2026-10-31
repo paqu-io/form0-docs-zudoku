@@ -321,3 +321,44 @@ Entries never contain the old value. If you keep the form's state yourself, clea
 including those in rows you are not showing. Your `snapshot` does not change, and a read-only
 evaluation clears nothing. Clearing has no effect on whether saved rows keep or refresh their
 calculated values.
+
+## Resolve a hidden value that fails validation
+
+When you pass `validateHiddenValues`, `prepareSubmission()` and `validateSubmission()` mark each
+hidden value that fails its own rules with `hidden: true`. To replace or clear one of those values
+in your own code, inspect it first and then correct it:
+
+```js
+const finding = { fieldName: "hidden_note", instancePath: [] }
+const inspected = await evaluator.inspectHiddenValue(snapshot, finding)
+
+if (inspected.status === "inspected") {
+  // inspected.value holds the current value. Decide what to do with it.
+  const corrected = await evaluator.correctHiddenValue(snapshot, { ...finding, value: null })
+
+  if (corrected.status === "evaluated") {
+    // Use corrected.snapshot, unless the record changed since you inspected it.
+  }
+}
+```
+
+- `inspectHiddenValue()` checks that the value is still hidden and still fails. It returns a copy in
+  `value`.
+- `correctHiddenValue()` takes a replacement that passes the field's own rules, or `null` to clear
+  the value. It returns the updated record in `snapshot` and the result of the checks in
+  `validationSummary`.
+
+Neither method changes your `snapshot`, shows the field, runs `change` or lifecycle handlers,
+deletes rows, or saves anything. Saved rows keep their calculated values, as they do with
+`evaluate()`.
+
+If something goes wrong, `status` is `"failed"` and `issues` has one of these codes:
+
+- `hidden_value_not_invalid`: the value no longer fails, or the field is no longer hidden.
+- `invalid_replacement`: the replacement fails the field's own rules.
+- `readonly_scope`: you passed `interactionMode: "readonly"`.
+
+Make sure the record has not changed before you use `corrected.snapshot`. The bindings and the CLI
+preview do this for you, and they ask for any open row to be closed first.
+
+Explicitly saved rows stay in the submitted record even when every answer is empty. Their IDs and metadata are retained, and empty TextField/NumericField answers serialize as `null`. Both structured serializers apply this rule without an option. Cancel an unsaved row or remove a saved row to exclude it.
