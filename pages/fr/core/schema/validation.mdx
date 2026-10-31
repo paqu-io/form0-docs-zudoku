@@ -94,7 +94,8 @@ Les deux suivent les mêmes règles :
   soumission.
 - Un champ obligatoire visible et vide bloque la soumission, même en lecture seule.
 - `0` et un **No** sélectionné comptent comme renseignés.
-- Une ligne masquée ne participe pas à la vérification.
+- Une [ligne masquée d’une section répétable](/fr/core/fields/containers#repeatablesection) ne
+  participe pas à la vérification.
 - Un brouillon peut être sauvegardé avec des erreurs de validation. Un gestionnaire qui échoue à
   l’exécution bloque aussi les brouillons.
 - Les gestionnaires de validation ne peuvent ni modifier de valeurs ni afficher d’alertes.

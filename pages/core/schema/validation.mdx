@@ -93,7 +93,8 @@ Both follow the same rules:
 - By default, hidden fields and fields under hidden parents do not block a submission.
 - A visible required field that is empty blocks a submission, even when it is read-only.
 - `0` and a selected **No** count as filled in.
-- A hidden row takes no part in the check.
+- A hidden [repeatable section row](/core/fields/containers#repeatablesection) takes no part in the
+  check.
 - A draft can be saved with validation errors. A handler that fails while running blocks drafts too.
 - Validation handlers cannot change values or show alerts.
 - These checks do not change `state.errors`. `LabelField` and `CalculatedField` follow their own

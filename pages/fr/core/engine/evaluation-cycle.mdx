@@ -143,10 +143,11 @@ bloque la soumission.
 ## Évaluer un enregistrement complet
 
 `engine.eval()` couvre un seul enregistrement. Un formulaire avec des sections répétables est un
-arbre : un enregistrement principal, ses lignes et les lignes qu’elles contiennent. Utilisez
-`createRecordEvaluator({ schema, helpers, security })` lorsque vous avez besoin d’un résultat pour
-tout l’arbre, par exemple pour vérifier un enregistrement avant de le sauvegarder. Il utilise les
-mêmes expressions et règles de portée que le moteur.
+arbre : un enregistrement principal, ses [lignes](/fr/core/fields/containers#repeatablesection) et
+les lignes qu’elles contiennent. Utilisez `createRecordEvaluator({ schema, helpers, security })`
+lorsque vous avez besoin d’un résultat pour tout l’arbre, par exemple pour vérifier un
+enregistrement avant de le sauvegarder. Il utilise les mêmes expressions et règles de portée que le
+moteur.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -392,4 +393,5 @@ En cas d’échec, `status` vaut `"failed"` et `issues` contient l’un de ces c
 Vérifiez que l’enregistrement n’a pas changé avant d’utiliser `corrected.snapshot`. Les bindings et
 l’aperçu de la CLI le font pour vous, et demandent de fermer d’abord toute ligne ouverte.
 
-Les lignes enregistrées explicitement restent dans l’enregistrement soumis même si toutes leurs réponses sont vides. Leurs identifiants et métadonnées sont conservés, et les réponses TextField/NumericField vides sont sérialisées en `null`. Les deux sérialiseurs structurés appliquent cette règle sans option. Annulez une ligne non enregistrée ou supprimez une ligne enregistrée pour l’exclure.
+Si l’effacement de la valeur laisse une ligne sans réponse, la ligne reste dans l’enregistrement.
+Voir [Lignes vides enregistrées](/fr/core/output-records#lignes-vides-enregistrées).

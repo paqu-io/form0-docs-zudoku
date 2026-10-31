@@ -1,6 +1,6 @@
 ---
 title: Modes et navigation
-description: Configurez l’édition, les en-têtes, les sections, les entrées répétables et la navigation de validation.
+description: Configurez l’édition, les en-têtes, les sections, les lignes répétables et la navigation de validation.
 ---
 
 <PageBadges />
@@ -15,10 +15,11 @@ Définissez `showHeader={false}` lorsque l’application fournit son propre en-t
 propres actions. `onRequestClose` active l’annulation et protège les formulaires modifiés par une
 confirmation d’abandon.
 
-## Mode d’ouverture des entrées répétables
+## Mode d’ouverture des lignes répétables
 
-`repeatableEntryMode` accepte `readonly` (par défaut) ou `edit` pour les lignes existantes à tous
-les niveaux d’imbrication. Les lignes existantes s’ouvrent en consultation avec Edit si leur parent
+`repeatableEntryMode` accepte `readonly` (par défaut) ou `edit` pour les
+[lignes de sections répétables](/fr/core/fields/containers#repeatablesection) existantes à tous les
+niveaux d’imbrication. Les lignes existantes s’ouvrent en consultation avec Edit si leur parent
 permet la modification ; les nouvelles s’ouvrent en modification. Un parent en lecture seule permet
 de consulter ses descendants, mais empêche leur modification, leur ajout et leur suppression.
 L’option de modification directe ne contourne pas les restrictions du parent.
@@ -35,8 +36,7 @@ en modification directe. Consultation → Modification exécute edit sans répé
 vaut `readonly` ou `edit` pour l'enregistrement exécutant l'événement, indépendamment du mode du
 parent. Consulter permet les lectures, ALERT et ON/OFF du périmètre ; une écriture rejette tout le
 lot avant délégation au host. Déplacez l'initialisation qui écrit vers new/edit ou protégez les
-setters de load pour la modification directe. La version coordonnée du core avec contrôle du mode
-est requise ; la structure du schéma et de l'enregistrement sauvegardé reste identique.
+setters de load pour la modification directe.
 
 ## Sections et validation
 
@@ -56,7 +56,7 @@ destination verticale pour tenir compte des en-têtes ou autres superpositions d
 des libellés dans la disposition latérale. Gardez le comportement conditionnel de la navigation dans
 le schéma au lieu de le dupliquer dans l’état du composant.
 
-## Événements d’enregistrement et entrées répétables
+## Événements d’enregistrement et lignes répétables
 
 Avec `engineOptions.events.lifecycle: true`, l'application précise `recordKind: "new"` ou
 `"existing"` pour la racine. L'ouverture attend `load-record` ; la modification directe exécute ensuite
@@ -64,6 +64,7 @@ Avec `engineOptions.events.lifecycle: true`, l'application précise `recordKind:
 Consulter exécute seulement load et conserve les calculs acceptés ; les conditions et la validation
 intrinsèque restent actives.
 
-Le mode explicite `lifecycle: false` conserve le cycle historique. Voir
-le contrat géré dans [FormRenderer](/fr/bindings/react-native/form-renderer) et
+Utilisez `lifecycle: false` pour ne garder que `load-record`, `edit-record` et `change` pour
+l'enregistrement principal. Voir le contrat géré dans
+[FormRenderer](/fr/bindings/react-native/form-renderer) et
 [Événements et opérations](/fr/core/engine/events-operations).

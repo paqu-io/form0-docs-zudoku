@@ -25,8 +25,8 @@ The preview follows the same [value rules](/core/engine/value-updates) as the of
 
 The server returns diagnostics with each evaluation. The browser console shows new or changed
 findings, resolved findings, and problems that come back. Identical evaluations do not print them
-again. A finding in a nested row shows its repeatable path and row ID, or says that it uses a row
-position when there is no ID.
+again. A finding in a nested [repeatable section row](/core/fields/containers#repeatablesection)
+shows its repeatable path and row ID, or says that it uses a row position when there is no ID.
 
 Use `form0 serve [schema] --no-diagnostics` to hide calculation reports and built-in preview console
 output. Diagnostics are still collected. An app started with `serve --app` keeps its own reporting.
@@ -118,7 +118,7 @@ You need [form0-cli](/cli/install-update).
 The preview shows no read-only banner, so look for the disabled (grayed-out) fields and
 **Submit Record** button.
 
-### Rows
+### Repeatable section rows
 
 Inline rows offer **Edit**, **Save row**, and **Cancel row**. Edits stay staged until you accept
 them: **Save row** validates the row first, and **Cancel row** discards its staged nested edits.
@@ -246,4 +246,5 @@ it.
 [Resolve a hidden value](/bindings/react/values-snapshots-submission#resolve-a-hidden-value-that-fails-validation)
 in the React docs explains what the handler receives and returns.
 
-Explicitly saved rows stay in the submitted record even when every answer is empty. Their IDs and metadata are retained, and empty TextField/NumericField answers serialize as `null`. This does not depend on `onResolveHiddenValue`. Cancel an unsaved row or remove a saved row to exclude it.
+If clearing the value leaves a row with no answers, the row stays in the record. See
+[Saved empty rows](/core/output-records#saved-empty-rows).

@@ -74,7 +74,8 @@ lettura della tabella precedente: campi radice, della riga corrente e delle righ
 discendenti, i rami fratelli e i rami non correlati non sono accessibili. `validateSchema()` e la
 creazione del motore rifiutano un riferimento illegale prima dell'apertura del modulo. L'errore
 identifica l'elemento proprietario, la proprietà della condizione, il campo referenziato e i due
-percorsi di appartenenza ai record. Restano supportate le chiavi di campo e i riferimenti `data_name`.
+percorsi di appartenenza ai record. Una condizione può fare riferimento a un campo tramite la chiave
+o il `data_name`.
 
 Una `Section` o `BuildingPlanSection` eredita l'appartenenza del record che la contiene. Le condizioni
 di una `RepeatableSection` governano la raccolta nel record che la contiene; i campi figli appartengono
@@ -113,9 +114,9 @@ eventi, imposta `engineOptions.events.lifecycle` su `false`. Vedi
 [Attivazione degli eventi nei binding ufficiali](/it/core/builtins/events-overview) per tempistiche
 e metadati.
 
-Gli eventi di record, come `load-record`, possono leggere solo i campi radice. I gestori di eventi di
-campo e ripetibili seguono il proprio ambito dichiarato; restano invariate le letture degli antenati
-e le scritture esclusivamente locali.
+Gli eventi di record, come `load-record`, possono leggere solo i campi radice. I gestori di eventi
+di campo e ripetibili seguono il proprio ambito dichiarato: possono leggere i campi dei genitori e
+scrivere solo nel proprio record.
 
 ## Le righe nel record di output
 

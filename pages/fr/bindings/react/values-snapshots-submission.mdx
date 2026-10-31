@@ -29,7 +29,8 @@ Pour une restauration complète, privilégiez `initialSnapshot` :
 ```
 
 Un snapshot initial remplace `initialValues` pour les valeurs brutes des champs. Il restaure aussi
-les entrées répétables imbriquées et les horodatages client et serveur comme un état cohérent.
+les [lignes de sections répétables](/fr/core/fields/containers#repeatablesection) imbriquées et les
+horodatages client et serveur comme un état cohérent.
 
 ## Observer les brouillons
 
@@ -319,7 +320,8 @@ l’exécution de votre gestionnaire, la réponse est ignorée et l’utilisateu
 nouveau. Fermez d’abord toute ligne ouverte. Les formulaires en lecture seule n’affichent pas le
 bouton.
 
-Les lignes enregistrées explicitement restent dans l’enregistrement soumis même si toutes leurs réponses sont vides. Leurs identifiants et métadonnées sont conservés, et les réponses TextField/NumericField vides sont sérialisées en `null`. Cela ne dépend pas de `onResolveHiddenValue`. Annulez une ligne non enregistrée ou supprimez une ligne enregistrée pour l’exclure.
+Si l’effacement de la valeur laisse une ligne sans réponse, la ligne reste dans l’enregistrement.
+Voir [Lignes vides enregistrées](/fr/core/output-records#lignes-vides-enregistrées).
 
 ### Essayez de résoudre une valeur masquée
 

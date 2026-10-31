@@ -29,8 +29,8 @@ Para una restauración completa, usa preferentemente `initialSnapshot`:
 ```
 
 Un snapshot inicial sustituye a `initialValues` para los valores sin procesar de los campos. También
-restaura las entradas repetibles anidadas y las marcas de tiempo del cliente y del servidor como un
-estado coherente.
+restaura las [filas de secciones repetibles](/es/core/fields/containers#repeatablesection) anidadas
+y las marcas de tiempo del cliente y del servidor como un estado coherente.
 
 ## Observa los borradores
 
@@ -316,7 +316,8 @@ nada hasta que el usuario hace clic en **Submit**. Si el registro cambia mientra
 manejador, la respuesta se descarta y el usuario tiene que volver a enviar. Cierra antes cualquier
 fila abierta. Los formularios de solo lectura no muestran el botón.
 
-Las filas guardadas explícitamente permanecen en el registro enviado aunque todas sus respuestas estén vacías. Conservan sus identificadores y metadatos, y las respuestas vacías de TextField/NumericField se serializan como `null`. Esto no depende de `onResolveHiddenValue`. Cancela una fila sin guardar o elimina una fila guardada para excluirla.
+Si al borrar el valor una fila se queda sin respuestas, la fila permanece en el registro. Consulta
+[Filas vacías guardadas](/es/core/output-records#filas-vacías-guardadas).
 
 ### Prueba a resolver un valor oculto
 

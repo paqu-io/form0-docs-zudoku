@@ -31,6 +31,10 @@ Attributs supplémentaires :
 
 ## RepeatableSection
 
+Une `RepeatableSection` permet à l’utilisateur d’ajouter autant de lignes qu’il le souhaite, comme
+les lignes d’une commande. Chaque ligne contient ses propres valeurs pour le même ensemble de
+champs. Dans l’enregistrement de sortie, chaque ligne devient un enregistrement enfant.
+
 ```json
 {
   "type": "RepeatableSection",
@@ -76,12 +80,12 @@ Attributs supplémentaires :
 
 Attributs supplémentaires :
 
-- `location_enabled` : active les données de localisation des éléments.
-- `location_required` : exige des données de localisation pour les éléments.
+- `location_enabled` : active les données de localisation des lignes.
+- `location_required` : exige des données de localisation pour les lignes.
 - `title_field` : `TitleField` facultatif servant à déterminer le titre de chaque enregistrement enfant. Utilisez `null` si aucun
-  titre d'entrée n'est configuré.
+  titre de ligne n'est configuré.
 
-Les sections répétables produisent un tableau d'enregistrements enfants dans la sortie. Le titre d'entrée configuré est
+Les sections répétables produisent un tableau d'enregistrements enfants dans la sortie. Le titre de ligne configuré est
 stocké dans `@title` sur chaque enregistrement enfant. Si toutes les parties du titre sont vides, `@title` vaut `null` ; les renderers
 peuvent afficher un libellé de position comme `Items 1`, mais cette valeur de repli n'est pas enregistrée.
 

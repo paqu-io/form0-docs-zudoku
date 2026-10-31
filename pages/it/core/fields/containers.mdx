@@ -31,6 +31,10 @@ Attributi aggiuntivi:
 
 ## RepeatableSection
 
+Una `RepeatableSection` permette all'utente di aggiungere un numero qualsiasi di righe, come le voci
+di un ordine. Ogni riga contiene i propri valori per lo stesso insieme di campi. Nel record di
+output, ogni riga diventa un record figlio.
+
 ```json
 {
   "type": "RepeatableSection",
@@ -76,12 +80,12 @@ Attributi aggiuntivi:
 
 Attributi aggiuntivi:
 
-- `location_enabled`: abilita i dati di posizione per gli elementi.
-- `location_required`: rende obbligatori i dati di posizione per gli elementi.
+- `location_enabled`: abilita i dati di posizione per le righe.
+- `location_required`: rende obbligatori i dati di posizione per le righe.
 - `title_field`: `TitleField` facoltativo usato per ricavare il titolo di ogni record figlio. Usa `null` se non
-  è configurato alcun titolo della voce.
+  è configurato alcun titolo della riga.
 
-Le sezioni ripetibili producono un array di record figli nell'output. Il titolo della voce configurato viene
+Le sezioni ripetibili producono un array di record figli nell'output. Il titolo della riga configurato viene
 salvato come `@title` in ogni record figlio. Se tutte le parti del titolo sono vuote, `@title` è `null`; i renderer
 possono mostrare un'etichetta posizionale come `Items 1`, ma questo valore di ripiego non viene salvato.
 

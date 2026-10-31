@@ -28,8 +28,10 @@ ufficiali:
 
 Il server restituisce la diagnostica con ogni valutazione. La console del browser mostra i risultati
 nuovi o modificati, quelli risolti e i problemi che si ripresentano. Le valutazioni identiche non li
-stampano di nuovo. Un risultato in una riga annidata mostra il percorso ripetibile e
-l'identificatore della riga, oppure indica che usa una posizione quando non c'è un identificatore.
+stampano di nuovo. Un risultato in una
+[riga annidata di una sezione ripetibile](/it/core/fields/containers#repeatablesection) mostra il
+percorso ripetibile e l'identificatore della riga, oppure indica che usa una posizione quando non
+c'è un identificatore.
 
 Usa `form0 serve [schema] --no-diagnostics` per nascondere i report dei calcoli e l'output integrato
 della console dell'anteprima. La diagnostica viene comunque raccolta. Un'app avviata con
@@ -125,7 +127,7 @@ Ti serve [form0-cli](/it/cli/install-update).
 L'anteprima non mostra alcun banner di sola lettura, quindi controlla che i campi e il pulsante
 **Submit Record** siano disattivati (in grigio).
 
-### Righe
+### Righe di sezioni ripetibili
 
 Le righe in linea offrono **Modifica**, **Salva riga** e **Annulla riga**. Le modifiche restano in
 sospeso finché non le accetti: **Salva riga** valida prima la riga, e **Annulla riga** scarta le
@@ -262,4 +264,5 @@ Il gestore viene eseguito sul tuo server, quindi non può aprire una finestra di
 [Risolvere un valore nascosto](/it/bindings/react/values-snapshots-submission#risolvere-un-valore-nascosto-che-non-supera-la-validazione)
 nella documentazione di React spiega cosa riceve e cosa restituisce il gestore.
 
-Le righe salvate esplicitamente rimangono nel record inviato anche quando tutte le risposte sono vuote. Conservano identificatori e metadati, e le risposte vuote di TextField/NumericField vengono serializzate come `null`. Questo non dipende da `onResolveHiddenValue`. Annulla una riga non salvata o elimina una riga salvata per escluderla.
+Se cancellando il valore una riga resta senza risposte, la riga rimane nel record. Vedi
+[Righe vuote salvate](/it/core/output-records#righe-vuote-salvate).

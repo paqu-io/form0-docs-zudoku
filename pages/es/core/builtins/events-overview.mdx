@@ -30,18 +30,18 @@ ON("change", "age", function (event) {
 De forma predeterminada, `FormRenderer` en `form0-react` y `form0-react-native` despacha estos
 eventos:
 
-| Evento            | Cuándo se ejecuta                                                 |
-| ----------------- | ----------------------------------------------------------------- |
-| `load-record`     | Cada vez que se abre un registro, para editarlo o en solo lectura |
-| `new-record`      | Un registro nuevo empieza a editarse                              |
-| `edit-record`     | Un registro existente empieza a editarse                          |
-| `change`          | Un usuario edita un campo, o añade, edita o elimina una fila      |
-| `focus`, `blur`   | Un campo de texto o numérico recibe o pierde el foco              |
-| `validate-record` | Un usuario envía el formulario o guarda un borrador               |
-| `save-record`     | Después de la validación, una vez por cada intento de guardado    |
-| `cancel-record`   | Un usuario confirma la cancelación de un registro                 |
-| `unload-record`   | Un registro se cierra                                             |
-| `change-status`   | Un usuario cambia el campo de estado, si está activado            |
+| Evento            | Cuándo se ejecuta                                                                                                                     |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `load-record`     | Cada vez que se abre un registro, para editarlo o en solo lectura                                                                     |
+| `new-record`      | Un registro nuevo empieza a editarse                                                                                                  |
+| `edit-record`     | Un registro existente empieza a editarse                                                                                              |
+| `change`          | Un usuario edita un campo, o añade, edita o elimina una [fila de una sección repetible](/es/core/fields/containers#repeatablesection) |
+| `focus`, `blur`   | Un campo de texto o numérico recibe o pierde el foco                                                                                  |
+| `validate-record` | Un usuario envía el formulario o guarda un borrador                                                                                   |
+| `save-record`     | Después de la validación, una vez por cada intento de guardado                                                                        |
+| `cancel-record`   | Un usuario confirma la cancelación de un registro                                                                                     |
+| `unload-record`   | Un registro se cierra                                                                                                                 |
+| `change-status`   | Un usuario cambia el campo de estado, si está activado                                                                                |
 
 Las filas tienen sus propios eventos: `load-repeatable`, `new-repeatable`, `edit-repeatable`,
 `validate-repeatable`, `save-repeatable`, `cancel-repeatable`, `unload-repeatable`. Una fila nunca

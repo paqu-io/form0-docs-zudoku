@@ -207,11 +207,13 @@ Ninguno de los dos métodos evalúa el formulario, guarda un registro ni cierra 
 
 ### Ejecutar los manejadores de una fila
 
-Para ejecutar los manejadores de una fila sin renderer, pasa `eventScope.instancePath` al crear el
-motor. La ruta del registro principal es `[]`. Cada segmento de fila tiene `repeatableKey`,
-`instanceId`, `index` e `identity`. Las rutas usan las claves del esquema, y los listeners usan
-`data_name`. Una fila sin identificador usa `identity: "position"`. form0 comprueba la ruta con el
-esquema, pero tu aplicación debe comprobar que la fila sigue existiendo.
+Para ejecutar los manejadores de una
+[fila de una sección repetible](/es/core/fields/containers#repeatablesection) sin renderer, pasa
+`eventScope.instancePath` al crear el motor. La ruta del registro principal es `[]`. Cada segmento
+de fila tiene `repeatableKey`, `instanceId`, `index` e `identity`. Las rutas usan las claves del
+esquema, y los listeners usan `data_name`. Una fila sin identificador usa `identity: "position"`.
+form0 comprueba la ruta con el esquema, pero tu aplicación debe comprobar que la fila sigue
+existiendo.
 
 Un manejador de fila puede leer sus propios campos, y los campos de filas padre y del formulario
 principal que aporte tu aplicación. `SETVALUE()` solo escribe en la fila actual. Las filas hermanas,

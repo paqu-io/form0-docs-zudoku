@@ -463,7 +463,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "en",
     "title": "Modes and navigation",
-    "description": "Configure editing, headers, sections, repeatable entries, and validation navigation.",
+    "description": "Configure editing, headers, sections, repeatable rows, and validation navigation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -2542,7 +2542,7 @@
     "translationKey": "/core/engine/value-updates",
     "locale": "en",
     "title": "Value updates and normalization",
-    "description": "Supported setters, strict choice inputs, loading, and unchanged record formats.",
+    "description": "Supported setters, strict choice inputs, loading, and record formats.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -3433,7 +3433,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "es",
     "title": "Modos y navegación",
-    "description": "Configura la edición, los encabezados, las secciones, las entradas repetibles y la navegación de validación.",
+    "description": "Configura la edición, los encabezados, las secciones, las filas repetibles y la navegación de validación.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5512,7 +5512,7 @@
     "translationKey": "/core/engine/value-updates",
     "locale": "es",
     "title": "Actualización y normalización de valores",
-    "description": "Setters admitidos, entradas de elección estrictas, carga y formatos de registro conservados.",
+    "description": "Setters admitidos, entradas de elección estrictas, carga y formatos de registro.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -6997,7 +6997,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "fr",
     "title": "Modes et navigation",
-    "description": "Configurez l’édition, les en-têtes, les sections, les entrées répétables et la navigation de validation.",
+    "description": "Configurez l’édition, les en-têtes, les sections, les lignes répétables et la navigation de validation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -9076,7 +9076,7 @@
     "translationKey": "/core/engine/value-updates",
     "locale": "fr",
     "title": "Mise à jour et normalisation des valeurs",
-    "description": "Setters pris en charge, entrées de choix strictes, chargement et formats conservés.",
+    "description": "Setters pris en charge, entrées de choix strictes, chargement et formats d’enregistrement.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -10723,7 +10723,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "it",
     "title": "Modalità e navigazione",
-    "description": "Configura modifica, intestazioni, sezioni, voci ripetibili e navigazione della validazione.",
+    "description": "Configura modifica, intestazioni, sezioni, righe ripetibili e navigazione della validazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12802,7 +12802,7 @@
     "translationKey": "/core/engine/value-updates",
     "locale": "it",
     "title": "Aggiornamento e normalizzazione dei valori",
-    "description": "Setter supportati, input di scelta rigorosi, caricamento e formati invariati.",
+    "description": "Setter supportati, input di scelta rigorosi, caricamento e formati dei record.",
     "indexable": true,
     "status": "published",
     "alternates": [

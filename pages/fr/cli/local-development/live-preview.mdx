@@ -27,7 +27,8 @@ officiels :
 
 Le serveur renvoie des diagnostics avec chaque évaluation. La console du navigateur affiche les
 constats nouveaux ou modifiés, ceux qui sont résolus et les problèmes qui reviennent. Les
-évaluations identiques ne les réaffichent pas. Un constat dans une ligne imbriquée affiche son
+évaluations identiques ne les réaffichent pas. Un constat dans une
+[ligne imbriquée d’une section répétable](/fr/core/fields/containers#repeatablesection) affiche son
 chemin répétable et l’identifiant de la ligne, ou indique qu’il utilise une position lorsqu’il n’y a
 pas d’identifiant.
 
@@ -128,7 +129,7 @@ Il vous faut [form0-cli](/fr/cli/install-update).
 L’aperçu n’affiche aucune bannière de lecture seule : vérifiez donc que les champs et le bouton
 **Submit Record** sont désactivés (grisés).
 
-### Lignes
+### Lignes de sections répétables
 
 Les lignes intégrées proposent **Modifier**, **Enregistrer la ligne** et **Annuler la ligne**. Les
 modifications restent en attente jusqu’à ce que vous les acceptiez : **Enregistrer la ligne** valide
@@ -268,4 +269,5 @@ navigateur. `form0 serve` n’a aucune option pour cela.
 [Résoudre une valeur masquée](/fr/bindings/react/values-snapshots-submission#résoudre-une-valeur-masquée-qui-échoue-à-la-validation)
 dans la documentation React explique ce que le gestionnaire reçoit et renvoie.
 
-Les lignes enregistrées explicitement restent dans l’enregistrement soumis même si toutes leurs réponses sont vides. Leurs identifiants et métadonnées sont conservés, et les réponses TextField/NumericField vides sont sérialisées en `null`. Cela ne dépend pas de `onResolveHiddenValue`. Annulez une ligne non enregistrée ou supprimez une ligne enregistrée pour l’exclure.
+Si l’effacement de la valeur laisse une ligne sans réponse, la ligne reste dans l’enregistrement.
+Voir [Lignes vides enregistrées](/fr/core/output-records#lignes-vides-enregistrées).

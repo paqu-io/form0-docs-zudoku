@@ -71,9 +71,10 @@ exigent le contexte de `createRecordEvaluator()`. Sans ce contexte, le moteur or
 diagnostic. Les événements peuvent lire un CalculatedField agrégé accessible, mais ne peuvent pas
 appeler directement ces fonctions.
 
-Utilisez le data_name de RepeatableSection et un data_name cible littéral appartenant à ses lignes.
-Section n’ajoute aucun périmètre d’enregistrement. Les noms dynamiques, alias et appels dans EVAL sont
-exclus ; les autres usages d’EVAL restent inchangés. Le marqueur plat RepeatableSection reste null.
+Utilisez le data_name de RepeatableSection et un data_name cible littéral appartenant à ses
+[lignes](/fr/core/fields/containers#repeatablesection). Section n’ajoute aucun périmètre
+d’enregistrement. Les noms dynamiques, alias et appels dans EVAL sont exclus. Le marqueur plat
+RepeatableSection vaut null.
 
 | Valeurs par ligne                  | REPEATABLEVALUES                           | REPEATABLESUM             |
 | ---------------------------------- | ------------------------------------------ | ------------------------- |
@@ -90,7 +91,7 @@ mal formé produit un échec de calcul, sans sélection ni suppression silencieu
 restent groupés par ligne, choix prédéfinis puis texte Other. Les liens exposent uniquement les
 références, sans récupérer de contenu.
 
-Autres cibles : TextField, BooleanField, DateField, TimeField. Les tableaux/objets calculés conservent
-leurs types et regroupements. Conteneurs, LabelField, médias, StatusField et TitleField sont exclus.
-Les titres et médias restent pris en charge hors projection. L’ordre et les lignes acceptées masquées
-sont conservés. Les diagnostics restent distincts de la validité de soumission.
+Autres cibles : TextField, BooleanField, DateField, TimeField. Les tableaux/objets calculés
+conservent leurs types et regroupements. Conteneurs, LabelField, médias, StatusField et TitleField
+sont exclus. Les lignes gardent leur ordre accepté et les lignes masquées sont incluses. Les
+diagnostics n’affectent pas la validité de soumission.

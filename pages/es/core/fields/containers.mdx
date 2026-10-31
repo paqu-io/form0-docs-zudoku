@@ -31,6 +31,10 @@ Atributos adicionales:
 
 ## RepeatableSection
 
+Una `RepeatableSection` permite al usuario añadir cualquier número de filas, como las líneas de un
+pedido. Cada fila guarda sus propios valores para el mismo conjunto de campos. En el registro de
+salida, cada fila se convierte en un registro hijo.
+
 ```json
 {
   "type": "RepeatableSection",
@@ -76,12 +80,12 @@ Atributos adicionales:
 
 Atributos adicionales:
 
-- `location_enabled`: habilita los datos de ubicación de los elementos.
-- `location_required`: exige datos de ubicación para los elementos.
+- `location_enabled`: habilita los datos de ubicación de las filas.
+- `location_required`: exige datos de ubicación para las filas.
 - `title_field`: `TitleField` opcional que se usa para obtener el título de cada registro hijo. Usa `null` si no
-  hay ningún título de entrada configurado.
+  hay ningún título de fila configurado.
 
-Las secciones repetibles generan un array de registros hijos en la salida. El título de entrada configurado se
+Las secciones repetibles generan un array de registros hijos en la salida. El título de fila configurado se
 guarda como `@title` en cada registro hijo. Si todas las partes del título están vacías, `@title` es `null`; los renderers
 pueden mostrar una etiqueta posicional como `Items 1`, pero ese valor alternativo no se guarda.
 

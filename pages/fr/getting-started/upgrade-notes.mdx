@@ -22,15 +22,16 @@ Comparez les versions que vous utilisez avec chaque ligne. Une ligne vous concer
 est antérieure à celle indiquée. La date est celle de la publication du premier paquet contenant le
 changement. Un paquet absent de la ligne n’est pas concerné.
 
-| Date         | Changement                                                                                                                                                                            | Versions                                                  |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `2026-10-30` | [Les valeurs des champs sont vérifiées par type](#les-valeurs-des-champs-sont-vérifiées-par-type)                                                                                     | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
-| `2026-10-30` | [Les schémas qui effacent les valeurs masquées exigent que tous les paquets soient à jour](#les-schémas-qui-effacent-les-valeurs-masquées-exigent-que-tous-les-paquets-soient-à-jour) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
-| `2026-10-29` | [Les champs de choix exigent des identifiants textuels dans `SETVALUE()`](#les-champs-de-choix-exigent-des-identifiants-textuels-dans-setvalue)                                       | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0    |
-| `2026-10-28` | [`FormRenderer` exige `recordKind`](#formrenderer-exige-recordkind)                                                                                                                   | react 0.5.0, react-native 0.6.0                           |
-| `2026-10-27` | [Les gestionnaires ne peuvent pas modifier un enregistrement en lecture seule](#les-gestionnaires-ne-peuvent-pas-modifier-un-enregistrement-en-lecture-seule)                         | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0    |
-| `2026-10-22` | [Les conditions ne peuvent lire que leur propre enregistrement et ses parents](#les-conditions-ne-peuvent-lire-que-leur-propre-enregistrement-et-ses-parents)                         | core 0.6.0                                                |
-| `2026-10-08` | [Les éditeurs de ligne sur mobile n’exécutent plus les événements d’enregistrement](#les-éditeurs-de-ligne-sur-mobile-nexécutent-plus-les-événements-denregistrement)                 | react-native 0.3.0                                        |
+| Date         | Changement                                                                                                                                                                            | Versions                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `2026-10-31` | [Les lignes vides enregistrées restent dans l’enregistrement](#les-lignes-vides-enregistrées-restent-dans-lenregistrement)                                                            | core 0.11.0, react 0.10.0, react-native 0.11.0, cli 0.10.0 |
+| `2026-10-30` | [Les valeurs des champs sont vérifiées par type](#les-valeurs-des-champs-sont-vérifiées-par-type)                                                                                     | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-30` | [Les schémas qui effacent les valeurs masquées exigent que tous les paquets soient à jour](#les-schémas-qui-effacent-les-valeurs-masquées-exigent-que-tous-les-paquets-soient-à-jour) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-29` | [Les champs de choix exigent des identifiants textuels dans `SETVALUE()`](#les-champs-de-choix-exigent-des-identifiants-textuels-dans-setvalue)                                       | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0     |
+| `2026-10-28` | [`FormRenderer` exige `recordKind`](#formrenderer-exige-recordkind)                                                                                                                   | react 0.5.0, react-native 0.6.0                            |
+| `2026-10-27` | [Les gestionnaires ne peuvent pas modifier un enregistrement en lecture seule](#les-gestionnaires-ne-peuvent-pas-modifier-un-enregistrement-en-lecture-seule)                         | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0     |
+| `2026-10-22` | [Les conditions ne peuvent lire que leur propre enregistrement et ses parents](#les-conditions-ne-peuvent-lire-que-leur-propre-enregistrement-et-ses-parents)                         | core 0.6.0                                                 |
+| `2026-10-08` | [Les éditeurs de ligne sur mobile n’exécutent plus les événements d’enregistrement](#les-éditeurs-de-ligne-sur-mobile-nexécutent-plus-les-événements-denregistrement)                 | react-native 0.3.0                                         |
 
 ## Mettez à niveau les paquets ensemble
 
@@ -39,6 +40,26 @@ Chaque binding dépend d’une version correspondante de `form0-core` : installe
 - React: `npm install form0-react@latest form0-core@latest`
 - React Native: `npm install form0-react-native@latest form0-core@latest`
 - CLI: `npm install --global form0-cli@latest`
+
+## Les lignes vides enregistrées restent dans l’enregistrement
+
+**Publié :** 2026-10-31
+
+**S’applique à partir de :** `form0-core` 0.11.0, `form0-react` 0.10.0, `form0-react-native` 0.11.0,
+`form0-cli` 0.10.0
+
+**Agissez si** une section répétable n’a que des champs facultatifs et que votre serveur ou votre
+base de données attend une réponse dans chaque
+[ligne](/fr/core/fields/containers#repeatablesection). Un utilisateur peut ajouter une ligne et
+l’enregistrer sans rien saisir. Cette ligne était auparavant retirée de l’enregistrement soumis.
+Elle y reste désormais, avec son identifiant, ses horodatages et des réponses `null`.
+
+**Que faire :** Marquez un champ de la ligne comme `required` pour qu’elle ne puisse pas être
+enregistrée vide, ou gérez ces lignes sur votre serveur.
+[Lignes vides enregistrées](/fr/core/output-records#lignes-vides-enregistrées) montre le résultat.
+
+**Vérifiez :** Ouvrez le formulaire, ajoutez une ligne et enregistrez-la sans rien saisir. Cliquez
+sur **Submit** et confirmez que votre serveur accepte l’enregistrement.
 
 ## Les valeurs des champs sont vérifiées par type
 
@@ -115,8 +136,9 @@ SETVALUE("rating", "1")
 SETVALUE("tags", ["red"])
 ```
 
-Un gestionnaire qui écrit dans un champ inaccessible, comme un champ de ligne depuis un gestionnaire
-du formulaire principal, perd désormais tous ses appels à `SETVALUE()`, pas seulement celui-ci.
+Un gestionnaire qui écrit dans un champ inaccessible, comme un champ d’une
+[ligne de section répétable](/fr/core/fields/containers#repeatablesection) depuis un gestionnaire du
+formulaire principal, perd désormais tous ses appels à `SETVALUE()`, pas seulement celui-ci.
 
 **Vérifiez :** Recherchez `SETVALUE(` dans vos schémas, déclenchez chaque gestionnaire et vérifiez
 que le champ affiche la valeur. Des versions antérieures de `form0-react` peuvent laisser le champ
@@ -225,7 +247,7 @@ form0 validate path/to/schema.json
 **S’applique à partir de :** `form0-react-native` 0.3.0
 
 **Agissez si** vous effectuez la mise à niveau depuis `form0-react-native` 0.2.x et un gestionnaire
-compte sur l’exécution de `load-record`, `edit-record` ou `change` dans une entrée répétable.
+compte sur l’exécution de `load-record`, `edit-record` ou `change` dans une ligne répétable.
 
 **Que faire :** Déplacez la logique de ligne vers les événements répétables, avec le `data_name` de
 votre section répétable :

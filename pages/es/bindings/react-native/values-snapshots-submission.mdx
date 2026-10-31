@@ -23,7 +23,8 @@ completa, usa preferentemente `initialSnapshot`:
 />
 ```
 
-El snapshot mantiene juntos los valores sin procesar, las entradas repetibles anidadas y las marcas
+El snapshot mantiene juntos los valores sin procesar, las
+[filas de secciones repetibles](/es/core/fields/containers#repeatablesection) anidadas y las marcas
 de tiempo:
 
 ```js
@@ -294,4 +295,5 @@ nada hasta que el usuario pulsa **Submit**. Si el registro cambia mientras se ej
 la respuesta se descarta y el usuario tiene que volver a enviar. Cierra antes cualquier fila
 abierta. En un formulario de solo lectura, el usuario no puede pulsar el hallazgo.
 
-Las filas guardadas explícitamente permanecen en el registro enviado aunque todas sus respuestas estén vacías. Conservan sus identificadores y metadatos, y las respuestas vacías de TextField/NumericField se serializan como `null`. Esto no depende de `onResolveHiddenValue`. Cancela una fila sin guardar o elimina una fila guardada para excluirla.
+Si al borrar el valor una fila se queda sin respuestas, la fila permanece en el registro. Consulta
+[Filas vacías guardadas](/es/core/output-records#filas-vacías-guardadas).

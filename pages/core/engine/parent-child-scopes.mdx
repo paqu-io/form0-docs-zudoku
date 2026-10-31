@@ -71,8 +71,8 @@ allowed fields reads `undefined`, and the engine reports a warning such as
 shown above: root fields, fields in the current row and fields in ancestor rows. Descendant rows,
 sibling branches and unrelated branches are inaccessible. `validateSchema()` and engine construction
 reject an illegal reference before opening the form. The error identifies the owning element,
-condition property, referenced field and both record ownership paths. Existing field keys and
-`data_name` references remain supported.
+condition property, referenced field and both record ownership paths. A condition can reference a
+field by its key or its `data_name`.
 
 A `Section` or `BuildingPlanSection` inherits its containing record's ownership. A
 `RepeatableSection`'s own conditions govern the collection in its containing record, while its child
@@ -111,7 +111,8 @@ record's load handlers again. To turn these events off, set `engineOptions.event
 metadata.
 
 Record events, such as `load-record`, can read only main-form fields. Field and repeatable event
-handlers follow their declared scope; ancestor reads and local-only writes remain unchanged.
+handlers follow their declared scope: they can read parent fields and write only to their own
+record.
 
 ## Rows in the output record
 

@@ -86,6 +86,11 @@ prompts such as `form0(server)>` stay unchanged.
 | field      | campo      | champ          | campo   |
 | record     | registro   | enregistrement | record  |
 | submission | envío      | soumission     | invio   |
+| row        | fila       | ligne          | riga    |
+
+A row is one entry in a `RepeatableSection`. Use "row" while a form is being edited and "child
+record" for its saved data, and do not call it an entry. The first mention on a page says
+"repeatable section row" and links to `/core/fields/containers#repeatablesection`.
 
 Italian keeps "record" (il record, i record), as is usual in Italian technical writing.
 

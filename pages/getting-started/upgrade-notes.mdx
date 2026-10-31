@@ -21,15 +21,16 @@ Compare the versions you use with each row. A row applies if your version is old
 shown. The date is when the first package with the change was released. A package that is not listed
 is not affected.
 
-| Date         | Change                                                                                                                        | Versions                                                  |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `2026-10-30` | [Field values are checked by type](#field-values-are-checked-by-type)                                                         | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
-| `2026-10-30` | [Schemas that clear hidden values need every package upgraded](#schemas-that-clear-hidden-values-need-every-package-upgraded) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
-| `2026-10-29` | [Choice fields need string IDs in `SETVALUE()`](#choice-fields-need-string-ids-in-setvalue)                                   | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0    |
-| `2026-10-28` | [`FormRenderer` requires `recordKind`](#formrenderer-requires-recordkind)                                                     | react 0.5.0, react-native 0.6.0                           |
-| `2026-10-27` | [Handlers cannot change a read-only record](#handlers-cannot-change-a-read-only-record)                                       | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0    |
-| `2026-10-22` | [Conditions can only read their own record and its parents](#conditions-can-only-read-their-own-record-and-its-parents)       | core 0.6.0                                                |
-| `2026-10-08` | [Mobile row editors no longer run record events](#mobile-row-editors-no-longer-run-record-events)                             | react-native 0.3.0                                        |
+| Date         | Change                                                                                                                        | Versions                                                   |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `2026-10-31` | [Saved empty rows stay in the record](#saved-empty-rows-stay-in-the-record)                                                   | core 0.11.0, react 0.10.0, react-native 0.11.0, cli 0.10.0 |
+| `2026-10-30` | [Field values are checked by type](#field-values-are-checked-by-type)                                                         | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-30` | [Schemas that clear hidden values need every package upgraded](#schemas-that-clear-hidden-values-need-every-package-upgraded) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-29` | [Choice fields need string IDs in `SETVALUE()`](#choice-fields-need-string-ids-in-setvalue)                                   | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0     |
+| `2026-10-28` | [`FormRenderer` requires `recordKind`](#formrenderer-requires-recordkind)                                                     | react 0.5.0, react-native 0.6.0                            |
+| `2026-10-27` | [Handlers cannot change a read-only record](#handlers-cannot-change-a-read-only-record)                                       | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0     |
+| `2026-10-22` | [Conditions can only read their own record and its parents](#conditions-can-only-read-their-own-record-and-its-parents)       | core 0.6.0                                                 |
+| `2026-10-08` | [Mobile row editors no longer run record events](#mobile-row-editors-no-longer-run-record-events)                             | react-native 0.3.0                                         |
 
 ## Upgrade the packages together
 
@@ -38,6 +39,25 @@ Each binding depends on a matching `form0-core` version, so install them at the 
 - React: `npm install form0-react@latest form0-core@latest`
 - React Native: `npm install form0-react-native@latest form0-core@latest`
 - CLI: `npm install --global form0-cli@latest`
+
+## Saved empty rows stay in the record
+
+**Released:** 2026-10-31
+
+**Applies from:** `form0-core` 0.11.0, `form0-react` 0.10.0, `form0-react-native` 0.11.0,
+`form0-cli` 0.10.0
+
+**Act if** a repeatable section has only optional fields and your server or database expects every
+[row](/core/fields/containers#repeatablesection) to hold an answer. A user can add a row and save it
+without typing anything. That row used to be dropped from the submitted record. It now stays, with
+its ID, its timestamps, and `null` answers.
+
+**What to do:** Mark one field in the row as `required`, so the row can't be saved empty, or handle
+these rows on your server. [Saved empty rows](/core/output-records#saved-empty-rows) shows the
+output.
+
+**Check it:** Open the form, add a row, and save it without typing anything. Click **Submit** and
+confirm that your server accepts the record.
 
 ## Field values are checked by type
 
@@ -114,7 +134,8 @@ SETVALUE("rating", "1")
 SETVALUE("tags", ["red"])
 ```
 
-A handler that writes to a field it cannot reach, such as a row field from a main-form handler, now
+A handler that writes to a field it cannot reach, such as a field in a
+[repeatable section row](/core/fields/containers#repeatablesection) from a main-form handler, now
 loses all its `SETVALUE()` calls, not only that one.
 
 **Check it:** Search your schemas for `SETVALUE(`, then trigger each handler and confirm the field
@@ -222,7 +243,7 @@ form0 validate path/to/schema.json
 **Applies from:** `form0-react-native` 0.3.0
 
 **Act if** you upgrade from `form0-react-native` 0.2.x and a handler relies on `load-record`,
-`edit-record`, or `change` running inside a repeatable entry.
+`edit-record`, or `change` running inside a repeatable row.
 
 **What to do:** Move row logic to the repeatable events, using the `data_name` of your repeatable
 section:

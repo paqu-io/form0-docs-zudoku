@@ -50,7 +50,7 @@ public exports.
 
 See the managed event controller and scope contract in [FormRenderer](/bindings/react-native/form-renderer).
 
-`engineOptions.events`: `lifecycle` (true), required `recordKind` (new/existing), `fieldInteractions` ([focus, blur, click]). Set `lifecycle: false` for legacy lifecycle or `fieldInteractions: []` to disable automatic interactions.
+`engineOptions.events`: `lifecycle` (true), required `recordKind` (new/existing), `fieldInteractions` ([focus, blur, click]). Set `lifecycle: false` to keep only `load-record`, `edit-record`, and `change`, or `fieldInteractions: []` to disable automatic interactions.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
 
-Programmatic setters use the shared strict input contract. Initial values and host overrides remain tolerant loading paths, including View; accepted calculations are preserved in View. [See the value-update contract](/core/engine/value-updates).
+Setters reject values in the wrong shape. Initial values and application overrides are more tolerant, including in View, which keeps accepted calculations. [See the value-update contract](/core/engine/value-updates).

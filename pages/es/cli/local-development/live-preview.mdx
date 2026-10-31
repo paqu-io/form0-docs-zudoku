@@ -28,8 +28,10 @@ oficiales:
 
 El servidor devuelve diagnósticos con cada evaluación. La consola del navegador muestra los
 hallazgos nuevos o modificados, los resueltos y los problemas que reaparecen. Las evaluaciones
-idénticas no los vuelven a imprimir. Un hallazgo en una fila anidada muestra su ruta repetible y el
-identificador de la fila, o indica que usa una posición cuando no hay identificador.
+idénticas no los vuelven a imprimir. Un hallazgo en una
+[fila anidada de una sección repetible](/es/core/fields/containers#repeatablesection) muestra su
+ruta repetible y el identificador de la fila, o indica que usa una posición cuando no hay
+identificador.
 
 Usa `form0 serve [schema] --no-diagnostics` para ocultar los informes de cálculo y la salida de
 consola integrada de la vista previa. Los diagnósticos se siguen recopilando. Una aplicación
@@ -126,7 +128,7 @@ Necesitas [form0-cli](/es/cli/install-update).
 La vista previa no muestra ningún banner de solo lectura, así que comprueba que los campos y el
 botón **Submit Record** estén desactivados (en gris).
 
-### Filas
+### Filas de secciones repetibles
 
 Las filas en línea ofrecen **Editar**, **Guardar fila** y **Cancelar fila**. Las ediciones quedan
 pendientes hasta que las aceptas: **Guardar fila** valida primero la fila, y **Cancelar fila**
@@ -265,4 +267,5 @@ El manejador se ejecuta en tu servidor, así que no puede abrir un diálogo del 
 [Resolver un valor oculto](/es/bindings/react/values-snapshots-submission#resolver-un-valor-oculto-que-no-pasa-la-validación)
 en la documentación de React explica qué recibe y qué devuelve el manejador.
 
-Las filas guardadas explícitamente permanecen en el registro enviado aunque todas sus respuestas estén vacías. Conservan sus identificadores y metadatos, y las respuestas vacías de TextField/NumericField se serializan como `null`. Esto no depende de `onResolveHiddenValue`. Cancela una fila sin guardar o elimina una fila guardada para excluirla.
+Si al borrar el valor una fila se queda sin respuestas, la fila permanece en el registro. Consulta
+[Filas vacías guardadas](/es/core/output-records#filas-vacías-guardadas).

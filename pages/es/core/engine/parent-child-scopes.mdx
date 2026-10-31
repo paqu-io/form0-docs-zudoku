@@ -73,8 +73,8 @@ un cálculo fuera de los campos permitidos lee `undefined`, y el motor emite un 
 lectura de la tabla anterior: campos raíz, de la fila actual y de las filas antecesoras. No permiten
 leer filas descendientes, ramas hermanas ni ramas ajenas. `validateSchema()` y la creación del motor
 rechazan una referencia ilegal antes de abrir el formulario. El error identifica el elemento dueño,
-la propiedad de condición, el campo referenciado y ambas rutas de pertenencia a registros. Se mantiene
-el soporte de claves de campo y referencias por `data_name`.
+la propiedad de condición, el campo referenciado y ambas rutas de pertenencia a registros. Una
+condición puede hacer referencia a un campo por su clave o por su `data_name`.
 
 Una `Section` o `BuildingPlanSection` hereda la pertenencia del registro que la contiene. Las
 condiciones de una `RepeatableSection` gobiernan la colección en el registro que la contiene; sus
@@ -113,9 +113,9 @@ eventos, establece `engineOptions.events.lifecycle` en `false`. Consulta
 [Despacho de eventos en los bindings oficiales](/es/core/builtins/events-overview) para conocer los
 momentos y los metadatos.
 
-Los eventos de registro, como `load-record`, solo pueden leer campos raíz. Los manejadores de eventos
-de campo y repetibles siguen su ámbito declarado; se mantienen las lecturas de antecesores y las
-escrituras exclusivamente locales.
+Los eventos de registro, como `load-record`, solo pueden leer campos raíz. Los manejadores de
+eventos de campo y repetibles siguen su ámbito declarado: pueden leer los campos de sus padres y
+escribir solo en su propio registro.
 
 ## Las filas en el registro de salida
 

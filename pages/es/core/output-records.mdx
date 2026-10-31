@@ -36,9 +36,10 @@ const record = createStructuredRecord(state, fields, {
 
 ### Serialización cooperativa
 
-Para un registro evaluado grande, `createStructuredRecordAsync` usa la misma transformación y
-cede el control al entorno entre filas. Mantén estables el estado, los campos y las opciones hasta
-que termine; los controladores de envío de los bindings ya controlan la instantánea seleccionada.
+Para un registro evaluado grande, `createStructuredRecordAsync` usa la misma transformación y cede
+el control al entorno entre [filas](/es/core/fields/containers#repeatablesection). Mantén estables
+el estado, los campos y las opciones hasta que termine; los controladores de envío de los bindings
+ya controlan la instantánea seleccionada.
 
 ```js
 const abortController = new AbortController()
@@ -60,14 +61,13 @@ const record = await createStructuredRecordAsync(
 El cuarto argumento controla la planificación y queda fuera del registro. `yieldToHost` es una
 función opcional que devuelve una promesa para una tarea del entorno; sin ella, core usa un
 temporizador. La cancelación rechaza la promesa con `AbortError` y no devuelve un registro parcial.
-Este método no realiza cálculos, validación ni persistencia. Conserva la estructura del registro,
-el ID cero, el orden de las filas, el formato multimedia, los títulos y las reglas de marcas de
-tiempo del serializador síncrono. Los formateadores de campos siguen siendo síncronos.
+Este método no realiza cálculos, validación ni persistencia. Devuelve el mismo registro que
+`createStructuredRecord`. Los formateadores de campos son síncronos.
 
 Las secciones repetibles crean registros anidados. Utiliza `originalElements` para conservar la
 estructura de anidamiento correcta al crear registros.
 
-Las entradas abreviadas de setters no alteran los valores predeterminados ni los formatos enviados. SingleChoice/Boolean usa choice_value y other_value; MultiChoice usa choices_value y other_value. [Consulta el contrato de actualización de valores](/es/core/engine/value-updates).
+Sea cual sea la forma de asignar un valor, el registro enviado usa el mismo formato: SingleChoice/Boolean usa choice_value y other_value; MultiChoice usa choices_value y other_value. [Consulta el contrato de actualización de valores](/es/core/engine/value-updates).
 
 ## Cargar un registro guardado
 
@@ -98,4 +98,20 @@ texto simple. Para comprobar un registro guardado con el esquema, pasa `raw_valu
 
 ## Filas vacías guardadas
 
-Una fila repetible guardada explícitamente permanece en el registro aunque todas sus respuestas estén vacías. Por ejemplo, un artículo de pedido aceptado con TextField `product` y NumericField `quantity` opcionales se serializa con ambas respuestas en `null`, conservando su identificador y marcas de tiempo. Esto se aplica a las filas anidadas y a ambos serializadores estructurados, independientemente de la conservación de valores ocultos o de un manejador de recuperación. Cancela una fila sin guardar o elimina una fila guardada para excluirla. Las colecciones vacías permanecen vacías; la serialización no crea filas.
+Una [fila](/es/core/fields/containers#repeatablesection) guardada permanece en el registro aunque
+todas sus respuestas estén vacías. Por ejemplo, si un usuario añade una fila a un pedido, deja en
+blanco los campos opcionales `product` y `quantity` y guarda la fila, el registro enviado la incluye
+igualmente. Abreviada, la fila tiene este aspecto:
+
+```json
+{
+  "id": "01a1924c-66df-79b8-bdf8-2100ba684129",
+  "created_at": "2026-10-31T14:10:43.043Z",
+  "form_values": { "product": null, "quantity": null }
+}
+```
+
+Esto también se aplica a las filas anidadas. Una sección repetible sin filas permanece vacía.
+
+Para impedir que se guarde una fila vacía, marca uno de sus campos como `required`. Para dejar una
+fila fuera del registro, cancélala antes de guardarla o elimínala.

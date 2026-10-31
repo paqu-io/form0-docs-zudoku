@@ -200,11 +200,11 @@ Neither method evaluates the form, saves a record, or closes an editor.
 
 ### Run a row's handlers
 
-To run a row's handlers without a renderer, pass `eventScope.instancePath` when you create the
-engine. The main record's path is `[]`. Each row segment has `repeatableKey`, `instanceId`, `index`,
-and `identity`. Paths use schema keys, and listeners use `data_name`. A row without an ID uses
-`identity: "position"`. form0 checks the path against the schema, but your application must check
-that the row still exists.
+To run the handlers of a [repeatable section row](/core/fields/containers#repeatablesection) without
+a renderer, pass `eventScope.instancePath` when you create the engine. The main record's path is
+`[]`. Each row segment has `repeatableKey`, `instanceId`, `index`, and `identity`. Paths use schema
+keys, and listeners use `data_name`. A row without an ID uses `identity: "position"`. form0 checks
+the path against the schema, but your application must check that the row still exists.
 
 A row handler can read its own fields, and the parent-row and main-form fields your application
 supplies. `SETVALUE()` writes only to the current row. Sibling rows, child rows, and repeatable

@@ -30,18 +30,18 @@ ON("change", "age", function (event) {
 
 Par défaut, `FormRenderer` dans `form0-react` et `form0-react-native` déclenche ces événements :
 
-| Événement         | Quand il s’exécute                                                            |
-| ----------------- | ----------------------------------------------------------------------------- |
-| `load-record`     | Chaque fois qu’un enregistrement s’ouvre, en modification ou en lecture seule |
-| `new-record`      | Un nouvel enregistrement passe en modification                                |
-| `edit-record`     | Un enregistrement existant passe en modification                              |
-| `change`          | Un utilisateur modifie un champ, ou ajoute, modifie ou supprime une ligne     |
-| `focus`, `blur`   | Un champ texte ou numérique gagne ou perd le focus                            |
-| `validate-record` | Un utilisateur soumet le formulaire ou sauvegarde un brouillon                |
-| `save-record`     | Après la validation, une fois par tentative de sauvegarde                     |
-| `cancel-record`   | Un utilisateur confirme l’annulation d’un enregistrement                      |
-| `unload-record`   | Un enregistrement se ferme                                                    |
-| `change-status`   | Un utilisateur modifie le champ de statut, s’il est activé                    |
+| Événement         | Quand il s’exécute                                                                                                                                |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `load-record`     | Chaque fois qu’un enregistrement s’ouvre, en modification ou en lecture seule                                                                     |
+| `new-record`      | Un nouvel enregistrement passe en modification                                                                                                    |
+| `edit-record`     | Un enregistrement existant passe en modification                                                                                                  |
+| `change`          | Un utilisateur modifie un champ, ou ajoute, modifie ou supprime une [ligne d’une section répétable](/fr/core/fields/containers#repeatablesection) |
+| `focus`, `blur`   | Un champ texte ou numérique gagne ou perd le focus                                                                                                |
+| `validate-record` | Un utilisateur soumet le formulaire ou sauvegarde un brouillon                                                                                    |
+| `save-record`     | Après la validation, une fois par tentative de sauvegarde                                                                                         |
+| `cancel-record`   | Un utilisateur confirme l’annulation d’un enregistrement                                                                                          |
+| `unload-record`   | Un enregistrement se ferme                                                                                                                        |
+| `change-status`   | Un utilisateur modifie le champ de statut, s’il est activé                                                                                        |
 
 Les lignes ont leurs propres événements : `load-repeatable`, `new-repeatable`, `edit-repeatable`,
 `validate-repeatable`, `save-repeatable`, `cancel-repeatable`, `unload-repeatable`. Une ligne

@@ -140,10 +140,10 @@ campo obbligatorio vuoto blocca l'invio.
 ## Valutare un record completo
 
 `engine.eval()` copre un solo record. Un modulo con sezioni ripetibili è un albero: un record
-principale, le sue righe e le eventuali righe al loro interno. Usa
-`createRecordEvaluator({ schema, helpers, security })` quando ti serve un risultato per tutto
-l'albero, ad esempio per controllare un record prima di salvarlo. Usa le stesse espressioni e regole
-di ambito del motore.
+principale, le sue [righe](/it/core/fields/containers#repeatablesection) e le eventuali righe al
+loro interno. Usa `createRecordEvaluator({ schema, helpers, security })` quando ti serve un
+risultato per tutto l'albero, ad esempio per controllare un record prima di salvarlo. Usa le stesse
+espressioni e regole di ambito del motore.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -384,4 +384,5 @@ Se qualcosa non va, `status` è `"failed"` e `issues` contiene uno di questi cod
 Assicurati che il record non sia cambiato prima di usare `corrected.snapshot`. I binding e
 l'anteprima della CLI lo fanno per te, e chiedono di chiudere prima qualsiasi riga aperta.
 
-Le righe salvate esplicitamente rimangono nel record inviato anche quando tutte le risposte sono vuote. Conservano identificatori e metadati, e le risposte vuote di TextField/NumericField vengono serializzate come `null`. Entrambi i serializzatori strutturati applicano questa regola senza opzioni. Annulla una riga non salvata o elimina una riga salvata per escluderla.
+Se cancellando il valore una riga resta senza risposte, la riga rimane nel record. Vedi
+[Righe vuote salvate](/it/core/output-records#righe-vuote-salvate).

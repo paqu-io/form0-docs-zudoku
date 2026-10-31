@@ -15,10 +15,11 @@ n’est pas disponible.
 `showPrimaryActionsInViewMode` détermine si les actions principales désactivées restent visibles en
 mode consultation.
 
-## Mode d’ouverture des entrées répétables
+## Mode d’ouverture des lignes répétables
 
-`repeatableEntryMode` accepte `readonly` (par défaut) ou `edit` pour les lignes existantes à tous
-les niveaux d’imbrication. Les lignes existantes s’ouvrent en consultation avec Edit si leur parent
+`repeatableEntryMode` accepte `readonly` (par défaut) ou `edit` pour les
+[lignes de sections répétables](/fr/core/fields/containers#repeatablesection) existantes à tous les
+niveaux d’imbrication. Les lignes existantes s’ouvrent en consultation avec Edit si leur parent
 permet la modification ; les nouvelles s’ouvrent en modification. Un parent en lecture seule permet
 de consulter ses descendants, mais empêche leur modification, leur ajout et leur suppression.
 L’option de modification directe ne contourne pas les restrictions du parent.
@@ -35,8 +36,7 @@ en modification directe. Consultation → Modification exécute edit sans répé
 vaut `readonly` ou `edit` pour l'enregistrement exécutant l'événement, indépendamment du mode du
 parent. Consulter permet les lectures, ALERT et ON/OFF du périmètre ; une écriture rejette tout le
 lot avant délégation au host. Déplacez l'initialisation qui écrit vers new/edit ou protégez les
-setters de load pour la modification directe. La version coordonnée du core avec contrôle du mode
-est requise ; la structure du schéma et de l'enregistrement sauvegardé reste identique.
+setters de load pour la modification directe.
 
 ## Emplacement
 
@@ -58,6 +58,6 @@ d’abandon tient compte des modifications du renderer et de `externalDirty`.
 - `forceShowNavigationPanel` garde la navigation par sections visible alors qu’elle serait normalement réduite.
 - `simplifiedMode` présente un champ à la fois ; `onSimplifiedNavigation` observe la progression.
 
-Les sections, les entrées répétables, la navigation vers les erreurs de validation, la gestion du
+Les sections, les lignes répétables, la navigation vers les erreurs de validation, la gestion du
 focus et les actions au clavier sont gérées par `FormRenderer`. Gardez le comportement conditionnel
 dans le schéma plutôt que de le dupliquer dans l’état React.

@@ -29,7 +29,8 @@ Per un ripristino completo, preferisci `initialSnapshot`:
 ```
 
 Uno snapshot iniziale sostituisce `initialValues` per i valori grezzi dei campi. Ripristina anche le
-voci ripetibili annidate e i timestamp di client e server come un unico stato coerente.
+[righe di sezioni ripetibili](/it/core/fields/containers#repeatablesection) annidate e i timestamp
+di client e server come un unico stato coerente.
 
 ## Osservare le bozze
 
@@ -315,7 +316,8 @@ viene salvato nulla finché l'utente non fa clic su **Submit**. Se il record cam
 è in esecuzione, la risposta viene scartata e l'utente deve inviare di nuovo. Chiudi prima qualsiasi
 riga aperta. I moduli in sola lettura non mostrano il pulsante.
 
-Le righe salvate esplicitamente rimangono nel record inviato anche quando tutte le risposte sono vuote. Conservano identificatori e metadati, e le risposte vuote di TextField/NumericField vengono serializzate come `null`. Questo non dipende da `onResolveHiddenValue`. Annulla una riga non salvata o elimina una riga salvata per escluderla.
+Se cancellando il valore una riga resta senza risposte, la riga rimane nel record. Vedi
+[Righe vuote salvate](/it/core/output-records#righe-vuote-salvate).
 
 ### Prova a risolvere un valore nascosto
 

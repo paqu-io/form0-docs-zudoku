@@ -21,7 +21,8 @@ Use `initialValues` for an ordinary record seed. `overrideValues` take precedenc
 />
 ```
 
-The snapshot keeps raw values, nested repeatable entries, and timestamps together:
+The snapshot keeps raw values, nested
+[repeatable section rows](/core/fields/containers#repeatablesection), and timestamps together:
 
 ```js
 {
@@ -279,4 +280,5 @@ presses **Submit**. If the record changes while your handler runs, the reply is 
 user has to submit again. Close any open row first. In a read-only form, the user can't press the
 finding.
 
-Explicitly saved rows stay in the submitted record even when every answer is empty. Their IDs and metadata are retained, and empty TextField/NumericField answers serialize as `null`. This does not depend on `onResolveHiddenValue`. Cancel an unsaved row or remove a saved row to exclude it.
+If clearing the value leaves a row with no answers, the row stays in the record. See
+[Saved empty rows](/core/output-records#saved-empty-rows).

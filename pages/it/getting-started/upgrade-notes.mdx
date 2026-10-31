@@ -21,15 +21,16 @@ Confronta le versioni che usi con ogni riga. Una riga ti riguarda se la tua vers
 quella indicata. La data è quella di pubblicazione del primo pacchetto con la modifica. Un pacchetto
 non elencato non è interessato.
 
-| Data         | Modifica                                                                                                                                                                    | Versioni                                                  |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `2026-10-30` | [I valori dei campi vengono controllati per tipo](#i-valori-dei-campi-vengono-controllati-per-tipo)                                                                         | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
-| `2026-10-30` | [Gli schemi che cancellano i valori nascosti richiedono tutti i pacchetti aggiornati](#gli-schemi-che-cancellano-i-valori-nascosti-richiedono-tutti-i-pacchetti-aggiornati) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
-| `2026-10-29` | [I campi di scelta richiedono identificatori testuali in `SETVALUE()`](#i-campi-di-scelta-richiedono-identificatori-testuali-in-setvalue)                                   | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0    |
-| `2026-10-28` | [`FormRenderer` richiede `recordKind`](#formrenderer-richiede-recordkind)                                                                                                   | react 0.5.0, react-native 0.6.0                           |
-| `2026-10-27` | [I gestori non possono modificare un record in sola lettura](#i-gestori-non-possono-modificare-un-record-in-sola-lettura)                                                   | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0    |
-| `2026-10-22` | [Le condizioni possono leggere solo il proprio record e i suoi genitori](#le-condizioni-possono-leggere-solo-il-proprio-record-e-i-suoi-genitori)                           | core 0.6.0                                                |
-| `2026-10-08` | [Gli editor di riga su mobile non eseguono più gli eventi del record](#gli-editor-di-riga-su-mobile-non-eseguono-più-gli-eventi-del-record)                                 | react-native 0.3.0                                        |
+| Data         | Modifica                                                                                                                                                                    | Versioni                                                   |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `2026-10-31` | [Le righe vuote salvate rimangono nel record](#le-righe-vuote-salvate-rimangono-nel-record)                                                                                 | core 0.11.0, react 0.10.0, react-native 0.11.0, cli 0.10.0 |
+| `2026-10-30` | [I valori dei campi vengono controllati per tipo](#i-valori-dei-campi-vengono-controllati-per-tipo)                                                                         | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-30` | [Gli schemi che cancellano i valori nascosti richiedono tutti i pacchetti aggiornati](#gli-schemi-che-cancellano-i-valori-nascosti-richiedono-tutti-i-pacchetti-aggiornati) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-29` | [I campi di scelta richiedono identificatori testuali in `SETVALUE()`](#i-campi-di-scelta-richiedono-identificatori-testuali-in-setvalue)                                   | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0     |
+| `2026-10-28` | [`FormRenderer` richiede `recordKind`](#formrenderer-richiede-recordkind)                                                                                                   | react 0.5.0, react-native 0.6.0                            |
+| `2026-10-27` | [I gestori non possono modificare un record in sola lettura](#i-gestori-non-possono-modificare-un-record-in-sola-lettura)                                                   | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0     |
+| `2026-10-22` | [Le condizioni possono leggere solo il proprio record e i suoi genitori](#le-condizioni-possono-leggere-solo-il-proprio-record-e-i-suoi-genitori)                           | core 0.6.0                                                 |
+| `2026-10-08` | [Gli editor di riga su mobile non eseguono più gli eventi del record](#gli-editor-di-riga-su-mobile-non-eseguono-più-gli-eventi-del-record)                                 | react-native 0.3.0                                         |
 
 ## Aggiorna i pacchetti insieme
 
@@ -38,6 +39,25 @@ Ogni binding dipende da una versione corrispondente di `form0-core`, quindi inst
 - React: `npm install form0-react@latest form0-core@latest`
 - React Native: `npm install form0-react-native@latest form0-core@latest`
 - CLI: `npm install --global form0-cli@latest`
+
+## Le righe vuote salvate rimangono nel record
+
+**Pubblicato:** 2026-10-31
+
+**Si applica da:** `form0-core` 0.11.0, `form0-react` 0.10.0, `form0-react-native` 0.11.0,
+`form0-cli` 0.10.0
+
+**Intervieni se** una sezione ripetibile ha solo campi facoltativi e il tuo server o il tuo database
+si aspetta una risposta in ogni [riga](/it/core/fields/containers#repeatablesection). Un utente può
+aggiungere una riga e salvarla senza scrivere nulla. Prima quella riga veniva tolta dal record
+inviato. Ora rimane, con il suo identificatore, i suoi timestamp e risposte `null`.
+
+**Cosa fare:** Contrassegna un campo della riga come `required`, così la riga non può essere salvata
+vuota, oppure gestisci queste righe sul tuo server.
+[Righe vuote salvate](/it/core/output-records#righe-vuote-salvate) mostra il risultato.
+
+**Verifica:** Apri il modulo, aggiungi una riga e salvala senza scrivere nulla. Fai clic su
+**Submit** e conferma che il tuo server accetta il record.
 
 ## I valori dei campi vengono controllati per tipo
 
@@ -114,7 +134,8 @@ SETVALUE("rating", "1")
 SETVALUE("tags", ["red"])
 ```
 
-Un gestore che scrive in un campo non raggiungibile, come un campo di riga da un gestore del modulo
+Un gestore che scrive in un campo non raggiungibile, come un campo di una
+[riga di sezione ripetibile](/it/core/fields/containers#repeatablesection) da un gestore del modulo
 principale, ora perde tutte le sue chiamate a `SETVALUE()`, non solo quella.
 
 **Verifica:** Cerca `SETVALUE(` nei tuoi schemi, attiva ogni gestore e verifica che il campo mostri
@@ -224,7 +245,7 @@ form0 validate path/to/schema.json
 **Si applica da:** `form0-react-native` 0.3.0
 
 **Intervieni se** aggiorni da `form0-react-native` 0.2.x e un gestore si aspetta che `load-record`,
-`edit-record` o `change` vengano eseguiti dentro una voce ripetibile.
+`edit-record` o `change` vengano eseguiti dentro una riga ripetibile.
 
 **Cosa fare:** Sposta la logica di riga negli eventi ripetibili, usando il `data_name` della tua
 sezione ripetibile:

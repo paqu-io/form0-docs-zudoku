@@ -19,9 +19,8 @@ These are initial values, rather than setter calls. For schema fields named `cou
 
 ## Calculation diagnostics
 
-The following reporting controls describe form0-cli 0.6.0 and later. Runtime calculation diagnostics
-identify the field, stable code, severity, phase, and any suggested correction. Diagnostic details
-go to stderr; evaluated state remains on stdout.
+Runtime calculation diagnostics identify the field, stable code, severity, phase, and any suggested
+correction. Diagnostic details go to stderr; evaluated state remains on stdout.
 
 The command prints state even when a calculation fails, then exits with status `1` if that
 evaluation contains an error-severity diagnostic. Warnings alone exit with status `0`. A failure

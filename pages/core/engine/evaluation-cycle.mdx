@@ -131,9 +131,10 @@ empty required field blocks submission.
 ## Evaluate a whole record
 
 `engine.eval()` covers one record. A form with repeatable sections is a tree: a main record, its
-rows, and any rows inside them. Use `createRecordEvaluator({ schema, helpers, security })` when you
-need a result for the whole tree, such as checking a record before you save it. It uses the same
-expressions and scope rules as the engine.
+[rows](/core/fields/containers#repeatablesection), and any rows inside them. Use
+`createRecordEvaluator({ schema, helpers, security })` when you need a result for the whole tree,
+such as checking a record before you save it. It uses the same expressions and scope rules as the
+engine.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -361,4 +362,5 @@ If something goes wrong, `status` is `"failed"` and `issues` has one of these co
 Make sure the record has not changed before you use `corrected.snapshot`. The bindings and the CLI
 preview do this for you, and they ask for any open row to be closed first.
 
-Explicitly saved rows stay in the submitted record even when every answer is empty. Their IDs and metadata are retained, and empty TextField/NumericField answers serialize as `null`. Both structured serializers apply this rule without an option. Cancel an unsaved row or remove a saved row to exclude it.
+If clearing the value leaves a row with no answers, the row stays in the record. See
+[Saved empty rows](/core/output-records#saved-empty-rows).

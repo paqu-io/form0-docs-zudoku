@@ -21,15 +21,16 @@ Compara las versiones que usas con cada fila. Una fila te afecta si tu versión 
 indicada. La fecha es la de publicación del primer paquete con el cambio. Un paquete que no aparece
 no se ve afectado.
 
-| Fecha        | Cambio                                                                                                                                                                  | Versiones                                                 |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `2026-10-30` | [Los valores de los campos se comprueban por tipo](#los-valores-de-los-campos-se-comprueban-por-tipo)                                                                   | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
-| `2026-10-30` | [Los esquemas que borran valores ocultos necesitan todos los paquetes actualizados](#los-esquemas-que-borran-valores-ocultos-necesitan-todos-los-paquetes-actualizados) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0 |
-| `2026-10-29` | [Los campos de selección necesitan identificadores de texto en `SETVALUE()`](#los-campos-de-selección-necesitan-identificadores-de-texto-en-setvalue)                   | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0    |
-| `2026-10-28` | [`FormRenderer` requiere `recordKind`](#formrenderer-requiere-recordkind)                                                                                               | react 0.5.0, react-native 0.6.0                           |
-| `2026-10-27` | [Los manejadores no pueden cambiar un registro de solo lectura](#los-manejadores-no-pueden-cambiar-un-registro-de-solo-lectura)                                         | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0    |
-| `2026-10-22` | [Las condiciones solo pueden leer su propio registro y sus padres](#las-condiciones-solo-pueden-leer-su-propio-registro-y-sus-padres)                                   | core 0.6.0                                                |
-| `2026-10-08` | [Los editores de fila en móvil ya no ejecutan eventos de registro](#los-editores-de-fila-en-móvil-ya-no-ejecutan-eventos-de-registro)                                   | react-native 0.3.0                                        |
+| Fecha        | Cambio                                                                                                                                                                  | Versiones                                                  |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `2026-10-31` | [Las filas vacías guardadas permanecen en el registro](#las-filas-vacías-guardadas-permanecen-en-el-registro)                                                           | core 0.11.0, react 0.10.0, react-native 0.11.0, cli 0.10.0 |
+| `2026-10-30` | [Los valores de los campos se comprueban por tipo](#los-valores-de-los-campos-se-comprueban-por-tipo)                                                                   | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-30` | [Los esquemas que borran valores ocultos necesitan todos los paquetes actualizados](#los-esquemas-que-borran-valores-ocultos-necesitan-todos-los-paquetes-actualizados) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-29` | [Los campos de selección necesitan identificadores de texto en `SETVALUE()`](#los-campos-de-selección-necesitan-identificadores-de-texto-en-setvalue)                   | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0     |
+| `2026-10-28` | [`FormRenderer` requiere `recordKind`](#formrenderer-requiere-recordkind)                                                                                               | react 0.5.0, react-native 0.6.0                            |
+| `2026-10-27` | [Los manejadores no pueden cambiar un registro de solo lectura](#los-manejadores-no-pueden-cambiar-un-registro-de-solo-lectura)                                         | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0     |
+| `2026-10-22` | [Las condiciones solo pueden leer su propio registro y sus padres](#las-condiciones-solo-pueden-leer-su-propio-registro-y-sus-padres)                                   | core 0.6.0                                                 |
+| `2026-10-08` | [Los editores de fila en móvil ya no ejecutan eventos de registro](#los-editores-de-fila-en-móvil-ya-no-ejecutan-eventos-de-registro)                                   | react-native 0.3.0                                         |
 
 ## Actualiza los paquetes a la vez
 
@@ -38,6 +39,25 @@ Cada binding depende de una versión concreta de `form0-core`, así que instála
 - React: `npm install form0-react@latest form0-core@latest`
 - React Native: `npm install form0-react-native@latest form0-core@latest`
 - CLI: `npm install --global form0-cli@latest`
+
+## Las filas vacías guardadas permanecen en el registro
+
+**Publicado:** 2026-10-31
+
+**Se aplica desde:** `form0-core` 0.11.0, `form0-react` 0.10.0, `form0-react-native` 0.11.0,
+`form0-cli` 0.10.0
+
+**Actúa si** una sección repetible solo tiene campos opcionales y tu servidor o tu base de datos
+esperan que cada [fila](/es/core/fields/containers#repeatablesection) tenga alguna respuesta. Un
+usuario puede añadir una fila y guardarla sin escribir nada. Antes esa fila se quitaba del registro
+enviado. Ahora permanece, con su identificador, sus marcas de tiempo y respuestas `null`.
+
+**Qué hacer:** Marca un campo de la fila como `required` para que no se pueda guardar vacía, o
+gestiona estas filas en tu servidor.
+[Filas vacías guardadas](/es/core/output-records#filas-vacías-guardadas) muestra el resultado.
+
+**Compruébalo:** Abre el formulario, añade una fila y guárdala sin escribir nada. Haz clic en
+**Submit** y confirma que tu servidor acepta el registro.
 
 ## Los valores de los campos se comprueban por tipo
 
@@ -114,8 +134,9 @@ SETVALUE("rating", "1")
 SETVALUE("tags", ["red"])
 ```
 
-Un manejador que escribe en un campo al que no puede acceder, como un campo de fila desde un
-manejador del formulario principal, ahora pierde todas sus llamadas a `SETVALUE()`, no solo esa.
+Un manejador que escribe en un campo al que no puede acceder, como un campo de una
+[fila de una sección repetible](/es/core/fields/containers#repeatablesection) desde un manejador del
+formulario principal, ahora pierde todas sus llamadas a `SETVALUE()`, no solo esa.
 
 **Compruébalo:** Busca `SETVALUE(` en tus esquemas, ejecuta cada manejador y confirma que el campo
 muestra el valor. Versiones anteriores de `form0-react` pueden dejar el campo sin cambios y sin
@@ -223,7 +244,7 @@ form0 validate path/to/schema.json
 **Se aplica desde:** `form0-react-native` 0.3.0
 
 **Actúa si** actualizas desde `form0-react-native` 0.2.x y un manejador depende de que
-`load-record`, `edit-record` o `change` se ejecuten dentro de una entrada repetible.
+`load-record`, `edit-record` o `change` se ejecuten dentro de una fila repetible.
 
 **Qué hacer:** Mueve la lógica de fila a los eventos repetibles, usando el `data_name` de tu sección
 repetible:

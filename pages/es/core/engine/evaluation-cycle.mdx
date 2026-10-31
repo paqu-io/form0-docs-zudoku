@@ -140,10 +140,10 @@ obligatorio vacío bloquea el envío.
 ## Evaluar un registro completo
 
 `engine.eval()` cubre un solo registro. Un formulario con secciones repetibles es un árbol: un
-registro principal, sus filas y las filas que haya dentro de ellas. Usa
-`createRecordEvaluator({ schema, helpers, security })` cuando necesites un resultado para todo el
-árbol, como comprobar un registro antes de guardarlo. Usa las mismas expresiones y reglas de ámbito
-que el motor.
+registro principal, sus [filas](/es/core/fields/containers#repeatablesection) y las filas que haya
+dentro de ellas. Usa `createRecordEvaluator({ schema, helpers, security })` cuando necesites un
+resultado para todo el árbol, como comprobar un registro antes de guardarlo. Usa las mismas
+expresiones y reglas de ámbito que el motor.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -385,4 +385,5 @@ Si algo falla, `status` es `"failed"` e `issues` incluye uno de estos códigos:
 Asegúrate de que el registro no haya cambiado antes de usar `corrected.snapshot`. Los bindings y la
 vista previa de la CLI lo hacen por ti, y piden cerrar antes cualquier fila abierta.
 
-Las filas guardadas explícitamente permanecen en el registro enviado aunque todas sus respuestas estén vacías. Conservan sus identificadores y metadatos, y las respuestas vacías de TextField/NumericField se serializan como `null`. Ambos serializadores estructurados aplican esta regla sin ninguna opción. Cancela una fila sin guardar o elimina una fila guardada para excluirla.
+Si al borrar el valor una fila se queda sin respuestas, la fila permanece en el registro. Consulta
+[Filas vacías guardadas](/es/core/output-records#filas-vacías-guardadas).

@@ -206,11 +206,13 @@ Nessuno dei due metodi valuta il modulo, salva un record o chiude un editor.
 
 ### Eseguire i gestori di una riga
 
-Per eseguire i gestori di una riga senza renderer, passa `eventScope.instancePath` quando crei il
-motore. Il percorso del record principale è `[]`. Ogni segmento di riga ha `repeatableKey`,
-`instanceId`, `index` e `identity`. I percorsi usano le chiavi dello schema, e i listener usano
-`data_name`. Una riga senza identificatore usa `identity: "position"`. form0 controlla il percorso
-rispetto allo schema, ma la tua applicazione deve controllare che la riga esista ancora.
+Per eseguire i gestori di una
+[riga di sezione ripetibile](/it/core/fields/containers#repeatablesection) senza renderer, passa
+`eventScope.instancePath` quando crei il motore. Il percorso del record principale è `[]`. Ogni
+segmento di riga ha `repeatableKey`, `instanceId`, `index` e `identity`. I percorsi usano le chiavi
+dello schema, e i listener usano `data_name`. Una riga senza identificatore usa
+`identity: "position"`. form0 controlla il percorso rispetto allo schema, ma la tua applicazione
+deve controllare che la riga esista ancora.
 
 Un gestore di riga può leggere i propri campi, e i campi delle righe genitori e del modulo
 principale forniti dalla tua applicazione. `SETVALUE()` scrive solo nella riga corrente. Le righe

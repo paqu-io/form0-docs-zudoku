@@ -23,7 +23,8 @@ ed è utile per i valori controllati dalla tua applicazione. Per un ripristino c
 />
 ```
 
-Lo snapshot mantiene insieme valori grezzi, voci ripetibili annidate e timestamp:
+Lo snapshot mantiene insieme valori grezzi,
+[righe di sezioni ripetibili](/it/core/fields/containers#repeatablesection) annidate e timestamp:
 
 ```js
 {
@@ -291,4 +292,5 @@ viene salvato nulla finché l'utente non preme **Submit**. Se il record cambia m
 esecuzione, la risposta viene scartata e l'utente deve inviare di nuovo. Chiudi prima qualsiasi riga
 aperta. In un modulo in sola lettura, l'utente non può premere il risultato.
 
-Le righe salvate esplicitamente rimangono nel record inviato anche quando tutte le risposte sono vuote. Conservano identificatori e metadati, e le risposte vuote di TextField/NumericField vengono serializzate come `null`. Questo non dipende da `onResolveHiddenValue`. Annulla una riga non salvata o elimina una riga salvata per escluderla.
+Se cancellando il valore una riga resta senza risposte, la riga rimane nel record. Vedi
+[Righe vuote salvate](/it/core/output-records#righe-vuote-salvate).

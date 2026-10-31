@@ -74,8 +74,8 @@ lecture que le tableau ci-dessus : champs racine, de la ligne courante et des li
 lignes descendantes, branches sœurs et branches sans lien sont inaccessibles. `validateSchema()` et
 la création du moteur rejettent une référence illégale avant l'ouverture du formulaire. L'erreur
 identifie l'élément propriétaire, la propriété de condition, le champ référencé et les deux chemins
-d'appartenance aux enregistrements. Les clés de champ et les références par `data_name` restent prises
-en charge.
+d'appartenance aux enregistrements. Une condition peut désigner un champ par sa clé ou par son
+`data_name`.
 
 Une `Section` ou `BuildingPlanSection` hérite de l'appartenance de l'enregistrement qui la contient.
 Les conditions d'une `RepeatableSection` gouvernent la collection dans l'enregistrement qui la
@@ -116,8 +116,8 @@ principal. Pour désactiver ces événements, réglez `engineOptions.events.life
 le calendrier et les métadonnées.
 
 Les événements d'enregistrement, comme `load-record`, ne peuvent lire que les champs racine. Les
-gestionnaires d'événements de champ et de répétable suivent leur portée déclarée ; les lectures
-d'ancêtres et les écritures uniquement locales restent inchangées.
+gestionnaires d'événements de champ et de répétable suivent leur portée déclarée : ils peuvent lire
+les champs de leurs parents et écrire uniquement dans leur propre enregistrement.
 
 ## Les lignes dans l'enregistrement de sortie
 

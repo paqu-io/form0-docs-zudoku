@@ -215,12 +215,13 @@ Aucune de ces méthodes n’évalue le formulaire, ne sauvegarde un enregistreme
 
 ### Exécuter les gestionnaires d’une ligne
 
-Pour exécuter les gestionnaires d’une ligne sans renderer, passez `eventScope.instancePath` à la
-création du moteur. Le chemin de l’enregistrement principal est `[]`. Chaque segment de ligne
-comporte `repeatableKey`, `instanceId`, `index` et `identity`. Les chemins utilisent les clés du
-schéma, et les écouteurs utilisent `data_name`. Une ligne sans identifiant utilise
-`identity: "position"`. form0 vérifie le chemin par rapport au schéma, mais votre application doit
-vérifier que la ligne existe toujours.
+Pour exécuter les gestionnaires d’une
+[ligne de section répétable](/fr/core/fields/containers#repeatablesection) sans renderer, passez
+`eventScope.instancePath` à la création du moteur. Le chemin de l’enregistrement principal est `[]`.
+Chaque segment de ligne comporte `repeatableKey`, `instanceId`, `index` et `identity`. Les chemins
+utilisent les clés du schéma, et les écouteurs utilisent `data_name`. Une ligne sans identifiant
+utilise `identity: "position"`. form0 vérifie le chemin par rapport au schéma, mais votre
+application doit vérifier que la ligne existe toujours.
 
 Un gestionnaire de ligne peut lire ses propres champs, ainsi que les champs des lignes parentes et
 du formulaire principal fournis par votre application. `SETVALUE()` écrit uniquement dans la ligne

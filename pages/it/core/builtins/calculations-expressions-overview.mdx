@@ -71,9 +71,10 @@ richiedono il contesto di `createRecordEvaluator()`. Senza quel contesto il moto
 un diagnostico. Gli eventi possono leggere un CalculatedField aggregato accessibile, ma non chiamare
 direttamente queste funzioni.
 
-Usa il data_name di RepeatableSection e un data_name di destinazione letterale delle sue righe.
-Section non aggiunge un ambito di record. Nomi dinamici, alias e chiamate dentro EVAL non sono
-supportati; gli altri usi di EVAL restano invariati. Il segnaposto piatto RepeatableSection resta null.
+Usa il data_name di RepeatableSection e un data_name di destinazione letterale delle sue
+[righe](/it/core/fields/containers#repeatablesection). Section non aggiunge un ambito di record.
+Nomi dinamici, alias e chiamate dentro EVAL non sono supportati. Il segnaposto piatto
+RepeatableSection è null.
 
 | Valori delle righe                    | REPEATABLEVALUES                           | REPEATABLESUM               |
 | ------------------------------------- | ------------------------------------------ | --------------------------- |
@@ -89,7 +90,7 @@ esplicitamente in un calcolo di riga prima della somma. Scelte ambigue o malform
 di calcolo, senza scegliere o scartare silenziosamente. Si preservano raggruppamento per riga, ordine
 delle scelte e poi testo Other. I collegamenti espongono solo riferimenti, senza recuperare contenuti.
 
-Altre destinazioni: TextField, BooleanField, DateField e TimeField. Array/oggetti calcolati mantengono
-tipi e raggruppamento. Contenitori, LabelField, media, StatusField e TitleField sono esclusi. Titoli e
-media restano supportati fuori dalla proiezione. Ordine e righe nascoste accettate sono preservati.
-I diagnostici restano separati dalla validità dell’invio.
+Altre destinazioni: TextField, BooleanField, DateField e TimeField. Array/oggetti calcolati
+mantengono tipi e raggruppamento. Contenitori, LabelField, media, StatusField e TitleField sono
+esclusi. Le righe mantengono l’ordine accettato e le righe nascoste sono incluse. I diagnostici non
+influiscono sulla validità dell’invio.
