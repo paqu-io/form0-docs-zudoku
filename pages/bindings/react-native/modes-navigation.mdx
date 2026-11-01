@@ -1,6 +1,6 @@
 ---
 title: Modes and navigation
-description: Configure editing, headers, sections, repeatable entries, and validation navigation.
+description: Configure editing, headers, sections, repeatable rows, and validation navigation.
 ---
 
 <PageBadges />
@@ -14,12 +14,13 @@ The built-in header shows submit or save according to `primaryActionMode`. Set `
 when the application provides its own screen header and actions. `onRequestClose` enables cancel
 behavior and protects dirty forms with a discard confirmation.
 
-## Repeatable entry opening mode
+## Repeatable row opening mode
 
-`repeatableEntryMode` accepts `readonly` (default) or `edit` for existing rows at every nesting
-level. Existing rows open in view mode with Edit when their parent permits editing; new rows start
-in edit mode. A read-only parent allows browsing descendants while preventing editing, adding and
-removing them. The direct-edit option does not override parent restrictions.
+`repeatableEntryMode` accepts `readonly` (default) or `edit` for existing
+[repeatable section rows](/core/fields/containers#repeatablesection) at every nesting level.
+Existing rows open in view mode with Edit when their parent permits editing; new rows start in edit
+mode. A read-only parent allows browsing descendants while preventing editing, adding and removing
+them. The direct-edit option does not override parent restrictions.
 
 View displays supplied accepted calculated values without running calculations or applying missing
 schema defaults. Conditions and intrinsic validation still use those values. Edit evaluates with
@@ -31,8 +32,7 @@ Managed opening awaits `load-record`/`load-repeatable`, then the matching new/ed
 editing. View → Edit runs edit without repeating load. `event.mode` is `readonly` or `edit` for the
 executing record, independent of its parent's mode. View permits reads, ALERT and scoped ON/OFF;
 a record write rejects the complete operation batch before host delegation. Move writable
-initialization to new/edit, or guard load setters for direct editing. This requires the coordinated
-core release with mode control; it changes no form-schema or saved-record shape.
+initialization to new/edit, or guard load setters for direct editing.
 
 ## Sections and validation
 
@@ -52,13 +52,13 @@ for application headers or other overlays.
 layout. Keep conditional navigation behavior in the schema instead of duplicating it in component
 state.
 
-## Record events and repeatable entries
+## Record events and repeatable rows
 
 With `engineOptions.events.lifecycle: true`, the host must specify `recordKind: "new"` or
 `"existing"` for the root. Opening runs `load-record`; entering editing runs `new-record` or
 `edit-record`. Rows use their actual classification and the corresponding `*-repeatable` events.
 View mode runs load only and preserves accepted calculations; conditions and intrinsic validation still evaluate.
 
-Explicit `lifecycle: false` preserves legacy lifecycle behavior. See the managed lifecycle
-contract in [FormRenderer](/bindings/react-native/form-renderer) and
+Set `lifecycle: false` to keep only `load-record`, `edit-record`, and `change` for the main record.
+See the managed lifecycle contract in [FormRenderer](/bindings/react-native/form-renderer) and
 [Events and operations](/core/engine/events-operations).

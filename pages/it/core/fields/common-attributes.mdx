@@ -27,10 +27,74 @@ campi descrivono tutto ciò che non è elencato qui.
 
 - `visible`: visibilità di base (booleano).
 - `visible_conditions`: oggetto condizione; se presente, prevale su `visible`.
+- `visible_preserve_value`: indica se un campo nascosto conserva il suo valore (booleano,
+  facoltativo). Vedi
+  [Cancellare un valore quando un campo viene nascosto](#cancellare-un-valore-quando-un-campo-viene-nascosto).
 - `required`: obbligatorietà di base (booleano).
 - `required_conditions`: oggetto condizione; se presente, prevale su `required`.
 - `read_only`: indicatore di sola lettura di base (booleano).
 - `read_only_conditions`: oggetto condizione; se presente, prevale su `read_only`.
+
+## Cancellare un valore quando un campo viene nascosto
+
+Per impostazione predefinita, un campo nascosto conserva il suo valore. Il valore resta nei valori
+del modulo, viene salvato con il record e continua a contare nei calcoli. Imposta
+`visible_preserve_value` su `false` quando una risposta nascosta non deve essere conservata, come un
+indirizzo email dopo che l'utente ha scelto di essere contattato per telefono:
+
+```json
+{
+  "type": "TextField",
+  "data_name": "email",
+  "label": "Email",
+  "visible": false,
+  "visible_conditions": { "field_id": "contact_method", "operator": "equal_to", "value": "email" },
+  "visible_preserve_value": false
+}
+```
+
+Questo esempio mostra solo gli attributi che contano qui.
+
+Quando il campo viene nascosto, il suo valore diventa `null`. Questo vale per:
+
+- i campi nascosti dalla propria condizione o da un `Section` o `RepeatableSection` padre, anche
+  dentro le [righe](/it/core/fields/containers#repeatablesection) chiuse; e
+- i campi nascosti fin dall'inizio, compresi il loro `default_value` e qualsiasi valore caricato.
+
+Le altre regole sono:
+
+- Quando il campo riappare, resta vuoto. form0 non ripristina il vecchio valore e non applica di
+  nuovo `default_value`.
+- Un record in sola lettura conserva i valori salvati.
+- Nel record salvato, un campo cancellato appare come qualsiasi altro campo vuoto. Le righe, i loro
+  ID e i loro metadati restano.
+- Cancellare un campo multimediale o di collegamento rimuove solo il riferimento. Il file o il
+  record collegato non viene eliminato.
+
+Questi campi di input supportano l'attributo: `TextField`, `NumericField`, `SingleChoiceField`,
+`MultiChoiceField`, `BooleanField`, `DateField`, `TimeField`, `PhotoField`, `VideoField`,
+`SignatureField` e `FormLinkField`. I contenitori, le etichette, i campi calcolati e i titoli e gli
+stati generati non lo supportano.
+
+### Prova
+
+Ti serve [form0-cli](/it/cli/install-update).
+
+1. Scarica il modulo di esempio e avvia l'anteprima:
+
+   ```bash
+   curl -o hidden-value.json https://docs.form0.dev/examples/hidden-value.form0.json
+   form0 serve hidden-value.json
+   ```
+
+1. Apri `http://localhost:3030`. Il campo `email` imposta `visible_preserve_value` su `false`,
+   mentre il campo `phone` lo omette.
+
+1. Scegli **Email**, inserisci un indirizzo, scegli **Phone** e poi di nuovo **Email**. Il campo
+   **Email** è vuoto.
+
+1. Scegli **Phone**, inserisci un numero, scegli **Email** e poi di nuovo **Phone**. Il numero è
+   ancora lì.
 
 ## Valore predefinito
 

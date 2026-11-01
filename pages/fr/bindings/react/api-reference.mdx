@@ -55,5 +55,7 @@ compilée est disponible sous `form0-react/index.css`.
 
 Voir le contrôleur et le contrat des périmètres dans [FormRenderer](/fr/bindings/react/form-renderer).
 
-`engineOptions.events`: `lifecycle` (true), `recordKind` obligatoire (new/existing), `fieldInteractions` ([focus, blur, click]). Utilisez `lifecycle: false` pour le cycle historique ou `fieldInteractions: []` pour désactiver les interactions automatiques.
+`engineOptions.events`: `lifecycle` (true), `recordKind` obligatoire (new/existing), `fieldInteractions` ([focus, blur, click]). Utilisez `lifecycle: false` pour ne garder que `load-record`, `edit-record` et `change`, ou `fieldInteractions: []` pour désactiver les interactions automatiques.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+Les setters rejettent les valeurs de forme incorrecte. Les valeurs initiales et les remplacements de l’application sont plus tolérants, y compris en vue, qui conserve les calculs acceptés. [Voir le contrat de mise à jour des valeurs](/fr/core/engine/value-updates).

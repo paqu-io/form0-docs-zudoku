@@ -12,78 +12,194 @@ valores.
 El servidor de vista previa es una herramienta de desarrollo. Usa proyectos y conectores de
 confianza, y exponlo solo en una red de confianza.
 
+## Cómo aplica los valores la vista previa
+
+La vista previa sigue las mismas [reglas de valores](/es/core/engine/value-updates) que los bindings
+oficiales:
+
+- `SETVALUE()` y las actualizaciones por código se comprueban como un lote. Si se rechaza una, no se
+  aplica ninguna.
+- Una selección de texto desconocida se queda en el campo, para que la validación pueda informar de
+  ella.
+- Un registro de solo lectura bloquea las escrituras de eventos, también durante `load-record`. El
+  ajuste `read_only` de un campo no las bloquea, así que el código puede seguir cambiando ese campo.
+
 ## Diagnósticos de cálculo en el navegador
 
-En form0-cli 0.6.0 y versiones posteriores, el servidor devuelve diagnósticos estructurados junto al estado
-evaluado. La consola muestra problemas nuevos o modificados, resueltos y recurrentes; las
-evaluaciones idénticas no los repiten. Los diagnósticos de filas anidadas indican la ruta repetible
-y el ID existente de la fila, o una referencia explícita por posición si no hay ID.
+El servidor devuelve diagnósticos con cada evaluación. La consola del navegador muestra los
+hallazgos nuevos o modificados, los resueltos y los problemas que reaparecen. Las evaluaciones
+idénticas no los vuelven a imprimir. Un hallazgo en una
+[fila anidada de una sección repetible](/es/core/fields/containers#repeatablesection) muestra su
+ruta repetible y el identificador de la fila, o indica que usa una posición cuando no hay
+identificador.
 
-Usa `form0 serve [schema] --no-diagnostics` para ocultar los informes de cálculo propios de la CLI
-y de la consola de vista previa integrada. Los diagnósticos siguen recopilándose. Una aplicación
-iniciada con `serve --app` mantiene su propia política de presentación.
+Usa `form0 serve [schema] --no-diagnostics` para ocultar los informes de cálculo y la salida de
+consola integrada de la vista previa. Los diagnósticos se siguen recopilando. Una aplicación
+iniciada con `serve --app` mantiene sus propios informes.
 
-Una evaluación completada devuelve el estado aunque sus diagnósticos contengan errores. La
-validación de campos, las operaciones de eventos, el envío y el guardado de borradores mantienen
-su comportamiento; los diagnósticos no añaden alertas ni bloqueos de envío.
+Un cálculo que termina sigue devolviendo el estado aunque sus diagnósticos contengan errores. Los
+diagnósticos no añaden alertas al formulario ni bloquean el envío, y la validación de campos, los
+eventos y el guardado de borradores funcionan como siempre.
 
 <span id="eventos-portátiles-de-vista-previa-cli-070" />
 
 ## Vista previa del registro y eventos del ciclo de vida
 
-La vista previa usa API introducidas en core 0.8.1; CLI instala core compatible automáticamente. Las vistas previas nuevas activan ciclo de vida y focus/blur/click compatibles y seleccionan **Nuevo registro**. En **Ajustes del formulario → Vista previa del registro**, elige **Registro existente** o **Abrir en solo lectura**. La clasificación selecciona eventos, no carga registros. Se respetan las desactivaciones guardadas explícitamente. **Opciones avanzadas de eventos** contiene los interruptores de compatibilidad. Solo lectura ejecuta load; cambiar configuración inicia otra sesión con valores aceptados. `serve --app` conserva las opciones de la aplicación. Los bindings ofrecen API y exigen clasificación explícita del host. El ciclo CLI sin interfaz conserva su valor anterior.
+Una vista previa nueva empieza como un registro nuevo, con los eventos de ciclo de vida y los
+eventos de foco de los campos activados. Para cambiar cómo se abre, ve a **Form Settings** >
+**Vista previa del registro**:
 
-La inicialización evalúa los valores efectivos, ejecuta `load-record` y después `new-record` o
-`edit-record`. Los cambios del usuario esperan las actualizaciones pendientes; los valores por
-defecto, los cálculos y `SETVALUE()` no generan cambios adicionales. El estado habilitado utiliza
-`change-status`; focus y blur en controles de texto y números están activos por defecto; las opciones usan change. El click automático se reserva para campos de activación compatibles. Actualmente no existe HyperlinkField y ningún control integrado emite click automáticamente. El dispatch explícito del controlador del host sigue disponible.
+- **Registro nuevo** ejecuta los manejadores de `new-record`. Es la opción predeterminada.
+- **Registro existente** ejecuta los manejadores de `edit-record`. No carga un registro de la base
+  de datos, solo elige qué manejadores se ejecutan.
+- **Abrir en modo de solo lectura** ejecuta `load-record` en lugar de `new-record` o `edit-record`.
+  Los campos aparecen en gris y no se pueden editar, y **Submit Record** está desactivado.
 
-Enviar sigue validación integrada/personalizada → `save-record` una vez → nueva validación solo si
-cambian los valores → serialización final → envío al conector existente. `INVALID(message)` síncrono
-crea un mensaje de resumen del ámbito sin modificar `state.errors`. Los diagnósticos de cálculo no
-bloquean por sí solos. **Preparar borrador** devuelve en consola una instantánea y un resumen que
-puede tener errores, sin persistencia ni envío al conector. No hay eventos de esquema `saved-*`.
+**Opciones avanzadas de eventos** tiene los interruptores para desactivar eventos, y una elección
+guardada se mantiene. Cambiar estos ajustes inicia una sesión nueva con los valores ya aceptados.
+Una aplicación iniciada con `serve --app` mantiene sus propias opciones, y los comandos
+independientes como `form0 run` mantienen sus propios valores predeterminados.
 
-Las filas en línea ofrecen **Editar**, **Guardar fila** y **Cancelar fila**. Utilizan eventos de
-repeatable y valores provisionales: guardar valida/prepara antes de aceptar; cancelar descarta
-las ediciones anidadas provisionales. Se permite leer campos principales y antecesores autorizados;
-las escrituras son locales a la fila. Contraer solo cambia la presentación. Añadir/editar/eliminar
-aceptado notifica al repeatable propietario; los errores posteriores de notificación se presentan
-separados de la preparación aceptada. Las filas cerradas usan la preparación de envío compartida descrita abajo sin repetir su ciclo de edición.
+### Qué se ejecuta y cuándo
 
-El controlador activo es `window.form0PreviewEvents`. `dispatch()` y
-`prepareSave({ intent: 'submit' | 'draft' })` devuelven promesas con hallazgos/errores y esperan la
-presentación aceptada; preparar no envía ni cierra. Las filas requieren `instancePath` completo y
-el `scopeId` observado (`data-preview-scope-id`); las rutas posicionales exigen ese ID. Los metadatos
-son JSON; se rechazan funciones y archivos nativos. Los valores guardados no contienen metadatos de
-ámbito/diagnóstico. Cancelar/Cerrar notifica antes de retirar; recargar o descartar forzosamente solo
-retira. Reabrir inicia otra sesión. No cambia los códigos de salida de run/validate.
+- Cuando se abre un registro, el formulario se evalúa, se ejecuta `load-record` y después
+  `new-record` o `edit-record`.
+- Cuando un usuario edita un campo, `change` se ejecuta cuando terminan las actualizaciones en cola.
+  En un campo de texto, eso significa cada pulsación de tecla.
+- Los valores predeterminados, los cálculos y `SETVALUE()` no añaden eventos `change`.
+- Los campos de texto y numéricos emiten `focus` y `blur`, y los campos de opción usan `change`.
+- Un campo de estado activado emite `change-status` cuando un usuario lo cambia.
+- Ningún control integrado emite `click`. Despáchalo tú con el controlador descrito más abajo.
 
-**Acciones avanzadas de vista previa** agrupa **Preparar borrador**, **Cancelar registro** y
-**Cerrar registro** en una sección plegada. Preparar un borrador permite inspeccionarlo y nunca lo
-guarda en un conector. Los controles de filas anidadas desactivados indican qué editor padre debe
-abrirse primero. El envío muestra el registro final expandible y el resultado de cada conector en
-la consola. Sin conectores, indica que el registro se preparó solo para vista previa; un fallo de
-conector o almacenamiento no se considera un guardado correcto.
+### Qué ocurre al enviar
 
-## Preparación compartida y adaptador de almacenamiento del host
+1. Se ejecuta la validación integrada y la personalizada.
+2. `save-record` se ejecuta una vez.
+3. La validación se ejecuta de nuevo, solo si cambiaron valores.
+4. Se construye el registro final y se envía a cualquier conector.
 
-La vista previa usa frescura y validación integrada compartidas con el ciclo de vida gestionado
-activado o desactivado. La exclusión desactiva validación personalizada y hooks gestionados. No se
-repiten eventos load/edit/change/save/unload de filas cerradas. Acepta o cancela los editores
-secundarios antes de preparar la raíz.
+`INVALID(message)` añade un mensaje a la lista de validación sin cambiar `state.errors`. Los
+diagnósticos de cálculo por sí solos no bloquean un envío. No existen eventos de esquema `saved-*`.
 
-`createApp()` admite `submissionOptions` del servidor y un `storageAdapter` opcional. Retener exige
-el adaptador y `allowRetain`; las peticiones del navegador no conceden ese permiso. El adaptador
-implementa `load(identity)` asíncrono, que devuelve `{ record, freshness }` o `null`, y
-`save(identity, { record, freshness })`. `record` mantiene el formato estructurado existente. La sesión
-restaura `recordIdentity` o `recordOptions.mainRecordId`, incluido cero. El ejemplo sustituye
-atómicamente un sobre local; el host de producción define la política de revisiones y conflictos.
+El envío registra en la consola el registro final y el resultado de cada conector. Un fallo de un
+conector o del almacenamiento no cuenta como registro guardado.
 
-El éxito del adaptador reconoce la preparación. Un rechazo, persistencia parcial o fallo de un
-conector deja el intento sin guardar. Los conectores reciben el mismo registro sin nueva obligación
-de almacenar frescura. Los clientes de preparación reconocen explícitamente el guardado externo.
-`getSaveChanges()` pagina los cambios; las decisiones afectan a todos o a ninguno.
+### Pruébalo
+
+Necesitas [form0-cli](/es/cli/install-update).
+
+1. Inicia la vista previa con un formulario de ejemplo:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Abre `http://localhost:3030`, escribe `10` en **Amount** y haz clic en **Submit Record**.
+
+1. Abre la consola del navegador. Muestra `[STRUCTURED RECORD] Record prepared` y después
+   `No database connector configured; record prepared for preview only.`
+
+### Prueba un registro de solo lectura
+
+Necesitas [form0-cli](/es/cli/install-update).
+
+1. Inicia la vista previa con el formulario de ejemplo. Si ya está en marcha, pasa al siguiente paso.
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Abre `http://localhost:3030` y haz clic en **⚙** para abrir **Form Settings**.
+
+1. En **Vista previa del registro**, selecciona **Abrir en modo de solo lectura** y haz clic en
+   **Save**.
+
+1. Haz clic en **Amount** y escribe un número. No aparece nada. **City** no se puede abrir, y
+   **Submit Record** está desactivado.
+
+1. Recarga la página. El formulario sigue en solo lectura, porque el ajuste se guarda en tu
+   navegador.
+
+1. Abre **Form Settings** otra vez, desmarca **Abrir en modo de solo lectura** y haz clic en
+   **Save** para volver a editar el formulario.
+
+La vista previa no muestra ningún banner de solo lectura, así que comprueba que los campos y el
+botón **Submit Record** estén desactivados (en gris).
+
+### Filas de secciones repetibles
+
+Las filas en línea ofrecen **Editar**, **Guardar fila** y **Cancelar fila**. Las ediciones quedan
+pendientes hasta que las aceptas: **Guardar fila** valida primero la fila, y **Cancelar fila**
+descarta sus ediciones anidadas pendientes. Contraer una fila solo cambia su aspecto.
+
+Los manejadores de fila usan los eventos repetibles. Pueden leer los campos permitidos de los padres
+y del formulario principal, y solo escriben en su propia fila. Añadir, editar o eliminar una fila
+notifica a la sección repetible a la que pertenece. Un problema en esa notificación se informa por
+separado, y la fila aceptada se mantiene.
+
+Las filas cerradas se preparan con el resto del registro al enviar, sin repetir sus eventos de
+edición.
+
+### Acciones avanzadas
+
+**Acciones avanzadas de vista previa** es una sección plegada con tres acciones:
+
+- **Preparar borrador** imprime en la consola un snapshot sin procesar y el resumen de validación,
+  si lo hay. Nunca guarda el borrador ni llama a un conector.
+- **Cancelar registro** descarta los cambios del editor.
+- **Cerrar registro** ejecuta el ciclo de descarga.
+
+Cancelar o cerrar avisa a los manejadores antes de que termine la sesión. Recargar la página la
+termina sin aviso, y volver a abrir inicia una sesión nueva. Un control de fila anidada desactivado
+explica qué editor padre hay que abrir primero.
+
+### Controlar la vista previa desde la consola
+
+`window.form0PreviewEvents` es un controlador para desarrolladores de la vista previa activa:
+
+- `dispatch()` ejecuta un evento y devuelve sus hallazgos y problemas.
+- `prepareSave({ intent: "submit" | "draft" })` prepara un guardado sin enviar ni cerrar nada.
+
+Para apuntar a una fila, pasa su `instancePath` completo y el `scopeId` que aparece como
+`data-preview-scope-id` en la página. Una ruta por posición necesita ese identificador. Los
+metadatos deben ser JSON, así que se rechazan la configuración ejecutable y las referencias nativas
+a archivos. Los valores guardados no contienen datos de ámbito ni de diagnóstico. El controlador no
+cambia el estado de salida de los comandos de terminal.
+
+## Dibujar en un BuildingPlan
+
+Dibujar en un lienzo BuildingPlan abre un borrador de edición de la planta. Las habitaciones,
+paredes, aberturas y demás geometría aparecen de inmediato como filas. **Guardar fila** valida y
+acepta la planta, y **Cancelar fila** restaura juntas su geometría y sus filas. Las preguntas
+obligatorias de la inspección siguen necesitando respuesta.
+
+Antes de volver a dibujar, acepta o cancela cualquier editor de habitación o pared abierto. Termina
+el borrador de la planta antes de enviar el registro principal. Contraer o cambiar de planta no
+guarda. Los registros y las secciones BuildingPlan de solo lectura desactivan el dibujo. Dibujar no
+cambia el formato del esquema ni del registro, y no permite que `SETVALUE()` escriba entre
+registros.
+
+## Revisar filas recalculadas
+
+Define `form.repeatable_recalculation` como `"confirm"` en el esquema para revisar los cálculos
+modificados de las filas guardadas al enviar el registro principal. Si lo omites o usas
+`"automatic"`, se actualizan automáticamente. No hay ningún interruptor para esto en los ajustes de
+la vista previa.
+
+Una fila abierta sigue recalculándose con los valores actuales de sus padres, así que acéptala o
+cancélala antes de enviar. Conservar valores anteriores necesita además el permiso del servidor
+descrito en la sección siguiente.
+
+La vista previa usa las mismas comprobaciones con los eventos de ciclo de vida activados o no. Con
+los eventos desactivados, la validación personalizada y los manejadores de guardado siguen
+desactivados.
+
+## Guardar registros de la vista previa
+
+`createApp()` acepta `submissionOptions` del lado del servidor y un `storageAdapter` opcional, para
+que puedas probar el guardado y la restauración de registros en tu propio servidor de vista previa:
 
 ```js
 import { createApp } from "form0-cli/src/server/express-server.js"
@@ -94,3 +210,62 @@ const app = createApp(getSchema, getSchemaSource, projectDir, {
   storageAdapter: createFilePreviewStorage(previewStorageDirectory),
 })
 ```
+
+El adaptador implementa dos métodos asíncronos:
+
+- `load(identity)` devuelve `{ record, freshness }` o `null`.
+- `save(identity, { record, freshness })` los guarda.
+
+`record` usa el formato de registro estructurado. Para restaurar un registro, la sesión usa
+`recordIdentity` o `recordOptions.mainRecordId`, incluido el identificador cero. El adaptador de
+ejemplo sustituye un archivo local de forma atómica. En producción, tu aplicación decide cómo
+gestionar las revisiones y los conflictos.
+
+`allowRetain` necesita un adaptador, y las peticiones del navegador no pueden concederlo. Un `save`
+correcto confirma la preparación. Si se rechaza, guarda solo parte de los datos o falla un conector,
+el intento queda sin guardar. Los conectores reciben el mismo registro de siempre y no guardan
+`freshness`. Un cliente que solo prepara un guardado debe confirmar por sí mismo un guardado externo
+correcto. `getSaveChanges()` devuelve los detalles de la revisión por páginas, y una decisión se
+aplica a todas las filas modificadas o a ninguna.
+
+## Valores ocultos en la vista previa
+
+La vista previa aplica las mismas
+[comprobaciones de valores](/es/core/schema/validation#validación-en-tiempo-de-ejecución) y reglas
+de
+[`visible_preserve_value`](/es/core/fields/common-attributes#borrar-un-valor-cuando-un-campo-se-oculta)
+que los bindings, también en las filas cerradas.
+[La exportación e importación CSV](/es/cli/schemas/import-export-csv) conserva el atributo.
+
+Para comprobar los valores ocultos al enviar, define la opción en el servidor. Las peticiones del
+navegador no pueden cambiarla:
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
+})
+```
+
+### Resolver un valor oculto
+
+Para que la vista previa pueda corregir un valor oculto que no pasa la validación, pasa
+`onResolveHiddenValue` a `createApp()`. Los resultados de validación muestran entonces el botón
+**Resolver valor oculto**.
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
+  onResolveHiddenValue: async (finding) => {
+    // Return { value: replacement }, { value: null }, or nothing to cancel.
+    return { value: null }
+  },
+})
+```
+
+El manejador se ejecuta en tu servidor, así que no puede abrir un diálogo del navegador.
+`form0 serve` no tiene ninguna opción para esto.
+[Resolver un valor oculto](/es/bindings/react/values-snapshots-submission#resolver-un-valor-oculto-que-no-pasa-la-validación)
+en la documentación de React explica qué recibe y qué devuelve el manejador.
+
+Si al borrar el valor una fila se queda sin respuestas, la fila permanece en el registro. Consulta
+[Filas vacías guardadas](/es/core/output-records#filas-vacías-guardadas).

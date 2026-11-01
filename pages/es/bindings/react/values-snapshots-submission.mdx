@@ -8,8 +8,7 @@ description: Inicializa, observa, restaura y envía el estado de form0 en React.
 ## Valores iniciales y valores prioritarios
 
 Usa `initialValues` para el registro que se está editando. `overrideValues` tiene prioridad y es
-útil para valores de la aplicación host que deben prevalecer, como un estado que proporciona la
-aplicación.
+útil para los valores que controla tu aplicación, como un estado que llega de tu backend.
 
 Para una restauración completa, usa preferentemente `initialSnapshot`:
 
@@ -30,8 +29,8 @@ Para una restauración completa, usa preferentemente `initialSnapshot`:
 ```
 
 Un snapshot inicial sustituye a `initialValues` para los valores sin procesar de los campos. También
-restaura las entradas repetibles anidadas y las marcas de tiempo del cliente y del servidor como un
-estado coherente.
+restaura las [filas de secciones repetibles](/es/core/fields/containers#repeatablesection) anidadas
+y las marcas de tiempo del cliente y del servidor como un estado coherente.
 
 ## Observa los borradores
 
@@ -55,36 +54,149 @@ El snapshot contiene:
 
 ## Envía registros
 
+Usa `onSubmit` para enviar un registro terminado a tu API. `FormRenderer` lo llama solo cuando el
+formulario supera la validación.
+
+```jsx
+async function saveRecord(record) {
+  const response = await fetch("/api/records", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(record),
+  })
+
+  if (!response.ok) throw new Error(`The server answered ${response.status}`)
+}
+```
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  onSubmit={saveRecord}
+/>
+```
+
 `onSubmit(record, meta)` recibe el registro estructurado que se describe en
 [Salida y registros](/es/core/output-records). `meta` contiene `rawValues`, `repeatable`,
 `timestamps` y `validationSummary`.
 
-Si `onSubmit` devuelve una promesa, un overlay configurado con `autoCloseOverlayOnSubmit` solo se
-cierra cuando se resuelve la promesa. Si se rechaza, sigue abierto. Usa `submitBlockedReason` para
-requisitos de la aplicación ajenos al esquema y `externalDirty` para el estado de la aplicación
-ajeno al renderer.
+El guardado se considera correcto cuando `onSubmit` termina o su promesa se resuelve. Para indicar
+un fallo, lanza un error o rechaza la promesa. `fetch` no rechaza la promesa ante una respuesta
+`500`, así que comprueba `response.ok` como en el ejemplo.
 
-## API de eventos gestionados
+Si el formulario se ejecuta en un overlay con `autoCloseOverlayOnSubmit`, el overlay solo se cierra
+después de un guardado correcto.
 
-Consulta el controlador de eventos y el contrato de ámbitos en [FormRenderer](/es/bindings/react/form-renderer).
+Usa `submitBlockedReason` para desactivar **Submit** mientras quede algo sin resolver fuera del
+esquema, como una petición en curso. Usa `externalDirty` para los cambios que tu aplicación mantiene
+fuera del formulario.
 
-`engineOptions.events`: `lifecycle` (true), `recordKind` obligatorio (new/existing), `fieldInteractions` ([focus, blur, click]). Usa `lifecycle: false` para el ciclo heredado o `fieldInteractions: []` para desactivar interacciones automáticas.
-`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+Para ver un ejemplo completo con servidor, consulta
+[Añade un formulario a una aplicación React existente](/es/guides/add-form-to-react-app).
 
-La preparación no persiste ni cierra. Los borradores raíz conservan los hallazgos en el resumen; submit normal y la aceptación de filas se bloquean ante validación fallida. Los diagnósticos de cálculo siguen separados. No se evalúan ni agregan filas cerradas.
+## Fallos de guardado y mensajes de consola
 
-## Revisión de cálculos secundarios y persistencia
+Cuando un guardado falla, `FormRenderer` conserva los valores del usuario para que pueda reintentar
+y escribe un informe en `console.error` con la etapa del fallo y el error original. No muestra
+ningún mensaje al usuario, así que hazlo en tu aplicación y vuelve a lanzar el error:
 
-El envío ordinario actualiza automáticamente los cálculos secundarios cerrados si se omite el ajuste.
-`form.repeatable_recalculation: 'confirm'` exige revisión. El host puede exigirla con `mode: 'confirm'`,
-pero `automatic` no puede debilitar la confirmación del formulario. `allowRetain` es un permiso explícito
-del host y no activa por sí mismo la confirmación. La decisión afecta a todos los secundarios o a
-ninguno. La preparación raíz se rechaza si queda un editor secundario sin aceptar.
+```jsx
+async function handleSubmit(record) {
+  try {
+    await saveRecord(record)
+  } catch (error) {
+    setMessage("The record was not saved. Try again.")
+    throw error
+  }
+}
+```
 
-La revisión muestra títulos/rutas, etiquetas, valores anteriores/nuevos y recuentos en páginas
-limitadas. Personaliza los textos con `submissionOptions.messages`. Se conservan todos los resultados
-de validación con sus rutas; la interfaz los pagina y permite navegar al registro o campo afectado.
-Los resultados personalizados de ámbito pertenecen al registro, sin asociarlos a un campo inventado.
+Si capturas el error sin volver a lanzarlo, `FormRenderer` considera que el guardado ha salido bien.
+
+`submissionDiagnostics` controla estos mensajes de consola:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "new" } }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+  onSubmit={handleSubmit}
+/>
+```
+
+- `saveFailures` está activo por defecto. Asígnale `false` si tu aplicación ya informa de los
+  fallos.
+- `validationBlocks` está desactivado por defecto. Asígnale `true` para registrar una línea cada vez
+  que la validación bloquee **Submit** o **Save** en una fila repetible.
+
+Un campo obligatorio vacío es un bloqueo de validación, no un fallo de guardado.
+
+### Pruébalo
+
+1. Haz clic en **Submit** con un campo obligatorio vacío. El campo muestra su mensaje de validación
+   y la consola no muestra nada.
+2. Añade `validationBlocks: true` y haz clic en **Submit** otra vez. La consola muestra
+   `[form0-react] Submit blocked by validation.`
+3. Rellena el campo, haz que `saveRecord` lance `new Error("Example save failure")` y haz clic en
+   **Submit**. La consola muestra `[form0-react] Submit failed during onSubmit.` con tu error, y los
+   valores siguen en el formulario.
+4. Quita el `throw` y haz clic en **Submit** otra vez. El guardado se completa.
+
+### Detalles
+
+- Estos ajustes se aplican de inmediato, incluso durante un guardado en curso. Son independientes de
+  `debug`, `engineOptions.diagnostics.console` y los ajustes del ciclo de vida.
+- Los informes no incluyen valores del formulario, snapshots ni rutas de registros. Los fallos de
+  preparación incluyen sus códigos y mensajes.
+- Cancelar una confirmación no escribe nada en la consola. Una excepción lanzada por tu callback se
+  informa como fallo del callback.
+- `form0-core` escribe sus propias líneas, como `[EVENT HANDLER] Registered`. Estos ajustes no las
+  controlan.
+- Estos ajustes cubren las acciones integradas del renderer. Si llamas directamente a
+  `prepareSave()`, revisa el resultado que devuelve.
+
+## Usar eventos desde tu propio código
+
+`engineOptions.events` define qué eventos se ejecutan, y `engineOptions.onEventController` te da un
+controlador para tus propios botones. [FormRenderer](/es/bindings/react/form-renderer) los describe
+por completo.
+
+| Opción                     | Predeterminado               | Finalidad                                                               |
+| -------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
+| `events.recordKind`        | Obligatorio                  | `"new"` / `"existing"`.                                                 |
+| `events.lifecycle`         | `true`                       | Define `false` para dejar solo `load-record`, `edit-record` y `change`. |
+| `events.fieldInteractions` | `["focus", "blur", "click"]` | Define `[]` para desactivar las interacciones automáticas.              |
+
+`onEventController(controller | null)` te da `dispatch(request)` y `prepareSave(request)`.
+
+`prepareSave()` nunca guarda ni cierra nada. El resumen devuelto enumera los mensajes de validación
+de un borrador del registro principal. Los fallos de validación bloquean un envío normal y la
+aceptación de una fila, y los diagnósticos de cálculo no bloquean nada.
+
+## Revisar filas recalculadas
+
+Cuando un usuario envía, `FormRenderer` recalcula automáticamente las filas guardadas. Define
+`form.repeatable_recalculation` como `"confirm"` en el esquema cuando los usuarios deban revisar
+antes los valores modificados.
+
+`submissionOptions` cambia esto desde tu código:
+
+- `mode: "confirm"` exige una revisión aunque el esquema no lo haga. `"automatic"` no puede
+  desactivar una confirmación definida en el esquema.
+- `allowRetain: true` permite que el usuario conserve valores anteriores. No activa una revisión por
+  sí solo.
+- `messages` sustituye los textos de revisión y de estado.
+
+La revisión predeterminada muestra por páginas los títulos y las rutas de las filas, las etiquetas
+de los campos, los valores anteriores y nuevos y los recuentos. Una elección se aplica a todas las
+filas modificadas o a ninguna. Un guardado se rechaza mientras siga abierto un editor de fila.
+
+Todos los hallazgos de validación siguen disponibles con sus rutas de registro, y el formulario los
+pagina y enlaza con el registro o el campo. Un mensaje de `INVALID()` pertenece a su registro, no a
+un campo.
+
+### Guardar el registro y su `freshness`
 
 ```jsx
 <FormRenderer
@@ -99,19 +211,19 @@ Los resultados personalizados de ámbito pertenecen al registro, sin asociarlos 
 />
 ```
 
-La finalización correcta del callback reconoce la persistencia. Guarda conjuntamente el registro
-seleccionado y su complemento de frescura antes de resolver; lanza un error o rechaza ante un fallo o
-cancelación. Elegir `20 → 24` conserva `24` como trabajo sin guardar aunque después falle la validación
-o persistencia. La frescura queda fuera de los valores guardados. Restáurala con `initialFreshness`;
-los reconocimientos antiguos no borran estados pendientes nuevos. Con totales retenidos `[110,220]`,
-el total enviado es `330`, nunca el `360` de la propuesta actualizada.
+Cuando tu callback termina, form0 considera que el guardado fue correcto. Guarda el registro y
+`meta.freshness` juntos antes de que se resuelva, y lanza un error o rechaza la promesa si falla o
+se cancela.
 
-Los controladores de preparación no abren diálogos ni persisten. Comprueba `eligible`, gestiona
-`requires_decision` con `payload: null` y reconoce solo el `preparationId` guardado correctamente.
-Las páginas de cambios contienen 50 entradas por defecto y hasta 100. Continúa mediante
-`prepareSave()` y `decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Los cambios de
-entradas/configuración o una nueva preparación invalidan la revisión. La validación precede al hook
-de guardado, ejecutado una vez por intento; sus escrituras pueden exigir otra revisión sin repetirlo.
+`freshness` queda fuera de los valores del formulario. Devuelve el guardado mediante
+`initialFreshness`. Una confirmación anterior no puede borrar un estado pendiente más reciente. Si
+un usuario conserva totales de fila anteriores `[110,220]`, la suma enviada es `330`, nunca los
+`360` de la propuesta actualizada. Si el usuario cambia un valor de `20` a `24`, `24` se mantiene
+como trabajo sin guardar aunque la validación o el guardado fallen después.
+
+### Ejecutar una revisión desde tu propia interfaz
+
+Un controlador prepara un guardado sin abrir un diálogo ni guardar nada:
 
 ```js
 const prepared = await controller.prepareSave({ intent: "submit", signal })
@@ -128,4 +240,128 @@ if (prepared.status === "requires_decision") {
 }
 ```
 
-Los workers conservan internamente revisiones e informes. Las respuestas habituales incluyen los datos seleccionados y resúmenes; los detalles se solicitan por páginas limitadas. Los helpers de tipo función siguen sin admitirse en workers. Las señales y callbacks no se envían mediante clonación estructurada.
+Comprueba `eligible`, gestiona `requires_decision`, donde `payload` es `null`, y confirma solo el
+`preparationId` que guardaste. `getSaveChanges()` devuelve 50 entradas de forma predeterminada y 100
+como máximo. Para continuar una revisión, llama a `prepareSave()` con
+`decision: { reviewId, action: "refresh" | "retain" | "cancel" }`. Cambiar las entradas o la
+configuración, o iniciar una preparación más reciente, termina la revisión.
+
+La validación se ejecuta antes del manejador de guardado, que se ejecuta una vez por intento. Si el
+manejador cambia valores, puede hacer falta una revisión nueva, pero el manejador no vuelve a
+ejecutarse.
+
+En modo worker, las revisiones pendientes y los informes se quedan en el worker. Las respuestas
+contienen los datos seleccionados y los resúmenes, y los detalles de los cambios se piden por
+páginas. Los helpers que son funciones no se admiten en modo worker. Las señales de cancelación y
+los callbacks quedan fuera de los mensajes enviados al worker.
+
+Los setters siguen las [reglas de valores](/es/core/engine/value-updates). `initialValues` y
+`overrideValues` son más tolerantes, también en modo de solo lectura, donde los valores calculados
+se mantienen tal como llegan.
+
+## Valores ocultos
+
+Un campo con
+[`visible_preserve_value: false`](/es/core/fields/common-attributes#borrar-un-valor-cuando-un-campo-se-oculta)
+se borra mientras el usuario edita, también en las filas cerradas. Sigue borrado en `raw_values`,
+`repeatable` y el registro enviado. Los demás campos conservan sus valores al ocultarse, y un
+formulario de solo lectura no borra nada.
+
+Para comprobar los valores ocultos conservados en el envío final, define `validateHiddenValues`:
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
+  schema={schema}
+  submissionOptions={{ validateHiddenValues: true }}
+  onSubmit={saveRecord}
+/>
+```
+
+Un valor oculto que no cumple sus propias reglas bloquea entonces **Submit**. El usuario puede
+corregirlo haciendo visible el campo de nuevo, o tu aplicación puede
+[resolverlo](#resolver-un-valor-oculto-que-no-pasa-la-validación). Además,
+[comprueba los valores ocultos en tu servidor](/es/core/schema/validation#comprobar-valores-ocultos-en-un-servidor).
+Los borradores y los campos obligatorios ocultos y vacíos no se ven afectados.
+
+## Resolver un valor oculto que no pasa la validación
+
+Con `validateHiddenValues` activado, un valor oculto que no cumple sus propias reglas bloquea
+**Submit**, y el usuario no puede llegar al campo para corregirlo. La pestaña **Validation** lo
+explica. Para que tu aplicación pueda corregir el valor, pasa `onResolveHiddenValue`. La pestaña
+muestra entonces el botón **Resolve hidden value**.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={async ({ fieldName }) => {
+    if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+    return { value: null }
+  }}
+  onSubmit={saveRecord}
+/>
+```
+
+Tu manejador recibe `fieldName`, `fieldKey`, `instancePath`, `message` y una copia del `value`
+actual. Puede devolver:
+
+- `{ value: replacement }` para reemplazar el valor, que debe cumplir las reglas propias del campo
+- `{ value: null }` para borrarlo
+- `undefined` o `null` para cancelar
+
+El campo sigue oculto, no se ejecutan manejadores de `change` ni de ciclo de vida, y no se guarda
+nada hasta que el usuario hace clic en **Submit**. Si el registro cambia mientras se ejecuta tu
+manejador, la respuesta se descarta y el usuario tiene que volver a enviar. Cierra antes cualquier
+fila abierta. Los formularios de solo lectura no muestran el botón.
+
+Si al borrar el valor una fila se queda sin respuestas, la fila permanece en el registro. Consulta
+[Filas vacías guardadas](/es/core/output-records#filas-vacías-guardadas).
+
+### Prueba a resolver un valor oculto
+
+Necesitas una aplicación React con `form0-react`.
+[Añade un formulario a una aplicación React existente](/es/guides/add-form-to-react-app) crea una.
+
+1. Descarga el formulario de ejemplo y muéstralo. Tiene un campo de texto oculto, `legacy_code`, y
+   este código carga un número en él:
+
+   ```bash
+   mkdir -p src/forms
+   curl -o src/forms/hidden-value-recovery.form0.json https://docs.form0.dev/examples/hidden-value-recovery.form0.json
+   ```
+
+   ```jsx
+   import { FormRenderer } from "form0-react"
+   import "form0-react/index.css"
+   import schema from "./forms/hidden-value-recovery.form0.json"
+
+   export default function App() {
+     return (
+       <FormRenderer
+         schema={schema}
+         formWidth="100%"
+         initialValues={{ name: "Ada", legacy_code: 42 }}
+         engineOptions={{ events: { recordKind: "existing" } }}
+         submissionOptions={{ validateHiddenValues: true }}
+         onResolveHiddenValue={async ({ fieldName }) => {
+           if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+           return { value: null }
+         }}
+         onSubmit={(record) => console.log(record)}
+       />
+     )
+   }
+   ```
+
+1. Haz clic en **Submit**. El formulario no se envía. Abre la pestaña **Validation**. Muestra
+   `legacy_code must be a string` e indica que el valor está oculto.
+
+1. Haz clic en **Resolve hidden value** y cancela el diálogo. No cambia nada.
+
+1. Haz clic de nuevo en **Resolve hidden value** y confirma. El hallazgo desaparece y el campo sigue
+   oculto.
+
+1. Haz clic en **Submit**. La consola del navegador muestra el registro, con `legacy_code` en
+   `null`.

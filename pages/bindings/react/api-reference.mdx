@@ -56,5 +56,7 @@ available as `form0-react/index.css`.
 
 See the managed event controller and scope contract in [FormRenderer](/bindings/react/form-renderer).
 
-`engineOptions.events`: `lifecycle` (true), required `recordKind` (new/existing), `fieldInteractions` ([focus, blur, click]). Set `lifecycle: false` for legacy lifecycle or `fieldInteractions: []` to disable automatic interactions.
+`engineOptions.events`: `lifecycle` (true), required `recordKind` (new/existing), `fieldInteractions` ([focus, blur, click]). Set `lifecycle: false` to keep only `load-record`, `edit-record`, and `change`, or `fieldInteractions: []` to disable automatic interactions.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+Setters reject values in the wrong shape. Initial values and application overrides are more tolerant, including in View, which keeps accepted calculations. [See the value-update contract](/core/engine/value-updates).

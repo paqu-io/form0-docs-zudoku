@@ -26,9 +26,7 @@ formulario.
 - **form0-cli**, instalado con `npm install --global form0-cli`
 
 El starter de React + Vite incluye los paquetes form0 necesarios. Si usas una aplicación existente,
-necesita como mínimo `form0-core` 0.4.1 y `form0-react` 0.2.2. Sigue
-[Instalar y renderizar con React](/es/bindings/react/install-render) para instalarlos o
-actualizarlos antes de copiar el esquema.
+consulta [Añade un formulario a una aplicación React existente](/es/guides/add-form-to-react-app).
 
 ## Crea el formulario
 
@@ -431,8 +429,9 @@ Una condición sobre un campo de selección compara el `value` de la opción ele
 Consulta [Condiciones y operadores](/es/core/schema/conditions-operators).
 
 Ocultar un campo no borra su valor. Si alguien escribe una dirección de email y luego cambia a
-**Phone**, la dirección sigue en los valores del formulario. Decide en tu aplicación si los valores
-ocultos deben conservarse.
+**Phone**, la dirección sigue en los valores del formulario. Para borrarla, añade
+`"visible_preserve_value": false` al campo. Consulta
+[Borrar un valor cuando un campo se oculta](/es/core/fields/common-attributes#borrar-un-valor-cuando-un-campo-se-oculta).
 
 ### Prioridad calculada
 
@@ -512,3 +511,5 @@ Para profundizar:
   cálculos que dependen unos de otros.
 - [Envíos y conectores](/es/starter-apps/react-vite/submissions-connectors): adónde va el registro
   enviado en el starter y cómo mandarlo a una base de datos.
+- [Añade un formulario a una aplicación React existente](/es/guides/add-form-to-react-app): ejecuta
+  este formulario en tu propia aplicación y envía los registros a tu API.

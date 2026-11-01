@@ -27,10 +27,73 @@ describen todo lo que no aparece aquí.
 
 - `visible`: visibilidad base (booleano).
 - `visible_conditions`: objeto de condición; si está presente, prevalece sobre `visible`.
+- `visible_preserve_value`: indica si un campo oculto conserva su valor (booleano, opcional).
+  Consulta [Borrar un valor cuando un campo se oculta](#borrar-un-valor-cuando-un-campo-se-oculta).
 - `required`: obligatoriedad base (booleano).
 - `required_conditions`: objeto de condición; si está presente, prevalece sobre `required`.
 - `read_only`: indicador base de solo lectura (booleano).
 - `read_only_conditions`: objeto de condición; si está presente, prevalece sobre `read_only`.
+
+## Borrar un valor cuando un campo se oculta
+
+Un campo oculto conserva su valor de forma predeterminada. El valor sigue en los valores del
+formulario, se guarda con el registro y sigue contando en los cálculos. Define
+`visible_preserve_value` como `false` cuando una respuesta oculta no deba conservarse, como una
+dirección de email después de que el usuario elija que lo contacten por teléfono:
+
+```json
+{
+  "type": "TextField",
+  "data_name": "email",
+  "label": "Email",
+  "visible": false,
+  "visible_conditions": { "field_id": "contact_method", "operator": "equal_to", "value": "email" },
+  "visible_preserve_value": false
+}
+```
+
+Este ejemplo muestra solo los atributos que importan aquí.
+
+Cuando el campo se oculta, su valor pasa a ser `null`. Esto se aplica a:
+
+- los campos ocultos por su propia condición o por un `Section` o `RepeatableSection` padre, también
+  dentro de las [filas](/es/core/fields/containers#repeatablesection) cerradas; y
+- los campos que empiezan ocultos, incluidos su `default_value` y cualquier valor cargado.
+
+Las demás reglas son:
+
+- Al mostrar el campo de nuevo, sigue vacío. form0 no restaura el valor anterior ni vuelve a aplicar
+  `default_value`.
+- Un registro de solo lectura conserva sus valores guardados.
+- En el registro guardado, un campo borrado se ve como cualquier otro campo vacío. Las filas, sus ID
+  y sus metadatos se conservan.
+- Borrar un campo multimedia o de enlace elimina solo la referencia. El archivo o el registro
+  enlazado no se elimina.
+
+Estos campos de entrada admiten el atributo: `TextField`, `NumericField`, `SingleChoiceField`,
+`MultiChoiceField`, `BooleanField`, `DateField`, `TimeField`, `PhotoField`, `VideoField`,
+`SignatureField` y `FormLinkField`. Los contenedores, las etiquetas, los campos calculados y los
+títulos y estados generados no lo admiten.
+
+### Pruébalo
+
+Necesitas [form0-cli](/es/cli/install-update).
+
+1. Descarga el formulario de ejemplo e inicia la vista previa:
+
+   ```bash
+   curl -o hidden-value.json https://docs.form0.dev/examples/hidden-value.form0.json
+   form0 serve hidden-value.json
+   ```
+
+1. Abre `http://localhost:3030`. El campo `email` define `visible_preserve_value` como `false`, y el
+   campo `phone` lo omite.
+
+1. Elige **Email**, escribe una dirección, elige **Phone** y vuelve a elegir **Email**. El campo
+   **Email** está vacío.
+
+1. Elige **Phone**, escribe un número, elige **Email** y vuelve a elegir **Phone**. El número sigue
+   ahí.
 
 ## Valor predeterminado
 

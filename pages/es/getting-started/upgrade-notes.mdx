@@ -1,0 +1,267 @@
+---
+title: Notas de actualización
+description: Qué cambiar en tu aplicación al actualizar los paquetes de form0.
+---
+
+<PageBadges />
+
+Esta página enumera los cambios de form0 que requieren alguna acción por tu parte. Si una versión no
+aparece aquí, puedes instalarla sin cambiar tu código. Para ver funciones nuevas y correcciones,
+consulta las notas de versión de [form0-core](https://github.com/paqu-io/form0-core/releases),
+[form0-react](https://github.com/paqu-io/form0-react/releases),
+[form0-react-native](https://github.com/paqu-io/form0-react-native/releases) y
+[form0-cli](https://github.com/paqu-io/form0-cli/releases).
+
+Los cambios aparecen del más reciente al más antiguo. Para actualizar, revisa todas las entradas
+posteriores a las versiones que usas hoy.
+
+## Encuentra los cambios que te afectan
+
+Compara las versiones que usas con cada fila. Una fila te afecta si tu versión es anterior a la
+indicada. La fecha es la de publicación del primer paquete con el cambio. Un paquete que no aparece
+no se ve afectado.
+
+| Fecha        | Cambio                                                                                                                                                                  | Versiones                                                  |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `2026-10-31` | [Las filas vacías guardadas permanecen en el registro](#las-filas-vacías-guardadas-permanecen-en-el-registro)                                                           | core 0.11.0, react 0.10.0, react-native 0.11.0, cli 0.10.0 |
+| `2026-10-30` | [Los valores de los campos se comprueban por tipo](#los-valores-de-los-campos-se-comprueban-por-tipo)                                                                   | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-30` | [Los esquemas que borran valores ocultos necesitan todos los paquetes actualizados](#los-esquemas-que-borran-valores-ocultos-necesitan-todos-los-paquetes-actualizados) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-29` | [Los campos de selección necesitan identificadores de texto en `SETVALUE()`](#los-campos-de-selección-necesitan-identificadores-de-texto-en-setvalue)                   | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0     |
+| `2026-10-28` | [`FormRenderer` requiere `recordKind`](#formrenderer-requiere-recordkind)                                                                                               | react 0.5.0, react-native 0.6.0                            |
+| `2026-10-27` | [Los manejadores no pueden cambiar un registro de solo lectura](#los-manejadores-no-pueden-cambiar-un-registro-de-solo-lectura)                                         | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0     |
+| `2026-10-22` | [Las condiciones solo pueden leer su propio registro y sus padres](#las-condiciones-solo-pueden-leer-su-propio-registro-y-sus-padres)                                   | core 0.6.0                                                 |
+| `2026-10-08` | [Los editores de fila en móvil ya no ejecutan eventos de registro](#los-editores-de-fila-en-móvil-ya-no-ejecutan-eventos-de-registro)                                   | react-native 0.3.0                                         |
+
+## Actualiza los paquetes a la vez
+
+Cada binding depende de una versión concreta de `form0-core`, así que instálalos al mismo tiempo:
+
+- React: `npm install form0-react@latest form0-core@latest`
+- React Native: `npm install form0-react-native@latest form0-core@latest`
+- CLI: `npm install --global form0-cli@latest`
+
+## Las filas vacías guardadas permanecen en el registro
+
+**Publicado:** 2026-10-31
+
+**Se aplica desde:** `form0-core` 0.11.0, `form0-react` 0.10.0, `form0-react-native` 0.11.0,
+`form0-cli` 0.10.0
+
+**Actúa si** una sección repetible solo tiene campos opcionales y tu servidor o tu base de datos
+esperan que cada [fila](/es/core/fields/containers#repeatablesection) tenga alguna respuesta. Un
+usuario puede añadir una fila y guardarla sin escribir nada. Antes esa fila se quitaba del registro
+enviado. Ahora permanece, con su identificador, sus marcas de tiempo y respuestas `null`.
+
+**Qué hacer:** Marca un campo de la fila como `required` para que no se pueda guardar vacía, o
+gestiona estas filas en tu servidor.
+[Filas vacías guardadas](/es/core/output-records#filas-vacías-guardadas) muestra el resultado.
+
+**Compruébalo:** Abre el formulario, añade una fila y guárdala sin escribir nada. Haz clic en
+**Submit** y confirma que tu servidor acepta el registro.
+
+## Los valores de los campos se comprueban por tipo
+
+**Publicado:** 2026-10-30
+
+**Se aplica desde:** `form0-core` 0.10.0, `form0-react` 0.9.0, `form0-react-native` 0.10.0,
+`form0-cli` 0.10.0
+
+**Actúa si** tu aplicación o tus registros guardados contienen valores que no coinciden con el tipo
+del campo. form0 no los convierte, así que un campo visible con uno de estos valores muestra un
+error y bloquea **Submit**:
+
+| Campo          | Ahora es un error          | Usa en su lugar                  |
+| -------------- | -------------------------- | -------------------------------- |
+| `NumericField` | `"12"`                     | `12`                             |
+| `TextField`    | `42`                       | `"42"`                           |
+| `DateField`    | `2026-02-30`, `not-a-date` | Una fecha real como `YYYY-MM-DD` |
+| `TimeField`    | `24:00`                    | `HH:MM` o `HH:MM:SS`             |
+
+**Qué hacer:** Convierte los valores antes de pasarlos a `initialValues`, `initialSnapshot`,
+`overrideValues` o `SETVALUE()`, y corrige los registros guardados que los contengan. Un servidor
+que llama a `prepareSubmission()` también rechaza estos valores.
+
+**Compruébalo:** Guarda una muestra de tus valores como `values.json` y ejecuta este comando.
+Cualquier problema aparece en `errors` en la salida:
+
+```bash
+form0 run path/to/schema.json --values values.json
+```
+
+## Los esquemas que borran valores ocultos necesitan todos los paquetes actualizados
+
+**Publicado:** 2026-10-30
+
+**Se aplica desde:** `form0-core` 0.10.0, `form0-react` 0.9.0, `form0-react-native` 0.10.0,
+`form0-cli` 0.10.0
+
+**Actúa si** añades `visible_preserve_value` a un esquema. Los paquetes anteriores rechazan el
+atributo con este error:
+
+```text
+Field "email" (TextField) does not support visible_preserve_value attribute
+```
+
+**Qué hacer:** Actualiza todos los paquetes que leen el esquema antes de añadir el atributo,
+incluidos `form0-core` en tu servidor y `form0-cli` en tu equipo.
+
+**Compruébalo:** Ejecuta este comando. Termina con estado `0`:
+
+```bash
+form0 validate path/to/schema.json
+```
+
+## Los campos de selección necesitan identificadores de texto en `SETVALUE()`
+
+**Publicado:** 2026-10-29
+
+**Se aplica desde:** `form0-core` 0.9.0, `form0-react` 0.6.0, `form0-react-native` 0.7.0,
+`form0-cli` 0.9.0
+
+**Actúa si** un manejador pasa a `SETVALUE()` un valor de selección como número, como booleano o con
+una forma incorrecta.
+
+**Qué hacer:** `SingleChoiceField` y `BooleanField` aceptan un identificador de texto.
+`MultiChoiceField` acepta un array de identificadores de texto.
+
+```js
+// Before: these leave the field unchanged
+SETVALUE("rating", 1)
+SETVALUE("tags", "red")
+
+// Now
+SETVALUE("rating", "1")
+SETVALUE("tags", ["red"])
+```
+
+Un manejador que escribe en un campo al que no puede acceder, como un campo de una
+[fila de una sección repetible](/es/core/fields/containers#repeatablesection) desde un manejador del
+formulario principal, ahora pierde todas sus llamadas a `SETVALUE()`, no solo esa.
+
+**Compruébalo:** Busca `SETVALUE(` en tus esquemas, ejecuta cada manejador y confirma que el campo
+muestra el valor. Versiones anteriores de `form0-react` pueden dejar el campo sin cambios y sin
+mensaje de consola en modo gestionado. Los bindings con `eventDiagnostics` informan de estos fallos
+por defecto; comprueba también el formulario.
+
+## `FormRenderer` requiere `recordKind`
+
+**Publicado:** 2026-10-28
+
+**Se aplica desde:** `form0-react` 0.5.0, `form0-react-native` 0.6.0
+
+**Actúa si** usas `FormRenderer` de `form0-react` o `form0-react-native`. Sin `recordKind`, lanza
+este error:
+
+```text
+form0: events.recordKind must be "new" or "existing" when lifecycle is enabled.
+```
+
+**Qué hacer:** Establece `recordKind` en `"new"` para un registro nuevo, o en `"existing"` al abrir
+uno guardado:
+
+```jsx
+<FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
+```
+
+Los eventos del ciclo de vida y los eventos de foco y desenfoque de los campos ahora están activos
+por defecto, así que sus manejadores empiezan a ejecutarse. Los controles integrados no emiten
+`click` automáticamente. Para mantener el comportamiento anterior, desactiva estos eventos:
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { lifecycle: false, fieldInteractions: [] } }}
+  schema={schema}
+/>
+```
+
+**Compruébalo:** Abre el formulario y confirma que se renderiza sin el error. Si usas manejadores
+del ciclo de vida, confirma que cada uno se ejecuta una vez.
+
+## Los manejadores no pueden cambiar un registro de solo lectura
+
+**Publicado:** 2026-10-27
+
+**Se aplica desde:** `form0-core` 0.8.0, `form0-react` 0.5.0, `form0-react-native` 0.6.0,
+`form0-cli` 0.8.0
+
+**Actúa si** un manejador de `load-record` llama a `SETVALUE()` y el formulario puede abrirse en
+solo lectura. `load-record` se ejecuta en ambos modos.
+
+**Qué hacer:** Mueve la escritura a `new-record` o `edit-record`:
+
+```js
+// Before: rejected when the form opens read-only
+ON("load-record", function () {
+  SETVALUE("status_note", "Opened")
+})
+
+// Now: runs only when the user is editing
+ON("edit-record", function () {
+  SETVALUE("status_note", "Opened")
+})
+```
+
+También puedes conservar el manejador y comprobar `event.mode`:
+
+```js
+ON("load-record", function (event) {
+  if (event.mode === "edit") SETVALUE("status_note", "Opened")
+})
+```
+
+**Compruébalo:** Abre el formulario con `mode="readonly"`. Si un manejador sigue escribiendo, la
+consola muestra este mensaje y el formulario se abre sin los cambios de ese manejador:
+`View-mode handlers cannot change record data.`
+
+## Las condiciones solo pueden leer su propio registro y sus padres
+
+**Publicado:** 2026-10-22
+
+**Se aplica desde:** `form0-core` 0.6.0
+
+**Actúa si** tu esquema tiene secciones repetibles y una condición lee un campo de fila desde fuera
+de esa fila. `form0-core` rechaza el esquema con un error como este:
+
+```text
+Field "note" visible_conditions references "amount" outside its record scope (owner: main form; reference: payments)
+```
+
+**Qué hacer:** Haz que la condición apunte a un campo de la misma fila, de una fila padre o del
+formulario principal. [Ámbitos padre e hijo](/es/core/engine/parent-child-scopes) incluye un ejemplo
+completo.
+
+**Compruébalo:** Ejecuta este comando con cada esquema. Termina con el estado `1` y muestra el error
+si una condición está fuera de ámbito:
+
+```bash
+form0 validate path/to/schema.json
+```
+
+## Los editores de fila en móvil ya no ejecutan eventos de registro
+
+**Publicado:** 2026-10-08
+
+**Se aplica desde:** `form0-react-native` 0.3.0
+
+**Actúa si** actualizas desde `form0-react-native` 0.2.x y un manejador depende de que
+`load-record`, `edit-record` o `change` se ejecuten dentro de una fila repetible.
+
+**Qué hacer:** Mueve la lógica de fila a los eventos repetibles, usando el `data_name` de tu sección
+repetible:
+
+```js
+ON("load-repeatable", "rows", function () {
+  // Runs when a row opens
+})
+
+ON("new-repeatable", "rows", function () {
+  // Runs when a new row starts editing
+})
+
+ON("edit-repeatable", "rows", function () {
+  // Runs when an existing row starts editing
+})
+```
+
+**Compruébalo:** Abre una fila y confirma que tu manejador se ejecuta. Los manejadores del
+formulario principal ya no se ejecutan al abrir una fila.

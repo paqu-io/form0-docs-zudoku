@@ -31,6 +31,10 @@ Additional attributes:
 
 ## RepeatableSection
 
+A `RepeatableSection` lets a user add any number of rows, such as the line items of an order. Each
+row holds its own values for the same set of fields. In the output record, each row becomes a child
+record.
+
 ```json
 {
   "type": "RepeatableSection",
@@ -76,12 +80,12 @@ Additional attributes:
 
 Additional attributes:
 
-- `location_enabled`: Enables location data for items.
-- `location_required`: Requires location data for items.
+- `location_enabled`: Enables location data for rows.
+- `location_required`: Requires location data for rows.
 - `title_field`: Optional `TitleField` used to derive each child record's title. Use `null` when no
-  entry title is configured.
+  row title is configured.
 
-Repeatable sections create an array of child records in the output. A configured entry title is
+Repeatable sections create an array of child records in the output. A configured row title is
 stored as `@title` on each child record. If all title parts are blank, `@title` is `null`; renderers
 may show a positional label such as `Items 1`, but that fallback is not persisted.
 

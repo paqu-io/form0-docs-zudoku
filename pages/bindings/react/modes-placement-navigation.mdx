@@ -14,12 +14,13 @@ explain why editing is unavailable.
 `showPrimaryActionsInViewMode` controls whether disabled primary actions remain visible in view
 mode.
 
-## Repeatable entry opening mode
+## Repeatable row opening mode
 
-`repeatableEntryMode` accepts `readonly` (default) or `edit` for existing rows at every nesting
-level. Existing rows open in view mode with Edit when their parent permits editing; new rows start
-in edit mode. A read-only parent allows browsing descendants while preventing editing, adding and
-removing them. The direct-edit option does not override parent restrictions.
+`repeatableEntryMode` accepts `readonly` (default) or `edit` for existing
+[repeatable section rows](/core/fields/containers#repeatablesection) at every nesting level.
+Existing rows open in view mode with Edit when their parent permits editing; new rows start in edit
+mode. A read-only parent allows browsing descendants while preventing editing, adding and removing
+them. The direct-edit option does not override parent restrictions.
 
 View displays supplied accepted calculated values without running calculations or applying missing
 schema defaults. Conditions and intrinsic validation still use those values. Edit evaluates with
@@ -31,8 +32,7 @@ Managed opening awaits `load-record`/`load-repeatable`, then the matching new/ed
 editing. View → Edit runs edit without repeating load. `event.mode` is `readonly` or `edit` for the
 executing record, independent of its parent's mode. View permits reads, ALERT and scoped ON/OFF;
 a record write rejects the complete operation batch before host delegation. Move writable
-initialization to new/edit, or guard load setters for direct editing. This requires the coordinated
-core release with mode control; it changes no form-schema or saved-record shape.
+initialization to new/edit, or guard load setters for direct editing.
 
 ## Placement
 
@@ -54,6 +54,6 @@ confirmation includes renderer changes and `externalDirty`.
 - `forceShowNavigationPanel` keeps section navigation visible when it would normally collapse.
 - `simplifiedMode` presents one field at a time; `onSimplifiedNavigation` observes movement.
 
-Sections, repeatable entries, validation navigation, focus handling, and keyboard actions are
+Sections, repeatable rows, validation navigation, focus handling, and keyboard actions are
 managed by `FormRenderer`. Keep conditional behavior in the schema rather than duplicating it in
 React state.

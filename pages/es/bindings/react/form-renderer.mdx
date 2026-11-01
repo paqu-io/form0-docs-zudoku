@@ -23,16 +23,22 @@ secciones y genera registros estructurados al enviar.
 
 ## Propiedades esenciales
 
-| Propiedad             | Finalidad                                                                                                      |
-| --------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `schema`              | Un esquema form0 que contiene `form.elements`.                                                                 |
-| `initialValues`       | Valores iniciales de los campos no repetibles.                                                                 |
-| `initialSnapshot`     | Restaura a la vez los valores sin procesar, el estado de las secciones repetibles y las marcas de tiempo.      |
-| `overrideValues`      | Aplica valores prioritarios sobre los valores iniciales.                                                       |
-| `onSubmit`            | Recibe el registro estructurado y los metadatos del envío.                                                     |
-| `onSnapshotChange`    | Observa los snapshots iniciales y los de cambios del usuario.                                                  |
-| `mode`                | Empieza en modo `edit` o `readonly`.                                                                           |
-| `repeatableEntryMode` | Apertura de filas repetibles existentes: `readonly` (predeterminado) o `edit`; las nuevas se abren en edición. |
+| Propiedad               | Finalidad                                                                                                                                                                         |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `schema`                | Un esquema form0 que contiene `form.elements`.                                                                                                                                    |
+| `initialValues`         | Valores iniciales de los campos no repetibles.                                                                                                                                    |
+| `initialSnapshot`       | Restaura a la vez los valores sin procesar, el estado de las secciones repetibles y las marcas de tiempo.                                                                         |
+| `overrideValues`        | Aplica valores prioritarios sobre los valores iniciales.                                                                                                                          |
+| `onSubmit`              | Recibe el registro estructurado y los metadatos del envío.                                                                                                                        |
+| `submissionDiagnostics` | Controla los informes de fallos de guardado (activos) y los bloqueos de validación (inactivos).                                                                                   |
+| `submissionOptions`     | Define las opciones de revisión, los mensajes y `validateHiddenValues`.                                                                                                           |
+| `onResolveHiddenValue`  | Permite que tu aplicación [corrija un valor oculto](/es/bindings/react/values-snapshots-submission#resolver-un-valor-oculto-que-no-pasa-la-validación) que no pasa la validación. |
+| `initialFreshness`      | Restaura el `freshness` guardado de un registro.                                                                                                                                  |
+| `eventDiagnostics`      | Controla los informes de eventos fallidos (activos).                                                                                                                              |
+| `onSnapshotChange`      | Observa los snapshots iniciales y los de cambios del usuario.                                                                                                                     |
+| `mode`                  | Empieza en modo `edit` o `readonly`.                                                                                                                                              |
+| `repeatableEntryMode`   | Apertura de [filas de secciones repetibles](/es/core/fields/containers#repeatablesection) existentes: `readonly` (predeterminado) o `edit`; las nuevas se abren en edición.       |
+| `formWidth`             | Ancho máximo del formulario, como `100%`. El valor predeterminado es `30vw`.                                                                                                      |
 
 ## Interfaz y estado propios de la aplicación
 
@@ -52,7 +58,10 @@ Continúa con [Valores, snapshots y envío](/es/bindings/react/values-snapshots-
 
 ## Opciones del motor y diagnósticos de cálculo
 
-`engineOptions` transmite helpers, seguridad, `onWarning`, `onUpdate`, `onOperations` y los controles de diagnóstico a los motores raíz y de filas repetibles. Helpers y seguridad se fijan al crear el motor: vuelve a montar `FormRenderer` para sustituirlos de forma predecible. Los callbacks y la preferencia de consola se mantienen actualizados en los editores abiertos sin una evaluación adicional.
+`engineOptions` pasa helpers, ajustes de seguridad, `onWarning`, `onUpdate`, `onOperations` y los
+ajustes de diagnóstico de cálculo al motor principal y a los motores de fila. Los helpers y la
+seguridad se definen al crear el motor, así que vuelve a montar `FormRenderer` para cambiarlos. Los
+callbacks y el ajuste de consola se actualizan en los editores abiertos sin otra evaluación.
 
 ```jsx
 const findingsByScope = new Map()
@@ -70,21 +79,48 @@ const findingsByScope = new Map()
 />
 ```
 
-Los informes de consola están activados por defecto. `diagnostics.console: false` oculta los detalles de cálculo y los avisos de recuperación y fin de ámbito; la recopilación y los callbacks siguen activos. Proporcionar `onDiagnostics` no desactiva la consola implícitamente. Se conservan los códigos, la gravedad, los mensajes, las fases, las sugerencias y el contexto de core. Los encabezados de la consola de desarrollo usan inglés, como los mensajes existentes del binding.
+Los informes de consola están activos de forma predeterminada. `diagnostics.console: false`
+desactiva en la consola los detalles de cálculo y los mensajes de recuperación y de fin de ámbito,
+mientras la recopilación y los callbacks continúan. Añadir `onDiagnostics` no desactiva los informes
+de consola. Los títulos de la consola están en inglés.
 
-`onDiagnostics(snapshot, meta)` recibe una copia defensiva del array tras cada evaluación completada y aceptada, incluida la primera, los hallazgos idénticos y `[]` tras la recuperación. La consola evita repeticiones idénticas e informa de hallazgos nuevos o modificados, recuperación y recurrencia. Los errores de los observadores, incluidas las promesas rechazadas, no interrumpen la evaluación ni las operaciones.
+`onDiagnostics(snapshot, meta)` recibe una copia de los hallazgos después de cada evaluación
+completada, incluidos la primera, los hallazgos repetidos y `[]` tras la recuperación. La consola
+omite las repeticiones idénticas e informa de los hallazgos nuevos o modificados, de la recuperación
+y de los problemas que reaparecen. Un error en tu callback, incluida una promesa rechazada, no puede
+interrumpir la evaluación.
 
-Los metadatos contienen `scopeId`, `instancePath`, `evaluationId` y `kind`. Un ámbito identifica una vida transitoria del motor; los identificadores de evaluación aumentan dentro de él. La ruta raíz es `[]`. Cada segmento de fila contiene `repeatableKey`, `instanceId`, `index` desde cero e `identity: "id" | "position"`. Se usan los valores existentes de `id` o `record_id`, con una alternativa explícitamente posicional si faltan. Los hallazgos incluyen la misma ruta en `context.instancePath`; los informes nunca crean identificadores de registro.
+`meta` contiene `scopeId`, `instancePath`, `evaluationId` y `kind`. Un ámbito es la vida de un
+motor, y los identificadores de evaluación aumentan dentro de él. La ruta del registro principal es
+`[]`. Cada segmento de fila tiene `repeatableKey`, `instanceId`, un `index` que empieza en cero e
+`identity: "id" | "position"`. form0 usa el `id` o `record_id` de una fila y, si no existe, su
+posición. Los hallazgos llevan la misma ruta en `context.instancePath`. Los informes nunca crean
+identificadores de registro.
 
-Cerrar o eliminar un editor, sustituir su motor o esquema, o desmontarlo retira el ámbito anterior con `onDiagnostics([], { ...meta, kind: "scope-ended" })`. Significa que el ámbito deja de observarse, no que la fila guardada se haya recuperado. Solo se representan motores que realmente se evalúan: el callback no es un informe completo de validez para el envío ni vuelve a evaluar filas cerradas.
+Cerrar o eliminar un editor, sustituir su motor o esquema, o desmontarlo termina el ámbito con
+`onDiagnostics([], { ...meta, kind: "scope-ended" })`. Esto significa que el ámbito ya no se
+observa, no que la fila se haya recuperado. Solo se informa de los motores que evalúan, así que este
+callback no es un informe completo de estado, y no vuelve a evaluar las filas cerradas.
 
-Los diagnósticos de cálculo quedan fuera de `state.errors`, los snapshots guardados y los registros. No cambian cuándo se muestran los errores de validación, las decisiones de envío ni el guardado de borradores, y no generan alertas automáticas ni un panel de diagnóstico.
+Los diagnósticos de cálculo quedan fuera de `state.errors`, de los snapshots guardados y de los
+registros. No cambian la validación, el envío ni el guardado de borradores, y no añaden alertas ni
+paneles.
 
-`onOperations(operations, meta, applyDefault)` recibe las operaciones distintas de alertas. Delega las seleccionadas con `applyDefault(selected, meta)`; sin callback se conserva el procesamiento existente. Los diálogos `ALERT` del renderer aparecen una vez. Los lotes siguen el procesamiento existente de cada plataforma; los callbacks deben atender cada lote recibido. `onWarning` conserva la ruta de avisos heredada y su limitación de frecuencia; no sustituye los snapshots de diagnóstico. `onUpdate(state, engine)` conserva el motor o facade propio de la ejecución; usa `onDiagnostics` para consumir diagnósticos de forma portable.
+### Gestionar operaciones y advertencias
 
-## Eventos gestionados y validación personalizada
+`onOperations(operations, meta, applyDefault)` recibe todas las operaciones excepto las alertas.
+Pasa las que quieras gestionar de forma normal a `applyDefault(selected, meta)`. Sin el callback, se
+aplica la gestión predeterminada. El renderer muestra cada `ALERT` una vez. Tu callback debe
+gestionar todos los lotes que reciba.
 
-Los bindings actuales usan core 0.8.1 o posterior. El ciclo de vida y las interacciones compatibles focus/blur/click se activan por defecto:
+`onWarning` recibe las advertencias del motor, que pueden limitarse, y no sustituye a
+`onDiagnostics`. `onUpdate(state, engine)` recibe el estado y un objeto de motor cuyo tipo depende
+de cómo se ejecuta el formulario. Si solo necesitas diagnósticos, usa `onDiagnostics`.
+
+## Eventos y validación personalizada
+
+Los eventos de ciclo de vida y las interacciones de campo están activos de forma predeterminada. Usa
+`recordKind` para indicar si el formulario contiene un registro nuevo o uno existente:
 
 ```jsx
 <FormRenderer
@@ -98,40 +134,120 @@ Los bindings actuales usan core 0.8.1 o posterior. El ciclo de vida y las intera
 />
 ```
 
-`recordKind` debe ser explícitamente `new` o `existing`; omitirlo es un error de configuración salvo con `lifecycle: false`. Los valores no determinan la clasificación. La configuración pertenece a la sesión; vuelve a montar para cambiar clasificación, ciclo, helpers o seguridad. Los callbacks siguen actualizándose. La apertura de solo lectura ejecuta load; al editar, load y luego new/edit. Las filas abiertas usan sus eventos repeatable y clasificación real. Usa `lifecycle: false` para conservar el ciclo heredado y `fieldInteractions: []` para desactivar interacciones. Los controles de texto y números emiten focus y blur; las opciones usan change. El click automático se reserva para campos de activación compatibles. Actualmente no existe HyperlinkField y ningún control integrado emite click automáticamente. El dispatch explícito del controlador del host sigue disponible.
+`recordKind` debe ser `new` o `existing`, salvo que definas `lifecycle: false`. form0 no lo deduce
+de los valores. Estos ajustes duran toda la vida del editor, así que vuelve a montarlo para cambiar
+`recordKind`, `lifecycle`, los helpers o la seguridad. Los callbacks siguen activos.
 
-El controlador de la generación se entrega tras inicializar y se retira con `null`.
-`dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` devuelve una promesa con `status`,
-`operations`, `validationIssues` e `issues` al terminar las operaciones aceptadas.
-`prepareSave({ intent: 'submit' | 'draft', instancePath?, scopeId? })` devuelve `eligible`, `payload`,
-`meta`, `validationSummary` e `issues`; nunca persiste ni cierra. Los listeners usan `data_name` y las
-rutas, claves de esquema e IDs existentes. La alternativa posicional exige el `scopeId` activo observado
-en diagnósticos. Se rechazan destinos cerrados y generaciones anteriores.
+- Un formulario de solo lectura ejecuta `load-record`. Un formulario en edición ejecuta
+  `load-record` y después `new-record` o `edit-record`.
+- Las filas abiertas usan los eventos repetibles, según sean nuevas o existentes.
+- `lifecycle: false` deja solo `load-record`, `edit-record` y `change` para el registro principal.
+  `fieldInteractions: []` desactiva las interacciones automáticas.
+- Los campos de texto y numéricos emiten `focus` y `blur`, y los campos de opción usan `change`.
+  Ningún control integrado emite `click`, así que despáchalo con el controlador.
 
-`INVALID(message)` crea un mensaje no vacío, síncrono y del ámbito durante validate-record o
-validate-repeatable. Los hallazgos se integran en el resumen/navegación de validación, reemplazan cada
-intento y se limpian al editar o retirar el ámbito. No entran en `state.errors`, diagnósticos de cálculo,
-valores ni metadatos de registros o medios. Los handlers de validación y cierre rechazan operaciones de
-valores/interfaz y promesas. Las filas pueden leer campos principales y antecesores actuales; SETVALUE
-solo escribe en la fila actual. El acceso a colecciones queda excluido.
+### El controlador de eventos
 
-La preparación espera actualizaciones, valida, ejecuta save-\* una vez si la política lo permite,
-espera operaciones, revalida valores cambiados y serializa ese estado final. Submit y la aceptación
-de filas respetan la validación; los borradores raíz permiten `hasErrors: true`. No hay borradores de
-fila. Un fallo de ejecución no entrega payload. `isDraft` refleja el intento actual e `isValid` la
-validez intrínseca. Los diagnósticos de cálculo no bloquean guardados. La actualización de filas cerradas
-y la agregación siguen siendo trabajos separados.
+`onEventController` recibe un controlador cuando el formulario se inicializa, y `null` cuando ese
+controlador se retira:
 
-Las ediciones del usuario notifican change tras asentarse. Los cambios de filas aceptados incluyen
-`action` (add/edit/remove) y `affectedInstancePath`; el estado habilitado notifica change-status solo
-por cambios del usuario. Defaults, SETVALUE y cálculos no generan change adicionales. Las suscripciones de interacción están activadas por defecto; texto/número emiten focus/blur y las
-opciones usan change. Ningún control integrado emite click automáticamente. El dispatch explícito
-del controlador del host sigue disponible. Se esperan onOperations asíncrono y applyDefault
-selectivo; el fallback caduca al terminar el dispatch. El renderer gestiona ALERT una sola vez.
+- `dispatch({ type, fieldKey?, instancePath?, scopeId?, metadata? })` devuelve una promesa con
+  `status`, `operations`, `validationIssues` e `issues`, cuando terminan las operaciones aceptadas.
+- `prepareSave({ intent: "submit" | "draft", instancePath?, scopeId? })` devuelve una promesa con
+  `eligible`, `payload`, `meta`, `validationSummary` e `issues`. Nunca guarda ni cierra nada.
 
-Cancelar confirmado ejecuta cancel y luego unload; un cierre correcto soportado ejecuta unload antes
-de liberar el motor. El host debe enviar unload antes de desmontar directamente. Rerenders, resets,
-limpieza de Strict Mode y desmontaje forzado solo retiran ámbitos. Save-_ ocurre antes del guardado;
-no hay eventos saved-_. La aplicación controla persistencia, éxito y cierre.
+Los listeners de campo usan `data_name`, y las rutas usan las claves del esquema y los
+identificadores de fila. Una ruta por posición necesita el `scopeId` activo de los diagnósticos. Los
+destinos cerrados y los controladores retirados se rechazan.
 
-Los archivos File/Blob nativos conservan sus metadatos estándar y datos inmutables. Las propiedades personalizadas quedan fuera de la serialización nativa. La corrección de compatibilidad multimedia está incluida en core 0.5.1.
+### Validación personalizada
+
+`INVALID(message)` añade un mensaje a un registro o una fila durante `validate-record` o
+`validate-repeatable`. Los mensajes se unen a la lista de validación y a su navegación, se
+sustituyen en cada intento y se borran cuando cambian los datos o se cierra el editor. Nunca entran
+en `state.errors`, en los diagnósticos de cálculo, en los valores ni en los metadatos del registro.
+
+Los manejadores de validación y de cierre no pueden cambiar valores, mostrar alertas ni devolver
+promesas. Los manejadores de fila pueden leer los campos actuales del registro principal y de los
+padres, pero `SETVALUE` solo escribe en su propia fila, y las colecciones repetibles quedan fuera de
+su alcance.
+
+### Cómo se prepara un guardado
+
+1. Espera a las actualizaciones pendientes.
+2. Valida.
+3. Ejecuta `save-record` o `save-repeatable` una vez, si la validación lo permite.
+4. Espera a que terminen sus operaciones.
+5. Valida de nuevo si cambiaron valores.
+6. Construye el registro a partir de ese snapshot final.
+
+El envío y la aceptación de filas se detienen ante fallos de validación. Un borrador del registro
+principal continúa con `hasErrors: true`, y las filas no tienen borradores. Si un manejador falla,
+no se devuelve `payload`. `isDraft` describe la acción actual, e `isValid` es la validez integrada.
+Los diagnósticos de cálculo por sí solos nunca bloquean un guardado.
+
+### Cuándo se ejecutan los eventos
+
+Las ediciones del usuario emiten `change` cuando terminan las actualizaciones. Los cambios de fila
+aceptados añaden `action` (`add`, `edit` o `remove`) y `affectedInstancePath`. Un campo de estado
+activado emite `change-status` solo para cambios del usuario. Los valores predeterminados,
+`SETVALUE` y los cálculos no emiten `change`. form0 espera el trabajo asíncrono de `onOperations` y
+`applyDefault`. La alternativa caduca con su despacho.
+
+Una cancelación confirmada ejecuta el evento de cancelación y después el de descarga. Un cierre
+correcto ejecuta el evento de descarga antes de eliminar el editor. Si tu aplicación cierra un
+editor directamente, despacha el evento de descarga antes de desmontarlo. Los nuevos renderizados,
+los reinicios, la limpieza de React Strict Mode y los desmontajes forzados no cuentan como cierre.
+`save-record` y `save-repeatable` se ejecutan antes de guardar, y no existen eventos de esquema
+`saved-*`. Tu aplicación se encarga de guardar, de los mensajes de éxito y de cerrar.
+
+Las subidas `File` y `Blob` conservan sus metadatos estándar y su contenido. Sus propiedades
+personalizadas no se conservan.
+
+## Informes de eventos fallidos
+
+`eventDiagnostics` controla los informes de consola de los eventos fallidos, por separado de
+`submissionDiagnostics`:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  eventDiagnostics={{ failures: true }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+/>
+```
+
+Un evento fallido registra un `console.error` de forma predeterminada, incluidos un `SETVALUE()`
+rechazado y una promesa rechazada de `onOperations`. El informe tiene el tipo de evento, el campo,
+el ámbito del registro principal o de la fila, y los códigos y mensajes de los problemas. No incluye
+valores, argumentos de operación, snapshots ni identificadores de registro. Define `failures: false`
+si tu aplicación gestiona estos informes. El ajuste se actualiza en los editores abiertos y en las
+operaciones pendientes.
+
+Los mensajes de validación e `INVALID()` no son fallos, y el trabajo cancelado no informa de nada.
+**Submit** y **Save** de una fila usan los informes de envío, así que no recibes dos. Si llamas
+directamente a `prepareSave()`, inspecciona su resultado. `dispatch()` devuelve su resultado aunque
+los informes de consola estén desactivados. Estos ajustes no controlan las advertencias de
+`form0-core` ni la salida de consola con `lifecycle: false`.
+
+Los campos numéricos aceptan números, como `SETVALUE("quantity", 1)`. Los campos de opción aceptan
+identificadores de texto: `SETVALUE("rating", "1")` para selección única y `SETVALUE("tags", ["1"])`
+para selección múltiple. Una llamada rechazada deja sin aplicar todo su lote. Los informes no
+cambian valores, validación, registros ni recuentos de evaluaciones.
+
+### Pruébalo
+
+1. En un esquema con un `SingleChoiceField` llamado `rating`, añade este manejador a
+   `form.events.code`:
+
+   ```js
+   ON("load-record", function () {
+     SETVALUE("rating", 1)
+   })
+   ```
+
+1. Abre el formulario. **rating** sigue vacío, y la consola muestra `[form0-react] Event failed.`
+
+1. Sustituye `1` por el identificador de texto de una de las opciones del campo y vuelve a abrir el
+   formulario. La opción queda seleccionada, y la consola no muestra ningún informe.

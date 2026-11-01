@@ -5,8 +5,6 @@ description: Establece el valor de un campo durante un evento.
 
 <PageBadges />
 
-import { Callout } from "zudoku/ui/Callout"
-
 Establece el valor de un campo durante un evento.
 
 ## Ejemplo
@@ -15,13 +13,18 @@ Establece el valor de un campo durante un evento.
 SETVALUE("age", 18)
 ```
 
-<Callout type="caution" title="Usa la forma de valor en tiempo de ejecución en los campos de selección">
-  No todos los bindings oficiales normalizan de la misma forma los valores primitivos de los campos de
-  selección. Para que el código de eventos sea portable, asigna un `SingleChoiceField` o un
-  `BooleanField` con `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`. Asigna un
-  `MultiChoiceField` con `{ "choices": [...], "other": [] }`. Los campos de texto, numéricos y demás
-  campos escalares siguen aceptando sus valores escalares habituales.
-</Callout>
+El valor debe coincidir con el campo. Usa un número para un `NumericField` y un texto para un
+`TextField`. Un `SingleChoiceField` o `BooleanField` acepta un identificador de texto, y un
+`MultiChoiceField` acepta una lista de identificadores de texto:
+
+```js
+SETVALUE("rating", "1")
+SETVALUE("tags", ["red", "blue"])
+```
+
+Si se rechaza una llamada de un manejador, no se aplica ninguna operación de ese evento. Aplicar un
+`SETVALUE()` recalcula el formulario, pero no despacha `change`. Consulta
+[Actualización y normalización de valores](/es/core/engine/value-updates).
 
 ## Parámetros
 
@@ -31,3 +34,19 @@ SETVALUE("age", 18)
 ## Devuelve
 
 El descriptor de la operación (utilizado por los clientes).
+
+## Pruébalo
+
+Necesitas [form0-cli](/es/cli/install-update). Todas las páginas de builtins de eventos usan el
+mismo formulario de prueba.
+
+1. Descarga el formulario e inicia la vista previa:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Abre `http://localhost:3030`.
+
+1. Escribe `7` en **Amount**. **Note** muestra **Amount is 7**.

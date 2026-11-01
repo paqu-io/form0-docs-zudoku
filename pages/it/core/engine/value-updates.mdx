@@ -1,0 +1,65 @@
+---
+title: Aggiornamento e normalizzazione dei valori
+description: Setter supportati, input di scelta rigorosi, caricamento e formati dei record.
+---
+
+<PageBadges />
+
+Usa i setter supportati per modificare gli input tramite codice. Un batch non vuoto valuta una volta e restituisce lo stato corrente del motore; un batch vuoto non esegue operazioni. La costruzione richiede ancora una valutazione iniziale esplicita.
+
+```js
+const engine = createFormEngine({ schema, initialValues: { width: 3, height: 10 } })
+engine.eval()
+const state = engine.setValues({ width: 4, height: 5 })
+engine.setValue("country", "it")
+engine.setValue("countries", ["it", "fr"])
+```
+
+## Schema, valori live e output dei record
+
+| Rappresentazione                | SingleChoice / Boolean                       | MultiChoice                                  |
+| ------------------------------- | -------------------------------------------- | -------------------------------------------- |
+| Scelte dello schema             | `choices: [{ value: 'it', label: 'Italy' }]` | `choices: [{ value: 'it', label: 'Italy' }]` |
+| Valore predefinito dello schema | `default_value: 'it'`                        | `default_value: ['it']`                      |
+| Input abbreviato del setter     | `'it'`                                       | `['it']`                                     |
+| Chiave di selezione live        | `choice`                                     | `choices`                                    |
+| Chiave di selezione inviata     | `choice_value`                               | `choices_value`                              |
+
+Entrambi i tipi prendono le scelte dallo schema. Boolean usa gli identificatori testuali configurati, non booleani JavaScript. Usa [`buildFormRecordSnapshot`](/it/core/output-records#caricare-un-record-salvato) per riconvertire un record salvato in valori live.
+
+```js
+// SingleChoice / Boolean live value:
+{ choice: [{ value: "it", label: "Italy" }], other: [] }
+// MultiChoice live value:
+{ choices: [{ value: "it", label: "Italy" }], other: [] }
+// SingleChoice / Boolean submitted field value:
+{ choice_value: [{ value: "it", label: "Italy" }], other_value: [] }
+// MultiChoice submitted field value:
+{ choices_value: [{ value: "it", label: "Italy" }], other_value: [] }
+```
+
+## Input accettati ed errori
+
+- SingleChoice/Boolean accetta un identificatore testuale o il proprio oggetto live. MultiChoice accetta un array di identificatori testuali o il proprio oggetto live. Input numerici o booleani, alias tra tipi e oggetti di selezione con la sola etichetta generano TypeError.
+- Etichette esplicite e metadati vengono copiati e conservati. Le etichette mancanti provengono dalle scelte dello schema; gli identificatori sconosciuti usano il proprio identificatore come etichetta. Gli array Altro mancanti diventano array vuoti. Quelli forniti devono contenere oggetti con etichetta, compreso testo vuoto durante la modifica.
+- Null o undefined svuota un campo di scelta. Una stringa vuota resta una selezione non valida. Gli identificatori sconosciuti vengono conservati per la validazione ordinaria e non diventano mai automaticamente Altro. Ordine e duplicati vengono conservati.
+- Nomi sconosciuti o di altri ambiti, strutture di scelta errate e destinazioni calcolate, di visualizzazione o contenitori rifiutano tutto il batch prima di modifiche o valutazioni. Gli altri tipi mantengono i propri valori live e le regole di validazione abituali.
+
+## Caricamento e permessi di scrittura
+
+Inizializzazione e reset normalizzano gli input abbreviati supportati e conservano le bozze caricate con strutture errate per la validazione. Metadati sconosciuti e calcoli accettati restano disponibili. Usa i setter invece di modificare direttamente lo stato del motore.
+
+Gli aggiornamenti usano identificatori data_name e appartengono all’ambito del record in esecuzione. Una [riga di una sezione ripetibile](/it/core/fields/containers#repeatablesection) può leggere i valori degli antenati forniti ma non scrivere nei campi di antenati o righe sorelle. CalculatedField, TitleField, LabelField e i contenitori non possono essere destinazioni dei setter o del SETVALUE ufficiale. Un input ordinario marcato read_only resta aggiornabile tramite codice.
+
+Il modo readonly del record blocca setter e scritture degli eventi. Gli overrideValues e la sostituzione dello snapshot caricano comunque i valori: la tua applicazione può mostrare uno stato ricevuto dal backend lasciando la vista non modificabile. La vista conserva i calcoli accettati; queste sostituzioni non salvano record e non ripetono eventi del ciclo di vita.
+
+## Eventi e adattatori
+
+I setter non attivano change o eventi del ciclo di vita e non preparano l’invio. SETVALUE raccoglie un’istruzione; l’host applica le istruzioni accettate e valuta. Cambiare width ricalcola un’espressione area che usa width; assegnare direttamente area viene rifiutato. Una modifica ordinaria valuta il proprio ambito senza aggiornare tutti i discendenti chiusi.
+
+Gli adattatori usano normalizeFieldValue puro per preparare i valori prima della valutazione. Copia gli input e rifiuta i tipi protetti, ma non valuta né attiva eventi; l’adattatore controlla anche modo e proprietà dell’intero batch. React su thread principale/worker, Native e anteprima CLI condividono queste regole.
+
+```js
+import { normalizeFieldValue } from "form0-core"
+const value = normalizeFieldValue(countryField, "it")
+```

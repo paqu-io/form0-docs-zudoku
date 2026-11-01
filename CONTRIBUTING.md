@@ -86,6 +86,11 @@ prompts such as `form0(server)>` stay unchanged.
 | field      | campo      | champ          | campo   |
 | record     | registro   | enregistrement | record  |
 | submission | envío      | soumission     | invio   |
+| row        | fila       | ligne          | riga    |
+
+A row is one entry in a `RepeatableSection`. Use "row" while a form is being edited and "child
+record" for its saved data, and do not call it an entry. The first mention on a page says
+"repeatable section row" and links to `/core/fields/containers#repeatablesection`.
 
 Italian keeps "record" (il record, i record), as is usual in Italian technical writing.
 
@@ -150,7 +155,8 @@ Guides show the finished result with screenshots. Keep them few and easy to main
 - Take one screenshot of the finished result per guide, plus at most one for a key moment.
 - Use the English schema and UI labels. All locales share the same image, as they share the same
   English JSON examples. Translate only the alt text.
-- Save screenshots as WebP under `public/guides/<guide-slug>/`, using the light theme.
+- Save screenshots as WebP under `public/guides/assets/<guide-slug>/`, using the light theme. Keep
+  guide files under `assets/`: a folder named like a guide would sit beside that page in the build.
 - Retake them when the renderer UI changes noticeably.
 
 ## Writing style
@@ -161,6 +167,29 @@ Guides show the finished result with screenshots. Keep them few and easy to main
 - Do not document planned or speculative behavior as available.
 - Link to the owning form0 repository when implementation details matter.
 - Use sentence case for headings.
+- Start with what a feature is for and when to use it, before any rules or options.
+- Write "your application" rather than "host" unless the difference from a worker or another
+  process matters. Define other internal terms on first use, or replace them.
+- Describe what is true today. Avoid "new", "existing", "legacy", "for this release", and version
+  numbers in reference pages. Changes that need reader action belong in
+  [Upgrade notes](#upgrade-notes).
+- Put the common case first and edge rules at the end of the section.
+- Mention reform only where it is the subject, such as the `cli/reform/` pages.
+
+### Try it
+
+When a page describes behavior a reader can observe, add numbered steps that show how to see it:
+the schema or code to use, the command or action to run, and the expected result. Run the steps
+against the released packages before committing, and show the actual output.
+
+### Upgrade notes
+
+When a release requires readers to change something, add an entry to
+`pages/getting-started/upgrade-notes.mdx` in all four languages, newest first. Each entry says
+when it was released, which versions it applies from, who needs to act, what to do, and how to
+check the result. Add a row to the table at the top too, dated with the first package that shipped
+the change, in `YYYY-MM-DD` format so the date reads the same in every language. Changes that need
+no action stay in the GitHub release notes.
 
 Technical statements should match the current released package or repository behavior. When a
 change depends on an unreleased implementation, link the corresponding pull request and coordinate

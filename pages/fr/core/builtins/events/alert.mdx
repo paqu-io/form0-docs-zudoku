@@ -21,3 +21,22 @@ ALERT("Warning", "Check the form")
 ## Valeur renvoyée
 
 Le descripteur de l’opération (utilisé par les clients).
+
+## Essayez
+
+Il vous faut [form0-cli](/fr/cli/install-update). Toutes les pages des builtins d’événements
+utilisent le même formulaire de test.
+
+1. Téléchargez le formulaire et démarrez l’aperçu :
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Ouvrez `http://localhost:3030`.
+
+1. Choisissez **Rome** dans **City**. Une boîte de dialogue s’ouvre avec le titre **City changed**
+   et le message **Check the delivery address.**
+
+1. Cliquez sur **OK** pour la fermer.

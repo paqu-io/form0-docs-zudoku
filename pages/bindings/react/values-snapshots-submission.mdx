@@ -8,7 +8,7 @@ description: Seed, observe, restore, and submit form0 React state.
 ## Initial values and overrides
 
 Use `initialValues` for the record being edited. `overrideValues` take precedence and are useful
-for authoritative host values such as a status supplied by an application.
+for values your application controls, such as a status from your backend.
 
 For complete restoration, prefer `initialSnapshot`:
 
@@ -29,7 +29,8 @@ For complete restoration, prefer `initialSnapshot`:
 ```
 
 An initial snapshot supersedes `initialValues` for raw field values. It also restores nested
-repeatable entries and client/server timestamps as one coherent state.
+[repeatable section rows](/core/fields/containers#repeatablesection) and client/server timestamps as
+one coherent state.
 
 ## Observe drafts
 
@@ -53,35 +54,146 @@ The snapshot contains:
 
 ## Submit records
 
+Use `onSubmit` to send a finished record to your API. `FormRenderer` calls it only when the form
+passes validation.
+
+```jsx
+async function saveRecord(record) {
+  const response = await fetch("/api/records", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(record),
+  })
+
+  if (!response.ok) throw new Error(`The server answered ${response.status}`)
+}
+```
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  onSubmit={saveRecord}
+/>
+```
+
 `onSubmit(record, meta)` receives the structured record described in
 [Output and records](/core/output-records). `meta` contains `rawValues`, `repeatable`, `timestamps`,
 and `validationSummary`.
 
-If `onSubmit` returns a promise, an overlay configured with `autoCloseOverlayOnSubmit` closes only
-after the promise resolves. A rejection leaves it open. Use `submitBlockedReason` for application
-requirements outside the schema and `externalDirty` for application state outside the renderer.
+The save counts as successful when `onSubmit` returns or its promise resolves. To report a failure,
+throw an error or reject the promise. `fetch` does not reject on a `500` response, so check
+`response.ok` as in the example.
 
-## Managed event API
+If the form runs in an overlay with `autoCloseOverlayOnSubmit`, the overlay closes only after a
+successful save.
 
-See the managed event controller and scope contract in [FormRenderer](/bindings/react/form-renderer).
+Use `submitBlockedReason` to disable **Submit** while something outside the schema is unresolved,
+such as a request in flight. Use `externalDirty` for changes your application holds outside the
+form.
 
-`engineOptions.events`: `lifecycle` (true), required `recordKind` (new/existing), `fieldInteractions` ([focus, blur, click]). Set `lifecycle: false` for legacy lifecycle or `fieldInteractions: []` to disable automatic interactions.
-`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+For a complete example with a server, see
+[Add a form to an existing React app](/guides/add-form-to-react-app).
 
-Preparation does not persist or close. Root draft validation findings remain visible in the returned summary; normal submit and row acceptance are blocked by validation failures. Calculation diagnostics remain independent. No closed-row evaluation or aggregation is added.
+## Save failures and console messages
 
-## Child calculation review and persistence
+When a save fails, `FormRenderer` keeps the user's values so they can retry, and prints one
+`console.error` report with the failure stage and the original error. It does not show a message to
+the user, so do that in your application and then rethrow the error:
 
-Ordinary submission automatically refreshes closed-child calculations when the form setting is
-omitted. `form.repeatable_recalculation: 'confirm'` requires review. Host `mode: 'confirm'` may
-strengthen that requirement; `automatic` cannot weaken an authored confirmation. `allowRetain` is
-explicit host permission and does not enable confirmation by itself. Review choices apply to all
-affected children or none. A root save is rejected while a child editor is still unaccepted.
+```jsx
+async function handleSubmit(record) {
+  try {
+    await saveRecord(record)
+  } catch (error) {
+    setMessage("The record was not saved. Try again.")
+    throw error
+  }
+}
+```
 
-The default review shows row titles/paths, field labels, old/new values and counts in bounded pages.
-Override review/status text with `submissionOptions.messages`. Complete validation findings remain
-available with record paths; the UI pages them and navigates to the affected record or field.
-Scope-level custom findings belong to their record, with no invented field association.
+If you catch the error without rethrowing it, `FormRenderer` treats the save as successful.
+
+`submissionDiagnostics` controls these console messages:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "new" } }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+  onSubmit={handleSubmit}
+/>
+```
+
+- `saveFailures` is on by default. Set it to `false` if your application already reports failures.
+- `validationBlocks` is off by default. Set it to `true` to log one line each time validation blocks
+  **Submit** or a repeatable row's **Save**.
+
+A required field left empty is a validation block, not a save failure.
+
+### Try it
+
+1. Click **Submit** with a required field empty. The field shows its validation message, and the
+   console stays quiet.
+2. Add `validationBlocks: true` and click **Submit** again. The console shows
+   `[form0-react] Submit blocked by validation.`
+3. Fill in the field, make `saveRecord` throw `new Error("Example save failure")`, and click
+   **Submit**. The console shows `[form0-react] Submit failed during onSubmit.` with your error, and
+   your values stay in the form.
+4. Remove the `throw` and click **Submit** again. The save succeeds.
+
+### Details
+
+- These settings take effect immediately, even while a save is pending. They are separate from
+  `debug`, `engineOptions.diagnostics.console`, and lifecycle settings.
+- Reports do not include form values, snapshots, or record paths. Preparation failures include their
+  issue codes and messages.
+- Cancelling a confirmation stays quiet. An exception thrown by your callback is reported as a
+  callback failure.
+- `form0-core` prints its own lines, such as `[EVENT HANDLER] Registered`. These settings do not
+  control them.
+- These settings cover the renderer's built-in actions. If you call `prepareSave()` directly,
+  inspect the result it returns.
+
+## Use events from your own code
+
+`engineOptions.events` sets which events run, and `engineOptions.onEventController` gives you a
+controller for your own buttons. [FormRenderer](/bindings/react/form-renderer) describes both in
+full.
+
+| Option                     | Default                      | Purpose                                                                 |
+| -------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
+| `events.recordKind`        | Required                     | `"new"` / `"existing"`.                                                 |
+| `events.lifecycle`         | `true`                       | Set to `false` to keep only `load-record`, `edit-record`, and `change`. |
+| `events.fieldInteractions` | `["focus", "blur", "click"]` | Set to `[]` to turn off automatic interactions.                         |
+
+`onEventController(controller | null)` gives you `dispatch(request)` and `prepareSave(request)`.
+
+`prepareSave()` never saves or closes anything. The returned summary lists validation messages for a
+main-record draft. Validation failures block a normal submit and row acceptance, and calculation
+diagnostics block nothing.
+
+## Review recalculated rows
+
+When a user submits, `FormRenderer` recalculates saved rows automatically. Set
+`form.repeatable_recalculation` to `"confirm"` in the schema when users should review changed values
+first.
+
+`submissionOptions` changes this from your code:
+
+- `mode: "confirm"` requires a review even if the schema does not. `"automatic"` cannot turn off a
+  confirmation set in the schema.
+- `allowRetain: true` lets the user keep older values. It does not turn on a review by itself.
+- `messages` replaces the review and status text.
+
+The default review shows row titles and paths, field labels, old and new values, and counts, in
+pages. A choice applies to all changed rows or none. A save is rejected while a row editor is still
+open.
+
+All validation findings stay available with their record paths, and the form pages them and links to
+the record or field. An `INVALID()` message belongs to its record, not to a field.
+
+### Save the record and its `freshness`
 
 ```jsx
 <FormRenderer
@@ -96,19 +208,17 @@ Scope-level custom findings belong to their record, with no invented field assoc
 />
 ```
 
-A successfully completed callback acknowledges persistence. It must save the selected record and
-matching freshness companion together before resolving; throw or reject on failure or cancellation.
-Selecting `20 → 24` keeps `24` as unsaved editor work even if validation or persistence then fails.
-Freshness stays outside saved form values. Restore the host's persisted companion through
-`initialFreshness`; older acknowledgements cannot clear newer pending state. For retained child
-totals `[110,220]`, the submitted root sum is `330`, never the refreshed proposal's `360`.
+When your callback completes, form0 treats the save as successful. Save the record and
+`meta.freshness` together before it resolves, and throw or reject on failure or cancellation.
 
-Prepare-only controllers do not open a dialog or persist data. Check `eligible`, handle
-`requires_decision` with `payload: null`, and acknowledge only the exact successfully saved
-`preparationId`. Change pages default to 50 and allow at most 100 entries. Continue a review by calling
-`prepareSave()` with `decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Changed inputs,
-configuration or a newer preparation invalidate the review. Validation runs before the save hook,
-which executes once per attempt; accepted hook writes can require a new review without repeating it.
+`freshness` stays outside the form values. Pass the saved one back as `initialFreshness`. An older
+acknowledgement cannot clear newer pending state. If a user keeps older row totals `[110,220]`, the
+submitted sum is `330`, never the `360` of the refreshed proposal. If the user changes a value from
+`20` to `24`, `24` stays as unsaved work even if validation or saving then fails.
+
+### Run a review from your own interface
+
+A controller prepares a save without opening a dialog or saving anything:
 
 ```js
 const prepared = await controller.prepareSave({ intent: "submit", signal })
@@ -125,4 +235,122 @@ if (prepared.status === "requires_decision") {
 }
 ```
 
-Workers keep pending reviews and reports internally. Routine replies contain selected data and summaries; change details are requested in bounded pages. Function-valued helpers remain unsupported in worker mode. Abort signals and callbacks stay outside structured-clone messages.
+Check `eligible`, handle `requires_decision`, where `payload` is `null`, and acknowledge only the
+`preparationId` you saved. `getSaveChanges()` returns 50 entries by default and at most 100. To
+continue a review, call `prepareSave()` with
+`decision: { reviewId, action: "refresh" | "retain" | "cancel" }`. Changing the inputs or
+configuration, or starting a newer preparation, ends the review.
+
+Validation runs before the save handler, which runs once for each attempt. If the handler changes
+values, a new review may be needed, but the handler does not run again.
+
+In worker mode, pending reviews and reports stay in the worker. Replies contain the selected data
+and summaries, and you request change details in pages. Helpers that are functions are not supported
+in worker mode. Abort signals and callbacks stay out of the messages sent to the worker.
+
+Setters follow the [value rules](/core/engine/value-updates). `initialValues` and `overrideValues`
+are more tolerant, including in read-only mode, where calculated values stay as supplied.
+
+## Hidden values
+
+A field with
+[`visible_preserve_value: false`](/core/fields/common-attributes#clear-a-value-when-a-field-is-hidden)
+is cleared while the user edits, including in closed rows. It stays cleared in `raw_values`,
+`repeatable`, and the submitted record. Other fields keep their values when hidden, and a read-only
+form clears nothing.
+
+To check kept hidden values on final submission, set `validateHiddenValues`:
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
+  schema={schema}
+  submissionOptions={{ validateHiddenValues: true }}
+  onSubmit={saveRecord}
+/>
+```
+
+A hidden value that fails its own rules then blocks **Submit**. The user can fix it by making the
+field visible again, or your application can
+[resolve it](#resolve-a-hidden-value-that-fails-validation). Also
+[check hidden values on your server](/core/schema/validation#check-hidden-values-on-a-server).
+Drafts and empty hidden required fields are not affected.
+
+## Resolve a hidden value that fails validation
+
+With `validateHiddenValues` on, a hidden value that fails its own rules blocks **Submit**, and the
+user can't reach the field to fix it. The **Validation** tab explains this. To let your application
+fix the value, pass `onResolveHiddenValue`. The tab then shows a **Resolve hidden value** button.
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={async ({ fieldName }) => {
+    if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+    return { value: null }
+  }}
+  onSubmit={saveRecord}
+/>
+```
+
+Your handler receives `fieldName`, `fieldKey`, `instancePath`, `message`, and a copy of the current
+`value`. It can return:
+
+- `{ value: replacement }` to replace the value, which must pass the field's own rules
+- `{ value: null }` to clear it
+- `undefined` or `null` to cancel
+
+The field stays hidden, no `change` or lifecycle handlers run, and nothing is saved until the user
+clicks **Submit**. If the record changes while your handler runs, the reply is discarded and the
+user has to submit again. Close any open row first. Read-only forms don't show the button.
+
+If clearing the value leaves a row with no answers, the row stays in the record. See
+[Saved empty rows](/core/output-records#saved-empty-rows).
+
+### Try resolving a hidden value
+
+You need a React app with `form0-react`.
+[Add a form to an existing React app](/guides/add-form-to-react-app) creates one.
+
+1. Download the example form and render it. It has a hidden text field, `legacy_code`, and this code
+   loads a number into it:
+
+   ```bash
+   mkdir -p src/forms
+   curl -o src/forms/hidden-value-recovery.form0.json https://docs.form0.dev/examples/hidden-value-recovery.form0.json
+   ```
+
+   ```jsx
+   import { FormRenderer } from "form0-react"
+   import "form0-react/index.css"
+   import schema from "./forms/hidden-value-recovery.form0.json"
+
+   export default function App() {
+     return (
+       <FormRenderer
+         schema={schema}
+         formWidth="100%"
+         initialValues={{ name: "Ada", legacy_code: 42 }}
+         engineOptions={{ events: { recordKind: "existing" } }}
+         submissionOptions={{ validateHiddenValues: true }}
+         onResolveHiddenValue={async ({ fieldName }) => {
+           if (!window.confirm(`Clear the hidden value for ${fieldName}?`)) return
+           return { value: null }
+         }}
+         onSubmit={(record) => console.log(record)}
+       />
+     )
+   }
+   ```
+
+1. Click **Submit**. The form is not submitted. Open the **Validation** tab. It shows
+   `legacy_code must be a string` and says that the value is hidden.
+
+1. Click **Resolve hidden value** and cancel the dialog. Nothing changes.
+
+1. Click **Resolve hidden value** again and confirm. The finding disappears, and the field stays
+   hidden.
+
+1. Click **Submit**. The browser console shows the record, with `legacy_code` set to `null`.

@@ -37,8 +37,9 @@ const record = createStructuredRecord(state, fields, {
 ### Serializzazione cooperativa
 
 Per un record valutato di grandi dimensioni, `createStructuredRecordAsync` usa la stessa
-trasformazione e restituisce il controllo all'ambiente tra le righe. Mantieni stabili stato, campi
-e opzioni fino al completamento; i controller di invio dei binding possiedono già lo snapshot scelto.
+trasformazione e restituisce il controllo all'ambiente tra le
+[righe](/it/core/fields/containers#repeatablesection). Mantieni stabili stato, campi e opzioni fino
+al completamento; i controller di invio dei binding possiedono già lo snapshot scelto.
 
 ```js
 const abortController = new AbortController()
@@ -60,9 +61,57 @@ const record = await createStructuredRecordAsync(
 Il quarto argomento controlla la pianificazione e rimane esterno al record. `yieldToHost` è una
 funzione facoltativa che restituisce una promessa per un'attività dell'ambiente; in sua assenza,
 core usa un timer. L'annullamento rifiuta la promessa con `AbortError` senza restituire record
-parziali. Il metodo non esegue calcoli, validazione o persistenza. Conserva struttura, ID zero,
-ordine delle righe, formato dei media, titoli e regole dei timestamp del serializzatore sincrono.
-I formattatori dei singoli campi rimangono sincroni.
+parziali. Il metodo non esegue calcoli, validazione o persistenza. Restituisce lo stesso record di
+`createStructuredRecord`. I formattatori dei singoli campi sono sincroni.
 
 Le sezioni ripetibili creano record annidati. Usa `originalElements` per mantenere la corretta
 struttura di annidamento quando crei i record.
+
+Comunque venga impostato un valore, il record inviato usa lo stesso formato: SingleChoice/Boolean usa choice_value e other_value; MultiChoice usa choices_value e other_value. [Vedi il contratto di aggiornamento dei valori](/it/core/engine/value-updates).
+
+## Caricare un record salvato
+
+Usa `buildFormRecordSnapshot(schema, record)` per riconvertire un record salvato in valori
+utilizzabili da form0, ad esempio per riaprirlo. Restituisce `raw_values`, `repeatable` e
+`timestamps`, la stessa forma di `initialSnapshot`.
+
+```jsx
+import { buildFormRecordSnapshot } from "form0-core"
+import { FormRenderer } from "form0-react"
+
+export function SavedCase({ schema, savedRecord }) {
+  const snapshot = buildFormRecordSnapshot(schema, savedRecord)
+
+  return (
+    <FormRenderer
+      engineOptions={{ events: { recordKind: "existing" } }}
+      schema={schema}
+      initialSnapshot={snapshot}
+    />
+  )
+}
+```
+
+Genera un errore se un campo ha una forma errata, come un campo di scelta salvato come testo
+semplice. Per verificare un record salvato rispetto allo schema, passa `raw_values` e `repeatable` a
+`createRecordEvaluator().prepareSubmission()`.
+
+## Righe vuote salvate
+
+Una [riga](/it/core/fields/containers#repeatablesection) salvata rimane nel record anche quando
+tutte le sue risposte sono vuote. Per esempio, se un utente aggiunge una riga a un ordine, lascia
+vuoti i campi facoltativi `product` e `quantity` e salva la riga, il record inviato la include
+comunque. In forma abbreviata, la riga appare così:
+
+```json
+{
+  "id": "01a1924c-66df-79b8-bdf8-2100ba684129",
+  "created_at": "2026-10-31T14:10:43.043Z",
+  "form_values": { "product": null, "quantity": null }
+}
+```
+
+Questo vale anche per le righe annidate. Una sezione ripetibile senza righe rimane vuota.
+
+Per impedire il salvataggio di una riga vuota, contrassegna uno dei suoi campi come `required`. Per
+escludere una riga dal record, annullala prima di salvarla oppure eliminala.

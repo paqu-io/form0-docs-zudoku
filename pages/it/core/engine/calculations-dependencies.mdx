@@ -145,12 +145,10 @@ SETRESULT($numerator / $divisor)
 ```
 
 ```js
-engine.getState().values.divisor = 0
-engine.eval()
+engine.setValue("divisor", 0)
 engine.getDiagnostics() // [{ code: "runtime_exception", fieldName: "quotient", ... }]
 
-engine.getState().values.divisor = 4
-engine.eval()
+engine.setValue("divisor", 4)
 engine.getDiagnostics() // []
 ```
 
@@ -256,21 +254,8 @@ applicazione. Non è ancora stata fissata una data di rimozione.
 
 ## Campi calcolati nelle sezioni ripetibili
 
-Un campo calcolato all'interno di una `RepeatableSection` viene eseguito una volta per ogni riga. Può
-fare riferimento ai campi del modulo principale, ai campi della propria riga e ai campi delle righe
-che la contengono. Un riferimento a un campo fuori da questo ambito legge `undefined` e genera un
-avviso. Vedi [Ambiti padre e figlio](/it/core/engine/parent-child-scopes).
-
-## Anteprima Builder per espressioni di raccolta
-
-reform Builder offre Automatico / Chiedi prima di aggiornare i calcoli figli nelle impostazioni
-radice. La seconda opzione scrive `form.repeatable_recalculation: 'confirm'`; l’omissione resta
-automatica. Completamento e validazione usano i metadati core riservati ai calcoli.
-
-Le espressioni scalari mantengono l’anteprima rapida. Per raccolte dirette o dipendenti, scegli
-**Applica e visualizza il modulo**. Applica al documento non salvato e apre l’anteprima completa
-esistente, senza salvare o pubblicare lo schema. Aggiungi costi `10` e `20` per ottenere `30`.
-Nei progetti annidati, ciascun progetto aggrega le proprie attività accettate.
-
-Pubblica core con `evaluateScope()` prima di aggiornare binding, CLI e applicazioni dipendenti.
-Core 0.7.0 include la preparazione completa; la valutazione dell’editor è una capacità aggiuntiva.
+Un campo calcolato all'interno di una `RepeatableSection` viene eseguito una volta per ogni
+[riga](/it/core/fields/containers#repeatablesection). Può fare riferimento ai campi del modulo
+principale, ai campi della propria riga e ai campi delle righe che la contengono. Un riferimento a
+un campo fuori da questo ambito legge `undefined` e genera un avviso. Vedi
+[Ambiti padre e figlio](/it/core/engine/parent-child-scopes).

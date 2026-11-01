@@ -14,9 +14,10 @@ quando l'applicazione host deve spiegare perché la modifica non è disponibile.
 `showPrimaryActionsInViewMode` controlla se le azioni principali disabilitate restano visibili in
 modalità di visualizzazione.
 
-## Modalità di apertura delle voci ripetibili
+## Modalità di apertura delle righe ripetibili
 
-`repeatableEntryMode` accetta `readonly` (predefinito) o `edit` per le righe esistenti a ogni livello
+`repeatableEntryMode` accetta `readonly` (predefinito) o `edit` per le
+[righe di sezioni ripetibili](/it/core/fields/containers#repeatablesection) esistenti a ogni livello
 di annidamento. Le righe esistenti si aprono in visualizzazione con Edit se il record padre consente
 la modifica; le nuove si aprono in modifica. Un padre in sola lettura consente di consultare i
 discendenti, ma ne impedisce la modifica, l’aggiunta e la rimozione. L’opzione di modifica diretta
@@ -34,8 +35,7 @@ modifica diretta. Visualizzazione → Modifica esegue edit senza ripetere load. 
 `readonly` o `edit` per il record che esegue l'evento, indipendentemente dal modo del padre.
 Visualizzare consente letture, ALERT e ON/OFF dell'ambito; una scrittura rifiuta l'intero lotto
 prima della delega all'host. Sposta l'inizializzazione che scrive in new/edit o proteggi i setter
-di load per la modifica diretta. Serve la versione coordinata del core con controllo del modo;
-la struttura dello schema e del record salvato resta invariata.
+di load per la modifica diretta.
 
 ## Posizionamento
 
@@ -57,6 +57,6 @@ abbandono considera le modifiche del renderer e `externalDirty`.
 - `forceShowNavigationPanel` mantiene visibile la navigazione per sezioni quando normalmente verrebbe compressa.
 - `simplifiedMode` mostra un campo alla volta; `onSimplifiedNavigation` osserva gli spostamenti.
 
-Sezioni, voci ripetibili, navigazione tra gli errori di validazione, gestione del focus e azioni da
+Sezioni, righe ripetibili, navigazione tra gli errori di validazione, gestione del focus e azioni da
 tastiera sono gestite da `FormRenderer`. Mantieni il comportamento condizionale nello schema invece
 di duplicarlo nello stato React.

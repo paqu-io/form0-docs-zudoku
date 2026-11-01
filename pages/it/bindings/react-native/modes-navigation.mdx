@@ -1,6 +1,6 @@
 ---
 title: Modalità e navigazione
-description: Configura modifica, intestazioni, sezioni, voci ripetibili e navigazione della validazione.
+description: Configura modifica, intestazioni, sezioni, righe ripetibili e navigazione della validazione.
 ---
 
 <PageBadges />
@@ -15,9 +15,10 @@ Imposta `showHeader={false}` quando l'applicazione fornisce una propria intestaz
 le proprie azioni. `onRequestClose` abilita l'annullamento e protegge i moduli con modifiche non
 salvate con una conferma di abbandono.
 
-## Modalità di apertura delle voci ripetibili
+## Modalità di apertura delle righe ripetibili
 
-`repeatableEntryMode` accetta `readonly` (predefinito) o `edit` per le righe esistenti a ogni livello
+`repeatableEntryMode` accetta `readonly` (predefinito) o `edit` per le
+[righe di sezioni ripetibili](/it/core/fields/containers#repeatablesection) esistenti a ogni livello
 di annidamento. Le righe esistenti si aprono in visualizzazione con Edit se il record padre consente
 la modifica; le nuove si aprono in modifica. Un padre in sola lettura consente di consultare i
 discendenti, ma ne impedisce la modifica, l’aggiunta e la rimozione. L’opzione di modifica diretta
@@ -35,8 +36,7 @@ modifica diretta. Visualizzazione → Modifica esegue edit senza ripetere load. 
 `readonly` o `edit` per il record che esegue l'evento, indipendentemente dal modo del padre.
 Visualizzare consente letture, ALERT e ON/OFF dell'ambito; una scrittura rifiuta l'intero lotto
 prima della delega all'host. Sposta l'inizializzazione che scrive in new/edit o proteggi i setter
-di load per la modifica diretta. Serve la versione coordinata del core con controllo del modo;
-la struttura dello schema e del record salvato resta invariata.
+di load per la modifica diretta.
 
 ## Sezioni e validazione
 
@@ -56,13 +56,13 @@ verticale per tenere conto delle intestazioni o di altri overlay dell'applicazio
 etichette nel layout laterale. Mantieni nello schema il comportamento condizionale della navigazione
 invece di duplicarlo nello stato del componente.
 
-## Eventi del record e voci ripetibili
+## Eventi del record e righe ripetibili
 
 Con `engineOptions.events.lifecycle: true`, l'applicazione specifica `recordKind: "new"` o
 `"existing"` per la radice. L'apertura attende `load-record`; la modifica diretta esegue poi
 `new-record` o `edit-record`. Le righe usano gli eventi `*-repeatable` corrispondenti. Visualizzare
 esegue solo load e conserva i calcoli accettati; condizioni e validazione intrinseca restano attive.
 
-La modalità esplicita `lifecycle: false` conserva il ciclo legacy. Vedi il
-contratto gestito in [FormRenderer](/it/bindings/react-native/form-renderer) e
+Usa `lifecycle: false` per mantenere solo `load-record`, `edit-record` e `change` per il record
+principale. Vedi il contratto gestito in [FormRenderer](/it/bindings/react-native/form-renderer) e
 [Eventi e operazioni](/it/core/engine/events-operations).

@@ -20,58 +20,127 @@
     },
     "how-form0-compares": {
       "title": "form0 a confronto"
+    },
+    "upgrade-notes": {
+      "title": "Note di aggiornamento"
     }
   },
   "cli": {
-    "overview": { "title": "Panoramica" },
-    "install-update": { "title": "Installare e aggiornare" },
-    "initialize-project": { "title": "Inizializzare un progetto" },
-    "interactive-shell": { "title": "Shell interattiva" },
+    "overview": {
+      "title": "Panoramica"
+    },
+    "install-update": {
+      "title": "Installare e aggiornare"
+    },
+    "initialize-project": {
+      "title": "Inizializzare un progetto"
+    },
+    "interactive-shell": {
+      "title": "Shell interattiva"
+    },
     "ai-authoring": {
-      "overview": { "title": "Panoramica" },
-      "getting-started": { "title": "Per iniziare" },
-      "providers-models": { "title": "Provider e modelli" },
-      "authoring-workflow": { "title": "Flusso di creazione" },
-      "commands-status": { "title": "Comandi e stato" },
-      "privacy-security": { "title": "Privacy e sicurezza" },
-      "limitations-troubleshooting": { "title": "Limiti e risoluzione dei problemi" }
+      "overview": {
+        "title": "Panoramica"
+      },
+      "getting-started": {
+        "title": "Per iniziare"
+      },
+      "providers-models": {
+        "title": "Provider e modelli"
+      },
+      "authoring-workflow": {
+        "title": "Flusso di creazione"
+      },
+      "commands-status": {
+        "title": "Comandi e stato"
+      },
+      "privacy-security": {
+        "title": "Privacy e sicurezza"
+      },
+      "limitations-troubleshooting": {
+        "title": "Limiti e risoluzione dei problemi"
+      }
     },
     "schemas": {
-      "load-edit": { "title": "Caricare e modificare gli schemi" },
-      "validate-preview": { "title": "Validare e visualizzare l’anteprima" },
-      "run-values": { "title": "Eseguire con valori" },
-      "watch-test": { "title": "Monitorare e testare" },
-      "import-export-csv": { "title": "Importare ed esportare CSV" }
+      "load-edit": {
+        "title": "Caricare e modificare gli schemi"
+      },
+      "validate-preview": {
+        "title": "Validare e visualizzare l’anteprima"
+      },
+      "run-values": {
+        "title": "Eseguire con valori"
+      },
+      "watch-test": {
+        "title": "Monitorare e testare"
+      },
+      "import-export-csv": {
+        "title": "Importare ed esportare CSV"
+      }
     },
     "local-development": {
-      "live-preview": { "title": "Server di anteprima" },
-      "app-development-servers": { "title": "Server di sviluppo delle applicazioni" }
+      "live-preview": {
+        "title": "Server di anteprima"
+      },
+      "app-development-servers": {
+        "title": "Server di sviluppo delle applicazioni"
+      }
     },
-    "project-configuration": { "title": "Configurazione del progetto" },
-    "connector-management": { "title": "Gestione dei connettori" },
+    "project-configuration": {
+      "title": "Configurazione del progetto"
+    },
+    "connector-management": {
+      "title": "Gestione dei connettori"
+    },
     "reform": {
-      "sign-in-organization": { "title": "Accedere e selezionare un’organizzazione" },
-      "sync-forms": { "title": "Sincronizzare i moduli" }
+      "sign-in-organization": {
+        "title": "Accedere e selezionare un’organizzazione"
+      },
+      "sync-forms": {
+        "title": "Sincronizzare i moduli"
+      }
     },
-    "command-reference": { "title": "Riferimento dei comandi" },
-    "troubleshooting": { "title": "Risoluzione dei problemi" },
-    "security": { "title": "Sicurezza" }
+    "command-reference": {
+      "title": "Riferimento dei comandi"
+    },
+    "troubleshooting": {
+      "title": "Risoluzione dei problemi"
+    },
+    "security": {
+      "title": "Sicurezza"
+    }
   },
   "starter-apps": {
-    "overview": { "title": "Panoramica delle app starter" },
+    "overview": {
+      "title": "Panoramica delle app starter"
+    },
     "react-vite": {
-      "create-run": { "title": "Creare ed eseguire lo starter React e Vite" },
+      "create-run": {
+        "title": "Creare ed eseguire lo starter React e Vite"
+      },
       "project-structure-configuration": {
         "title": "Struttura e configurazione del progetto React e Vite"
       },
-      "forms-routes-presentations": { "title": "Moduli, route e presentazioni" },
-      "renderers-themes-styling": { "title": "Renderer, temi e stili" },
-      "submissions-connectors": { "title": "Invii e connettori" },
-      "build-deployment": { "title": "Compilare e distribuire lo starter React e Vite" },
-      "troubleshooting": { "title": "Risoluzione dei problemi dello starter React e Vite" }
+      "forms-routes-presentations": {
+        "title": "Moduli, route e presentazioni"
+      },
+      "renderers-themes-styling": {
+        "title": "Renderer, temi e stili"
+      },
+      "submissions-connectors": {
+        "title": "Invii e connettori"
+      },
+      "build-deployment": {
+        "title": "Compilare e distribuire lo starter React e Vite"
+      },
+      "troubleshooting": {
+        "title": "Risoluzione dei problemi dello starter React e Vite"
+      }
     },
     "react-native-expo": {
-      "create-run": { "title": "Creare ed eseguire lo starter React Native ed Expo" },
+      "create-run": {
+        "title": "Creare ed eseguire lo starter React Native ed Expo"
+      },
       "project-structure-configuration": {
         "title": "Struttura e configurazione del progetto React Native ed Expo"
       },
@@ -81,52 +150,120 @@
       "renderers-themes-fonts-images": {
         "title": "Renderer, temi, font e immagini"
       },
-      "device-development-networking": { "title": "Sviluppo su dispositivo e rete" },
-      "local-storage-submissions": { "title": "Archiviazione locale e invii" },
-      "build-distribution": { "title": "Compilare e distribuire lo starter React Native ed Expo" },
-      "troubleshooting": { "title": "Risoluzione dei problemi dello starter React Native ed Expo" }
+      "device-development-networking": {
+        "title": "Sviluppo su dispositivo e rete"
+      },
+      "local-storage-submissions": {
+        "title": "Archiviazione locale e invii"
+      },
+      "build-distribution": {
+        "title": "Compilare e distribuire lo starter React Native ed Expo"
+      },
+      "troubleshooting": {
+        "title": "Risoluzione dei problemi dello starter React Native ed Expo"
+      }
     }
   },
   "connectors": {
-    "overview": { "title": "Panoramica dei connettori" },
-    "choose": { "title": "Scegliere un connettore" },
-    "direct-integration": { "title": "Integrazione diretta" },
+    "overview": {
+      "title": "Panoramica dei connettori"
+    },
+    "choose": {
+      "title": "Scegliere un connettore"
+    },
+    "direct-integration": {
+      "title": "Integrazione diretta"
+    },
     "postgresql": {
-      "setup": { "title": "Installazione e configurazione di PostgreSQL" },
-      "storage": { "title": "Modello di archiviazione e operatività di PostgreSQL" }
+      "setup": {
+        "title": "Installazione e configurazione di PostgreSQL"
+      },
+      "storage": {
+        "title": "Modello di archiviazione e operatività di PostgreSQL"
+      }
     },
     "sqlite": {
-      "setup": { "title": "Installazione e configurazione di SQLite" },
-      "storage": { "title": "Modello di archiviazione e operatività di SQLite" }
+      "setup": {
+        "title": "Installazione e configurazione di SQLite"
+      },
+      "storage": {
+        "title": "Modello di archiviazione e operatività di SQLite"
+      }
     },
-    "security": { "title": "Sicurezza e responsabilità dei dati" },
-    "troubleshooting": { "title": "Risoluzione dei problemi dei connettori" }
+    "security": {
+      "title": "Sicurezza e responsabilità dei dati"
+    },
+    "troubleshooting": {
+      "title": "Risoluzione dei problemi dei connettori"
+    }
   },
   "bindings": {
-    "overview": { "title": "Panoramica dei binding" },
+    "overview": {
+      "title": "Panoramica dei binding"
+    },
     "react": {
-      "install-render": { "title": "Installazione e rendering" },
-      "form-renderer": { "title": "FormRenderer" },
-      "values-snapshots-submission": { "title": "Valori, snapshot e invio" },
-      "built-in-renderers": { "title": "Renderer di campo integrati" },
-      "custom-renderers": { "title": "Renderer di campo personalizzati" },
-      "modes-placement-navigation": { "title": "Modalità, posizionamento e navigazione" },
-      "themes-styling": { "title": "Temi e stili" },
-      "workers-performance": { "title": "Worker e prestazioni" },
-      "api-reference": { "title": "Riferimento API di React" },
-      "troubleshooting": { "title": "Risoluzione dei problemi di React" }
+      "install-render": {
+        "title": "Installazione e rendering"
+      },
+      "form-renderer": {
+        "title": "FormRenderer"
+      },
+      "values-snapshots-submission": {
+        "title": "Valori, snapshot e invio"
+      },
+      "built-in-renderers": {
+        "title": "Renderer di campo integrati"
+      },
+      "custom-renderers": {
+        "title": "Renderer di campo personalizzati"
+      },
+      "modes-placement-navigation": {
+        "title": "Modalità, posizionamento e navigazione"
+      },
+      "themes-styling": {
+        "title": "Temi e stili"
+      },
+      "workers-performance": {
+        "title": "Worker e prestazioni"
+      },
+      "api-reference": {
+        "title": "Riferimento API di React"
+      },
+      "troubleshooting": {
+        "title": "Risoluzione dei problemi di React"
+      }
     },
     "react-native": {
-      "install-render": { "title": "Installazione e rendering" },
-      "form-renderer": { "title": "FormRenderer" },
-      "values-snapshots-submission": { "title": "Valori, snapshot e invio" },
-      "built-in-renderers": { "title": "Renderer di campo integrati" },
-      "custom-renderers": { "title": "Renderer di campo personalizzati" },
-      "modes-navigation": { "title": "Modalità e navigazione" },
-      "themes-assets": { "title": "Temi, font e immagini" },
-      "mobile-integration": { "title": "Integrazione mobile" },
-      "api-reference": { "title": "Riferimento API di React Native" },
-      "troubleshooting": { "title": "Risoluzione dei problemi di React Native" }
+      "install-render": {
+        "title": "Installazione e rendering"
+      },
+      "form-renderer": {
+        "title": "FormRenderer"
+      },
+      "values-snapshots-submission": {
+        "title": "Valori, snapshot e invio"
+      },
+      "built-in-renderers": {
+        "title": "Renderer di campo integrati"
+      },
+      "custom-renderers": {
+        "title": "Renderer di campo personalizzati"
+      },
+      "modes-navigation": {
+        "title": "Modalità e navigazione"
+      },
+      "themes-assets": {
+        "title": "Temi, font e immagini"
+      },
+      "mobile-integration": {
+        "title": "Integrazione mobile"
+      },
+      "api-reference": {
+        "title": "Riferimento API di React Native"
+      },
+      "troubleshooting": {
+        "title": "Risoluzione dei problemi di React Native"
+      }
     }
   },
   "core": {
@@ -148,6 +285,9 @@
       },
       "events-operations": {
         "title": "Eventi e operazioni"
+      },
+      "value-updates": {
+        "title": "Aggiornamento e normalizzazione dei valori"
       }
     },
     "schema": {
@@ -301,6 +441,9 @@
   "guides": {
     "case-intake-form": {
       "title": "Crea un modulo di apertura pratiche"
+    },
+    "add-form-to-react-app": {
+      "title": "Aggiungi un modulo a un'app React esistente"
     }
   },
   "diagrams": {

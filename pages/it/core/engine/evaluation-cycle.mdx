@@ -71,8 +71,10 @@ Consulta [Vedere errori e avvisi](/it/core/engine/calculations-dependencies#vede
 - **Le condizioni vedono i valori calcolati.** I calcoli vengono eseguiti per primi, quindi un
   `visible_conditions` o un `required_conditions` può fare riferimento a un `CalculatedField` e
   ottiene sempre il suo valore corrente.
-- **I calcoli ignorano la visibilità.** Nascondere un campo non ne cancella il valore. Il valore di
-  un campo nascosto resta in `values` e continua a contare in ogni calcolo che lo usa.
+- **I calcoli ignorano la visibilità.** Per impostazione predefinita un campo nascosto conserva il
+  suo valore, che quindi resta in `values` e continua a contare in ogni calcolo che lo usa. Per
+  cancellarlo, vedi
+  [Cancellare un valore quando un campo viene nascosto](/it/core/fields/common-attributes#cancellare-un-valore-quando-un-campo-viene-nascosto).
 - **La validazione copre tutti i campi.** Gli errori di valore vengono calcolati anche per i campi
   nascosti. Un campo obbligatorio vuoto non è un errore in `errors`: è il renderer o la tua
   applicazione a decidere se blocca l'invio. Vedi
@@ -99,19 +101,15 @@ binding ufficiali:
 4. Attivano `change` per il campo modificato, eseguendo ogni gestore `ON("change", ...)`
    corrispondente.
 
-I gestori di eventi non modificano mai direttamente il modulo. Restituiscono un elenco di operazioni,
-come `SETVALUE` o `ALERT`, e l'host le applica. Quando l'host applica un `SETVALUE`, scrive il
-valore ed esegue di nuovo `eval()`, ma non attiva un altro evento `change`. Per questo un gestore
-non può avviare una catena di eventi di modifica impostando altri campi.
+I gestori di eventi non modificano mai il modulo da soli. Restituiscono un elenco di operazioni,
+come `SETVALUE` o `ALERT`, e il renderer o la tua applicazione le applica. Applicare un `SETVALUE`
+scrive il valore ed esegue di nuovo `eval()`, ma non attiva un altro evento `change`. Per questo un
+gestore non può avviare una catena di eventi change impostando altri campi.
 
-<Callout type="info" title="Supporto degli eventi nei binding">
-  form0-core definisce un vocabolario di eventi più ampio, che comprende eventi di record, di campo
-  e di sezione ripetibile. I renderer ufficiali attualmente attivano gli eventi portabili del ciclo
-  di vita `load-record`, `edit-record` e `change`. Gli altri eventi non vengono attivati
-  automaticamente perché la loro tempistica dipende dal flusso e dall'interfaccia dell'applicazione
-  host. Le applicazioni possono attivarli esplicitamente con `engine.trigger(...)`. L'attivazione
-  automatica di altri eventi può essere valutata caso per caso, ma gli schemi dovrebbero dipendere
-  solo dagli eventi documentati dal proprio host o binding. Vedi [Attivazione degli eventi nei
+<Callout type="info" title="Gli eventi nei renderer ufficiali">
+  I renderer ufficiali attivano per impostazione predefinita gli eventi del ciclo di vita, come
+  `load-record` e `save-record`, oltre a `change`, `focus` e `blur`. Se usi direttamente
+  `form0-core`, attiva tu gli eventi con `engine.trigger(...)`. Vedi [Attivazione degli eventi nei
   binding ufficiali](/it/core/builtins/events-overview).
 </Callout>
 
@@ -126,31 +124,26 @@ const engine = createFormEngine({ schema, initialValues: { quantity: 2 } })
 engine.eval()
 
 // When the user changes a value:
-engine.getState().values.quantity = 3
-engine.eval()
+engine.setValue("quantity", 3)
 
 // Then dispatch the change event and apply the operations it returns.
 const operations = engine.trigger("change", "quantity")
 ```
 
-<Callout type="caution" title="I campi a scelta usano le forme dei valori a runtime">
-  `initialValues` e le scritture dirette in `engine.getState().values` devono usare la forma dei
-  valori a runtime del motore. Ad esempio, un `SingleChoiceField` o un `BooleanField` usa
-  `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`, mentre un `MultiChoiceField`
-  usa `choices` al posto di `choice`. Questa forma è diversa dal `default_value` scalare o array di
-  un campo a scelta nello schema. I componenti di campo dei renderer ufficiali producono queste
-  forme; form0-core attualmente non offre un metodo pubblico per impostare e normalizzare i valori.
-</Callout>
+`setValue()` e `setValues()` accettano valori semplici, compreso un identificatore testuale per un
+campo di scelta, ed eseguono la valutazione per te. I record salvati usano un altro formato. Vedi
+[Aggiornamento e normalizzazione dei valori](/it/core/engine/value-updates).
 
 La tua applicazione è responsabile di applicare le operazioni restituite e di decidere quando un
 campo obbligatorio vuoto blocca l'invio.
 
-## Preparazione dell’albero di record
+## Valutare un record completo
 
-`createRecordEvaluator({ schema, helpers, security })` riusa l’esecutore di espressioni e le regole di
-ambito esistenti per coordinare istanze reali radice e figlie. Le applicazioni usano questa API per
-selezionare e validare uno snapshot prima della persistenza e applicano il risultato tramite il
-proprio renderer o controller. `engine.eval()` mantiene il contratto dello stato intrinseco.
+`engine.eval()` copre un solo record. Un modulo con sezioni ripetibili è un albero: un record
+principale, le sue [righe](/it/core/fields/containers#repeatablesection) e le eventuali righe al
+loro interno. Usa `createRecordEvaluator({ schema, helpers, security })` quando ti serve un
+risultato per tutto l'albero, ad esempio per controllare un record prima di salvarlo. Usa le stesse
+espressioni e regole di ambito del motore.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -161,64 +154,134 @@ const refreshed = await evaluator.evaluate(snapshot, { mode: "refresh" })
 const prepared = await evaluator.prepareSubmission(snapshot)
 ```
 
-`snapshot` usa `{ values, repeatable }`. Ogni riga conserva `id`, `values`, raccolte `repeatable` annidate,
-allegati e metadati. I valori usano data_names; le raccolte usano le chiavi dello schema, se presenti.
-Converti prima le scelte salvate nel formato di esecuzione con le utilità esistenti. Nessuna chiamata
-modifica l’ingresso, persiste dati, genera ID/timestamp di record o applica proposte all’interfaccia.
+`snapshot` ha la forma `{ values, repeatable }`. I valori usano i `data_name`, e le mappe dei
+ripetibili usano le chiavi dello schema quando esistono. Ogni riga conserva il suo `id`, i `values`,
+il `repeatable` annidato, gli allegati e i metadati. Per partire da un record salvato, convertilo
+con [`buildFormRecordSnapshot`](/it/core/output-records#caricare-un-record-salvato).
 
-Accepted mantiene i calcoli dei figli chiusi e ricalcola gli aggregati radice dai valori accettati.
-Salvare un importo figlio da 100 a 150 aggiorna l’aggregato quando l’host fornisce quella riga
-accettata; annullare non lo cambia. Refresh prepara tutti i calcoli figli insieme. Con imposta dal
-10% al 20%, il totale accettato 110 diventa una proposta 120. Validazione e uscita usano lo stesso
-snapshot selezionato. I cicli reali fra record falliscono senza uno snapshot parziale; i diagnostici
-locali mantengono la semantica separata esistente.
+Nessuna di queste chiamate cambia `snapshot`, salva dati, crea identificatori di record o timestamp,
+o aggiorna un modulo sullo schermo.
 
-`prepareSubmission` accetta `intent: 'submit' | 'draft'`, `mode: 'automatic' | 'confirm'`,
-`allowRetain: true` e `managedEvents: true` (entrambi false per impostazione predefinita). Automatic
-è il comportamento predefinito; l’host non può indebolire una conferma dello schema. In confirm,
-calcoli figli cambiati restituiscono `status: 'requires_decision'`, `reviewId`, `proposal`, `changes`,
-`choices` e `snapshot: null`. La proposta serve per la revisione, non per l’invio. Dopo una scelta
-esplicita richiama con ingressi correnti, stesse opzioni e
-`decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Retain richiede il permesso dell’host
-in entrambe le chiamate. Nuove preparazioni, ingressi/opzioni diversi o un altro valutatore invalidano
-la revisione. L’accettazione usa i valori catturati; ogni decisione si consuma una volta sola.
+### Mantenere o aggiornare le righe salvate
 
-Controlla `eligible` prima dell’invio. Gli stati sono `ready`, `blocked`, `requires_decision`, `failed`
-e `cancelled`. `validationSummary`, `diagnostics` e `issues` di esecuzione rimangono separati.
-Le bozze mantengono calcoli figli senza dialogo e consentono errori ordinari, continuando a segnalarli
-insieme all’aggiornamento pendente. I fallimenti di esecuzione impediscono l’idoneità.
+Una riga salvata conserva i suoi valori calcolati. `evaluate()` ti permette di scegliere cosa farne:
 
-Persisti `freshness` fuori dal record: `{ version: 1, status: 'current' | 'pending', schemaRevision,
-affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Ripristinalo per mostrare lo stato pendente.
-Ogni preparazione ricalcola dagli ingressi correnti; i metadati non riproducono proposte. Cancella lo
-stato pendente salvato solo dopo aver persistito il risultato aggiornato corrispondente.
+- **Per impostazione predefinita**, le righe salvate mantengono i valori calcolati, e i totali del
+  record principale si ottengono da questi. Se l'importo di una riga passa da 100 a 150 e la tua
+  applicazione passa quella riga salvata, il totale si aggiorna. Se l'utente annulla la modifica,
+  no.
+- **Con `mode: "refresh"`**, tutte le righe vengono ricalcolate insieme. Se un'imposta passa dal 10%
+  al 20%, un totale salvato di 110 diventa 120 nel risultato.
 
-Ogni voce interessata rappresenta una riga; `fields` elenca le identità dei suoi calcoli modificati.
-L’ascendenza completa viene salvata una sola volta per riga, conservando l’ID zero e i riferimenti per
-posizione. Lo stato aggiornato ha un elenco di elementi interessati vuoto.
+La validazione e l'output usano lo stesso risultato. Un ciclo di dipendenze che attraversa più
+record fallisce e non restituisce alcuno snapshot. La diagnostica dei calcoli all'interno di un
+record viene riportata come sempre.
 
-La registrazione degli handler usa ogni ambito selezionato; analisi e compilazione sono condivise.
+### Preparare un invio
 
-La preparazione gestita esegue solo validazione radice e di righe chiuse partecipanti con gli antenati
-selezionati correnti. Non riproduce load/edit/save/unload. L’host mantiene validare → salvare una volta
-→ rivalutare/rivalidare se cambia qualcosa → serializzare. Un hook che cambia ingressi invalida la
-revisione senza essere ripetuto. `event.isValid` descrive la validità intrinseca del suo ambito; quella
-combinata compare nel riepilogo.
+`prepareSubmission(snapshot, options)` produce lo snapshot da salvare, dopo i calcoli e la
+validazione. Controlla `eligible` prima di salvarlo.
 
-Sono disponibili `signal`, un obiettivo di pianificazione di 8ms (`budgetMs`) e `yieldToHost`
-asincrono. Le espressioni restano sincrone e possono superare l’intervallo. L’analisi dello schema è
-condivisa, senza motori permanenti per righe chiuse. Le sessioni di anteprima aggiungono
-`runRecord({ snapshot, instancePath })` per un’anteprima esplicita dell’albero.
+| Opzione                | Valori                     | Predefinito   | Scopo                                                                                                 |
+| ---------------------- | -------------------------- | ------------- | ----------------------------------------------------------------------------------------------------- |
+| `intent`               | `"submit"`, `"draft"`      | `"submit"`    | Indica se è un invio finale o una bozza.                                                              |
+| `mode`                 | `"automatic"`, `"confirm"` | `"automatic"` | Indica se le righe modificate richiedono una revisione.                                               |
+| `allowRetain`          | Booleano                   | `false`       | Permette a una revisione di mantenere valori calcolati precedenti.                                    |
+| `managedEvents`        | Booleano                   | `false`       | Esegue i gestori di validazione.                                                                      |
+| `validateHiddenValues` | Booleano                   | `false`       | [Controlla i valori nascosti](/it/core/schema/validation#controllare-i-valori-nascosti-su-un-server). |
+
+`status` è `ready`, `blocked`, `requires_decision`, `failed` o `cancelled`. I risultati della
+validazione (`validationSummary`), i `diagnostics` dei calcoli e gli `issues` di esecuzione vengono
+riportati separatamente.
+
+Per impostazione predefinita, i valori di riga modificati vengono aggiornati automaticamente. Una
+bozza (`intent: "draft"`) mantiene invece i valori calcolati salvati delle righe senza revisione, e
+può risultare idonea anche con errori di validazione. Riporta comunque quegli errori e le righe non
+aggiornate. Un gestore che fallisce la rende non idonea.
+
+### Rivedere le righe modificate
+
+Usa una revisione quando gli utenti devono vedere i valori ricalcolati prima del salvataggio. Passa
+`mode: "confirm"` oppure imposta `"repeatable_recalculation": "confirm"` nel modulo.
+`mode: "automatic"` non può disattivare una conferma impostata nello schema.
+
+Se un valore di riga dovesse cambiare, `prepareSubmission()` restituisce
+`status: "requires_decision"`, con `reviewId`, `proposal`, `changes`, `choices` e `snapshot: null`.
+Mostra `proposal` all'utente, ma non salvarlo. Quando l'utente ha deciso, chiama di nuovo
+`prepareSubmission()` con gli stessi input e le stesse opzioni, più la decisione:
+
+```js
+const prepared = await evaluator.prepareSubmission(snapshot, { mode: "confirm" })
+
+if (prepared.status === "requires_decision") {
+  showReview(prepared.proposal, prepared.changes)
+}
+
+// After the user decides, with the same evaluator, snapshot, and options:
+const result = await evaluator.prepareSubmission(snapshot, {
+  mode: "confirm",
+  decision: { reviewId: prepared.reviewId, action: "refresh" },
+})
+```
+
+`action` è `refresh`, `retain` o `cancel`. `retain` mantiene i valori calcolati precedenti e
+richiede `allowRetain: true` in entrambe le chiamate. Senza, la chiamata fallisce con
+`retention_not_allowed`.
+
+Una revisione termina quando avvii un'altra preparazione, cambi gli input o le opzioni, o usi un
+altro valutatore. Una decisione funziona una sola volta e applica i valori acquisiti per la
+revisione.
+
+### Salvare `freshness` con il record
+
+`freshness` indica se i calcoli salvati di un record sono aggiornati. Un record è `pending` quando
+l'utente ha mantenuto valori precedenti o ha salvato una bozza:
+
+```js
+{
+  version: 1,
+  status: "pending", // or "current"
+  schemaRevision: "form0-bffe7ba2caa7302e",
+  affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }],
+}
+```
+
+Salvalo accanto al record, non al suo interno, e ripristinalo perché la tua applicazione possa
+mostrare quali righe non sono aggiornate. Cancella uno stato `pending` salvato solo dopo aver
+salvato il risultato attuale corrispondente. Ogni preparazione parte dagli input attuali, quindi un
+`freshness` salvato non può riproporre una vecchia proposta.
+
+Ogni voce di `affected` è una riga, e `fields` elenca i campi calcolati cambiati in quella riga.
+`instancePath` è il percorso completo della riga, che mantiene esatti l'identificatore zero e le
+righe per posizione. Quando `status` è `current`, `affected` è vuoto.
+
+### Gestori di validazione in un invio
+
+Con `managedEvents: true`, `prepareSubmission()` esegue i gestori di validazione del record
+principale e delle righe chiuse, con i valori attuali dei loro genitori. Non ripete gli eventi di
+caricamento, modifica, salvataggio o scaricamento delle righe chiuse. `event.isValid` descrive solo
+il record in cui viene eseguito il gestore. Il risultato di tutto l'albero è in `validationSummary`.
+
+Se la tua applicazione esegue da sola i gestori di salvataggio, mantieni questo ordine: valida,
+esegui il gestore di salvataggio una volta, valuta e valida di nuovo se ha cambiato dei valori, e
+poi costruisci il record. Un gestore di salvataggio che cambia gli input termina una revisione
+precedente, e non viene eseguito di nuovo.
+
+### Valutazioni lunghe
+
+Gli alberi grandi possono richiedere tempo. Passa `signal` per annullare una valutazione, `budgetMs`
+per fissare un obiettivo per ogni porzione di lavoro (8 ms per impostazione predefinita) e
+`yieldToHost`, una funzione asincrona che lascia rispondere la tua interfaccia tra una porzione e
+l'altra. Un'espressione viene sempre eseguita fino in fondo, quindi può superare quell'obiettivo. Le
+righe condividono un'unica analisi dello schema, quindi non serve un motore per ogni riga chiusa.
+
+Le sessioni di anteprima offrono anche `runRecord({ snapshot, instancePath })` per visualizzare in
+anteprima i calcoli in tutto l'albero.
 
 ## Valutare un record aperto
 
-`evaluateScope()` valuta solo il record selezionato, usando gli antenati attuali forniti e le altre
-righe accettate. Un `instancePath` vuoto seleziona la radice. I percorsi figli includono tutti gli antenati;
-le righe identificate si risolvono per ID, incluso zero. I percorsi posizionali dipendono dall’ordine
-acquisito. I percorsi non validi falliscono esplicitamente. Il risultato contiene `state`, la
-`validationSummary` integrata, modifiche, diagnostica e problemi di esecuzione, senza un altro albero
-completo. Non modifica l’input, aggiorna righe chiuse, esegue eventi del ciclo di vita, salva dati o
-genera ID e timestamp.
+Usa `evaluateScope()` mentre un utente modifica un record, come una riga aperta. Valuta solo quel
+record, con i valori attuali dei suoi genitori e i valori salvati delle altre righe:
 
 ```js
 const editor = await evaluator.evaluateScope(snapshot, {
@@ -232,18 +295,94 @@ if (editor.status === "evaluated") {
 }
 ```
 
-Per esempio, un progetto con costi accettati `[10,20]` e una maggiorazione locale di `5` mostra `35`
-durante la modifica. Annullare conserva l’aggregato accettato del padre. Salvare accetta i valori e
-aggiorna l’aggregato del padre. L’invio completo usa ancora `prepareSubmission()`; `engine.eval()`
-mantiene il contratto scalare intrinseco.
+Un `instancePath` vuoto seleziona il record principale. Il percorso di una riga ha un segmento per
+ogni livello di annidamento. Una riga con un identificatore viene trovata con quell'identificatore,
+compreso zero, e una riga senza identificatore viene trovata in base alla sua posizione nello
+snapshot. Un percorso non valido fallisce con un errore.
 
-## Visualizzazione dei valori accettati
+Il risultato contiene `state`, il `validationSummary` integrato, le modifiche, la diagnostica e i
+problemi di esecuzione, ma non un albero completo. La chiamata non cambia il tuo input, non aggiorna
+le righe chiuse, non esegue eventi del ciclo di vita, non salva dati e non crea identificatori o
+timestamp.
 
-I motori scalari accettano `mode: 'readonly' | 'edit'` (`edit` predefinito). In readonly, `eval()`
-calcola condizioni e validazione intrinseca dai valori forniti, conserva i calcoli e non applica
-valori predefiniti mancanti. L'host chiama `setMode('edit')`, poi `eval()`; `getMode()` legge la modalità
-attuale. Cambiare modalità non ripete load, non ripristina vecchi valori dal database e non salva.
+Ad esempio, un progetto con costi delle attività salvati `[10,20]` e una maggiorazione locale di `5`
+mostra `35` mentre l'utente lo modifica. Annullare lascia invariato il totale salvato nel genitore.
+Salvare il progetto mantiene quei valori e aggiorna il totale del genitore. Per inviare un record
+completo, usa `prepareSubmission()`.
 
-Per un albero usa `evaluateScope(snapshot, { interactionMode: 'readonly', instancePath })`.
-Restituisce stato e validazione incorporata dai valori accettati senza calcolare. La modifica è
-predefinita. Le politiche di `evaluate()` e `prepareSubmission()` restano invariate.
+## Visualizzare un record senza modificarlo
+
+Per mostrare un record salvato, crea il motore con `mode: "readonly"`. `eval()` calcola allora
+condizioni e validazione dai valori che fornisci, lascia i valori calcolati come sono e non applica
+i valori predefiniti mancanti. La modalità predefinita è `"edit"`.
+
+Per consentire la modifica, chiama `setMode("edit")` e poi `eval()`. `getMode()` restituisce la
+modalità attuale. Cambiare modalità non esegue di nuovo gli eventi di caricamento, non ripristina
+vecchi valori del database e non salva nulla.
+
+Per un albero di record, usa
+`evaluateScope(snapshot, { interactionMode: "readonly", instancePath })`. Restituisce lo stato dei
+campi e la validazione integrata dai valori che fornisci, senza calcoli.
+
+## Cancellare i valori nascosti
+
+Se un campo imposta
+[`visible_preserve_value`](/it/core/fields/common-attributes#cancellare-un-valore-quando-un-campo-viene-nascosto)
+su `false`, la valutazione lo cancella quando viene nascosto. Cancellare un valore può cambiare
+calcoli e condizioni, che possono nascondere altri campi, quindi la valutazione si ripete finché
+nulla cambia. Questo non esegue eventi `change` né eventi del ciclo di vita. Gli schemi che non
+usano l'attributo saltano questo passaggio.
+
+`evaluate()`, `evaluateScope()` e `prepareSubmission()` elencano ciò che hanno cancellato in
+`clearedFields`:
+
+```js
+;[{ instancePath: [], fieldName: "email", fieldKey: "email" }]
+```
+
+Le voci non contengono mai il vecchio valore. Se gestisci tu lo stato del modulo, cancella i campi
+elencati, compresi quelli nelle righe che non stai mostrando. Il tuo `snapshot` non cambia, e una
+valutazione in sola lettura non cancella nulla. La cancellazione non influisce sul fatto che le
+righe salvate mantengano o aggiornino i valori calcolati.
+
+## Risolvere un valore nascosto che non supera la validazione
+
+Quando passi `validateHiddenValues`, `prepareSubmission()` e `validateSubmission()` contrassegnano
+ogni valore nascosto che non rispetta le proprie regole con `hidden: true`. Per sostituire o
+cancellare uno di questi valori dal tuo codice, prima ispezionalo e poi correggilo:
+
+```js
+const finding = { fieldName: "hidden_note", instancePath: [] }
+const inspected = await evaluator.inspectHiddenValue(snapshot, finding)
+
+if (inspected.status === "inspected") {
+  // inspected.value holds the current value. Decide what to do with it.
+  const corrected = await evaluator.correctHiddenValue(snapshot, { ...finding, value: null })
+
+  if (corrected.status === "evaluated") {
+    // Use corrected.snapshot, unless the record changed since you inspected it.
+  }
+}
+```
+
+- `inspectHiddenValue()` controlla che il valore sia ancora nascosto e continui a non rispettare le
+  regole. Restituisce una copia in `value`.
+- `correctHiddenValue()` accetta un valore sostitutivo che rispetti le regole del campo, oppure
+  `null` per cancellare il valore. Restituisce il record aggiornato in `snapshot` e l'esito dei
+  controlli in `validationSummary`.
+
+Nessuno dei due metodi cambia il tuo `snapshot`, mostra il campo, esegue gestori di `change` o del
+ciclo di vita, elimina righe o salva qualcosa. Le righe salvate mantengono i propri valori
+calcolati, come con `evaluate()`.
+
+Se qualcosa non va, `status` è `"failed"` e `issues` contiene uno di questi codici:
+
+- `hidden_value_not_invalid`: il valore non è più errato oppure il campo non è più nascosto.
+- `invalid_replacement`: il valore sostitutivo non rispetta le regole del campo.
+- `readonly_scope`: hai passato `interactionMode: "readonly"`.
+
+Assicurati che il record non sia cambiato prima di usare `corrected.snapshot`. I binding e
+l'anteprima della CLI lo fanno per te, e chiedono di chiudere prima qualsiasi riga aperta.
+
+Se cancellando il valore una riga resta senza risposte, la riga rimane nel record. Vedi
+[Righe vuote salvate](/it/core/output-records#righe-vuote-salvate).

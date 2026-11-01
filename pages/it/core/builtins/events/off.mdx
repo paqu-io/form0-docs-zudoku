@@ -22,3 +22,24 @@ OFF("change", "city")
 ## Valore restituito
 
 Il descrittore dell’operazione (utilizzato dai client).
+
+## Prova
+
+Ti serve [form0-cli](/it/cli/install-update). Tutte le pagine dei builtin per gli eventi usano lo
+stesso modulo di prova.
+
+1. Scarica il modulo e avvia l'anteprima:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Apri `http://localhost:3030`.
+
+1. Scegli **Rome** in **City**. Si apre un avviso. Fai clic su **OK**.
+
+1. In **Stop the city alert**, seleziona **Yes**. Il gestore di quel campo chiama
+   `OFF("change", "city")`.
+
+1. Scegli **Paris** in **City**. Non si apre alcun avviso.

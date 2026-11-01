@@ -49,12 +49,11 @@ El servidor de Vite redirige `/api` a `http://localhost:3030` de forma predeterm
 dirección del servidor de la CLI. La configuración de Vite consume este valor y no lo expone al
 código del navegador.
 
-Vite escucha en el puerto 5173 con `strictPort`, de acuerdo con `devServer.port`. En form0-cli 0.7.0
-y versiones posteriores, cuando el puerto está declarado, `form0 serve --app` inicia primero la
-aplicación, inicia el servidor de la CLI cuando ese puerto acepta conexiones y después muestra la
-URL de la aplicación que debes abrir. Si el puerto 5173 está en uso, Vite se detiene en lugar de
-elegir otro puerto. Para usar otro puerto, cámbialo tanto en `vite.config.js` como en
-`devServer.port`.
+Vite escucha en el puerto 5173 con `strictPort`, de acuerdo con `devServer.port`. Cuando el puerto
+está declarado, `form0 serve --app` inicia primero la aplicación, inicia el servidor de la CLI
+cuando ese puerto acepta conexiones y después muestra la URL de la aplicación que debes abrir. Si el
+puerto 5173 está en uso, Vite se detiene en lugar de elegir otro puerto. Para usar otro puerto,
+cámbialo tanto en `vite.config.js` como en `devServer.port`.
 
 No pongas credenciales en variables del lado del cliente. Las credenciales de la base de datos
 pertenecen al entorno de la CLI o del conector del lado del servidor, descrito en la

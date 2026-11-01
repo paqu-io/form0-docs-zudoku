@@ -11,7 +11,7 @@ Los eventos se definen en `form.events.code` y se evalúan durante la ejecución
 registrar manejadores y `SETVALUE`/`ALERT` para interactuar con el formulario.
 
 Al crear el motor, `events.code` se ejecuta una vez para registrar los manejadores. Esto no dispara
-ningún evento. Un evento solo se ejecuta cuando el host llama a `engine.trigger(...)` o cuando un
+ningún evento. Un evento solo se ejecuta cuando tu aplicación llama a `engine.trigger(...)` o cuando un
 binding lo dispara por una interacción del usuario o una transición del ciclo de vida de la aplicación.
 
 ## Ejemplo rápido
@@ -27,31 +27,37 @@ ON("change", "age", function (event) {
 
 ## Despacho de eventos en los bindings oficiales
 
-`form0-react` y `form0-react-native` disparan intencionadamente un conjunto pequeño y portable de
-eventos desde sus componentes `FormRenderer`:
+De forma predeterminada, `FormRenderer` en `form0-react` y `form0-react-native` despacha estos
+eventos:
 
-| Evento        | Cuándo se dispara                                                |
-| ------------- | ---------------------------------------------------------------- |
-| `load-record` | Cuando el motor del registro principal está listo                |
-| `edit-record` | Cuando el registro principal entra en modo de edición            |
-| `change`      | Después de que el usuario cambie un campo del registro principal |
+| Evento            | Cuándo se ejecuta                                                                                                                     |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `load-record`     | Cada vez que se abre un registro, para editarlo o en solo lectura                                                                     |
+| `new-record`      | Un registro nuevo empieza a editarse                                                                                                  |
+| `edit-record`     | Un registro existente empieza a editarse                                                                                              |
+| `change`          | Un usuario edita un campo, o añade, edita o elimina una [fila de una sección repetible](/es/core/fields/containers#repeatablesection) |
+| `focus`, `blur`   | Un campo de texto o numérico recibe o pierde el foco                                                                                  |
+| `validate-record` | Un usuario envía el formulario o guarda un borrador                                                                                   |
+| `save-record`     | Después de la validación, una vez por cada intento de guardado                                                                        |
+| `cancel-record`   | Un usuario confirma la cancelación de un registro                                                                                     |
+| `unload-record`   | Un registro se cierra                                                                                                                 |
+| `change-status`   | Un usuario cambia el campo de estado, si está activado                                                                                |
 
-Los editores de filas repetibles no disparan estos eventos automáticamente. En particular, abrir
-una fila no vuelve a ejecutar los manejadores `load-record` o `edit-record` del registro principal,
-y cambiar un campo de la fila no dispara `change`. Por ahora, la aplicación controla los eventos del
-ciclo de vida de los repetibles.
+Las filas tienen sus propios eventos: `load-repeatable`, `new-repeatable`, `edit-repeatable`,
+`validate-repeatable`, `save-repeatable`, `cancel-repeatable`, `unload-repeatable`. Una fila nunca
+ejecuta los eventos del registro principal.
 
-El registro del núcleo también acepta `new-record`, `save-record`, `validate-record`, `blur`,
-`focus`, `click` y los eventos `*-repeatable`. Estos dependen del ciclo de vida y de decisiones de
-interfaz propias de cada aplicación, por lo que los renderers oficiales actualmente no los
-disparan automáticamente. Una aplicación que integre `form0-core` directamente puede dispararlos
-mediante `engine.trigger(eventType, fieldKey, metadata)` en el punto adecuado de su flujo.
+Los campos de opción informan de los cambios con `change`, no con `focus` ni `blur`. `click` está
+disponible, pero ningún control integrado lo emite, así que despáchalo tú. Los valores
+predeterminados, los cálculos y `SETVALUE` no despachan `change`.
 
-La activación automática de eventos adicionales puede estudiarse individualmente, pero no está
-implícita por el hecho de que un evento exista en el núcleo. Los esquemas solo deben depender de los
-eventos que su aplicación host o binding documenten como compatibles.
+Usa `engineOptions.events` para cambiar esto. `lifecycle: false` deja solo `load-record`,
+`edit-record` y `change` para los campos del registro principal. `fieldInteractions: []` desactiva
+`focus` y `blur`.
 
-Registrar uno de estos manejadores con `ON` no convierte el evento en automático.
+Si usas `form0-core` directamente, nada se despacha por ti. Llama a
+`engine.trigger(eventType, fieldKey, metadata)` en el punto adecuado de tu aplicación. Registrar un
+manejador con `ON` no hace que su evento se ejecute.
 
 ## Builtins de eventos
 

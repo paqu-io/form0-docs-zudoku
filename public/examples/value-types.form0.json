@@ -1,0 +1,67 @@
+{
+  "form": {
+    "name": "Types",
+    "description": null,
+    "elements": [
+      {
+        "type": "TextField",
+        "key": "name",
+        "data_name": "name",
+        "label": "Name",
+        "display": "default",
+        "description": null,
+        "description_mode": null,
+        "required": false,
+        "required_conditions": null,
+        "visible": true,
+        "visible_conditions": null,
+        "read_only": false,
+        "read_only_conditions": null,
+        "default_value": null,
+        "pattern": null,
+        "pattern_description": null,
+        "supporting_image": false,
+        "supporting_image_path": null,
+        "supporting_image_display": null
+      },
+      {
+        "type": "NumericField",
+        "key": "age",
+        "data_name": "age",
+        "label": "Age",
+        "display": "default",
+        "description": null,
+        "description_mode": null,
+        "required": false,
+        "required_conditions": null,
+        "visible": true,
+        "visible_conditions": null,
+        "read_only": false,
+        "read_only_conditions": null,
+        "default_value": null,
+        "format": "integer",
+        "min": null,
+        "max": null,
+        "supporting_image": false,
+        "supporting_image_path": null,
+        "supporting_image_display": null
+      },
+      {
+        "type": "DateField",
+        "key": "start",
+        "data_name": "start",
+        "label": "Start",
+        "display": "default",
+        "description": null,
+        "description_mode": null,
+        "required": false,
+        "required_conditions": null,
+        "visible": true,
+        "visible_conditions": null,
+        "read_only": false,
+        "read_only_conditions": null,
+        "default_value": null
+      }
+    ]
+  }
+}

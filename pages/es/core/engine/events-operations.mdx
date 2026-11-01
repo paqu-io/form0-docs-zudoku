@@ -1,6 +1,6 @@
 ---
 title: Eventos y operaciones
-description: Cómo se registran y ejecutan los manejadores de eventos de form0, qué pueden leer y cómo llegan a la aplicación host las operaciones que devuelven.
+description: Cómo se registran y ejecutan los manejadores de eventos de form0, qué pueden leer y cómo llegan a tu aplicación las operaciones que devuelven.
 ---
 
 <PageBadges />
@@ -9,8 +9,7 @@ import { Callout } from "zudoku/ui/Callout"
 
 Los manejadores de eventos permiten que un esquema reaccione a lo que ocurre en un formulario, como
 la carga de un registro o el cambio de un campo. Un manejador nunca modifica el formulario
-directamente. Describe lo que debe ocurrir como una lista de operaciones, y la aplicación host las
-aplica. Esta página explica cómo se registran los manejadores, qué pueden leer y cómo se aplican sus
+directamente. Describe lo que debe ocurrir como una lista de operaciones, y el renderer o tu aplicación las aplica. Esta página explica cómo se registran los manejadores, qué pueden leer y cómo se aplican sus
 operaciones.
 
 Para saber qué eventos despachan los renderers oficiales, consulta
@@ -42,9 +41,9 @@ ON("load-record", function onLoad() {
   compara la cadena de registro de forma exacta y no traduce entre `key` y `data_name`.
 - Omite el campo para ejecutar el manejador en todos los campos.
 - Un tipo de evento desconocido muestra un aviso y el manejador no se registra.
-- `ON`/`OFF` síncronos dentro de manejadores permitidos actualizan los listeners del motor después
-  de un despacho correcto. Un lote rechazado no registra nada. Los callbacks anidados escritos en
-  el esquema funcionan en Hermes y no capturan variables locales del manejador exterior.
+- `ON` y `OFF` dentro de un manejador surten efecto cuando el despacho termina bien. Si el despacho
+  se rechaza, no hacen nada. Los callbacks anidados dentro de un manejador funcionan en Hermes, pero
+  no pueden usar las variables locales del manejador exterior.
 
 ## Cómo se ejecuta el código de los manejadores
 
@@ -120,7 +119,7 @@ disponibles.
 <Callout type="info" title="SETVALUE no actualiza lo que lee el manejador">
   `SETVALUE` solo registra una operación. Durante el resto del manejador, `$data_name` sigue
   devolviendo el valor del momento en que se despachó el evento. El nuevo valor es visible después
-  de que el host aplique la operación.
+  de aplicar la operación.
 </Callout>
 
 ## Operaciones
@@ -140,10 +139,11 @@ que se ejecutaron los manejadores.
 
 ### Las operaciones se comprueban antes de devolverse
 
-Antes de que `trigger()` devuelva el resultado, el motor comprueba cada `SETVALUE` según el ámbito
-del manejador. Un `SETVALUE` que apunta a un campo que el manejador no puede leer, o a un campo que
-no existe en el esquema, se elimina de la lista y el motor emite un aviso. Todo `SETVALUE` que
-devuelve `trigger()` apunta a un campo que el manejador puede modificar.
+Antes de que `trigger()` devuelva su resultado, el motor comprueba cada `SETVALUE` según el ámbito
+del manejador. Si uno apunta a un campo que el manejador no puede escribir, o a un campo que no está
+en el esquema, el motor informa de una advertencia y `trigger()` no devuelve ninguna operación de
+ese evento. Cada `SETVALUE` que devuelve `trigger()` apunta a un campo que el manejador puede
+cambiar.
 
 ### Cómo aplican las operaciones los bindings oficiales
 
@@ -152,12 +152,11 @@ De forma predeterminada, los renderers oficiales:
 - muestran cada `ALERT` en su propio cuadro de diálogo; y
 - escriben el valor de cada `SETVALUE` en el formulario y ejecutan una nueva pasada de evaluación.
 
-<Callout type="caution" title="Los valores de SETVALUE para campos de elección deben ser portables">
-  El binding de React convierte un valor de elección primitivo como `"it"` en la forma de valor en
-  tiempo de ejecución del campo, pero React Native todavía no hace esa conversión. Mientras los
-  bindings no compartan un único contrato de normalización, usa las formas canónicas en tiempo de
-  ejecución cuando `SETVALUE` apunte a un campo de elección. Consulta la [referencia de
-  `SETVALUE`](/es/core/builtins/events/setvalue) para ver ejemplos.
+<Callout type="caution" title="Los campos de opción aceptan identificadores de texto">
+  `SETVALUE` acepta un identificador de texto para un `SingleChoiceField` o `BooleanField`, y una
+  lista de identificadores de texto para un `MultiChoiceField`. Si un valor tiene una forma
+  incorrecta, no se aplica ninguna operación de ese evento, y el renderer registra `Event failed.`
+  en la consola. Consulta la [referencia de `SETVALUE`](/es/core/builtins/events/setvalue).
 </Callout>
 
 Los componentes `FormRenderer` de React y React Native permiten que una aplicación gestione las
@@ -176,9 +175,9 @@ Llama a `applyDefault` con las operaciones que quieras que el binding gestione c
 
 ### Aplicar operaciones sin un renderer
 
-Si usas form0-core directamente, aplica tú la lista devuelta. Para `SETVALUE`, escribe el valor y
-ejecuta `eval()`, como se describe en [Ciclo de evaluación](/es/core/engine/evaluation-cycle). Los
-campos de elección necesitan su forma de valor en tiempo de ejecución, no un simple valor de opción.
+Si usas form0-core directamente, aplica tú la lista devuelta. Para `SETVALUE`, llama a
+`engine.setValue(fieldDataName, valueToSet)`, que acepta un identificador de texto para un campo de
+opción y ejecuta la evaluación. Consulta [Ciclo de evaluación](/es/core/engine/evaluation-cycle).
 
 ## Sin cadenas de eventos de cambio
 
@@ -189,37 +188,73 @@ que asignó. Un manejador `change` de `age` que asigna `adult_note` no ejecuta l
 Si asignar un campo también debe activar la lógica de otro, pon ambas en el mismo manejador o usa un
 `CalculatedField` cuando el valor pueda derivarse de otros campos.
 
-## Ejecución gestionada del core
+## Obtener resultados detallados
 
-El nuevo contrato del core añade `engine.triggerDetailed(eventType, fieldKey, metadata)` síncrono, que devuelve copias defensivas de `operations`, `validationIssues` e `issues` de ejecución. Un despacho gestionado fallido no devuelve operaciones aplicables. La vía de compatibilidad `engine.trigger()` conserva su array de operaciones. Ningún método evalúa, persiste ni cierra un editor.
+`engine.trigger()` devuelve solo las operaciones. Usa
+`engine.triggerDetailed(eventType, fieldKey, metadata)` cuando también necesites los mensajes de
+validación y los fallos. Es síncrono y devuelve tres listas:
 
-Configura `eventScope.instancePath` al crear un motor de fila sin renderer; el ámbito raíz es `[]`. Las rutas completas usan `repeatableKey`, `instanceId`, `index` e `identity`. Las claves de ruta usan las claves del esquema; los identificadores de listeners usan `data_name`. Un ID ausente se indica expresamente como posicional. El core valida la ascendencia del esquema y la pertenencia; el host debe comprobar la identidad y generación de la fila activa. Los manejadores gestionados de fila pueden leer campos actuales, de ancestros y principales proporcionados por el host; `SETVALUE()` solo escribe campos de la fila actual. No se permite acceder a ramas hermanas, descendientes o ajenas ni a colecciones repetibles. Los metadatos de la aplicación no pueden sustituir la identidad ni el ámbito del dispatcher.
+```js
+const { operations, validationIssues, issues } = engine.triggerDetailed("validate-record")
+```
 
-`INVALID(message)` está disponible durante la ejecución gestionada de `validate-record` y `validate-repeatable` y requiere una cadena no vacía. Los hallazgos pertenecen al ámbito, sin asociación a un campo, y no entran en `state.errors`, diagnósticos de cálculo, valores ni metadatos guardados. Los manejadores de validación rechazan operaciones de valores/interfaz y promesas. Los manejadores de cancelación y descarga son notificaciones de solo lectura y también rechazan hallazgos de validación y alertas.
+- `operations`: lo que hay que aplicar. Si un manejador falla, está vacía.
+- `validationIssues`: mensajes de `INVALID()`.
+- `issues`: fallos durante la ejecución de los manejadores, cada uno con `code`, `message`,
+  `eventType` e `instancePath`.
 
-El registro añade `cancel-record`, `unload-record`, `cancel-repeatable`, `unload-repeatable` y `change-status`. Registrarlos no los automatiza. `save-record` y `save-repeatable` siguen siendo previos al guardado; no se introducen eventos de esquema `saved-*`. React 0.4.0, React Native 0.5.0 y CLI 0.7.0 adoptan el ciclo de vida ampliado, el controlador y la preparación del guardado. Los bindings actuales activan el ciclo de vida por defecto y exigen clasificación explícita new/existing. CLI también activa estos eventos en la vista previa del navegador; los comandos independientes siguen controlados por el host.
+Ninguno de los dos métodos evalúa el formulario, guarda un registro ni cierra un editor.
 
-Consulta el [contrato de eventos mantenido](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md) para conocer el contrato completo y las fases de entrega. La política general de validación, la actualización de filas cerradas y la responsabilidad de persistencia siguen siendo trabajos separados.
+### Ejecutar los manejadores de una fila
 
-Los objetos multimedia File/Blob nativos se copian defensivamente, conservando metadatos estándar y contenido binario inmutable. Esta corrección está incluida en core 0.5.1. Se rechazan otros objetos no portables; los handlers asíncronos siguen sin admitirse.
+Para ejecutar los manejadores de una
+[fila de una sección repetible](/es/core/fields/containers#repeatablesection) sin renderer, pasa
+`eventScope.instancePath` al crear el motor. La ruta del registro principal es `[]`. Cada segmento
+de fila tiene `repeatableKey`, `instanceId`, `index` e `identity`. Las rutas usan las claves del
+esquema, y los listeners usan `data_name`. Una fila sin identificador usa `identity: "position"`.
+form0 comprueba la ruta con el esquema, pero tu aplicación debe comprobar que la fila sigue
+existiendo.
 
-## Modo y visualización de valores aceptados
+Un manejador de fila puede leer sus propios campos, y los campos de filas padre y del formulario
+principal que aporte tu aplicación. `SETVALUE()` solo escribe en la fila actual. Las filas hermanas,
+las filas hijas y las colecciones repetibles quedan fuera de su alcance. Los metadatos no pueden
+sustituir las propiedades propias del evento, como su tipo o su ámbito.
 
-Cada manejador recibe `event.mode: 'readonly' | 'edit'`, propiedad del motor. Describe el registro
-que ejecuta el evento, incluido un hijo consultado cuyo padre se está editando. La clasificación
-nuevo/existente, la intención de borrador y los campos de solo lectura son independientes. Los
-metadatos del llamador y las asignaciones del manejador no conceden permisos. La validación de
-ámbitos cerrados del árbol recibe `readonly` sin abrirlos; la del editor conserva su modo y solo
-puede producir hallazgos.
+### Qué puede hacer cada tipo de manejador
 
-Load se ejecuta una vez por apertura en ambos modos. La edición directa espera load antes de
-new/edit. Visualizar → Editar ejecuta edit sin repetir load. Visualizar permite leer valores
-aceptados, mostrar ALERT y modificar listeners del ámbito. SETVALUE u otra escritura rechaza todo
-el lote, incluidos avisos y cambios de listeners, antes de delegarlo. `triggerDetailed()` devuelve
-problemas de ejecución; `trigger()` heredado no devuelve operaciones y emite avisos estructurados.
-La vista sigue disponible.
+| Manejadores                              | Pueden                      | No pueden                                                |
+| ---------------------------------------- | --------------------------- | -------------------------------------------------------- |
+| `validate-record`, `validate-repeatable` | Llamar a `INVALID(message)` | Cambiar valores, mostrar alertas ni devolver promesas    |
+| `cancel-record`, `cancel-repeatable`     | Leer valores                | Cambiar valores, llamar a `INVALID()` ni mostrar alertas |
+| `unload-record`, `unload-repeatable`     | Leer valores                | Cambiar valores, llamar a `INVALID()` ni mostrar alertas |
 
-Para inicializar cada entrada en edición, usa new/edit en lugar de load protegido. El catálogo de
-builtins declara los efectos; las operaciones o efectos desconocidos se rechazan. Se mantienen las
-restricciones de validación/cierre. Los efectos externos de helpers privilegiados no se revierten
-con las operaciones, y editar no autoriza persistencia externa.
+`save-record` y `save-repeatable` se ejecutan antes de guardar. No existen eventos de esquema
+`saved-*`. Las aplicaciones se encargan de guardar, de los mensajes de éxito y de cerrar el editor.
+
+Los metadatos de un evento pueden contener objetos simples, listas, fechas, valores simples y
+referencias `File` o `Blob`, que conservan sus metadatos y su contenido. Los demás tipos de objeto
+se rechazan. Los manejadores del esquema no pueden ser asíncronos.
+
+Consulta el
+[contrato de eventos mantenido](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md)
+para ver las reglas completas.
+
+## Registros de solo lectura
+
+Cada manejador recibe `event.mode`, que es `"readonly"` o `"edit"` para el registro en el que se
+ejecuta. Una fila de solo lectura dentro de un registro editable recibe `"readonly"`. El modo es
+independiente de si el registro es nuevo, de si es un borrador y del ajuste `read_only` de un campo.
+Los metadatos y los manejadores no pueden cambiarlo.
+
+`load-record` se ejecuta una vez cada vez que se abre un registro, en cualquier modo. Un registro
+abierto para editar ejecuta `new-record` o `edit-record` después. Pasar de solo lectura a edición
+ejecuta `edit-record` sin volver a ejecutar `load-record`.
+
+En un registro de solo lectura, los manejadores pueden leer valores, mostrar un `ALERT` y añadir o
+quitar listeners. Un `SETVALUE` rechaza todo el lote, incluidas las alertas y los cambios de
+listeners, y el registro sigue siendo legible. `triggerDetailed()` lo informa en `issues`, y
+`trigger()` no devuelve operaciones e informa de una advertencia.
+
+Pon la inicialización que debe ejecutarse siempre que empieza la edición en un manejador de
+`new-record` o `edit-record`, no en `load-record`. Los helpers que tu aplicación pasa al motor
+pueden tener sus propios efectos secundarios, que form0 no puede deshacer.

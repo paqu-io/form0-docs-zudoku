@@ -67,13 +67,14 @@ ROUND($price * $qty, 2)
 ## Colecciones repetibles
 
 `REPEATABLEVALUES($tasks, 'cost')` y `REPEATABLESUM($tasks, 'cost')` son exclusivos de cálculos y
-requieren contexto de `createRecordEvaluator()`. Llegarán después de core 0.6.0; sin ese contexto,
-el motor ordinario devuelve un diagnóstico. Los eventos pueden leer un CalculatedField agregado
-accesible, pero no llamar directamente a estas funciones.
+requieren contexto de `createRecordEvaluator()`. Sin ese contexto, el motor ordinario devuelve un
+diagnóstico. Los eventos pueden leer un CalculatedField agregado accesible, pero no llamar
+directamente a estas funciones.
 
-Usa el data_name de RepeatableSection y un data_name destino literal de sus filas. Section no añade
-ámbito de registro. No se admiten nombres dinámicos, alias ni llamadas dentro de EVAL; el resto de
-EVAL mantiene su comportamiento. El marcador plano de RepeatableSection sigue siendo null.
+Usa el data_name de RepeatableSection y un data_name destino literal de sus
+[filas](/es/core/fields/containers#repeatablesection). Section no añade ámbito de registro. No se
+admiten nombres dinámicos, alias ni llamadas dentro de EVAL. El marcador plano de RepeatableSection
+es null.
 
 | Valores por fila             | REPEATABLEVALUES                           | REPEATABLESUM       |
 | ---------------------------- | ------------------------------------------ | ------------------- |
@@ -92,5 +93,5 @@ referencias, sin recuperar contenidos.
 
 Otros destinos admitidos: TextField, BooleanField, DateField y TimeField. Arrays/objetos calculados
 conservan tipo y agrupación. Contenedores, LabelField, medios, StatusField y TitleField se excluyen.
-Los títulos y medios existentes siguen admitidos fuera de la proyección. Se preservan el orden y las
-filas ocultas aceptadas. Los diagnósticos siguen separados de la validez del envío.
+Las filas mantienen su orden aceptado y las filas ocultas se incluyen. Los diagnósticos no afectan a
+la validez del envío.

@@ -11,80 +11,198 @@ port `3030` et écoute sur `localhost` ; `--port` et `--host` permettent de modi
 Le serveur d’aperçu est un outil de développement. Utilisez des projets et des connecteurs de
 confiance, et ne l’exposez que sur un réseau de confiance.
 
+## Comment l’aperçu applique les valeurs
+
+L’aperçu suit les mêmes [règles de valeurs](/fr/core/engine/value-updates) que les bindings
+officiels :
+
+- `SETVALUE()` et les mises à jour par code sont vérifiés comme un lot. Si l’une d’elles est
+  rejetée, aucune n’est appliquée.
+- Une sélection textuelle inconnue reste dans le champ, pour que la validation puisse la signaler.
+- Un enregistrement en lecture seule bloque les écritures des événements, y compris pendant
+  `load-record`. Le réglage `read_only` d’un champ ne les bloque pas : le code peut donc toujours
+  modifier ce champ.
+
 ## Diagnostics de calcul dans le navigateur
 
-Dans form0-cli 0.6.0 et les versions ultérieures, le serveur renvoie des diagnostics structurés avec l’état
-évalué. La console affiche les problèmes nouveaux ou modifiés, résolus et récurrents ; les
-évaluations identiques ne les répètent pas. Les diagnostics des lignes imbriquées indiquent le
-chemin répétable et l’ID existant de la ligne, ou une référence explicite par position sans ID.
+Le serveur renvoie des diagnostics avec chaque évaluation. La console du navigateur affiche les
+constats nouveaux ou modifiés, ceux qui sont résolus et les problèmes qui reviennent. Les
+évaluations identiques ne les réaffichent pas. Un constat dans une
+[ligne imbriquée d’une section répétable](/fr/core/fields/containers#repeatablesection) affiche son
+chemin répétable et l’identifiant de la ligne, ou indique qu’il utilise une position lorsqu’il n’y a
+pas d’identifiant.
 
-Utilisez `form0 serve [schema] --no-diagnostics` pour masquer les rapports de calcul de la CLI
-et la sortie console de l’aperçu intégré. Les diagnostics restent collectés. Une application
-lancée avec `serve --app` conserve sa propre politique de présentation.
+Utilisez `form0 serve [schema] --no-diagnostics` pour masquer les rapports de calcul et la sortie
+console intégrée de l’aperçu. Les diagnostics sont toujours collectés. Une application démarrée avec
+`serve --app` garde ses propres rapports.
 
-Une évaluation terminée renvoie l’état même si ses diagnostics contiennent des erreurs. La
-validation des champs, les opérations d’événement, la soumission et les brouillons conservent
-leur comportement ; les diagnostics n’ajoutent pas d’alertes ni de blocages de soumission.
+Un calcul qui se termine renvoie quand même l’état lorsque ses diagnostics contiennent des erreurs.
+Les diagnostics n’ajoutent pas d’alertes au formulaire et ne bloquent pas la soumission, et la
+validation des champs, les événements et la sauvegarde des brouillons fonctionnent comme d’habitude.
 
 <span id="événements-portables-de-laperçu-cli-070" />
 
 ## Aperçu des enregistrements et événements du cycle de vie
 
-L’aperçu utilise des API introduites dans core 0.8.1 ; CLI installe core compatible automatiquement. Les nouveaux aperçus activent le cycle de vie et les interactions compatibles focus/blur/click et sélectionnent **Nouvel enregistrement**. Dans **Paramètres du formulaire → Aperçu de l’enregistrement**, choisissez **Enregistrement existant** ou **Ouvrir en lecture seule**. La classification choisit les hooks sans charger d’enregistrement. Les désactivations explicitement sauvegardées restent respectées. **Paramètres avancés des événements** contient les commutateurs de compatibilité. La lecture seule exécute load ; changer la configuration démarre une session avec les valeurs acceptées. `serve --app` conserve les options de l’application. Les bindings proposent des API avec classification explicite du host. Le cycle CLI sans interface conserve sa valeur précédente.
+Un nouvel aperçu démarre comme un nouvel enregistrement, avec les événements de cycle de vie et les
+événements de focus des champs activés. Pour modifier son ouverture, allez dans **Form Settings** >
+**Aperçu de l’enregistrement** :
 
-L’initialisation évalue les valeurs effectives, exécute `load-record`, puis `new-record` ou
-`edit-record`. Les changements utilisateur attendent les mises à jour en file ; valeurs par défaut,
-calculs et `SETVALUE()` ne produisent pas de changements supplémentaires. Le statut activé utilise
-`change-status` ; focus et blur des contrôles texte et numériques sont activés par défaut ; les choix utilisent change. Le click automatique est réservé aux champs d’activation pris en charge. HyperlinkField n’existe pas actuellement et aucun contrôle intégré n’émet click automatiquement. Le dispatch explicite du contrôleur du host reste disponible.
+- **Nouvel enregistrement** exécute les gestionnaires de `new-record`. C’est le choix par défaut.
+- **Enregistrement existant** exécute les gestionnaires de `edit-record`. Il ne charge pas
+  d’enregistrement de base de données, il choisit seulement les gestionnaires à exécuter.
+- **Ouvrir en lecture seule** exécute `load-record` au lieu de `new-record` ou `edit-record`. Les
+  champs sont grisés et ne peuvent pas être modifiés, et **Submit Record** est désactivé.
 
-L’envoi suit validation intégrée/personnalisée → `save-record` une fois → nouvelle validation
-uniquement si les valeurs changent → sérialisation finale → envoi au connecteur existant.
-`INVALID(message)` synchrone crée un message de résumé du périmètre sans modifier `state.errors`.
-Les diagnostics de calcul ne bloquent pas seuls l’envoi. **Préparer le brouillon** affiche un
-instantané et un résumé éventuellement invalide dans la console, sans persistance ni connecteur.
-Il n’y a aucun événement de schéma `saved-*`.
+**Paramètres avancés des événements** contient les interrupteurs pour désactiver des événements, et
+un choix enregistré reste en place. Modifier ces réglages démarre une nouvelle session avec les
+valeurs déjà acceptées. Une application démarrée avec `serve --app` garde ses propres options, et
+les commandes autonomes comme `form0 run` gardent leurs propres valeurs par défaut.
 
-Les lignes intégrées proposent **Modifier**, **Enregistrer la ligne** et **Annuler la ligne**. Elles
-utilisent les événements repeatable et des valeurs provisoires : enregistrer valide/prépare avant
-acceptation ; annuler abandonne les modifications imbriquées provisoires. Lecture des champs
-principaux/ancêtres autorisés, écritures limitées à la ligne. Réduire est uniquement visuel. Les
-ajouts/modifications/suppressions acceptés notifient le repeatable propriétaire ; les erreurs de
-notification ultérieures restent distinctes de la préparation acceptée. Les lignes fermées utilisent la préparation partagée décrite ci-dessous sans rejouer leur cycle d’édition.
+### Ce qui s’exécute et quand
 
-Le contrôleur actif est `window.form0PreviewEvents`. `dispatch()` et
-`prepareSave({ intent: 'submit' | 'draft' })` renvoient des promesses avec résultats/problèmes et
-attendent la présentation acceptée ; préparer n’envoie ni ne ferme. Les lignes exigent un
-`instancePath` complet et le `scopeId` observé (`data-preview-scope-id`) ; les chemins positionnels
-exigent cet ID. Les métadonnées sont JSON ; fonctions et fichiers natifs sont rejetés. Aucune
-métadonnée de périmètre/diagnostic n’entre dans les valeurs enregistrées. Annuler/Fermer notifie avant
-retrait ; rechargement/destruction forcée retire uniquement. Rouvrir crée une nouvelle session.
-Les codes de sortie de run/validate restent inchangés.
+- À l’ouverture d’un enregistrement, le formulaire est évalué, `load-record` s’exécute, puis
+  `new-record` ou `edit-record`.
+- Lorsqu’un utilisateur modifie un champ, `change` s’exécute une fois les mises à jour en file
+  terminées. Dans un champ texte, cela signifie à chaque frappe.
+- Les valeurs par défaut, les calculs et `SETVALUE()` n’ajoutent pas d’événements `change`.
+- Les champs texte et numériques émettent `focus` et `blur`, et les champs de choix utilisent
+  `change`.
+- Un champ de statut activé émet `change-status` lorsqu’un utilisateur le modifie.
+- Aucun contrôle intégré n’émet `click`. Déclenchez-le vous-même avec le contrôleur décrit plus bas.
 
-**Actions avancées de l’aperçu** regroupe **Préparer le brouillon**, **Annuler l’enregistrement** et
-**Fermer l’enregistrement** dans une section repliée. Préparer un brouillon permet de l’inspecter et
-ne le sauvegarde jamais via un connecteur. Les contrôles désactivés des lignes imbriquées indiquent
-quel éditeur parent ouvrir d’abord. L’envoi affiche l’objet final dépliable et le résultat de chaque
-connecteur dans la console. Sans connecteur, il indique que l’enregistrement est préparé uniquement
-pour l’aperçu ; un échec de connecteur ou de stockage ne constitue pas une sauvegarde réussie.
+### Ce qui se passe à la soumission
 
-## Préparation partagée et adaptateur de stockage du host
+1. La validation intégrée et personnalisée s’exécute.
+2. `save-record` s’exécute une fois.
+3. La validation s’exécute de nouveau, seulement si des valeurs ont changé.
+4. L’enregistrement final est construit et envoyé à tout connecteur.
 
-L’aperçu utilise la fraîcheur et la validation intégrée partagées, avec ou sans cycle de vie géré.
-La désactivation laisse les hooks et la validation personnalisée gérés désactivés. Aucun événement
-load/edit/change/save/unload de ligne fermée n’est rejoué. Acceptez ou annulez les éditeurs enfants
-avant la préparation racine.
+`INVALID(message)` ajoute un message à la liste de validation sans modifier `state.errors`. Les
+diagnostics de calcul seuls ne bloquent pas une soumission. Il n’existe pas d’événements de schéma
+`saved-*`.
 
-`createApp()` accepte `submissionOptions` côté serveur et un `storageAdapter` facultatif. Conserver
-exige cet adaptateur et `allowRetain` ; le navigateur ne peut pas accorder cette permission.
-L’adaptateur implémente `load(identity)` asynchrone retournant `{ record, freshness }` ou `null`, et
-`save(identity, { record, freshness })`. `record` garde la structure existante. La session restaure
-`recordIdentity` ou `recordOptions.mainRecordId`, y compris zéro. L’exemple remplace atomiquement une
-enveloppe locale ; le host de production définit la gestion des révisions et conflits.
+La soumission journalise dans la console l’enregistrement final et le résultat de chaque connecteur.
+Un échec de connecteur ou de stockage ne compte pas comme un enregistrement sauvegardé.
 
-La réussite reconnaît la préparation. Un rejet, une persistance partielle ou l’échec d’un connecteur
-laisse la tentative non enregistrée. Les connecteurs reçoivent le même enregistrement sans devoir
-stocker la fraîcheur. Les clients de préparation reconnaissent explicitement leur sauvegarde externe.
-`getSaveChanges()` pagine les changements ; les choix concernent tous les enfants ou aucun.
+### Essayez
+
+Il vous faut [form0-cli](/fr/cli/install-update).
+
+1. Démarrez l’aperçu avec un formulaire d’exemple :
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Ouvrez `http://localhost:3030`, saisissez `10` dans **Amount** et cliquez sur **Submit Record**.
+
+1. Ouvrez la console du navigateur. Elle affiche `[STRUCTURED RECORD] Record prepared`, puis
+   `No database connector configured; record prepared for preview only.`
+
+### Essayez un enregistrement en lecture seule
+
+Il vous faut [form0-cli](/fr/cli/install-update).
+
+1. Démarrez l’aperçu avec le formulaire d’exemple. S’il est déjà lancé, passez à l’étape suivante.
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Ouvrez `http://localhost:3030` et cliquez sur **⚙** pour ouvrir **Form Settings**.
+
+1. Sous **Aperçu de l’enregistrement**, sélectionnez **Ouvrir en lecture seule** et cliquez sur
+   **Save**.
+
+1. Cliquez sur **Amount** et saisissez un nombre. Rien ne s’affiche. **City** ne peut pas être
+   ouvert, et **Submit Record** est désactivé.
+
+1. Rechargez la page. Le formulaire reste en lecture seule, car le réglage est enregistré dans votre
+   navigateur.
+
+1. Ouvrez de nouveau **Form Settings**, décochez **Ouvrir en lecture seule** et cliquez sur **Save**
+   pour modifier à nouveau le formulaire.
+
+L’aperçu n’affiche aucune bannière de lecture seule : vérifiez donc que les champs et le bouton
+**Submit Record** sont désactivés (grisés).
+
+### Lignes de sections répétables
+
+Les lignes intégrées proposent **Modifier**, **Enregistrer la ligne** et **Annuler la ligne**. Les
+modifications restent en attente jusqu’à ce que vous les acceptiez : **Enregistrer la ligne** valide
+d’abord la ligne, et **Annuler la ligne** abandonne ses modifications imbriquées en attente. Replier
+une ligne change seulement son apparence.
+
+Les gestionnaires de ligne utilisent les événements répétables. Ils peuvent lire les champs
+autorisés des parents et du formulaire principal, et n’écrivent que dans leur propre ligne. Ajouter,
+modifier ou supprimer une ligne notifie la section répétable qui la contient. Un problème dans cette
+notification est signalé séparément, et la ligne acceptée reste.
+
+Les lignes fermées sont préparées avec le reste de l’enregistrement à la soumission, sans rejouer
+leurs événements de modification.
+
+### Actions avancées
+
+**Actions avancées de l’aperçu** est une section repliée avec trois actions :
+
+- **Préparer le brouillon** affiche dans la console un snapshot brut et le résumé de validation,
+  s’il y en a un. Il ne sauvegarde jamais le brouillon et n’appelle aucun connecteur.
+- **Annuler l’enregistrement** abandonne les modifications de l’éditeur.
+- **Fermer l’enregistrement** exécute le cycle de déchargement.
+
+Annuler ou fermer notifie les gestionnaires avant la fin de la session. Recharger la page y met fin
+sans notification, et rouvrir démarre une nouvelle session. Un contrôle de ligne imbriquée désactivé
+indique quel éditeur parent ouvrir d’abord.
+
+### Contrôler l’aperçu depuis la console
+
+`window.form0PreviewEvents` est un contrôleur pour développeurs de l’aperçu actif :
+
+- `dispatch()` exécute un événement et renvoie ses constats et ses problèmes.
+- `prepareSave({ intent: "submit" | "draft" })` prépare une sauvegarde sans rien soumettre ni
+  fermer.
+
+Pour cibler une ligne, passez son `instancePath` complet et le `scopeId` affiché sous la forme
+`data-preview-scope-id` sur la page. Un chemin par position exige cet identifiant. Les métadonnées
+doivent être en JSON : la configuration exécutable et les références natives à des fichiers sont
+donc rejetées. Les valeurs sauvegardées ne contiennent aucune donnée de portée ou de diagnostic. Le
+contrôleur ne change pas le statut de sortie des commandes du terminal.
+
+## Dessiner dans un BuildingPlan
+
+Dessiner dans un canevas BuildingPlan ouvre un brouillon de modification de l’étage. Les pièces,
+murs, ouvertures et autres géométries apparaissent aussitôt sous forme de lignes.
+**Enregistrer la ligne** valide et accepte l’étage, et **Annuler la ligne** restaure ensemble sa
+géométrie et ses lignes. Les questions obligatoires du relevé doivent toujours recevoir une réponse.
+
+Avant de dessiner de nouveau, acceptez ou annulez tout éditeur de pièce ou de mur ouvert. Terminez
+le brouillon de l’étage avant de soumettre l’enregistrement principal. Replier ou changer d’étage ne
+sauvegarde pas. Les enregistrements et les sections BuildingPlan en lecture seule désactivent le
+dessin. Dessiner ne modifie pas le format du schéma ou de l’enregistrement, et ne permet pas à
+`SETVALUE()` d’écrire d’un enregistrement à l’autre.
+
+## Examiner les lignes recalculées
+
+Définissez `form.repeatable_recalculation` sur `"confirm"` dans le schéma pour examiner les calculs
+modifiés des lignes sauvegardées lors de la soumission de l’enregistrement principal. Si vous
+l’omettez ou utilisez `"automatic"`, ils sont actualisés automatiquement. Aucun interrupteur
+n’existe pour cela dans les réglages de l’aperçu.
+
+Une ligne ouverte continue à être recalculée avec les valeurs actuelles de ses parents : acceptez-la
+ou annulez-la donc avant de soumettre. Conserver d’anciennes valeurs exige aussi l’autorisation du
+serveur décrite dans la section suivante.
+
+L’aperçu applique les mêmes vérifications, que les événements de cycle de vie soient activés ou non.
+Lorsqu’ils sont désactivés, la validation personnalisée et les gestionnaires de sauvegarde restent
+désactivés.
+
+## Sauvegarder les enregistrements de l’aperçu
+
+`createApp()` accepte des `submissionOptions` côté serveur et un `storageAdapter` facultatif, pour
+tester la sauvegarde et la restauration d’enregistrements dans votre propre serveur d’aperçu :
 
 ```js
 import { createApp } from "form0-cli/src/server/express-server.js"
@@ -95,3 +213,61 @@ const app = createApp(getSchema, getSchemaSource, projectDir, {
   storageAdapter: createFilePreviewStorage(previewStorageDirectory),
 })
 ```
+
+L’adaptateur implémente deux méthodes asynchrones :
+
+- `load(identity)` renvoie `{ record, freshness }` ou `null`.
+- `save(identity, { record, freshness })` les stocke.
+
+`record` utilise le format d’enregistrement structuré. Pour restaurer un enregistrement, la session
+utilise `recordIdentity` ou `recordOptions.mainRecordId`, y compris l’identifiant zéro. L’adaptateur
+d’exemple remplace un fichier local de façon atomique. En production, votre application décide
+comment gérer les révisions et les conflits.
+
+`allowRetain` exige un adaptateur, et les requêtes du navigateur ne peuvent pas l’accorder. Un
+`save` réussi confirme la préparation. S’il est rejeté, s’il ne stocke qu’une partie des données ou
+si un connecteur échoue, la tentative reste non sauvegardée. Les connecteurs reçoivent le même
+enregistrement que d’habitude et ne stockent pas `freshness`. Un client qui prépare seulement une
+sauvegarde doit confirmer lui-même une sauvegarde externe réussie. `getSaveChanges()` renvoie les
+détails de la revue par pages, et une décision s’applique à toutes les lignes modifiées ou à aucune.
+
+## Valeurs masquées dans l’aperçu
+
+L’aperçu applique les mêmes
+[vérifications de valeurs](/fr/core/schema/validation#validation-à-lexécution) et règles de
+[`visible_preserve_value`](/fr/core/fields/common-attributes#effacer-une-valeur-lorsquun-champ-est-masqué)
+que les bindings, y compris dans les lignes fermées.
+[L’export et l’import CSV](/fr/cli/schemas/import-export-csv) conservent l’attribut.
+
+Pour vérifier les valeurs masquées à la soumission, définissez l’option sur le serveur. Les requêtes
+du navigateur ne peuvent pas la modifier :
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
+})
+```
+
+### Résoudre une valeur masquée
+
+Pour que l’aperçu puisse corriger une valeur masquée qui échoue à la validation, passez
+`onResolveHiddenValue` à `createApp()`. Les résultats de validation affichent alors le bouton
+**Résoudre la valeur masquée**.
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
+  onResolveHiddenValue: async (finding) => {
+    // Return { value: replacement }, { value: null }, or nothing to cancel.
+    return { value: null }
+  },
+})
+```
+
+Le gestionnaire s’exécute sur votre serveur : il ne peut donc pas ouvrir de boîte de dialogue du
+navigateur. `form0 serve` n’a aucune option pour cela.
+[Résoudre une valeur masquée](/fr/bindings/react/values-snapshots-submission#résoudre-une-valeur-masquée-qui-échoue-à-la-validation)
+dans la documentation React explique ce que le gestionnaire reçoit et renvoie.
+
+Si l’effacement de la valeur laisse une ligne sans réponse, la ligne reste dans l’enregistrement.
+Voir [Lignes vides enregistrées](/fr/core/output-records#lignes-vides-enregistrées).

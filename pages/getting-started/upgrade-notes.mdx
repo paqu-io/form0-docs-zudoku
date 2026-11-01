@@ -1,0 +1,266 @@
+---
+title: Upgrade notes
+description: What to change in your application when you upgrade form0 packages.
+---
+
+<PageBadges />
+
+This page lists the form0 changes that need action from you. If a release is not listed here, you
+can install it without changing your code. For new features and fixes, see the release notes for
+[form0-core](https://github.com/paqu-io/form0-core/releases),
+[form0-react](https://github.com/paqu-io/form0-react/releases),
+[form0-react-native](https://github.com/paqu-io/form0-react-native/releases), and
+[form0-cli](https://github.com/paqu-io/form0-cli/releases).
+
+Changes are listed newest first. To upgrade, work through every entry newer than the versions you
+use today.
+
+## Find the changes that apply to you
+
+Compare the versions you use with each row. A row applies if your version is older than the one
+shown. The date is when the first package with the change was released. A package that is not listed
+is not affected.
+
+| Date         | Change                                                                                                                        | Versions                                                   |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `2026-10-31` | [Saved empty rows stay in the record](#saved-empty-rows-stay-in-the-record)                                                   | core 0.11.0, react 0.10.0, react-native 0.11.0, cli 0.10.0 |
+| `2026-10-30` | [Field values are checked by type](#field-values-are-checked-by-type)                                                         | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-30` | [Schemas that clear hidden values need every package upgraded](#schemas-that-clear-hidden-values-need-every-package-upgraded) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-29` | [Choice fields need string IDs in `SETVALUE()`](#choice-fields-need-string-ids-in-setvalue)                                   | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0     |
+| `2026-10-28` | [`FormRenderer` requires `recordKind`](#formrenderer-requires-recordkind)                                                     | react 0.5.0, react-native 0.6.0                            |
+| `2026-10-27` | [Handlers cannot change a read-only record](#handlers-cannot-change-a-read-only-record)                                       | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0     |
+| `2026-10-22` | [Conditions can only read their own record and its parents](#conditions-can-only-read-their-own-record-and-its-parents)       | core 0.6.0                                                 |
+| `2026-10-08` | [Mobile row editors no longer run record events](#mobile-row-editors-no-longer-run-record-events)                             | react-native 0.3.0                                         |
+
+## Upgrade the packages together
+
+Each binding depends on a matching `form0-core` version, so install them at the same time:
+
+- React: `npm install form0-react@latest form0-core@latest`
+- React Native: `npm install form0-react-native@latest form0-core@latest`
+- CLI: `npm install --global form0-cli@latest`
+
+## Saved empty rows stay in the record
+
+**Released:** 2026-10-31
+
+**Applies from:** `form0-core` 0.11.0, `form0-react` 0.10.0, `form0-react-native` 0.11.0,
+`form0-cli` 0.10.0
+
+**Act if** a repeatable section has only optional fields and your server or database expects every
+[row](/core/fields/containers#repeatablesection) to hold an answer. A user can add a row and save it
+without typing anything. That row used to be dropped from the submitted record. It now stays, with
+its ID, its timestamps, and `null` answers.
+
+**What to do:** Mark one field in the row as `required`, so the row can't be saved empty, or handle
+these rows on your server. [Saved empty rows](/core/output-records#saved-empty-rows) shows the
+output.
+
+**Check it:** Open the form, add a row, and save it without typing anything. Click **Submit** and
+confirm that your server accepts the record.
+
+## Field values are checked by type
+
+**Released:** 2026-10-30
+
+**Applies from:** `form0-core` 0.10.0, `form0-react` 0.9.0, `form0-react-native` 0.10.0, `form0-cli`
+0.10.0
+
+**Act if** your application or your stored records hold values that do not match the field type.
+form0 does not convert them, so a visible field with one of these values shows an error and blocks
+**Submit**:
+
+| Field          | Now an error               | Use instead                 |
+| -------------- | -------------------------- | --------------------------- |
+| `NumericField` | `"12"`                     | `12`                        |
+| `TextField`    | `42`                       | `"42"`                      |
+| `DateField`    | `2026-02-30`, `not-a-date` | A real date as `YYYY-MM-DD` |
+| `TimeField`    | `24:00`                    | `HH:MM` or `HH:MM:SS`       |
+
+**What to do:** Convert the values before you pass them to `initialValues`, `initialSnapshot`,
+`overrideValues`, or `SETVALUE()`, and correct stored records that hold them. A server that calls
+`prepareSubmission()` rejects these values too.
+
+**Check it:** Save a sample of your values as `values.json` and run this command. Any problem
+appears under `errors` in the output:
+
+```bash
+form0 run path/to/schema.json --values values.json
+```
+
+## Schemas that clear hidden values need every package upgraded
+
+**Released:** 2026-10-30
+
+**Applies from:** `form0-core` 0.10.0, `form0-react` 0.9.0, `form0-react-native` 0.10.0, `form0-cli`
+0.10.0
+
+**Act if** you add `visible_preserve_value` to a schema. Older packages reject the attribute with
+this error:
+
+```text
+Field "email" (TextField) does not support visible_preserve_value attribute
+```
+
+**What to do:** Upgrade every package that reads the schema before you add the attribute, including
+`form0-core` on your server and `form0-cli` on your machine.
+
+**Check it:** Run this command. It exits with status `0`:
+
+```bash
+form0 validate path/to/schema.json
+```
+
+## Choice fields need string IDs in `SETVALUE()`
+
+**Released:** 2026-10-29
+
+**Applies from:** `form0-core` 0.9.0, `form0-react` 0.6.0, `form0-react-native` 0.7.0, `form0-cli`
+0.9.0
+
+**Act if** a handler passes a choice value to `SETVALUE()` as a number, as a boolean, or in the
+wrong shape.
+
+**What to do:** A `SingleChoiceField` or `BooleanField` takes a string ID. A `MultiChoiceField`
+takes an array of string IDs.
+
+```js
+// Before: these leave the field unchanged
+SETVALUE("rating", 1)
+SETVALUE("tags", "red")
+
+// Now
+SETVALUE("rating", "1")
+SETVALUE("tags", ["red"])
+```
+
+A handler that writes to a field it cannot reach, such as a field in a
+[repeatable section row](/core/fields/containers#repeatablesection) from a main-form handler, now
+loses all its `SETVALUE()` calls, not only that one.
+
+**Check it:** Search your schemas for `SETVALUE(`, then trigger each handler and confirm the field
+shows the value. Earlier `form0-react` releases can leave the field unchanged without a console
+message in managed mode. Bindings with `eventDiagnostics` report these failures by default;
+verify the form itself as well.
+
+## `FormRenderer` requires `recordKind`
+
+**Released:** 2026-10-28
+
+**Applies from:** `form0-react` 0.5.0, `form0-react-native` 0.6.0
+
+**Act if** you use `FormRenderer` from `form0-react` or `form0-react-native`. Without `recordKind`,
+it throws this error:
+
+```text
+form0: events.recordKind must be "new" or "existing" when lifecycle is enabled.
+```
+
+**What to do:** Set `recordKind` to `"new"` for a new record, or `"existing"` when you open a saved
+one:
+
+```jsx
+<FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
+```
+
+Lifecycle events and field focus and blur events are now on by default, so handlers for them start
+running. Built-in controls do not emit `click` automatically. To keep the earlier behavior, turn
+these events off:
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { lifecycle: false, fieldInteractions: [] } }}
+  schema={schema}
+/>
+```
+
+**Check it:** Open the form and confirm it renders without the error. If you use lifecycle handlers,
+confirm each one runs once.
+
+## Handlers cannot change a read-only record
+
+**Released:** 2026-10-27
+
+**Applies from:** `form0-core` 0.8.0, `form0-react` 0.5.0, `form0-react-native` 0.6.0, `form0-cli`
+0.8.0
+
+**Act if** a `load-record` handler calls `SETVALUE()` and the form can open read-only. `load-record`
+runs in both modes.
+
+**What to do:** Move the write to `new-record` or `edit-record`:
+
+```js
+// Before: rejected when the form opens read-only
+ON("load-record", function () {
+  SETVALUE("status_note", "Opened")
+})
+
+// Now: runs only when the user is editing
+ON("edit-record", function () {
+  SETVALUE("status_note", "Opened")
+})
+```
+
+You can also keep the handler and check `event.mode`:
+
+```js
+ON("load-record", function (event) {
+  if (event.mode === "edit") SETVALUE("status_note", "Opened")
+})
+```
+
+**Check it:** Open the form with `mode="readonly"`. If a handler still writes, the console shows
+this message and the form opens without that handler's changes:
+`View-mode handlers cannot change record data.`
+
+## Conditions can only read their own record and its parents
+
+**Released:** 2026-10-22
+
+**Applies from:** `form0-core` 0.6.0
+
+**Act if** your schema has repeatable sections and a condition reads a row field from outside that
+row. `form0-core` rejects the schema with an error such as:
+
+```text
+Field "note" visible_conditions references "amount" outside its record scope (owner: main form; reference: payments)
+```
+
+**What to do:** Point the condition at a field in the same row, a parent row, or the main form.
+[Parent and child scopes](/core/engine/parent-child-scopes) has a worked example.
+
+**Check it:** Run this command for each schema. It exits with status `1` and prints the error if a
+condition is out of scope:
+
+```bash
+form0 validate path/to/schema.json
+```
+
+## Mobile row editors no longer run record events
+
+**Released:** 2026-10-08
+
+**Applies from:** `form0-react-native` 0.3.0
+
+**Act if** you upgrade from `form0-react-native` 0.2.x and a handler relies on `load-record`,
+`edit-record`, or `change` running inside a repeatable row.
+
+**What to do:** Move row logic to the repeatable events, using the `data_name` of your repeatable
+section:
+
+```js
+ON("load-repeatable", "rows", function () {
+  // Runs when a row opens
+})
+
+ON("new-repeatable", "rows", function () {
+  // Runs when a new row starts editing
+})
+
+ON("edit-repeatable", "rows", function () {
+  // Runs when an existing row starts editing
+})
+```
+
+**Check it:** Open a row and confirm your handler runs. Main-form handlers no longer run when a row
+opens.

@@ -1,0 +1,396 @@
+---
+title: Añade un formulario a una aplicación React existente
+description: Añade el formulario de registro de casos a una aplicación React, envía cada registro a tu propia API y compruébalo en tu servidor.
+---
+
+<PageBadges />
+
+import { Stepper } from "zudoku/ui/Stepper"
+
+En esta guía, añades el [formulario de registro de casos](/es/guides/case-intake-form) a una
+aplicación React que ya tienes. Cuando termines:
+
+- el formulario se ejecutará en una página de tu aplicación;
+- cada envío llegará a tu propia API como un registro estructurado;
+- tu servidor volverá a comprobar el registro antes de guardarlo; y
+- un guardado fallido mostrará un mensaje y conservará lo que escribió el usuario.
+
+**Tiempo:** unos 20 minutos.
+
+## Antes de empezar
+
+- **Node.js** `22` o posterior
+- **Una aplicación React 18 o 19.** Los pasos usan Vite. Con otra herramienta de compilación, adapta
+  el paso del proxy.
+- **`box-sizing: border-box` en todos los elementos.** La mayoría de los resets de CSS lo
+  establecen, incluido el de Tailwind. Sin esto, los campos del formulario se salen de su
+  contenedor.
+
+Para seguir la guía con una aplicación nueva, créala con Vite:
+
+```bash
+npm create vite@latest case-intake-demo -- --template react
+cd case-intake-demo
+npm install
+```
+
+Después sustituye el contenido de `src/index.css` por esta regla. Establece `box-sizing` y elimina
+el texto centrado de la plantilla:
+
+```css
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+```
+
+## Añade el formulario
+
+<Stepper>
+
+1. Instala los paquetes de form0:
+
+   ```bash
+   npm install form0-react form0-core
+   ```
+
+1. Descarga el esquema de [Crea un formulario de registro de casos](/es/guides/case-intake-form). Si
+   ya creaste ese formulario, copia tu propio `schema.json` a esta ruta.
+
+   ```bash
+   mkdir -p src/forms
+   curl -o src/forms/case-intake.form0.json https://docs.form0.dev/guides/assets/case-intake-form/case-intake.form0.json
+   ```
+
+1. Crea `src/CaseIntakeForm.jsx`:
+
+   ```jsx
+   import { FormRenderer } from "form0-react"
+   import "form0-react/index.css"
+   import schema from "./forms/case-intake.form0.json"
+
+   export function CaseIntakeForm() {
+     return (
+       <FormRenderer
+         engineOptions={{ events: { recordKind: "new" } }}
+         formWidth="100%"
+         schema={schema}
+         onSubmit={(record) => console.log(record)}
+       />
+     )
+   }
+   ```
+
+   `recordKind` indica a form0 si este formulario crea un registro nuevo o abre uno guardado, y
+   `FormRenderer` lo requiere. `formWidth` establece el ancho máximo del formulario, que es `30vw`
+   por defecto.
+
+1. Muestra el formulario en una página. En una aplicación Vite nueva, sustituye el contenido de
+   `src/App.jsx`:
+
+   ```jsx
+   import { CaseIntakeForm } from "./CaseIntakeForm"
+
+   export default function App() {
+     return <CaseIntakeForm />
+   }
+   ```
+
+   En tu propia aplicación, renderiza `<CaseIntakeForm />` en la página donde deba ir el formulario.
+
+1. Inicia la aplicación y abre la URL que muestra, normalmente `http://localhost:5173`:
+
+   ```bash
+   npm run dev
+   ```
+
+   Rellena los campos obligatorios y haz clic en **Submit**. La consola del navegador muestra el
+   registro estructurado.
+
+</Stepper>
+
+`FormRenderer` muestra su encabezado estándar, el panel de navegación y los metadatos del registro.
+Para cambiar el aspecto del formulario, consulta
+[Temas y estilos](/es/bindings/react/themes-styling).
+
+![El formulario de registro de casos en una aplicación React, relleno, con prioridad alta y una fecha de respuesta calculada](/guides/assets/add-form-to-react-app/result.webp)
+
+## Envía registros a tu API
+
+<Stepper>
+
+1. Sustituye `src/CaseIntakeForm.jsx` por esta versión, que envía cada registro a `/api/cases`:
+
+   ```jsx
+   import { useState } from "react"
+   import { FormRenderer } from "form0-react"
+   import "form0-react/index.css"
+   import schema from "./forms/case-intake.form0.json"
+
+   export function CaseIntakeForm() {
+     const [formKey, setFormKey] = useState(0)
+     const [sending, setSending] = useState(false)
+     const [message, setMessage] = useState(null)
+
+     async function sendCase(record) {
+       setSending(true)
+       setMessage(null)
+
+       try {
+         const response = await fetch("/api/cases", {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify(record),
+         })
+
+         if (!response.ok) throw new Error(`The server answered ${response.status}`)
+
+         setMessage("Case saved.")
+         setFormKey((key) => key + 1)
+       } catch (error) {
+         setMessage("The case was not saved. Try again.")
+         throw error
+       } finally {
+         setSending(false)
+       }
+     }
+
+     return (
+       <main>
+         {message && <p role="status">{message}</p>}
+         <FormRenderer
+           key={formKey}
+           engineOptions={{ events: { recordKind: "new" } }}
+           formWidth="100%"
+           schema={schema}
+           submitBlockedReason={sending ? "Sending the case" : undefined}
+           onSubmit={sendCase}
+         />
+       </main>
+     )
+   }
+   ```
+
+   Aquí importan tres detalles:
+
+   - `fetch` no rechaza la promesa ante una respuesta `500`, así que el código comprueba
+     `response.ok` y lanza un error.
+   - El bloque `catch` muestra un mensaje y después vuelve a lanzar el error. Sin el `throw`,
+     `FormRenderer` considera que el guardado ha salido bien.
+   - Al cambiar `key`, un formulario nuevo y vacío sustituye al anterior después de un guardado
+     correcto.
+
+1. Crea `server/cases-api.mjs`. Este ejemplo solo usa Node.js y `form0-core`:
+
+   ```js
+   import { readFileSync } from "node:fs"
+   import { createServer } from "node:http"
+   import {
+     buildFormRecordSnapshot,
+     createRecordEvaluator,
+     createStructuredRecord,
+     flattenFields,
+   } from "form0-core"
+
+   const schema = JSON.parse(readFileSync("src/forms/case-intake.form0.json", "utf8"))
+   const fields = flattenFields(schema.form.elements)
+
+   async function checkRecord(record) {
+     const { raw_values, repeatable } = buildFormRecordSnapshot(schema, record)
+     const result = await createRecordEvaluator({ schema }).prepareSubmission(
+       {
+         values: raw_values,
+         repeatable,
+       },
+       { validateHiddenValues: true },
+     )
+
+     if (!result.eligible) {
+       return {
+         issues: result.validationSummary.orderedIssues.map(({ fieldName, message }) => ({
+           fieldName,
+           message,
+         })),
+       }
+     }
+
+     const checkedRecord = createStructuredRecord(result.snapshot, fields, {
+       originalElements: schema.form.elements,
+     })
+     return { checkedRecord }
+   }
+
+   function reply(response, status, body) {
+     response.writeHead(status, { "Content-Type": "application/json" })
+     response.end(JSON.stringify(body))
+   }
+
+   createServer(async (request, response) => {
+     if (request.method !== "POST" || request.url !== "/api/cases") {
+       return reply(response, 404, { error: "Not found" })
+     }
+
+     try {
+       let body = ""
+       for await (const chunk of request) body += chunk
+
+       const { checkedRecord, issues } = await checkRecord(JSON.parse(body))
+       if (issues) return reply(response, 422, { issues })
+
+       console.log("Saved case:", checkedRecord.form_values)
+       reply(response, 201, { saved: true })
+     } catch (error) {
+       console.error(error)
+       reply(response, 400, { error: "The record could not be read." })
+     }
+   }).listen(3001, () => console.log("Cases API listening on port 3001"))
+   ```
+
+   El servidor lee el mismo archivo de esquema que el formulario, así que ambos aplican las mismas
+   reglas. Crea un evaluador nuevo para cada petición porque una llamada a `prepareSubmission()`
+   cancela cualquier llamada anterior que siga en curso en el mismo evaluador.
+
+1. Reenvía las peticiones de `/api` a ese servidor durante el desarrollo. Sustituye `vite.config.js`
+   por:
+
+   ```js
+   import react from "@vitejs/plugin-react"
+   import { defineConfig } from "vite"
+
+   export default defineConfig({
+     plugins: [react()],
+     server: {
+       proxy: { "/api": "http://localhost:3001" },
+     },
+   })
+   ```
+
+1. Inicia la API en un segundo terminal, desde la raíz del proyecto:
+
+   ```bash
+   node server/cases-api.mjs
+   ```
+
+   Muestra `Cases API listening on port 3001`.
+
+</Stepper>
+
+## Pruébalo
+
+Mantén los dos terminales en marcha, abre el formulario y sigue estos pasos.
+
+1. **Envía un formulario vacío.** Haz clic en **Submit**. Los campos obligatorios muestran sus
+   mensajes y el terminal de la API no muestra nada.
+
+1. **Guarda un caso.** Rellena **Full name**, elige **Email** como método de contacto y rellena
+   **Email** y **Summary**. Elige **My team**, responde **Yes** a **Is work blocked?**, rellena
+   **Describe the business impact** y haz clic en **Submit**. La página muestra **Case saved.**, el
+   formulario se vacía y el terminal de la API muestra `Saved case:` con `priority: 'high'`.
+
+1. **Haz que falle un guardado.** Detén la API con `Ctrl+C`, vuelve a rellenar el formulario y haz
+   clic en **Submit**. La página muestra **The case was not saved. Try again.**, tus valores siguen
+   en el formulario y la consola del navegador muestra
+   `[form0-react] Submit failed during onSubmit.`
+
+1. **Reintenta.** Vuelve a iniciar la API y haz clic en **Submit**. El caso se guarda.
+
+1. **Envía un registro incompleto.** Llama directamente a la API, sin el formulario:
+
+   ```bash
+   curl -i -X POST http://localhost:3001/api/cases \
+     -H "Content-Type: application/json" \
+     -d '{"form_values":{"name":"Ada"}}'
+   ```
+
+   El servidor responde `422` y enumera los campos que faltan.
+
+1. **Envía una prioridad incorrecta.** Guarda este registro como `tampered-case.json`. Sus
+   respuestas dan una prioridad `low`, pero el registro indica `high`:
+
+   ```json
+   {
+     "form_values": {
+       "name": "Ada Lovelace",
+       "contact_method": {
+         "choice_value": [{ "value": "email", "label": "Email" }],
+         "other_value": []
+       },
+       "email": "ada@example.com",
+       "received_on": "2026-11-02",
+       "summary": "Cannot log in",
+       "impact": { "choice_value": [{ "value": "person", "label": "Only me" }], "other_value": [] },
+       "blocked": { "choice_value": [{ "value": "no", "label": "No" }], "other_value": [] },
+       "priority": "high"
+     }
+   }
+   ```
+
+   Envíalo a la API:
+
+   ```bash
+   curl -i -X POST http://localhost:3001/api/cases \
+     -H "Content-Type: application/json" \
+     -d @tampered-case.json
+   ```
+
+   El servidor responde `201` y el terminal de la API muestra `priority: 'low'`. El servidor calcula
+   por sí mismo los campos calculados.
+
+## Cómo funciona
+
+### La validación se ejecuta dos veces
+
+`FormRenderer` valida en el navegador, de modo que el usuario recibe respuesta inmediata y
+`onSubmit` solo se ejecuta con un formulario válido. Un cliente puede saltarse ese paso, así que
+`checkRecord()` repite la comprobación en el servidor:
+
+1. `buildFormRecordSnapshot()` convierte el registro recibido en valores del formulario y elimina
+   los campos que no están en el esquema. Lanza un error si el registro está mal formado, y el
+   servidor responde `400`.
+2. `prepareSubmission()` vuelve a ejecutar los cálculos y aplica las reglas del esquema. `eligible`
+   indica si el registro ha pasado la comprobación.
+3. `createStructuredRecord()` crea el registro que se va a guardar a partir de los valores
+   comprobados, de modo que contiene los resultados calculados por el servidor.
+
+### Qué cubre la comprobación del servidor
+
+El servidor aplica las reglas de tu esquema y comprueba que cada valor tenga el tipo correcto:
+
+| Un cliente envía                                                   | Resultado                                  |
+| ------------------------------------------------------------------ | ------------------------------------------ |
+| Un campo obligatorio vacío, incluido uno obligatorio por condición | Se rechaza con `422`                       |
+| Un valor de selección que no está en el esquema                    | Se rechaza con `422`                       |
+| Un valor calculado modificado                                      | Se sustituye por el resultado del servidor |
+| Un campo que no está en el esquema                                 | Se elimina                                 |
+| Un campo de selección con una estructura incorrecta                | Se rechaza con `400`                       |
+| Una fecha mal formada, como `not-a-date`                           | Se rechaza con `422`                       |
+| Un número en un `TextField`                                        | Se rechaza con `422`                       |
+| Un valor de tipo incorrecto en un campo oculto                     | Se rechaza con `422`                       |
+| Un valor válido en un campo oculto                                 | Se guarda con el registro                  |
+
+El servidor rechaza un tipo incorrecto en un campo oculto porque `checkRecord()` pasa
+`validateHiddenValues: true`. Un valor válido se mantiene porque form0 conserva los valores ocultos
+de forma predeterminada. Para borrar un campo cuando se oculta, define
+`"visible_preserve_value": false` en el esquema.
+
+Estas comprobaciones solo conocen tu esquema. Añade tus propias comprobaciones antes de guardar, por
+ejemplo si este usuario puede crear el caso.
+
+### Antes de pasar a producción
+
+Este ejemplo es breve para que las llamadas a form0 se vean con facilidad. Antes de usarlo de
+verdad:
+
+- Añade autenticación y un límite para el tamaño de las peticiones.
+- Guarda `checkedRecord` en tu base de datos en lugar de mostrarlo. Los
+  [conectores](/es/connectors/overview) pueden almacenar registros de form0 en PostgreSQL o SQLite.
+- Mantén el esquema en tu servidor. Nunca aceptes un esquema de un cliente, porque los esquemas
+  contienen código que se ejecuta en tu servidor.
+
+## Por dónde seguir
+
+- [Valores, snapshots y envío](/es/bindings/react/values-snapshots-submission): restaura registros
+  guardados y observa borradores.
+- [FormRenderer](/es/bindings/react/form-renderer): todas las propiedades del componente.
+- [Salida y registros](/es/core/output-records): la estructura del registro que recibes.

@@ -20,14 +20,55 @@ attribute correctness, not UI concerns.
 
 ## Runtime validation
 
-At runtime, fields also validate their values when the engine evaluates:
+At runtime, each field checks its value when the engine evaluates. The result is in the `errors` map
+of the engine state.
 
-- Numeric min/max checks
-- Pattern matches for text fields
-- Choice values must match defined choices
+| Field          | Accepted value                                                                | Also checked                                                  |
+| -------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `TextField`    | A string                                                                      | `pattern`, if set                                             |
+| `NumericField` | A finite number                                                               | `min` and `max`, and whole numbers when `format` is `integer` |
+| `DateField`    | A real calendar date as `YYYY-MM-DD`, from year `0001` to `9999`              | None                                                          |
+| `TimeField`    | `HH:MM` or `HH:MM:SS`, with hours `00`–`23` and minutes and seconds `00`–`59` | None                                                          |
+| Choice fields  | Values defined in `choices`                                                   | None                                                          |
 
-Runtime value validation runs for every field, including fields that are currently hidden. The
-result is available in the engine state's `errors` map.
+- form0 does not convert values, so `"12"` in a `NumericField` is an error.
+- `null`, `undefined`, and `""` count as empty, not as the wrong type. An empty optional `TextField`
+  also skips `pattern`.
+- A value that fails stays in `values` and appears in `errors`, so a loaded record can still be
+  inspected and corrected.
+- These checks run for every field, including hidden ones.
+
+### Try it
+
+You need [form0-cli](/cli/install-update).
+
+1. Download a form with a `TextField`, a `NumericField`, and a `DateField`:
+
+   ```bash
+   curl -o value-types.json https://docs.form0.dev/examples/value-types.form0.json
+   ```
+
+1. Run it with correct values. The output shows `"errors": {}`:
+
+   ```bash
+   form0 run value-types.json --values '{"name":"Ada","age":36,"start":"2026-02-28"}'
+   ```
+
+1. Run it with wrong values:
+
+   ```bash
+   form0 run value-types.json --values '{"name":42,"age":"36","start":"2026-02-30"}'
+   ```
+
+   Each field now appears under `errors`:
+
+   ```json
+   "errors": {
+     "name": "name must be a string",
+     "age": "age must be a finite number",
+     "start": "start must be a valid YYYY-MM-DD date"
+   }
+   ```
 
 ### Required fields and submission
 
@@ -36,27 +77,71 @@ required field is empty. Required-field enforcement is a submission concern: the
 renderers combine `visible`, `required`, and the current value, skip hidden fields, and decide when
 to display the error.
 
-### Shared submission validation
+### Check a submission
 
-`validateSubmission({ schema, snapshot, validationIssues })` checks an already evaluated runtime tree.
-It does not evaluate values or establish freshness. `createRecordEvaluator().prepareSubmission()`
-combines evaluation, selection and this same validation policy. Headless applications and renderer
-integrations can share these submission rules.
+`createRecordEvaluator().prepareSubmission()` runs the calculations, selects the values to submit,
+and applies the same checks as the official renderers. Use it on a server, or in any application
+without a renderer. See [Prepare a submission](/core/engine/evaluation-cycle#prepare-a-submission)
+for its options.
 
-Hidden fields and fields under hidden ancestors do not block ordinary submission. Visible required
-read-only empty input fields do block. Numeric zero and legitimate false selections are populated
-values. Intrinsic `state.errors` is unchanged, and LabelField/CalculatedField constraints remain.
+If you already have an evaluated snapshot, call
+`validateSubmission({ schema, snapshot, validationIssues })`. It only checks: it does not
+recalculate anything, and it does not remove unknown fields.
 
-The summary contains `hasErrors`, `requiredFieldErrors`, `generalErrors`, `scopeIssues` and
-`orderedIssues`. Findings identify field key/data_name and full row `instancePath`; custom `INVALID`
-remains scope-level. Root findings precede descendants in record order. `managedEvents: true` reruns
-participating closed-row validators automatically. Genuine input failures require correction even
-when many rows fail; root drafts remain allowed. Hidden record scopes do not participate. Root custom
-rules remain root-level and cannot be automatically attributed to an individual hidden field.
+Both follow the same rules:
 
-Retained submissions validate the selected retained snapshot, including its calculated helpers and
-condition outcomes. Their pending freshness is a separate fact. Validation handlers cannot write
-values or perform UI operations; execution failures block eligibility, including drafts.
+- By default, hidden fields and fields under hidden parents do not block a submission.
+- A visible required field that is empty blocks a submission, even when it is read-only.
+- `0` and a selected **No** count as filled in.
+- A hidden [repeatable section row](/core/fields/containers#repeatablesection) takes no part in the
+  check.
+- A draft can be saved with validation errors. A handler that fails while running blocks drafts too.
+- Validation handlers cannot change values or show alerts.
+- These checks do not change `state.errors`. `LabelField` and `CalculatedField` follow their own
+  rules.
+
+The result includes a `validationSummary`:
+
+| Property              | Contains                                                            |
+| --------------------- | ------------------------------------------------------------------- |
+| `hasErrors`           | Whether anything failed.                                            |
+| `requiredFieldErrors` | Required fields left empty.                                         |
+| `generalErrors`       | Values that fail their field's rules.                               |
+| `scopeIssues`         | `INVALID()` messages, which belong to a record or row, not a field. |
+| `orderedIssues`       | All of these in record order, with the main record before its rows. |
+
+Each finding names its field by key and `data_name`, and its row by `instancePath`. An `INVALID()`
+message from the main record stays with the main record, because form0 cannot tell which field it is
+about. `managedEvents: true` also runs validation handlers for closed rows. Every failing row must
+be corrected before a submission can pass, however many rows fail.
+
+If a user keeps older calculated values during a
+[review](/core/engine/evaluation-cycle#review-changed-rows), the checks run on those kept values,
+including the conditions that depend on them.
+
+### Check hidden values on a server
+
+By default, a submission ignores errors in hidden fields, because the user cannot see them. A client
+calling your API can put anything in those fields, so turn the check on in your server code:
+
+```js
+const result = await evaluator.prepareSubmission(snapshot, { validateHiddenValues: true })
+```
+
+`validateSubmission()` takes the same option. With it on, a hidden value that fails its own rules
+blocks the submission, such as a number in a `TextField`. This includes hidden rows. The other rules
+stay the same:
+
+- A hidden required field that is empty does not block, and validation handlers in hidden rows do
+  not run.
+- A draft can still be saved with these errors.
+- When you continue a review with `decision`, pass the same setting.
+
+Each of these errors has `hidden: true`. To replace or clear the value in your own code, see
+[Resolve a hidden value](/core/engine/evaluation-cycle#resolve-a-hidden-value-that-fails-validation).
+
+This check covers values only. It does not remove unknown fields or decide who may submit.
+[Add a form to an existing React app](/guides/add-form-to-react-app) has a complete server example.
 
 ## Typical errors
 

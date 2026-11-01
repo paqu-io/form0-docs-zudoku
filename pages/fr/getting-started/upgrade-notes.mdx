@@ -1,0 +1,270 @@
+---
+title: Notes de mise à niveau
+description: Ce qu’il faut changer dans votre application lors de la mise à niveau des paquets form0.
+---
+
+<PageBadges />
+
+Cette page liste les changements de form0 qui demandent une action de votre part. Si une version n’y
+figure pas, vous pouvez l’installer sans modifier votre code. Pour les nouvelles fonctionnalités et
+les corrections, consultez les notes de version de
+[form0-core](https://github.com/paqu-io/form0-core/releases),
+[form0-react](https://github.com/paqu-io/form0-react/releases),
+[form0-react-native](https://github.com/paqu-io/form0-react-native/releases) et
+[form0-cli](https://github.com/paqu-io/form0-cli/releases).
+
+Les changements sont classés du plus récent au plus ancien. Pour mettre à niveau, traitez toutes les
+entrées plus récentes que les versions que vous utilisez aujourd’hui.
+
+## Trouvez les changements qui vous concernent
+
+Comparez les versions que vous utilisez avec chaque ligne. Une ligne vous concerne si votre version
+est antérieure à celle indiquée. La date est celle de la publication du premier paquet contenant le
+changement. Un paquet absent de la ligne n’est pas concerné.
+
+| Date         | Changement                                                                                                                                                                            | Versions                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `2026-10-31` | [Les lignes vides enregistrées restent dans l’enregistrement](#les-lignes-vides-enregistrées-restent-dans-lenregistrement)                                                            | core 0.11.0, react 0.10.0, react-native 0.11.0, cli 0.10.0 |
+| `2026-10-30` | [Les valeurs des champs sont vérifiées par type](#les-valeurs-des-champs-sont-vérifiées-par-type)                                                                                     | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-30` | [Les schémas qui effacent les valeurs masquées exigent que tous les paquets soient à jour](#les-schémas-qui-effacent-les-valeurs-masquées-exigent-que-tous-les-paquets-soient-à-jour) | core 0.10.0, react 0.9.0, react-native 0.10.0, cli 0.10.0  |
+| `2026-10-29` | [Les champs de choix exigent des identifiants textuels dans `SETVALUE()`](#les-champs-de-choix-exigent-des-identifiants-textuels-dans-setvalue)                                       | core 0.9.0, react 0.6.0, react-native 0.7.0, cli 0.9.0     |
+| `2026-10-28` | [`FormRenderer` exige `recordKind`](#formrenderer-exige-recordkind)                                                                                                                   | react 0.5.0, react-native 0.6.0                            |
+| `2026-10-27` | [Les gestionnaires ne peuvent pas modifier un enregistrement en lecture seule](#les-gestionnaires-ne-peuvent-pas-modifier-un-enregistrement-en-lecture-seule)                         | core 0.8.0, react 0.5.0, react-native 0.6.0, cli 0.8.0     |
+| `2026-10-22` | [Les conditions ne peuvent lire que leur propre enregistrement et ses parents](#les-conditions-ne-peuvent-lire-que-leur-propre-enregistrement-et-ses-parents)                         | core 0.6.0                                                 |
+| `2026-10-08` | [Les éditeurs de ligne sur mobile n’exécutent plus les événements d’enregistrement](#les-éditeurs-de-ligne-sur-mobile-nexécutent-plus-les-événements-denregistrement)                 | react-native 0.3.0                                         |
+
+## Mettez à niveau les paquets ensemble
+
+Chaque binding dépend d’une version correspondante de `form0-core` : installez-les en même temps :
+
+- React: `npm install form0-react@latest form0-core@latest`
+- React Native: `npm install form0-react-native@latest form0-core@latest`
+- CLI: `npm install --global form0-cli@latest`
+
+## Les lignes vides enregistrées restent dans l’enregistrement
+
+**Publié :** 2026-10-31
+
+**S’applique à partir de :** `form0-core` 0.11.0, `form0-react` 0.10.0, `form0-react-native` 0.11.0,
+`form0-cli` 0.10.0
+
+**Agissez si** une section répétable n’a que des champs facultatifs et que votre serveur ou votre
+base de données attend une réponse dans chaque
+[ligne](/fr/core/fields/containers#repeatablesection). Un utilisateur peut ajouter une ligne et
+l’enregistrer sans rien saisir. Cette ligne était auparavant retirée de l’enregistrement soumis.
+Elle y reste désormais, avec son identifiant, ses horodatages et des réponses `null`.
+
+**Que faire :** Marquez un champ de la ligne comme `required` pour qu’elle ne puisse pas être
+enregistrée vide, ou gérez ces lignes sur votre serveur.
+[Lignes vides enregistrées](/fr/core/output-records#lignes-vides-enregistrées) montre le résultat.
+
+**Vérifiez :** Ouvrez le formulaire, ajoutez une ligne et enregistrez-la sans rien saisir. Cliquez
+sur **Submit** et confirmez que votre serveur accepte l’enregistrement.
+
+## Les valeurs des champs sont vérifiées par type
+
+**Publié :** 2026-10-30
+
+**S’applique à partir de :** `form0-core` 0.10.0, `form0-react` 0.9.0, `form0-react-native` 0.10.0,
+`form0-cli` 0.10.0
+
+**Agissez si** votre application ou vos enregistrements stockés contiennent des valeurs qui ne
+correspondent pas au type du champ. form0 ne les convertit pas : un champ visible avec l’une de ces
+valeurs affiche donc une erreur et bloque **Submit** :
+
+| Champ          | Désormais une erreur       | À utiliser                            |
+| -------------- | -------------------------- | ------------------------------------- |
+| `NumericField` | `"12"`                     | `12`                                  |
+| `TextField`    | `42`                       | `"42"`                                |
+| `DateField`    | `2026-02-30`, `not-a-date` | Une vraie date au format `YYYY-MM-DD` |
+| `TimeField`    | `24:00`                    | `HH:MM` ou `HH:MM:SS`                 |
+
+**Que faire :** Convertissez les valeurs avant de les passer à `initialValues`, `initialSnapshot`,
+`overrideValues` ou `SETVALUE()`, et corrigez les enregistrements stockés qui les contiennent. Un
+serveur qui appelle `prepareSubmission()` rejette aussi ces valeurs.
+
+**Vérifiez :** Enregistrez un échantillon de vos valeurs sous le nom `values.json` et exécutez cette
+commande. Tout problème apparaît dans `errors` dans la sortie :
+
+```bash
+form0 run path/to/schema.json --values values.json
+```
+
+## Les schémas qui effacent les valeurs masquées exigent que tous les paquets soient à jour
+
+**Publié :** 2026-10-30
+
+**S’applique à partir de :** `form0-core` 0.10.0, `form0-react` 0.9.0, `form0-react-native` 0.10.0,
+`form0-cli` 0.10.0
+
+**Agissez si** vous ajoutez `visible_preserve_value` à un schéma. Les paquets plus anciens rejettent
+l’attribut avec cette erreur :
+
+```text
+Field "email" (TextField) does not support visible_preserve_value attribute
+```
+
+**Que faire :** Mettez à niveau tous les paquets qui lisent le schéma avant d’ajouter l’attribut, y
+compris `form0-core` sur votre serveur et `form0-cli` sur votre machine.
+
+**Vérifiez :** Exécutez cette commande. Elle se termine avec le statut `0` :
+
+```bash
+form0 validate path/to/schema.json
+```
+
+## Les champs de choix exigent des identifiants textuels dans `SETVALUE()`
+
+**Publié :** 2026-10-29
+
+**S’applique à partir de :** `form0-core` 0.9.0, `form0-react` 0.6.0, `form0-react-native` 0.7.0,
+`form0-cli` 0.9.0
+
+**Agissez si** un gestionnaire passe à `SETVALUE()` une valeur de choix sous forme de nombre, de
+booléen ou avec une forme incorrecte.
+
+**Que faire :** `SingleChoiceField` et `BooleanField` acceptent un identifiant textuel.
+`MultiChoiceField` accepte un tableau d’identifiants textuels.
+
+```js
+// Before: these leave the field unchanged
+SETVALUE("rating", 1)
+SETVALUE("tags", "red")
+
+// Now
+SETVALUE("rating", "1")
+SETVALUE("tags", ["red"])
+```
+
+Un gestionnaire qui écrit dans un champ inaccessible, comme un champ d’une
+[ligne de section répétable](/fr/core/fields/containers#repeatablesection) depuis un gestionnaire du
+formulaire principal, perd désormais tous ses appels à `SETVALUE()`, pas seulement celui-ci.
+
+**Vérifiez :** Recherchez `SETVALUE(` dans vos schémas, déclenchez chaque gestionnaire et vérifiez
+que le champ affiche la valeur. Des versions antérieures de `form0-react` peuvent laisser le champ
+inchangé sans message console en mode géré. Les bindings avec `eventDiagnostics` signalent ces
+échecs par défaut ; vérifiez aussi le formulaire lui-même.
+
+## `FormRenderer` exige `recordKind`
+
+**Publié :** 2026-10-28
+
+**S’applique à partir de :** `form0-react` 0.5.0, `form0-react-native` 0.6.0
+
+**Agissez si** vous utilisez `FormRenderer` de `form0-react` ou `form0-react-native`. Sans
+`recordKind`, il lève cette erreur :
+
+```text
+form0: events.recordKind must be "new" or "existing" when lifecycle is enabled.
+```
+
+**Que faire :** Réglez `recordKind` sur `"new"` pour un nouvel enregistrement, ou sur `"existing"` à
+l’ouverture d’un enregistrement sauvegardé :
+
+```jsx
+<FormRenderer engineOptions={{ events: { recordKind: "new" } }} schema={schema} />
+```
+
+Les événements du cycle de vie et les événements de focus et de perte de focus des champs sont
+désormais actifs par défaut : leurs gestionnaires commencent donc à s’exécuter. Les contrôles
+intégrés n’émettent pas `click` automatiquement. Pour conserver le comportement précédent,
+désactivez ces événements :
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { lifecycle: false, fieldInteractions: [] } }}
+  schema={schema}
+/>
+```
+
+**Vérifiez :** Ouvrez le formulaire et vérifiez qu’il s’affiche sans l’erreur. Si vous utilisez des
+gestionnaires du cycle de vie, vérifiez que chacun s’exécute une seule fois.
+
+## Les gestionnaires ne peuvent pas modifier un enregistrement en lecture seule
+
+**Publié :** 2026-10-27
+
+**S’applique à partir de :** `form0-core` 0.8.0, `form0-react` 0.5.0, `form0-react-native` 0.6.0,
+`form0-cli` 0.8.0
+
+**Agissez si** un gestionnaire de `load-record` appelle `SETVALUE()` et le formulaire peut s’ouvrir
+en lecture seule. `load-record` s’exécute dans les deux modes.
+
+**Que faire :** Déplacez l’écriture vers `new-record` ou `edit-record` :
+
+```js
+// Before: rejected when the form opens read-only
+ON("load-record", function () {
+  SETVALUE("status_note", "Opened")
+})
+
+// Now: runs only when the user is editing
+ON("edit-record", function () {
+  SETVALUE("status_note", "Opened")
+})
+```
+
+Vous pouvez aussi conserver le gestionnaire et tester `event.mode` :
+
+```js
+ON("load-record", function (event) {
+  if (event.mode === "edit") SETVALUE("status_note", "Opened")
+})
+```
+
+**Vérifiez :** Ouvrez le formulaire avec `mode="readonly"`. Si un gestionnaire écrit encore, la
+console affiche ce message et le formulaire s’ouvre sans les modifications de ce gestionnaire :
+`View-mode handlers cannot change record data.`
+
+## Les conditions ne peuvent lire que leur propre enregistrement et ses parents
+
+**Publié :** 2026-10-22
+
+**S’applique à partir de :** `form0-core` 0.6.0
+
+**Agissez si** votre schéma comporte des sections répétables et une condition lit un champ de ligne
+depuis l’extérieur de cette ligne. `form0-core` rejette le schéma avec une erreur comme celle-ci :
+
+```text
+Field "note" visible_conditions references "amount" outside its record scope (owner: main form; reference: payments)
+```
+
+**Que faire :** Faites pointer la condition vers un champ de la même ligne, d’une ligne parente ou
+du formulaire principal. [Portées parent et enfant](/fr/core/engine/parent-child-scopes) contient un
+exemple complet.
+
+**Vérifiez :** Exécutez cette commande pour chaque schéma. Elle se termine avec le statut `1` et
+affiche l’erreur si une condition est hors de portée :
+
+```bash
+form0 validate path/to/schema.json
+```
+
+## Les éditeurs de ligne sur mobile n’exécutent plus les événements d’enregistrement
+
+**Publié :** 2026-10-08
+
+**S’applique à partir de :** `form0-react-native` 0.3.0
+
+**Agissez si** vous effectuez la mise à niveau depuis `form0-react-native` 0.2.x et un gestionnaire
+compte sur l’exécution de `load-record`, `edit-record` ou `change` dans une ligne répétable.
+
+**Que faire :** Déplacez la logique de ligne vers les événements répétables, avec le `data_name` de
+votre section répétable :
+
+```js
+ON("load-repeatable", "rows", function () {
+  // Runs when a row opens
+})
+
+ON("new-repeatable", "rows", function () {
+  // Runs when a new row starts editing
+})
+
+ON("edit-repeatable", "rows", function () {
+  // Runs when an existing row starts editing
+})
+```
+
+**Vérifiez :** Ouvrez une ligne et vérifiez que votre gestionnaire s’exécute. Les gestionnaires du
+formulaire principal ne s’exécutent plus à l’ouverture d’une ligne.

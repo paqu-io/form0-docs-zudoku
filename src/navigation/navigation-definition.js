@@ -58,6 +58,7 @@ const documentationItems = [
       doc("getting-started/quickstart", "Quickstart"),
       doc("getting-started/schema-edit", "Edit your first schema"),
       doc("getting-started/how-form0-compares", "How form0 compares"),
+      doc("getting-started/upgrade-notes", "Upgrade notes"),
     ],
     { icon: "nav-sparkles" },
   ),
@@ -164,6 +165,7 @@ const documentationItems = [
       doc("core/concepts", "Concepts"),
       category("How the engine works", [
         doc("core/engine/evaluation-cycle", "Evaluation cycle"),
+        doc("core/engine/value-updates", "Value updates and normalization"),
         doc("core/engine/calculations-dependencies", "Calculations and dependencies"),
         doc("core/engine/parent-child-scopes", "Parent and child scopes"),
         doc("core/engine/events-operations", "Events and operations"),
@@ -296,7 +298,10 @@ const documentationItems = [
   ),
 ]
 
-const guidesItems = [doc("guides/case-intake-form", "Build a case intake form")]
+const guidesItems = [
+  doc("guides/case-intake-form", "Build a case intake form"),
+  doc("guides/add-form-to-react-app", "Add a form to an existing React app"),
+]
 
 export const navigationDefinition = deepFreeze([
   category("Documentation", documentationItems),

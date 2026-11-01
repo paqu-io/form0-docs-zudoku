@@ -27,10 +27,72 @@ here.
 
 - `visible`: Base visibility (boolean).
 - `visible_conditions`: Condition object; overrides `visible` when present.
+- `visible_preserve_value`: Whether a hidden field keeps its value (boolean, optional). See
+  [Clear a value when a field is hidden](#clear-a-value-when-a-field-is-hidden).
 - `required`: Base requirement (boolean).
 - `required_conditions`: Condition object; overrides `required` when present.
 - `read_only`: Base read-only flag (boolean).
 - `read_only_conditions`: Condition object; overrides `read_only` when present.
+
+## Clear a value when a field is hidden
+
+A hidden field keeps its value by default. The value stays in the form values, is saved with the
+record, and still counts in calculations. Set `visible_preserve_value` to `false` when a hidden
+answer should not be kept, such as an email address after the user chooses to be contacted by phone:
+
+```json
+{
+  "type": "TextField",
+  "data_name": "email",
+  "label": "Email",
+  "visible": false,
+  "visible_conditions": { "field_id": "contact_method", "operator": "equal_to", "value": "email" },
+  "visible_preserve_value": false
+}
+```
+
+This example shows only the attributes that matter here.
+
+When the field is hidden, its value becomes `null`. This applies to:
+
+- fields hidden by their own condition or by a parent `Section` or `RepeatableSection`, including
+  inside closed [rows](/core/fields/containers#repeatablesection); and
+- fields that start hidden, including their `default_value` and any loaded value.
+
+The other rules are:
+
+- Showing the field again leaves it empty. form0 does not restore the old value or apply
+  `default_value` again.
+- A read-only record keeps its stored values.
+- In the saved record, a cleared field looks like any other empty field. Rows, their IDs, and their
+  metadata stay.
+- Clearing a media or link field removes only the reference. The file or linked record is not
+  deleted.
+
+These input fields support the attribute: `TextField`, `NumericField`, `SingleChoiceField`,
+`MultiChoiceField`, `BooleanField`, `DateField`, `TimeField`, `PhotoField`, `VideoField`,
+`SignatureField`, and `FormLinkField`. Containers, labels, calculated fields, and generated titles
+and statuses do not.
+
+### Try it
+
+You need [form0-cli](/cli/install-update).
+
+1. Download the example form and start the preview:
+
+   ```bash
+   curl -o hidden-value.json https://docs.form0.dev/examples/hidden-value.form0.json
+   form0 serve hidden-value.json
+   ```
+
+1. Open `http://localhost:3030`. The `email` field sets `visible_preserve_value` to `false`, and the
+   `phone` field leaves it out.
+
+1. Choose **Email**, enter an address, choose **Phone**, and then choose **Email** again. The
+   **Email** field is empty.
+
+1. Choose **Phone**, enter a number, choose **Email**, and then choose **Phone** again. The number
+   is still there.
 
 ## Default value
 

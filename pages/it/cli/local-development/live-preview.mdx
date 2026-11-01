@@ -12,77 +12,191 @@ questi valori.
 Il server di anteprima è uno strumento di sviluppo. Usa progetti e connettori affidabili, ed
 esponilo solo su una rete affidabile.
 
+## Come l'anteprima applica i valori
+
+L'anteprima segue le stesse [regole dei valori](/it/core/engine/value-updates) dei binding
+ufficiali:
+
+- `SETVALUE()` e gli aggiornamenti da codice vengono controllati come un lotto. Se uno viene
+  rifiutato, nessuno viene applicato.
+- Una selezione testuale sconosciuta resta nel campo, così la validazione può segnalarla.
+- Un record in sola lettura blocca le scritture degli eventi, anche durante `load-record`.
+  L'impostazione `read_only` di un campo non le blocca, quindi il codice può ancora modificare quel
+  campo.
+
 ## Diagnostica dei calcoli nel browser
 
-In form0-cli 0.6.0 e versioni successive, il server restituisce diagnostica strutturata insieme allo
-stato valutato. La console mostra problemi nuovi o modificati, risolti e ricorrenti; le
-valutazioni identiche non li ripetono. I riscontri delle righe annidate indicano il percorso
-ripetibile e l’ID esistente della riga, oppure un riferimento esplicito per posizione senza ID.
+Il server restituisce la diagnostica con ogni valutazione. La console del browser mostra i risultati
+nuovi o modificati, quelli risolti e i problemi che si ripresentano. Le valutazioni identiche non li
+stampano di nuovo. Un risultato in una
+[riga annidata di una sezione ripetibile](/it/core/fields/containers#repeatablesection) mostra il
+percorso ripetibile e l'identificatore della riga, oppure indica che usa una posizione quando non
+c'è un identificatore.
 
-Usa `form0 serve [schema] --no-diagnostics` per nascondere i rapporti di calcolo della CLI e
-l’output della console dell’anteprima integrata. La diagnostica viene comunque raccolta.
-Un’app avviata con `serve --app` mantiene la propria politica di presentazione.
+Usa `form0 serve [schema] --no-diagnostics` per nascondere i report dei calcoli e l'output integrato
+della console dell'anteprima. La diagnostica viene comunque raccolta. Un'app avviata con
+`serve --app` mantiene i propri report.
 
-Una valutazione completata restituisce lo stato anche quando la diagnostica contiene errori.
-Validazione dei campi, operazioni degli eventi, invio e bozze mantengono il loro comportamento;
-la diagnostica non aggiunge avvisi del modulo né blocchi all’invio.
+Un calcolo che termina restituisce comunque lo stato anche quando la diagnostica contiene errori. La
+diagnostica non aggiunge avvisi al modulo e non blocca l'invio, e la validazione dei campi, gli
+eventi e il salvataggio delle bozze funzionano come sempre.
 
 <span id="eventi-portabili-dellanteprima-cli-070" />
 
 ## Anteprima dei record ed eventi del ciclo di vita
 
-L’anteprima usa API introdotte in core 0.8.1; CLI installa core compatibile automaticamente. Le nuove anteprime abilitano ciclo di vita e focus/blur/click supportati e selezionano **Nuovo record**. In **Impostazioni del modulo → Anteprima del record**, scegli **Record esistente** o **Apri in sola lettura**. La classificazione sceglie gli hook senza caricare record. Le disattivazioni salvate esplicitamente restano rispettate. **Impostazioni avanzate degli eventi** contiene gli interruttori di compatibilità. La sola lettura esegue load; cambiare configurazione avvia una sessione con valori accettati. `serve --app` conserva le opzioni dell’applicazione. I binding offrono API con classificazione esplicita dell’host. Il ciclo CLI senza interfaccia conserva il valore precedente.
+Una nuova anteprima parte come un nuovo record, con gli eventi del ciclo di vita e gli eventi di
+focus dei campi attivi. Per cambiare come si apre, vai in **Form Settings** >
+**Anteprima del record**:
 
-L’inizializzazione valuta i valori effettivi, esegue `load-record`, poi `new-record` o `edit-record`.
-Le modifiche dell’utente attendono gli aggiornamenti in coda; valori predefiniti, calcoli e
-`SETVALUE()` non generano altre modifiche. Lo stato abilitato usa `change-status`; focus e blur dei controlli di testo e numerici sono attivi per impostazione predefinita; le scelte usano change. Il click automatico è riservato ai campi di attivazione supportati. Attualmente HyperlinkField non esiste e nessun controllo integrato emette click automaticamente. Il dispatch esplicito del controller dell’host rimane disponibile.
+- **Nuovo record** esegue i gestori di `new-record`. È l'opzione predefinita.
+- **Record esistente** esegue i gestori di `edit-record`. Non carica un record dal database, sceglie
+  solo quali gestori eseguire.
+- **Apri in sola lettura** esegue `load-record` invece di `new-record` o `edit-record`. I campi
+  appaiono in grigio e non si possono modificare, e **Submit Record** è disattivato.
 
-L’invio segue validazione integrata/personalizzata → `save-record` una volta → nuova validazione
-solo se cambiano i valori → serializzazione finale → invio al connettore esistente.
-`INVALID(message)` sincrono crea un messaggio di riepilogo dell’ambito senza modificare `state.errors`.
-I diagnostici di calcolo non bloccano da soli. **Prepara bozza** restituisce in console un’istantanea
-con riepilogo anche non valido, senza persistenza né connettori. Non ci sono eventi di schema `saved-*`.
+**Impostazioni avanzate degli eventi** contiene gli interruttori per disattivare gli eventi, e una
+scelta salvata resta valida. Cambiare queste impostazioni avvia una nuova sessione con i valori già
+accettati. Un'app avviata con `serve --app` mantiene le proprie opzioni, e i comandi autonomi come
+`form0 run` mantengono i propri valori predefiniti.
 
-Le righe in linea offrono **Modifica**, **Salva riga** e **Annulla riga**. Usano eventi repeatable e
-valori provvisori: salvare valida/prepara prima di accettare; annullare scarta le modifiche annidate
-provvisorie. Sono permesse letture principali/degli antenati autorizzati e scritture solo nella riga.
-Comprimere cambia solo la visualizzazione. Aggiunte/modifiche/rimozioni accettate notificano il
-repeatable proprietario; gli errori successivi di notifica restano separati dalla preparazione
-accettata. Le righe chiuse usano la preparazione condivisa descritta sotto senza ripetere il ciclo di modifica.
+### Cosa viene eseguito e quando
 
-Il controller attivo è `window.form0PreviewEvents`. `dispatch()` e
-`prepareSave({ intent: 'submit' | 'draft' })` restituiscono promesse con risultati/problemi e attendono
-la presentazione accettata; preparare non invia né chiude. Le righe richiedono `instancePath` completo
-e lo `scopeId` osservato (`data-preview-scope-id`); i percorsi posizionali richiedono tale ID. I
-metadati sono JSON; funzioni e file nativi sono rifiutati. I valori salvati non contengono metadati di
-ambito/diagnostica. Annulla/Chiudi notifica prima del ritiro; ricaricamento/eliminazione forzata ritira
-soltanto. Riaprire avvia una nuova sessione. I codici di uscita di run/validate restano invariati.
+- Quando si apre un record, il modulo viene valutato, viene eseguito `load-record` e poi
+  `new-record` o `edit-record`.
+- Quando un utente modifica un campo, `change` viene eseguito al termine degli aggiornamenti in
+  coda. In un campo di testo, significa a ogni tasto premuto.
+- I valori predefiniti, i calcoli e `SETVALUE()` non aggiungono eventi `change`.
+- I campi di testo e numerici emettono `focus` e `blur`, mentre i campi di scelta usano `change`.
+- Un campo di stato attivo emette `change-status` quando un utente lo cambia.
+- Nessun controllo integrato emette `click`. Attivalo tu con il controller descritto più avanti.
 
-**Azioni avanzate di anteprima** raggruppa **Prepara bozza**, **Annulla record** e **Chiudi record**
-in una sezione chiusa inizialmente. Preparare una bozza permette solo di esaminarla e non la salva
-tramite un connettore. I controlli disabilitati delle righe annidate indicano quale editor padre
-aprire prima. L’invio mostra in console l’oggetto finale espandibile e l’esito di ogni connettore.
-Senza connettori, indica che il record è preparato solo per l’anteprima; un errore del connettore o
-del salvataggio non viene considerato un salvataggio riuscito.
+### Cosa succede all'invio
 
-## Preparazione condivisa e adattatore storage dell’host
+1. Viene eseguita la validazione integrata e quella personalizzata.
+2. `save-record` viene eseguito una volta.
+3. La validazione viene eseguita di nuovo, solo se sono cambiati dei valori.
+4. Il record finale viene costruito e inviato a ogni connettore.
 
-L’anteprima usa freschezza e validazione integrata condivise con ciclo di vita gestito attivo o
-inattivo. L’esclusione mantiene disabilitati hook e validazione personalizzata gestiti. Non vengono
-ripetuti eventi load/edit/change/save/unload delle righe chiuse. Accetta o annulla gli editor figli
-prima della preparazione radice.
+`INVALID(message)` aggiunge un messaggio all'elenco di validazione senza cambiare `state.errors`. La
+diagnostica dei calcoli da sola non blocca un invio. Non esistono eventi di schema `saved-*`.
 
-`createApp()` accetta `submissionOptions` del server e uno `storageAdapter` facoltativo. Mantenere i
-valori richiede adattatore e `allowRetain`; le richieste browser non possono concedere il permesso.
-L’adattatore implementa `load(identity)` asincrono, che restituisce `{ record, freshness }` o `null`, e
-`save(identity, { record, freshness })`. `record` mantiene la struttura esistente. La sessione ripristina
-`recordIdentity` o `recordOptions.mainRecordId`, incluso zero. L’esempio sostituisce atomicamente un
-contenitore locale; l’host di produzione definisce la gestione di revisioni e conflitti.
+L'invio registra nella console il record finale e l'esito di ogni connettore. Un errore di un
+connettore o dell'archiviazione non conta come record salvato.
 
-Il successo riconosce la preparazione. Rifiuto, persistenza parziale o fallimento di un connettore
-lasciano il tentativo non salvato. I connettori ricevono lo stesso record senza nuovi obblighi di
-storage della freschezza. I client di preparazione riconoscono esplicitamente il salvataggio esterno.
-`getSaveChanges()` pagina le modifiche; le decisioni riguardano tutti i figli o nessuno.
+### Prova
+
+Ti serve [form0-cli](/it/cli/install-update).
+
+1. Avvia l'anteprima con un modulo di esempio:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Apri `http://localhost:3030`, inserisci `10` in **Amount** e fai clic su **Submit Record**.
+
+1. Apri la console del browser. Mostra `[STRUCTURED RECORD] Record prepared` e poi
+   `No database connector configured; record prepared for preview only.`
+
+### Prova un record in sola lettura
+
+Ti serve [form0-cli](/it/cli/install-update).
+
+1. Avvia l'anteprima con il modulo di esempio. Se è già avviata, passa al punto successivo.
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Apri `http://localhost:3030` e fai clic su **⚙** per aprire **Form Settings**.
+
+1. In **Anteprima del record**, seleziona **Apri in sola lettura** e fai clic su **Save**.
+
+1. Fai clic su **Amount** e digita un numero. Non appare nulla. **City** non si apre e
+   **Submit Record** è disattivato.
+
+1. Ricarica la pagina. Il modulo resta in sola lettura, perché l'impostazione viene salvata nel
+   browser.
+
+1. Apri di nuovo **Form Settings**, deseleziona **Apri in sola lettura** e fai clic su **Save** per
+   tornare a modificare il modulo.
+
+L'anteprima non mostra alcun banner di sola lettura, quindi controlla che i campi e il pulsante
+**Submit Record** siano disattivati (in grigio).
+
+### Righe di sezioni ripetibili
+
+Le righe in linea offrono **Modifica**, **Salva riga** e **Annulla riga**. Le modifiche restano in
+sospeso finché non le accetti: **Salva riga** valida prima la riga, e **Annulla riga** scarta le
+modifiche annidate in sospeso. Comprimere una riga ne cambia solo l'aspetto.
+
+I gestori di riga usano gli eventi ripetibili. Possono leggere i campi consentiti dei genitori e del
+modulo principale, e scrivono solo nella propria riga. Aggiungere, modificare o rimuovere una riga
+notifica la sezione ripetibile a cui appartiene. Un problema in quella notifica viene riportato
+separatamente, e la riga accettata resta.
+
+Le righe chiuse vengono preparate insieme al resto del record all'invio, senza ripetere i loro
+eventi di modifica.
+
+### Azioni avanzate
+
+**Azioni avanzate di anteprima** è una sezione compressa con tre azioni:
+
+- **Prepara bozza** stampa nella console uno snapshot grezzo e l'eventuale riepilogo di validazione.
+  Non salva mai la bozza e non chiama alcun connettore.
+- **Annulla record** scarta le modifiche dell'editor.
+- **Chiudi record** esegue il ciclo di scaricamento.
+
+Annullare o chiudere avvisa i gestori prima della fine della sessione. Ricaricare la pagina la
+termina senza avviso, e riaprire avvia una nuova sessione. Un controllo di riga annidata disattivato
+spiega quale editor genitore aprire prima.
+
+### Controllare l'anteprima dalla console
+
+`window.form0PreviewEvents` è un controller per sviluppatori dell'anteprima attiva:
+
+- `dispatch()` esegue un evento e restituisce i suoi risultati e problemi.
+- `prepareSave({ intent: "submit" | "draft" })` prepara un salvataggio senza inviare o chiudere
+  nulla.
+
+Per puntare a una riga, passa il suo `instancePath` completo e lo `scopeId` mostrato come
+`data-preview-scope-id` nella pagina. Un percorso per posizione richiede quell'identificatore. I
+metadati devono essere JSON, quindi la configurazione eseguibile e i riferimenti nativi ai file
+vengono rifiutati. I valori salvati non contengono dati di ambito o di diagnostica. Il controller
+non cambia lo stato di uscita dei comandi del terminale.
+
+## Disegnare in un BuildingPlan
+
+Disegnare in un'area BuildingPlan apre una bozza di modifica del piano. Stanze, pareti, aperture e
+altra geometria compaiono subito come righe. **Salva riga** valida e accetta il piano, e
+**Annulla riga** ripristina insieme la geometria e le righe. Le domande obbligatorie del sopralluogo
+richiedono comunque una risposta.
+
+Prima di disegnare di nuovo, accetta o annulla ogni editor di stanza o parete aperto. Completa la
+bozza del piano prima di inviare il record principale. Comprimere o cambiare piano non salva. I
+record e le sezioni BuildingPlan in sola lettura disattivano il disegno. Disegnare non cambia il
+formato dello schema o del record, e non permette a `SETVALUE()` di scrivere tra record diversi.
+
+## Rivedere le righe ricalcolate
+
+Imposta `form.repeatable_recalculation` su `"confirm"` nello schema per rivedere i calcoli
+modificati delle righe salvate quando invii il record principale. Se lo ometti o usi `"automatic"`,
+si aggiornano automaticamente. Non c'è un interruttore per questo nelle impostazioni dell'anteprima.
+
+Una riga aperta continua a essere ricalcolata con i valori attuali dei genitori, quindi accettala o
+annullala prima di inviare. Mantenere i valori precedenti richiede anche il permesso del server
+descritto nella sezione successiva.
+
+L'anteprima applica gli stessi controlli con gli eventi del ciclo di vita attivi o meno. Con gli
+eventi disattivati, la validazione personalizzata e i gestori di salvataggio restano disattivati.
+
+## Salvare i record dell'anteprima
+
+`createApp()` accetta `submissionOptions` lato server e uno `storageAdapter` facoltativo, così puoi
+provare il salvataggio e il ripristino dei record nel tuo server di anteprima:
 
 ```js
 import { createApp } from "form0-cli/src/server/express-server.js"
@@ -93,3 +207,62 @@ const app = createApp(getSchema, getSchemaSource, projectDir, {
   storageAdapter: createFilePreviewStorage(previewStorageDirectory),
 })
 ```
+
+L'adattatore implementa due metodi asincroni:
+
+- `load(identity)` restituisce `{ record, freshness }` o `null`.
+- `save(identity, { record, freshness })` li salva.
+
+`record` usa il formato del record strutturato. Per ripristinare un record, la sessione usa
+`recordIdentity` o `recordOptions.mainRecordId`, compreso l'identificatore zero. L'adattatore di
+esempio sostituisce un file locale in modo atomico. In produzione, la tua applicazione decide come
+gestire revisioni e conflitti.
+
+`allowRetain` richiede un adattatore, e le richieste del browser non possono concederlo. Un `save`
+riuscito conferma la preparazione. Se viene rifiutato, salva solo una parte dei dati o un connettore
+fallisce, il tentativo resta non salvato. I connettori ricevono lo stesso record di sempre e non
+salvano `freshness`. Un client che prepara soltanto un salvataggio deve confermare da solo un
+salvataggio esterno riuscito. `getSaveChanges()` restituisce i dettagli della revisione a pagine, e
+una decisione vale per tutte le righe modificate o per nessuna.
+
+## Valori nascosti nell'anteprima
+
+L'anteprima applica gli stessi
+[controlli dei valori](/it/core/schema/validation#validazione-in-fase-di-esecuzione) e le stesse
+regole di
+[`visible_preserve_value`](/it/core/fields/common-attributes#cancellare-un-valore-quando-un-campo-viene-nascosto)
+dei binding, anche nelle righe chiuse.
+[L'esportazione e l'importazione CSV](/it/cli/schemas/import-export-csv) conservano l'attributo.
+
+Per controllare i valori nascosti all'invio, imposta l'opzione sul server. Le richieste del browser
+non possono cambiarla:
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
+})
+```
+
+### Risolvere un valore nascosto
+
+Per consentire all'anteprima di correggere un valore nascosto che non supera la validazione, passa
+`onResolveHiddenValue` a `createApp()`. Gli esiti di validazione mostrano allora il pulsante
+**Risolvi valore nascosto**.
+
+```js
+const app = createApp(getSchema, getSchemaSource, projectDir, {
+  submissionOptions: { validateHiddenValues: true },
+  onResolveHiddenValue: async (finding) => {
+    // Return { value: replacement }, { value: null }, or nothing to cancel.
+    return { value: null }
+  },
+})
+```
+
+Il gestore viene eseguito sul tuo server, quindi non può aprire una finestra di dialogo del browser.
+`form0 serve` non ha alcuna opzione per questo.
+[Risolvere un valore nascosto](/it/bindings/react/values-snapshots-submission#risolvere-un-valore-nascosto-che-non-supera-la-validazione)
+nella documentazione di React spiega cosa riceve e cosa restituisce il gestore.
+
+Se cancellando il valore una riga resta senza risposte, la riga rimane nel record. Vedi
+[Righe vuote salvate](/it/core/output-records#righe-vuote-salvate).

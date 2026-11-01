@@ -50,5 +50,7 @@ controller delle sezioni ripetibili e le utility di invio non sono esportazioni 
 
 Vedi il controller e il contratto degli ambiti in [FormRenderer](/it/bindings/react-native/form-renderer).
 
-`engineOptions.events`: `lifecycle` (true), `recordKind` obbligatorio (new/existing), `fieldInteractions` ([focus, blur, click]). Usa `lifecycle: false` per il ciclo legacy o `fieldInteractions: []` per disabilitare le interazioni automatiche.
+`engineOptions.events`: `lifecycle` (true), `recordKind` obbligatorio (new/existing), `fieldInteractions` ([focus, blur, click]). Usa `lifecycle: false` per mantenere solo `load-record`, `edit-record` e `change`, oppure `fieldInteractions: []` per disabilitare le interazioni automatiche.
 `engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+
+I setter rifiutano i valori con una forma errata. I valori iniziali e le sostituzioni dell’applicazione sono più tolleranti, anche nella vista, che conserva i calcoli accettati. [Vedi il contratto di aggiornamento dei valori](/it/core/engine/value-updates).

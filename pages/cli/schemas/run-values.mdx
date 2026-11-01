@@ -11,11 +11,16 @@ or a path to a JSON, YAML, or YML file.
 The command prints the evaluated engine state, including values, validation errors, visibility,
 requirements, and read-only state. Unknown input fields are ignored with warnings.
 
+These are initial values, rather than setter calls. For schema fields named `country` (SingleChoice) and `countries` (MultiChoice), the following JSON uses their distinct shorthand shapes. Supported shorthand is normalized during loading; malformed loaded values remain available for validation. See [value updates and normalization](/core/engine/value-updates) for the live and submitted representations and the stricter setter contract.
+
+```json
+{ "country": "it", "countries": ["it", "fr"] }
+```
+
 ## Calculation diagnostics
 
-The following reporting controls describe form0-cli 0.6.0 and later. Runtime calculation diagnostics
-identify the field, stable code, severity, phase, and any suggested correction. Diagnostic details
-go to stderr; evaluated state remains on stdout.
+Runtime calculation diagnostics identify the field, stable code, severity, phase, and any suggested
+correction. Diagnostic details go to stderr; evaluated state remains on stdout.
 
 The command prints state even when a calculation fails, then exits with status `1` if that
 evaluation contains an error-severity diagnostic. Warnings alone exit with status `0`. A failure
@@ -23,4 +28,5 @@ in an intermediate calculation pass still belongs to that evaluation, even if a 
 
 Add `--no-diagnostics` to suppress diagnostic details. Collection and exit status remain active.
 Diagnostics are separate from field-validation errors in `state.errors`; they do not change
-submission validation or reform draft saving. See [calculation diagnostics](/core/engine/calculations-dependencies#seeing-errors-and-warnings).
+submission validation. See
+[calculation diagnostics](/core/engine/calculations-dependencies#seeing-errors-and-warnings).

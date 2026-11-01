@@ -11,7 +11,7 @@ Events live in `form.events.code` and are evaluated at runtime. Use `ON` to regi
 and `SETVALUE`/`ALERT` to interact with the form.
 
 Creating an engine runs `events.code` once to register handlers. It does not dispatch an event.
-An event runs only when the host calls `engine.trigger(...)` or a binding dispatches it for a user
+An event runs only when your application calls `engine.trigger(...)` or a binding dispatches it for a user
 interaction or application lifecycle transition.
 
 ## Quick example
@@ -27,30 +27,36 @@ ON("change", "age", function (event) {
 
 ## Event dispatch in official bindings
 
-`form0-react` and `form0-react-native` intentionally dispatch a small, portable set of events from
-their `FormRenderer` components:
+By default, `FormRenderer` in `form0-react` and `form0-react-native` dispatches these events:
 
-| Event         | When it is dispatched                           |
-| ------------- | ----------------------------------------------- |
-| `load-record` | After the main record engine is ready           |
-| `edit-record` | When the main record enters edit mode           |
-| `change`      | After a user changes a field in the main record |
+| Event             | When it runs                                                                                                           |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `load-record`     | Each time a record opens, for editing or read-only                                                                     |
+| `new-record`      | A new record starts editing                                                                                            |
+| `edit-record`     | An existing record starts editing                                                                                      |
+| `change`          | A user edits a field, or adds, edits, or removes a [repeatable section row](/core/fields/containers#repeatablesection) |
+| `focus`, `blur`   | A text or numeric input gains or loses focus                                                                           |
+| `validate-record` | A user submits the form or saves a draft                                                                               |
+| `save-record`     | After validation, once for each save attempt                                                                           |
+| `cancel-record`   | A user confirms cancelling a record                                                                                    |
+| `unload-record`   | A record closes                                                                                                        |
+| `change-status`   | A user changes the status field, if it is enabled                                                                      |
 
-Repeatable-row editors do not dispatch these events automatically. In particular, opening a row
-does not re-run the main record's `load-record` or `edit-record` handlers, and changing a row field
-does not dispatch `change`. Repeatable lifecycle events remain application-owned for now.
+Rows have their own events: `load-repeatable`, `new-repeatable`, `edit-repeatable`,
+`validate-repeatable`, `save-repeatable`, `cancel-repeatable`, `unload-repeatable`. A row never runs
+the main record's events.
 
-The core registry also accepts `new-record`, `save-record`, `validate-record`, `blur`, `focus`,
-`click`, and the `*-repeatable` events. These depend on application-specific lifecycle and UI
-decisions, so the official renderers currently do not dispatch them automatically. An application
-integrating `form0-core` directly can dispatch them with
-`engine.trigger(eventType, fieldKey, metadata)` at the appropriate point in its own workflow.
+Choice fields report changes through `change`, not `focus` or `blur`. `click` is available, but no
+built-in control emits it, so dispatch it yourself. Defaults, calculations, and `SETVALUE` do not
+dispatch `change`.
 
-Additional automatic dispatch may be considered individually, but it is not implied by an event
-being available in core. Schemas should rely only on events that their host application or binding
-documents as supported.
+Use `engineOptions.events` to change this. `lifecycle: false` keeps only `load-record`,
+`edit-record`, and `change` for main-record fields. `fieldInteractions: []` turns off `focus` and
+`blur`.
 
-Registering one of these handlers with `ON` does not make the event automatic.
+If you use `form0-core` directly, nothing is dispatched for you. Call
+`engine.trigger(eventType, fieldKey, metadata)` at the right point in your application. Registering
+a handler with `ON` does not make its event run.
 
 ## Event builtins
 

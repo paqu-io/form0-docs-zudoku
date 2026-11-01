@@ -10,3 +10,41 @@ to convert it back to JSON.
 
 Both commands support explicit input or output paths and `--force` for intentional replacement.
 Validate and review the generated schema after converting it.
+
+## Hidden-value column
+
+The CSV has a `visible_preserve_value` column, right after `visible_conditions`. Use it to set
+[what happens to a value when its field is hidden](/core/fields/common-attributes#clear-a-value-when-a-field-is-hidden):
+
+| Cell    | Result                                           |
+| ------- | ------------------------------------------------ |
+| Empty   | The attribute is left out, so the value is kept. |
+| `true`  | The value is kept.                               |
+| `false` | The value is cleared when the field is hidden.   |
+
+Fill it in only for input fields. Leave it empty for sections, calculated fields, and title and
+status rows.
+
+### Try it
+
+You need [form0-cli](/cli/install-update).
+
+1. Download an example form and export it. The `email` field sets the attribute, and the `phone`
+   field does not:
+
+   ```bash
+   curl -o hidden-value.json https://docs.form0.dev/examples/hidden-value.form0.json
+   form0 schema export hidden-value.csv --input hidden-value.json --force
+   ```
+
+1. Open `hidden-value.csv`. The `visible_preserve_value` column shows `false` for `email` and is
+   empty for `phone`.
+
+1. Import the CSV into a new file:
+
+   ```bash
+   form0 schema import hidden-value.csv --output hidden-value-copy.json --force
+   ```
+
+   In `hidden-value-copy.json`, `email` has `"visible_preserve_value": false`, and `phone` has no
+   such attribute.

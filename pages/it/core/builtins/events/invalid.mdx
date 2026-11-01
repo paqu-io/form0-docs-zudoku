@@ -1,26 +1,77 @@
 ---
 title: INVALID
-description: Messaggi sincroni di validazione personalizzata per gli eventi gestiti.
+description: Rifiuta un invio con un tuo messaggio di validazione.
 ---
 
 <PageBadges />
 
-Crea un risultato di validazione personalizzata a livello di ambito durante la validazione gestita. Richiede una stringa non vuota ed è riservato agli eventi.
+`INVALID(message)` impedisce l'invio di un record e mostra il tuo messaggio all'utente. Usalo per le
+regole che un'impostazione del campo non può esprimere, come un importo minimo o un controllo che
+confronta due campi.
 
 ## Esempio
 
 ```js
-ON("validate-record", function (event) {
+ON("validate-record", function () {
   if ($amount < 4) INVALID("Amount must be at least four.")
 })
 
-ON("validate-repeatable", "rows", function (event) {
+ON("validate-repeatable", "rows", function () {
   if ($row_amount <= 0) INVALID("Enter a positive row amount.")
 })
 ```
 
-## Comportamento
+`validate-record` viene eseguito quando l'utente invia il modulo. `validate-repeatable` viene
+eseguito quando l'utente salva una [riga](/it/core/fields/containers#repeatablesection) della
+sezione ripetibile indicata, qui `rows`.
 
-Esegui il dispatch con `engine.triggerDetailed()` e verifica sia `validationIssues` sia gli `issues` di esecuzione. Ogni tentativo restituisce risultati nuovi. `INVALID()` non scrive negli `state.errors` intrinseci, nella diagnostica dei calcoli, nei valori o nei record salvati. È rifiutato fuori da `validate-record` e `validate-repeatable`; i gestori di validazione rifiutano operazioni su valori/interfaccia e promesse. L’host definisce la politica di invio e bozze. Un risultato di validazione da solo non è un errore di esecuzione.
+## Parametri
 
-Consulta [Eventi e operazioni](/it/core/engine/events-operations) e il [contratto mantenuto](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md). L’integrazione nell’interfaccia dei binding segue la pubblicazione del core; la sola registrazione non avvia la validazione.
+- message: stringa non vuota
+
+## Valore restituito
+
+Il descrittore dell’operazione (utilizzato dai client).
+
+## Note
+
+- Chiama `INVALID()` dentro un gestore di `validate-record` o `validate-repeatable`. Altrove viene
+  rifiutato.
+- Il messaggio riguarda l'intero record o l'intera riga, non un singolo campo, quindi compare
+  nell'elenco di validazione del modulo.
+- I gestori di validazione possono solo controllare i valori. Non possono cambiare valori, mostrare
+  avvisi o restituire promise.
+- `INVALID()` non aggiunge nulla a `state.errors`, alla diagnostica dei calcoli o al record salvato.
+
+Con il solo `form0-core`, attiva tu l'evento e leggi `validationIssues`:
+
+```js
+const { validationIssues } = engine.triggerDetailed("validate-record")
+// [{ message: "Amount must be at least four.", instancePath: [] }]
+```
+
+Ogni chiamata restituisce nuovi risultati. Un risultato non conta come errore di esecuzione, quindi
+non compare in `issues`. La tua applicazione decide cosa farne, ad esempio se consentire una bozza.
+
+Consulta [Eventi e operazioni](/it/core/engine/events-operations) e il
+[contratto mantenuto](https://github.com/paqu-io/form0-core/blob/development/EVENT_CONTRACT.md).
+
+## Prova
+
+Ti serve [form0-cli](/it/cli/install-update). Tutte le pagine dei builtin per gli eventi usano lo
+stesso modulo di prova.
+
+1. Scarica il modulo e avvia l'anteprima:
+
+   ```bash
+   curl -o event-builtins.json https://docs.form0.dev/examples/event-builtins.form0.json
+   form0 serve event-builtins.json
+   ```
+
+1. Apri `http://localhost:3030`.
+
+1. Inserisci `2` in **Amount** e fai clic su **Submit Record**. Il modulo mostra
+   **Amount must be at least four.** e non viene inviato.
+
+1. Cambia **Amount** in `10` e fai clic su **Submit Record**. Il messaggio scompare, e la console
+   del browser mostra `[STRUCTURED RECORD] Record prepared`.

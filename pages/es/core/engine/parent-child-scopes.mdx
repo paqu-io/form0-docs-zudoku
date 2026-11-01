@@ -69,14 +69,12 @@ Los cálculos y los manejadores de eventos de campo siguen estas reglas de acces
 un cálculo fuera de los campos permitidos lee `undefined`, y el motor emite un aviso como
 `Field 'line_total' is not accessible from current context`.
 
-La aplicación de ámbitos en condiciones está disponible desde core 0.6.0.
-
 `visible_conditions`, `required_conditions` y `read_only_conditions` usan los mismos ámbitos de
 lectura de la tabla anterior: campos raíz, de la fila actual y de las filas antecesoras. No permiten
 leer filas descendientes, ramas hermanas ni ramas ajenas. `validateSchema()` y la creación del motor
 rechazan una referencia ilegal antes de abrir el formulario. El error identifica el elemento dueño,
-la propiedad de condición, el campo referenciado y ambas rutas de pertenencia a registros. Se mantiene
-el soporte de claves de campo y referencias por `data_name`.
+la propiedad de condición, el campo referenciado y ambas rutas de pertenencia a registros. Una
+condición puede hacer referencia a un campo por su clave o por su `data_name`.
 
 Una `Section` o `BuildingPlanSection` hereda la pertenencia del registro que la contiene. Las
 condiciones de una `RepeatableSection` gobiernan la colección en el registro que la contiene; sus
@@ -91,14 +89,13 @@ un error de configuración y emite un aviso estructurado de acceso; no se convie
 intrínseco de `state.errors` ni en un diagnóstico de cálculo.
 
 Por ejemplo, las puntuaciones aceptadas en `inspections` pueden ser `95` y `90`, mientras que el
-valor predeterminado de `inspection_score` es `50`. Una condición de `payments.approval_note` no puede
-comparar directamente ese campo ajeno con `80`: se rechaza el esquema en vez de usar `50 < 80` para
-exigir la nota. Para corregir una regla inválida existente, referencia un resultado explícito raíz o
-antecesor, o un cálculo auxiliar local basado en ese resultado permitido. Si tu aplicación proporciona
-`inspection_scores: [95, 90]` en la raíz, un auxiliar dentro de `payments` puede calcular
-`SETRESULT($inspection_scores.some((score) => score < 80));` y la nota puede condicionar su estado a
-ese auxiliar local. La aplicación de ámbitos en condiciones no introduce funciones de colección ni
-actualización automática de filas cerradas.
+valor predeterminado de `inspection_score` es `50`. Una condición de `payments.approval_note` no
+puede comparar directamente ese campo ajeno con `80`: se rechaza el esquema en vez de usar `50 < 80`
+para exigir la nota. Para corregir una regla inválida existente, referencia un resultado explícito
+raíz o antecesor, o un cálculo auxiliar local basado en ese resultado permitido. Si tu aplicación
+proporciona `inspection_scores: [95, 90]` en la raíz, un auxiliar dentro de `payments` puede
+calcular `SETRESULT($inspection_scores.some((score) => score < 80));` y la nota puede condicionar su
+estado a ese auxiliar local.
 
 ## Los valores del padre son una copia
 
@@ -109,16 +106,16 @@ se vuelve a abrir.
 
 ## Eventos y filas
 
-Los bindings oficiales de React y React Native ofrecen eventos portables del ciclo de vida de
-registros y repetibles al activar `engineOptions.events.lifecycle`. Los manejadores de fila reciben
-el ámbito de la instancia; abrir una fila no repite los manejadores de carga raíz. Sin esa activación,
-se mantiene el despacho heredado. Consulta
+Los bindings oficiales de React y React Native despachan por defecto los eventos del ciclo de vida
+de registros y repetibles. Los manejadores de fila se ejecutan en el ámbito de su fila, y abrir una
+fila no vuelve a ejecutar los manejadores de carga del registro principal. Para desactivar estos
+eventos, establece `engineOptions.events.lifecycle` en `false`. Consulta
 [Despacho de eventos en los bindings oficiales](/es/core/builtins/events-overview) para conocer los
 momentos y los metadatos.
 
-Los eventos de registro, como `load-record`, solo pueden leer campos raíz. Los manejadores de eventos
-de campo y repetibles siguen su ámbito declarado; se mantienen las lecturas de antecesores y las
-escrituras exclusivamente locales.
+Los eventos de registro, como `load-record`, solo pueden leer campos raíz. Los manejadores de
+eventos de campo y repetibles siguen su ámbito declarado: pueden leer los campos de sus padres y
+escribir solo en su propio registro.
 
 ## Las filas en el registro de salida
 
@@ -138,6 +135,3 @@ Las colecciones incluyen filas aceptadas ocultas; la validación de envío exclu
 ancestros ocultos. Para visibilidad de pagos dependiente de inspecciones, usa una colección raíz y un
 helper booleano local. Trata números ausentes explícitamente, por ejemplo
 `$scores.some(score => typeof score === 'number' && score < 80)`.
-
-Estas interfaces llegarán después de 0.6.0 y requieren adopción de consumidores. La comprobación
-existente del ámbito de condiciones se mantiene.

@@ -27,9 +27,8 @@ d’enregistrer le formulaire.
 - **form0-cli**, installé avec `npm install --global form0-cli`
 
 Le starter React + Vite inclut les paquets form0 nécessaires. Si vous utilisez une application
-existante, elle doit utiliser au minimum `form0-core` 0.4.1 et `form0-react` 0.2.2. Suivez
-[Installer et afficher avec React](/fr/bindings/react/install-render) pour les installer ou les
-mettre à jour avant de copier le schéma.
+existante, consultez
+[Ajouter un formulaire à une application React existante](/fr/guides/add-form-to-react-app).
 
 ## Créer le formulaire
 
@@ -432,8 +431,9 @@ Une condition sur un champ de choix compare la `value` du choix sélectionné, p
 Consultez [Conditions et opérateurs](/fr/core/schema/conditions-operators).
 
 Masquer un champ n’efface pas sa valeur. Si quelqu’un saisit une adresse e-mail puis passe à
-**Phone**, l’adresse reste dans les valeurs du formulaire. C’est à votre application de décider si
-les valeurs masquées doivent être conservées.
+**Phone**, l’adresse reste dans les valeurs du formulaire. Pour l’effacer, ajoutez
+`"visible_preserve_value": false` au champ. Consultez
+[Effacer une valeur lorsqu’un champ est masqué](/fr/core/fields/common-attributes#effacer-une-valeur-lorsquun-champ-est-masqué).
 
 ### Priorité calculée
 
@@ -514,3 +514,5 @@ Pour aller plus loin :
   calculs qui dépendent les uns des autres.
 - [Soumissions et connecteurs](/fr/starter-apps/react-vite/submissions-connectors) : où va
   l’enregistrement soumis dans le starter, et comment l’envoyer vers une base de données.
+- [Ajouter un formulaire à une application React existante](/fr/guides/add-form-to-react-app) :
+  exécuter ce formulaire dans votre propre application et envoyer les enregistrements à votre API.

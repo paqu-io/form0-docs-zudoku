@@ -8,7 +8,7 @@ description: Inizializza, rendi persistente, ripristina, salva e invia lo stato 
 ## Stato iniziale e ripristino
 
 Usa `initialValues` per inizializzare un record nel modo consueto. `overrideValues` ha la precedenza
-ed è utile per i valori che devono prevalere lato host. Per un ripristino completo, preferisci
+ed è utile per i valori controllati dalla tua applicazione. Per un ripristino completo, preferisci
 `initialSnapshot`:
 
 ```jsx
@@ -23,7 +23,8 @@ ed è utile per i valori che devono prevalere lato host. Per un ripristino compl
 />
 ```
 
-Lo snapshot mantiene insieme valori grezzi, voci ripetibili annidate e timestamp:
+Lo snapshot mantiene insieme valori grezzi,
+[righe di sezioni ripetibili](/it/core/fields/containers#repeatablesection) annidate e timestamp:
 
 ```js
 {
@@ -41,6 +42,69 @@ Lo snapshot mantiene insieme valori grezzi, voci ripetibili annidate e timestamp
 `onSnapshotChange(snapshot, meta)` segnala prima `{ kind: "seed", dirty: false }`; le modifiche
 successive dell'utente usano `{ kind: "change", dirty }`.
 
+## Errori di salvataggio e messaggi della console
+
+Quando un salvataggio non riesce, `FormRenderer` conserva i valori dell'utente perché possa
+riprovare e scrive un rapporto in `console.error` con la fase dell'errore e l'errore originale. Non
+mostra alcun messaggio all'utente, quindi fallo nella tua applicazione e poi rilancia l'errore:
+
+```jsx
+async function handleSubmit(record) {
+  try {
+    await saveRecord(record)
+  } catch (error) {
+    setMessage("The record was not saved. Try again.")
+    throw error
+  }
+}
+```
+
+Se intercetti l'errore senza rilanciarlo, `FormRenderer` considera riuscito il salvataggio.
+
+`submissionDiagnostics` controlla questi messaggi della console:
+
+```jsx
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "new" } }}
+  submissionDiagnostics={{ saveFailures: true, validationBlocks: false }}
+  onSubmit={handleSubmit}
+/>
+```
+
+- `saveFailures` è attivo per impostazione predefinita. Impostalo su `false` se l'applicazione
+  segnala già gli errori.
+- `validationBlocks` è disattivato per impostazione predefinita. Impostalo su `true` per registrare
+  una riga ogni volta che la validazione blocca **Submit** o **Save** su una riga ripetibile.
+
+Un campo obbligatorio vuoto è un blocco di validazione, non un errore di salvataggio.
+
+### Prova
+
+1. Tocca **Submit** con un campo obbligatorio vuoto. Il campo mostra il suo messaggio di validazione
+   e la console resta silenziosa.
+2. Aggiungi `validationBlocks: true` e tocca di nuovo **Submit**. La console mostra
+   `[form0-react-native] Submit blocked by validation.`
+3. Compila il campo, fai in modo che `saveRecord` generi `new Error("Example save failure")` e tocca
+   **Submit**. La console mostra `[form0-react-native] Submit failed during onSubmit.` con il tuo
+   errore, e i valori restano nel modulo.
+4. Rimuovi il `throw` e tocca di nuovo **Submit**. Il salvataggio riesce.
+
+### Dettagli
+
+- Queste impostazioni si applicano subito, anche durante un salvataggio in corso. Sono indipendenti
+  da `debug`, `engineOptions.diagnostics.console` e dalle impostazioni del ciclo di vita.
+- I rapporti non includono valori del modulo, snapshot o percorsi dei record. Gli errori di
+  preparazione includono i relativi codici e messaggi.
+- Annullare una conferma non scrive nulla nella console. Un'eccezione generata dal tuo callback
+  viene segnalata come errore del callback.
+- `form0-core` scrive le proprie righe, come `[EVENT HANDLER] Registered`. Queste impostazioni non
+  le controllano.
+- Queste impostazioni coprono le azioni integrate del renderer. Se chiami direttamente
+  `prepareSave()`, controlla il risultato restituito.
+- Le stesse impostazioni valgono per gli errori di `onSave` nelle bozze. Le bozze non valide restano
+  salvabili e una bozza salvata correttamente non registra alcun blocco di validazione.
+
 ## Salvare bozze o inviare record
 
 Imposta `primaryActionMode="save"` e fornisci `onSave(snapshot, meta)` per un'azione di salvataggio
@@ -52,30 +116,49 @@ strutturato descritto in [Output e record](/it/core/output-records), insieme ai 
 stato delle sezioni ripetibili, ai timestamp e al riepilogo della validazione.
 
 Il binding non rende persistenti né sincronizza nessuno dei due contenuti. Memorizza gli snapshot in
-locale, carica i record, ripeti i tentativi non riusciti e risolvi i conflitti nell'applicazione
-host.
+locale, carica i record, ripeti i tentativi non riusciti e risolvi i conflitti nella tua applicazione.
 
-## API degli eventi gestiti
+## Usare gli eventi dal tuo codice
 
-Vedi il controller e il contratto degli ambiti in [FormRenderer](/it/bindings/react-native/form-renderer).
+`engineOptions.events` definisce quali eventi vengono eseguiti, e `engineOptions.onEventController`
+ti dà un controller per i tuoi pulsanti. [FormRenderer](/it/bindings/react-native/form-renderer) li
+descrive per intero.
 
-`engineOptions.events`: `lifecycle` (true), `recordKind` obbligatorio (new/existing), `fieldInteractions` ([focus, blur, click]). Usa `lifecycle: false` per il ciclo legacy o `fieldInteractions: []` per disabilitare le interazioni automatiche.
-`engineOptions.onEventController(controller | null)`: `dispatch(request)`, `prepareSave(request)`.
+| Opzione                    | Predefinito                  | Scopo                                                                       |
+| -------------------------- | ---------------------------- | --------------------------------------------------------------------------- |
+| `events.recordKind`        | Obbligatorio                 | `"new"` / `"existing"`.                                                     |
+| `events.lifecycle`         | `true`                       | Imposta `false` per mantenere solo `load-record`, `edit-record` e `change`. |
+| `events.fieldInteractions` | `["focus", "blur", "click"]` | Imposta `[]` per disattivare le interazioni automatiche.                    |
 
-La preparazione non persiste né chiude. Le bozze radice mantengono i risultati nel riepilogo; submit normale e accettazione delle righe sono bloccati dalla validazione. I diagnostici di calcolo restano separati. Nessuna valutazione o aggregazione delle righe chiuse.
+`onEventController(controller | null)` ti dà `dispatch(request)` e `prepareSave(request)`.
 
-## Revisione dei calcoli figli e persistenza
+`prepareSave()` non salva e non chiude mai nulla. Il riepilogo restituito elenca i messaggi di
+validazione di una bozza del record principale. Gli errori di validazione bloccano un invio normale
+e l'accettazione di una riga, mentre la diagnostica dei calcoli non blocca nulla.
 
-L’invio ordinario aggiorna automaticamente i calcoli figli chiusi se l’impostazione è omessa.
-`form.repeatable_recalculation: 'confirm'` richiede revisione. L’host può imporla con `mode: 'confirm'`,
-ma `automatic` non può ridurre il requisito del modulo. `allowRetain` è un permesso esplicito e non
-attiva da solo la conferma. La scelta riguarda tutti i figli interessati o nessuno. La preparazione
-radice è rifiutata se rimane un editor figlio non accettato.
+## Rivedere le righe ricalcolate
 
-La revisione mostra titoli/percorsi, etichette, vecchi/nuovi valori e conteggi in pagine limitate.
-Personalizza i testi con `submissionOptions.messages`. Tutti gli esiti di validazione restano
-disponibili con i percorsi; l’interfaccia li pagina e porta al record o campo interessato. Gli esiti
-personalizzati di ambito appartengono al record, senza attribuirli a un campo inventato.
+Quando un utente invia, `FormRenderer` ricalcola automaticamente le righe salvate. Imposta
+`form.repeatable_recalculation` su `"confirm"` nello schema quando gli utenti devono prima rivedere
+i valori modificati.
+
+`submissionOptions` cambia questo comportamento dal tuo codice:
+
+- `mode: "confirm"` richiede una revisione anche se lo schema non lo fa. `"automatic"` non può
+  disattivare una conferma impostata nello schema.
+- `allowRetain: true` permette all'utente di mantenere i valori precedenti. Da solo non attiva una
+  revisione.
+- `messages` sostituisce i testi di revisione e di stato.
+
+La revisione predefinita mostra a pagine i titoli e i percorsi delle righe, le etichette dei campi,
+i valori vecchi e nuovi e i conteggi. Una scelta vale per tutte le righe modificate o per nessuna.
+Un salvataggio viene rifiutato finché resta aperto un editor di riga.
+
+Tutti i risultati della validazione restano disponibili con i relativi percorsi del record, e il
+modulo li suddivide in pagine e rimanda al record o al campo. Un messaggio di `INVALID()` riguarda
+il suo record, non un campo.
+
+### Salvare il record e il suo `freshness`
 
 ```jsx
 <FormRenderer
@@ -90,19 +173,19 @@ personalizzati di ambito appartengono al record, senza attribuirli a un campo in
 />
 ```
 
-Il completamento corretto del callback riconosce la persistenza. Salva insieme record selezionato e
-compagno di freschezza prima di risolvere; genera un errore o rifiuta in caso di fallimento o
-annullamento. Scegliere `20 → 24` conserva `24` come lavoro non salvato se validazione o persistenza
-falliscono dopo. La freschezza resta fuori dai valori salvati. Ripristinala con `initialFreshness`;
-riconoscimenti vecchi non cancellano stati in sospeso nuovi. Con totali mantenuti `[110,220]`, la somma
-inviata è `330`, mai il `360` della proposta aggiornata.
+Quando la tua callback termina, form0 considera riuscito il salvataggio. Salva il record e
+`meta.freshness` insieme prima che si risolva, e lancia un errore o rifiuta la promise in caso di
+errore o annullamento.
 
-I controller di preparazione non aprono dialoghi né salvano dati. Controlla `eligible`, gestisci
-`requires_decision` con `payload: null` e riconosci solo il `preparationId` salvato correttamente.
-Le pagine contengono 50 modifiche per impostazione predefinita e al massimo 100. Continua con
-`prepareSave()` e `decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Input/configurazioni
-modificati o una nuova preparazione invalidano la revisione. La validazione precede l’hook di
-salvataggio, eseguito una volta; le sue scritture possono richiedere revisione senza ripetere l’hook.
+`freshness` resta fuori dai valori del modulo. Ripassa quello salvato tramite `initialFreshness`.
+Una conferma più vecchia non può cancellare uno stato in sospeso più recente. Se un utente mantiene
+totali di riga precedenti `[110,220]`, la somma inviata è `330`, mai i `360` della proposta
+aggiornata. Se l'utente cambia un valore da `20` a `24`, `24` resta come lavoro non salvato anche se
+poi la validazione o il salvataggio falliscono.
+
+### Eseguire una revisione dalla tua interfaccia
+
+Un controller prepara un salvataggio senza aprire una finestra di dialogo e senza salvare nulla:
 
 ```js
 const prepared = await controller.prepareSave({ intent: "submit", signal })
@@ -119,8 +202,95 @@ if (prepared.status === "requires_decision") {
 }
 ```
 
-`prepareSave({ intent: 'draft' })` radice e il salvataggio bozze Native mantengono i calcoli figli
-accettati senza dialogo. Gli errori ordinari vengono riportati e consentono una bozza radice; i
-fallimenti di esecuzione la impediscono. Applica a `onSave` lo stesso contratto record-compagno.
-Una scrittura locale duratura è distinta dalla successiva sincronizzazione con il server.
-Questo contratto non implementa lo storage del compagno in reform web/mobile/backend di produzione.
+Controlla `eligible`, gestisci `requires_decision`, dove `payload` è `null`, e conferma solo il
+`preparationId` che hai salvato. `getSaveChanges()` restituisce 50 voci per impostazione predefinita
+e al massimo 100. Per continuare una revisione, chiama `prepareSave()` con
+`decision: { reviewId, action: "refresh" | "retain" | "cancel" }`. Cambiare gli input o la
+configurazione, o avviare una preparazione più recente, termina la revisione.
+
+La validazione viene eseguita prima del gestore di salvataggio, che viene eseguito una volta per
+ogni tentativo. Se il gestore cambia dei valori, può servire una nuova revisione, ma il gestore non
+viene eseguito di nuovo.
+
+`prepareSave({ intent: "draft" })` e l'azione di salvataggio della bozza mantengono i valori
+calcolati delle righe salvate senza una finestra di dialogo. Gli errori di validazione vengono
+riportati e consentono comunque una bozza del record principale, ma un errore di un gestore la
+impedisce. In `onSave`, salva anche il record e `freshness` insieme. Una scrittura offline riuscita
+è indipendente dalla successiva sincronizzazione con il server.
+
+I setter seguono le [regole dei valori](/it/core/engine/value-updates). `initialValues` e
+`overrideValues` sono più tolleranti, anche in sola lettura, dove i valori calcolati restano come
+sono stati forniti.
+
+## Valori nascosti
+
+Un campo con
+[`visible_preserve_value: false`](/it/core/fields/common-attributes#cancellare-un-valore-quando-un-campo-viene-nascosto)
+viene cancellato mentre l'utente modifica, anche nelle righe chiuse. Resta cancellato in
+`raw_values`, `repeatable` e nel record inviato. Gli altri campi conservano i valori quando vengono
+nascosti, e un modulo in sola lettura non cancella nulla.
+
+Per controllare i valori nascosti conservati nell'invio finale, imposta `validateHiddenValues`:
+
+```jsx
+<FormRenderer
+  engineOptions={{ events: { recordKind: "existing" } }}
+  schema={schema}
+  submissionOptions={{ validateHiddenValues: true }}
+  onSubmit={saveRecord}
+/>
+```
+
+Un valore nascosto che non rispetta le proprie regole blocca quindi **Submit**. L'utente può
+correggerlo rendendo di nuovo visibile il campo, oppure la tua applicazione può
+[risolverlo](#risolvere-un-valore-nascosto-che-non-supera-la-validazione). Inoltre,
+[controlla i valori nascosti sul tuo server](/it/core/schema/validation#controllare-i-valori-nascosti-su-un-server).
+Le bozze e i campi obbligatori nascosti e vuoti non sono interessati.
+
+## Risolvere un valore nascosto che non supera la validazione
+
+Con `validateHiddenValues` attivo, un valore nascosto che non rispetta le proprie regole blocca
+**Submit**, e l'utente non può raggiungere il campo per correggerlo. La scheda **Issues** del
+pannello di navigazione lo spiega. Per consentire alla tua applicazione di correggere il valore,
+passa `onResolveHiddenValue`. L'utente può quindi premere il risultato, che termina con **Resolve
+hidden value**, per eseguire il tuo gestore.
+
+```jsx
+import { Alert } from "react-native"
+
+const resolveHiddenValue = ({ fieldName }) =>
+  new Promise((resolve) => {
+    Alert.alert(
+      "Hidden value",
+      `Clear ${fieldName}?`,
+      [
+        { text: "Cancel", style: "cancel", onPress: () => resolve() },
+        { text: "Clear", style: "destructive", onPress: () => resolve({ value: null }) },
+      ],
+      { cancelable: true, onDismiss: () => resolve() },
+    )
+  })
+
+<FormRenderer
+  schema={schema}
+  engineOptions={{ events: { recordKind: "existing" } }}
+  submissionOptions={{ validateHiddenValues: true }}
+  onResolveHiddenValue={resolveHiddenValue}
+  onSubmit={saveRecord}
+/>
+```
+
+Il tuo gestore riceve `fieldName`, `fieldKey`, `instancePath`, `message` e una copia del `value`
+attuale. Può restituire:
+
+- `{ value: replacement }` per sostituire il valore, che deve rispettare le regole del campo
+- `{ value: null }` per cancellarlo
+- `undefined` o `null` per annullare
+
+Il campo resta nascosto, non viene eseguito alcun gestore di `change` o del ciclo di vita, e non
+viene salvato nulla finché l'utente non preme **Submit**. Se il record cambia mentre il gestore è in
+esecuzione, la risposta viene scartata e l'utente deve inviare di nuovo. Chiudi prima qualsiasi riga
+aperta. In un modulo in sola lettura, l'utente non può premere il risultato.
+
+Se cancellando il valore una riga resta senza risposte, la riga rimane nel record. Vedi
+[Righe vuote salvate](/it/core/output-records#righe-vuote-salvate).

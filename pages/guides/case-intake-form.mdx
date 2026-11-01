@@ -25,9 +25,7 @@ All of this behavior lives in one JSON schema. The application code only registe
 - **form0-cli**, installed with `npm install --global form0-cli`
 
 The React + Vite starter includes the required form0 packages. If you are using an existing
-application, it needs at least `form0-core` 0.4.1 and `form0-react` 0.2.2. Follow
-[Install and render with React](/bindings/react/install-render) to install or update them before
-copying the schema.
+application, see [Add a form to an existing React app](/guides/add-form-to-react-app).
 
 ## Build the form
 
@@ -430,8 +428,9 @@ A condition on a choice field compares the selected choice `value`, not its labe
 [Conditions and operators](/core/schema/conditions-operators).
 
 Hiding a field does not clear its value. If someone types an email address and then switches to
-**Phone**, the email address is still in the form values. Decide in your application whether hidden
-values should be kept.
+**Phone**, the email address is still in the form values. To clear it, add
+`"visible_preserve_value": false` to the field. See
+[Clear a value when a field is hidden](/core/fields/common-attributes#clear-a-value-when-a-field-is-hidden).
 
 ### Calculated priority
 
@@ -511,3 +510,5 @@ To go deeper:
   calculations that depend on each other.
 - [Submissions and connectors](/starter-apps/react-vite/submissions-connectors): where the submitted
   record goes in the starter, and how to send it to a database.
+- [Add a form to an existing React app](/guides/add-form-to-react-app): run this form in your own
+  application and send records to your API.

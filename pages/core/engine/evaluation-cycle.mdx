@@ -67,8 +67,9 @@ with `engine.getDiagnostics()`. They do not change `errors`, conditions, or even
 
 - **Conditions see calculated values.** Calculations run first, so a `visible_conditions` or
   `required_conditions` can reference a `CalculatedField` and always gets its current value.
-- **Calculations ignore visibility.** Hiding a field does not clear its value. A hidden field's
-  value is still in `values` and still counts in any calculation that references it.
+- **Calculations ignore visibility.** A hidden field keeps its value by default, so the value is
+  still in `values` and still counts in any calculation that references it. To clear it instead, see
+  [Clear a value when a field is hidden](/core/fields/common-attributes#clear-a-value-when-a-field-is-hidden).
 - **Validation covers every field.** Value errors are computed for hidden fields too. An empty
   required field is not an error in `errors`; the renderer or your application decides whether it
   blocks submission. See [Required fields and submission](/core/schema/validation).
@@ -92,17 +93,14 @@ The engine has no separate "update" step. When a user edits a field, the officia
 4. Dispatch `change` for the edited field, which runs any matching `ON("change", ...)` handler.
 
 Event handlers never change the form themselves. They return a list of operations, such as
-`SETVALUE` or `ALERT`, and the host applies them. When the host applies a `SETVALUE`, it writes the
-value and runs `eval()` again, but it does not dispatch another `change` event. A handler therefore
-cannot start a chain of change events by setting other fields.
+`SETVALUE` or `ALERT`, and the renderer or your application applies them. Applying a `SETVALUE`
+writes the value and runs `eval()` again, but it does not dispatch another `change` event. A handler
+therefore cannot start a chain of change events by setting other fields.
 
-<Callout type="info" title="Event support in the bindings">
-  form0-core defines a broader event vocabulary, including record, field, and repeatable-section
-  events. The official renderers currently dispatch the portable lifecycle events `load-record`,
-  `edit-record`, and `change`. Other events are not dispatched automatically because their timing
-  depends on the host application's workflow and UI. Applications can dispatch them explicitly with
-  `engine.trigger(...)`. Additional automatic dispatch may be considered individually, but schemas
-  should rely only on events documented by their host or binding. See [Event dispatch in official
+<Callout type="info" title="Events in the official renderers">
+  The official renderers dispatch lifecycle events by default, such as `load-record` and
+  `save-record`, as well as `change`, `focus`, and `blur`. If you use `form0-core` directly,
+  dispatch events yourself with `engine.trigger(...)`. See [Event dispatch in official
   bindings](/core/builtins/events-overview).
 </Callout>
 
@@ -117,31 +115,26 @@ const engine = createFormEngine({ schema, initialValues: { quantity: 2 } })
 engine.eval()
 
 // When the user changes a value:
-engine.getState().values.quantity = 3
-engine.eval()
+engine.setValue("quantity", 3)
 
 // Then dispatch the change event and apply the operations it returns.
 const operations = engine.trigger("change", "quantity")
 ```
 
-<Callout type="caution" title="Choice fields use runtime value shapes">
-  `initialValues` and direct writes to `engine.getState().values` must use the engine's live value
-  shape. For example, a `SingleChoiceField` or `BooleanField` uses
-  `{ "choice": [{ "value": "it", "label": "Italy" }], "other": [] }`, while a
-  `MultiChoiceField` uses `choices` instead of `choice`. This differs from a choice field's scalar or
-  array `default_value` in the schema. Official renderer field components produce these live shapes;
-  form0-core does not currently provide a public value-setting and normalization method.
-</Callout>
+`setValue()` and `setValues()` accept plain values, including a string ID for a choice field, and
+run the evaluation for you. Stored records use a different format. See
+[Value updates and normalization](/core/engine/value-updates).
 
 Your application is responsible for applying the returned operations and for deciding when an
 empty required field blocks submission.
 
-## Record-tree preparation
+## Evaluate a whole record
 
-`createRecordEvaluator({ schema, helpers, security })` shares the existing expression executor and
-scope rules, and coordinates actual root/child record instances. Hosts use this API to select and
-validate one snapshot before persistence, and apply its result through their renderer or controller.
-`engine.eval()` retains its existing intrinsic-state behavior.
+`engine.eval()` covers one record. A form with repeatable sections is a tree: a main record, its
+[rows](/core/fields/containers#repeatablesection), and any rows inside them. Use
+`createRecordEvaluator({ schema, helpers, security })` when you need a result for the whole tree,
+such as checking a record before you save it. It uses the same expressions and scope rules as the
+engine.
 
 ```js
 import { createRecordEvaluator } from "form0-core"
@@ -152,63 +145,126 @@ const refreshed = await evaluator.evaluate(snapshot, { mode: "refresh" })
 const prepared = await evaluator.prepareSubmission(snapshot)
 ```
 
-`snapshot` uses `{ values, repeatable }`. Each row retains its existing `id`, `values`, nested
-`repeatable`, attachments and metadata. Values use data_names; repeatable maps use schema keys when
-present. Stored choice objects must first be converted to live shape with existing record utilities.
-No call mutates the input, persists data, generates record IDs/timestamps or applies a proposal to UI.
+`snapshot` has the form `{ values, repeatable }`. Values use `data_name`s, and repeatable maps use
+schema keys when they exist. Each row keeps its `id`, `values`, nested `repeatable`, attachments,
+and metadata. To start from a stored record, convert it with
+[`buildFormRecordSnapshot`](/core/output-records#load-a-stored-record).
 
-Accepted mode keeps closed child calculations and recomputes root aggregates from accepted values.
-Saving a child amount from 100 to 150 updates the aggregate when the host supplies that accepted row;
-cancelling the edit does not. Refresh mode prepares all child calculations together. With tax changed
-from 10% to 20%, accepted child total 110 becomes proposed 120. Validation and output use the same
-selected snapshot. Real record-spanning dependency cycles fail without a partial snapshot; local
-calculation diagnostics retain their existing separate semantics.
+None of these calls changes `snapshot`, saves data, creates record IDs or timestamps, or updates a
+form on screen.
 
-`prepareSubmission` accepts `intent: 'submit' | 'draft'`, `mode: 'automatic' | 'confirm'`,
-`allowRetain: true`, and `managedEvents: true` (both flags default false). Automatic is the default;
-a host-required confirmation cannot weaken schema confirmation. Changed child values in confirm
-mode return `status: 'requires_decision'`, `reviewId`, `proposal`, `changes`, `choices` and
-`snapshot: null`. The proposal is for review, not delivery. After an explicit host/user decision,
-call again with current inputs, identical policy options and
-`decision: { reviewId, action: 'refresh' | 'retain' | 'cancel' }`. Retention requires host permission
-on both calls. New preparations, changed inputs/options or another evaluator invalidate the review;
-acceptance uses the captured values, and decisions are single-use.
+### Keep or refresh saved rows
 
-Check `eligible` before delivery. Status is `ready`, `blocked`, `requires_decision`, `failed` or
-`cancelled`. `validationSummary`, calculation `diagnostics` and execution `issues` remain separate.
-Drafts retain child calculations without a dialog and allow ordinary validation failures. They still
-report those failures and pending freshness; execution failures prevent eligibility.
+A saved row stores its calculated values. `evaluate()` lets you choose what to do with them:
 
-Persist `freshness` separately from the record: `{ version: 1, status: 'current' | 'pending',
-schemaRevision, affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }] }`. Restore it for the host's
-pending-state UI. Every new preparation recomputes from current inputs; metadata is not a replayable
-proposal. Clear stored pending status only after persisting the corresponding current result.
+- **By default**, saved rows keep their calculated values, and the main record's totals are worked
+  out from them. If a row's amount goes from 100 to 150 and your application passes in that saved
+  row, the total updates. If the user cancels the edit, it does not.
+- **With `mode: "refresh"`**, all rows are recalculated together. If a tax rate goes from 10% to
+  20%, a saved row total of 110 becomes 120 in the result.
 
-Each affected entry represents one row; `fields` lists its changed calculation identities. Complete
-ancestry is stored once per row, preserving ID zero and positional targeting. Current freshness has
-an empty affected list.
+Validation and output use that same result. A dependency cycle that spans records fails and returns
+no snapshot. Calculation diagnostics inside one record are reported as usual.
 
-Handler registration uses each selected scope; parsing and compilation are shared.
+### Prepare a submission
 
-Managed preparation runs root and participating closed-row validation only, with current selected
-ancestor values. It does not replay closed-row load/edit/save/unload. Hosts keep the existing
-validate → save once → conditional re-evaluate/revalidate → serialize sequence. Changed save-hook
-inputs invalidate an earlier review without rerunning that hook. `event.isValid` describes built-in
-validity of its executing scope; combined tree validity is in the summary.
+`prepareSubmission(snapshot, options)` produces the snapshot to save, after calculations and
+validation. Check `eligible` before you save it.
 
-Evaluation supports `signal`, an 8ms default scheduling target (`budgetMs`) and optional async
-`yieldToHost`. Individual expressions remain synchronous and can exceed a scheduling slice. Schema
-analysis is shared; no permanent engine per closed row is required. Preview sessions also expose
-`runRecord({ snapshot, instancePath })` for explicit tree-aware calculation preview.
+| Option                 | Values                     | Default       | Purpose                                                                          |
+| ---------------------- | -------------------------- | ------------- | -------------------------------------------------------------------------------- |
+| `intent`               | `"submit"`, `"draft"`      | `"submit"`    | Whether this is a final submission or a draft.                                   |
+| `mode`                 | `"automatic"`, `"confirm"` | `"automatic"` | Whether changed rows need a review.                                              |
+| `allowRetain`          | Boolean                    | `false`       | Lets a review keep older calculated values.                                      |
+| `managedEvents`        | Boolean                    | `false`       | Runs validation handlers.                                                        |
+| `validateHiddenValues` | Boolean                    | `false`       | [Checks hidden values](/core/schema/validation#check-hidden-values-on-a-server). |
+
+`status` is `ready`, `blocked`, `requires_decision`, `failed`, or `cancelled`. Validation findings
+(`validationSummary`), calculation `diagnostics`, and execution `issues` are reported separately.
+
+By default, changed row values are refreshed automatically. A draft (`intent: "draft"`) instead
+keeps the rows' saved calculated values without a review, and it can be eligible with validation
+errors. It still reports those errors and the rows that are out of date. A handler that fails makes
+it ineligible.
+
+### Review changed rows
+
+Use a review when users should see recalculated values before they are saved. Pass
+`mode: "confirm"`, or set `"repeatable_recalculation": "confirm"` in the form. `mode: "automatic"`
+cannot turn off a confirmation set in the schema.
+
+If any row value would change, `prepareSubmission()` returns `status: "requires_decision"`, with
+`reviewId`, `proposal`, `changes`, `choices`, and `snapshot: null`. Show `proposal` to the user, but
+do not save it. After the user decides, call `prepareSubmission()` again with the same inputs and
+options, plus the decision:
+
+```js
+const prepared = await evaluator.prepareSubmission(snapshot, { mode: "confirm" })
+
+if (prepared.status === "requires_decision") {
+  showReview(prepared.proposal, prepared.changes)
+}
+
+// After the user decides, with the same evaluator, snapshot, and options:
+const result = await evaluator.prepareSubmission(snapshot, {
+  mode: "confirm",
+  decision: { reviewId: prepared.reviewId, action: "refresh" },
+})
+```
+
+`action` is `refresh`, `retain`, or `cancel`. `retain` keeps the older calculated values and needs
+`allowRetain: true` on both calls. Without it, the call fails with `retention_not_allowed`.
+
+A review ends when you start another preparation, change the inputs or options, or use another
+evaluator. A decision works once, and it applies the values captured for the review.
+
+### Save `freshness` with the record
+
+`freshness` says whether a record's stored calculations are up to date. A record is `pending` when
+the user kept older values or saved a draft:
+
+```js
+{
+  version: 1,
+  status: "pending", // or "current"
+  schemaRevision: "form0-bffe7ba2caa7302e",
+  affected: [{ instancePath, fields: [{ fieldName, fieldKey }] }],
+}
+```
+
+Save it beside the record, not inside it, and restore it so your application can show which rows are
+out of date. Clear a stored `pending` status only after you save the matching current result. Each
+preparation works from the current inputs, so stored `freshness` cannot replay an old proposal.
+
+Each `affected` entry is one row, and `fields` lists the calculated fields that changed in it.
+`instancePath` is the complete path to the row, which keeps ID zero and position-based rows exact.
+When `status` is `current`, `affected` is empty.
+
+### Validation handlers in a submission
+
+With `managedEvents: true`, `prepareSubmission()` runs validation handlers for the main record and
+for closed rows, using the current values of their parents. It does not replay the load, edit, save,
+or unload events of closed rows. `event.isValid` describes only the record the handler runs in. The
+result for the whole tree is in `validationSummary`.
+
+If your application runs save handlers itself, keep this order: validate, run the save handler once,
+evaluate and validate again if it changed values, and then build the record. A save handler that
+changes inputs ends an earlier review, and it does not run again.
+
+### Long evaluations
+
+Large trees can take time. Pass `signal` to cancel an evaluation, `budgetMs` to set a target for
+each slice of work (8 ms by default), and `yieldToHost`, an async function that lets your interface
+respond between slices. A single expression always runs to the end, so it can exceed that target.
+Rows share one schema analysis, so you do not need an engine for each closed row.
+
+Preview sessions also offer `runRecord({ snapshot, instancePath })` to preview calculations across
+the tree.
 
 ## Evaluate one open record
 
-`evaluateScope()` evaluates only the selected record, using supplied current ancestors and accepted
-other rows. An empty `instancePath` selects the root. Child paths contain every ancestry segment;
-identified rows resolve by ID, including zero. Positional paths refer to the captured ordering.
-Invalid paths fail explicitly. The result contains `state`, built-in `validationSummary`, changes,
-diagnostics and execution issues, with no additional complete record tree. It does not mutate the
-caller, refresh closed rows, run lifecycle events, persist data or generate IDs/timestamps.
+Use `evaluateScope()` while a user edits one record, such as an open row. It evaluates only that
+record, using the current values of its parents and the saved values of other rows:
 
 ```js
 const editor = await evaluator.evaluateScope(snapshot, {
@@ -222,18 +278,89 @@ if (editor.status === "evaluated") {
 }
 ```
 
-For example, a project with accepted task costs `[10,20]` and a local surcharge of `5` displays
-`35` while editing. Cancelling leaves the parent's accepted aggregate unchanged. Saving the project
-accepts those values and updates its parent's aggregate. Whole-record submission still uses
-`prepareSubmission()`; intrinsic `engine.eval()` retains its existing scalar contract.
+An empty `instancePath` selects the main record. A row's path has one segment for each level of
+nesting. A row with an ID is found by that ID, including zero, and a row without one is found by its
+position in the snapshot. An invalid path fails with an error.
 
-## Accepted-snapshot viewing
+The result contains `state`, built-in `validationSummary`, changes, diagnostics, and execution
+issues, but not a whole tree. The call does not change your input, refresh closed rows, run
+lifecycle events, save data, or create IDs or timestamps.
 
-Scalar engines accept `mode: 'readonly' | 'edit'` (default `edit`). In readonly, `eval()` computes
-conditions and intrinsic validation from supplied values, preserving calculations and not applying
-missing schema defaults. The host can call `setMode('edit')`, then `eval()`; `getMode()` reads the
-current mode. Switching mode does not replay load, restore older database values or persist work.
+For example, a project with saved task costs `[10,20]` and a local surcharge of `5` shows `35` while
+the user edits it. Cancelling leaves the saved total in the parent unchanged. Saving the project
+keeps those values and updates the parent's total. To submit a whole record, use
+`prepareSubmission()`.
 
-For a record tree, use `evaluateScope(snapshot, { interactionMode: 'readonly', instancePath })`.
-It returns field state and built-in validation from supplied accepted values without calculations.
-Editing is the default. Whole-tree `evaluate()` and `prepareSubmission()` policies are unchanged.
+## View a record without editing
+
+To show a saved record, create the engine with `mode: "readonly"`. `eval()` then works out
+conditions and validation from the values you supply, keeps calculated values as they are, and does
+not apply missing defaults. The default mode is `"edit"`.
+
+To let the user edit, call `setMode("edit")` and then `eval()`. `getMode()` returns the current
+mode. Changing mode does not run load events again, restore older database values, or save anything.
+
+For a record tree, use `evaluateScope(snapshot, { interactionMode: "readonly", instancePath })`. It
+returns field state and built-in validation from the values you supply, without calculations.
+
+## Clear hidden values
+
+If a field sets
+[`visible_preserve_value`](/core/fields/common-attributes#clear-a-value-when-a-field-is-hidden) to
+`false`, evaluation clears it when it is hidden. Clearing a value can change calculations and
+conditions, which can hide more fields, so evaluation repeats until nothing changes. This runs no
+`change` or lifecycle events. Schemas that do not use the attribute skip this step.
+
+`evaluate()`, `evaluateScope()`, and `prepareSubmission()` list what they cleared in
+`clearedFields`:
+
+```js
+;[{ instancePath: [], fieldName: "email", fieldKey: "email" }]
+```
+
+Entries never contain the old value. If you keep the form's state yourself, clear the listed fields,
+including those in rows you are not showing. Your `snapshot` does not change, and a read-only
+evaluation clears nothing. Clearing has no effect on whether saved rows keep or refresh their
+calculated values.
+
+## Resolve a hidden value that fails validation
+
+When you pass `validateHiddenValues`, `prepareSubmission()` and `validateSubmission()` mark each
+hidden value that fails its own rules with `hidden: true`. To replace or clear one of those values
+in your own code, inspect it first and then correct it:
+
+```js
+const finding = { fieldName: "hidden_note", instancePath: [] }
+const inspected = await evaluator.inspectHiddenValue(snapshot, finding)
+
+if (inspected.status === "inspected") {
+  // inspected.value holds the current value. Decide what to do with it.
+  const corrected = await evaluator.correctHiddenValue(snapshot, { ...finding, value: null })
+
+  if (corrected.status === "evaluated") {
+    // Use corrected.snapshot, unless the record changed since you inspected it.
+  }
+}
+```
+
+- `inspectHiddenValue()` checks that the value is still hidden and still fails. It returns a copy in
+  `value`.
+- `correctHiddenValue()` takes a replacement that passes the field's own rules, or `null` to clear
+  the value. It returns the updated record in `snapshot` and the result of the checks in
+  `validationSummary`.
+
+Neither method changes your `snapshot`, shows the field, runs `change` or lifecycle handlers,
+deletes rows, or saves anything. Saved rows keep their calculated values, as they do with
+`evaluate()`.
+
+If something goes wrong, `status` is `"failed"` and `issues` has one of these codes:
+
+- `hidden_value_not_invalid`: the value no longer fails, or the field is no longer hidden.
+- `invalid_replacement`: the replacement fails the field's own rules.
+- `readonly_scope`: you passed `interactionMode: "readonly"`.
+
+Make sure the record has not changed before you use `corrected.snapshot`. The bindings and the CLI
+preview do this for you, and they ask for any open row to be closed first.
+
+If clearing the value leaves a row with no answers, the row stays in the record. See
+[Saved empty rows](/core/output-records#saved-empty-rows).

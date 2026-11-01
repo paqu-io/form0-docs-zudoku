@@ -25,10 +25,8 @@ registrare il modulo.
 - **Node.js** `22.19.0+`
 - **form0-cli**, installato con `npm install --global form0-cli`
 
-Lo starter React + Vite include i pacchetti form0 necessari. Se usi un'applicazione esistente,
-servono almeno `form0-core` 0.4.1 e `form0-react` 0.2.2. Segui
-[Installazione e rendering con React](/it/bindings/react/install-render) per installarli o
-aggiornarli prima di copiare lo schema.
+Lo starter React + Vite include i pacchetti form0 necessari. Se usi un'applicazione esistente, vedi
+[Aggiungi un modulo a un'app React esistente](/it/guides/add-form-to-react-app).
 
 ## Crea il modulo
 
@@ -431,8 +429,9 @@ Una condizione su un campo a scelta confronta il `value` della scelta selezionat
 etichetta. Vedi [Condizioni e operatori](/it/core/schema/conditions-operators).
 
 Nascondere un campo non ne cancella il valore. Se qualcuno inserisce un indirizzo email e poi passa
-a **Phone**, l'indirizzo resta nei valori del modulo. Decidi nella tua applicazione se i valori
-nascosti vanno conservati.
+a **Phone**, l'indirizzo resta nei valori del modulo. Per cancellarlo, aggiungi
+`"visible_preserve_value": false` al campo. Vedi
+[Cancellare un valore quando un campo viene nascosto](/it/core/fields/common-attributes#cancellare-un-valore-quando-un-campo-viene-nascosto).
 
 ### Priorità calcolata
 
@@ -512,3 +511,5 @@ Per approfondire:
   che dipendono l'uno dall'altro.
 - [Invii e connettori](/it/starter-apps/react-vite/submissions-connectors): dove finisce il record
   inviato nello starter e come mandarlo a un database.
+- [Aggiungi un modulo a un'app React esistente](/it/guides/add-form-to-react-app): esegui questo
+  modulo nella tua applicazione e invia i record alla tua API.

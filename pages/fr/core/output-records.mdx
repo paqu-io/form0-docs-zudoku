@@ -36,9 +36,10 @@ const record = createStructuredRecord(state, fields, {
 
 ### Sérialisation coopérative
 
-Pour un grand enregistrement évalué, `createStructuredRecordAsync` utilise la même transformation
-et rend le contrôle à l'environnement entre les lignes. Gardez l'état, les champs et les options
-stables jusqu'à la fin ; les contrôleurs de soumission des bindings possèdent déjà l'instantané choisi.
+Pour un grand enregistrement évalué, `createStructuredRecordAsync` utilise la même transformation et
+rend le contrôle à l'environnement entre les [lignes](/fr/core/fields/containers#repeatablesection).
+Gardez l'état, les champs et les options stables jusqu'à la fin ; les contrôleurs de soumission des
+bindings possèdent déjà l'instantané choisi.
 
 ```js
 const abortController = new AbortController()
@@ -57,12 +58,61 @@ const record = await createStructuredRecordAsync(
 )
 ```
 
-Le quatrième argument contrôle la planification et reste hors de l'enregistrement. `yieldToHost`
-est une fonction facultative renvoyant une promesse pour une tâche de l'environnement ; sans elle,
-core utilise un temporisateur. L'annulation rejette la promesse avec `AbortError` sans renvoyer
+Le quatrième argument contrôle la planification et reste hors de l'enregistrement. `yieldToHost` est
+une fonction facultative renvoyant une promesse pour une tâche de l'environnement ; sans elle, core
+utilise un temporisateur. L'annulation rejette la promesse avec `AbortError` sans renvoyer
 d'enregistrement partiel. Cette méthode n'effectue ni calcul, ni validation, ni persistance. Elle
-conserve la structure du sérialiseur synchrone, l'ID zéro, l'ordre des lignes, le format des médias,
-les titres et les règles d'horodatage. Les formateurs de champs restent synchrones.
+renvoie le même enregistrement que `createStructuredRecord`. Les formateurs de champs sont
+synchrones.
 
 Les sections répétables créent des enregistrements imbriqués. Utilisez `originalElements` pour conserver
 la bonne structure d'imbrication lors de la création des enregistrements.
+
+Quelle que soit la façon de définir une valeur, l’enregistrement soumis utilise le même format : SingleChoice/Boolean utilise choice_value et other_value ; MultiChoice utilise choices_value et other_value. [Voir le contrat de mise à jour des valeurs](/fr/core/engine/value-updates).
+
+## Charger un enregistrement stocké
+
+Utilisez `buildFormRecordSnapshot(schema, record)` pour reconvertir un enregistrement stocké en
+valeurs exploitables par form0, par exemple pour le rouvrir. La fonction renvoie `raw_values`,
+`repeatable` et `timestamps`, la même forme que `initialSnapshot`.
+
+```jsx
+import { buildFormRecordSnapshot } from "form0-core"
+import { FormRenderer } from "form0-react"
+
+export function SavedCase({ schema, savedRecord }) {
+  const snapshot = buildFormRecordSnapshot(schema, savedRecord)
+
+  return (
+    <FormRenderer
+      engineOptions={{ events: { recordKind: "existing" } }}
+      schema={schema}
+      initialSnapshot={snapshot}
+    />
+  )
+}
+```
+
+Elle lève une erreur si un champ a une forme incorrecte, comme un champ de choix stocké en texte
+simple. Pour vérifier un enregistrement stocké par rapport au schéma, passez `raw_values` et
+`repeatable` à `createRecordEvaluator().prepareSubmission()`.
+
+## Lignes vides enregistrées
+
+Une [ligne](/fr/core/fields/containers#repeatablesection) enregistrée reste dans l’enregistrement
+même si toutes ses réponses sont vides. Par exemple, si un utilisateur ajoute une ligne à une
+commande, laisse vides les champs facultatifs `product` et `quantity` et enregistre la ligne,
+l’enregistrement soumis l’inclut quand même. Sous forme abrégée, la ligne se présente ainsi :
+
+```json
+{
+  "id": "01a1924c-66df-79b8-bdf8-2100ba684129",
+  "created_at": "2026-10-31T14:10:43.043Z",
+  "form_values": { "product": null, "quantity": null }
+}
+```
+
+Cela s’applique aussi aux lignes imbriquées. Une section répétable sans ligne reste vide.
+
+Pour empêcher l’enregistrement d’une ligne vide, marquez l’un de ses champs comme `required`. Pour
+exclure une ligne de l’enregistrement, annulez-la avant de l’enregistrer ou supprimez-la.

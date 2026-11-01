@@ -36,9 +36,10 @@ const record = createStructuredRecord(state, fields, {
 
 ### Cooperative serialization
 
-For a large evaluated record, `createStructuredRecordAsync` uses the same transformation and
-yields to the host between rows. Keep the supplied state, fields and options stable until it
-finishes; binding submission controllers already own the selected snapshot.
+For a large evaluated record, `createStructuredRecordAsync` uses the same transformation and yields
+to the host between [rows](/core/fields/containers#repeatablesection). Keep the supplied state,
+fields and options stable until it finishes; binding submission controllers already own the selected
+snapshot.
 
 ```js
 const abortController = new AbortController()
@@ -60,8 +61,57 @@ const record = await createStructuredRecordAsync(
 The fourth argument controls scheduling and stays outside the record. `yieldToHost` is an optional
 function returning a promise for a host task; without it, core uses a timer. Cancellation rejects
 with `AbortError` and returns no partial record. This method performs no calculation, validation or
-persistence. It preserves the synchronous serializer's record shape, ID zero, row order, media
-formatting, titles and timestamp rules. Individual field formatters remain synchronous.
+persistence. It returns the same record as `createStructuredRecord`. Individual field formatters are
+synchronous.
 
 Repeatable sections create nested records. Use `originalElements` to preserve the correct nesting
 structure when building records.
+
+However a value is set, the submitted record uses the same format: SingleChoice/Boolean uses choice_value and other_value; MultiChoice uses choices_value and other_value. [See the value-update contract](/core/engine/value-updates).
+
+## Load a stored record
+
+Use `buildFormRecordSnapshot(schema, record)` to turn a stored record back into values form0 can
+work with, for example to reopen a saved record. It returns `raw_values`, `repeatable`, and
+`timestamps`, the same shape as `initialSnapshot`.
+
+```jsx
+import { buildFormRecordSnapshot } from "form0-core"
+import { FormRenderer } from "form0-react"
+
+export function SavedCase({ schema, savedRecord }) {
+  const snapshot = buildFormRecordSnapshot(schema, savedRecord)
+
+  return (
+    <FormRenderer
+      engineOptions={{ events: { recordKind: "existing" } }}
+      schema={schema}
+      initialSnapshot={snapshot}
+    />
+  )
+}
+```
+
+It throws an error if a field has the wrong shape, such as a choice field stored as a plain string.
+To check a stored record against the schema, pass `raw_values` and `repeatable` to
+`createRecordEvaluator().prepareSubmission()`.
+
+## Saved empty rows
+
+A saved [row](/core/fields/containers#repeatablesection) stays in the record even when all its
+answers are empty. For example, if a user adds a row to an order, leaves the optional `product` and
+`quantity` fields blank, and saves the row, the submitted record still includes it. Shortened, the
+row looks like this:
+
+```json
+{
+  "id": "01a1924c-66df-79b8-bdf8-2100ba684129",
+  "created_at": "2026-10-31T14:10:43.043Z",
+  "form_values": { "product": null, "quantity": null }
+}
+```
+
+This also applies to rows inside rows. A repeatable section with no rows stays empty.
+
+To stop users from saving an empty row, mark one of its fields as `required`. To leave a row out of
+the record, cancel it before saving or remove it.

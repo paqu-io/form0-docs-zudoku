@@ -463,7 +463,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "en",
     "title": "Modes and navigation",
-    "description": "Configure editing, headers, sections, repeatable entries, and validation navigation.",
+    "description": "Configure editing, headers, sections, repeatable rows, and validation navigation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -2245,7 +2245,7 @@
     "translationKey": "/core/builtins/events/invalid",
     "locale": "en",
     "title": "INVALID",
-    "description": "Synchronous custom validation messages for managed form events.",
+    "description": "Reject a submission with your own validation message.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -2488,7 +2488,7 @@
     "translationKey": "/core/engine/events-operations",
     "locale": "en",
     "title": "Events and operations",
-    "description": "How form0 event handlers are registered and run, what they can read, and how the operations they return reach the host application.",
+    "description": "How form0 event handlers are registered and run, what they can read, and how the operations they return reach your application.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -2534,6 +2534,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/engine/parent-child-scopes"
+      }
+    ]
+  },
+  "/core/engine/value-updates": {
+    "pathname": "/core/engine/value-updates",
+    "translationKey": "/core/engine/value-updates",
+    "locale": "en",
+    "title": "Value updates and normalization",
+    "description": "Supported setters, strict choice inputs, loading, and record formats.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/value-updates"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/value-updates"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/value-updates"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/value-updates"
       }
     ]
   },
@@ -3406,7 +3433,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "es",
     "title": "Modos y navegación",
-    "description": "Configura la edición, los encabezados, las secciones, las entradas repetibles y la navegación de validación.",
+    "description": "Configura la edición, los encabezados, las secciones, las filas repetibles y la navegación de validación.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5188,7 +5215,7 @@
     "translationKey": "/core/builtins/events/invalid",
     "locale": "es",
     "title": "INVALID",
-    "description": "Mensajes de validación personalizada síncrona para eventos gestionados.",
+    "description": "Rechaza un envío con tu propio mensaje de validación.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5431,7 +5458,7 @@
     "translationKey": "/core/engine/events-operations",
     "locale": "es",
     "title": "Eventos y operaciones",
-    "description": "Cómo se registran y ejecutan los manejadores de eventos de form0, qué pueden leer y cómo llegan a la aplicación host las operaciones que devuelven.",
+    "description": "Cómo se registran y ejecutan los manejadores de eventos de form0, qué pueden leer y cómo llegan a tu aplicación las operaciones que devuelven.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -5477,6 +5504,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/engine/parent-child-scopes"
+      }
+    ]
+  },
+  "/es/core/engine/value-updates": {
+    "pathname": "/es/core/engine/value-updates",
+    "translationKey": "/core/engine/value-updates",
+    "locale": "es",
+    "title": "Actualización y normalización de valores",
+    "description": "Setters admitidos, entradas de elección estrictas, carga y formatos de registro.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/value-updates"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/value-updates"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/value-updates"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/value-updates"
       }
     ]
   },
@@ -5963,6 +6017,60 @@
       {
         "locale": "it",
         "pathname": "/it/getting-started/schema-edit"
+      }
+    ]
+  },
+  "/es/getting-started/upgrade-notes": {
+    "pathname": "/es/getting-started/upgrade-notes",
+    "translationKey": "/getting-started/upgrade-notes",
+    "locale": "es",
+    "title": "Notas de actualización",
+    "description": "Qué cambiar en tu aplicación al actualizar los paquetes de form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/upgrade-notes"
+      }
+    ]
+  },
+  "/es/guides/add-form-to-react-app": {
+    "pathname": "/es/guides/add-form-to-react-app",
+    "translationKey": "/guides/add-form-to-react-app",
+    "locale": "es",
+    "title": "Añade un formulario a una aplicación React existente",
+    "description": "Añade el formulario de registro de casos a una aplicación React, envía cada registro a tu propia API y compruébalo en tu servidor.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/add-form-to-react-app"
       }
     ]
   },
@@ -6889,7 +6997,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "fr",
     "title": "Modes et navigation",
-    "description": "Configurez l’édition, les en-têtes, les sections, les entrées répétables et la navigation de validation.",
+    "description": "Configurez l’édition, les en-têtes, les sections, les lignes répétables et la navigation de validation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8671,7 +8779,7 @@
     "translationKey": "/core/builtins/events/invalid",
     "locale": "fr",
     "title": "INVALID",
-    "description": "Messages synchrones de validation personnalisée pour les événements gérés.",
+    "description": "Rejetez une soumission avec votre propre message de validation.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8914,7 +9022,7 @@
     "translationKey": "/core/engine/events-operations",
     "locale": "fr",
     "title": "Événements et opérations",
-    "description": "Comment les gestionnaires d'événements form0 sont enregistrés et exécutés, ce qu'ils peuvent lire et comment les opérations qu'ils renvoient parviennent à l'application host.",
+    "description": "Comment les gestionnaires d'événements form0 sont enregistrés et exécutés, ce qu'ils peuvent lire et comment les opérations qu'ils renvoient parviennent à votre application.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -8960,6 +9068,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/engine/parent-child-scopes"
+      }
+    ]
+  },
+  "/fr/core/engine/value-updates": {
+    "pathname": "/fr/core/engine/value-updates",
+    "translationKey": "/core/engine/value-updates",
+    "locale": "fr",
+    "title": "Mise à jour et normalisation des valeurs",
+    "description": "Setters pris en charge, entrées de choix strictes, chargement et formats d’enregistrement.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/value-updates"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/value-updates"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/value-updates"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/value-updates"
       }
     ]
   },
@@ -9446,6 +9581,60 @@
       {
         "locale": "it",
         "pathname": "/it/getting-started/schema-edit"
+      }
+    ]
+  },
+  "/fr/getting-started/upgrade-notes": {
+    "pathname": "/fr/getting-started/upgrade-notes",
+    "translationKey": "/getting-started/upgrade-notes",
+    "locale": "fr",
+    "title": "Notes de mise à niveau",
+    "description": "Ce qu’il faut changer dans votre application lors de la mise à niveau des paquets form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/upgrade-notes"
+      }
+    ]
+  },
+  "/fr/guides/add-form-to-react-app": {
+    "pathname": "/fr/guides/add-form-to-react-app",
+    "translationKey": "/guides/add-form-to-react-app",
+    "locale": "fr",
+    "title": "Ajouter un formulaire à une application React existante",
+    "description": "Ajoutez le formulaire d’ouverture de dossier à une application React, envoyez chaque enregistrement à votre propre API et vérifiez-le sur votre serveur.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/add-form-to-react-app"
       }
     ]
   },
@@ -9989,6 +10178,60 @@
       }
     ]
   },
+  "/getting-started/upgrade-notes": {
+    "pathname": "/getting-started/upgrade-notes",
+    "translationKey": "/getting-started/upgrade-notes",
+    "locale": "en",
+    "title": "Upgrade notes",
+    "description": "What to change in your application when you upgrade form0 packages.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/upgrade-notes"
+      }
+    ]
+  },
+  "/guides/add-form-to-react-app": {
+    "pathname": "/guides/add-form-to-react-app",
+    "translationKey": "/guides/add-form-to-react-app",
+    "locale": "en",
+    "title": "Add a form to an existing React app",
+    "description": "Add the case intake form to a React application, send each record to your own API, and check it on your server.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/add-form-to-react-app"
+      }
+    ]
+  },
   "/guides/case-intake-form": {
     "pathname": "/guides/case-intake-form",
     "translationKey": "/guides/case-intake-form",
@@ -10480,7 +10723,7 @@
     "translationKey": "/bindings/react-native/modes-navigation",
     "locale": "it",
     "title": "Modalità e navigazione",
-    "description": "Configura modifica, intestazioni, sezioni, voci ripetibili e navigazione della validazione.",
+    "description": "Configura modifica, intestazioni, sezioni, righe ripetibili e navigazione della validazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12262,7 +12505,7 @@
     "translationKey": "/core/builtins/events/invalid",
     "locale": "it",
     "title": "INVALID",
-    "description": "Messaggi sincroni di validazione personalizzata per gli eventi gestiti.",
+    "description": "Rifiuta un invio con un tuo messaggio di validazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12505,7 +12748,7 @@
     "translationKey": "/core/engine/events-operations",
     "locale": "it",
     "title": "Eventi e operazioni",
-    "description": "Come vengono registrati ed eseguiti i gestori di eventi di form0, cosa possono leggere e come le operazioni che restituiscono arrivano all'applicazione host.",
+    "description": "Come vengono registrati ed eseguiti i gestori di eventi di form0, cosa possono leggere e come le operazioni che restituiscono arrivano alla tua applicazione.",
     "indexable": true,
     "status": "published",
     "alternates": [
@@ -12551,6 +12794,33 @@
       {
         "locale": "it",
         "pathname": "/it/core/engine/parent-child-scopes"
+      }
+    ]
+  },
+  "/it/core/engine/value-updates": {
+    "pathname": "/it/core/engine/value-updates",
+    "translationKey": "/core/engine/value-updates",
+    "locale": "it",
+    "title": "Aggiornamento e normalizzazione dei valori",
+    "description": "Setter supportati, input di scelta rigorosi, caricamento e formati dei record.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/core/engine/value-updates"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/core/engine/value-updates"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/core/engine/value-updates"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/core/engine/value-updates"
       }
     ]
   },
@@ -13037,6 +13307,60 @@
       {
         "locale": "it",
         "pathname": "/it/getting-started/schema-edit"
+      }
+    ]
+  },
+  "/it/getting-started/upgrade-notes": {
+    "pathname": "/it/getting-started/upgrade-notes",
+    "translationKey": "/getting-started/upgrade-notes",
+    "locale": "it",
+    "title": "Note di aggiornamento",
+    "description": "Cosa cambiare nella tua applicazione quando aggiorni i pacchetti form0.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/getting-started/upgrade-notes"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/getting-started/upgrade-notes"
+      }
+    ]
+  },
+  "/it/guides/add-form-to-react-app": {
+    "pathname": "/it/guides/add-form-to-react-app",
+    "translationKey": "/guides/add-form-to-react-app",
+    "locale": "it",
+    "title": "Aggiungi un modulo a un'app React esistente",
+    "description": "Aggiungi il modulo di apertura pratiche a un'applicazione React, invia ogni record alla tua API e controllalo sul tuo server.",
+    "indexable": true,
+    "status": "published",
+    "alternates": [
+      {
+        "locale": "en",
+        "pathname": "/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "es",
+        "pathname": "/es/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "fr",
+        "pathname": "/fr/guides/add-form-to-react-app"
+      },
+      {
+        "locale": "it",
+        "pathname": "/it/guides/add-form-to-react-app"
       }
     ]
   },
