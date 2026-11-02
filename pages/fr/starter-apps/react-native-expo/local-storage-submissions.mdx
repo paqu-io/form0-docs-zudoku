@@ -24,6 +24,16 @@ soumission est insérée avec les métadonnées de l’enregistrement et l’enr
 au format JSON. Les contrôles de débogage inclus permettent de lister ou d’effacer les
 enregistrements lorsque `debug` est activé.
 
+## Photos et vidéos
+
+`PhotoField` et `VideoField` prennent des photos et des vidéos avec l’appareil photo ou les
+choisissent dans la galerie au moyen de `src/lib/media-picker.js`, qui utilise `expo-image-picker` ;
+`Form0Form` le passe à `FormRenderer` en tant que `mediaPicker`. Les fichiers du sélecteur lui-même
+sont temporaires : les fichiers choisis sont donc copiés dans le dossier de documents de
+l’application, sous `form0-media/`. Les enregistrements conservent l’`url` locale de chaque fichier
+avec `upload_status: "local"`, et rien n’est envoyé. Retirer un élément d’un enregistrement ne
+supprime pas son fichier.
+
 ## La persistance n’est pas la synchronisation
 
 Ce stockage assure uniquement la persistance sur l’appareil. Il n’envoie pas les enregistrements, ne

@@ -26,9 +26,10 @@ gestiona el starter y reinicia Metro después de añadir recursos nuevos.
 ## Un campo indica que no es compatible o que es provisional
 
 Consulta [Renderers de campo integrados](/es/bindings/react-native/built-in-renderers).
-`PhotoField`, `VideoField` y `FormLinkField` necesitan renderers propios de la aplicación para
-funcionar en producción. Asegúrate de pasar la sustitución al mismo `FormRenderer` o proveedor de
-registro que renderiza el formulario.
+`FormLinkField` necesita un renderer propio de la aplicación para funcionar en producción.
+`PhotoField` y `VideoField` muestran un marcador provisional hasta que `FormRenderer` recibe un
+`mediaPicker`. Asegúrate de pasar la sustitución al mismo `FormRenderer` o proveedor de registro que
+renderiza el formulario.
 
 ## El envío no se ejecuta
 

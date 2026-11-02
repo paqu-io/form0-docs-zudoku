@@ -28,6 +28,8 @@ application API for remote storage.
 
 ## Media boundary
 
-Photo and video capture require custom renderers. Those renderers own runtime permissions, capture,
-local identifiers, previews, background upload, and cleanup. Keep durable identifiers in form
-values; do not assume a temporary file URI will remain valid across application restarts.
+The built-in `PhotoField` and `VideoField` capture through the `mediaPicker` passed to
+`FormRenderer`; see [Built-in field renderers](/bindings/react-native/built-in-renderers). Your
+picker, or your custom renderers, own runtime permissions, file storage, background upload, and
+cleanup. Keep durable identifiers in form values; do not assume a temporary file URI will remain
+valid across application restarts.

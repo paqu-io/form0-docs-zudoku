@@ -32,7 +32,9 @@ autenticata dell'applicazione per l'archiviazione remota.
 
 ## Limiti dei contenuti multimediali
 
-L'acquisizione di foto e video richiede renderer personalizzati. Questi renderer gestiscono i
-permessi a runtime, l'acquisizione, gli identificatori locali, le anteprime, il caricamento in
-background e la pulizia. Conserva identificatori persistenti nei valori del modulo; non dare per
-scontato che l'URI di un file temporaneo resti valido dopo il riavvio dell'applicazione.
+I `PhotoField` e `VideoField` integrati acquisiscono tramite il `mediaPicker` passato a
+`FormRenderer`; consulta [Renderer di campo integrati](/it/bindings/react-native/built-in-renderers).
+Il tuo picker, o i tuoi renderer personalizzati, gestiscono i permessi a runtime, l'archiviazione dei
+file, il caricamento in background e la pulizia. Conserva identificatori persistenti nei valori del
+modulo; non dare per scontato che l'URI di un file temporaneo resti valido dopo il riavvio
+dell'applicazione.

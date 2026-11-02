@@ -26,9 +26,10 @@ starter la gère, et redémarrez Metro après avoir ajouté de nouvelles ressour
 ## Un champ est signalé comme non pris en charge ou provisoire
 
 Consultez [Renderers de champ intégrés](/fr/bindings/react-native/built-in-renderers).
-`PhotoField`, `VideoField` et `FormLinkField` nécessitent des surcharges de l’application pour un
-comportement de production. Vérifiez que la surcharge est transmise au même `FormRenderer` ou
-fournisseur de registre que celui qui affiche le formulaire.
+`FormLinkField` nécessite une surcharge de l’application pour un comportement de production.
+`PhotoField` et `VideoField` affichent un espace réservé tant que `FormRenderer` ne reçoit pas de
+`mediaPicker`. Vérifiez que la surcharge est transmise au même `FormRenderer` ou fournisseur de
+registre que celui qui affiche le formulaire.
 
 ## La soumission ne s’exécute pas
 

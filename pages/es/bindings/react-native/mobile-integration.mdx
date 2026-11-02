@@ -32,8 +32,9 @@ dispositivo y una API autenticada de la aplicación para el almacenamiento remot
 
 ## Límites de los archivos multimedia
 
-La captura de fotos y vídeos requiere renderers personalizados. Esos renderers se encargan de los
-permisos en tiempo de ejecución, la captura, los identificadores locales, las vistas previas, la
-subida en segundo plano y la limpieza. Guarda identificadores duraderos en los valores del
-formulario; no des por hecho que el URI de un archivo temporal seguirá siendo válido tras reiniciar
-la aplicación.
+Los `PhotoField` y `VideoField` integrados capturan mediante el `mediaPicker` que se pasa a
+`FormRenderer`; consulta [Renderers de campo integrados](/es/bindings/react-native/built-in-renderers).
+Tu selector, o tus renderers personalizados, se encargan de los permisos en tiempo de ejecución, el
+almacenamiento de los archivos, la subida en segundo plano y la limpieza. Guarda identificadores
+duraderos en los valores del formulario; no des por hecho que el URI de un archivo temporal seguirá
+siendo válido tras reiniciar la aplicación.

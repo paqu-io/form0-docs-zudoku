@@ -51,6 +51,8 @@ sections, and produces structured records or restorable snapshots.
 - `onSchemaReady` receives the prepared schema after stable keys have been ensured.
 - `engineOptions` supplies Core helpers, security configuration, warnings, operation handling, and
   update observation.
+- `mediaPicker` takes or chooses photos and videos for the built-in `PhotoField` and `VideoField`;
+  see [Built-in field renderers](/bindings/react-native/built-in-renderers#photo-and-video-fields).
 
 Schema event handlers run on Hermes when they are written as functions or arrow functions in
 `form.events.code`. See [How handler code runs](/core/engine/events-operations#how-handler-code-runs).

@@ -23,6 +23,15 @@ La base de datos se guarda en el sandbox de la aplicación propio de cada plataf
 inserta con los metadatos del registro y el registro estructurado completo en formato JSON. Los
 controles de depuración incluidos permiten listar o borrar registros cuando `debug` está activado.
 
+## Fotos y vídeos
+
+`PhotoField` y `VideoField` toman fotos y vídeos con la cámara o los eligen de la galería mediante
+`src/lib/media-picker.js`, que usa `expo-image-picker`; `Form0Form` lo pasa a `FormRenderer` como
+`mediaPicker`. Los archivos del propio selector son temporales, así que los archivos elegidos se
+copian en la carpeta de documentos de la aplicación, dentro de `form0-media/`. Los registros guardan
+la `url` local de cada archivo con `upload_status: "local"`, y no se sube nada. Quitar un elemento
+de un registro no borra su archivo.
+
 ## Persistencia no es sincronización
 
 Este almacén solo ofrece persistencia en el dispositivo. No sube registros, no reintenta peticiones,

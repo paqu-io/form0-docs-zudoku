@@ -24,9 +24,10 @@ new assets.
 
 ## A field says it is unsupported or provisional
 
-Check [Built-in field renderers](/bindings/react-native/built-in-renderers). `PhotoField`,
-`VideoField`, and `FormLinkField` need application overrides for production behavior. Ensure the
-override is passed to the same `FormRenderer` or registry provider that renders the form.
+Check [Built-in field renderers](/bindings/react-native/built-in-renderers). `FormLinkField` needs
+an application override for production behavior. `PhotoField` and `VideoField` show a placeholder
+until `FormRenderer` receives a `mediaPicker`. Ensure an override is passed to the same
+`FormRenderer` or registry provider that renders the form.
 
 ## Submission does not run
 

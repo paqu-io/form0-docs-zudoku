@@ -15,13 +15,67 @@ Schema behavior and accepted attributes remain defined by the [Field catalog](/c
 | Date and time               | `DateField`, `TimeField`                                |
 | Display and record metadata | `LabelField`, `TitleField`, `StatusField`               |
 | Signature                   | `SignatureField`                                        |
+| Photo and video             | `PhotoField`, `VideoField`                              |
 
 `Section` and `RepeatableSection` are structural nodes handled by `FormRenderer` through inline or
 drilldown navigation rather than the field registry.
 
-`PhotoField`, `VideoField`, and `FormLinkField` currently use placeholder-backed defaults. Provide
-application renderers before relying on those fields in production. Media capture, permissions,
-local storage, upload, and retention remain application responsibilities.
+`FormLinkField` is not supported yet and uses a placeholder. Provide an application renderer before
+relying on it in production.
 
 Use `KNOWN_FIELD_TYPES` to inspect the registrable set and `getMissingFieldComponentTypes()` during
 development to detect missing defaults or overrides.
+
+## Photo and video fields
+
+`PhotoField` and `VideoField` list the attached items with captions, show the field's limits, and
+offer camera and library buttons. The binding has no camera or photo-library dependency: pass a
+`mediaPicker` to `FormRenderer` and the fields call it. Without one they show a placeholder, and
+renderers passed through `renderers` still replace them.
+
+```jsx
+import * as ImagePicker from "expo-image-picker"
+
+const mediaPicker = {
+  async pick({ kind, source, multiple, limit }) {
+    const options = {
+      mediaTypes: kind === "video" ? ["videos"] : ["images"],
+      allowsMultipleSelection: multiple,
+      ...(limit ? { selectionLimit: limit } : {}),
+    }
+    if (source === "camera") {
+      const { granted } = await ImagePicker.requestCameraPermissionsAsync()
+      if (!granted) throw new Error("Allow camera access to take photos and videos.")
+    }
+    const result =
+      source === "camera"
+        ? await ImagePicker.launchCameraAsync(options)
+        : await ImagePicker.launchImageLibraryAsync(options)
+    if (result.canceled) return []
+    return result.assets.map((asset) => ({
+      uri: asset.uri,
+      fileName: asset.fileName,
+      mimeType: asset.mimeType,
+      fileSize: asset.fileSize,
+      duration: asset.duration == null ? null : asset.duration / 1000,
+    }))
+  },
+}
+
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  mediaPicker={mediaPicker}
+/>
+```
+
+`pick` receives `kind` (`photo` or `video`), `source` (`camera` or `library`), `multiple`, `limit`,
+and `field`. `limit` is how many more photos the field accepts, or `null`. Resolve to the picked
+items, or to an empty array when the user cancels; the message of a thrown error is shown under
+the field. Each item needs a `uri`, and videos also need a `duration` in seconds, which
+`form0-core` validates. An optional `sources` array chooses the buttons. Pickers often return
+temporary files, so copy them somewhere permanent if records keep them.
+
+Values use the same entries as `form0-react`: `photo_id` or `video_id`, `media_id`, `filename`,
+`caption`, `url` for the local file, `mime_type`, `size_bytes`, client timestamps, and
+`upload_status: "local"`. Uploading the files remains an application responsibility.

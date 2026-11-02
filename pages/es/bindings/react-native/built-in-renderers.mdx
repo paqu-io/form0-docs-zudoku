@@ -16,15 +16,69 @@ definidos en el [Catálogo de campos](/es/core/fields/catalog).
 | Fecha y hora                           | `DateField`, `TimeField`                                |
 | Visualización y metadatos del registro | `LabelField`, `TitleField`, `StatusField`               |
 | Firma                                  | `SignatureField`                                        |
+| Foto y vídeo                           | `PhotoField`, `VideoField`                              |
 
 `Section` y `RepeatableSection` son nodos estructurales. `FormRenderer` los gestiona mediante la
 navegación en línea o drilldown, no mediante el registro de campos.
 
-`PhotoField`, `VideoField` y `FormLinkField` usan por ahora renderers predeterminados provisionales.
-Proporciona renderers propios de la aplicación antes de usar esos campos en producción. La captura
-de multimedia, los permisos, el almacenamiento local, la subida y la conservación de los archivos
-siguen siendo responsabilidad de la aplicación.
+`FormLinkField` todavía no es compatible y muestra un marcador provisional. Proporciona un renderer
+propio de la aplicación antes de usarlo en producción.
 
 Usa `KNOWN_FIELD_TYPES` para consultar el conjunto de tipos registrables y
 `getMissingFieldComponentTypes()` durante el desarrollo para detectar renderers predeterminados o
 personalizados que falten.
+
+## Campos de foto y vídeo
+
+`PhotoField` y `VideoField` muestran los elementos adjuntos con sus pies de foto, indican los
+límites del campo y ofrecen botones para la cámara y la galería. El binding no depende de ninguna
+biblioteca de cámara ni de galería: pasa un `mediaPicker` a `FormRenderer` y los campos lo llaman.
+Sin él muestran un marcador provisional, y los renderers que pases mediante `renderers` siguen
+sustituyéndolos.
+
+```jsx
+import * as ImagePicker from "expo-image-picker"
+
+const mediaPicker = {
+  async pick({ kind, source, multiple, limit }) {
+    const options = {
+      mediaTypes: kind === "video" ? ["videos"] : ["images"],
+      allowsMultipleSelection: multiple,
+      ...(limit ? { selectionLimit: limit } : {}),
+    }
+    if (source === "camera") {
+      const { granted } = await ImagePicker.requestCameraPermissionsAsync()
+      if (!granted) throw new Error("Allow camera access to take photos and videos.")
+    }
+    const result =
+      source === "camera"
+        ? await ImagePicker.launchCameraAsync(options)
+        : await ImagePicker.launchImageLibraryAsync(options)
+    if (result.canceled) return []
+    return result.assets.map((asset) => ({
+      uri: asset.uri,
+      fileName: asset.fileName,
+      mimeType: asset.mimeType,
+      fileSize: asset.fileSize,
+      duration: asset.duration == null ? null : asset.duration / 1000,
+    }))
+  },
+}
+
+<FormRenderer
+  engineOptions={{ events: { recordKind: "new" } }}
+  schema={schema}
+  mediaPicker={mediaPicker}
+/>
+```
+
+`pick` recibe `kind` (`photo` o `video`), `source` (`camera` o `library`), `multiple`, `limit` y
+`field`. `limit` indica cuántas fotos más acepta el campo, o `null`. Resuelve con los elementos
+elegidos, o con un array vacío si el usuario cancela; el mensaje de un error lanzado se muestra
+debajo del campo. Cada elemento necesita un `uri`, y los vídeos también una `duration` en segundos,
+que `form0-core` valida. Un array `sources` opcional elige los botones. Los selectores suelen
+devolver archivos temporales, así que cópialos a un lugar permanente si los registros los conservan.
+
+Los valores usan las mismas entradas que `form0-react`: `photo_id` o `video_id`, `media_id`,
+`filename`, `caption`, `url` para el archivo local, `mime_type`, `size_bytes`, marcas de tiempo del
+cliente y `upload_status: "local"`. Subir los archivos sigue siendo responsabilidad de la aplicación.
