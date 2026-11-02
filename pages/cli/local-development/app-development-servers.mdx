@@ -10,3 +10,7 @@ server. Maintained web and mobile templates include suitable configuration.
 
 Expo projects can use `--public-url` when a device must reach the development server through a
 tunnel or stable public development URL.
+
+For an Expo app, the preview on port 3030 says that the app itself opens on the phone from Expo's QR
+code. In the interactive shell, `serve --app` does not show the `form0(server)>` prompt until you
+press Enter, so Expo prints its QR code on clean lines. Commands typed before that still run.

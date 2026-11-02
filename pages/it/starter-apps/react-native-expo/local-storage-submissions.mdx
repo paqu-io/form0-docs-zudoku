@@ -23,6 +23,15 @@ Il database si trova nella sandbox dell'applicazione specifica di ogni piattafor
 inserito con i metadati del record e il record strutturato completo in formato JSON. I controlli di
 debug inclusi permettono di elencare o cancellare i record quando `debug` è attivo.
 
+## Foto e video
+
+`PhotoField` e `VideoField` scattano foto e registrano video con la fotocamera, o li scelgono dalla
+galleria, tramite `src/lib/media-picker.js`, che usa `expo-image-picker`; `Form0Form` lo passa a
+`FormRenderer` come `mediaPicker`. I file del picker sono temporanei, quindi i file scelti vengono
+copiati nella cartella dei documenti dell'app, in `form0-media/`. I record salvano l'`url` locale di
+ogni file con `upload_status: "local"`, e non viene caricato nulla. Rimuovere un elemento da un
+record non elimina il relativo file.
+
 ## Persistenza non significa sincronizzazione
 
 Questo archivio offre solo la persistenza sul dispositivo. Non carica i record, non ritenta le

@@ -23,6 +23,15 @@ The database lives in the platform-specific application sandbox. Each submission
 record metadata and the complete structured record as JSON. The included debug controls can list
 or clear records when `debug` is enabled.
 
+## Photos and videos
+
+`PhotoField` and `VideoField` take photos and videos with the camera or choose them from the
+library through `src/lib/media-picker.js`, which uses `expo-image-picker`; `Form0Form` passes it to
+`FormRenderer` as `mediaPicker`. The picker's own files are temporary, so picked files are copied
+into the app's documents folder under `form0-media/`. Records store each file's local `url` with
+`upload_status: "local"`, and nothing is uploaded. Removing an item from a record does not delete
+its file.
+
 ## Persistence is not synchronization
 
 This store provides on-device persistence only. It does not upload records, retry requests, resolve

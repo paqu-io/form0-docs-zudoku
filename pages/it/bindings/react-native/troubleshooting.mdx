@@ -25,10 +25,11 @@ starter e riavvia Metro dopo aver aggiunto nuove risorse.
 
 ## Un campo risulta non supportato o provvisorio
 
-Consulta [Renderer di campo integrati](/it/bindings/react-native/built-in-renderers). `PhotoField`,
-`VideoField` e `FormLinkField` richiedono override dell'applicazione per il comportamento in
-produzione. Assicurati che l'override sia passato allo stesso `FormRenderer` o provider di registro
-che esegue il rendering del modulo.
+Consulta [Renderer di campo integrati](/it/bindings/react-native/built-in-renderers).
+`FormLinkField` richiede un override dell'applicazione per il comportamento in produzione.
+`PhotoField` e `VideoField` mostrano un segnaposto finché `FormRenderer` non riceve un
+`mediaPicker`. Assicurati che l'override sia passato allo stesso `FormRenderer` o provider di
+registro che esegue il rendering del modulo.
 
 ## L'invio non viene eseguito
 
