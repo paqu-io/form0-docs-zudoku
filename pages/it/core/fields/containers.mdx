@@ -216,6 +216,23 @@ all'annullamento, senza zoom o ricentramento. Sono preferenze dell'editor, non r
 Un rifiuto mostra un'indicazione utile e conserva la geometria accettata. L'API comune conserva i
 diagnostici per ambito.
 
+Le facce parallele dello stesso lato possono allinearsi su una linea e sui suoi prolungamenti;
+le facce condivise opposte mantengono la distanza dello spessore. Un movimento può allineare entrambi
+gli assi. Un contatto compatibile viene riconciliato come geometria condivisa; l'allineamento senza
+contatto non unisce identità fisiche. Le pareti raggiungono i nuovi angoli e le giunzioni considerano
+lo spessore, anche tornando a una linea retta o invertendo un ritorno.
+
+Un angolo che taglia parzialmente una porta o finestra richiede conferma al termine del gesto.
+Annullare conserva la pianta accettata. Confermare mantiene la posizione proposta e rimuove le aperture
+fisiche indicate da tutte le viste; l'eliminazione delle osservazioni associate viene dichiarata.
+Geometria ed eliminazioni confermate costituiscono una sola operazione Undo/Redo. Una conferma obsoleta
+non sovrascrive nuove risposte. Un'apertura interamente fuori dalla faccia della stanza modificata
+rimane sulla parete fisica. Gli host possono fornire `confirmOpeningRemoval` al controller; il
+comportamento predefinito rifiuta la rimozione. Le normali scritture delle righe restituiscono il
+conflitto nel relativo ambito senza eliminare aperture silenziosamente.
+
+Salvare o annullare un editor aperto dell'apertura interessata prima di ripetere il movimento.
+
 Le API portabili sono esportate da `form0-core` e `form0-core/building-plan`:
 
 | API                                                  | Funzione                                                                                 |

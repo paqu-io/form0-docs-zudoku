@@ -215,6 +215,23 @@ termina al soltar o cancelar, sin cambiar zoom ni centrar la vista. Son preferen
 respuestas. Un rechazo muestra un mensaje de recuperación y conserva la geometría aceptada. La API
 compartida mantiene los diagnósticos por ámbito.
 
+Las caras paralelas del mismo lado pueden alinearse sobre una línea y sus prolongaciones; las
+caras compartidas opuestas conservan la separación del espesor. Un movimiento puede alinear ambos
+ejes. Un contacto compatible se reconcilia como geometría compartida; la alineación sin contacto
+no fusiona elementos físicos. Las paredes alcanzan las nuevas esquinas y las uniones consideran
+el espesor, incluso al recuperar una línea recta o invertir un retorno.
+
+Una esquina que corta parcialmente una puerta o ventana requiere confirmación al terminar el gesto.
+Cancelar conserva la disposición aceptada. Confirmar conserva la posición propuesta y elimina las
+aberturas físicas indicadas de todas las vistas; se informa de cualquier eliminación de observaciones.
+La geometría y las eliminaciones confirmadas forman una sola operación Undo/Redo. Una confirmación
+obsoleta no sobrescribe respuestas nuevas. Una abertura totalmente fuera de la cara de la habitación
+editada permanece en su pared física. Los hosts pueden proporcionar `confirmOpeningRemoval` al
+controlador; por defecto rechaza eliminar. Las escrituras normales de filas devuelven el conflicto
+por ámbito sin eliminar aberturas de forma silenciosa.
+
+Guarde o cancele cualquier editor abierto de una abertura afectada antes de repetir el movimiento.
+
 Las API portables se exportan desde `form0-core` y `form0-core/building-plan`:
 
 | API                                                  | Función                                                                                     |

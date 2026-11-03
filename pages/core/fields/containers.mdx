@@ -211,6 +211,23 @@ extensions help remove tiny jogs. Pan stops on release/cancellation without chan
 recentering. These are editor preferences, not record answers. Rejected edits show one recovery
 message and retain the accepted layout. Scoped diagnostics remain available through the shared API.
 
+Same-side parallel edges can align on a common line, including extensions; opposite shared faces
+keep the wall-thickness gap. Compatible constraints can snap both axes during one move. A completed
+compatible contact is reconciled as shared geometry; same-line alignment without contact does not
+merge physical subjects. Captured walls extend to resized corners and shared junctions account for
+thickness, including straight realignment and reversed returns.
+
+A corner cutting partly through a door/window requires confirmation when the canvas gesture ends.
+Cancel keeps the accepted layout. Confirm keeps the proposed position and removes the listed
+physical openings from every room view; associated observation deletion is disclosed. Geometry,
+opening removal, and any confirmed observation cascade form one Undo/Redo operation. A stale
+confirmation cannot overwrite newer answers. An opening wholly outside the edited room's facing
+extent stays on its surviving physical host. API hosts can provide `confirmOpeningRemoval` on the
+canvas controller; its default declines removal. Ordinary row writes return the scoped conflict
+without silently deleting an opening.
+
+Save or cancel a separately open editor for an affected opening before repeating the move.
+
 The portable APIs are exported from `form0-core` and `form0-core/building-plan`:
 
 | API                                                  | Purpose                                                                            |

@@ -215,6 +215,23 @@ déplacement s'arrête au relâchement ou à l'annulation, sans zoom ni recentra
 sont pas des réponses. Un rejet affiche un conseil de correction et conserve la géométrie acceptée.
 Les diagnostics par périmètre restent disponibles dans l'API commune.
 
+Les faces parallèles du même côté peuvent s'aligner sur une ligne et ses prolongements ; les
+faces partagées opposées conservent l'écart d'épaisseur. Un déplacement peut aligner les deux axes.
+Un contact compatible devient une géométrie partagée ; un alignement sans contact ne fusionne pas
+les sujets physiques. Les murs rejoignent les angles redimensionnés et les jonctions tiennent
+compte de l'épaisseur, y compris au retour à une ligne droite ou lors d'une inversion de retour.
+
+Un angle coupant partiellement une porte ou une fenêtre exige une confirmation à la fin du geste.
+Annuler conserve le plan accepté. Confirmer conserve la position proposée et supprime les ouvertures
+physiques indiquées de toutes les vues ; la suppression d'observations associées est annoncée.
+Géométrie et suppressions confirmées constituent une seule opération Undo/Redo. Une confirmation
+périmée ne remplace pas de nouvelles réponses. Une ouverture entièrement hors de la face de la pièce
+modifiée reste sur son mur physique. Les hôtes peuvent fournir `confirmOpeningRemoval` au contrôleur ;
+le comportement par défaut refuse la suppression. Les écritures ordinaires renvoient le conflit
+localisé sans supprimer silencieusement une ouverture.
+
+Enregistrez ou annulez un éditeur ouvert pour une ouverture concernée avant de répéter le déplacement.
+
 Les API portables sont exportées par `form0-core` et `form0-core/building-plan` :
 
 | API                                                  | Rôle                                                                                       |
