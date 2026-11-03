@@ -199,6 +199,19 @@ des ouvertures reste fixe lors des étirements ordinaires. Une géométrie inval
 disposition valide et affiche un conflit. Undo et Redo restaurent des opérations complètes sans
 rejouer les événements du cycle de vie. Les objets génériques restent gérés dans le formulaire.
 
+Le canevas dessine la matière des murs à leur épaisseur effective, y compris les valeurs explicites
+des segments, et affiche chaque ouverture une seule fois dans cette bande. Les lignes de face
+restent les cibles de sélection et de modification. Les jonctions valides sont dessinées sans
+traits internes doublés ; leur dessin ne fusionne ni identités ni réponses. Une épaisseur
+explicitement inconnue apparaît comme une ligne schématique en pointillés, sans largeur inventée.
+Ces formes sont calculées et ne sont pas stockées dans l'enregistrement. CLI privilégie la pièce
+en cours de modification lorsque des portions se superposent ; React et Native limitent la
+modification à la pièce active. La vue initiale inclut la matière extérieure près de l'origine ;
+les gestes suivants ne la recentrent pas. Un changement d'épaisseur fixe la face de la pièce active,
+ou la face de référence stable pour un changement à l'échelle de l'étage. Passer de 0,20 m à 0,30 m
+maintient cette face et déplace l'autre de 0,10 m, sous réserve de validation. Des valeurs explicites
+de pièce contradictoires exigent toujours une résolution commune au mur.
+
 Chaque portion droite de face possède sa ligne de mur habituelle. Un décrochement valide peut
 faire passer quatre lignes à six. Les nouveaux tracés reçoivent des identités physiques distinctes
 par défaut ; le partage partiel seul ne divise pas un mur continu. `editingPolicy: { preserveWallGrouping: true }`

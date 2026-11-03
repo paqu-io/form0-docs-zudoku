@@ -199,6 +199,18 @@ El ancho de las aberturas se conserva en estiramientos normales. La geometría i
 última disposición válida y muestra un conflicto. Undo y Redo restauran operaciones completas sin
 repetir eventos de ciclo de vida. Los objetos genéricos se gestionan desde el formulario.
 
+El lienzo dibuja el material de cada pared con su espesor efectivo, incluidos los valores explícitos
+de los tramos, y muestra cada abertura una sola vez a través de esa franja. Las filas de cara siguen
+siendo los destinos de selección y edición. Las uniones válidas se dibujan sin trazos internos
+duplicados; dibujar una unión no fusiona identidades ni respuestas. Un espesor explícitamente
+desconocido se representa con una línea esquemática discontinua, sin inventar una anchura. Estas
+formas se calculan y no se guardan en el registro. La CLI prioriza la habitación que se está editando
+si las porciones se superponen; React y Native limitan la edición a la habitación activa. La vista
+inicial incluye el material exterior junto al origen; los gestos posteriores no la recentran. Un
+cambio de espesor fija la cara de la habitación activa, o la cara de referencia estable para cambios
+de planta. Pasar de 0,20 m a 0,30 m mantiene esa cara y desplaza la opuesta 0,10 m, sujeto a validación.
+Los valores explícitos de habitación contradictorios siguen exigiendo una resolución común en la pared.
+
 Cada porción recta de cara tiene su propia fila normal de pared. Un quiebro válido puede pasar de
 cuatro filas a seis. Los nuevos tramos reciben identidades físicas distintas por defecto; compartir
 solo una parte no divide una pared continua. `editingPolicy: { preserveWallGrouping: true }` conserva

@@ -196,6 +196,18 @@ fixed during ordinary stretches. Invalid geometry or openings leave the last val
 and report a conflict. Undo and Redo restore complete operations without replaying row lifecycle
 events. Generic objects remain form-managed.
 
+The canvas draws physical wall material at its effective thickness, including segment overrides,
+and shows each hosted opening once across that wall band. Room-facing rows remain the selection
+and editing targets. Valid junctions draw without internal duplicate strokes; drawing a junction
+does not merge physical identities or answers. Explicit unknown thickness uses a dashed schematic
+line rather than an invented width. These footprints are derived and are not stored in the record.
+CLI preview prioritizes the room being edited when portions overlap; React and Native restrict
+wall editing to the active room. The first view includes exterior wall material near the floor
+origin; later gestures do not recenter it. A thickness change anchors the active room's face, or
+the stable reference face for floor-wide edits. Changing 0.20 m to 0.30 m keeps that face fixed and
+moves the opposite face by 0.10 m, subject to layout validation. Conflicting explicit room defaults
+still require one common wall resolution.
+
 Each straight facing portion has its own ordinary wall row. A valid jog can turn four rows into
 six. New runs receive separate physical wall identities by default; partial sharing alone does not
 split a continuous wall. `editingPolicy: { preserveWallGrouping: true }` preserves physical grouping

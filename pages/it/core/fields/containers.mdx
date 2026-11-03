@@ -199,6 +199,19 @@ rientro valido. La larghezza delle aperture resta fissa negli allungamenti norma
 non valida mantiene l'ultima disposizione valida e mostra un conflitto. Undo e Redo ripristinano
 operazioni complete senza ripetere eventi del ciclo di vita. Gli oggetti generici si gestiscono nel modulo.
 
+Il canvas disegna il materiale delle pareti con lo spessore effettivo, inclusi i valori espliciti
+dei segmenti, e mostra ogni apertura una sola volta nella fascia della parete. Le righe delle facce
+restano i riferimenti per selezione e modifica. Le giunzioni valide si disegnano senza tratti interni
+duplicati; il disegno non unisce identità fisiche o risposte. Uno spessore esplicitamente sconosciuto
+appare come linea schematica tratteggiata, senza inventare una larghezza. Queste forme sono derivate
+e non vengono salvate nel record. La CLI dà priorità alla stanza in modifica quando le porzioni si
+sovrappongono; React e Native limitano la modifica alla stanza attiva. La vista iniziale comprende
+il materiale esterno vicino all'origine; i gesti successivi non la ricentrano. Un cambio di spessore
+mantiene ferma la faccia della stanza attiva, oppure la faccia di riferimento stabile per modifiche
+del piano. Passare da 0,20 m a 0,30 m mantiene quella faccia e sposta l'opposta di 0,10 m, previa
+validazione della geometria. Valori espliciti di stanza contrastanti richiedono ancora una
+risoluzione comune sulla parete.
+
 Ogni porzione rettilinea della faccia ha la propria normale riga di parete. Un rientro valido può
 portare da quattro righe a sei. I nuovi tratti ricevono identità fisiche separate per impostazione
 predefinita; la sola condivisione parziale non divide una parete continua.
