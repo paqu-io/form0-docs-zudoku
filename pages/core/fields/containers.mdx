@@ -109,18 +109,127 @@ preferred, while `data_name` references are accepted for authored schemas.
   "visible_conditions": null,
   "read_only": false,
   "read_only_conditions": null,
-  "building_plan": { "nodes": [], "edges": [] },
-  "node_overrides": null,
-  "elements": []
+  "node_overrides": null
 }
 ```
 
 Additional attributes:
 
-- `building_plan`: Structure describing the plan topology.
+- `building_plan`: Compiler-generated topology and binding metadata; author questions through `node_overrides`.
 - `node_overrides`: Overrides for generated nodes.
+- `elements`: Generated nested RepeatableSections and their question definitions.
 
-<Callout type="info" title="Building plan expansion">
-  BuildingPlanSection expands into nested RepeatableSections at runtime. We will expand this
-  documentation with full examples soon.
+The example above is the hand-authored schema. Expansion adds `elements` and
+`building_plan`; omit both when authoring this field. `elements` contains the actual generated
+RepeatableSection hierarchy. `building_plan` describes its blueprint, generated keys, and bindings.
+Neither attribute stores a respondent's drawn rooms or walls. Add custom questions through
+`node_overrides`, rather than editing the generated `elements` tree.
+
+The earlier example's `building_plan: { nodes: [], edges: [] }` and `elements: []` were redundant
+placeholders that the expander replaced. They were not an instance-geometry format.
+
+Geometry is saved in ordinary child records. In serialized output, each record's answers are under
+`form_values`; floor, room, and wall collections contain child records with their own `form_values`.
+The relevant generated fields are:
+
+| Owner                         | Field before generated suffixes | Stored content                                                         |
+| ----------------------------- | ------------------------------- | ---------------------------------------------------------------------- |
+| Room                          | `room_vertices`                 | Versioned JSON text with metric polygon vertices and stable vertex IDs |
+| Floor-owned physical wall     | `wall_geometry`                 | Versioned JSON text with metric construction segments                  |
+| Room-facing wall row          | `wall_face_model`               | Versioned JSON text with physical-wall references and bound portions   |
+| Floor, room, wall, or opening | Generated `*_model` fields      | Stable identities and relationship/default/override metadata           |
+
+Actual output keys depend on expansion and the selected key mode. Opening dimensions and offsets
+are ordinary numeric answers on wall-owned opening records. The record adapter reconstructs a
+structured semantic snapshot from these fields; no separate schema-level geometry object is needed.
+
+<Callout type="info" title="Experimental BuildingPlan contract">
+  This contract is being developed across matching core, CLI, React, and Native builds. Existing
+  development-format records are not migrated automatically. No IFC or RDF exporter is included.
 </Callout>
+
+The canvas remains a view of ordinary repeatable records. Selecting an element opens its existing
+row editor; Add, Edit, Save, Cancel, and Remove retain their usual roles. A child Save accepts into
+its parent draft. Floor Save accepts into the form; record persistence still belongs to the host.
+Cancelling a room or wall also reverses the shared geometry changes initiated in that editor.
+
+Floors own physical walls and observations. Rooms own facing portions that reference those walls;
+physical walls own their doors and windows. Columns, beams, and generic objects remain room-owned.
+Two staggered rooms can share only 2 m of an 8 m continuous wall without creating another physical
+wall. Physical subjects, vertices, segments, and facing portions have stable IDs separate from
+repeatable row IDs and schema keys. Stored geometry uses metric coordinates.
+
+The editing hierarchy remains floor → room → column/beam/object/wall → door/window.
+The floor's canonical physical-wall and observation collections are internal storage, not separate
+editors or navigation entries. Shared physical questions are shown in the ordinary room wall row.
+An Observations child editor appears there only when observation questions are explicitly configured;
+it is absent from the default workflow.
+
+Custom wall questions belong to the room side by default. Use `node_overrides.walls.field_bindings`
+to opt a custom question into another scope:
+
+```js
+field_bindings: {
+  construction_material: { scope: 'physical_wall', inherit: true },
+  surface_condition: { scope: 'room_face' },
+  measured_moisture: { scope: 'observation' },
+}
+```
+
+These names refer to ordinary question definitions in `walls.extra_elements`; retain their normal
+field attributes. Physical answers are evaluated in the physical subject's context. Room questions
+may read declared physical bindings. A physical calculation cannot take its meaning from one
+room's private answers. Observation questions belong to explicit dated observation entries with
+coverage and evidence; inherited defaults never create measurements or evidence.
+
+Suitable properties can opt into live inheritance. Wall thickness and wall height initially support
+it. Resolution is: explicit segment/wall override, then one distinct explicit adjacent-room default, then
+floor fallback, then schema fallback. Equal room defaults agree; differing defaults require one
+shared wall resolution. Height is never inferred from storey height. An explicit empty or unknown
+answer is distinct from inheritance. Source labels show the effective value's origin; resetting an
+override restores live inheritance. Requiredness and value checks apply to the effective value.
+
+Canvas previews do not write accepted form state. Completed gestures commit one operation. Moving
+a room detaches its shared sides and reconciles attachments at the destination. Shared-face edits
+can adjust a neighbour over only the bound extent and create a valid local jog. Opening widths stay
+fixed during ordinary stretches. Invalid geometry or openings leave the last valid layout intact
+and report a conflict. Undo and Redo restore complete operations without replaying row lifecycle
+events. Generic objects remain form-managed.
+
+The portable APIs are exported from `form0-core` and `form0-core/building-plan`:
+
+| API                                                  | Purpose                                                                            |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `createBuildingPlanSession`                          | Snapshots, previews, commits, checkpoints, history, and diagnostics                |
+| `readBuildingPlanRecord` / `writeBuildingPlanRecord` | Canonical repeatable records and versioned semantic snapshots                      |
+| `createBuildingPlanRecordSession`                    | Scoped row writes and effective-value presentation                                 |
+| `createBuildingPlanEditor`                           | Existing nested editor lifetimes and shared transactions                           |
+| `isBuildingPlanInternalCollection`                   | Presentation filter for canonical collections and unconfigured observation editors |
+
+Use the metadata returned by `expandBuildingPlanSchema` rather than guessing generated field keys.
+Room-side physical fields and hosted-opening lists are projections: standard serialization omits
+those copies and retains the canonical floor/wall records once. Preserve the model identity and
+geometry fields when storing or reloading a record. Canvas pan, zoom, selection, and unfinished
+pointer/touch previews are transient UI state.
+
+The raw record is verbose: generated keys identify fields, and geometry/model fields contain escaped
+JSON text to preserve the ordinary field-value contract. For inspection or application processing,
+decode a saved record into plain semantic objects:
+
+```js
+import {
+  expandBuildingPlanSchema,
+  buildFormRecordSnapshot,
+  readBuildingPlanRecord,
+} from "form0-core"
+
+const expanded = expandBuildingPlanSchema(schema)
+const runtime = buildFormRecordSnapshot(expanded.schema, savedRecord)
+const plan = readBuildingPlanRecord({ meta: expanded.buildingPlanMeta[0], record: runtime })
+// plan.floors[0].rooms[0].vertices
+// plan.floors[0].walls[0].segments
+```
+
+This decoded view is reconstructed on demand; submission does not store another independent copy.
+Coordinates are floor-local metres with x to the right and y down. A room-facing binding identifies
+its wall/segment and the covered distance interval along that segment, so partial sharing is explicit.

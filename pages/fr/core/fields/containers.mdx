@@ -109,18 +109,131 @@ recommandées, mais les références par `data_name` sont acceptées dans les sc
   "visible_conditions": null,
   "read_only": false,
   "read_only_conditions": null,
-  "building_plan": { "nodes": [], "edges": [] },
-  "node_overrides": null,
-  "elements": []
+  "node_overrides": null
 }
 ```
 
 Attributs supplémentaires :
 
-- `building_plan` : structure décrivant la topologie du plan.
+- `building_plan` : métadonnées de topologie et de liaison produites par le compilateur ; définir les questions avec `node_overrides`.
 - `node_overrides` : surcharges appliquées aux nœuds générés.
+- `elements` : RepeatableSections imbriquées et définitions de questions générées.
 
-<Callout type="info" title="Building plan expansion">
-  BuildingPlanSection se développe en RepeatableSection imbriquées à l'exécution. Nous compléterons
-  bientôt cette documentation avec des exemples complets.
+L'exemple ci-dessus est le schéma rédigé par l'auteur. L'expansion ajoute `elements` et
+`building_plan` ; omettre ces deux attributs lors de la définition du champ. `elements` contient
+la véritable hiérarchie de RepeatableSections générées. `building_plan` décrit son modèle, ses
+clés générées et ses liaisons. Aucun ne stocke les pièces ou murs dessinés par l'utilisateur.
+Ajouter les questions avec `node_overrides`, sans modifier l'arbre `elements` généré.
+
+Les anciens `building_plan: { nodes: [], edges: [] }` et `elements: []` étaient des espaces réservés
+redondants que l'expansion remplaçait. Ils ne définissaient pas la géométrie d'une réponse.
+
+La géométrie est conservée dans des enregistrements enfants ordinaires. Les réponses de chaque
+enregistrement sérialisé sont dans `form_values` ; les collections d'étages, de pièces et de murs
+contiennent des enfants avec leur propre `form_values`. Les principaux champs générés sont :
+
+| Propriétaire                       | Champ avant les suffixes générés | Contenu stocké                                                                          |
+| ---------------------------------- | -------------------------------- | --------------------------------------------------------------------------------------- |
+| Pièce                              | `room_vertices`                  | Texte JSON versionné avec sommets métriques du polygone et identifiants stables         |
+| Mur physique appartenant à l'étage | `wall_geometry`                  | Texte JSON versionné avec segments de construction métriques                            |
+| Ligne de face de mur d'une pièce   | `wall_face_model`                | Texte JSON versionné avec références au mur physique et portions liées                  |
+| Étage, pièce, mur ou ouverture     | Champs `*_model` générés         | Identités stables et métadonnées de relations, valeurs par défaut et valeurs explicites |
+
+Les clés réelles dépendent de l'expansion et du mode de clés choisi. Dimensions et positions des
+ouvertures restent des réponses numériques ordinaires dans leurs enregistrements enfants du mur.
+L'adaptateur reconstruit un instantané sémantique structuré ; aucun autre objet de géométrie dans
+le schéma n'est nécessaire.
+
+<Callout type="info" title="Contrat expérimental de BuildingPlan">
+  Ce contrat est développé dans des versions coordonnées de core, CLI, React et Native. Les anciens
+  enregistrements de développement ne sont pas migrés automatiquement. Aucun export IFC ou RDF n'est
+  inclus.
 </Callout>
+
+Le canevas représente des enregistrements répétables ordinaires. Sélectionner un élément ouvre son
+éditeur de ligne ; Add, Edit, Save, Cancel et Remove conservent leur rôle. Save dans un enfant accepte
+les modifications dans le brouillon parent. Save dans un étage les accepte dans le formulaire ;
+l'application reste responsable de la persistance. Annuler une pièce ou un mur rétablit aussi les
+modifications de géométrie partagée initiées dans cet éditeur.
+
+Les étages possèdent les murs physiques et les observations. Les pièces possèdent les portions de
+face qui référencent ces murs ; portes et fenêtres appartiennent au mur physique. Poteaux, poutres
+et objets génériques restent associés à la pièce. Deux pièces décalées peuvent ne partager que 2 m
+d'un mur continu de 8 m. Sujets physiques, sommets, segments et portions ont des identifiants stables
+distincts des identifiants de ligne et des clés du schéma. Les coordonnées sont métriques.
+
+La hiérarchie d'édition reste étage → pièce → poteau/poutre/objet/mur → porte/fenêtre.
+Les collections canoniques de murs physiques et d'observations de l'étage sont un stockage interne,
+sans éditeur ni entrée de navigation distincts. Les questions physiques partagées apparaissent dans
+la ligne de mur habituelle de la pièce. Un éditeur enfant Observations n'y apparaît que si des
+questions d'observation sont explicitement configurées ; il est absent du parcours par défaut.
+
+Les questions personnalisées de mur concernent par défaut le côté de la pièce. Utilisez
+`node_overrides.walls.field_bindings` pour choisir une autre portée :
+
+```js
+field_bindings: {
+  construction_material: { scope: 'physical_wall', inherit: true },
+  surface_condition: { scope: 'room_face' },
+  measured_moisture: { scope: 'observation' },
+}
+```
+
+Ces noms correspondent aux questions ordinaires de `walls.extra_elements`, avec leurs attributs
+habituels. Les réponses physiques sont évaluées dans le contexte du sujet physique. Les questions
+de pièce peuvent lire les propriétés physiques déclarées. Un calcul physique ne doit pas dépendre
+des réponses privées d'une pièce. Les observations ont une date, une couverture et des preuves
+explicites ; les valeurs héritées ne créent jamais de mesures ni de preuves.
+
+Les propriétés adaptées peuvent activer l'héritage dynamique, dont initialement l'épaisseur et la
+hauteur de mur. L'ordre est : valeur explicite du segment ou du mur, une seule valeur explicite distincte des
+pièces adjacentes, valeur de l'étage, valeur du schéma. Des valeurs identiques concordent ; des
+valeurs différentes nécessitent une résolution commune au mur. La hauteur n'est jamais déduite de
+celle de l'étage. Une valeur explicitement vide ou inconnue se distingue de l'héritage. Les libellés
+indiquent l'origine ; réinitialiser rétablit l'héritage. Obligation et validation portent sur la valeur effective.
+
+Les aperçus ne modifient pas l'état accepté. Un geste terminé valide une opération. Déplacer une
+pièce détache ses côtés partagés et réconcilie ses connexions à destination. Modifier une face
+partagée peut ajuster seulement l'étendue liée du voisin et créer un décrochement valide. La largeur
+des ouvertures reste fixe lors des étirements ordinaires. Une géométrie invalide conserve la dernière
+disposition valide et affiche un conflit. Undo et Redo restaurent des opérations complètes sans
+rejouer les événements du cycle de vie. Les objets génériques restent gérés dans le formulaire.
+
+Les API portables sont exportées par `form0-core` et `form0-core/building-plan` :
+
+| API                                                  | Rôle                                                                                       |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `createBuildingPlanSession`                          | Instantanés, aperçus, validation, points de contrôle, historique et diagnostics            |
+| `readBuildingPlanRecord` / `writeBuildingPlanRecord` | Enregistrements canoniques et instantanés sémantiques versionnés                           |
+| `createBuildingPlanRecordSession`                    | Écritures de ligne limitées et présentation des valeurs effectives                         |
+| `createBuildingPlanEditor`                           | Cycle des éditeurs imbriqués existants et transactions partagées                           |
+| `isBuildingPlanInternalCollection`                   | Filtre de présentation des collections canoniques et éditeurs d'observation non configurés |
+
+Utilisez les métadonnées de `expandBuildingPlanSchema` pour résoudre les clés générées. Les champs
+physiques et listes d'ouvertures affichés depuis une pièce sont des projections : la sérialisation
+ordinaire omet ces copies et conserve une seule fois les enregistrements canoniques. Conservez les
+champs d'identité et de géométrie lors du stockage et du rechargement. Panoramique, zoom, sélection
+et gestes inachevés sont un état transitoire.
+
+L'enregistrement brut est volumineux : les clés générées identifient les champs, et les champs de
+géométrie/modèle contiennent du texte JSON échappé pour conserver le contrat habituel des valeurs.
+Pour l'inspection ou le traitement applicatif, décodez l'enregistrement en objets sémantiques ordinaires :
+
+```js
+import {
+  expandBuildingPlanSchema,
+  buildFormRecordSnapshot,
+  readBuildingPlanRecord,
+} from "form0-core"
+
+const expanded = expandBuildingPlanSchema(schema)
+const runtime = buildFormRecordSnapshot(expanded.schema, savedRecord)
+const plan = readBuildingPlanRecord({ meta: expanded.buildingPlanMeta[0], record: runtime })
+// plan.floors[0].rooms[0].vertices
+// plan.floors[0].walls[0].segments
+```
+
+Cette vue est reconstruite à la demande ; la soumission ne stocke pas une autre copie indépendante.
+Les coordonnées sont des mètres locaux à l'étage, x vers la droite et y vers le bas. Chaque liaison
+de face indique son mur/segment et l'intervalle de distance couvert le long du segment, ce qui rend
+le partage partiel explicite.

@@ -109,18 +109,130 @@ aunque en los esquemas escritos a mano también se aceptan referencias por `data
   "visible_conditions": null,
   "read_only": false,
   "read_only_conditions": null,
-  "building_plan": { "nodes": [], "edges": [] },
-  "node_overrides": null,
-  "elements": []
+  "node_overrides": null
 }
 ```
 
 Atributos adicionales:
 
-- `building_plan`: estructura que describe la topología del plano.
+- `building_plan`: metadatos de topología y vínculos generados por el compilador; las preguntas se definen mediante `node_overrides`.
 - `node_overrides`: modificaciones que se aplican a los nodos generados.
+- `elements`: RepeatableSections anidadas y definiciones de preguntas generadas.
 
-<Callout type="info" title="Building plan expansion">
-  BuildingPlanSection se expande en RepeatableSection anidadas en tiempo de ejecución. Pronto
-  ampliaremos esta documentación con ejemplos completos.
+El ejemplo anterior es el esquema escrito por el autor. La expansión añade `elements` y
+`building_plan`; omitir ambos al definir este campo. `elements` contiene la jerarquía real de
+RepeatableSections generadas. `building_plan` describe su plantilla, claves generadas y vínculos.
+Ninguno almacena las habitaciones o paredes dibujadas por el usuario. Añadir preguntas mediante
+`node_overrides`, sin editar el árbol `elements` generado.
+
+Los anteriores `building_plan: { nodes: [], edges: [] }` y `elements: []` eran marcadores redundantes
+que el expansor sustituía. No eran un formato para la geometría de una respuesta.
+
+La geometría se guarda en registros hijos normales. Las respuestas de cada registro serializado
+están en `form_values`; las colecciones de plantas, habitaciones y paredes contienen registros
+hijos con su propio `form_values`. Los campos generados relevantes son:
+
+| Propietario                             | Campo antes de los sufijos generados | Contenido guardado                                                                           |
+| --------------------------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------- |
+| Habitación                              | `room_vertices`                      | Texto JSON versionado con vértices métricos del polígono e identificadores estables          |
+| Pared física de la planta               | `wall_geometry`                      | Texto JSON versionado con tramos constructivos métricos                                      |
+| Fila de cara de pared de una habitación | `wall_face_model`                    | Texto JSON versionado con referencias a la pared física y porciones vinculadas               |
+| Planta, habitación, pared o abertura    | Campos `*_model` generados           | Identidades estables y metadatos de relaciones, valores predeterminados y valores explícitos |
+
+Las claves reales dependen de la expansión y del modo de claves elegido. Las dimensiones y
+posiciones de las aberturas son respuestas numéricas normales en sus registros hijos de pared.
+El adaptador reconstruye una instantánea semántica estructurada; no hace falta otro objeto de
+geometría en el esquema.
+
+<Callout type="info" title="Contrato experimental de BuildingPlan">
+  Este contrato se desarrolla en versiones coordinadas de core, CLI, React y Native. No se migran
+  automáticamente los registros con el formato de desarrollo anterior. No se incluye exportación IFC
+  ni RDF.
 </Callout>
+
+El lienzo representa registros repetibles normales. Seleccionar un elemento abre su editor de fila;
+Add, Edit, Save, Cancel y Remove conservan su función habitual. Save en un hijo acepta cambios en el
+borrador del padre. Save en la planta acepta cambios en el formulario; la aplicación sigue siendo
+responsable de guardar el registro. Cancelar una habitación o pared también revierte los cambios
+compartidos de geometría iniciados en ese editor.
+
+Las plantas contienen las paredes físicas y las observaciones. Las habitaciones contienen las
+porciones de cara que referencian esas paredes; las puertas y ventanas pertenecen a la pared física.
+Columnas, vigas y objetos genéricos siguen perteneciendo a la habitación. Dos habitaciones desplazadas
+pueden compartir solo 2 m de una pared continua de 8 m. Los sujetos físicos, vértices, segmentos y
+porciones tienen identificadores estables distintos de los de las filas y del esquema. Las coordenadas son métricas.
+
+La jerarquía de edición sigue siendo planta → habitación → columna/viga/objeto/pared → puerta/ventana.
+Las colecciones canónicas de paredes físicas y observaciones de la planta son almacenamiento interno,
+sin editores ni entradas de navegación independientes. Las preguntas físicas compartidas se muestran
+en la fila habitual de pared de la habitación. El editor hijo Observations solo aparece allí cuando
+se configuran explícitamente preguntas de observación; no forma parte del flujo predeterminado.
+
+Las preguntas personalizadas de pared pertenecen por defecto al lado de la habitación. Usa
+`node_overrides.walls.field_bindings` para elegir otro ámbito:
+
+```js
+field_bindings: {
+  construction_material: { scope: 'physical_wall', inherit: true },
+  surface_condition: { scope: 'room_face' },
+  measured_moisture: { scope: 'observation' },
+}
+```
+
+Los nombres corresponden a preguntas normales de `walls.extra_elements`, con sus atributos
+habituales. Las respuestas físicas se evalúan en el contexto del sujeto físico. Las preguntas de
+habitación pueden leer vínculos físicos declarados. Un cálculo físico no puede depender de
+respuestas privadas de una habitación. Las observaciones tienen fecha, cobertura y evidencia
+explícitas; los valores heredados nunca crean mediciones ni evidencia.
+
+Las propiedades adecuadas pueden activar la herencia dinámica. Inicialmente se incluyen el espesor
+y la altura de pared. La precedencia es: valor explícito del tramo o de la pared, un único valor explícito distinto
+de las habitaciones adyacentes, valor de planta y valor de esquema. Los valores iguales coinciden;
+los distintos exigen una resolución compartida en la pared. La altura nunca se deduce de la altura
+de planta. Un vacío o desconocido explícito se distingue de heredar. Las etiquetas muestran el
+origen; restablecer un valor explícito recupera la herencia. La obligatoriedad y validación se aplican al valor efectivo.
+
+Las previsualizaciones no escriben el estado aceptado. Cada gesto completo confirma una operación.
+Mover una habitación separa sus lados compartidos y reconcilia las conexiones en el destino. Editar
+una cara compartida puede ajustar solo la extensión vinculada del vecino y crear un quiebro válido.
+El ancho de las aberturas se conserva en estiramientos normales. La geometría inválida mantiene la
+última disposición válida y muestra un conflicto. Undo y Redo restauran operaciones completas sin
+repetir eventos de ciclo de vida. Los objetos genéricos se gestionan desde el formulario.
+
+Las API portables se exportan desde `form0-core` y `form0-core/building-plan`:
+
+| API                                                  | Función                                                                                     |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `createBuildingPlanSession`                          | Instantáneas, previsualizaciones, confirmación, puntos de control, historial y diagnósticos |
+| `readBuildingPlanRecord` / `writeBuildingPlanRecord` | Registros repetibles canónicos e instantáneas semánticas versionadas                        |
+| `createBuildingPlanRecordSession`                    | Escrituras de fila acotadas y presentación del valor efectivo                               |
+| `createBuildingPlanEditor`                           | Ciclo de los editores anidados existentes y transacciones compartidas                       |
+| `isBuildingPlanInternalCollection`                   | Filtro de presentación para colecciones canónicas y editores de observación sin configurar  |
+
+Usa los metadatos de `expandBuildingPlanSchema` para resolver claves generadas. Los campos físicos
+y listas de aberturas mostrados desde una habitación son proyecciones: la serialización normal
+omite esas copias y conserva una sola vez los registros canónicos. Conserva los campos de identidad
+y geometría al guardar o recargar. Desplazamiento, zoom, selección y gestos sin terminar son estado transitorio.
+
+El registro sin procesar es extenso: las claves generadas identifican campos, y los campos de
+geometría/modelo contienen texto JSON escapado para conservar el contrato habitual de valores.
+Para inspección o procesamiento, decodifica el registro guardado en objetos semánticos ordinarios:
+
+```js
+import {
+  expandBuildingPlanSchema,
+  buildFormRecordSnapshot,
+  readBuildingPlanRecord,
+} from "form0-core"
+
+const expanded = expandBuildingPlanSchema(schema)
+const runtime = buildFormRecordSnapshot(expanded.schema, savedRecord)
+const plan = readBuildingPlanRecord({ meta: expanded.buildingPlanMeta[0], record: runtime })
+// plan.floors[0].rooms[0].vertices
+// plan.floors[0].walls[0].segments
+```
+
+Esta vista se reconstruye bajo demanda; el envío no guarda otra copia independiente.
+Las coordenadas son metros locales de la planta, con x hacia la derecha e y hacia abajo. Cada vínculo
+de cara identifica su pared/segmento y el intervalo de distancia cubierto a lo largo del segmento,
+por lo que las partes compartidas quedan explícitas.
