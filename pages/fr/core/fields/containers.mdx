@@ -199,6 +199,22 @@ des ouvertures reste fixe lors des étirements ordinaires. Une géométrie inval
 disposition valide et affiche un conflit. Undo et Redo restaurent des opérations complètes sans
 rejouer les événements du cycle de vie. Les objets génériques restent gérés dans le formulaire.
 
+Chaque portion droite de face possède sa ligne de mur habituelle. Un décrochement valide peut
+faire passer quatre lignes à six. Les nouveaux tracés reçoivent des identités physiques distinctes
+par défaut ; le partage partiel seul ne divise pas un mur continu. `editingPolicy: { preserveWallGrouping: true }`
+conserve le regroupement physique pour les opérations futures, avec des lignes de face distinctes.
+`separate_wall` sépare explicitement des segments (`wallId`, `segmentIds` facultatif). Ces choix ne
+décrivent pas une rénovation et ne créent aucune preuve de mesure. Les identités et sources sont conservées.
+
+L'alignement magnétique et le déplacement doux près des bords sont activés par défaut et réglables
+séparément avec `editingPolicy.snapping` et `editingPolicy.edgeAutoPan`. Settings expose ces préférences
+et le regroupement physique dans CLI ; React et Native proposent des commandes d'alignement et de
+déplacement. Alt suspend l'alignement pendant un geste sur ordinateur. Les guides tiennent compte de
+l'épaisseur et du zoom ; les prolongements fixes aident à supprimer les petits décrochements. Le
+déplacement s'arrête au relâchement ou à l'annulation, sans zoom ni recentrage. Ces préférences ne
+sont pas des réponses. Un rejet affiche un conseil de correction et conserve la géométrie acceptée.
+Les diagnostics par périmètre restent disponibles dans l'API commune.
+
 Les API portables sont exportées par `form0-core` et `form0-core/building-plan` :
 
 | API                                                  | Rôle                                                                                       |

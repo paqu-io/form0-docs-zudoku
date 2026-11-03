@@ -199,6 +199,22 @@ El ancho de las aberturas se conserva en estiramientos normales. La geometría i
 última disposición válida y muestra un conflicto. Undo y Redo restauran operaciones completas sin
 repetir eventos de ciclo de vida. Los objetos genéricos se gestionan desde el formulario.
 
+Cada porción recta de cara tiene su propia fila normal de pared. Un quiebro válido puede pasar de
+cuatro filas a seis. Los nuevos tramos reciben identidades físicas distintas por defecto; compartir
+solo una parte no divide una pared continua. `editingPolicy: { preserveWallGrouping: true }` conserva
+la agrupación física en operaciones futuras, manteniendo las filas de cara separadas. `separate_wall`
+permite separar explícitamente tramos (`wallId`, `segmentIds` opcional). Estas decisiones no describen
+una reforma ni generan pruebas de medición. Se conservan identidades y referencias de origen.
+
+La alineación magnética y el desplazamiento suave cerca de los bordes están activados por defecto;
+`editingPolicy.snapping` y `editingPolicy.edgeAutoPan` los controlan de forma independiente. Settings
+incluye esas preferencias y la agrupación física en CLI; React y Native muestran controles de alineación
+y desplazamiento. Alt omite la alineación durante un gesto de escritorio. Las guías tienen en cuenta
+espesor y zoom; las prolongaciones estáticas ayudan a eliminar pequeños quiebros. El desplazamiento
+termina al soltar o cancelar, sin cambiar zoom ni centrar la vista. Son preferencias del editor, no
+respuestas. Un rechazo muestra un mensaje de recuperación y conserva la geometría aceptada. La API
+compartida mantiene los diagnósticos por ámbito.
+
 Las API portables se exportan desde `form0-core` y `form0-core/building-plan`:
 
 | API                                                  | Función                                                                                     |

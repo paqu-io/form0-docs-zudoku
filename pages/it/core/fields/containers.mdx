@@ -199,6 +199,23 @@ rientro valido. La larghezza delle aperture resta fissa negli allungamenti norma
 non valida mantiene l'ultima disposizione valida e mostra un conflitto. Undo e Redo ripristinano
 operazioni complete senza ripetere eventi del ciclo di vita. Gli oggetti generici si gestiscono nel modulo.
 
+Ogni porzione rettilinea della faccia ha la propria normale riga di parete. Un rientro valido può
+portare da quattro righe a sei. I nuovi tratti ricevono identità fisiche separate per impostazione
+predefinita; la sola condivisione parziale non divide una parete continua.
+`editingPolicy: { preserveWallGrouping: true }` conserva il raggruppamento fisico nelle operazioni
+future, mantenendo righe distinte. `separate_wall` separa esplicitamente i segmenti (`wallId`,
+`segmentIds` facoltativo). Queste scelte non descrivono una ristrutturazione né creano prove di misura.
+Identità esistenti e riferimenti alle fonti vengono conservati.
+
+Allineamento magnetico e scorrimento delicato ai bordi sono attivi per impostazione predefinita e
+regolabili separatamente con `editingPolicy.snapping` e `editingPolicy.edgeAutoPan`. Settings espone
+queste preferenze e il raggruppamento fisico nella CLI; React e Native mostrano controlli di allineamento
+e scorrimento. Alt sospende l'allineamento durante un gesto desktop. Le guide considerano spessore e
+zoom; le estensioni fisse aiutano a eliminare piccoli rientri. Lo scorrimento termina al rilascio o
+all'annullamento, senza zoom o ricentramento. Sono preferenze dell'editor, non risposte del record.
+Un rifiuto mostra un'indicazione utile e conserva la geometria accettata. L'API comune conserva i
+diagnostici per ambito.
+
 Le API portabili sono esportate da `form0-core` e `form0-core/building-plan`:
 
 | API                                                  | Funzione                                                                                 |

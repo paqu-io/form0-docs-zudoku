@@ -196,6 +196,21 @@ fixed during ordinary stretches. Invalid geometry or openings leave the last val
 and report a conflict. Undo and Redo restore complete operations without replaying row lifecycle
 events. Generic objects remain form-managed.
 
+Each straight facing portion has its own ordinary wall row. A valid jog can turn four rows into
+six. New runs receive separate physical wall identities by default; partial sharing alone does not
+split a continuous wall. `editingPolicy: { preserveWallGrouping: true }` preserves physical grouping
+for future operations, while keeping the separate facing rows. `separate_wall` can explicitly separate
+selected construction segments (`wallId`, optional `segmentIds`). Neither choice describes a renovation
+or creates new survey evidence. Surviving identities and source references are retained.
+
+Magnetic alignment and gentle edge auto-pan are enabled by default and can be switched independently
+with `editingPolicy.snapping` and `editingPolicy.edgeAutoPan`. CLI preview exposes these preferences
+and physical grouping in Settings; React and Native show alignment and pan controls. Desktop Alt
+bypasses snapping during a gesture. Guides account for wall thickness and zoom; stationary wall
+extensions help remove tiny jogs. Pan stops on release/cancellation without changing zoom or
+recentering. These are editor preferences, not record answers. Rejected edits show one recovery
+message and retain the accepted layout. Scoped diagnostics remain available through the shared API.
+
 The portable APIs are exported from `form0-core` and `form0-core/building-plan`:
 
 | API                                                  | Purpose                                                                            |
