@@ -211,8 +211,15 @@ cambio de espesor fija la cara de la habitación activa, o la cara de referencia
 de planta. Pasar de 0,20 m a 0,30 m mantiene esa cara y desplaza la opuesta 0,10 m, sujeto a validación.
 Los valores explícitos de habitación contradictorios siguen exigiendo una resolución común en la pared.
 
+Cuando un nuevo retorno de un quiebro alcanza una pared existente, el contacto compatible comparte
+ese elemento físico. La cara de la habitación activa queda fija y la opuesta se separa por el
+espesor efectivo, sin duplicar la franja. Su fila de cara puede llevar la etiqueta de la pared existente.
+Al separar una habitación, se reconcilian las extensiones guardadas de la pared estacionaria con sus
+caras restantes, conservando identidad, posiciones de aberturas y contexto de observaciones fechadas.
+Se conservan las particiones creadas de forma independiente y la longitud necesaria para alojar aberturas retenidas.
+
 Cada porción recta de cara tiene su propia fila normal de pared. Un quiebro válido puede pasar de
-cuatro filas a seis. Los nuevos tramos reciben identidades físicas distintas por defecto; compartir
+cuatro filas a seis. Los nuevos tramos independientes reciben identidades físicas distintas por defecto; compartir
 solo una parte no divide una pared continua. `editingPolicy: { preserveWallGrouping: true }` conserva
 la agrupación física en operaciones futuras, manteniendo las filas de cara separadas. `separate_wall`
 permite separar explícitamente tramos (`wallId`, `segmentIds` opcional). Estas decisiones no describen

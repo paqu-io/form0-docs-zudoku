@@ -212,8 +212,15 @@ ou la face de référence stable pour un changement à l'échelle de l'étage. P
 maintient cette face et déplace l'autre de 0,10 m, sous réserve de validation. Des valeurs explicites
 de pièce contradictoires exigent toujours une résolution commune au mur.
 
+Lorsqu'un nouveau retour de décrochement rejoint un mur existant, un contact compatible partage
+ce sujet physique. La face de la pièce active reste fixe et la face opposée est espacée de
+l'épaisseur effective, sans bande doublée. Sa ligne de face peut donc porter le libellé du mur existant.
+Le détachement d'une pièce réconcilie les étendues enregistrées du mur immobile avec ses faces
+restantes, en conservant identité, positions des ouvertures et contexte des observations datées.
+Les cloisons créées indépendamment et les longueurs nécessaires aux ouvertures conservées restent intactes.
+
 Chaque portion droite de face possède sa ligne de mur habituelle. Un décrochement valide peut
-faire passer quatre lignes à six. Les nouveaux tracés reçoivent des identités physiques distinctes
+faire passer quatre lignes à six. Les nouveaux tracés indépendants reçoivent des identités physiques distinctes
 par défaut ; le partage partiel seul ne divise pas un mur continu. `editingPolicy: { preserveWallGrouping: true }`
 conserve le regroupement physique pour les opérations futures, avec des lignes de face distinctes.
 `separate_wall` sépare explicitement des segments (`wallId`, `segmentIds` facultatif). Ces choix ne

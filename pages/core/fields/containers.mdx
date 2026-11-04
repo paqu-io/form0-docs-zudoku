@@ -208,8 +208,15 @@ the stable reference face for floor-wide edits. Changing 0.20 m to 0.30 m keeps 
 moves the opposite face by 0.10 m, subject to layout validation. Conflicting explicit room defaults
 still require one common wall resolution.
 
+When a new jog return meets an existing wall, compatible contact shares that physical subject.
+The active room face stays fixed and the opposite face is spaced by the effective thickness,
+avoiding a double-width strip. Its room-facing row may therefore carry the existing wall's label.
+Detaching a room reconciles the stationary wall's saved extents with its remaining faces while
+preserving identity, hosted opening positions and dated observation context. Independently authored
+partitions and host lengths required by retained openings remain intact.
+
 Each straight facing portion has its own ordinary wall row. A valid jog can turn four rows into
-six. New runs receive separate physical wall identities by default; partial sharing alone does not
+six. New independent runs receive separate physical wall identities by default; partial sharing alone does not
 split a continuous wall. `editingPolicy: { preserveWallGrouping: true }` preserves physical grouping
 for future operations, while keeping the separate facing rows. `separate_wall` can explicitly separate
 selected construction segments (`wallId`, optional `segmentIds`). Neither choice describes a renovation

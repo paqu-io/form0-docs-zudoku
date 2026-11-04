@@ -212,8 +212,15 @@ del piano. Passare da 0,20 m a 0,30 m mantiene quella faccia e sposta l'opposta 
 validazione della geometria. Valori espliciti di stanza contrastanti richiedono ancora una
 risoluzione comune sulla parete.
 
+Quando un nuovo ritorno del rientro incontra una parete esistente, il contatto compatibile condivide
+quel soggetto fisico. La faccia della stanza attiva resta ferma e quella opposta viene distanziata
+dello spessore effettivo, senza raddoppiare la fascia. La riga della faccia può quindi avere l'etichetta della parete esistente.
+Separare una stanza riconcilia le estensioni salvate della parete ferma con le facce rimaste,
+conservando identità, posizioni delle aperture e contesto delle osservazioni datate. Le partizioni
+create indipendentemente e le lunghezze necessarie per ospitare le aperture conservate restano intatte.
+
 Ogni porzione rettilinea della faccia ha la propria normale riga di parete. Un rientro valido può
-portare da quattro righe a sei. I nuovi tratti ricevono identità fisiche separate per impostazione
+portare da quattro righe a sei. I nuovi tratti indipendenti ricevono identità fisiche separate per impostazione
 predefinita; la sola condivisione parziale non divide una parete continua.
 `editingPolicy: { preserveWallGrouping: true }` conserva il raggruppamento fisico nelle operazioni
 future, mantenendo righe distinte. `separate_wall` separa esplicitamente i segmenti (`wallId`,
