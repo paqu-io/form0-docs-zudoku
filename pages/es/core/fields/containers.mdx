@@ -229,6 +229,14 @@ dentro del borrador normal. React y Native los ofrecen en la habitación activa;
 seleccione una pared en modo Select para introducir la distancia exacta. La sesión acepta
 `split_face` (`faceId`, `offset` en metros) y `rejoin_cut` (`cutId`). Los vértices métricos guardan
 la referencia `editingCutId`; `split_wall` / `join_walls` siguen siendo operaciones físicas distintas.
+En una porción dividida explícitamente, el único campo **Thickness** existente modifica ese tramo
+físico. No hay otro campo de espesor ni una pregunta de alcance. Las caras compartidas muestran el
+mismo valor; el resto conserva su espesor efectivo. Las sobrescrituras se guardan en segmentos de
+construcción; los valores por defecto siguen activos y Reset restaura la herencia. La cara activa
+queda anclada y la opuesta puede formar un escalón al cambiar el espesor. Rejoin conserva las
+divisiones significativas de espesor. Las demás preguntas físicas mantienen su alcance declarado.
+Las guías magnéticas también usan bordes inmóviles de la misma habitación y sus prolongaciones,
+para que los retornos válidos puedan enderezarse exactamente.
 Las porciones de tabiques interiores se mueven perpendicularmente al tramo original, manteniendo
 retornos conectados. Use Rejoin antes de mover o modificar el tabique completo. Guarde o cancele
 una entrada de pared abierta antes de eliminarla con Rejoin.

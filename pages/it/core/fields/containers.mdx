@@ -230,6 +230,14 @@ nel normale draft. React e Native li offrono nella stanza attiva; in Native sele
 in modalità Select per inserire la distanza esatta. La sessione accetta `split_face` (`faceId`,
 `offset` in metri) e `rejoin_cut` (`cutId`). I vertici metrici conservano il riferimento `editingCutId`;
 `split_wall` / `join_walls` rimangono operazioni fisiche distinte.
+Per una porzione divisa esplicitamente, l'unico campo **Thickness** esistente modifica quel tratto
+fisico. Non si aggiungono campi di spessore né domande sull'ambito. Le facce condivise mostrano lo
+stesso valore; il resto mantiene il proprio spessore effettivo. Le sostituzioni si salvano sui segmenti
+di costruzione; i valori predefiniti restano attivi e Reset ripristina l'ereditarietà. La faccia attiva
+rimane ancorata; quella opposta può formare un gradino al cambio di spessore. Rejoin conserva le
+divisioni significative. Le altre domande fisiche mantengono l'ambito dichiarato. Le guide magnetiche
+usano anche bordi fermi della stessa stanza e i loro prolungamenti, per riallineare esattamente i
+raccordi validi.
 Le porzioni di tramezzi interni si spostano perpendicolarmente al tracciato originale, mantenendo
 i raccordi collegati. Usare Rejoin prima di spostare o rimodellare l'intero tramezzo. Salvare o
 annullare una voce di parete aperta prima di eliminarla con Rejoin.

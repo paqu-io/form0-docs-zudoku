@@ -231,6 +231,14 @@ dans la pièce active ; sur Native, sélectionnez un mur en mode Select pour sai
 La session accepte `split_face` (`faceId`, `offset` en mètres) et `rejoin_cut` (`cutId`). Les sommets
 métriques gardent la référence `editingCutId` ; `split_wall` / `join_walls` restent des opérations
 physiques distinctes.
+Pour une portion explicitement divisée, l'unique champ **Thickness** existant modifie cette étendue
+physique. Aucun champ d'épaisseur supplémentaire ni choix de portée n'est ajouté. Les faces
+partagées affichent la même valeur ; le reste conserve son épaisseur effective. Les surcharges sont
+enregistrées sur les segments de construction ; les valeurs par défaut restent actives et Reset
+rétablit l'héritage. La face active reste fixe et la face opposée peut former un ressaut lors d'un
+changement d'épaisseur. Rejoin conserve les divisions significatives. Les autres questions physiques
+gardent leur portée déclarée. Les guides magnétiques utilisent aussi les bords fixes de la même
+pièce et leurs prolongements, pour réaligner exactement les retours valides.
 Les portions de cloisons intérieures se déplacent perpendiculairement à leur tracé initial, avec
 des retours connectés. Utilisez Rejoin avant de déplacer ou remodeler toute la cloison. Enregistrez
 ou annulez une entrée de mur ouverte avant de la supprimer avec Rejoin.

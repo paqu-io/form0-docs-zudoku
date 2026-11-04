@@ -226,6 +226,13 @@ React and Native offer these commands inside the active room. On Native, select 
 mode for exact distance entry. Session callers use `split_face` (`faceId`, `offset` in metres) and
 `rejoin_cut` (`cutId`). Editing cut references persist with metric vertices as `editingCutId`;
 physical `split_wall` / `join_walls` remain separate construction operations.
+For an explicitly split portion, the single existing **Thickness** field edits that physical span.
+There is no additional thickness field or scope question. Shared room sides show the same value;
+the rest of the wall keeps its own effective thickness. Overrides are stored on construction
+segments, while room/floor defaults stay live and Reset restores inheritance. The active face stays
+anchored; the opposite face may step at a thickness change. Rejoin preserves meaningful thickness
+divisions. Other physical-wall questions keep their declared scope. Magnetic guides also use
+stationary edges in the same room and their extension lines, so valid returns can straighten exactly.
 Split internal partitions move perpendicular to their original run and keep connected returns.
 Rejoin before moving or reshaping the whole partition. Save or Cancel an open wall entry before
 using Rejoin to remove that entry.
