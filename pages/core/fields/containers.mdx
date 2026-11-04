@@ -215,9 +215,24 @@ Detaching a room reconciles the stationary wall's saved extents with its remaini
 preserving identity, hosted opening positions and dated observation context. Independently authored
 partitions and host lengths required by retained openings remain intact.
 
-Each straight facing portion has its own ordinary wall row. A valid jog can turn four rows into
-six. New independent runs receive separate physical wall identities by default; partial sharing alone does not
-split a continuous wall. `editingPolicy: { preserveWallGrouping: true }` preserves physical grouping
+Each straight facing portion has its own ordinary wall row. **Split** creates explicit editable
+portions of a straight wall, preserving its physical identity, hosted openings and original
+observations. Choose a point with magnetic alignment or enter a distance from the marked `0` end.
+The cut stays after straightening and save/reload.
+**Rejoin** removes a chosen cut once its portions are contiguous, collinear and have compatible
+answers. Offset portions or conflicting answers produce an inline explanation; a cut through an
+opening is refused. Each command is one reversible operation using the normal child/floor draft.
+React and Native offer these commands inside the active room. On Native, select a wall in Select
+mode for exact distance entry. Session callers use `split_face` (`faceId`, `offset` in metres) and
+`rejoin_cut` (`cutId`). Editing cut references persist with metric vertices as `editingCutId`;
+physical `split_wall` / `join_walls` remain separate construction operations.
+Split internal partitions move perpendicular to their original run and keep connected returns.
+Rejoin before moving or reshaping the whole partition. Save or Cancel an open wall entry before
+using Rejoin to remove that entry.
+
+A valid jog can turn four rows into six. New independent runs receive separate physical wall
+identities by default; partial sharing alone does not split a continuous wall.
+`editingPolicy: { preserveWallGrouping: true }` preserves physical grouping
 for future operations, while keeping the separate facing rows. `separate_wall` can explicitly separate
 selected construction segments (`wallId`, optional `segmentIds`). Neither choice describes a renovation
 or creates new survey evidence. Surviving identities and source references are retained.

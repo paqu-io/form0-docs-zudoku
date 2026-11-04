@@ -218,9 +218,24 @@ Al separar una habitación, se reconcilian las extensiones guardadas de la pared
 caras restantes, conservando identidad, posiciones de aberturas y contexto de observaciones fechadas.
 Se conservan las particiones creadas de forma independiente y la longitud necesaria para alojar aberturas retenidas.
 
-Cada porción recta de cara tiene su propia fila normal de pared. Un quiebro válido puede pasar de
-cuatro filas a seis. Los nuevos tramos independientes reciben identidades físicas distintas por defecto; compartir
-solo una parte no divide una pared continua. `editingPolicy: { preserveWallGrouping: true }` conserva
+Cada porción recta de cara tiene su propia fila normal de pared. **Split** crea porciones editables
+explícitas de una pared recta, conservando su identidad física, aberturas y observaciones originales.
+Elija un punto con alineación magnética o introduzca una distancia desde el extremo marcado `0`.
+El corte permanece al enderezar y al
+guardar/recargar. **Rejoin** elimina el corte elegido cuando las porciones son contiguas, colineales
+y tienen respuestas compatibles. Las porciones desplazadas o respuestas contradictorias muestran
+una explicación; se rechaza un corte por una abertura. Cada comando es una operación reversible
+dentro del borrador normal. React y Native los ofrecen en la habitación activa; en Native,
+seleccione una pared en modo Select para introducir la distancia exacta. La sesión acepta
+`split_face` (`faceId`, `offset` en metros) y `rejoin_cut` (`cutId`). Los vértices métricos guardan
+la referencia `editingCutId`; `split_wall` / `join_walls` siguen siendo operaciones físicas distintas.
+Las porciones de tabiques interiores se mueven perpendicularmente al tramo original, manteniendo
+retornos conectados. Use Rejoin antes de mover o modificar el tabique completo. Guarde o cancele
+una entrada de pared abierta antes de eliminarla con Rejoin.
+
+Un quiebro válido puede pasar de cuatro filas a seis. Los nuevos tramos independientes reciben
+identidades físicas distintas por defecto; compartir solo una parte no divide una pared continua.
+`editingPolicy: { preserveWallGrouping: true }` conserva
 la agrupación física en operaciones futuras, manteniendo las filas de cara separadas. `separate_wall`
 permite separar explícitamente tramos (`wallId`, `segmentIds` opcional). Estas decisiones no describen
 una reforma ni generan pruebas de medición. Se conservan identidades y referencias de origen.

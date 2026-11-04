@@ -219,9 +219,25 @@ Le détachement d'une pièce réconcilie les étendues enregistrées du mur immo
 restantes, en conservant identité, positions des ouvertures et contexte des observations datées.
 Les cloisons créées indépendamment et les longueurs nécessaires aux ouvertures conservées restent intactes.
 
-Chaque portion droite de face possède sa ligne de mur habituelle. Un décrochement valide peut
-faire passer quatre lignes à six. Les nouveaux tracés indépendants reçoivent des identités physiques distinctes
-par défaut ; le partage partiel seul ne divise pas un mur continu. `editingPolicy: { preserveWallGrouping: true }`
+Chaque portion droite de face possède sa ligne de mur habituelle. **Split** crée des portions
+modifiables explicites d'un mur droit, en conservant son identité physique, ses ouvertures et ses
+observations originales. Choisissez un point avec alignement magnétique ou une distance depuis
+l'extrémité marquée `0`. La coupe reste
+après réalignement et enregistrement/rechargement. **Rejoin** retire la coupe choisie lorsque ses
+portions sont contiguës, colinéaires et portent des réponses compatibles. Un décalage ou des réponses
+contradictoires affichent une explication ; une coupe traversant une ouverture est refusée. Chaque
+commande est une opération réversible dans le brouillon habituel. React et Native les proposent
+dans la pièce active ; sur Native, sélectionnez un mur en mode Select pour saisir la distance exacte.
+La session accepte `split_face` (`faceId`, `offset` en mètres) et `rejoin_cut` (`cutId`). Les sommets
+métriques gardent la référence `editingCutId` ; `split_wall` / `join_walls` restent des opérations
+physiques distinctes.
+Les portions de cloisons intérieures se déplacent perpendiculairement à leur tracé initial, avec
+des retours connectés. Utilisez Rejoin avant de déplacer ou remodeler toute la cloison. Enregistrez
+ou annulez une entrée de mur ouverte avant de la supprimer avec Rejoin.
+
+Un décrochement valide peut faire passer quatre lignes à six. Les nouveaux tracés indépendants
+reçoivent des identités physiques distinctes par défaut ; le partage partiel seul ne divise pas
+un mur continu. `editingPolicy: { preserveWallGrouping: true }`
 conserve le regroupement physique pour les opérations futures, avec des lignes de face distinctes.
 `separate_wall` sépare explicitement des segments (`wallId`, `segmentIds` facultatif). Ces choix ne
 décrivent pas une rénovation et ne créent aucune preuve de mesure. Les identités et sources sont conservées.

@@ -219,9 +219,23 @@ Separare una stanza riconcilia le estensioni salvate della parete ferma con le f
 conservando identità, posizioni delle aperture e contesto delle osservazioni datate. Le partizioni
 create indipendentemente e le lunghezze necessarie per ospitare le aperture conservate restano intatte.
 
-Ogni porzione rettilinea della faccia ha la propria normale riga di parete. Un rientro valido può
-portare da quattro righe a sei. I nuovi tratti indipendenti ricevono identità fisiche separate per impostazione
-predefinita; la sola condivisione parziale non divide una parete continua.
+Ogni porzione rettilinea della faccia ha la propria normale riga di parete. **Split** crea porzioni
+modificabili esplicite di una parete diritta, conservando identità fisica, aperture e osservazioni
+originali. Scegliere un punto con allineamento magnetico o inserire una distanza dall'estremità
+indicata con `0`. Il taglio rimane dopo riallineamento
+e salvataggio/ricaricamento. **Rejoin** rimuove il taglio scelto quando le porzioni sono contigue,
+collineari e hanno risposte compatibili. Porzioni spostate o risposte contrastanti mostrano una
+spiegazione; un taglio attraverso un'apertura viene rifiutato. Ogni comando è un'operazione reversibile
+nel normale draft. React e Native li offrono nella stanza attiva; in Native selezionare una parete
+in modalità Select per inserire la distanza esatta. La sessione accetta `split_face` (`faceId`,
+`offset` in metri) e `rejoin_cut` (`cutId`). I vertici metrici conservano il riferimento `editingCutId`;
+`split_wall` / `join_walls` rimangono operazioni fisiche distinte.
+Le porzioni di tramezzi interni si spostano perpendicolarmente al tracciato originale, mantenendo
+i raccordi collegati. Usare Rejoin prima di spostare o rimodellare l'intero tramezzo. Salvare o
+annullare una voce di parete aperta prima di eliminarla con Rejoin.
+
+Un rientro valido può portare da quattro righe a sei. I nuovi tratti indipendenti ricevono identità
+fisiche separate per impostazione predefinita; la sola condivisione parziale non divide una parete continua.
 `editingPolicy: { preserveWallGrouping: true }` conserva il raggruppamento fisico nelle operazioni
 future, mantenendo righe distinte. `separate_wall` separa esplicitamente i segmenti (`wallId`,
 `segmentIds` facoltativo). Queste scelte non descrivono una ristrutturazione né creano prove di misura.
