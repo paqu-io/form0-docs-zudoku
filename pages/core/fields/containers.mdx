@@ -97,6 +97,19 @@ preferred, while `data_name` references are accepted for authored schemas.
 
 ## BuildingPlanSection
 
+When a shared corner changes, adjoining unedited walls keep their lines. Their lengths may adjust
+at the junction. Pinning additionally protects the selected portion's endpoints.
+
+Rooms start as rectangles. Drag a corner to reshape its two adjoining wall portions, including
+diagonal walls and corners in split or jogged rooms. Wall-body drags always stay parallel to the
+wall's starting angle. Diagonal boundary wall drags follow the initial horizontal or vertical
+direction; adjoining walls keep their directions and adjust their lengths at the new intersections.
+Corner travel also follows horizontal/vertical guidance. Hold Alt for free two-axis movement,
+or use **Free drag** on Native. Split internal partitions retain their perpendicular-movement rule.
+**Pin / unpin** then a wall protects its position during the current editing session. Pins are
+editor controls, not saved answers. Shared changes preview together and use the ordinary child/floor
+Save, Cancel and Undo/Redo. Contact snapping recognizes the physical wall band at different zoom levels.
+
 ```json
 {
   "type": "BuildingPlanSection",

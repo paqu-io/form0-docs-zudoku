@@ -97,6 +97,21 @@ recommandées, mais les références par `data_name` sont acceptées dans les sc
 
 ## BuildingPlanSection
 
+Lorsqu'un sommet partagé change, les murs adjacents non modifiés conservent leur alignement.
+Leur longueur peut s'adapter à la jonction. Une épingle protège aussi les extrémités de la portion.
+
+Les pièces commencent par des rectangles. Déplacez un sommet pour modifier ses deux portions de mur
+adjacentes, y compris les murs diagonaux et les sommets des pièces découpées ou avec décrochements.
+Le déplacement d'un mur reste parallèle à son orientation initiale. Les murs diagonaux du périmètre
+suivent la direction horizontale ou verticale initiale ; les murs adjacents gardent leur direction
+et adaptent leur longueur aux nouvelles intersections. Les sommets suivent aussi un guide horizontal
+ou vertical. Maintenez Alt pour un mouvement libre sur les deux axes, ou utilisez **Free drag** sur
+Native. Les cloisons intérieures découpées gardent leur règle de déplacement perpendiculaire.
+Choisissez **Pin / unpin**, puis un mur, pour fixer sa position pendant la session d'édition actuelle.
+Les épingles sont des contrôles de l'éditeur, pas des réponses enregistrées. Les changements partagés
+sont prévisualisés ensemble et utilisent les commandes habituelles Save, Cancel et Undo/Redo de
+l'élément et de l'étage. L'alignement tient compte de l'épaisseur physique à différents niveaux de zoom.
+
 ```json
 {
   "type": "BuildingPlanSection",

@@ -97,6 +97,21 @@ mentre negli schemi scritti a mano sono accettati anche i riferimenti tramite `d
 
 ## BuildingPlanSection
 
+Modificando un vertice condiviso, le pareti adiacenti non modificate mantengono il proprio
+allineamento. La lunghezza può adattarsi alla giunzione. Il blocco protegge anche gli estremi del tratto.
+
+Le stanze iniziano come rettangoli. Trascinare un vertice modifica i due tratti di parete adiacenti,
+comprese pareti diagonali e vertici di stanze suddivise o con rientranze. Il trascinamento di una
+parete rimane parallelo al suo orientamento iniziale. Le pareti diagonali del perimetro seguono la
+direzione orizzontale o verticale iniziale; le pareti adiacenti mantengono la direzione e adattano
+la lunghezza alle nuove intersezioni. Anche i vertici seguono una guida orizzontale o verticale.
+Tenere premuto Alt per muoversi liberamente sui due assi, oppure usare **Free drag** su Native.
+Le pareti interne suddivise mantengono la regola di movimento perpendicolare. Scegliere **Pin / unpin**
+e poi una parete per fissarne la posizione durante la sessione di modifica corrente. I blocchi sono
+controlli dell'editor, non risposte salvate. Le modifiche condivise vengono mostrate insieme e usano
+i normali comandi Save, Cancel e Undo/Redo dell'elemento e del piano. L'allineamento considera lo
+spessore fisico della parete ai diversi livelli di zoom.
+
 ```json
 {
   "type": "BuildingPlanSection",

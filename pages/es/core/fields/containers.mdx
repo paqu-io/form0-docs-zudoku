@@ -97,6 +97,21 @@ aunque en los esquemas escritos a mano también se aceptan referencias por `data
 
 ## BuildingPlanSection
 
+Al modificar una esquina compartida, las paredes adyacentes no editadas conservan su alineación.
+Su longitud puede ajustarse en la unión. Fijar un tramo protege además sus extremos.
+
+Las habitaciones empiezan como rectángulos. Arrastre una esquina para modificar sus dos tramos
+adyacentes, incluidas paredes diagonales y esquinas de habitaciones divididas o con retranqueos.
+Al arrastrar una pared, esta permanece paralela a su orientación inicial. El arrastre de paredes
+diagonales del perímetro sigue la dirección horizontal o vertical inicial; las paredes adyacentes
+conservan su dirección y ajustan su longitud en las nuevas intersecciones. Las esquinas también
+siguen una guía horizontal o vertical. Mantenga Alt para moverse libremente en ambos ejes, o use
+**Free drag** en Native. Los tabiques interiores divididos mantienen su regla de movimiento perpendicular.
+Elija **Pin / unpin** y después una pared para fijar su posición durante la sesión de edición actual.
+Las fijaciones son controles del editor, no respuestas guardadas. Los cambios compartidos se
+previsualizan juntos y usan Save, Cancel y Undo/Redo habituales del elemento y de la planta.
+El ajuste de contacto reconoce el espesor físico de la pared a distintos niveles de zoom.
+
 ```json
 {
   "type": "BuildingPlanSection",
