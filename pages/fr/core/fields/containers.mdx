@@ -222,7 +222,7 @@ explicitement inconnue apparaît comme une ligne schématique en pointillés, sa
 Ces formes sont calculées et ne sont pas stockées dans l'enregistrement. CLI privilégie la pièce
 en cours de modification lorsque des portions se superposent ; React et Native limitent la
 modification à la pièce active. La vue initiale inclut la matière extérieure près de l'origine ;
-les gestes suivants ne la recentrent pas. Un changement d'épaisseur fixe la face de la pièce active,
+les gestes suivants ne la recentrent pas. Par défaut, un changement d'épaisseur fixe la face de la pièce active,
 ou la face de référence stable pour un changement à l'échelle de l'étage. Passer de 0,20 m à 0,30 m
 maintient cette face et déplace l'autre de 0,10 m, sous réserve de validation. Des valeurs explicites
 de pièce contradictoires exigent toujours une résolution commune au mur.
@@ -250,7 +250,7 @@ Pour une portion explicitement divisée, l'unique champ **Thickness** existant m
 physique. Aucun champ d'épaisseur supplémentaire ni choix de portée n'est ajouté. Les faces
 partagées affichent la même valeur ; le reste conserve son épaisseur effective. Les surcharges sont
 enregistrées sur les segments de construction ; les valeurs par défaut restent actives et Reset
-rétablit l'héritage. La face active reste fixe et la face opposée peut former un ressaut lors d'un
+rétablit l'héritage. Par défaut, la face active reste fixe et la face opposée peut former un ressaut lors d'un
 changement d'épaisseur. Rejoin conserve les divisions significatives. Les autres questions physiques
 gardent leur portée déclarée. Les guides magnétiques utilisent aussi les bords fixes de la même
 pièce et leurs prolongements, pour réaligner exactement les retours valides.
@@ -265,6 +265,19 @@ conserve le regroupement physique pour les opérations futures, avec des lignes 
 `separate_wall` sépare explicitement des segments (`wallId`, `segmentIds` facultatif). Ces choix ne
 décrivent pas une rénovation et ne créent aucune preuve de mesure. Les identités et sources sont conservées.
 
+Les modifications locales utilisent les axes physiques connectés avant de dériver les faces et le
+matériau. Les lignes de support adjacentes non modifiées restent fixes ; leurs extrémités peuvent
+glisser. Le regroupement physique ne décide ni propagation ni découpage. Les cloisons intérieures
+intentionnelles restent visibles. Axes, liaisons et sommets intérieurs conservent le contrat version 1 ;
+le réseau de jonctions est dérivé, sans enregistrement d'un graphe supplémentaire.
+
+`editingPolicy.thicknessAnchor` choisit `'room_face'` (par défaut) ou `'midline'`. Le premier fixe la
+face de la pièce active, ou la face de référence stable lors d'un changement de tout l'étage. Le second
+fixe l'axe et déplace chaque face de la moitié du changement d'épaisseur. Settings de CLI expose ce
+choix dans Building Plan Editing ; web/Native utilisent le défaut défini dans le code, sans autre
+commande visible standard. Il concerne les prochaines modifications, y compris les réponses d'épaisseur
+des lignes ordinaires. Le changer seul ne modifie ni géométrie ni historique Undo. Les observations restent intactes.
+
 L'alignement magnétique et le déplacement doux près des bords sont activés par défaut et réglables
 séparément avec `editingPolicy.snapping` et `editingPolicy.edgeAutoPan`. Settings expose ces préférences
 et le regroupement physique dans CLI ; React et Native proposent des commandes d'alignement et de
@@ -274,11 +287,12 @@ déplacement s'arrête au relâchement ou à l'annulation, sans zoom ni recentra
 sont pas des réponses. Un rejet affiche un conseil de correction et conserve la géométrie acceptée.
 Les diagnostics par périmètre restent disponibles dans l'API commune.
 
-Les faces parallèles du même côté peuvent s'aligner sur une ligne et ses prolongements ; les
-faces partagées opposées conservent l'écart d'épaisseur. Un déplacement peut aligner les deux axes.
-Un contact compatible devient une géométrie partagée ; un alignement sans contact ne fusionne pas
-les sujets physiques. Les murs rejoignent les angles redimensionnés et les jonctions tiennent
-compte de l'épaisseur, y compris au retour à une ligne droite ou lors d'une inversion de retour.
+L'alignement des murs utilise leurs axes et prolongements lorsque cette géométrie est disponible.
+Des faces opposées de même épaisseur conservent cet écart ; des tracés d'épaisseurs différentes
+alignent leurs axes, sans imposer une ligne commune aux faces intérieures. Un déplacement peut aligner
+les deux axes. Un contact compatible devient une géométrie partagée ; un alignement sans contact ne
+fusionne pas les sujets physiques. Les murs rejoignent les angles redimensionnés et les jonctions
+tiennent compte de l'épaisseur, y compris lors d'un retour à une ligne droite ou d'une inversion.
 
 Un angle coupant partiellement une porte ou une fenêtre exige une confirmation à la fin du geste.
 Annuler conserve le plan accepté. Confirmer conserve la position proposée et supprime les ouvertures

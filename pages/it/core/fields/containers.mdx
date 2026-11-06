@@ -221,7 +221,7 @@ duplicati; il disegno non unisce identità fisiche o risposte. Uno spessore espl
 appare come linea schematica tratteggiata, senza inventare una larghezza. Queste forme sono derivate
 e non vengono salvate nel record. La CLI dà priorità alla stanza in modifica quando le porzioni si
 sovrappongono; React e Native limitano la modifica alla stanza attiva. La vista iniziale comprende
-il materiale esterno vicino all'origine; i gesti successivi non la ricentrano. Un cambio di spessore
+il materiale esterno vicino all'origine; i gesti successivi non la ricentrano. Per impostazione predefinita, un cambio di spessore
 mantiene ferma la faccia della stanza attiva, oppure la faccia di riferimento stabile per modifiche
 del piano. Passare da 0,20 m a 0,30 m mantiene quella faccia e sposta l'opposta di 0,10 m, previa
 validazione della geometria. Valori espliciti di stanza contrastanti richiedono ancora una
@@ -248,7 +248,7 @@ in modalità Select per inserire la distanza esatta. La sessione accetta `split_
 Per una porzione divisa esplicitamente, l'unico campo **Thickness** esistente modifica quel tratto
 fisico. Non si aggiungono campi di spessore né domande sull'ambito. Le facce condivise mostrano lo
 stesso valore; il resto mantiene il proprio spessore effettivo. Le sostituzioni si salvano sui segmenti
-di costruzione; i valori predefiniti restano attivi e Reset ripristina l'ereditarietà. La faccia attiva
+di costruzione; i valori predefiniti restano attivi e Reset ripristina l'ereditarietà. Per impostazione predefinita, la faccia attiva
 rimane ancorata; quella opposta può formare un gradino al cambio di spessore. Rejoin conserva le
 divisioni significative. Le altre domande fisiche mantengono l'ambito dichiarato. Le guide magnetiche
 usano anche bordi fermi della stessa stanza e i loro prolungamenti, per riallineare esattamente i
@@ -264,6 +264,20 @@ future, mantenendo righe distinte. `separate_wall` separa esplicitamente i segme
 `segmentIds` facoltativo). Queste scelte non descrivono una ristrutturazione né creano prove di misura.
 Identità esistenti e riferimenti alle fonti vengono conservati.
 
+Le modifiche locali usano gli assi fisici collegati prima di ricavare facce e materiale. Le rette di
+supporto adiacenti non modificate restano fisse; gli estremi possono scorrere. Il raggruppamento fisico
+non determina propagazione o ritaglio. I tramezzi interni intenzionali restano visibili. Assi, vincoli
+delle facce e vertici interni mantengono il contratto record versione 1; la rete delle giunzioni viene
+ricavata, senza salvare un altro grafo.
+
+`editingPolicy.thicknessAnchor` sceglie `'room_face'` (predefinito) o `'midline'`. Il primo mantiene
+la faccia della stanza attiva, o la faccia di riferimento stabile per modifiche dell'intero piano.
+Il secondo fissa l'asse e sposta entrambe le facce di metà della variazione di spessore. Settings della
+CLI espone la scelta in Building Plan Editing; web/Native mantengono il valore definito nel codice,
+senza un altro controllo visibile standard. Si applica alle modifiche future, comprese le risposte
+di spessore nelle righe normali. Cambiare la preferenza non modifica geometria o cronologia Undo.
+Le osservazioni restano invariate in entrambe le modalità.
+
 Allineamento magnetico e scorrimento delicato ai bordi sono attivi per impostazione predefinita e
 regolabili separatamente con `editingPolicy.snapping` e `editingPolicy.edgeAutoPan`. Settings espone
 queste preferenze e il raggruppamento fisico nella CLI; React e Native mostrano controlli di allineamento
@@ -273,9 +287,10 @@ all'annullamento, senza zoom o ricentramento. Sono preferenze dell'editor, non r
 Un rifiuto mostra un'indicazione utile e conserva la geometria accettata. L'API comune conserva i
 diagnostici per ambito.
 
-Le facce parallele dello stesso lato possono allinearsi su una linea e sui suoi prolungamenti;
-le facce condivise opposte mantengono la distanza dello spessore. Un movimento può allineare entrambi
-gli assi. Un contatto compatibile viene riconciliato come geometria condivisa; l'allineamento senza
+L'allineamento delle pareti usa assi e prolungamenti quando è disponibile la geometria dell'asse.
+Le facce opposte di uguale spessore mantengono quella distanza; tratti di spessore diverso allineano
+gli assi, senza forzare le facce interne sulla stessa retta. Un movimento può allineare entrambi gli
+assi. Un contatto compatibile viene riconciliato come geometria condivisa; l'allineamento senza
 contatto non unisce identità fisiche. Le pareti raggiungono i nuovi angoli e le giunzioni considerano
 lo spessore, anche tornando a una linea retta o invertendo un ritorno.
 

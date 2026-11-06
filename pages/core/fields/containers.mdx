@@ -216,7 +216,7 @@ does not merge physical identities or answers. Explicit unknown thickness uses a
 line rather than an invented width. These footprints are derived and are not stored in the record.
 CLI preview prioritizes the room being edited when portions overlap; React and Native restrict
 wall editing to the active room. The first view includes exterior wall material near the floor
-origin; later gestures do not recenter it. A thickness change anchors the active room's face, or
+origin; later gestures do not recenter it. By default, a thickness change anchors the active room's face, or
 the stable reference face for floor-wide edits. Changing 0.20 m to 0.30 m keeps that face fixed and
 moves the opposite face by 0.10 m, subject to layout validation. Conflicting explicit room defaults
 still require one common wall resolution.
@@ -242,7 +242,7 @@ physical `split_wall` / `join_walls` remain separate construction operations.
 For an explicitly split portion, the single existing **Thickness** field edits that physical span.
 There is no additional thickness field or scope question. Shared room sides show the same value;
 the rest of the wall keeps its own effective thickness. Overrides are stored on construction
-segments, while room/floor defaults stay live and Reset restores inheritance. The active face stays
+segments, while room/floor defaults stay live and Reset restores inheritance. By default, the active face stays
 anchored; the opposite face may step at a thickness change. Rejoin preserves meaningful thickness
 divisions. Other physical-wall questions keep their declared scope. Magnetic guides also use
 stationary edges in the same room and their extension lines, so valid returns can straighten exactly.
@@ -257,6 +257,19 @@ for future operations, while keeping the separate facing rows. `separate_wall` c
 selected construction segments (`wallId`, optional `segmentIds`). Neither choice describes a renovation
 or creates new survey evidence. Surviving identities and source references are retained.
 
+Local wall/corner edits use connected physical midlines before deriving room-facing boundaries and
+material. Unedited adjoining supporting lines stay fixed; their endpoints can slide. Physical subject
+grouping does not decide propagation or clipping. Intentional interior partitions remain visible.
+Existing segment axes, facing bindings and clear room vertices retain the version 1 record contract;
+the junction network is derived rather than saved as another graph.
+
+`editingPolicy.thicknessAnchor` selects `'room_face'` (default) or `'midline'`. The default holds the
+active-room face, or the stable reference face for a floor-wide change. Midline mode holds the axis
+and moves both faces by half the thickness change. CLI Settings exposes the choice under Building
+Plan Editing. Web/Native keep the code-defined default without another standard visible control.
+The preference applies to future edits, including ordinary wall-row thickness answers; changing it
+alone changes neither geometry nor Undo history. Observations remain unchanged in both modes.
+
 Magnetic alignment and gentle edge auto-pan are enabled by default and can be switched independently
 with `editingPolicy.snapping` and `editingPolicy.edgeAutoPan`. CLI preview exposes these preferences
 and physical grouping in Settings; React and Native show alignment and pan controls. Desktop Alt
@@ -265,11 +278,12 @@ extensions help remove tiny jogs. Pan stops on release/cancellation without chan
 recentering. These are editor preferences, not record answers. Rejected edits show one recovery
 message and retain the accepted layout. Scoped diagnostics remain available through the shared API.
 
-Same-side parallel edges can align on a common line, including extensions; opposite shared faces
-keep the wall-thickness gap. Compatible constraints can snap both axes during one move. A completed
-compatible contact is reconciled as shared geometry; same-line alignment without contact does not
-merge physical subjects. Captured walls extend to resized corners and shared junctions account for
-thickness, including straight realignment and reversed returns.
+Wall alignment uses supporting midlines and their extensions when axis geometry is available.
+Equal-thickness opposite faces keep the physical thickness gap; unequal-thickness runs align by their
+axes rather than forcing their inside faces onto one line. Compatible constraints can snap both axes
+during one move. A completed compatible contact is reconciled as shared geometry; alignment without
+contact does not merge physical subjects. Captured walls extend to resized corners and shared
+junctions account for thickness, including straight realignment and reversed returns.
 
 A corner cutting partly through a door/window requires confirmation when the canvas gesture ends.
 Cancel keeps the accepted layout. Confirm keeps the proposed position and removes the listed
